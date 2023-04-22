@@ -1,4 +1,3 @@
-from unidecode import unidecode
 import datetime
 import random
 
