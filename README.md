@@ -1,5 +1,5 @@
 # ArreraChatBots
-Tentative de création d'un algorythme de discussion dans le buts futurs de l'intégrée a l'assistant personnelle SIX
+Tentative de création d'un algorythme de discussion dans le buts futurs de l'intégrée dans un reseau de Neuron commun au assistant Ryley et SIX
 
 ## lien vers le discord 
 
