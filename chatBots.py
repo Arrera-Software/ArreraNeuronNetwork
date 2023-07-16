@@ -1,14 +1,36 @@
 import datetime
 import random
+import time
 
 class neuroneDiscution :
-    def __init__(self,name,UserCourt,GenreCourt) :
+    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str) :
         self.name = name
-        self.user = UserCourt
-        self.genre = GenreCourt
+        self.user = user
+        self.genre = genre
+        self.createur = createur
+        self.bute = bute
         self.nbDiscution = 0
         self.oldrequette =  ""
-        self.oldSortie = "" 
+        self.oldSortie = ""
+        self.blague = ["Que dit une noisette quand elle tombe dans l’eau ?"
+                        ,"Comment est-ce que les abeilles communiquent entre elles ?"
+                        ,"Quel est l’arbre préféré du chômeur ?","Qu’est-ce qu’une frite enceinte ?"
+                        ,"Que dit une mère à son fils geek quand le dîner est servi ?"
+                        ,"Qu’est-ce qui est mieux que gagner une médaille d’or aux Jeux Paralympiques ?"
+                        ,"Pourquoi les Ch’tis aiment les fins de vacances au camping ?"
+                        ,"Quelle est la partie de la voiture la plus dangereuse ?"
+                        ,"Pourquoi dit-on que les poissons travaillent illégalement ?"
+                        ,"Mettre du sirop dans son gel douche"] 
+        self.reponseBlague=["Je me noix."
+                            ,"Par-miel."
+                            ,"Le bouleau."
+                            ,"Une patate sautée."
+                            ,"Alt Tab !"
+                            ,"Marcher"
+                            ,"Parce que c’est le moment où ils peuvent démonter leur tente."
+                            ,"La conductrice."
+                            ,"Parce qu'ils n'ont pas de FISH de paie"
+                            ,"En fait, dans tous les gels douches. Qu’une fois dans la salle de bain il n’y ait aucune issue possible."]
     
     def stokage(self,requette,text):
         self.oldrequette = requette.lower()
@@ -114,7 +136,7 @@ class neuroneDiscution :
                 self.nbDiscution += 1 
                 return 1 , text                 
             else :
-                if "toujours là"  in requette  or "es tu là" in requette or self.name in requette or "tu es là" in requette or "vous étes là" in requette or "vous etes là" :
+                if "toujours là"  in requette  or "es tu là" in requette or self.name in requette or "tu es là" in requette or "vous étes là" in requette or "vous etes là" in requette :
                     nbRand = random.randint(0,2)
                     listReponse3 = ["Je ne peut pas partir de tout façon","Je ne pas partir tant que je peux servir","A moin de m'arréter qui serait un acte horible je suis toujour la"]
                     text =str("Oui, je suis toujours la "+self.genre+" "+self.user+"." + listReponse3[nbRand])
@@ -127,10 +149,13 @@ class neuroneDiscution :
                             finPhrase = str("Vous me parler depuis un moment sans savoir qui je suis ?")
                         else :
                             finPhrase = str("")
-                        if self.name != "SIX" :
-                            debutPhrase = str("Je suis " + self.name  + ", l'assistant personnelle de "+self.genre+" "+self.user+" "+". Crée par Baptiste Pauchet sous le nom SIX. Si vous voulez savoir tout ce que je peux faire ouvrez ma page d'aide. ")
+                        if self.name == "SIX" :
+                            debutPhrase = str("Je suis Six , l'assistant personnelle Vocal de "+self.genre+" "+self.user+" "+". Crée par Baptiste Pauchet pour simplifier et automatiser l'uttilisation de son ordinateur et pour le divertire.")
                         else :
-                            debutPhrase = str("Je suis SIX, l'assistant personnelle de "+self.genre+" "+self.user+" "+". Crée par Baptiste Pauchet, si vous voulez savoir tout ce que je peux faire ouvrez ma page d'aide. ") 
+                            if self.name == "Ryley" :
+                                debutPhrase = str("Je suis Ryley un assistant textuel crée a l'origine par Baptiste Pauchet et Wiruto2 .Pour les assister dans leurs etude et par la suite les aider dans le developement informatique")
+                            else : 
+                                debutPhrase = str("Je suis "+self.name+" crée par "+ self.createur + ". Qui a pour bute "+ self.bute+ ". Et qui utilise un algorythme d'assistant personnelle developper par Arrera Software")
                         text = debutPhrase+finPhrase
                         self.stokage(requette,text)
                         self.nbDiscution += 1 
@@ -144,5 +169,49 @@ class neuroneDiscution :
                             self.nbDiscution += 1 
                             return 1 , text
                         else :
-                            text = ""
-                            return 0 , text
+                            if "tu peux me parler de toi" in requette or "tu peux te presenter" in requette:
+                                if "tu es qui" in self.oldrequette or "présente toi" in self.oldrequette or "présentation" in self.oldrequette or "qui es tu" in self.oldrequette or "qui es tu" in self.oldrequette:
+                                    phrase = "Je vous l'ai deja dit monsieur je peux pas trop vous dire plus je n'est pas de passion ni de hobbie je ne suis qu'un programme informatique"
+                                else :
+                                    phrase ="Je suis un assistant personnelle nommer "+self.name+" qui a été crée par Baptiste Pauchet. Je n'ai pas pas de passion ni de hobbie du a ma conditions de programme informatique."
+                                text = "Ok ," + phrase
+                                self.nbDiscution += 1 
+                                self.stokage(requette,text)
+                                return 1, text
+                            else :
+                                if "vous pouvez faire quoi" in requette or "tu peux faire quoi" in requette or "en quoi je peux vous étes utile" in requette or "que peut tu faire" in requette or "que pouvez-vous faire" in requette:
+                                    text = ""
+                                    return 2 , text
+                                else :
+                                    if "raconter une blague" in requette or "raconte-moi une blague" in requette :
+                                        if "vous etes pas drole" in self.oldrequette or "tu es pas drole" in self.oldrequette :
+                                            text ="Je peux pas raconter un blague si je suis pas drole"
+                                            return 1, text
+                                        else :
+                                            nb = random.randint(0,8)
+                                            text = self.blague[nb]+" "+self.reponseBlague[nb]
+                                            self.nbDiscution += 1 
+                                            self.stokage(requette,text)
+                                            return 1, text
+                                    if "vous etes pas drole" in requette  or "tu es pas drole" in requette :
+                                        if "raconter une blague" in self.oldrequette or "raconte-moi une blague" in self.oldrequette :
+                                            nb = random.randint(0,2)
+                                            listReponse4 =  ["Je suis désoler de ne pas etre drole pour vous "+self.genre,"Désoler si je ne suis pas drole "+self.genre,"Je peux m'en raconter une autre"]
+                                            text = listReponse4[nb]
+                                            self.nbDiscution += 1 
+                                            self.stokage(requette,text)
+                                            return 1, text
+                                    else :
+                                        if self.oldSortie == "Je peux m'en raconter une autre" :
+                                           if "vasy" in requette or "si tu veux" in requette or "comme tu veux" in requette or "comme vous voulez" in requette or "si vous voulez" in requette :
+                                                nb = random.randint(0,8)
+                                                text ="Ok, "+ self.blague[nb]+" "+self.reponseBlague[nb]
+                                                self.nbDiscution += 1 
+                                                self.stokage(requette,text)
+                                                return 1, text
+                                           else :
+                                               if "non" in requette or "pas besoin" in requette :
+                                                   text = "Comme vous voulez "+self.genre+", je voulez juste etre sympa"
+                                        else :
+                                            text = ""
+                                            return 0 , text
