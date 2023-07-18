@@ -16,14 +16,9 @@ print("Programme de teste d'algorythme de chatBots.\nPour stopper la discution a
 print(nom+" $ "+ chatBots.boot())
 while valeur != 15 :
     requette =  input("Vous $ ")
-    if requette == "quitter" or requette == "stop" or requette == "Quitter" or requette == "Stop" :
-        valeur =  15
+    if requette == "github" :
+        webbrowser.open("https://github.com/Arrera-Software/ArreraChatBots")
     else :
-        if requette == "github" :
-            webbrowser.open("https://github.com/Arrera-Software/ArreraChatBots")
-        else :
-            valeur , sortie = chatBots.neurone(requette)
-            print(valeur)
-            print(nom + " $ "+sortie)
-            
-                
+        valeur , sortie = chatBots.neurone(requette)
+        print(valeur)
+        print(nom + " $ "+sortie)               
