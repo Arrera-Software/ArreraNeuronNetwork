@@ -35,12 +35,6 @@ if "raconter une blague" in requette or "raconte-moi une blague" in requette :
                     text = ""
                     return 0 , text
         
-        else :
-            if self.vous == True:
-                text = "Je ne comprend ce que vous m'avez dit ou je ne peux pas vous répondre a votre requette"
-            else : 
-                text = "Je ne comprend ce que tu m'as dit ou ce que tu demande m'est imposible a repondre"
-            return 0 , text
 
 
 
@@ -95,3 +89,11 @@ if "toujours là"  in requette  or "es tu là" in requette or self.name in reque
     self.stokage(requette,text)
     self.nbDiscution += 1 
     return 1 , text
+
+_______________________________________________________________________________________
+ else :
+    if self.vous == True:
+        text = "Je ne comprend ce que vous m'avez dit ou je ne peux pas vous répondre a votre requette"
+    else : 
+        text = "Je ne comprend ce que tu m'as dit ou ce que tu demande m'est imposible a repondre"
+    return 0 , text

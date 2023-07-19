@@ -1,7 +1,16 @@
 import random
 class formule : 
-    def __init__(self,vous:bool):
+    def __init__(self,vous:bool,genre,user):
         self.vous = vous 
+        self.genre = genre
+        self.user = user
+    
+    def nocomprehension(self):
+        if self.vous == True:
+            text = "Je ne comprend ce que vous m'avez dit ou je ne peux pas vous répondre a votre requette"
+        else : 
+            text = "Je ne comprend ce que tu m'as dit ou ce que tu demande m'est imposible a repondre"
+        return text
         
     def salutation(self, hour):
         if hour >= 0 and hour < 3:

@@ -7,7 +7,7 @@ createur = "Baptiste Pauchet"
 bute = "developper un algo de ChatBot qui sera inclut dans SIX et Ryley"
 valeur =  0 
 print("Beinvenu sur le programme de teste du chatbot. ")
-mode = int(input("Facon de s'exprimer du chatbot\n1.Vousvoiment\n2.Tutoiment\n$"))
+mode = int(input("Facon de s'exprimer du chatbot\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
 if mode == 1 : 
     chatBots = neuroneDiscution(nom,user,genre,createur,bute,True)
 else :
