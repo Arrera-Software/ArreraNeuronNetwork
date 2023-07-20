@@ -1,5 +1,13 @@
-# ArreraChatBots
-Tentative de création d'un algorythme de discussion dans le buts futurs de l'intégrée dans un reseau de Neuron commun au assistant Ryley et SIX
+# Arrera Neuron Network
+Reseau de condition pour les assistant Ryley et Six 
+
+## Reseau de condition
+
+software [ ]\
+api [ ]\
+time [ ]\
+search [ ]\
+chatbot [X]\
 
 ## lien vers le discord 
 
