@@ -1,9 +1,12 @@
 import random
+from ObjetsNetwork.gestion import*
 class formule : 
-    def __init__(self,vous:bool,genre,user):
-        self.vous = vous 
-        self.genre = genre
-        self.user = user
+    def __init__(self,gestionnaireNeuron:gestionNetwork):
+        self.vous = bool(gestionnaireNeuron.getVous())
+        self.genre = str(gestionnaireNeuron.getGenre())
+        self.user  = str(gestionnaireNeuron.getUser())
+        print(self.genre)
+        print(self.user)
     
     def nocomprehension(self):
         if self.vous == True:

@@ -1,14 +1,14 @@
 class gestionNetwork:
     def __init__(self):
-        self.vous = bool
-        self.genre = str
-        self.name = str
-        self.user = str
-        self.bute = str
-        self.createur = str
-        self.nbDiscution = int
-        self.oldRequette = str 
-        self.oldSortie = str
+        self.vous = False
+        self.genre =""
+        self.name  =""
+        self.user =""
+        self.bute =""
+        self.createur =""
+        self.nbDiscution =""
+        self.oldRequette =""
+        self.oldSortie =""
     
     def setVous(self,vous:bool):
         self.vous = vous
@@ -32,33 +32,34 @@ class gestionNetwork:
         self.nbDiscution =+ 1
     
     def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str):
-        self.vous = vous
-        self.genre = genre
-        self.name = name
-        self.user = user 
-        self.bute = bute
-        self.createur = createur
+        self.vous = bool(vous)
+        self.genre =  str(genre)
+        self.name =  str(name)
+        self.user =  str(user) 
+        self.bute =  str(bute)
+        self.createur =  str(createur)
     
     def getVous(self):
-        return self.vous
+        return bool(self.vous)
     
     def getGenre(self):
-        return self.genre 
+        print(self.genre)
+        return str(self.genre) 
         
     def getName(self):
-        return self.name 
+        return  str(self.name )
         
     def getUser(self):
-        return self.user 
+        return  str(self.user )
     
     def getBute(self):
-        return self.bute 
+        return  str(self.bute )
     
     def getCreateur(self):
-        return self.createur 
+        return  str(self.createur )
         
     def getDiscution(self):
-        return self.nbDiscution
+        return  str(self.nbDiscution)
     
     def setHistory(self,text,requette):
         self.oldRequette = requette
