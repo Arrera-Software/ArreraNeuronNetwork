@@ -71,4 +71,7 @@ class gestionNetwork:
     def getOldSortie(self):
         return self.oldSortie
 
+    def getNbDiscution(self):
+        return int(self.nbDiscution)
+
         
