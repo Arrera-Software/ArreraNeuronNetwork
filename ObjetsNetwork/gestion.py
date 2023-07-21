@@ -6,7 +6,7 @@ class gestionNetwork:
         self.user =""
         self.bute =""
         self.createur =""
-        self.nbDiscution =""
+        self.nbDiscution =0
         self.oldRequette =""
         self.oldSortie =""
     
@@ -17,7 +17,7 @@ class gestionNetwork:
         self.genre = genre
         
     def setName(self,name:str):
-        self.name = name
+        self.name = name.lower()
         
     def setUser(self,user:str):
         self.user = user 
@@ -43,7 +43,6 @@ class gestionNetwork:
         return bool(self.vous)
     
     def getGenre(self):
-        print(self.genre)
         return str(self.genre) 
         
     def getName(self):
@@ -74,4 +73,8 @@ class gestionNetwork:
     def getNbDiscution(self):
         return int(self.nbDiscution)
 
-        
+    def verrifSortie(self,sortieNeuron):
+        if sortieNeuron == "":
+            return 0
+        else :
+            return 1   
