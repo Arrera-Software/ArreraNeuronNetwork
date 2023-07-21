@@ -6,7 +6,7 @@ Reseau de condition pour les assistant Ryley et Six
 software [ ]a faire \
 api [ ] a faire \
 time [ ]a faire \
-search [ ] a faire \ 
+search [ ] a faire\ 
 chatbot [X] en développement 
 
 ## lien vers le discord 
