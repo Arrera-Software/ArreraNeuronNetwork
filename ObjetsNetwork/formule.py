@@ -5,8 +5,6 @@ class formule :
         self.vous = bool(gestionnaireNeuron.getVous())
         self.genre = str(gestionnaireNeuron.getGenre())
         self.user  = str(gestionnaireNeuron.getUser())
-        print(self.genre)
-        print(self.user)
     
     def nocomprehension(self):
         if self.vous == True:
