@@ -175,6 +175,118 @@ class neuroneDiscution :
                                                     text ="Oui, je suis toujours la "+self.genre+" "+self.user+"." + listReponse[nbRand]
                                                 else :
                                                     text = "Oui, je suis toujours la "+self.user+ listReponse[nbRand]
+                                            else :
+                                                if self.oldrequette == "boot":
+                                                    if "oui" in requette :
+                                                        if "J'espère que vous avez un peu dormi." in self.oldsortie :
+                                                            nbRand = random.randint(0,1)
+                                                            listReponse = ["Tant mieux dit moi si vous avez besoin de moi",
+                                                                           "Je suis content de savoir sa" ]
+                                                            text = listReponse[nbRand]+" "+self.genre
+                                                        else:
+                                                            if "Êtes-vous prêt à travailler ?" in self.oldsortie :
+                                                                nbRand = random.randint(0,1)
+                                                                listReponse =["Okay je peux vous aider sur quoi "+self.genre,
+                                                                              "Super sur quoi vous voulez travailler sur quoi" ]
+                                                                text = listReponse[nbRand]
+                                                            else :
+                                                                if "J'espère que vous avez passé une bonne nuit." in self.oldsortie :
+                                                                    text = "Super sur quoi vous voulez travaille "+self.genre
+                                                                else :
+                                                                    if "J'espère que vous avez bien dormi." in self.oldsortie :
+                                                                        text = "Super sur quoi je peux vous aider "+self.genre
+                                                                    else :
+                                                                        if "J'espère que vous passez une bonne matinée." in self.oldsortie :
+                                                                            text = "Formidable sur quoi vous occupez votre début de matinée"
+                                                                        else :
+                                                                            if "J'espère que vous passez un bon début de journée." in self.oldsortie :
+                                                                                text = "Formidable, vous travaillez sur quoi ?"
+                                                                            else :
+                                                                                if "J'espère que vous passez une bonne après-midi ?" in self.oldsortie :
+                                                                                    text = "Formidable que fais-vous de votre après-midi"
+                                                                                else :
+                                                                                    if "Comment se passe votre début de soirée ?" in self.oldsortie :
+                                                                                        text = "Ceci me réjouit genre vous voulez faire quoi "+self.genre
+                                                                                    else :
+                                                                                        if "J'espère que votre début de soirée se passe bien." in self.oldsortie :
+                                                                                            text = "Formidable vous voulez faire quoi ce soir"
+                                                                                        else :
+                                                                                            if "Comment se passe votre soirée ?" in self.oldsortie :
+                                                                                                text = "Parfais je peux vous aidez ce soir "+self.genre
+                                                                                            else :
+                                                                                                if "J'espère que votre soirée s'est bien passée." in self.oldsortie :
+                                                                                                    text = "Ok vous vouliez faire quoi cette nuit"
+                                                                                                else :
+                                                                                                    if "As-tu bien dormi ?" in self.oldsortie :
+                                                                                                        text = "C'est surper pour toi"
+                                                                                                    else :
+                                                                                                        if "As-tu passé une bonne nuit ?" in self.oldsortie :
+                                                                                                            text = "Tant mieux pour toi tu veux travailler sur quoi aujourd'hui"
+                                                                                                        else :
+                                                                                                            if "Comment se passe ta matinée ?" in self.oldsortie :
+                                                                                                                text = "Parfais sur quoi on travaille aujourd'hui"
+                                                                                                            else :
+                                                                                                                if "Prêt à travailler ?" in self.oldsortie :
+                                                                                                                    text = "Ok on travaille sur quoi aujourd'hui"
+                                                                                                                else :
+                                                                                                                    if "es-tu prêt à travailler cet après-midi ?" in self.oldsortie :
+                                                                                                                        text = "Ok on travaille sur quoi cette aprem"
+                                                    else :
+                                                       if "non" in requette : 
+                                                            if "J'espère que vous avez un peu dormi" in self.oldsortie :
+                                                                nbRand = random.randint(0,1)
+                                                                listReponse = ["Je suis désolé pour vous je suis la pour vous aidez si vous a besoin "+self.genre,
+                                                                                "Vous dormirez mieux ce soir en attendant en quoi je peux vous aider"]    
+                                                                text = listReponse[nbRand]  
+                                                            else :
+                                                                if "Êtes-vous prêt à travailler ?" in self.oldsortie :
+                                                                    nbRand = random.randint(0,1)
+                                                                    listReponse = ["Okay, vous voulez faire quoi",
+                                                                                    "OK je reste disponible pour vous "+self.genre]
+                                                                    text = listReponse[nbRand]
+                                                                else :
+                                                                    if "J'espère que vous avez passé une bonne nuit." in self.oldsortie :
+                                                                        text ="Dommage je reste disponible si vous avez besoin de moi "+self.genre
+                                                                    else :
+                                                                        if "J'espère que vous avez bien dormi." in self.oldsortie :
+                                                                            text ="Dommage si vous avez besoin de moi je suis la"
+                                                                        else :  
+                                                                            if "J'espère que vous passez une bonne matinée." in self.oldsortie :
+                                                                                text ="OK je suis à votre service si vous avez besoin de moi"
+                                                                            else :   
+                                                                                if "J'espère que vous passez un bon début de journée." in self.oldsortie :
+                                                                                    text = "Dommage comment je peux vous la rendre meilleure genre"
+                                                                                else :    
+                                                                                    if "J'espère que vous passez une bonne après-midi ?" in self.oldsortie :
+                                                                                        text ="Ha, je reste la si vous avez besoin de moi je suis la "
+                                                                                    else :
+                                                                                        if "Comment se passe votre début de soirée ?" in self.oldsortie :
+                                                                                            text ="Comment je peux la rendre meilleur genre"
+                                                                                        else :  
+                                                                                            if "J'espère que votre début de soirée se passe bien." in self.oldsortie :
+                                                                                                text ="Comment je peux rendre votre soirée exceptionnelle"
+                                                                                            else :
+                                                                                                if "Comment se passe votre soirée ?" in self.oldsortie :
+                                                                                                    text ="Ceci me rend triste"
+                                                                                                else :
+                                                                                                    if "J'espère que votre soirée s'est bien passée." in self.oldsortie :
+                                                                                                        text = "Je vous conseiller d'allez dormir"
+                                                                                                    else :
+                                                                                                        if "As-tu bien dormi ?" in self.oldsortie :
+                                                                                                            text ="Dommage je peux d'aidez sur quoi ?"
+                                                                                                        else :  
+                                                                                                            if"As-tu passé une bonne nuit ?"in self.oldsortie :
+                                                                                                                text ="Dommage comment je peux t'aider aujourd'hui"
+                                                                                                            else :   
+                                                                                                                if "Prêt à travailler ?" in self.oldsortie :
+                                                                                                                    text ="Ok je reste la au besoin"
+                                                                                                                else :    
+                                                                                                                    if "Prêt à travailler ?" in self.oldsortie :
+                                                                                                                        text ="Ok je reste la au besoin"
+                                                                                                                    else :
+                                                                                                                        if "Es-tu prêt à travailler cet après-midi ?" in self.oldsortie :
+                                                                                                                            text ="Ok dit moi quand tu sera prét"                                    
+                                                            
         
         valeur = self.gestionNeuron.verrifSortie(text)                           
         self.gestionNeuron.setHistory(text,requette)
