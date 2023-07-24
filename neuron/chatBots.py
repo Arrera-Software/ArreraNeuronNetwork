@@ -286,8 +286,78 @@ class neuroneDiscution :
                                                                                                                     else :
                                                                                                                         if "Es-tu prêt à travailler cet après-midi ?" in self.oldsortie :
                                                                                                                             text ="Ok dit moi quand tu sera prét"                                    
-                                                            
-        
+                                                       else :
+                                                            if "bien" in requette :
+                                                                if "Comment se passe votre début de soirée ?" in self.oldsortie :
+                                                                   text = "Ceci me réjouit "+self.genre+" vous voulez"  
+                                                                else :
+                                                                    if "Comment se passe votre soirée ?" in self.oldsortie:
+                                                                        text =  "Parfais je peux vous aidez ce soir "+self.genre
+                                                                    else :
+                                                                        if "Comment se passe ta matinée ?" in self.oldsortie:
+                                                                            text = "Parfais sur quoi on travaille aujourd'hui"
+                                                            else : 
+                                                                if "je profite du calme du matin pour travailler peu"  in requette and "Que faites-vous si tôt ?" in self.oldsortie or  "juste des choses à faire." in requette and "Que faites-vous si tôt ?" in self.oldsortie  :
+                                                                    nbRand = random.randint(0,1)
+                                                                    listReponse = ["Ok je suis là si vous avez besoin de "+self.genre,
+                                                                                   "Dis-moi si vous avez besoin de moi"]
+                                                                    text =  listReponse[nbRand]
+                                                                else :
+                                                                    if "je suis pret" in requette and "Êtes-vous prêt à travailler ?" in self.oldsortie:
+                                                                        nbRand = random.randint(0,1)
+                                                                        listReponse = ["Parfait sur quoi on travaille aujourd'hui " +self.genre, 
+                                                                                       "Sur quoi l’on travaille aujourd'hui"]
+                                                                        text = listReponse[nbRand]
+                                                                    else :
+                                                                        if "j'ai un truc a faire" in requette :
+                                                                            if "Il faudrait peut-être dormir, non ?" in self.oldsortie :
+                                                                                text = "Tres bien je vais t'aider "
+                                                                            else :
+                                                                                if "Comment peux-tu travailler si tard ?" in self.oldsortie :
+                                                                                    text = "C'est pas une bonne idée de travailler" 
+                                                                                else :
+                                                                                    if "Il faudrait peut-être dormir, non ?" in self.oldsortie :
+                                                                                        text = "Ok je peux d'aider comment"
+                                                                                    else :
+                                                                                        if "Que fais-tu si tard ?" in self.oldsortie:
+                                                                                            text = "Comment je peux t'aider ?"
+                                                                                        else :
+                                                                                            if "Pourquoi me réveilles-tu si tard ?" in self.oldsortie:
+                                                                                                text = "Comment je peux t'aider ?"
+                                                                        else :
+                                                                            if "il faut que je fasse un truc"  in requette :
+                                                                                if "il faudrait peut-être dormir, non ?" in self.oldsortie :
+                                                                                    text = "Ok je vais d'aider pour que tu finisse vite. Quesque je peux faire"
+                                                                                else :
+                                                                                    if "comment peux-tu travailler si tard ?" in self.oldsortie :
+                                                                                        text = "Ok comment je peux t'aider" 
+                                                                                    else :
+                                                                                        if "il faudrait peut-être dormir, non ?" in self.oldsortie :
+                                                                                            text = "Sur quoi tu dois travailler"
+                                                                                        else :
+                                                                                            if "que fais-tu si tard ?" in self.oldsortie:
+                                                                                                text = "Sur quoi tu travaille"
+                                                                                            else :
+                                                                                                if "pourquoi me réveilles-tu si tard ?" in self.oldsortie:
+                                                                                                    text = "Sur quoi tu travaille"
+                                                                                                else :
+                                                                                                    if "comment peux-tu travailler si tard ?" in self.oldsortie:
+                                                                                                        text = "Je peux t'aider comment ?"    
+                                                                            else :
+                                                                                if "je dois finir un truc" in requette and "Que veux-tu faire ce soir ?" in self.oldsortie :
+                                                                                    text = "Je peux t'aider comment ?"
+                                                                                else :
+                                                                                    if "me divertir" in requette and "Que veux-tu faire ce soir ?" in self.oldsortie :
+                                                                                        text = "Sur quoi tu veux te divertir"
+                                                                                    else :
+                                                                                        if "travailler" in requette and "Veux-tu travailler ou te divertir ce soir ?" in self.oldsortie :
+                                                                                            text = "Sur quoi tu travaille"
+                                                                                        else :
+                                                                                            if "me divertir" in requette and "Veux-tu travailler ou te divertir ce soir ?" in self.oldsortie :
+                                                                                                text = "Sur quelle platforme veux-tu te divertir"
+                                                                                        
+                                                                                                                             
+                                                         
         valeur = self.gestionNeuron.verrifSortie(text)                           
         self.gestionNeuron.setHistory(text,requette)
         self.gestionNeuron.addDiscution()
