@@ -31,9 +31,13 @@ class neuroneDiscution :
         
         
     def neurone(self,requette):
+        #Recuperation de l'heure
         hour = datetime.datetime.now().hour
+        #Initilisation des variable nbRand et text et valeur
         nbRand = 0
         text = ""
+        valeur = 0
+        #Recuperation atribut de l'assistant
         self.oldrequette = self.gestionNeuron.getOldrequette()
         self.oldsortie = self.gestionNeuron.getOldSortie()
         self.nbDiscution = self.gestionNeuron.getNbDiscution()
@@ -43,7 +47,7 @@ class neuroneDiscution :
         self.user = self.gestionNeuron.getUser()
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
-        valeur = 0
+        #Reponse chat bot
         if  "salut" in requette   or "bonjour" in requette  or "bonsoir" in requette:
             text = self.formule.salutation(hour)
         else :
@@ -357,8 +361,11 @@ class neuroneDiscution :
                                                                                                 text = "Sur quelle platforme veux-tu te divertir"
                                                                                         
                                                                                                                              
-                                                         
-        valeur = self.gestionNeuron.verrifSortie(text)                           
+        #Mise a jour de la valeur                                                 
+        valeur = self.gestionNeuron.verrifSortie(text)
+        #Sauvegarde des sortie                         
         self.gestionNeuron.setHistory(text,requette)
+        #Ajout d'une discution
         self.gestionNeuron.addDiscution()
+        #Retour des valeur
         return valeur , text
