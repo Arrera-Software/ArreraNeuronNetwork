@@ -359,32 +359,43 @@ class neuroneDiscution :
                                                                                         else :
                                                                                             if "me divertir" in requette and "Veux-tu travailler ou te divertir ce soir ?" in self.oldsortie :
                                                                                                 text = "Sur quelle platforme veux-tu te divertir"                            
-                                                                                            else :
-                                                                                                if "quesque tu peux faire" in requette or "tu peux faire quoi" in requette or "vous pouvez faire quoi" in requette :
-                                                                                                    listFonction = self.gestionNeuron.getListFonction()
-                                                                                                    nbFonction = self.gestionNeuron.getNbListFonction()
-                                                                                                    nb = nbFonction - 1
-                                                                                                    if self.etatVous == True :
-                                                                                                        text = "je peux vous aidez a "
-                                                                                                        for i in range(0,nbFonction) :
-                                                                                                            if i == nb :
-                                                                                                                text = text + " et " + listFonction[i]
-                                                                                                            else :
-                                                                                                                if i == 0 :
-                                                                                                                    text = text + listFonction[i]
-                                                                                                                else :
-                                                                                                                    text = text + ","+listFonction[i]
-                                                                                                    else :
-                                                                                                        text = "je peux t'aidez a faire "
-                                                                                                        for i in range(0,nbFonction) :
-                                                                                                            if i == nb :
-                                                                                                                text = text + " et " + listFonction[i]
-                                                                                                            else :
-                                                                                                                if i == 0 :
-                                                                                                                    text = text + listFonction[i]
-                                                                                                                else :
-                                                                                                                    text = text + ","+listFonction[i]                               
-        #Mise a jour de la valeur                                                 
+                                                else :
+                                                    if "quesque tu peux faire" in requette or "tu peux faire quoi" in requette or "vous pouvez faire quoi" in requette :
+                                                        listFonction = self.gestionNeuron.getListFonction()
+                                                        nbFonction = self.gestionNeuron.getNbListFonction()
+                                                        nb = nbFonction - 1
+                                                        if self.etatVous == True :
+                                                            text = "je peux vous aidez a "
+                                                            for i in range(0,nbFonction) :
+                                                                if i == nb :
+                                                                    text = text + " et " + listFonction[i]
+                                                                else :
+                                                                    if i == 0 :
+                                                                        text = text + listFonction[i]
+                                                                    else :
+                                                                        text = text + ","+listFonction[i]
+                                                        else :
+                                                            text = "je peux t'aidez a faire "
+                                                            for i in range(0,nbFonction) :
+                                                                if i == nb :
+                                                                    text = text + " et " + listFonction[i]
+                                                                else :
+                                                                    if i == 0 :
+                                                                        text = text + listFonction[i]
+                                                                    else :
+                                                                        text = text + ","+listFonction[i]   
+                                                    else :
+                                                        if "non" in requette : 
+                                                            if self.etatVous == True :
+                                                                text = "OK "+self.genre+" je reste la au besoin"
+                                                            else :
+                                                                text = "Ok "+self.user+" ,Je reste la si tu a besoin de moi."
+                                                        else :
+                                                            if "oui" in requette : 
+                                                                text = "OK parfais"                                           
+                                                                
+                                                                                                    
+        #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Sauvegarde des sortie                         
         self.gestionNeuron.setHistory(text,requette)
