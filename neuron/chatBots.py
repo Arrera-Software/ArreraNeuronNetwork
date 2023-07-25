@@ -358,9 +358,32 @@ class neuroneDiscution :
                                                                                             text = "Sur quoi tu travaille"
                                                                                         else :
                                                                                             if "me divertir" in requette and "Veux-tu travailler ou te divertir ce soir ?" in self.oldsortie :
-                                                                                                text = "Sur quelle platforme veux-tu te divertir"
-                                                                                        
-                                                                                                                             
+                                                                                                text = "Sur quelle platforme veux-tu te divertir"                            
+                                                                                            else :
+                                                                                                if "quesque tu peux faire" in requette or "tu peux faire quoi" in requette or "vous pouvez faire quoi" in requette :
+                                                                                                    listFonction = self.gestionNeuron.getListFonction()
+                                                                                                    nbFonction = self.gestionNeuron.getNbListFonction()
+                                                                                                    nb = nbFonction - 1
+                                                                                                    if self.etatVous == True :
+                                                                                                        text = "je peux vous aidez a "
+                                                                                                        for i in range(0,nbFonction) :
+                                                                                                            if i == nb :
+                                                                                                                text = text + " et " + listFonction[i]
+                                                                                                            else :
+                                                                                                                if i == 0 :
+                                                                                                                    text = text + listFonction[i]
+                                                                                                                else :
+                                                                                                                    text = text + ","+listFonction[i]
+                                                                                                    else :
+                                                                                                        text = "je peux t'aidez a faire "
+                                                                                                        for i in range(0,nbFonction) :
+                                                                                                            if i == nb :
+                                                                                                                text = text + " et " + listFonction[i]
+                                                                                                            else :
+                                                                                                                if i == 0 :
+                                                                                                                    text = text + listFonction[i]
+                                                                                                                else :
+                                                                                                                    text = text + ","+listFonction[i]                               
         #Mise a jour de la valeur                                                 
         valeur = self.gestionNeuron.verrifSortie(text)
         #Sauvegarde des sortie                         
