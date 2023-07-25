@@ -41,28 +41,32 @@ class ArreraNetwork :
     
     def neuron(self,var:str) :
         requette = self.netoyage(str(var).lower())
-        valeur = 0 
-        #software
+        valeur = 0
+        #main
         if valeur == 0 :
-            #api
+            #software
             valeur = 0
             text = ""
             if valeur == 0 :
-                #time
+                #api
                 valeur = 0
                 text = ""
                 if valeur == 0 :
-                    #search
+                    #time
                     valeur = 0
                     text = ""
                     if valeur == 0 :
-                        valeur,text = self.chatBot.neurone(requette)
+                        #search
+                        valeur = 0
+                        text = ""
                         if valeur == 0 :
-                            if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette :
-                                text = self.formuleNeuron.aurevoir(datetime.datetime.now().hour)
-                                valeur = 15
-                            else : 
-                                valeur = 0 
-                                text = self.formuleNeuron.nocomprehension()   
+                            valeur,text = self.chatBot.neurone(requette)
+                            if valeur == 0 :
+                                if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette :
+                                    text = self.formuleNeuron.aurevoir(datetime.datetime.now().hour)
+                                    valeur = 15
+                                else : 
+                                    valeur = 0 
+                                    text = self.formuleNeuron.nocomprehension()   
         
         return valeur , text
