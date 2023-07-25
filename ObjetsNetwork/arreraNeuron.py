@@ -56,17 +56,22 @@ class ArreraNetwork :
                     valeur = 0
                     text = ""
                     if valeur == 0 :
-                        #search
+                        #internet
                         valeur = 0
                         text = ""
+                    else :
                         if valeur == 0 :
-                            valeur,text = self.chatBot.neurone(requette)
+                            #search
+                            valeur = 0
+                            text = ""
                             if valeur == 0 :
-                                if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette :
-                                    text = self.formuleNeuron.aurevoir(datetime.datetime.now().hour)
-                                    valeur = 15
-                                else : 
-                                    valeur = 0 
-                                    text = self.formuleNeuron.nocomprehension()   
+                                valeur,text = self.chatBot.neurone(requette)
+                                if valeur == 0 :
+                                    if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette :
+                                        text = self.formuleNeuron.aurevoir(datetime.datetime.now().hour)
+                                        valeur = 15
+                                    else : 
+                                        valeur = 0 
+                                        text = self.formuleNeuron.nocomprehension()   
         
         return valeur , text
