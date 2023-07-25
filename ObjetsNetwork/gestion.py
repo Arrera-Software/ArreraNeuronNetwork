@@ -5,6 +5,7 @@ class gestionNetwork:
         self.name  =""
         self.user =""
         self.bute =""
+        self.listFonction = []
         self.createur =""
         self.nbDiscution =0
         self.oldRequette =""
@@ -27,17 +28,21 @@ class gestionNetwork:
     
     def setCreateur(self,createur:str):
         self.createur = createur
+    
+    def setListFonction(self,liste:list[str]):
+        self.listFonction = liste
         
     def addDiscution(self):
         self.nbDiscution =+ 1
     
-    def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str):
+    def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str,liste:list[str]):
         self.vous = bool(vous)
         self.genre =  str(genre)
         self.name =  str(name)
         self.user =  str(user) 
         self.bute =  str(bute)
         self.createur =  str(createur)
+        self.listFonction = liste
     
     def getVous(self):
         return bool(self.vous)
@@ -72,9 +77,15 @@ class gestionNetwork:
 
     def getNbDiscution(self):
         return int(self.nbDiscution)
+    
+    def getNbListFonction(self):
+        return len(self.listFonction)
+    
+    def getListFonction(self):
+        return self.listFonction
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":
             return 0
         else :
-            return 1   
+            return 1  

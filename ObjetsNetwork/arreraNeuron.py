@@ -6,11 +6,11 @@ from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
 
 class ArreraNetwork :
-    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool):
+    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str]):
         #initilisation objet 
         self.gestionnaire = gestionNetwork()
         #set des atribut
-        self.gestionnaire.setAll(vous,genre,name,user,bute,createur)
+        self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction)
         #initilisation objet secondaire
         self.formuleNeuron = formule(self.gestionnaire)
         #initilisation des neuron
