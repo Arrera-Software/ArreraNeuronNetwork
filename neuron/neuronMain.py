@@ -1,10 +1,10 @@
 from ObjetsNetwork.gestion import*
-from arreraSoftware.lecteurText import*
+from arreraSoftware.fncArreraNetwork import*
 class neuroneMain :
-    def __init__(self,gestionnaireNeuron:gestionNetwork,json:jsonWork) :
+    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork) :
         #Init objet
-        self.gestionNeuron = gestionnaireNeuron
-        self.objetJSON = json
+        self.gestionNeuron = gestionnaire
+        self.fonctionArreraNetwork = fncArreraNetwork
         
     def neurone(self,requette):
         #Initilisation des variable nbRand et text et valeur
@@ -22,12 +22,8 @@ class neuroneMain :
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
         #reponse du neuron main
-        if "tu peux me lire un truc" in requette or "vous pouvez lire un truc" in requette or  "lit un truc" in requette :
-            if self.etatVous == True :
-                text = "Voici "+self.genre
-            else :
-                text = "Voici"
-            Reading(self.objetJSON,self.gestionNeuron)
+        if "lire un truc" in requette or  "lit un truc" in requette :
+            text = self.fonctionArreraNetwork.reading()
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Sauvegarde des sortie                         
