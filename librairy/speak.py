@@ -7,7 +7,7 @@ class Speaking :
         self.lang = langue
     
     def speak(self,texte:str):
-        tts = gTTS(texte,self.lang)
+        tts = gTTS(texte,lang=self.lang)
         tts.save("voc.mp3")
         playsound("voc.mp3")
         os.remove("voc.mp3")
