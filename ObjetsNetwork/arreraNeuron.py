@@ -8,16 +8,17 @@ from neuron.neuronMain import*
 
 class ArreraNetwork :
     def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str):
-        #initilisation objet 
+        #initilisation du gestionnaire du reseau de neuron 
         self.gestionnaire = gestionNetwork()
-        self.FichierJSON = jsonWork(fichierConfiguration)
         #set des atribut
         self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction)
-        #initilisation objet secondaire
+        #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
+        self.FichierJSON = jsonWork(fichierConfiguration)
+        self.arreraSoftware = fncArreraNetwork(self.FichierJSON,self.gestionnaire,"image/icon.png")
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
-        self.main = neuroneMain(self.gestionnaire,self.FichierJSON)
+        self.main = neuroneMain(self.arreraSoftware,self.gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -45,7 +46,7 @@ class ArreraNetwork :
     def neuron(self,var:str) :
         requette = self.netoyage(str(var).lower())
         valeur = 0
-        self.main.neurone(requette)
+        valeur,text = self.main.neurone(requette)
         if valeur == 0 :
             #software
             valeur = 0
@@ -62,7 +63,6 @@ class ArreraNetwork :
                         #internet
                         valeur = 0
                         text = ""
-                    else :
                         if valeur == 0 :
                             #search
                             valeur = 0
