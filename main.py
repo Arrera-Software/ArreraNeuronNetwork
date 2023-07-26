@@ -13,9 +13,9 @@ listeFonction = ["ouvrir une application"
 print("Beinvenu sur le programme de teste du chatbot. ")
 mode = int(input("Facon de s'exprimer du chatbot\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
 if mode == 1 : 
-    neuron = ArreraNetwork(nom,user,genre,createur,bute,True,listeFonction) 
+    neuron = ArreraNetwork(nom,user,genre,createur,bute,True,listeFonction,"configNeuron.json") 
 else :
-    neuron = ArreraNetwork(nom,user,genre,createur,bute,False,listeFonction)
+    neuron = ArreraNetwork(nom,user,genre,createur,bute,False,listeFonction,"configNeuron.json")
 print("Programme de teste d'algorythme de chatBots.\nPour stopper la discution avec le chats bots marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 print(nom+" $ "+ neuron.boot())
 while valeur != 15 :

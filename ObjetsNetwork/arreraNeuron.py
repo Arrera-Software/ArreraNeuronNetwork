@@ -1,20 +1,23 @@
 import datetime
 import random
-
+from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
+from neuron.neuronMain import*
 
 class ArreraNetwork :
-    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str]):
+    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str):
         #initilisation objet 
         self.gestionnaire = gestionNetwork()
+        self.FichierJSON = jsonWork(fichierConfiguration)
         #set des atribut
         self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction)
         #initilisation objet secondaire
         self.formuleNeuron = formule(self.gestionnaire)
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
+        self.main = neuroneMain(self.gestionnaire,self.FichierJSON)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -42,7 +45,7 @@ class ArreraNetwork :
     def neuron(self,var:str) :
         requette = self.netoyage(str(var).lower())
         valeur = 0
-        #main
+        self.main.neurone(requette)
         if valeur == 0 :
             #software
             valeur = 0
