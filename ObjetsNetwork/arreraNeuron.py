@@ -48,11 +48,11 @@ class ArreraNetwork :
         valeur = 0
         valeur,text = self.main.neurone(requette)
         if valeur == 0 :
-            #software
+            #api
             valeur = 0
             text = ""
             if valeur == 0 :
-                #api
+                #software
                 valeur = 0
                 text = ""
                 if valeur == 0 :
