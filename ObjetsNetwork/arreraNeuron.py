@@ -5,6 +5,7 @@ from neuron.chatBots import*
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
 from neuron.neuronMain import*
+from neuron.neuronAPI import*
 
 class ArreraNetwork :
     def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str):
@@ -19,6 +20,7 @@ class ArreraNetwork :
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
         self.main = neuroneMain(self.arreraSoftware,self.gestionnaire)
+        self.api = neuroneAPI(self.arreraSoftware,self.gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -48,9 +50,7 @@ class ArreraNetwork :
         valeur = 0
         valeur,text = self.main.neurone(requette)
         if valeur == 0 :
-            #api
-            valeur = 0
-            text = ""
+            valeur,text = self.api.neurone(requette)
             if valeur == 0 :
                 #software
                 valeur = 0
