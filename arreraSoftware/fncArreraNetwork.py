@@ -19,7 +19,7 @@ class fncArreraNetwork:
         self.user = self.gestionNeuron.getUser()
         self.genre = self.gestionNeuron.getGenre()
         #initialisation objet 
-        self.actuMeteo = MeteoActu("3b43e18afcf945888748071d177b8513","6","fr","fr")
+        self.actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
         
     def reading(self):
         fncLecture(self.travailJSON,self.name,self.icon)
@@ -30,7 +30,7 @@ class fncArreraNetwork:
         return text
 
     def sortieActualités(self):
-        listActu = self.actuMeteo.Actu()
+        listActu = self.actu.Actu()
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)

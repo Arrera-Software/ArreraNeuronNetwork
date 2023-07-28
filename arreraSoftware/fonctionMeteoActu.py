@@ -1,6 +1,7 @@
 import requests
+import geocoder
 
-class MeteoActu :
+class Actu :
     def __init__(self,keyActu:str,nbPage:int,pay:str,lang:str):
         self.nbPage = int(nbPage)
         self.pay = pay
