@@ -1,5 +1,6 @@
 from ObjetsNetwork.gestion import*
 from arreraSoftware.fncArreraNetwork import*
+from ObjetsNetwork.chaineCarractere import *
 
 class neuroneAPI :
     def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork) :
@@ -25,6 +26,22 @@ class neuroneAPI :
         #reponse du neuron main
         if "actualites" in requette :
             text = self.fonctionArreraNetwork.sortieActualités()
+        else :
+            if "meteo" in requette :
+                nb = self.gestionNeuron.getnbVilleMeteo()
+                villes = self.gestionNeuron.getListVilleMeteo()
+                resultat = 0 
+                for i in range(0,nb):
+                    ville = chaine.netoyage(villes[i])
+                    if ville in requette :
+                        text = self.fonctionArreraNetwork.sortieMeteo(villes[i])
+                        resultat = 1
+                        break
+                    else :
+                        resultat = 0
+                if resultat == 0 :
+                    text = self.fonctionArreraNetwork.sortieMeteo("")  
+                    
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Sauvegarde des sortie                         
