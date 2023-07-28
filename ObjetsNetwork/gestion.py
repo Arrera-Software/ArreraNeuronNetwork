@@ -10,6 +10,8 @@ class gestionNetwork:
         self.nbDiscution =0
         self.oldRequette =""
         self.oldSortie =""
+        self.nbVilleMeteo = 0
+        self.listVille = []
     
     def setVous(self,vous:bool):
         self.vous = vous
@@ -35,7 +37,7 @@ class gestionNetwork:
     def addDiscution(self):
         self.nbDiscution =+ 1
     
-    def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str,liste:list[str]):
+    def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str,liste:list[str],nbVille:int):
         self.vous = bool(vous)
         self.genre =  str(genre)
         self.name =  str(name)
@@ -43,6 +45,10 @@ class gestionNetwork:
         self.bute =  str(bute)
         self.createur =  str(createur)
         self.listFonction = liste
+        self.nbVilleMeteo = nbVille
+    
+    def setVilleMeteo(self,listVille:list[str]):
+        self.listVille = listVille
     
     def getVous(self):
         return bool(self.vous)
@@ -83,6 +89,12 @@ class gestionNetwork:
     
     def getListFonction(self):
         return self.listFonction
+    
+    def getnbVilleMeteo(self):
+        return self.nbVilleMeteo
+    
+    def getListVilleMeteo(self):
+        return self.listVille
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":
