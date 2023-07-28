@@ -6,13 +6,15 @@ from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
 from neuron.neuronMain import*
 from neuron.neuronAPI import*
+from ObjetsNetwork.chaineCarractere import *
 
 class ArreraNetwork :
-    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str):
+    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str,nbVille:int,listVille:str):
         #initilisation du gestionnaire du reseau de neuron 
         self.gestionnaire = gestionNetwork()
         #set des atribut
-        self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction)
+        self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction,nbVille)
+        self.gestionnaire.setVilleMeteo(listVille)
         #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
         self.FichierJSON = jsonWork(fichierConfiguration)
@@ -33,20 +35,9 @@ class ArreraNetwork :
         text = self.formuleNeuron.aurevoir(hour)
         return str(text)
     
-    def netoyage(self,chaine):
-        chaine = str(chaine)
-        chaine.replace("-"," ")
-        chaine.replace('"'," ")
-        chaine.replace("_"," ")
-        chaine.replace('/'," ")
-        chaine.replace("é","e")
-        chaine.replace("è","e")
-        chaine.replace("à","a")
-        chaine.replace("ç","c")
-        return chaine
     
     def neuron(self,var:str) :
-        requette = self.netoyage(str(var).lower())
+        requette = chaine.netoyage(str(var))
         valeur = 0
         valeur,text = self.main.neurone(requette)
         if valeur == 0 :
