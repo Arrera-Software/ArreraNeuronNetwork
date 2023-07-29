@@ -116,3 +116,17 @@ class fncArreraNetwork:
                 else :
                     text = "If fais "+self.meteo.gettemperature()+"°C"     
         return text
+    
+    def sortieGPS(self):
+        sortieGPS = self.gps.recuperationCordonneePossition()
+        if sortieGPS == True :
+            sortieGPS = self.gps.recuperationNameVillePosition()
+            if sortieGPS == True :
+                lat = self.gps.getlatPossition()
+                lon = self.gps.getlonPossition()
+                nameVille = self.gps.getNameVille()
+                if self.etatVous == True :
+                    text = "Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+"."
+                else :
+                    text = "Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" ."
+        return text

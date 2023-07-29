@@ -44,6 +44,9 @@ class neuroneAPI :
             else :
                 if "temperature" in requette :
                     text = self.fonctionArreraNetwork.sortieTemperature()
+                else :
+                    if "coordonnee gps" in requette or "position gps" in requette :
+                        text = self.fonctionArreraNetwork.sortieGPS()
                     
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
