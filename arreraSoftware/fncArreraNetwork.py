@@ -103,3 +103,16 @@ class fncArreraNetwork:
                 else :
                     text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."  
         return text   
+    
+    def sortieTemperature(self):
+        sortieGPS = self.gps.recuperationCordonneePossition()
+        if sortieGPS == True :
+            lat = self.gps.getlatPossition()
+            lon = self.gps.getlonPossition()
+            sortieMeteo = self.meteo.recuperationDataMeteo(lat,lon)
+            if sortieMeteo == True :
+                if self.etatVous == True :
+                    text = "La temperature actuel dehors et de "+self.meteo.gettemperature()+"°C"
+                else :
+                    text = "If fais "+self.meteo.gettemperature()+"°C"     
+        return text

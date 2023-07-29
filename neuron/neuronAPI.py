@@ -40,7 +40,10 @@ class neuroneAPI :
                     else :
                         resultat = 0
                 if resultat == 0 :
-                    text = self.fonctionArreraNetwork.sortieMeteo("")  
+                    text = self.fonctionArreraNetwork.sortieMeteo("")
+            else :
+                if "temperature" in requette :
+                    text = self.fonctionArreraNetwork.sortieTemperature()
                     
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
