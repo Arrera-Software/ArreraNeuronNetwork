@@ -1,5 +1,9 @@
 import geocoder
 import requests
+import webbrowser
+import platform
+import os
+import subprocess
 
 class GPS:
     def __init__(self,KeyGPS:str):
@@ -44,3 +48,41 @@ class GPS:
     
     def getNameVille(self):
         return self.nameVille
+    
+class GPSItineraires :
+    def __init__(self):
+        os = platform.system()
+        if os == "Windows":
+           self.chrome = "C:/Program Files/Google/Chrome/Application/chrome.exe %s"
+        else :
+            if os == "Linux":
+                self.chrome = "/usr/bin/google-chrome"
+        
+        self.baseURL = "https://www.google.fr/maps/dir/"
+                
+    def ouvertureItineraires(self,loc1:str,loc2:str):
+        nameOS = platform.system()
+        if nameOS == "Windows":
+            try:
+               # Vérifie si la clé de registre pour Google Chrome existe
+               key_path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\chrome.exe"
+               os.path.exists(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
+               etat = True
+            except:
+                etat = False 
+        else :
+            if nameOS == "Linux":
+                try:
+                    # Exécute la commande "which" pour rechercher l'exécutable de Google Chrome
+                    subprocess.check_output(["which", "google-chrome"])
+                    etat = True
+                except subprocess.CalledProcessError:
+                    etat = False
+            else :
+                etat = False
+        
+        if etat == True :
+            webbrowser.get(self.chrome).open(self.baseURL+loc1+"/"+loc2)
+            return True
+        else :
+            return False

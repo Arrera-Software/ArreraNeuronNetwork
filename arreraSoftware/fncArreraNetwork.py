@@ -23,6 +23,7 @@ class fncArreraNetwork:
         self.actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
         self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
+        self.itineraires = GPSItineraires()
         
     def reading(self):
         fncLecture(self.travailJSON,self.name,self.icon)
@@ -129,4 +130,40 @@ class fncArreraNetwork:
                     text = "Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+"."
                 else :
                     text = "Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" ."
+        return text
+    
+    def sortieItineraires(self,loc1:str,loc2:str):
+        if loc1 == "loc" :
+            sortieGPS = self.gps.recuperationCordonneePossition()
+            if sortieGPS == True :
+                self.gps.recuperationNameVillePosition()
+                loc = self.gps.getNameVille()
+                sortieGPS = self.itineraires.ouvertureItineraires(loc,loc2)
+                if sortieGPS == True :
+                    if self.etatVous == True :
+                        text = "J'espére que sa vous aidera "+self.genre+" "+self.user
+                    else :
+                        text ="Voila "+self.user
+                else :
+                    if self.etatVous == True :
+                        text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
+                    else :
+                        text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
+            else :
+                if self.etatVous == True :
+                    text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
+                else :
+                    text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
+        else :
+            sortieGPS = self.itineraires.ouvertureItineraires(loc1,loc2)
+            if sortieGPS == True :
+                if self.etatVous == True :
+                    text = "J'espére que sa vous aidera "+self.genre+" "+self.user
+                else :
+                    text ="Voila "+self.user
+            else :
+                if self.etatVous == True :
+                    text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
+                else :
+                    text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
         return text

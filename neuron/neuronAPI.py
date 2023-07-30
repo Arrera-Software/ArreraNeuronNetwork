@@ -47,7 +47,17 @@ class neuroneAPI :
                 else :
                     if "coordonnee gps" in requette or "position gps" in requette :
                         text = self.fonctionArreraNetwork.sortieGPS()
-                    
+                    else :
+                        if "itineraire" in requette or "comment aller" in requette :
+                            if "a" in requette :
+                                loc2 = requette.replace("comment","")
+                                loc2 = requette.replace("aller","")
+                                loc2 = requette.replace("trouve-moi","")
+                                loc2 = requette.replace("trouve","")
+                                loc2 = requette.replace("moi","")
+                                #loc2 = requette.replace(" ","")
+                                self.fonctionArreraNetwork.sortieItineraires("loc",loc2)
+                            
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Sauvegarde des sortie                         
