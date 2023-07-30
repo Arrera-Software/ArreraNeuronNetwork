@@ -1,5 +1,9 @@
+from librairy.travailJSON import *
+
 class gestionNetwork:
-    def __init__(self):
+    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork):
+        self.fileUser = fileUser
+        self.ConfigFile = ConfigFile
         self.vous = False
         self.genre =""
         self.name  =""
@@ -13,42 +17,48 @@ class gestionNetwork:
         self.nbVilleMeteo = 0
         self.listVille = []
     
-    def setVous(self,vous:bool):
-        self.vous = vous
+    def setVous(self):
+        if self.ConfigFile.lectureJSON("utilisationVous") == "1":
+            self.vous = True
+        else :
+            self.vous = False
     
-    def setGenre(self,genre:str):
-        self.genre = genre
+    def setGenre(self):
+        self.genre =  self.fileUser.lectureJSON("genre")
         
-    def setName(self,name:str):
-        self.name = name.lower()
+    def setName(self):
+        self.name =  self.ConfigFile.lectureJSON("name").lower
         
-    def setUser(self,user:str):
-        self.user = user 
+    def setUser(self):
+        self.user =  self.fileUser.lectureJSON("user")
     
-    def setBute(self,bute:str):
-        self.bute = bute
+    def setBute(self):
+        self.bute =   self.ConfigFile.lectureJSON("bute")
     
-    def setCreateur(self,createur:str):
-        self.createur = createur
+    def setCreateur(self):
+        self.createur = self.ConfigFile.lectureJSON("createur")
     
-    def setListFonction(self,liste:list[str]):
-        self.listFonction = liste
+    def setListFonction(self):
+        self.listFonction = self.ConfigFile.lectureJSON("listFonction")
         
     def addDiscution(self):
         self.nbDiscution =+ 1
     
-    def setAll(self,vous:bool,genre:str,name:str,user:str,bute:str,createur:str,liste:list[str],nbVille:int):
-        self.vous = bool(vous)
-        self.genre =  str(genre)
-        self.name =  str(name)
-        self.user =  str(user) 
-        self.bute =  str(bute)
-        self.createur =  str(createur)
-        self.listFonction = liste
-        self.nbVilleMeteo = nbVille
+    def setAll(self):
+        if self.ConfigFile.lectureJSON("utilisationVous") == "1":
+            self.vous = True
+        else :
+            self.vous = False
+        self.genre =  self.fileUser.lectureJSON("genre")
+        self.name =  str(self.ConfigFile.lectureJSON("name")).lower()
+        self.user =  str(self.fileUser.lectureJSON("user"))
+        self.bute =   self.ConfigFile.lectureJSON("bute")
+        self.createur =   str(self.ConfigFile.lectureJSON("createur"))
+        self.listFonction = self.ConfigFile.lectureJSON("listFonction")
+        self.nbVilleMeteo = int(self.ConfigFile.lectureJSON("nombreVilleMeteo"))
     
-    def setVilleMeteo(self,listVille:list[str]):
-        self.listVille = listVille
+    def setVilleMeteo(self):
+        self.listVille = self.fileUser.lectureJSONList("listVille")
     
     def getVous(self):
         return bool(self.vous)

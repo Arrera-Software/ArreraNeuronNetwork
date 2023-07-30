@@ -5,15 +5,15 @@ from librairy.travailJSON import *
 from librairy.speak import*
 
 class fncLecture :
-    def __init__(self,json:jsonWork,name,icon):
+    def __init__(self,ConfigNeuron:jsonWork):
         #initilation objet
-        self.json = json
-        self.name = name
-        self.icon = icon
+        self.configNeuron = ConfigNeuron
+        self.name = self.configNeuron.lectureJSON("name")
+        self.icon = self.configNeuron.lectureJSON("iconAssistant")
         self.lang = ""
         self.langSet = 0
-        self.color = self.json.lectureJSON("interfaceColor")
-        self.textColor = self.json.lectureJSON("interfaceTextColor")
+        self.color = self.configNeuron.lectureJSON("interfaceColor")
+        self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
         #initilisation et configuration fenetre tkinter 
         self.screen = Tk()
         self.screen.title(self.name+" : lecture ")
@@ -58,7 +58,7 @@ class fncLecture :
     def lecture(self):
         texte = self.entryLect.get("1.0",END)
         if self.langSet == 0 :
-            Speaking(self.json.lectureJSON("lang")).speak(texte)
+            Speaking(self.configNeuron.lectureJSON("lang")).speak(texte)
         else :
             Speaking(self.lang).speak(texte)
         self.screen.destroy()

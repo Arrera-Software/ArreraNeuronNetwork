@@ -8,6 +8,11 @@ class jsonWork :
         with open(self.fichier, 'r' , encoding='utf-8') as openfile:
             dict = json.load(openfile)[flag]
         return str(dict)
+    
+    def lectureJSONList(self,flag):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            liste = json.load(openfile)[flag]
+        return list(liste)
      
     def EcritureJSON(self,flag,valeur):#Permet d'ecrire une nouvelle valeur a flag definie
         openfile = open(self.fichier, 'r' , encoding='utf-8')

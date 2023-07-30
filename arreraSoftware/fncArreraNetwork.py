@@ -7,14 +7,14 @@ from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
 
 class fncArreraNetwork:
-    def __init__(self,json:jsonWork,gestionNeuron:gestionNetwork,iconAssistant:str):
+    def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork):
         #Recuperation des objet
-        self.travailJSON = json
+        self.configNeuron = fichierConfigurationNeuron
         self.gestionNeuron = gestionNeuron
-        self.icon = iconAssistant
+        self.icon = self.configNeuron.lectureJSON("iconAssistant")
         #Recuperation varriable
-        self.color = self.travailJSON.lectureJSON("interfaceColor")
-        self.textColor = self.travailJSON.lectureJSON("interfaceTextColor")
+        self.color = self.configNeuron.lectureJSON("interfaceColor")
+        self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
         self.etatVous = self.gestionNeuron.getVous()
         self.name = self.gestionNeuron.getName()
         self.user = self.gestionNeuron.getUser()
@@ -26,7 +26,7 @@ class fncArreraNetwork:
         self.itineraires = GPSItineraires()
         
     def reading(self):
-        fncLecture(self.travailJSON,self.name,self.icon)
+        fncLecture(self.configNeuron)
         if self.etatVous == True :
             text = "J'espere que sa vous etais utile "+self.genre
         else :

@@ -9,20 +9,22 @@ from neuron.neuronAPI import*
 from ObjetsNetwork.chaineCarractere import *
 
 class ArreraNetwork :
-    def __init__(self,name:str,user:str,genre:str,createur:str,bute:str,vous:bool,listFonction:list[str],fichierConfiguration:str,nbVille:int,listVille:str):
+    def __init__(self,userFile:str,fichierConfiguration:str):
+        #Ouverture fichier de configuration
+        self.fichierUtilisateur = jsonWork(userFile)
+        self.configNeuron = jsonWork(fichierConfiguration)
         #initilisation du gestionnaire du reseau de neuron 
-        self.gestionnaire = gestionNetwork()
+        self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron)
         #set des atribut
-        self.gestionnaire.setAll(vous,genre,name,user,bute,createur,listFonction,nbVille)
-        self.gestionnaire.setVilleMeteo(listVille)
+        self.gestionnaire.setAll()
+        self.gestionnaire.setVilleMeteo()
         #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
-        self.FichierJSON = jsonWork(fichierConfiguration)
-        self.arreraSoftware = fncArreraNetwork(self.FichierJSON,self.gestionnaire,"image/icon.png")
+        self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,)
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
-        self.main = neuroneMain(self.arreraSoftware,self.gestionnaire)
-        self.api = neuroneAPI(self.arreraSoftware,self.gestionnaire)
+        self.main = neuroneMain(self.fonctionAssistant,self.gestionnaire)
+        self.api = neuroneAPI(self.fonctionAssistant,self.gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
