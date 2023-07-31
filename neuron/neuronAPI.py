@@ -60,14 +60,31 @@ class neuroneAPI :
                         text = self.fonctionArreraNetwork.sortieGPS()
                     else :
                         if "itineraire" in requette or "comment aller" in requette :
-                            if "a" in requette :
+                            sortieFnc = False
+                            if "a" in requette or "au" in requette :
                                 loc2 = requette.replace("comment","")
                                 loc2 = requette.replace("aller","")
                                 loc2 = requette.replace("trouve-moi","")
                                 loc2 = requette.replace("trouve","")
                                 loc2 = requette.replace("moi","")
-                                #loc2 = requette.replace(" ","")
-                                self.fonctionArreraNetwork.sortieItineraires("loc",loc2)
+                                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                                    sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                                else :
+                                    if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                                        sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                                    else :
+                                        sortieFnc= self.fonctionArreraNetwork.sortieItineraires("loc",loc2)
+                            if sortieFnc== True :
+                                if self.etatVous == True :
+                                    text = "J'espére que sa vous aidera "+self.genre+" "+self.user
+                                else :
+                                    text ="Voila "+self.user
+                            else :
+                                if self.etatVous == True :
+                                    text = "Je suis desoler "+self.genre+" "+self.user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire"
+                                else :
+                                    text ="Desoler"+self.user+" Je ne peux pas te fournir ton itinéraire"
+                            
                             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
