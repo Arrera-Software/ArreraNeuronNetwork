@@ -139,31 +139,6 @@ class fncArreraNetwork:
                 self.gps.recuperationNameVillePosition()
                 loc = self.gps.getNameVille()
                 sortieGPS = self.itineraires.ouvertureItineraires(loc,loc2)
-                if sortieGPS == True :
-                    if self.etatVous == True :
-                        text = "J'espére que sa vous aidera "+self.genre+" "+self.user
-                    else :
-                        text ="Voila "+self.user
-                else :
-                    if self.etatVous == True :
-                        text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
-                    else :
-                        text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
-            else :
-                if self.etatVous == True :
-                    text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
-                else :
-                    text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
         else :
             sortieGPS = self.itineraires.ouvertureItineraires(loc1,loc2)
-            if sortieGPS == True :
-                if self.etatVous == True :
-                    text = "J'espére que sa vous aidera "+self.genre+" "+self.user
-                else :
-                    text ="Voila "+self.user
-            else :
-                if self.etatVous == True :
-                    text = "Je suis desoler "+self.genre+" "+self.user+" mais il a probleme qui m'empeche de vous donnez l'itineraire"
-                else :
-                    text ="Je suis desoler mais je ne peux pas vous fournir l'itineraire "
-        return text
+        return sortieGPS
