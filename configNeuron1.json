@@ -1,7 +1,9 @@
 {
    "name" : "Opale",
    "lang" :"fr",
-   "nombreVilleMeteo":"2",
+   "nombreVilleMeteo":"1",
+   "lieuDomicile":"1",
+   "lieuTravail":"1",
    "iconAssistant":"image/icon.png",
    "interfaceColor" : "white",
    "interfaceTextColor":"black",

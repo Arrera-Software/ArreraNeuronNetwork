@@ -5,6 +5,8 @@ class gestionNetwork:
         self.fileUser = fileUser
         self.ConfigFile = ConfigFile
         self.vous = False
+        self.lieuDomicile = False
+        self.lieuTravail = False
         self.genre =""
         self.name  =""
         self.user =""
@@ -40,15 +42,34 @@ class gestionNetwork:
     
     def setListFonction(self):
         self.listFonction = self.ConfigFile.lectureJSON("listFonction")
+      
+    def setLieu(self):
+        if self.ConfigFile.lectureJSON("lieuDomicile") == "1":
+            self.lieuDomicile = True
+        else :
+            self.lieuDomicile = False
+        if self.ConfigFile.lectureJSON("lieuTravail") == "1":
+            self.lieuTravail = True
+        else :
+            self.lieuTravail = False
         
     def addDiscution(self):
         self.nbDiscution =+ 1
+    
     
     def setAll(self):
         if self.ConfigFile.lectureJSON("utilisationVous") == "1":
             self.vous = True
         else :
             self.vous = False
+        if self.ConfigFile.lectureJSON("lieuDomicile") == "1":
+            self.lieuDomicile = True
+        else :
+            self.lieuDomicile = False
+        if self.ConfigFile.lectureJSON("lieuTravail") == "1":
+            self.lieuTravail = True
+        else :
+            self.lieuTravail = False
         self.genre =  self.fileUser.lectureJSON("genre")
         self.name =  str(self.ConfigFile.lectureJSON("name")).lower()
         self.user =  str(self.fileUser.lectureJSON("user"))
@@ -105,6 +126,15 @@ class gestionNetwork:
     
     def getListVilleMeteo(self):
         return self.listVille
+
+    def getEtatLieuDomicile(self):
+        return self.lieuDomicile
+
+    def getEtatLieuTravail(self):
+        return self.lieuTravail
+    
+    def getValeurfichierUtilisateur(self,flag:str):
+        return self.fileUser.lectureJSON(flag)
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":

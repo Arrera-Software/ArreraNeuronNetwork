@@ -1,5 +1,7 @@
 {
     "user":"Dev",
     "genre":"Monsieur",
-    "listVille":["Landrethun-le-nord","Boulogne-sur-mer"]
+    "listVille":["La-Capelle-les-boulogne","Calais"],
+    "lieuDomicile":"Landrethun-le-nord",
+    "lieuTravail":"Boulogne-sur-mer"
 }
