@@ -6,14 +6,14 @@ class neuroneMain :
         self.gestionNeuron = gestionnaire
         self.fonctionArreraNetwork = fncArreraNetwork
         
-    def neurone(self,requette:str):
+    def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         #Initilisation des variable nbRand et text et valeur
         nbRand = 0
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.oldrequette = self.gestionNeuron.getOldrequette()
-        self.oldsortie = self.gestionNeuron.getOldSortie()
+        self.oldRequette = requette
+        self.oldSorti = text
         self.nbDiscution = self.gestionNeuron.getNbDiscution()
         self.name = self.gestionNeuron.getName()
         self.etatVous = self.gestionNeuron.getVous()
@@ -41,9 +41,5 @@ class neuroneMain :
                         text = "Le calcule que tu me demande de faire est imposible."
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
-        #Sauvegarde des sortie                         
-        self.gestionNeuron.setHistory(text,requette)
-        #Ajout d'une discution
-        self.gestionNeuron.addDiscution()
         #Retour des valeur
         return valeur , text

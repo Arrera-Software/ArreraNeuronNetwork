@@ -14,8 +14,6 @@ class gestionNetwork:
         self.listFonction = []
         self.createur =""
         self.nbDiscution =0
-        self.oldRequette =""
-        self.oldSortie =""
         self.nbVilleMeteo = 0
         self.listVille = []
     
@@ -101,16 +99,6 @@ class gestionNetwork:
         
     def getDiscution(self):
         return  str(self.nbDiscution)
-    
-    def setHistory(self,text,requette):
-        self.oldRequette = requette
-        self.oldSortie = text
-        
-    def getOldrequette(self):
-        return self.oldRequette
-    
-    def getOldSortie(self):
-        return self.oldSortie
 
     def getNbDiscution(self):
         return int(self.nbDiscution)

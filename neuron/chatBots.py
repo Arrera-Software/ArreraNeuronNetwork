@@ -30,7 +30,7 @@ class neuroneDiscution :
                             ,"En fait, dans tous les gels douches. Qu’une fois dans la salle de bain il n’y ait aucune issue possible."]
         
         
-    def neurone(self,requette):
+    def neurone(self,requette,oldSortie:str,oldRequette:str):
         #Recuperation de l'heure
         hour = datetime.datetime.now().hour
         #Initilisation des variable nbRand et text et valeur
@@ -38,9 +38,10 @@ class neuroneDiscution :
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.oldrequette = self.gestionNeuron.getOldrequette()
-        self.oldsortie = self.gestionNeuron.getOldSortie()
+        self.oldrequette = oldRequette
+        self.oldsortie = oldSortie
         self.nbDiscution = self.gestionNeuron.getNbDiscution()
+        print(self.nbDiscution)
         self.name = self.gestionNeuron.getName()
         self.etatVous = self.gestionNeuron.getVous()
         self.genre = self.gestionNeuron.getGenre()
@@ -397,9 +398,5 @@ class neuroneDiscution :
                                                                                                     
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
-        #Sauvegarde des sortie                         
-        self.gestionNeuron.setHistory(text,requette)
-        #Ajout d'une discution
-        self.gestionNeuron.addDiscution()
         #Retour des valeur
         return valeur , text
