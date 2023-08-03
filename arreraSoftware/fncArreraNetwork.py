@@ -7,10 +7,11 @@ from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
 
 class fncArreraNetwork:
-    def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork):
+    def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
         #Recuperation des objet
         self.configNeuron = fichierConfigurationNeuron
         self.gestionNeuron = gestionNeuron
+        self.detecteurOS = decteurOS
         self.icon = self.configNeuron.lectureJSON("iconAssistant")
         #Recuperation varriable
         self.color = self.configNeuron.lectureJSON("interfaceColor")
@@ -26,7 +27,7 @@ class fncArreraNetwork:
         self.itineraires = GPSItineraires()
         
     def reading(self):
-        fncLecture(self.configNeuron)
+        fncLecture(self.configNeuron,self.detecteurOS)
         if self.etatVous == True :
             text = "J'espere que sa vous etais utile "+self.genre
         else :

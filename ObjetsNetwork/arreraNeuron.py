@@ -1,5 +1,6 @@
 import datetime
 import random
+from librairy.dectectionOS import*
 from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
@@ -15,12 +16,13 @@ class ArreraNetwork :
         self.configNeuron = jsonWork(fichierConfiguration)
         #initilisation du gestionnaire du reseau de neuron 
         self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron)
+        self.detecteurOS = OS()
         #set des atribut
         self.gestionnaire.setAll()
         self.gestionnaire.setVilleMeteo()
         #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
-        self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,)
+        self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,self.detecteurOS)
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
         self.main = neuroneMain(self.fonctionAssistant,self.gestionnaire)

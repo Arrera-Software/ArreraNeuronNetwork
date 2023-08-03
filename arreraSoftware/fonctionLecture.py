@@ -3,9 +3,10 @@ from gtts import gTTS
 from playsound import playsound
 from librairy.travailJSON import *
 from librairy.speak import*
+from librairy.dectectionOS import*
 
 class fncLecture :
-    def __init__(self,ConfigNeuron:jsonWork):
+    def __init__(self,ConfigNeuron:jsonWork,detecteurSys:OS):
         #initilation objet
         self.configNeuron = ConfigNeuron
         self.name = self.configNeuron.lectureJSON("name")
@@ -14,11 +15,18 @@ class fncLecture :
         self.langSet = 0
         self.color = self.configNeuron.lectureJSON("interfaceColor")
         self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
+        self.windowsOS = detecteurSys.osWindows()
+        self.linuxOS = detecteurSys.osLinux()
         #initilisation et configuration fenetre tkinter 
         self.screen = Tk()
         self.screen.title(self.name+" : lecture ")
-        self.screen.minsize(600,500)
-        self.screen.maxsize(600,500)
+        if self.windowsOS == True :
+            self.screen.minsize(600,500)
+            self.screen.maxsize(600,500)
+        else :
+            if self.linuxOS == True:
+                self.screen.minsize(600,550)
+                self.screen.maxsize(600,550)
         self.screen.iconphoto(False,PhotoImage(file=self.icon))
         self.screen.config(bg=self.color)
         #varriable
