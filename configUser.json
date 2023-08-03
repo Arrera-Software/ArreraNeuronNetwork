@@ -3,5 +3,7 @@
     "genre":"Monsieur",
     "listVille":["La-Capelle-les-boulogne","Calais"],
     "lieuDomicile":"Landrethun-le-nord",
-    "lieuTravail":"Boulogne-sur-mer"
+    "lieuTravail":"Boulogne-sur-mer",
+    "adresseDomicile" : "Landrethun-le-nord",
+    "adresseTravail":"Boulogne-sur-mer"
 }
