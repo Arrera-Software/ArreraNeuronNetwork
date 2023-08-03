@@ -65,26 +65,34 @@ class neuroneAPI :
                             sortieFnc = False
                             etatde = False
                             if "de" in requette :
-                                loc = requette.replace("comment","")
-                                loc = requette.replace("aller","")
-                                loc = requette.replace("trouve-moi","")
-                                loc = requette.replace("trouve","")
-                                loc = requette.replace("moi","")
-                                self.villeGPS1 = loc
-                                etatde = True
+                                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                                    self.villeGPS1 = self.gestionNeuron.getValeurfichierUtilisateur("adresseDomicile")
+                                    etatde = True
+                                else :
+                                    if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                                        self.villeGPS1 = self.gestionNeuron.getValeurfichierUtilisateur("adresseTravail")
+                                        etatde = True
+                                    else :
+                                        loc = requette.replace("comment","")
+                                        loc = requette.replace("aller","")
+                                        loc = requette.replace("trouve-moi","")
+                                        loc = requette.replace("trouve","")
+                                        loc = requette.replace("moi","")
+                                        self.villeGPS1 = loc
+                                        etatde = True
                             else :
                                 if "a" in requette or "au" in requette :
-                                    loc = requette.replace("comment","")
-                                    loc = requette.replace("aller","")
-                                    loc = requette.replace("trouve-moi","")
-                                    loc = requette.replace("trouve","")
-                                    loc = requette.replace("moi","")
                                     if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                        sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                                        sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("adresseDomicile"))
                                     else :
                                         if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                            sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                                            sortieFnc = self.fonctionArreraNetwork.sortieItineraires("loc",self.gestionNeuron.getValeurfichierUtilisateur("adresseTravail"))
                                         else :
+                                            loc = requette.replace("comment","")
+                                            loc = requette.replace("aller","")
+                                            loc = requette.replace("trouve-moi","")
+                                            loc = requette.replace("trouve","")
+                                            loc = requette.replace("moi","")
                                             sortieFnc= self.fonctionArreraNetwork.sortieItineraires("loc",loc)
                             if sortieFnc== True :
                                 if self.etatVous == True :
@@ -104,12 +112,18 @@ class neuroneAPI :
                                         text ="Desoler"+self.user+" Je ne peux pas te fournir ton itinéraire"
                         if "Quelle est votre destination" in self.oldsortie or "Quelle est ta destination final" in self.oldsortie :
                             sortieFnc = False
-                            loc = requette.replace("comment","")
-                            loc = requette.replace("aller","")
-                            loc = requette.replace("trouve-moi","")
-                            loc = requette.replace("trouve","")
-                            loc = requette.replace("moi","")
-                            sortieFnc = self.fonctionArreraNetwork.sortieItineraires(self.villeGPS1,loc)
+                            if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                                sortieFnc = self.fonctionArreraNetwork.sortieItineraires(self.villeGPS1,self.gestionNeuron.getValeurfichierUtilisateur("adresseDomicile"))
+                            else :
+                                if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                                    sortieFnc = self.fonctionArreraNetwork.sortieItineraires(self.villeGPS1,self.gestionNeuron.getValeurfichierUtilisateur("adresseTravail"))
+                                else :
+                                    loc = requette.replace("comment","")
+                                    loc = requette.replace("aller","")
+                                    loc = requette.replace("trouve-moi","")
+                                    loc = requette.replace("trouve","")
+                                    loc = requette.replace("moi","")
+                                    sortieFnc = self.fonctionArreraNetwork.sortieItineraires(self.villeGPS1,loc)
                             if sortieFnc== True :
                                 if self.etatVous == True :
                                     text = "J'espére que sa vous aidera "+self.genre+" "+self.user
