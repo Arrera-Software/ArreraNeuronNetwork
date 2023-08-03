@@ -41,7 +41,6 @@ class neuroneDiscution :
         self.oldrequette = oldRequette
         self.oldsortie = oldSortie
         self.nbDiscution = self.gestionNeuron.getNbDiscution()
-        print(self.nbDiscution)
         self.name = self.gestionNeuron.getName()
         self.etatVous = self.gestionNeuron.getVous()
         self.genre = self.gestionNeuron.getGenre()
