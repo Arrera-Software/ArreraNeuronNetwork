@@ -142,3 +142,52 @@ class fncArreraNetwork:
         else :
             sortieGPS = self.itineraires.ouvertureItineraires(loc1,loc2)
         return sortieGPS
+    
+    def ResumerActualite(self):
+        #Recuperation nom des villes
+        domicile = self.gestionNeuron.getValeurfichierUtilisateur("lieuDomicile")
+        travail = self.gestionNeuron.getValeurfichierUtilisateur("lieuTravail")
+        #Recuperation coordonne GPS
+        sortieGPS = self.gps.recuperationCordonneeVille(domicile)
+        if sortieGPS == True :
+            sortieMeteo = self.meteo.recuperationDataMeteo(self.gps.getlatVille(),self.gps.getLonVille())
+            if sortieMeteo == True:
+                tempDomicile = self.meteo.gettemperature()
+                descripDomicile = self.meteo.getdescription()
+                sortieGPS = self.gps.recuperationCordonneeVille(travail)
+                if sortieGPS == True :
+                    sortieMeteo = self.meteo.recuperationDataMeteo(self.gps.getlatVille(),self.gps.getLonVille())
+                    if sortieMeteo == True:
+                        tempTravail = self.meteo.gettemperature() 
+                        descripTravail = self.meteo.getdescription()
+                        if self.etatVous == True :
+                            text = "Le meteo a votre domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle a de votre lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
+                        else :
+                            text =  "Le meteo a ton domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle de ton lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
+                    else :
+                        if self.etatVous == True :
+                            return  "Desoler "+self.genre+" mais il a un probleme"
+                        else :
+                            return  "Desoler "+self.user+" mais il a un probleme"
+                else :
+                    if self.etatVous == True :
+                        return  "Desoler "+self.genre+" mais il a un probleme"
+                    else :
+                        return  "Desoler "+self.user+" mais il a un probleme"
+            else :
+                if self.etatVous == True :
+                    return  "Desoler "+self.genre+" mais il a un probleme"
+                else :
+                    return  "Desoler "+self.user+" mais il a un probleme"
+        else :
+            if self.etatVous == True :
+                return  "Desoler "+self.genre+" mais il a un probleme"
+            else :
+                return "Desoler "+self.user+" mais il a un probleme"
+        nbrand1 = random.randint(0,1)
+        nbrand2 = random.randint(2,3)
+        nbrand3 = random.randint(4,5)
+        listeActu = self.actu.Actu()
+        text2 = text+" Les actualites son "+listeActu[nbrand1]+"."+listeActu[nbrand2]+"."+listeActu[nbrand3]
+        
+        return text2

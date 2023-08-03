@@ -28,6 +28,8 @@ class neuroneAPI :
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
         #reponse du neuron main
+        if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette :
+            text = self.fonctionArreraNetwork.ResumerActualite()
         if "actualites" in requette :
             text = self.fonctionArreraNetwork.sortieActualités()
         else :
@@ -134,6 +136,7 @@ class neuroneAPI :
                                     text = "Je suis desoler "+self.genre+" "+self.user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire"
                                 else :
                                     text ="Desoler"+self.user+" Je ne peux pas te fournir ton itinéraire"
+                            
                             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
