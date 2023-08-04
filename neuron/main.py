@@ -12,8 +12,8 @@ class neuroneMain :
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.oldRequette = requette
-        self.oldSorti = text
+        self.oldrequette = oldRequette
+        self.oldsortie = oldSortie
         self.nbDiscution = self.gestionNeuron.getNbDiscution()
         self.name = self.gestionNeuron.getName()
         self.etatVous = self.gestionNeuron.getVous()

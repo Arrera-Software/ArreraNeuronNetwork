@@ -5,8 +5,8 @@ from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
-from neuron.neuronMain import*
-from neuron.neuronAPI import*
+from neuron.main import*
+from neuron.API import*
 from ObjetsNetwork.chaineCarractere import *
 
 class ArreraNetwork :
