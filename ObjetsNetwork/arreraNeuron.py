@@ -7,7 +7,9 @@ from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
 from neuron.main import*
 from neuron.API import*
+from neuron.software import*
 from ObjetsNetwork.chaineCarractere import *
+
 
 class ArreraNetwork :
     def __init__(self,userFile:str,fichierConfiguration:str):
@@ -27,6 +29,7 @@ class ArreraNetwork :
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
         self.main = neuroneMain(self.fonctionAssistant,self.gestionnaire)
         self.api = neuroneAPI(self.fonctionAssistant,self.gestionnaire)
+        self.software = neuroneSoftware(self.fonctionAssistant,self.gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -49,8 +52,7 @@ class ArreraNetwork :
             valeur,text = self.api.neurone(requette,self.oldSorti,self.oldRequette)
             if valeur == 0 :
                 #software
-                valeur = 0
-                text = ""
+                valeur,text = self.software.neurone(requette,self.oldSorti,self.oldRequette)
                 if valeur == 0 :
                     #time
                     valeur = 0
