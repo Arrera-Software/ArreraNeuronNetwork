@@ -5,6 +5,7 @@ from ObjetsNetwork.gestion import*
 from arreraSoftware.fonctionLecture import *
 from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
+from arreraSoftware.fonctionTraduction import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
@@ -25,6 +26,7 @@ class fncArreraNetwork:
         self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.itineraires = GPSItineraires()
+       
         
     def reading(self):
         fncLecture(self.configNeuron,self.detecteurOS)
@@ -192,3 +194,8 @@ class fncArreraNetwork:
         text2 = text+" Les actualites son "+listeActu[nbrand1]+"."+listeActu[nbrand2]+"."+listeActu[nbrand3]
         
         return text2
+    
+    def sortieTraducteur(self,langInt:str,langOut:int):
+        fncArreraTrad(self.configNeuron,langInt,langOut)
+        text = "J'espere que c'est bien"
+        return text

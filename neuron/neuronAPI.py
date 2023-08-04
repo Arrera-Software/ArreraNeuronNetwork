@@ -11,6 +11,14 @@ class neuroneAPI :
         self.etatVilleTravail = self.gestionNeuron.getEtatLieuTravail()
         self.villeGPS1 = ""
         self.villeGPS2 = ""
+        self.listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
+                        "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
+                        "suedois","danois","norvegien","finnois","grec","hebreu","indonesien"]
+        
+        self.dictLang = {"anglais":"en","francais":"fr","espagnol":"es","allemand":"de", "chinois simplifie":"zh-CN",
+                        "chinois traditionnel":"zh-TW","arabe":"ar", "russe":"ru","japonais":"ja",
+                        "coreen":"ko","italien":"it","portugais":"pt","neerlandais":"nl","suedois":"sv",
+                        "danois":"da","norvegien":"no","finnois":"fi","grec":"el","hebreu":"he","indonesien":"id"}
         
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -136,7 +144,42 @@ class neuroneAPI :
                                     text = "Je suis desoler "+self.genre+" "+self.user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire"
                                 else :
                                     text ="Desoler"+self.user+" Je ne peux pas te fournir ton itinéraire"
-                            
+                        else :
+                            if "traduis" in requette or "traduction" in requette :
+                                chaineCarractere = str(requette).lower()
+                                presenceLang = False
+                                for i in range(0,len(self.listeLang)-1):
+                                    if self.listeLang[i] in chaineCarractere :
+                                        presenceLang = True
+                                        break
+                                if presenceLang == True :
+                                    presenceLang = False
+                                    firstLang = chaine.firstMots(chaineCarractere,self.listeLang)
+                                    chaineCarractere = chaineCarractere.replace(firstLang,"")
+                                    for i in range(0,len(self.listeLang)-1):
+                                        if self.listeLang[i] in chaineCarractere :
+                                            presenceLang = True
+                                            break
+                                    if presenceLang == True :
+                                        secondLang = chaine.firstMots(chaineCarractere,self.listeLang)
+                                        self.fonctionArreraNetwork.sortieTraducteur(self.dictLang[firstLang],self.dictLang[secondLang])
+                                        if self.etatVous == True :
+                                            text="J'espère que cet outil de traduction vous a été utile "+self.genre
+                                        else :
+                                            text= "J'espère que ça a été "+self.name
+                                    else :
+                                        if self.etatVous == True :
+                                            text="Desoler "+self.genre+". Mais les langues que vous demander ne son pas disponible."
+                                        else :
+                                            text="Desoler,les langues que tu demande n'est pas disponible"
+                                else :
+                                    if self.etatVous == True :
+                                        text="Desoler "+self.genre+". Mais les langue que vous demander ne son pas disponible."
+                                    else :
+                                        text="Desoler,les langues que tu demande n'est pas disponible"
+                                
+      
+                                
                             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
