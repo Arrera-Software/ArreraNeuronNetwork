@@ -24,7 +24,17 @@ class neuroneSoftware :
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
         #reponse neuron software
-        
+        if "telecharge" in requette :
+            if "video" in requette :
+                text = self.fonctionArreraNetwork.sortieDownload("video")
+            else :
+                if "musique" in requette :
+                    text = self.fonctionArreraNetwork.sortieDownload("music")
+                else :
+                    if self.etatVous == True :
+                        text = "Je suis désoler "+self.genre+" mais je ne peux télécharger que des vidéo ou de musique"
+                    else :
+                        text = self.user+" je ne peux télécharger que de video ou de musique. "
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

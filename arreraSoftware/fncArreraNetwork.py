@@ -6,6 +6,7 @@ from arreraSoftware.fonctionLecture import *
 from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
 from arreraSoftware.fonctionTraduction import*
+from arreraSoftware.fncArreraDownload import *
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
@@ -26,7 +27,7 @@ class fncArreraNetwork:
         self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.itineraires = GPSItineraires()
-       
+        self.downloader = fncArreraVideoDownload(self.configNeuron)       
         
     def reading(self):
         fncLecture(self.configNeuron,self.detecteurOS)
@@ -197,5 +198,19 @@ class fncArreraNetwork:
     
     def sortieTraducteur(self,langInt:str,langOut:int):
         fncArreraTrad(self.configNeuron,langInt,langOut)
-        text = "J'espere que c'est bien"
+        
+    
+    def sortieDownload(self,mode):
+        self.downloader.fenetreDownload(mode)
+        if self.etatVous == True:
+            if mode == "music" :
+                text = "J'espère que la musique que vous avez téléchargée vous rendra heureux "+self.genre+" ."
+            else :
+                text = "J'espère que la vidéo que vous avez téléchargée vous rendra heureux "+self.genre+" ."
+        else :
+            if mode == "music" :
+                text =  "J'espère que la musique que vous avez téléchargée vous fera plaisir "+self.user+"."
+            else :
+                text =  "J'espère que la vidéo que vous avez téléchargée vous fera plaisir "+self.user+"."
+        
         return text
