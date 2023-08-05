@@ -17,6 +17,8 @@ class fncLecture :
         self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
         self.windowsOS = detecteurSys.osWindows()
         self.linuxOS = detecteurSys.osLinux()
+        
+    def fenetreLecture(self):
         #initilisation et configuration fenetre tkinter 
         self.screen = Tk()
         self.screen.title(self.name+" : lecture ")
@@ -44,7 +46,6 @@ class fncLecture :
         self.boutonValider.pack(side="bottom")
         #fin de la fenetre
         self.screen.config(menu=self.menuTop)
-        self.screen.mainloop()
     
     def retourAcceuil(self):
         self.menuTop.entryconfigure("Retour Acceuil",label="Langue de lecture",command=self.changementLang)

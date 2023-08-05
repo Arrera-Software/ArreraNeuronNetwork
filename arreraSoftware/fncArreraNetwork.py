@@ -23,6 +23,7 @@ class fncArreraNetwork:
         self.user = self.gestionNeuron.getUser()
         self.genre = self.gestionNeuron.getGenre()
         #initialisation objet 
+        self.fncReading = fncLecture(self.configNeuron,self.detecteurOS)
         self.actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
         self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
@@ -30,11 +31,11 @@ class fncArreraNetwork:
         self.downloader = fncArreraVideoDownload(self.configNeuron)       
         
     def reading(self):
-        fncLecture(self.configNeuron,self.detecteurOS)
+        self.fncReading.fenetreLecture()
         if self.etatVous == True :
-            text = "J'espere que sa vous etais utile "+self.genre
+            text = "Voila "+self.genre+" J'éspére que sa vous sera utile"
         else :
-            text = "J'espere que sa ta servie "+self.name
+            text = "Voila "+self.user+".Je suis toujour la si tu as besoin de moi."
         return text
 
     def sortieActualités(self):
