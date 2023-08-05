@@ -145,7 +145,7 @@ class neuroneAPI :
                                 else :
                                     text ="Desoler"+self.user+" Je ne peux pas te fournir ton itinéraire"
                         else :
-                            if "traduis" in requette or "traduction" in requette :
+                            if "traduis" in requette or "traduction" in requette or "traduire" in requette :
                                 chaineCarractere = str(requette).lower()
                                 presenceLang = False
                                 for i in range(0,len(self.listeLang)-1):
@@ -164,9 +164,9 @@ class neuroneAPI :
                                         secondLang = chaine.firstMots(chaineCarractere,self.listeLang)
                                         self.fonctionArreraNetwork.sortieTraducteur(self.dictLang[firstLang],self.dictLang[secondLang])
                                         if self.etatVous == True :
-                                            text="J'espère que cet outil de traduction vous a été utile "+self.genre
+                                            text="J'espère que cet outil de traduction vous a sera utile "+self.genre
                                         else :
-                                            text= "J'espère que ça a été "+self.name
+                                            text= "J'espère que sa te sera utile  "+self.name
                                     else :
                                         if self.etatVous == True :
                                             text="Desoler "+self.genre+". Mais les langues que vous demander ne son pas disponible."
