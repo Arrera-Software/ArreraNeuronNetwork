@@ -5,17 +5,21 @@ from tkinter import messagebox
 from tkinter import*
 
 class fncArreraTrad :
-    def __init__(self,ConfigNeuron:jsonWork,langInt:str,langOut:str):
+    def __init__(self,ConfigNeuron:jsonWork):
         #objet
-        self.traducteur = Translator(to_lang=langInt,from_lang=langOut)
-        self.paroleInt = Speaking(langInt)
-        self.paroleOut = Speaking(langOut)
+        
         self.configNeuron = ConfigNeuron
         #varriable fenetre Tkinter
         self.name = self.configNeuron.lectureJSON("name")
         self.icon = self.configNeuron.lectureJSON("iconAssistant")
         self.color = self.configNeuron.lectureJSON("interfaceColor")
         self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
+    
+    def fenetreTrad(self,langInt:str,langOut:str):
+        #objet
+        self.traducteur = Translator(to_lang=langInt,from_lang=langOut)
+        self.paroleInt = Speaking(langInt)
+        self.paroleOut = Speaking(langOut)
         #Creation fenetre Tkinter
         self.fenetreTK = Tk()
         self.fenetreTK.title(self.name+" : Outil de traduction")
@@ -38,8 +42,6 @@ class fncArreraTrad :
         self.btnTrad.pack()
         self.btnQuitter.pack()
         self.btnClear.pack()
-
-        self.fenetreTK.mainloop()
 
     def traduire(self):
         texte = self.textInt.get("1.0",END).strip()

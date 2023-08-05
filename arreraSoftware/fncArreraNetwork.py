@@ -28,6 +28,7 @@ class fncArreraNetwork:
         self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.itineraires = GPSItineraires()
+        self.traducteur = fncArreraTrad(self.configNeuron)
         self.downloader = fncArreraVideoDownload(self.configNeuron)       
         
     def reading(self):
@@ -198,7 +199,7 @@ class fncArreraNetwork:
         return text2
     
     def sortieTraducteur(self,langInt:str,langOut:int):
-        fncArreraTrad(self.configNeuron,langInt,langOut)
+        self.traducteur.fenetreTrad(langInt,langOut)
         
     
     def sortieDownload(self,mode):
