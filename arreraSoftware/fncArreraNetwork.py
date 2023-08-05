@@ -6,7 +6,7 @@ from arreraSoftware.fonctionLecture import *
 from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
 from arreraSoftware.fonctionTraduction import*
-from arreraSoftware.fncArreraDownload import *
+from arreraSoftware.fonctionArreraDownload import *
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
