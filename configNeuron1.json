@@ -10,5 +10,6 @@
    "utilisationVous":"1",
    "bute":"developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
    "createur":"Baptiste Pauchet",
-   "listFonction":["ouvrir une application","aider sur les recherches de internet","donner la meteo","faire un résumer des actualités"]
+   "listFonction":["ouvrir une application","aider sur les recherches de internet","donner la meteo","faire un résumer des actualités"],
+   "toucheCalculatrice":"image/calculatrice"
 }

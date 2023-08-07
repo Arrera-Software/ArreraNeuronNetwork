@@ -35,6 +35,8 @@ class neuroneSoftware :
                         text = "Je suis désoler "+self.genre+" mais je ne peux télécharger que des vidéo ou de musique"
                     else :
                         text = self.user+" je ne peux télécharger que de video ou de musique. "
+        if "calculatrice" in requette or "calculette" in requette :
+            text = self.fonctionArreraNetwork.sortieCalculatrice("")
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

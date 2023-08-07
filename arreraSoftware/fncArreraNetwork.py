@@ -7,7 +7,7 @@ from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
 from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
-
+from arreraSoftware.fonctionCalculatrice import * 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
         #Recuperation des objet
@@ -29,7 +29,8 @@ class fncArreraNetwork:
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.itineraires = GPSItineraires()
         self.traducteur = fncArreraTrad(self.configNeuron)
-        self.downloader = fncArreraVideoDownload(self.configNeuron)       
+        self.downloader = fncArreraVideoDownload(self.configNeuron)
+        self.calculatrice = fncCalculatrice(self.configNeuron)          
         
     def reading(self):
         self.fncReading.fenetreLecture()
@@ -216,3 +217,7 @@ class fncArreraNetwork:
                 text =  "J'espère que la vidéo que vous avez téléchargée vous fera plaisir "+self.user+"."
         
         return text
+    
+    def sortieCalculatrice(self,mode):
+        self.calculatrice.calculatrice(mode)
+        return "Voila"
