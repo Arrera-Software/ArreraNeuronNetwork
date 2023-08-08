@@ -36,7 +36,10 @@ class neuroneSoftware :
                     else :
                         text = self.user+" je ne peux télécharger que de video ou de musique. "
         if "calculatrice" in requette or "calculette" in requette :
-            text = self.fonctionArreraNetwork.sortieCalculatrice("")
+            if "nombre complex" in requette or "nb complex" in requette :
+                text = self.fonctionArreraNetwork.sortieCalculatrice("1")
+            else :
+                text = self.fonctionArreraNetwork.sortieCalculatrice("0")
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

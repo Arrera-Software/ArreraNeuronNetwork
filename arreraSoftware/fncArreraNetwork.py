@@ -219,5 +219,16 @@ class fncArreraNetwork:
         return text
     
     def sortieCalculatrice(self,mode):
+        if mode == "0":
+            if self.etatVous == True :
+                text = "Voila votre calculatrice "+self.genre
+            else :
+                text = "Voici la calculatrice"
+        else :
+            if mode == "1":
+                if self.etatVous == True :
+                    text = "Voila votre calculatrice en mode nombre complex "+self.genre
+                else :
+                    text = "Voici la calculatrice en mode complexe" 
         self.calculatrice.calculatrice(mode)
-        return "Voila"
+        return text

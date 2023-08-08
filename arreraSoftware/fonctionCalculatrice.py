@@ -10,6 +10,7 @@ class fncCalculatrice :
         self.color = self.configNeuron.lectureJSON("interfaceColor")
         self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
         self.emplacementTouche = self.configNeuron.lectureJSON("toucheCalculatrice")+"/"
+        self.operateurChooseComplex = ""
         
         
     def calculatrice(self,mode):
@@ -23,8 +24,16 @@ class fncCalculatrice :
         self.clavier = Frame(self.screen,width=500,height=250,bg=self.color)
         self.historique = Frame(self.screen,width=500,height=500,bg=self.color)
         self.nbComplex = Frame(self.screen,width=500,height=500,bg=self.color)
+        self.operateurComplex = Frame(self.nbComplex)
+        self.complex1 = Frame(self.nbComplex)
+        self.complex2 = Frame(self.nbComplex)
         #widget
         self.ZoneCalcule = Text(self.screen,width=50, height=10,highlightthickness=2, highlightbackground="black",font=("arial","25"))
+        self.affichageComplexOut = Entry(self.nbComplex,state="disabled",width=42,highlightthickness=2, highlightbackground="black",font=("arial","15"))
+        self.zoneComplex1A = Entry(self.complex1,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        self.zoneComplex1B = Entry(self.complex1,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        self.zoneComplex2A = Entry(self.complex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        self.zoneComplex2B = Entry(self.complex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         #touche clavier
         #chiffre
         self.btnNb0 = Button(self.clavier,image=self.imgNb0,command= lambda : self.ecritureCarractere("0"))
@@ -66,22 +75,45 @@ class fncCalculatrice :
         #btn fonction special
         self.btnAngle = Button(self.clavier,text="Randian en degres",font=("arial","13"),bg=self.color,fg=self.textColor)
         self.btnPythagore = Button(self.clavier,text="Theoreme de pythagore",font=("arial","13"),bg=self.color,fg=self.textColor)
-        self.btnNbComplex = Button(self.clavier,text="Nombre Complex",font=("arial","13"),bg=self.color,fg=self.textColor)
+        self.btnNbComplex = Button(self.clavier,text="Nombre Complex",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeComplex)
+        #btn nb complex
+        self.btnEgalComplex = Button(self.nbComplex,image=self.imgEgal,command= lambda : self.calculeComplex())
+        self.btnplusComplex = Button(self.operateurComplex,image=self.imgPlus,command= lambda : self.setOperateurComplex("+"))
+        self.btnMoinComplex = Button(self.operateurComplex,image=self.imgMoin,command= lambda : self.setOperateurComplex("-"))
+        self.btnFoisComplex = Button(self.operateurComplex,image=self.imgFois,command= lambda : self.setOperateurComplex("*"))
+        self.btnDiviserComplex = Button(self.operateurComplex,image=self.imgDiviser,command= lambda : self.setOperateurComplex("/"))
+        self.btnCancelComplex = Button(self.nbComplex,text="Annuler",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.cancelOperateurComplex)
+        self.btnRetourComplex = Button(self.nbComplex,text="Retour",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeCalcule)
         #label
+        self.labelPlus = Label(self.operateurComplex,image=self.imgPlus)
+        self.labelMois = Label(self.operateurComplex,image=self.imgMoin)
+        self.labelDiviser = Label(self.operateurComplex,image=self.imgDiviser)
+        self.labelFois = Label(self.operateurComplex,image=self.imgFois)
         self.affichageHistorique = Label(self.historique,text="Historique :",width=30,bg=self.color,fg=self.textColor,font=("arial","20"), anchor="w")
+        self.affichageComplexOut = Label(self.nbComplex,width=42,font=("arial","15"),bg="grey",fg="white")
+        self.complex1L = Label(self.complex1,text="j",font=("arial","15"),bg=self.color)
+        self.complex2L = Label(self.complex2,text="j",font=("arial","15"),bg=self.color)
         #affichage 
+        self.WidgetnbComplex()
         self.affichageClavier()
         self.historique.pack(side="left",fill="both", expand=True) 
-        self.clavier.pack(side="bottom",anchor="sw")
-        self.ZoneCalcule.pack(side="top",anchor="nw")
+        if mode == "0":
+            self.modeCalcule()
+        else :
+            if mode == "1":
+                self.modeComplex()
         #affichage historique
         self.affichageHistorique.place(x=0,y=0)
         #verrifaction de carratere taper
         self.ZoneCalcule.bind("<KeyPress-Return>",self.enterPressed)
         self.ZoneCalcule.bind("<KeyPress>",self.carractereInterdit)
     
-    def modeComplex(self):
-        self.clavier.place_forget()
+    def modeCalcule(self):
+        self.nbComplex.pack_forget()
+        self.updateCalculatrice() 
+        self.clavier.pack(side="bottom",anchor="sw")
+        self.ZoneCalcule.pack(side="top",anchor="nw") 
+        
         
     def affichageClavier(self):
         self.btnNb7.place(x=0,y=0)
@@ -126,6 +158,52 @@ class fncCalculatrice :
         self.btnAngle.place(x=250,y=35)
         self.btnPythagore.place(x=250,y=105)
         self.btnNbComplex.place(x=250,y=175)
+        
+    def updateCalculatrice(self):
+        self.btnNb7.update() 
+        self.btnNb8.update() 
+        self.btnNb9.update() 
+        self.btnParenthese1.update() 
+        self.btnParenthese2.update() 
+        
+        self.btnNb4.update() 
+        self.btnNb5.update() 
+        self.btnNb6.update() 
+        self.btnFois.update() 
+        self.btnDiviser.update() 
+        
+        self.btnNb1.update() 
+        self.btnNb2.update() 
+        self.btnNb3.update() 
+        self.btnplus.update() 
+        self.btnMoin.update() 
+        
+        self.btnNb0.place(x=0,y=105)
+        self.btnVirgule.place(x=35,y=105)
+        self.btnPuissanceDix.place(x=70,y=105)
+        self.btnEgal.place(x=105,y=105)
+        self.btnSuppr.place(x=140,y=105)
+        self.btnClear.place(x=175,y=105)
+        
+        self.btnSIN.place(x=0,y=140)
+        self.btnCOS.place(x=35,y=140)
+        self.btnTAN.place(x=70,y=140)
+        self.btnARCSIN.place(x=105,y=140)
+        self.btnARCCOS.place(x=140,y=140)
+        self.btnARCTAN.place(x=175,y=140)
+        
+        self.btnPI.update() 
+        self.btnRacine.update() 
+        self.btnExposant.update() 
+        self.btnExpodentiel.update() 
+        self.btnLN.update() 
+        self.btnLOG.update() 
+        
+        self.btnAngle.update() 
+        self.btnPythagore.update() 
+        self.btnNbComplex.update() 
+        
+        self.ZoneCalcule.update() 
        
     def imageTouche(self):
         self.imgNb0 = PhotoImage(file=self.emplacementTouche+"tchNB0.png")
@@ -209,5 +287,115 @@ class fncCalculatrice :
         except Exception as e:
             self.ZoneCalcule.delete("1.0", END)
             self.ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
-
+            
+    def modeComplex(self):
+        self.clavier.pack_forget()
+        self.ZoneCalcule.pack_forget()
+        self.nbComplex.pack(side="left")  
+        self.complex1.place(x=15,y=25)
+        self.operateurComplex.place(x=((self.nbComplex.winfo_reqwidth()-self.operateurComplex.winfo_reqwidth())//2),y=75)
+        self.complex2.place(x=15,y=125)
+        self.btnEgalComplex.place(x=((self.nbComplex.winfo_reqwidth()-self.btnEgalComplex.winfo_reqwidth())//2),y=175)
+        self.affichageComplexOut.place(x=15,y=225)
+        self.btnCancelComplex.place(x=(500-self.btnCancelComplex.winfo_reqwidth()),y=(500-self.btnCancelComplex.winfo_reqheight()))
+        self.btnRetourComplex.place(x=0,y=(500-self.btnCancelComplex.winfo_reqheight()))
+        self.zoneComplex1A.bind("<KeyPress>", self.carractereInterdit)
+        self.zoneComplex1B.bind("<KeyPress>", self.carractereInterdit)
+        self.zoneComplex2A.bind("<KeyPress>", self.carractereInterdit)
+        self.zoneComplex2B.bind("<KeyPress>", self.carractereInterdit)             
+    
+    def WidgetnbComplex(self):
+        self.zoneComplex1A.pack(side="left")
+        self.complex1L.pack(side="right")
+        self.zoneComplex1B.pack(side="right")
+        self.zoneComplex2A.pack(side="left")
+        self.complex2L.pack(side="right")
+        self.zoneComplex2B.pack(side="right") 
+        self.btnplusComplex.pack(side="left")
+        self.btnMoinComplex.pack(side="left")
+        self.btnFoisComplex.pack(side="left")
+        self.btnDiviserComplex.pack(side="left")
+    
+    def setOperateurComplex(self,operateur:str):
+        self.operateurChooseComplex = operateur
+        self.btnplusComplex.pack_forget()
+        self.btnMoinComplex.pack_forget()
+        self.btnFoisComplex.pack_forget()
+        self.btnDiviserComplex.pack_forget()
+        self.operateurComplex.place_forget()
+        if self.operateurChooseComplex == "+":
+            self.labelPlus.pack()
+        else :
+            if self.operateurChooseComplex == "-":
+                self.labelMois.pack()
+            else :
+                if self.operateurChooseComplex == "*":
+                    self.labelFois.pack()
+                else :
+                    if self.operateurChooseComplex== "/":
+                        self.labelDiviser.pack()
+        self.operateurComplex.update()
+        self.operateurComplex.place(x=((self.nbComplex.winfo_reqwidth()-self.operateurComplex.winfo_reqwidth())//2),y=75)
         
+    def cancelOperateurComplex(self):
+        if self.operateurChooseComplex == "":
+            self.operateurChooseComplex = ""
+        else :
+            self.operateurChooseComplex = ""
+            self.labelPlus.pack_forget()
+            self.labelMois.pack_forget()
+            self.labelFois.pack_forget()
+            self.labelDiviser.pack_forget()
+            self.operateurComplex.place_forget()
+            self.btnplusComplex.pack(side="left")
+            self.btnMoinComplex.pack(side="left")
+            self.btnFoisComplex.pack(side="left")
+            self.btnDiviserComplex.pack(side="left")
+            self.operateurComplex.update()
+            self.operateurComplex.place(x=((self.nbComplex.winfo_reqwidth()-self.operateurComplex.winfo_reqwidth())//2),y=75)
+        
+        
+    def calculeComplex(self):
+        nb1A = self.zoneComplex1A.get()
+        nb1B = self.zoneComplex1B.get()
+        nb2A = self.zoneComplex2A.get()
+        nb2B = self.zoneComplex2B.get()
+        if self.operateurChooseComplex == "" or nb1A.strip() == "" or nb1B.strip() == "" or nb2A.strip() == "" or nb2B.strip() == "" :
+            self.affichageComplexOut.configure(text="Erreur")
+        else :
+            calcule = CalculeNbComplexe(int(nb1A),int(nb1B),int(nb2A),int(nb2B))
+            if self.operateurChooseComplex == "+":
+                resultat = calcule.aditionNbComplex()
+            else :
+                if self.operateurChooseComplex == "-":
+                    resultat = calcule.soustrationNbComplex()
+                else :
+                    if self.operateurChooseComplex == "*":
+                        resultat = calcule.multiplicationNbComplex()
+                    else :
+                        if self.operateurChooseComplex == "/":
+                            resultat = calcule.divisionNbComplex()
+            self.operateurChooseComplex = ""
+            self.affichageComplexOut.configure(text=str(resultat))
+                
+
+class CalculeNbComplexe :
+    def __init__(self,nb1_1:int,nb1_2:int,nb2_1:int,nb2_2:int):
+        self.nb1= complex(nb1_1,nb1_2)
+        self.nb2 = complex(nb2_1,nb2_2)
+         
+    def aditionNbComplex(self):
+        resultat = self.nb1 + self.nb2
+        return resultat
+    
+    def soustrationNbComplex(self):
+        resultat = self.nb1 - self.nb2
+        return resultat
+    
+    def multiplicationNbComplex(self):
+        resultat = self.nb1 * self.nb2
+        return resultat
+    
+    def divisionNbComplex(self):
+        resultat = self.nb1 / self.nb2
+        return resultat       
