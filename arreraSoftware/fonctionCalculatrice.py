@@ -389,7 +389,7 @@ class fncCalculatrice :
                             self.affichageHistorique.configure(text="Historique :\n" + nb1+"/"+nb2 + " = " + str(resultat))
             self.operateurChooseComplex = ""
             self.affichageComplexOut.configure(text=str(resultat))
-                
+            
 
 class CalculeNbComplexe :
     def __init__(self,nb1_1:int,nb1_2:int,nb2_1:int,nb2_2:int):
@@ -416,4 +416,28 @@ class CalculeNbComplexe :
     
     def divisionNbComplex(self):
         resultat = self.nb1 / self.nb2
-        return resultat       
+        return resultat    
+    
+
+class Pythagore :
+    def __init__(self,nb1:int,nb2:int):
+        self.nb1 = nb1
+        self.nb2 = nb2
+        self.reciproque = bool
+       
+    
+    def theoemePythagore(self,nb1,nb2):
+        resultat = math.sqrt(self.nb1**2+self.nb2**2)
+        self.reciproque = False
+        return resultat
+    
+    def ReciproquePythagore(self,nb1,nb2):
+        resultat = math.sqrt(self.nb1**2-self.nb2**2)
+        self.reciproque = True
+        return resultat 
+    
+    def recuperationCalcule(self):
+        if self.reciproque == False :
+            return str("math.sqrt("+str(self.nb1)+"**2"+"+"+str(self.nb2)+"**2"+")") 
+        else :
+            return str("math.sqrt("+str(self.nb1)+"**2"+"-"+str(self.nb2)+"**2"+")") 
