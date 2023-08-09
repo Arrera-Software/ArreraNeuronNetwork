@@ -280,7 +280,7 @@ class fncCalculatrice :
         contenu = contenu.replace(" ", "")
         try:
             resultat = eval(contenu)
-            self.affichageHistorique.configure(text="Historique :\n" + contenu + " = " + str(resultat))
+            self.affichageHistorique.configure(text="Historique :\n" + str(contenu) + " = " + str(resultat))
             self.affichageHistorique.update()
             self.ZoneCalcule.delete("1.0", END)
             self.ecritureCarractere(str(resultat))
@@ -365,16 +365,28 @@ class fncCalculatrice :
         else :
             calcule = CalculeNbComplexe(int(nb1A),int(nb1B),int(nb2A),int(nb2B))
             if self.operateurChooseComplex == "+":
+                nb1 = calcule.recuperationNb1()
+                nb2 = calcule.recuperationNb2()
                 resultat = calcule.aditionNbComplex()
+                self.affichageHistorique.configure(text="Historique :\n" + nb1+"+"+nb2 + " = " + str(resultat))
             else :
                 if self.operateurChooseComplex == "-":
+                    nb1 = calcule.recuperationNb1()
+                    nb2 = calcule.recuperationNb2()
                     resultat = calcule.soustrationNbComplex()
+                    self.affichageHistorique.configure(text="Historique :\n" + nb1+"-"+nb2 + " = " + str(resultat))
                 else :
                     if self.operateurChooseComplex == "*":
+                        nb1 = calcule.recuperationNb1()
+                        nb2 = calcule.recuperationNb2()
                         resultat = calcule.multiplicationNbComplex()
+                        self.affichageHistorique.configure(text="Historique :\n" + nb1+"*"+nb2 + " = " + str(resultat))
                     else :
                         if self.operateurChooseComplex == "/":
+                            nb1 = calcule.recuperationNb1()
+                            nb2 = calcule.recuperationNb2()
                             resultat = calcule.divisionNbComplex()
+                            self.affichageHistorique.configure(text="Historique :\n" + nb1+"/"+nb2 + " = " + str(resultat))
             self.operateurChooseComplex = ""
             self.affichageComplexOut.configure(text=str(resultat))
                 
@@ -383,6 +395,12 @@ class CalculeNbComplexe :
     def __init__(self,nb1_1:int,nb1_2:int,nb2_1:int,nb2_2:int):
         self.nb1= complex(nb1_1,nb1_2)
         self.nb2 = complex(nb2_1,nb2_2)
+        
+    def recuperationNb1(self):
+        return str(self.nb1)
+    
+    def recuperationNb2(self):
+        return str(self.nb2)
          
     def aditionNbComplex(self):
         resultat = self.nb1 + self.nb2
