@@ -27,6 +27,9 @@ class fncCalculatrice :
         self.operateurComplex = Frame(self.nbComplex)
         self.complex1 = Frame(self.nbComplex)
         self.complex2 = Frame(self.nbComplex)
+        self.pythagore = Frame(self.screen,width=500,height=500,bg=self.color)
+        self.chooseCal = Frame(self.pythagore)
+        self.nbPythagore = Frame(self.pythagore)
         #widget
         self.ZoneCalcule = Text(self.screen,width=50, height=10,highlightthickness=2, highlightbackground="black",font=("arial","25"))
         self.affichageComplexOut = Entry(self.nbComplex,state="disabled",width=42,highlightthickness=2, highlightbackground="black",font=("arial","15"))
@@ -34,6 +37,8 @@ class fncCalculatrice :
         self.zoneComplex1B = Entry(self.complex1,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.zoneComplex2A = Entry(self.complex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.zoneComplex2B = Entry(self.complex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        self.zonePythagore1 = Entry(self.nbPythagore,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        self.zonePythagore2 = Entry(self.nbPythagore,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         #touche clavier
         #chiffre
         self.btnNb0 = Button(self.clavier,image=self.imgNb0,command= lambda : self.ecritureCarractere("0"))
@@ -74,7 +79,7 @@ class fncCalculatrice :
         self.btnSuppr = Button(self.clavier,image=self.imgSuppr,command=self.suppr)
         #btn fonction special
         self.btnAngle = Button(self.clavier,text="Randian en degres",font=("arial","13"),bg=self.color,fg=self.textColor)
-        self.btnPythagore = Button(self.clavier,text="Theoreme de pythagore",font=("arial","13"),bg=self.color,fg=self.textColor)
+        self.btnPythagore = Button(self.clavier,text="Theoreme de pythagore",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modePythagore)
         self.btnNbComplex = Button(self.clavier,text="Nombre Complex",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeComplex)
         #btn nb complex
         self.btnEgalComplex = Button(self.nbComplex,image=self.imgEgal,command= lambda : self.calculeComplex())
@@ -84,6 +89,10 @@ class fncCalculatrice :
         self.btnDiviserComplex = Button(self.operateurComplex,image=self.imgDiviser,command= lambda : self.setOperateurComplex("/"))
         self.btnCancelComplex = Button(self.nbComplex,text="Annuler",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.cancelOperateurComplex)
         self.btnRetourComplex = Button(self.nbComplex,text="Retour",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeCalcule)
+        #bouton pythagore
+        self.btnReciproque = Button(self.chooseCal,text="Reciproque",bg=self.color,fg=self.textColor,command=lambda : self.calculePythagore(2))
+        self.btnTheoreme = Button(self.chooseCal,text="Theoreme",bg=self.color,fg=self.textColor,command=lambda : self.calculePythagore(1))
+        self.btnRetourPythagore = Button(self.pythagore,text="Retour",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeCalcule)
         #label
         self.labelPlus = Label(self.operateurComplex,image=self.imgPlus)
         self.labelMois = Label(self.operateurComplex,image=self.imgMoin)
@@ -93,8 +102,10 @@ class fncCalculatrice :
         self.affichageComplexOut = Label(self.nbComplex,width=42,font=("arial","15"),bg="grey",fg="white")
         self.complex1L = Label(self.complex1,text="j",font=("arial","15"),bg=self.color)
         self.complex2L = Label(self.complex2,text="j",font=("arial","15"),bg=self.color)
+        self.affichagePythagoreOut =  Label(self.pythagore,width=42,font=("arial","15"),bg="grey",fg="white")
         #affichage 
         self.WidgetnbComplex()
+        self.widgetPythagore()
         self.affichageClavier()
         self.historique.pack(side="left",fill="both", expand=True) 
         if mode == "0":
@@ -102,6 +113,9 @@ class fncCalculatrice :
         else :
             if mode == "1":
                 self.modeComplex()
+            else :
+                if mode == "2":
+                    self.modePythagore()
         #affichage historique
         self.affichageHistorique.place(x=0,y=0)
         #verrifaction de carratere taper
@@ -110,6 +124,7 @@ class fncCalculatrice :
     
     def modeCalcule(self):
         self.nbComplex.pack_forget()
+        self.pythagore.pack_forget()
         self.updateCalculatrice() 
         self.clavier.pack(side="bottom",anchor="sw")
         self.ZoneCalcule.pack(side="top",anchor="nw") 
@@ -178,19 +193,19 @@ class fncCalculatrice :
         self.btnplus.update() 
         self.btnMoin.update() 
         
-        self.btnNb0.place(x=0,y=105)
-        self.btnVirgule.place(x=35,y=105)
-        self.btnPuissanceDix.place(x=70,y=105)
-        self.btnEgal.place(x=105,y=105)
-        self.btnSuppr.place(x=140,y=105)
-        self.btnClear.place(x=175,y=105)
+        self.btnNb0.update()
+        self.btnVirgule.update()
+        self.btnPuissanceDix.update()
+        self.btnEgal.update()
+        self.btnSuppr.update()
+        self.btnClear.update()
         
-        self.btnSIN.place(x=0,y=140)
-        self.btnCOS.place(x=35,y=140)
-        self.btnTAN.place(x=70,y=140)
-        self.btnARCSIN.place(x=105,y=140)
-        self.btnARCCOS.place(x=140,y=140)
-        self.btnARCTAN.place(x=175,y=140)
+        self.btnSIN.update()
+        self.btnCOS.update()
+        self.btnTAN.update()
+        self.btnARCSIN.update()
+        self.btnARCCOS.update()
+        self.btnARCTAN.update()
         
         self.btnPI.update() 
         self.btnRacine.update() 
@@ -299,6 +314,7 @@ class fncCalculatrice :
         self.affichageComplexOut.place(x=15,y=225)
         self.btnCancelComplex.place(x=(500-self.btnCancelComplex.winfo_reqwidth()),y=(500-self.btnCancelComplex.winfo_reqheight()))
         self.btnRetourComplex.place(x=0,y=(500-self.btnCancelComplex.winfo_reqheight()))
+        self.affichageComplexOut.configure(text="")
         self.zoneComplex1A.bind("<KeyPress>", self.carractereInterdit)
         self.zoneComplex1B.bind("<KeyPress>", self.carractereInterdit)
         self.zoneComplex2A.bind("<KeyPress>", self.carractereInterdit)
@@ -389,7 +405,43 @@ class fncCalculatrice :
                             self.affichageHistorique.configure(text="Historique :\n" + nb1+"/"+nb2 + " = " + str(resultat))
             self.operateurChooseComplex = ""
             self.affichageComplexOut.configure(text=str(resultat))
-            
+    
+    def widgetPythagore(self):
+        self.btnReciproque.pack(side="left")
+        self.btnTheoreme.pack(side="left")
+        self.zonePythagore1.pack(side="left")
+        self.zonePythagore2.pack(side="left")
+    
+    def modePythagore(self):
+        self.clavier.pack_forget()
+        self.ZoneCalcule.pack_forget()
+        self.pythagore.pack(side="right")  
+        self.nbPythagore.place(x=15,y=25)
+        self.chooseCal.place(x=(self.pythagore.winfo_reqwidth() - self.chooseCal.winfo_reqwidth()) // 2,y=125)
+        self.affichagePythagoreOut.place(x=15,y=225) 
+        self.btnRetourPythagore.place(x=0,y=(500-self.btnRetourPythagore.winfo_reqheight()))
+        self.affichagePythagoreOut.configure(text="")
+        
+    def calculePythagore(self,mode):
+        nb1 = self.zonePythagore1.get()
+        nb2 = self.zonePythagore2.get()
+        if nb1.strip() == "" or nb2.strip() == "":
+            self.affichagePythagoreOut.configure(text="Erreur")
+        else :
+            calcule = Pythagore(int(nb1),int(nb2))
+            if mode == 1:
+                resultat = str(calcule.theoreme())
+                sortieCalcule = calcule.recuperationCalcule()
+                self.affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
+            else :
+                if mode == 2:
+                    if int(nb1) <= int(nb2) :
+                        self.affichagePythagoreOut.configure(text="Erreur")
+                    else :
+                        resultat = str(calcule.reciproque())
+                        sortieCalcule = calcule.recuperationCalcule()
+                        self.affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
+                
 
 class CalculeNbComplexe :
     def __init__(self,nb1_1:int,nb1_2:int,nb2_1:int,nb2_2:int):
@@ -423,17 +475,16 @@ class Pythagore :
     def __init__(self,nb1:int,nb2:int):
         self.nb1 = nb1
         self.nb2 = nb2
-        self.reciproque = bool
+        self.etatReciproque = bool
        
-    
-    def theoemePythagore(self,nb1,nb2):
+    def theoreme(self):
         resultat = math.sqrt(self.nb1**2+self.nb2**2)
-        self.reciproque = False
+        self.etatReciproque = False
         return resultat
     
-    def ReciproquePythagore(self,nb1,nb2):
+    def reciproque(self):
         resultat = math.sqrt(self.nb1**2-self.nb2**2)
-        self.reciproque = True
+        self.etatReciproque = True
         return resultat 
     
     def recuperationCalcule(self):
