@@ -78,7 +78,7 @@ class fncCalculatrice :
         self.btnClear = Button(self.clavier,image=self.imgClear,command=self.clearAll)
         self.btnSuppr = Button(self.clavier,image=self.imgSuppr,command=self.suppr)
         #btn fonction special
-        self.btnAngle = Button(self.clavier,text="Randian en degres",font=("arial","13"),bg=self.color,fg=self.textColor)
+        self.btnAngle = Button(self.clavier,text="Randian en degres",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.convertiseurDegRad)
         self.btnPythagore = Button(self.clavier,text="Theoreme de pythagore",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modePythagore)
         self.btnNbComplex = Button(self.clavier,text="Nombre Complex",font=("arial","13"),bg=self.color,fg=self.textColor,command=self.modeComplex)
         #btn nb complex
@@ -441,6 +441,15 @@ class fncCalculatrice :
                         resultat = str(calcule.reciproque())
                         sortieCalcule = calcule.recuperationCalcule()
                         self.affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
+    
+    def convertiseurDegRad(self):
+        contenu = self.ZoneCalcule.get("1.0", END)
+        if contenu ==  "":
+            self.ZoneCalcule.delete("1.0", END)
+            self.ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
+        else :
+            self.ZoneCalcule.delete("1.0", END)
+            self.ecritureCarractere(str(math.degrees(int(contenu))))
                 
 
 class CalculeNbComplexe :
