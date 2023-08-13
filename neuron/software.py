@@ -40,6 +40,9 @@ class neuroneSoftware :
                 text = self.fonctionArreraNetwork.sortieCalculatrice("1")
             else :
                 text = self.fonctionArreraNetwork.sortieCalculatrice("0")
+        else :
+            if "pythagore" in requette :
+                text = self.fonctionArreraNetwork.sortieCalculatrice("2")
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur
