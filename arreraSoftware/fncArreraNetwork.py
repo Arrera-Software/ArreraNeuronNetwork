@@ -230,5 +230,10 @@ class fncArreraNetwork:
                     text = "Voila votre calculatrice en mode nombre complex "+self.genre
                 else :
                     text = "Voici la calculatrice en mode complexe" 
+            else :
+                if self.etatVous == True :
+                    text = "Voila votre calculatrice en mode pythagore "+self.genre
+                else :
+                    text = "Voici la calculatrice en mode pythagore" 
         self.calculatrice.calculatrice(mode)
         return text
