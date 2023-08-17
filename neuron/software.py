@@ -48,13 +48,13 @@ class neuroneSoftware :
             nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
             logOuvrerture = 0
             i = 0 
-            while logOuvrerture != 1 and i >= nbLogiciel :
-                for i in range(0,nbLogiciel):
-                    if listeLogiciel[i-1] in requette:
-                        text = self.fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1])
-                        logOuvrerture = 1
-                    else :
-                        logOuvrerture = 0
+            for i in range(0,nbLogiciel):
+                if listeLogiciel[i-1] in requette:
+                    text = self.fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1])
+                    logOuvrerture = 1
+                    break
+                else :
+                    logOuvrerture = 0
                         
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
