@@ -43,6 +43,20 @@ class neuroneSoftware :
         else :
             if "pythagore" in requette :
                 text = self.fonctionArreraNetwork.sortieCalculatrice("2")
+        if "ouvre" in requette :
+            listeLogiciel = self.gestionNeuron.getListLogiciel()
+            nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
+            logOuvrerture = 0
+            for i in range(0,nbLogiciel):
+                if logOuvrerture == 1:
+                    break
+                else :
+                    if listeLogiciel[i-1] in requette:
+                        text = self.fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1])
+                        logOuvrerture = 1
+                    else :
+                        logOuvrerture = 0
+                        
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

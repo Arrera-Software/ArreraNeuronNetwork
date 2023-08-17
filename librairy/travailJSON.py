@@ -13,6 +13,11 @@ class jsonWork :
         with open(self.fichier, 'r' , encoding='utf-8') as openfile:
             liste = json.load(openfile)[flag]
         return list(liste)
+    
+    def lectureJSONDict(self,flag):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            dictionnaire = json.load(openfile)[flag]
+        return dict(dictionnaire)
      
     def EcritureJSON(self,flag,valeur):#Permet d'ecrire une nouvelle valeur a flag definie
         openfile = open(self.fichier, 'r' , encoding='utf-8')

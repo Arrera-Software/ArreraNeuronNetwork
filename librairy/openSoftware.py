@@ -3,15 +3,15 @@ import subprocess
 import os
 
 class OpenSoftware :
-    def __int__(self,name:str,emplacementLogiciel:str):
+    def __init__(self,emplacementLogiciel:str):
         detecteurOS = OS()
         self.windowsOS = detecteurOS.osWindows()
         self.linuxOS = detecteurOS.osLinux()
         if self.windowsOS == True and self.linuxOS == False :
-            self.emplacement = os.path.abspath(emplacementLogiciel+str(name)+".lnk")
+            self.emplacement = os.path.abspath(emplacementLogiciel+".lnk")
         else :
            if self.windowsOS == False and self.linuxOS == True : 
-                self.emplacement = name
+                self.emplacement = emplacementLogiciel
            else :
                self.emplacement == "ereur"
                
@@ -20,11 +20,11 @@ class OpenSoftware :
             return False
         else :
             if self.windowsOS == False and self.linuxOS == True :
-                subprocess.Popen([self.emplacement])
+                subprocess.Popen([self.emplacement],stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 return True 
             else :
                 if self.windowsOS == True and self.linuxOS == False :
-                    subprocess.Popen(["cmd", "/c", "start", self.racourcieSoft])
+                    subprocess.Popen(["cmd", "/c", "start", self.emplacement])
                     return True
                 else :
                     return False

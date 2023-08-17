@@ -8,6 +8,7 @@ from arreraSoftware.fonctionGPS import*
 from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
+from librairy.openSoftware import*
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
         #Recuperation des objet
@@ -237,3 +238,27 @@ class fncArreraNetwork:
                     text = "Voici la calculatrice en mode pythagore" 
         self.calculatrice.calculatrice(mode)
         return text
+    
+    def listeSoftware(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            self.gestionNeuron.getListLogiciel()
+    
+    def sortieOpenSoftware(self,soft):
+        dictionnaireSoft = self.gestionNeuron.getDictionnaireLogiciel()
+        objet = OpenSoftware(dictionnaireSoft[soft])
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+                text = "Ok je vous ouvre "+soft+" "+self.genre
+            else :
+                text = "Voici "+soft
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir "+soft
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir "+soft
+        return text
+        
+            

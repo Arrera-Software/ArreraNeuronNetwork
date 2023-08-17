@@ -1,7 +1,8 @@
 from librairy.travailJSON import *
+from librairy.dectectionOS import*
 
 class gestionNetwork:
-    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork):
+    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork,detecteurOS:OS):
         self.fileUser = fileUser
         self.ConfigFile = ConfigFile
         self.vous = False
@@ -16,6 +17,7 @@ class gestionNetwork:
         self.nbDiscution =0
         self.nbVilleMeteo = 0
         self.listVille = []
+        self.detecteurOS = detecteurOS
     
     def setVous(self):
         if self.ConfigFile.lectureJSON("utilisationVous") == "1":
@@ -123,6 +125,24 @@ class gestionNetwork:
     
     def getValeurfichierUtilisateur(self,flag:str):
         return self.fileUser.lectureJSON(flag)
+    
+    def getDictionnaireLogiciel(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            return self.fileUser.lectureJSONDict("dictSoftWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                return self.fileUser.lectureJSONDict("dictSoftLinux")
+    
+    def getListLogiciel(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            return list(self.fileUser.lectureJSONDict("dictSoftWindows").keys())
+        else :
+            if etatWindows == False and etatLinux == True :
+                return list(self.fileUser.lectureJSONDict("dictSoftLinux").keys())
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":

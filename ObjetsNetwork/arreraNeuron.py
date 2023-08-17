@@ -16,9 +16,9 @@ class ArreraNetwork :
         #Ouverture fichier de configuration
         self.fichierUtilisateur = jsonWork(userFile)
         self.configNeuron = jsonWork(fichierConfiguration)
-        #initilisation du gestionnaire du reseau de neuron 
-        self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron)
+        #initilisation du gestionnaire du reseau de neuron
         self.detecteurOS = OS()
+        self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron,self.detecteurOS)
         #set des atribut
         self.gestionnaire.setAll()
         self.gestionnaire.setVilleMeteo()

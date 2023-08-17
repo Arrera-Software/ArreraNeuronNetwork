@@ -5,5 +5,11 @@
     "lieuDomicile":"Landrethun-le-nord",
     "lieuTravail":"Boulogne-sur-mer",
     "adresseDomicile" : "Landrethun-le-nord",
-    "adresseTravail":"Boulogne-sur-mer"
+    "adresseTravail":"Boulogne-sur-mer",
+    "nbSoft" : "0",
+    "dictSoftWindows" :{
+    },
+    "dictSoftLinux" :{
+        
+    }
 }
