@@ -3,11 +3,17 @@ Reseau de condition pour les assistant Ryley et Six
 
 ## Reseau de condition
 
-software [ ]a faire \
-api [ ] a faire \
-time [ ]a faire \
-search [ ] a faire\ 
-chatbot [X] en développement 
+main [X]
+
+software [ ] en cours 
+
+api [X] 
+
+Time [ ]a faire 
+
+search [ ] a faire 
+
+chatbot [X] 
 
 ## lien vers le discord 
 
