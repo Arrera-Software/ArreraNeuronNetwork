@@ -47,10 +47,9 @@ class neuroneSoftware :
             listeLogiciel = self.gestionNeuron.getListLogiciel()
             nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
             logOuvrerture = 0
-            for i in range(0,nbLogiciel):
-                if logOuvrerture == 1:
-                    break
-                else :
+            i = 0 
+            while logOuvrerture != 1 and i >= nbLogiciel :
+                for i in range(0,nbLogiciel):
                     if listeLogiciel[i-1] in requette:
                         text = self.fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1])
                         logOuvrerture = 1
