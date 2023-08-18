@@ -55,7 +55,9 @@ class neuroneSoftware :
                     break
                 else :
                     logOuvrerture = 0
-                        
+            if logOuvrerture == 0 :
+                if "traitement de texte" in requette or "microsoft word" in requette or "word" in requette or "libreOffice writer" in requette or "writer" in requette or "openOffice writer" in requette or  "wps office writer" in requette or "abiword" in requette or "zoho writer" in requette or "calligra words" in requette or "scrivener" in requette :
+                    text = self.fonctionArreraNetwork.sortieOpenTraitementTexte()                   
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

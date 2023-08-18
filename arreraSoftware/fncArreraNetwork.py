@@ -239,12 +239,6 @@ class fncArreraNetwork:
         self.calculatrice.calculatrice(mode)
         return text
     
-    def listeSoftware(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            self.gestionNeuron.getListLogiciel()
-    
     def sortieOpenSoftware(self,soft):
         dictionnaireSoft = self.gestionNeuron.getDictionnaireLogiciel()
         objet = OpenSoftware(dictionnaireSoft[soft])
@@ -260,5 +254,34 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir "+soft
         return text
-        
+    
+    def sortieOpenTraitementTexte(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("wordWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("wordLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici votre logiciel de traitement de texte "+self.genre+" "+self.user,
+                               "Je vous ai ouvert votre logiciel de traitement de texte. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                text = listReponse[nbrand]
+            else :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici ton logiciel de traitement de texte " +self.user,
+                                "Je t'ai ouvert ton logiciel de traitement de texte. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                text = listReponse[nbrand]
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel traitement de texte"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel traitement de texte"
+        return text
+            
             
