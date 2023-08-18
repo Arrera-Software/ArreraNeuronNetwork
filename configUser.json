@@ -13,5 +13,7 @@
         
     },
     "wordLinux":"",
-    "wordWindows":""
+    "wordWindows":"",
+    "exelLinux":"libreoffice",
+    "exelWindows":"racourcie/Excel"
 }

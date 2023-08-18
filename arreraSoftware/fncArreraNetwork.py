@@ -283,5 +283,34 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel traitement de texte"
         return text
+    
+    def sortieOpenTableur(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("exelWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("exelLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici votre logiciel de tableur "+self.genre+" "+self.user,
+                               "Je vous ai ouvert votre logiciel de tableur. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                text = listReponse[nbrand]
+            else :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici ton logiciel de tableur " +self.user,
+                                "Je t'ai ouvert ton logiciel de tableur. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                text = listReponse[nbrand]
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel tableur"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel tableur"
+        return text
             
             

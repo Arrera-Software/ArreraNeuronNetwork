@@ -57,7 +57,10 @@ class neuroneSoftware :
                     logOuvrerture = 0
             if logOuvrerture == 0 :
                 if "traitement de texte" in requette or "microsoft word" in requette or "word" in requette or "libreOffice writer" in requette or "writer" in requette or "openOffice writer" in requette or  "wps office writer" in requette or "abiword" in requette or "zoho writer" in requette or "calligra words" in requette or "scrivener" in requette :
-                    text = self.fonctionArreraNetwork.sortieOpenTraitementTexte()                   
+                    text = self.fonctionArreraNetwork.sortieOpenTraitementTexte()
+                else :
+                    if "tableur" in requette or "microsoft excel" in requette or "excel"in requette or "google sheets" in requette or "sheets" in requette or "libreOffice calc" in requette or "calc" in requette or "openOffice calc" in requette or "wps office spreadsheets" in requette or "zoho sheet" in requette or  "gnumeric" in requette or "onlyoffice spreadsheet editor" in requette or "calligra sheets" in requette :
+                        text = self.fonctionArreraNetwork.sortieOpenTableur()    
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur
