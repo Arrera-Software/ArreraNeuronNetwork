@@ -378,5 +378,28 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton navigateur internet"
         return text
+    
+    def sortieOpenNote(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("noteWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("noteLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+               text = "Voici vos notes "+self.genre
+            else :
+                text = "Voici tes notes "+self.user
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir vos notes"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir tes notes"
+        return text
             
             

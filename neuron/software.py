@@ -67,6 +67,9 @@ class neuroneSoftware :
                         else :
                             if "navigateur internet" in requette or"browser" in requette or "logiciel de navigation" in requette or "client web" in requette or "explorateur web" in requette or "navigateur web" in requette or "fureteur web" in requette or "visualiseur web" in requette or "programme de navigation en ligne" in requette or "nagivateur de pages web" in requette or "visionneuse web" in requette or "google chrome" in requette or "chrome" in requette or "mozilla firefox" in requette or "mozilla" in requette or "firefox" in requette or "microsoft edge" in requette or "edge" in requette or "opera" in requette or "brave" in requette or "vivaldi" in requette or "tor browser" in requette or "tor browser" in requette :
                                 text = self.fonctionArreraNetwork.sortieOpenBrowser()
+                            else :
+                                if "note" in requette or "bloc-notes" in requette or "bloc-note" in requette or "journal electronique" in requette or "microsoft onenote" in requette or "onenote" in requette or "simplenote" in requette or "bear" in requette :
+                                    text = self.fonctionArreraNetwork.sortieOpenNote()
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

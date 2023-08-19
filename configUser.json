@@ -19,5 +19,7 @@
     "diapoLinux" :"libreoffice",
     "diapoWindows":"racourcie/presentation",
     "browserLinux":"firefox",
-    "browserWindows":"racoucie/test"
+    "browserWindows":"racoucie/test",
+    "noteLinux":"firefox",
+    "noteWindows":"racoucie/test"
 }
