@@ -7,16 +7,23 @@ class OpenSoftware :
         detecteurOS = OS()
         self.windowsOS = detecteurOS.osWindows()
         self.linuxOS = detecteurOS.osLinux()
-        if self.windowsOS == True and self.linuxOS == False :
-            self.emplacement = os.path.abspath(emplacementLogiciel+".lnk")
+        self.emplacement = ""
+        self.etat = bool
+        if emplacementLogiciel == "":
+            self.etat = False
         else :
-           if self.windowsOS == False and self.linuxOS == True : 
-                self.emplacement = emplacementLogiciel
-           else :
-               self.emplacement == "ereur"
+            if self.windowsOS == True and self.linuxOS == False :
+                self.emplacement = os.path.abspath(emplacementLogiciel+".lnk")
+                self.etat = True
+            else :
+                if self.windowsOS == False and self.linuxOS == True : 
+                        self.emplacement = emplacementLogiciel
+                        self.etat = True
+                else :
+                    self.etat = False
                
     def open(self):
-        if self.emplacement == "ereur":
+        if self.etat == False:
             return False
         else :
             if self.windowsOS == False and self.linuxOS == True :
