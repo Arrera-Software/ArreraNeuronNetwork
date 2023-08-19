@@ -60,7 +60,10 @@ class neuroneSoftware :
                     text = self.fonctionArreraNetwork.sortieOpenTraitementTexte()
                 else :
                     if "tableur" in requette or "microsoft excel" in requette or "excel"in requette or "google sheets" in requette or "sheets" in requette or "libreOffice calc" in requette or "calc" in requette or "openOffice calc" in requette or "wps office spreadsheets" in requette or "zoho sheet" in requette or  "gnumeric" in requette or "onlyoffice spreadsheet editor" in requette or "calligra sheets" in requette :
-                        text = self.fonctionArreraNetwork.sortieOpenTableur()    
+                        text = self.fonctionArreraNetwork.sortieOpenTableur() 
+                    else :
+                        if "logiciel de présentation" in requette or "logiciel de diaporama" in requette or "diaporama" in requette or "microsoft powerpoint" in requette or "powerpoint" or "google slides" in requette or "slides" in requette or "libreoffice impress" in requette or "impress" in requette or "prezi" in requette or "canva" in requette or "slideshare" in requette or "visme" in requette or "haiku deck" in requette or "powtoon" in requette :
+                            text = self.fonctionArreraNetwork.sortieOpenDiapo()
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

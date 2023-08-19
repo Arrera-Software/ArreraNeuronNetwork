@@ -15,5 +15,7 @@
     "wordLinux":"",
     "wordWindows":"",
     "exelLinux":"",
-    "exelWindows":""
+    "exelWindows":"",
+    "diapoLinux" :"libreoffice",
+    "diapoWindows":"racourcie/presentation"
 }

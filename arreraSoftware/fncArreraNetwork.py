@@ -312,5 +312,34 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel tableur"
         return text
+    
+    def sortieOpenDiapo(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("diapoWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici votre logiciel de diaporama "+self.genre+" "+self.user,
+                               "Je vous ai ouvert votre logiciel de présentation. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                text = listReponse[nbrand]
+            else :
+                nbrand = random.randint(0,1)
+                listReponse = ["Voici ton logiciel de présentation " +self.user,
+                                "Je t'ai ouvert ton logiciel de diaporama. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                text = listReponse[nbrand]
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel de présentation"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel de présentation"
+        return text
             
             
