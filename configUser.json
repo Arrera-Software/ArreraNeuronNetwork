@@ -17,5 +17,7 @@
     "exelLinux":"",
     "exelWindows":"",
     "diapoLinux" :"libreoffice",
-    "diapoWindows":"racourcie/presentation"
+    "diapoWindows":"racourcie/presentation",
+    "browserLinux":"firefox",
+    "browserWindows":"racoucie/test"
 }

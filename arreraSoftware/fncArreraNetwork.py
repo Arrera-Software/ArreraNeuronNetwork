@@ -341,5 +341,42 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel de présentation"
         return text
+    
+    def sortieOpenBrowser(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("browserWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("browserLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+                nbrand = random.randint(0,5)
+                listReponse = ["Voici votre navigateur web "+self.genre+" "+self.user,
+                               "Ok je vous ouvre votre explorateur web "+self.genre+" "+self.user,
+                               "Voila votre explorateur web "+self.genre,
+                               "Voici votre navigateur internet "+self.genre+" "+self.user,
+                               "Ok je vous ouvre votre explorateur internet "+self.genre+" "+self.user,
+                               "Voila votre explorateur internet "+self.genre,]
+                text = listReponse[nbrand]
+            else :
+                nbrand = random.randint(0,5)
+                listReponse = ["Voici ton navigateur web "+self.genre+" "+self.user,
+                               "Ok je t'ouvre ton explorateur web "+self.genre+" "+self.user,
+                               "Voila ton explorateur web "+self.genre,
+                               "Voici ton navigateur internet "+self.genre+" "+self.user,
+                               "Ok je t'ouvre ton explorateur internet "+self.genre+" "+self.user,
+                               "Voila ton explorateur internet "+self.genre,]
+                text = listReponse[nbrand]
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre navigateur internet"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir ton navigateur internet"
+        return text
             
             
