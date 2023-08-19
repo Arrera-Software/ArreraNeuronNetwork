@@ -16,12 +16,12 @@
     "wordWindows":"",
     "exelLinux":"",
     "exelWindows":"",
-    "diapoLinux" :"libreoffice",
-    "diapoWindows":"racourcie/presentation",
-    "browserLinux":"firefox",
-    "browserWindows":"racoucie/test",
-    "noteLinux":"firefox",
-    "noteWindows":"racoucie/test",
-    "musicLinux":"firefox",
-    "musicWindows":"racoucie/test"
+    "diapoLinux" :"",
+    "diapoWindows":"",
+    "browserLinux":"",
+    "browserWindows":"",
+    "noteLinux":"",
+    "noteWindows":"",
+    "musicLinux":"",
+    "musicWindows":""
 }
