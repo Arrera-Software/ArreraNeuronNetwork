@@ -23,8 +23,10 @@ class neuroneOpen :
         self.user = self.gestionNeuron.getUser()
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
+        #varriable
+        logOuverture = 0
         #fonction neuron Open
-        if "ouvre" in requette :
+        if "ouvre" in requette or "ouvrir" in requette:
             listeLogiciel = self.gestionNeuron.getListLogiciel()
             nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
             if "traitement de texte" in requette or "microsoft word" in requette or "word" in requette or "libreOffice writer" in requette or "writer" in requette or "openOffice writer" in requette or  "wps office writer" in requette or "abiword" in requette or "zoho writer" in requette or "calligra words" in requette or "scrivener" in requette :
@@ -48,7 +50,13 @@ class neuroneOpen :
                                     for i in range(0,nbLogiciel):
                                         if listeLogiciel[i-1] in requette:
                                             text = self.fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1])
+                                            logOuverture = 1
                                             break
+                                    if logOuverture == 0 :
+                                        if "youtube" in requette :
+                                            text = self.fonctionArreraNetwork.sortieOpenYoutube()
+                                        
+                                            
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

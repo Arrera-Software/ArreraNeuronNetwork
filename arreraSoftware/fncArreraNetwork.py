@@ -424,5 +424,14 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel d'écoute musicale"
         return text
+    
+    def sortieOpenYoutube(self):
+        webbrowser.open("https://www.youtube.com/")
+        if self.etatVous == True :
+            text = "Ok, je vous ai ouvert YouTube."
+        else :
+            text = "Ok, je t'ai ouvert YouTube."
+        
+        return text
             
             
