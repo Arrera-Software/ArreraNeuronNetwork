@@ -5,7 +5,7 @@ Reseau de condition pour les assistant Ryley et Six
 
 main [X]
 
-software [ ] en cours 
+software [X]
 
 api [X] 
 
