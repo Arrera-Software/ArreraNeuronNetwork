@@ -55,6 +55,9 @@ class neuroneOpen :
                                     if logOuverture == 0 :
                                         if "youtube" in requette :
                                             text = self.fonctionArreraNetwork.sortieOpenYoutube()
+                                        else :
+                                            if "stockage en ligne" in requette or "stockage sur le cloud" in requette or "drive" in requette or "stokage cloud" in requette or "stockage distant" in requette or "google drive" in requette or "dropbox" in requette or "onedrive" in requette or "amazon drive" in requette or "box" in requette or "nextcloud" in requette :
+                                                text = self.fonctionArreraNetwork.sortieOpenCloud()
                                         
                                             
         #Mise a jour de la valeur                                                               

@@ -433,5 +433,15 @@ class fncArreraNetwork:
             text = "Ok, je t'ai ouvert YouTube."
         
         return text
+    
+    def sortieOpenCloud(self):
+        lien= self.gestionNeuron.getValeurfichierUtilisateur("lienCloud")
+        webbrowser.open(lien)
+        if self.etatVous == True :
+            text = "Ok, je vous ai ouvert votre stokage distant."
+        else :
+            text = "Ok, je t'ai ouvert ton stokage distant."
+        
+        return text
             
             
