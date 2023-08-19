@@ -24,5 +24,9 @@
     "noteWindows":"",
     "musicLinux":"",
     "musicWindows":"",
-    "lienCloud":""
+    "lienCloud":"",
+    "nbSite":"0",
+    "dictSite":{
+        
+    }
 }

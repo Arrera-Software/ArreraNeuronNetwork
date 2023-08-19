@@ -143,6 +143,12 @@ class gestionNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 return list(self.fileUser.lectureJSONDict("dictSoftLinux").keys())
+            
+    def getListWeb(self):
+        return list(self.fileUser.lectureJSONDict("dictSite").keys())
+    
+    def getDictionnaireWeb(self):
+        return self.fileUser.lectureJSONDict("dictSite")
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":

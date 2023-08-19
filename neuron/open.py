@@ -23,12 +23,14 @@ class neuroneOpen :
         self.user = self.gestionNeuron.getUser()
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
+        listeLogiciel = self.gestionNeuron.getListLogiciel()
+        nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
+        listeSite = self.gestionNeuron.getListWeb()
+        nbSite = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSite"))
         #varriable
         logOuverture = 0
         #fonction neuron Open
         if "ouvre" in requette or "ouvrir" in requette:
-            listeLogiciel = self.gestionNeuron.getListLogiciel()
-            nbLogiciel = int(self.gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
             if "traitement de texte" in requette or "microsoft word" in requette or "word" in requette or "libreOffice writer" in requette or "writer" in requette or "openOffice writer" in requette or  "wps office writer" in requette or "abiword" in requette or "zoho writer" in requette or "calligra words" in requette or "scrivener" in requette :
                 text = self.fonctionArreraNetwork.sortieOpenTraitementTexte()
             else :
@@ -58,6 +60,11 @@ class neuroneOpen :
                                         else :
                                             if "stockage en ligne" in requette or "stockage sur le cloud" in requette or "drive" in requette or "stokage cloud" in requette or "stockage distant" in requette or "google drive" in requette or "dropbox" in requette or "onedrive" in requette or "amazon drive" in requette or "box" in requette or "nextcloud" in requette :
                                                 text = self.fonctionArreraNetwork.sortieOpenCloud()
+                                            else :
+                                                for i in range(0,nbSite):
+                                                    if listeSite[i-1] in requette:
+                                                        text = self.fonctionArreraNetwork.sortieOpenSite(listeLogiciel[i-1])
+                                                        break
                                         
                                             
         #Mise a jour de la valeur                                                               
