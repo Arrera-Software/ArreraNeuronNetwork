@@ -15,7 +15,7 @@ search [ ] a faire
 
 chatbot [X] 
 
-Open [] en cours
+Open [X]
 
 ## lien vers le discord 
 
