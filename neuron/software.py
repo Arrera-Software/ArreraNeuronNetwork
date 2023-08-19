@@ -70,6 +70,10 @@ class neuroneSoftware :
                             else :
                                 if "note" in requette or "bloc-notes" in requette or "bloc-note" in requette or "journal electronique" in requette or "microsoft onenote" in requette or "onenote" in requette or "simplenote" in requette or "bear" in requette :
                                     text = self.fonctionArreraNetwork.sortieOpenNote()
+                                else :
+                                    if "musique" in requette or "music" in requette or "Windows Media Player" in requette or "vlc" in requette or "clementine" in requette or "groove music" in requette or "spotify" in requette or "deezer" in requette or "youTube music" in requette :
+                                        text = self.fonctionArreraNetwork.sortieOpenMusic()
+                                    
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

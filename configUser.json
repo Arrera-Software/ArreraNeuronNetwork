@@ -21,5 +21,7 @@
     "browserLinux":"firefox",
     "browserWindows":"racoucie/test",
     "noteLinux":"firefox",
-    "noteWindows":"racoucie/test"
+    "noteWindows":"racoucie/test",
+    "musicLinux":"firefox",
+    "musicWindows":"racoucie/test"
 }

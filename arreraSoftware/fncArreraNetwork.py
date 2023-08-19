@@ -401,5 +401,28 @@ class fncArreraNetwork:
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir tes notes"
         return text
+    
+    def sortieOpenMusic(self):
+        etatWindows = self.detecteurOS.osWindows()
+        etatLinux = self.detecteurOS.osLinux()
+        if etatWindows == True and etatLinux == False :
+            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("musicWindows")
+        else :
+            if etatWindows == False and etatLinux == True :
+                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("musicLinux")
+        objet = OpenSoftware(logiciel)
+        sortie = objet.open()
+        if sortie == True :
+            if self.etatVous == True :
+               text = "Voici "+self.genre+" ,bonne écoute"
+            else :
+                text = "Voici "+self.user+" ,bonne écoute"
+
+        else :
+            if self.etatVous == True :
+                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel d'écoute musicale"
+            else :
+                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel d'écoute musicale"
+        return text
             
             
