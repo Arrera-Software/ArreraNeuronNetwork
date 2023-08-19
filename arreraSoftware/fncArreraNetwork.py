@@ -443,5 +443,15 @@ class fncArreraNetwork:
             text = "Ok, je t'ai ouvert ton stokage distant."
         
         return text
+    
+    def sortieOpenSite(self,site):
+        dictionnaireSoft = self.gestionNeuron.getDictionnaireWeb()
+        webbrowser.open(dictionnaireSoft[site])
+        if self.etatVous == True :
+            text = "Ok je vous ouvre "+site+" "+self.genre
+        else :
+            text = "Voici "+site
+    
+    
             
             
