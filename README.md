@@ -15,6 +15,8 @@ search [ ] a faire
 
 chatbot [X] 
 
+Open [] en cours
+
 ## lien vers le discord 
 
 [Serveur discord support](https://discord.gg/hFxxUtdk8Y)
