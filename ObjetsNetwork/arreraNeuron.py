@@ -9,6 +9,7 @@ from neuron.main import*
 from neuron.API import*
 from neuron.software import*
 from neuron.open import *
+from neuron.search import*
 from ObjetsNetwork.chaineCarractere import *
 
 
@@ -32,6 +33,7 @@ class ArreraNetwork :
         self.api = neuroneAPI(self.fonctionAssistant,self.gestionnaire)
         self.software = neuroneSoftware(self.fonctionAssistant,self.gestionnaire)
         self.open = neuroneOpen(self.fonctionAssistant,self.gestionnaire)
+        self.search = neuroneSearch(self.fonctionAssistant,self.gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -64,8 +66,7 @@ class ArreraNetwork :
                         valeur,text = self.open.neurone(requette,self.oldSorti,self.oldRequette)
                         if valeur == 0 :
                             #search
-                            valeur = 0
-                            text = ""
+                            valeur,text = self.search.neurone(requette,self.oldSorti,self.oldSorti)
                             if valeur == 0 :
                                 valeur,text = self.chatBot.neurone(requette,self.oldSorti,self.oldRequette)
                                 if valeur == 0 :

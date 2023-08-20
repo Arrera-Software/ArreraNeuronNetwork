@@ -8,6 +8,7 @@ from arreraSoftware.fonctionGPS import*
 from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
+from arreraSoftware.fonctionRecherche import *
 from librairy.openSoftware import*
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
@@ -31,7 +32,8 @@ class fncArreraNetwork:
         self.itineraires = GPSItineraires()
         self.traducteur = fncArreraTrad(self.configNeuron)
         self.downloader = fncArreraVideoDownload(self.configNeuron)
-        self.calculatrice = fncCalculatrice(self.configNeuron)          
+        self.calculatrice = fncCalculatrice(self.configNeuron)  
+        self.objetRecherche = fncArreraSearch()        
         
     def reading(self):
         self.fncReading.fenetreLecture()
@@ -450,8 +452,60 @@ class fncArreraNetwork:
         if self.etatVous == True :
             text = "Ok je vous ouvre "+site+" "+self.genre
         else :
-            text = "Voici "+site
-    
-    
+            text = "Voici "+site  
             
-            
+    def sortieRechercheSimple(self,requette:str):
+        moteurDefault = self.gestionNeuron.getMoteurRechercheDefault()
+        moteurUser = self.gestionNeuron.getValeurfichierUtilisateur("moteurRecherche")
+        recherche = requette.replace("search","")
+        recherche = recherche.replace("recherche","")
+        if moteurUser == "":
+            moteur = moteurDefault
+        else :
+            moteur = moteurUser
+    
+        match moteur :
+            case "duckduckgo" :
+                self.objetRecherche.duckduckgoSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case "google" :
+                self.objetRecherche.googleSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case "qwant" :
+                self.objetRecherche.QwantSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case "ecosia" :
+                self.objetRecherche.EcosiaSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case "brave" :
+                self.objetRecherche.braveSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case "bing":
+                self.objetRecherche.bingSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
+                else :
+                    text = "Voici ta recherche "
+            case other :
+                self.objetRecherche.duckduckgoSearch(recherche)
+                if self.etatVous ==  True:
+                    text = "Je vous ai fais votre recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
+                else :
+                    text = "Je t'ai fais ta recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
+    
+        return text

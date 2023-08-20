@@ -18,6 +18,7 @@ class gestionNetwork:
         self.nbVilleMeteo = 0
         self.listVille = []
         self.detecteurOS = detecteurOS
+        self.moteurRechercheDefault = ""
     
     def setVous(self):
         if self.ConfigFile.lectureJSON("utilisationVous") == "1":
@@ -77,6 +78,7 @@ class gestionNetwork:
         self.createur =   str(self.ConfigFile.lectureJSON("createur"))
         self.listFonction = self.ConfigFile.lectureJSON("listFonction")
         self.nbVilleMeteo = int(self.ConfigFile.lectureJSON("nombreVilleMeteo"))
+        self.moteurRechercheDefault = str(self.ConfigFile.lectureJSON("moteurRechercheDefault"))
     
     def setVilleMeteo(self):
         self.listVille = self.fileUser.lectureJSONList("listVille")
@@ -125,6 +127,9 @@ class gestionNetwork:
     
     def getValeurfichierUtilisateur(self,flag:str):
         return self.fileUser.lectureJSON(flag)
+    
+    def getMoteurRechercheDefault(self):
+        return self.moteurRechercheDefault
     
     def getDictionnaireLogiciel(self):
         etatWindows = self.detecteurOS.osWindows()
