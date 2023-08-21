@@ -24,8 +24,11 @@ class neuroneSearch:
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
         #reponse neuron search
-        if "search" in requette or "recherche" in requette :
-            text = self.fonctionArreraNetwork.sortieRechercheSimple(requette)
+        if "bigsearch" in requette or "grand recherche" in requette :
+            text = self.fonctionArreraNetwork.sortieGrandRecherche(requette)
+        else :
+            if "search" in requette or "recherche" in requette :
+                text = self.fonctionArreraNetwork.sortieRechercheSimple(requette)
             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)

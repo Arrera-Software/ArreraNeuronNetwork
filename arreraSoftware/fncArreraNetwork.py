@@ -509,3 +509,20 @@ class fncArreraNetwork:
                     text = "Je t'ai fais ta recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
     
         return text
+    
+    def sortieGrandRecherche(self,requette:str):
+        recherche = requette.replace("bigsearch","")
+        recherche = recherche.replace("grand recherche","")
+        sortieRecheche = self.objetRecherche.GrandRecherche(recherche)
+        if sortieRecheche == True :
+            if self.etatVous == True :
+                text = "Voici le resultat de votre recherche sur plusieur moteur de recherche "+self.genre
+            else :
+                text = "Voici ton resultat " 
+        else :
+            if self.etatVous == True :
+                text = "Votre appareil n'est pas connecter internet "+self.genre
+            else :
+                text = "Je suis desoler mais je suis pas connecter a internet"
+                
+        return text 
