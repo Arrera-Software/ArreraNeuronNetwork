@@ -9,6 +9,7 @@ from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
 from arreraSoftware.fonctionRecherche import *
+from arreraSoftware.fonctionDate import *
 from librairy.openSoftware import*
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
@@ -33,7 +34,8 @@ class fncArreraNetwork:
         self.traducteur = fncArreraTrad(self.configNeuron)
         self.downloader = fncArreraVideoDownload(self.configNeuron)
         self.calculatrice = fncCalculatrice(self.configNeuron)  
-        self.objetRecherche = fncArreraSearch()        
+        self.objetRecherche = fncArreraSearch()
+        self.objetDate = fncDate()      
         
     def reading(self):
         self.fncReading.fenetreLecture()
@@ -530,4 +532,11 @@ class fncArreraNetwork:
             else :
                 text = "Je suis desoler mais je suis pas connecter a internet"
                 
-        return text 
+        return text
+    
+    def sortieHeure(self):
+        self.objetDate.rafraichisement()
+        heure = self.objetDate.heure()
+        minute = self.objetDate.minute()
+        return "Il est "+heure+" heure "+minute + "  minute" 
+         

@@ -24,6 +24,8 @@ class neuroneTime :
         self.bute = self.gestionNeuron.getBute()
         self.createur = self.gestionNeuron.getCreateur()
         #reponse neuron time
+        if "heure" in requette :
+            text = self.fonctionArreraNetwork.sortieHeure()
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur
