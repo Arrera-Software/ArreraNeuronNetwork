@@ -466,49 +466,54 @@ class fncArreraNetwork:
     
         match moteur :
             case "duckduckgo" :
-                self.objetRecherche.duckduckgoSearch(recherche)
+                sortieRecherche = self.objetRecherche.duckduckgoSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "google" :
-                self.objetRecherche.googleSearch(recherche)
+                sortieRecherche = self.objetRecherche.googleSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "qwant" :
-                self.objetRecherche.QwantSearch(recherche)
+                sortieRecherche = self.objetRecherche.QwantSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "ecosia" :
-                self.objetRecherche.EcosiaSearch(recherche)
+                sortieRecherche = self.objetRecherche.EcosiaSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "brave" :
-                self.objetRecherche.braveSearch(recherche)
+                sortieRecherche = self.objetRecherche.braveSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "bing":
-                self.objetRecherche.bingSearch(recherche)
+                sortieRecherche = self.objetRecherche.bingSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case other :
-                self.objetRecherche.duckduckgoSearch(recherche)
+                sortieRecherche = self.objetRecherche.duckduckgoSearch(recherche)
                 if self.etatVous ==  True:
                     text = "Je vous ai fais votre recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
                 else :
                     text = "Je t'ai fais ta recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
-    
-        return text
+        if sortieRecherche == False :
+            if self.etatVous ==  True:
+                return "Je suis désoler "+self.genre+" . Mais je peux pas faire votre recherche si je ne suis pas connecter a internet"
+            else :
+                return "Désoler "+self.user+" je suis pas connecter a internet"
+        else :
+            return text
     
     def sortieGrandRecherche(self,requette:str):
         recherche = requette.replace("bigsearch","")
