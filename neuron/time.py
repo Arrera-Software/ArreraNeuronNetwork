@@ -26,6 +26,10 @@ class neuroneTime :
         #reponse neuron time
         if "heure" in requette :
             text = self.fonctionArreraNetwork.sortieHeure()
+        else :
+            if "date" in requette :
+                text = self.fonctionArreraNetwork.sortieDate()
+            
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur

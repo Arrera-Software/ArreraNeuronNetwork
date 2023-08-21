@@ -539,4 +539,11 @@ class fncArreraNetwork:
         heure = self.objetDate.heure()
         minute = self.objetDate.minute()
         return "Il est "+heure+" heure "+minute + "  minute" 
+    
+    def sortieDate(self):
+        self.objetDate.rafraichisement()
+        jour = self.objetDate.jour()
+        mois = self.objetDate.mois()
+        annes = self.objetDate.annes()
+        return "On est le "+jour+" "+mois+" "+annes
          
