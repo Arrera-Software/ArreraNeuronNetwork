@@ -116,5 +116,6 @@ class fncArreraSearch :
                                         self.bingSearch(query)
                                         time.sleep(1.5)
                 i = i + 1
+            return True
         else :
             return False
