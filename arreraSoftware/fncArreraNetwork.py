@@ -1,5 +1,6 @@
 from tkinter import*
 import random
+from word2number import w2n
 from librairy.travailJSON import *
 from ObjetsNetwork.gestion import*
 from arreraSoftware.fonctionLecture import *
@@ -10,6 +11,7 @@ from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
 from arreraSoftware.fonctionRecherche import *
 from arreraSoftware.fonctionDate import *
+from arreraSoftware.fonctionHorloge import*
 from librairy.openSoftware import*
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
@@ -35,7 +37,9 @@ class fncArreraNetwork:
         self.downloader = fncArreraVideoDownload(self.configNeuron)
         self.calculatrice = fncCalculatrice(self.configNeuron)  
         self.objetRecherche = fncArreraSearch()
-        self.objetDate = fncDate()      
+        self.objetDate = fncDate()
+        self.objetHorloge = fncArreraHorloge()
+        self.objetHorloge.setAtributJSON(self.configNeuron)    
         
     def reading(self):
         self.fncReading.fenetreLecture()
@@ -546,4 +550,27 @@ class fncArreraNetwork:
         mois = self.objetDate.mois()
         annes = self.objetDate.annes()
         return "On est le "+jour+" "+mois+" "+annes
-         
+    
+    def sortieOpenChrono(self):
+        if self.etatVous == True :
+            text = "Tres bien je vous lance le chronométre "+self.genre
+        else :
+            text = "Okay je te lance le chronométre"
+        self.objetHorloge.modeChrono()
+        return text
+
+    def sortieOpenHorloge(self):
+        if self.etatVous == True :
+            text = "Tres bien je vous lance l'horloge "+self.genre
+        else :
+            text = "Okay je te lance l'horloge"
+        self.objetHorloge.modeHorloge()
+        return text
+    
+    def sortieOpenSimpleMinuteur(self):
+        if self.etatVous == True :
+            text = "Tres bien je vous lance l'application minuteur "+self.genre
+        else :
+            text = "Okay je te lance l'application minuteur"
+        self.objetHorloge.modeMinuteur()
+        return text                   

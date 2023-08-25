@@ -29,6 +29,15 @@ class neuroneTime :
         else :
             if "date" in requette :
                 text = self.fonctionArreraNetwork.sortieDate()
+            else :
+                if "chronometre" in requette or "chrono" in requette :
+                    text = self.fonctionArreraNetwork.sortieOpenChrono()
+                else :
+                    if "horloge" in requette :
+                        text = self.fonctionArreraNetwork.sortieOpenHorloge()
+                    else :
+                        if "minuteur" in requette :
+                            text = self.fonctionArreraNetwork.sortieOpenSimpleMinuteur()
             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
