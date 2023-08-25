@@ -1,10 +1,12 @@
+import datetime
 from librairy.travailJSON import *
 from librairy.dectectionOS import*
 
 class gestionNetwork:
-    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork,detecteurOS:OS):
+    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork,detecteurOS:OS,fileFete:jsonWork):
         self.fileUser = fileUser
         self.ConfigFile = ConfigFile
+        self.fichierVille = fileFete
         self.vous = False
         self.lieuDomicile = False
         self.lieuTravail = False
@@ -159,4 +161,10 @@ class gestionNetwork:
         if sortieNeuron == "":
             return 0
         else :
-            return 1  
+            return 1 
+    
+    def getFeteJour(self):
+        date= datetime.datetime.now()
+        jours = str(date.day)
+        mois = str(date.month)
+        return self.fichierVille.lectureJSONMultiFlag(mois,jours)

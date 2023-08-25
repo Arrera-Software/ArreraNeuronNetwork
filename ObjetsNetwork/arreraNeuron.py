@@ -15,13 +15,14 @@ from ObjetsNetwork.chaineCarractere import *
 
 
 class ArreraNetwork :
-    def __init__(self,userFile:str,fichierConfiguration:str):
+    def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
         #Ouverture fichier de configuration
         self.fichierUtilisateur = jsonWork(userFile)
         self.configNeuron = jsonWork(fichierConfiguration)
+        self.fichierVille = jsonWork(fileFete)
         #initilisation du gestionnaire du reseau de neuron
         self.detecteurOS = OS()
-        self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron,self.detecteurOS)
+        self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron,self.detecteurOS,self.fichierVille)
         #set des atribut
         self.gestionnaire.setAll()
         self.gestionnaire.setVilleMeteo()

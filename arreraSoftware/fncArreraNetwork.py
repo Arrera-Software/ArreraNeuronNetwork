@@ -200,13 +200,14 @@ class fncArreraNetwork:
                 return  "Desoler "+self.genre+" mais il a un probleme"
             else :
                 return "Desoler "+self.user+" mais il a un probleme"
+        feteJour = self.gestionNeuron.getFeteJour()
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)
         listeActu = self.actu.Actu()
         text2 = text+" Les actualites son "+listeActu[nbrand1]+"."+listeActu[nbrand2]+"."+listeActu[nbrand3]
-        
-        return text2
+        text3 = text2+".Et aujourd'hui on fete les "+feteJour
+        return text3
     
     def sortieTraducteur(self,langInt:str,langOut:int):
         self.traducteur.fenetreTrad(langInt,langOut)

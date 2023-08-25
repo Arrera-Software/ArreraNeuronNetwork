@@ -9,6 +9,11 @@ class jsonWork :
             dict = json.load(openfile)[flag]
         return str(dict)
     
+    def lectureJSONMultiFlag(self,flag1,flag2):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            dict = json.load(openfile)[flag1][flag2]
+        return str(dict)
+    
     def lectureJSONList(self,flag):
         with open(self.fichier, 'r' , encoding='utf-8') as openfile:
             liste = json.load(openfile)[flag]

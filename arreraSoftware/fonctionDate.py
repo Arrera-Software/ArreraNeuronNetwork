@@ -19,6 +19,9 @@ class fncDate :
     def jour(self):
         return str(self.date.day)
     
+    def nbMois(self):
+        return str(self.date.month)
+    
     def mois(self):
         mois = int(self.date.month)
         if mois == 1 :
