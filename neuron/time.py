@@ -38,6 +38,16 @@ class neuroneTime :
                     else :
                         if "minuteur" in requette :
                             text = self.fonctionArreraNetwork.sortieOpenSimpleMinuteur()
+                        else :
+                            if "ajouter un rendez-vous" in requette or "ajout un rendez-vous"  in requette or "ajout evenement" in requette or "ajout rappel" in requette or "ajout un evenement" in requette or "ajout un rappel" in requette or "ajouter un evenement" in requette or "ajouter  un rappel" in requette:
+                                text = self.fonctionArreraNetwork.sortieAjoutEvent()
+                            else :
+                                if "suppr un rendez-vous" in requette or "supprimer un rendez-vous"  in requette or "suppr evenement" in requette or "suppr rappel" in requette or "suppr un evenement" in requette or "suppr un rappel" in requette or "supprimer un evenement" in requette or "supprimer un rappel" in requette:
+                                    text = self.fonctionArreraNetwork.sortieSupprEvent()
+                                else :
+                                    if "evenement d'aujourd'hui" in requette or "evenement du jour" in requette or "rendez-vous d'aujourd'hui" or "rappel aujourd'hui" in requette:
+                                        text = self.fonctionArreraNetwork.sortieEvenementDay()
+                                    
             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)

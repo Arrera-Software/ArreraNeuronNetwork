@@ -1,4 +1,5 @@
 import datetime
+from datetime import  timedelta
 
 class fncDate :
     def __init__(self):
@@ -17,10 +18,18 @@ class fncDate :
         return str(self.date.time().second)
     
     def jour(self):
-        return str(self.date.day)
+        jour = self.date.day
+        if jour < 10 :
+            return "0"+str(jour)
+        else :
+            return str(jour)
     
     def nbMois(self):
-        return str(self.date.month)
+        mois = self.date.month
+        if mois < 10 :
+            return "0"+str(mois)
+        else :
+            return str(mois)    
     
     def mois(self):
         mois = int(self.date.month)
@@ -62,3 +71,8 @@ class fncDate :
     
     def annes(self):
         return str(self.date.year)
+
+    def dateTowmoro(self):
+        dateHier = self.date - timedelta(days=1)
+        return str(dateHier.strftime("%Y-%m-%d"))
+        

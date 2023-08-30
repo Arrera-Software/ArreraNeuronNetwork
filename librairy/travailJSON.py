@@ -31,3 +31,27 @@ class jsonWork :
         writeFile = open(self.fichier, 'w', encoding='utf-8')
         dict[flag] = valeur
         json.dump(dict,writeFile,indent=2)
+    
+    def dictJson(self):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            dict = json.load(openfile)
+        return dict
+       
+    def compteurFlagJSON(self):
+        openfile = open(self.fichier, 'r' , encoding='utf-8')
+        dict = json.load(openfile)
+        openfile.close()
+        return len(dict)
+    
+    def supprDictReorg(self,flag):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            dict = json.load(openfile)
+            del dict[flag]
+            newDict = {}
+            newKey = 0
+            for cle in sorted(dict.keys(), key=lambda x: int(x)):
+                newDict[str(newKey)] = dict[cle]
+                newKey += 1
+            writeFile = open(self.fichier, 'w', encoding='utf-8')
+            json.dump(newDict,writeFile,indent=2)
+            writeFile.close()

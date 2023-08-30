@@ -29,5 +29,6 @@
     "dictSite":{
         
     },
-    "moteurRecherche":""
+    "moteurRecherche":"",
+    "emplacementEvenenement" :"evenementUser.json"
 }

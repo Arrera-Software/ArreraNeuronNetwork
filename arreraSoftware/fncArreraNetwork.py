@@ -1,8 +1,12 @@
+#module pyhon
 from tkinter import*
 import random
-from word2number import w2n
+#librairy Arrera
 from librairy.travailJSON import *
+from librairy.openSoftware import*
+#objet de fonctionement du reseau
 from ObjetsNetwork.gestion import*
+#differente fonctionnalitée
 from arreraSoftware.fonctionLecture import *
 from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
@@ -12,7 +16,8 @@ from arreraSoftware.fonctionCalculatrice import *
 from arreraSoftware.fonctionRecherche import *
 from arreraSoftware.fonctionDate import *
 from arreraSoftware.fonctionHorloge import*
-from librairy.openSoftware import*
+from arreraSoftware.fonctionCalendar import *
+
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS):
         #Recuperation des objet
@@ -39,6 +44,7 @@ class fncArreraNetwork:
         self.objetRecherche = fncArreraSearch()
         self.objetDate = fncDate()
         self.objetHorloge = fncArreraHorloge()
+        self.objetCalendar = fncArreraCalendar(self.configNeuron,self.gestionNeuron)
         self.objetHorloge.setAtributJSON(self.configNeuron)    
         
     def reading(self):
@@ -574,4 +580,40 @@ class fncArreraNetwork:
         else :
             text = "Okay je te lance l'application minuteur"
         self.objetHorloge.modeMinuteur()
-        return text                   
+        return text   
+    
+    def sortieAjoutEvent(self):
+        self.objetCalendar.addEvenemnt()
+        return "Ok"    
+    
+    def sortieSupprEvent(self):
+        self.objetCalendar.supprEvenement()
+        return "Ok"    
+    
+    def sortieEvenementDay(self):
+        nb , listEvent = self.objetCalendar.checkEvenement()  
+        if nb == 0 :
+            if self.etatVous == True :
+                return "Vous avez aucun évenement aujourd'hui"
+            else :
+                return "Tu as rien de prévu aujourd'hui"  
+        else :
+            if self.etatVous == True :
+                text = "Vous avez "+str(nb)+" prévu évenement aujourd'hui "
+            else :
+                text = "Tu as "+str(nb)+" prévu évenement aujourd'hui "
+            if nb > 1 :
+                text = text + "qui sont "
+            else :
+                text = text + "qui est "
+            for i in range(0,nb) :
+                if i == nb-1:
+                    text = text + listEvent[i] + "."  
+                else :
+                    if i == nb-2 :
+                        text = text + listEvent[i] + " et "
+                    else :
+                        text = text + listEvent[i] + "," 
+                
+            
+            return text
