@@ -1,24 +1,36 @@
 # Arrera Neuron Network
-Reseau de condition pour les assistant Ryley et Six 
 
-## Reseau de condition
+Arrera Neuron Network et un projet qui a pour but de simplifier le developpemt des assistant Arrera qui son SIX et Ryley 
 
-main [X]
+# Fonction du reseau 
 
-software [X]
-
-api [X] 
-
-Time [ ]a faire 
-
-search [ ] en cours
-
-chatbot [X] 
-
-Open [X]
-
-## lien vers le discord 
-
-[Serveur discord support](https://discord.gg/hFxxUtdk8Y)
-
-Sur ce serveur discord vous pourrai poser des question sur le ChatBots et aider a son developement
+- Lire un texte
+- Faire des calcule simple
+- Enregistrer des video youtube
+- Ouvrir une calculatrice
+- ouvrir les notes de l'utilisateur
+- Ouvrir le navigateur internet
+- Ouvrir le logiciel de présentation
+- Ouvre le logiciel de traitement de texte
+- Ouvre le logiciel de tableur
+- Dire l’heure
+- Dire la date
+- Chronometre
+- Minuteur
+- Horloge
+- fonction bigsearch (Qui lance un recheche google,bing,brave,duckduckgo,qwant et ecosia en meme temps )
+- Recherche sur internet
+- Actualités
+- Ouvrir youtube
+- Donner la meteo
+- Ouvrir Stokage cloud
+- Resumer d’actualites et meteo
+- Donner la temperature
+- Donner les coordonnés GPS
+- Faire un étinéraire
+- Traduction
+- Ouvrir 5 site internet
+- Ouvrir 5 logiciel 
+- Ouvrir logiciel de musique
+- Permet de dire si on a enregistrer des evenement 
+- Enregister des envenement
