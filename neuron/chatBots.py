@@ -392,9 +392,14 @@ class neuroneDiscution :
                                                                 text = "Ok "+self.user+" ,Je reste la si tu a besoin de moi."
                                                         else :
                                                             if "oui" in requette : 
-                                                                text = "OK parfais"                                           
-                                                                
-                                                                                                    
+                                                                text = "OK parfais" 
+                                                            else :
+                                                                if "merci" in requette :
+                                                                    if self.etatVous == True :
+                                                                        text = "De rien "+self.genre+" je reste a votre servie si vous avez besoin de moi" 
+                                                                    else :
+                                                                        text = "De rien "+self.user+" je peux encore t'aider"                                         
+                                                                                                                                                             
         #Mise a jour de la valeur                                                               
         valeur = self.gestionNeuron.verrifSortie(text)
         #Retour des valeur
