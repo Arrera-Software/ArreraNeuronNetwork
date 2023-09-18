@@ -170,7 +170,7 @@ class formule :
                         else:
                             if hour >= 15 and hour <= 18:
                                 if self.vous:
-                                    formule = "Bonne fin d'après-midi,"
+                                    formule = "Au revoir,"
                                     cmp = self.genre + " " + self.user
                                     phrase = ["Passez une bonne fin d'après-midi.", "Profitez bien de votre fin de soirée."]
                                 else:
@@ -182,7 +182,7 @@ class formule :
                                     if self.vous:
                                         formule = "Bonne soirée,"
                                         cmp = self.genre + " " + self.user
-                                        phrase = ["Profitez bien de votre soirée.", "Reposez-vous bien ce soir."]
+                                        phrase = ["Profitez bien ", "Reposez-vous bien ce soir."]
                                     else:
                                         formule = "Au revoir,"
                                         cmp = self.user
