@@ -6,10 +6,13 @@ import os
 import subprocess
 
 class GPS:
-    def __init__(self,KeyGPS:str):
-        self.g = geocoder.ip('me')
+    def __init__(self,KeyGPS:str,etatConnextion:bool):
         self.url = "http://api.openweathermap.org/geo/1.0/"
         self.key = KeyGPS
+        if etatConnextion == True :
+            self.g = geocoder.ip('me')
+        else :
+            self.g = ""
             
     def recuperationCordonneePossition(self):
         if self.g.ok:

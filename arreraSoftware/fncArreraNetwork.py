@@ -39,7 +39,7 @@ class fncArreraNetwork:
         #initialisation objet 
         self.fncReading = fncLecture(self.configNeuron,self.detecteurOS)
         self.actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
-        self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602")
+        self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
         self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.itineraires = GPSItineraires()
         self.traducteur = fncArreraTrad(self.configNeuron)

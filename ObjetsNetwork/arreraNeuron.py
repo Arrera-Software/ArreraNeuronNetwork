@@ -31,6 +31,8 @@ class ArreraNetwork :
         #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
         self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,self.detecteurOS,self.network)
+        #recuperation etat du reseau
+        self.etatReseau = self.network.getEtatInternet()
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
         self.main = neuroneMain(self.fonctionAssistant,self.gestionnaire)
@@ -58,7 +60,11 @@ class ArreraNetwork :
         valeur = 0
         valeur,text = self.main.neurone(requette,self.oldSorti,self.oldRequette)
         if valeur == 0 :
-            valeur,text = self.api.neurone(requette,self.oldSorti,self.oldRequette)
+            #api
+            if self.etatReseau == True :
+                valeur,text = self.api.neurone(requette,self.oldSorti,self.oldRequette)
+            else :
+                valeur = 0 
             if valeur == 0 :
                 #software
                 valeur,text = self.software.neurone(requette,self.oldSorti,self.oldRequette)
@@ -70,7 +76,10 @@ class ArreraNetwork :
                         valeur,text = self.open.neurone(requette,self.oldSorti,self.oldRequette)
                         if valeur == 0 :
                             #search
-                            valeur,text = self.search.neurone(requette,self.oldSorti,self.oldSorti)
+                            if self.etatReseau == True :
+                                valeur,text = self.search.neurone(requette,self.oldSorti,self.oldSorti)
+                            else :
+                                valeur = 0
                             if valeur == 0 :
                                 valeur,text = self.chatBot.neurone(requette,self.oldSorti,self.oldRequette)
                                 if valeur == 0 :
