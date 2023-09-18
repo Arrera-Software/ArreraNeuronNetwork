@@ -1,6 +1,7 @@
 from ObjetsNetwork.arreraNeuron import *
 import webbrowser
 from librairy.travailJSON import *
+
 nom =  jsonWork("configNeuron1.json").lectureJSON("name")
 valeur =  0 
 print("Beinvenu sur le programme de teste du chatbot. ")

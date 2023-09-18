@@ -5,6 +5,7 @@ from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
+from ObjetsNetwork.network import*
 from neuron.main import*
 from neuron.API import*
 from neuron.software import*
@@ -23,12 +24,13 @@ class ArreraNetwork :
         #initilisation du gestionnaire du reseau de neuron
         self.detecteurOS = OS()
         self.gestionnaire = gestionNetwork(self.fichierUtilisateur,self.configNeuron,self.detecteurOS,self.fichierVille)
+        self.network = network()
         #set des atribut
         self.gestionnaire.setAll()
         self.gestionnaire.setVilleMeteo()
         #initialisation objet
         self.formuleNeuron = formule(self.gestionnaire)
-        self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,self.detecteurOS)
+        self.fonctionAssistant = fncArreraNetwork(self.configNeuron,self.gestionnaire,self.detecteurOS,self.network)
         #initilisation des neuron
         self.chatBot = neuroneDiscution(self.gestionnaire,self.formuleNeuron)
         self.main = neuroneMain(self.fonctionAssistant,self.gestionnaire)

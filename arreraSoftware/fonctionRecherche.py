@@ -5,13 +5,8 @@ from translate import*
 
 
 class fncArreraSearch :
-    def __init__(self):
-        self.etatConnexion = bool
-        try:
-            _ = requests.get("https://duckduckgo.com",timeout=5)
-            self.etatConnexion = True
-        except requests.ConnectionError :
-            self.etatConnexion = False
+    def __init__(self,etatConnextion:bool):
+        self.etatConnexion = etatConnextion
         
     
     def braveSearch(self,query:str):
