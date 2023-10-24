@@ -260,7 +260,7 @@ class fncArreraNetwork:
     
     def sortieOpenSoftware(self,soft):
         dictionnaireSoft = self.gestionNeuron.getDictionnaireLogiciel()
-        objet = OpenSoftware(dictionnaireSoft[soft])
+        objet = OpenSoftware(self.gestionNeuron,dictionnaireSoft[soft])
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -282,7 +282,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("wordLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -311,7 +311,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("exelLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -340,7 +340,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -369,7 +369,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("browserLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -406,7 +406,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("noteLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :
@@ -429,7 +429,7 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.gestionNeuron.getValeurfichierUtilisateur("musicLinux")
-        objet = OpenSoftware(logiciel)
+        objet = OpenSoftware(self.gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
             if self.etatVous == True :

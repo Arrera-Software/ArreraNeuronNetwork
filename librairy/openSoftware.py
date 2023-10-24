@@ -1,23 +1,24 @@
 from librairy.dectectionOS import*
+from ObjetsNetwork.gestion import*
 import subprocess
 import os
 
 class OpenSoftware :
-    def __init__(self,emplacementLogiciel:str):
+    def __init__(self,objetGestion:gestionNetwork,name:str):
         detecteurOS = OS()
         self.windowsOS = detecteurOS.osWindows()
         self.linuxOS = detecteurOS.osLinux()
         self.emplacement = ""
         self.etat = bool
-        if emplacementLogiciel == "":
+        if name == "":
             self.etat = False
         else :
             if self.windowsOS == True and self.linuxOS == False :
-                self.emplacement = os.path.abspath(emplacementLogiciel+".lnk")
+                self.emplacement = os.path.abspath(objetGestion.getEmplacementSoftwareWindows()+name+".lnk")
                 self.etat = True
             else :
                 if self.windowsOS == False and self.linuxOS == True : 
-                        self.emplacement = emplacementLogiciel
+                        self.emplacement = name
                         self.etat = True
                 else :
                     self.etat = False

@@ -168,3 +168,6 @@ class gestionNetwork:
         jours = str(date.day)
         mois = str(date.month)
         return self.fichierVille.lectureJSONMultiFlag(mois,jours)
+    
+    def getEmplacementSoftwareWindows(self):
+        return self.ConfigFile.lectureJSON("emplacementSoftWindows")
