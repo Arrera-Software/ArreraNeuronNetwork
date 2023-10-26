@@ -293,13 +293,13 @@ class neuroneDiscution :
                                                        else :
                                                             if "bien" in requette :
                                                                 if "Comment se passe votre début de soirée ?" in self.oldsortie :
-                                                                   text = "Ceci me réjouit "+self.genre+" vous voulez"  
+                                                                   text = "Ceci me réjouit "+self.genre+" que vous voulez faire ce soir ?"  
                                                                 else :
                                                                     if "Comment se passe votre soirée ?" in self.oldsortie:
-                                                                        text =  "Parfais je peux vous aidez ce soir "+self.genre
+                                                                        text =  "Parfais en quoi je vous aidez ce soir "+self.genre+" ?"
                                                                     else :
                                                                         if "Comment se passe ta matinée ?" in self.oldsortie:
-                                                                            text = "Parfais sur quoi on travaille aujourd'hui"
+                                                                            text = "Parfais sur quoi on travaille aujourd'hui ?"
                                                             else : 
                                                                 if "je profite du calme du matin pour travailler peu"  in requette and "Que faites-vous si tôt ?" in self.oldsortie or  "juste des choses à faire." in requette and "Que faites-vous si tôt ?" in self.oldsortie  :
                                                                     nbRand = random.randint(0,1)
