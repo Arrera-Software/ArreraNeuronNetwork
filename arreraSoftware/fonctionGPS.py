@@ -46,7 +46,7 @@ class GPS:
         if reponse.status_code == 400 :
             return False
         else :
-            self.nameVille = reponse.json()[0]["local_names"]["fr"]
+            self.nameVille = reponse.json()[0]["name"]
             return True
     
     def getNameVille(self):
