@@ -61,7 +61,7 @@ class ArreraCalendarAddSuppr :
     
     def _fenetreTk(self):
         #fenetre tkinter
-        self.screen = Tk()
+        self.screen = Toplevel()
         self.screen.title(self.name+" : Calendrier")
         self.screen.iconphoto(False,PhotoImage(file=self.icon))
         self.screen.maxsize(500,200)
@@ -95,11 +95,11 @@ class ArreraCalendarAddSuppr :
         
 
     def interfaceAdd(self):
-        self._fenetreTk()
+        self._fenetreToplevel()
         self.cadreAdd.pack()
         
     def interfaceSuppr(self):
-        self._fenetreTk()
+        self._fenetreToplevel()
         self.cadreSuppr.pack()
         dictEvenement = self.fileEvenement.dictJson()
         if len(dictEvenement) == 0 :

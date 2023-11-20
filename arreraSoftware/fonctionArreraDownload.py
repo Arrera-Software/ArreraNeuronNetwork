@@ -22,7 +22,7 @@ class fncArreraVideoDownload :
         
     def fenetreDownload(self,mode):
         #fenetre TK
-        self.screen = Tk()
+        self.screen = Toplevel()
         self.varChoix = StringVar(self.screen)
         self.screen.title(self.name+": Youtube Download")
         self.screen.config(bg=self.color)

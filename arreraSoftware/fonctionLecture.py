@@ -20,7 +20,7 @@ class fncLecture :
         
     def fenetreLecture(self):
         #initilisation et configuration fenetre tkinter 
-        self.screen = Tk()
+        self.screen = Toplevel()
         self.screen.title(self.name+" : lecture ")
         if self.windowsOS == True :
             self.screen.minsize(600,500)

@@ -14,7 +14,7 @@ class fncCalculatrice :
         
         
     def calculatrice(self,mode):
-        self.screen = Tk()
+        self.screen = Toplevel()
         self.imageTouche()
         self.screen.title(self.name+" : Calculatrice")
         self.screen.iconphoto(False,PhotoImage(file=self.icon))

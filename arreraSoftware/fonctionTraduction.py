@@ -21,7 +21,7 @@ class fncArreraTrad :
         self.paroleInt = Speaking(langInt)
         self.paroleOut = Speaking(langOut)
         #Creation fenetre Tkinter
-        self.fenetreTK = Tk()
+        self.fenetreTK = Toplevel()
         self.fenetreTK.title(self.name+" : Outil de traduction")
         self.fenetreTK.maxsize(1050,550)
         self.fenetreTK.minsize(1050,550)
