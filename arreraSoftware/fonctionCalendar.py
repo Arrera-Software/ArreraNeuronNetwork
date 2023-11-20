@@ -95,11 +95,11 @@ class ArreraCalendarAddSuppr :
         
 
     def interfaceAdd(self):
-        self._fenetreToplevel()
+        self._fenetreTk()
         self.cadreAdd.pack()
         
     def interfaceSuppr(self):
-        self._fenetreToplevel()
+        self._fenetreTk()
         self.cadreSuppr.pack()
         dictEvenement = self.fileEvenement.dictJson()
         if len(dictEvenement) == 0 :
