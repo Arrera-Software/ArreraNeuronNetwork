@@ -16,13 +16,7 @@ class fncArreraCalendar :
         color = self.__configNeuron.lectureJSON("interfaceColor")
         textColor = self.__configNeuron.lectureJSON("interfaceTextColor")
         self.__interfaceCalendar = ArreraCalendarAddSuppr(color,icon,textColor,name,self.__fichierEvenement,self.__objetDate)
-        dictEvenement =  self.__fichierEvenement.dictJson()
-        nbEvent = self.__fichierEvenement.compteurFlagJSON()
-        dateHier = self.__objetDate.dateTowmoro()
         
-            
-    
-    
     def addEvenemnt(self):
         self.__interfaceCalendar.interfaceAdd()
     

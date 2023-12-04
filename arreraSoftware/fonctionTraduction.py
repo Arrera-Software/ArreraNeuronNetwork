@@ -7,7 +7,6 @@ from tkinter import*
 class fncArreraTrad :
     def __init__(self,ConfigNeuron:jsonWork):
         #objet
-        
         self.__configNeuron = ConfigNeuron
         #varriable fenetre Tkinter
         self.__name = self.__configNeuron.lectureJSON("name")
@@ -18,8 +17,6 @@ class fncArreraTrad :
     def fenetreTrad(self,langInt:str,langOut:str):
         #objet
         self.__traducteur = Translator(to_lang=langInt,from_lang=langOut)
-        self.__paroleInt = Speaking(langInt)
-        self.__paroleOut = Speaking(langOut)
         #Creation fenetre Tkinter
         self.__fenetreTK = Toplevel()
         self.__fenetreTK.title(self.__name+" : Outil de traduction")

@@ -14,7 +14,6 @@ class fncLecture :
         self.__lang = ""
         self.__langSet = 0
         self.__color = self.__configNeuron.lectureJSON("interfaceColor")
-        self.__textColor = self.__configNeuron.lectureJSON("interfaceTextColor")
         self.__windowsOS = detecteurSys.osWindows()
         self.__linuxOS = detecteurSys.osLinux()
         

@@ -12,15 +12,9 @@ class neuroneMain :
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.__oldrequette = oldRequette
-        self.__oldsortie = oldSortie
-        self.__nbDiscution = self.__gestionNeuron.getNbDiscution()
-        self.__name = self.__gestionNeuron.getName()
         self.__etatVous = self.__gestionNeuron.getVous()
         self.__genre = self.__gestionNeuron.getGenre()
         self.__user = self.__gestionNeuron.getUser()
-        self.__bute = self.__gestionNeuron.getBute()
-        self.__createur = self.__gestionNeuron.getCreateur()
         #reponse du neuron main
         if "lire un truc" in requette or  "lit un truc" in requette :
             text = self.__fonctionArreraNetwork.reading()

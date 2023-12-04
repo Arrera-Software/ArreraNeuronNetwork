@@ -10,7 +10,6 @@ class neuroneAPI :
         self.__etatVilleDomicile = self.__gestionNeuron.getEtatLieuDomicile()
         self.__etatVilleTravail = self.__gestionNeuron.getEtatLieuTravail()
         self.__villeGPS1 = ""
-        self.__villeGPS2 = ""
         self.__listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                         "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
                         "suedois","danois","norvegien","finnois","grec","hebreu","indonesien"]
@@ -22,7 +21,6 @@ class neuroneAPI :
         
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         #Initilisation des variable nbRand et text et valeur
-        nbRand = 0
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant

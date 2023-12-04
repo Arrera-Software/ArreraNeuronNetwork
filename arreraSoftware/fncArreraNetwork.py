@@ -26,12 +26,8 @@ class fncArreraNetwork:
         self.__gestionNeuron = gestionNeuron
         self.__detecteurOS = decteurOS
         self.__objetNetwork =  network
-        self.__icon = self.__configNeuron.lectureJSON("iconAssistant")
         #Recuperation varriable
-        self.__color = self.__configNeuron.lectureJSON("interfaceColor")
-        self.__textColor = self.__configNeuron.lectureJSON("interfaceTextColor")
         self.__etatVous = self.__gestionNeuron.getVous()
-        self.__name = self.__gestionNeuron.getName()
         self.__user = self.__gestionNeuron.getUser()
         self.__genre = self.__gestionNeuron.getGenre()
         #Recuperation etat de la connextion internet

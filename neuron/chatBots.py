@@ -41,7 +41,7 @@ class neuroneDiscution :
         self.__oldrequette = oldRequette
         self.__oldsortie = oldSortie
         self.__nbDiscution = self.__gestionNeuron.getNbDiscution()
-        self.name = self.__gestionNeuron.getName()
+        self.__name = self.__gestionNeuron.getName()
         self.__etatVous = self.__gestionNeuron.getVous()
         self.__genre = self.__gestionNeuron.getGenre()
         self.__user = self.__gestionNeuron.getUser()
@@ -153,7 +153,7 @@ class neuroneDiscution :
                                             else : 
                                                 phrase = "Je te l'ai deja dit "+self.__user+" je peux pas trop t'en dire plus je n'est pas de passion ni de hobbie je ne suis qu'un programme informatique qui a pour bute "+self.__bute+"." 
                                         else :
-                                            phrase ="Je suis un assistant personnelle nommer "+self.name+" qui a été crée par "+self.__createur+". Je n'ai pas pas de passion ni de hobbie du a ma conditions de programme informatique."
+                                            phrase ="Je suis un assistant personnelle nommer "+self.__name+" qui a été crée par "+self.__createur+". Je n'ai pas pas de passion ni de hobbie du a ma conditions de programme informatique."
                                         text = "Ok ," + phrase
                                     else :
                                         if "tu es qui" in requette or "présente toi" in requette or "présentation" in requette or "qui es tu" in requette or "qui es tu" in requette:
@@ -161,16 +161,16 @@ class neuroneDiscution :
                                                 finPhrase = str("Vous me parler depuis un moment sans savoir qui je suis ?")
                                             else :
                                                 finPhrase = str("")
-                                            if self.name == "SIX" :
+                                            if self.__name == "SIX" :
                                                 debutPhrase = str("Je suis Six , l'assistant personnelle Vocal de "+self.__genre+" "+self.__user+" "+". Crée par Baptiste Pauchet pour simplifier et automatiser l'uttilisation de son ordinateur et pour le divertire.")
                                             else :
-                                                if self.name == "Ryley" :
+                                                if self.__name == "Ryley" :
                                                     debutPhrase = str("Je suis Ryley un assistant textuel crée a l'origine par Baptiste Pauchet et Wiruto2 .Pour les assister dans leurs etude et par la suite les aider dans le developement informatique")
                                                 else : 
-                                                    debutPhrase = str("Je suis "+self.name+" crée par "+ self.__createur + ". Qui a pour bute "+ self.__bute+ ". Et qui utilise un algorythme d'assistant personnelle developper par Arrera Software")
+                                                    debutPhrase = str("Je suis "+self.__name+" crée par "+ self.__createur + ". Qui a pour bute "+ self.__bute+ ". Et qui utilise un algorythme d'assistant personnelle developper par Arrera Software")
                                             text = debutPhrase+finPhrase
                                         else :
-                                            if "toujours la"  in requette  or "es tu la" in requette or self.name in requette or "tu es la" in requette or "vous étes la" in requette or "vous etes la" in requette :
+                                            if "toujours la"  in requette  or "es tu la" in requette or self.__name in requette or "tu es la" in requette or "vous étes la" in requette or "vous etes la" in requette :
                                                 nbRand = random.randint(0,2)
                                                 listReponse = ["Je ne peut pas partir de tout façon",
                                                                 "Je ne pas partir tant que je peux servir",
