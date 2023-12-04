@@ -49,6 +49,10 @@ class ArreraNetwork :
         self.__oldSorti = text
         return str(text)
     
+    def setOld(self,requette:str,sortie:str):
+        self.oldRequette = requette
+        self.oldSorti = sortie
+    
     def shutdown(self):
         hour = datetime.datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
