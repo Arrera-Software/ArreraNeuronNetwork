@@ -3,36 +3,36 @@ from datetime import  timedelta
 
 class fncDate :
     def __init__(self):
-        self.date= datetime.datetime.now()
+        self.__date= datetime.datetime.now()
     
     def rafraichisement(self):
-        self.date= datetime.datetime.now()
+        self.__date= datetime.datetime.now()
         
     def heure(self):
-        return str(self.date.time().hour)
+        return str(self.__date.time().hour)
 
     def minute(self):
-        return str(self.date.time().minute)
+        return str(self.__date.time().minute)
     
     def second(self):
-        return str(self.date.time().second)
+        return str(self.__date.time().second)
     
     def jour(self):
-        jour = self.date.day
+        jour = self.__date.day
         if jour < 10 :
             return "0"+str(jour)
         else :
             return str(jour)
     
     def nbMois(self):
-        mois = self.date.month
+        mois = self.__date.month
         if mois < 10 :
             return "0"+str(mois)
         else :
             return str(mois)    
     
     def mois(self):
-        mois = int(self.date.month)
+        mois = int(self.__date.month)
         if mois == 1 :
             monthSTR = "Janvier"
         else :
@@ -70,9 +70,9 @@ class fncDate :
         return monthSTR
     
     def annes(self):
-        return str(self.date.year)
+        return str(self.__date.year)
 
     def dateTowmoro(self):
-        dateHier = self.date - timedelta(days=1)
+        dateHier = self.__date - timedelta(days=1)
         return str(dateHier.strftime("%Y-%m-%d"))
         

@@ -6,194 +6,194 @@ from librairy.travailJSON import*
 
 class fncArreraHorloge :
     def __init__(self):
-        self.mainColor = str
-        self.textColor = str
-        self.icon = str
-        self.name = str
-        self.emplacementBIP = str
+        self.__mainColor = str
+        self.__textColor = str
+        self.__icon = str
+        self.__name = str
+        self.__emplacementBIP = str
         
         
     def setAttribut(self,mainColor:str,textColor:str,icon:str,name:str,bip:str):
-        self.mainColor = mainColor
-        self.textColor = textColor
-        self.icon = icon
-        self.name = name
-        self.emplacementBIP = bip
+        self.__mainColor = mainColor
+        self.__textColor = textColor
+        self.__icon = icon
+        self.__name = name
+        self.__emplacementBIP = bip
     
     def setAtributJSON(self,fileJSON:jsonWork):
-        self.mainColor = fileJSON.lectureJSON("interfaceColor")
-        self.textColor = fileJSON.lectureJSON("interfaceTextColor")
-        self.icon = fileJSON.lectureJSON("iconAssistant")
-        self.name = fileJSON.lectureJSON("name")
-        self.emplacementBIP = fileJSON.lectureJSON("emplacementAssetHorloge")
+        self.__mainColor = fileJSON.lectureJSON("interfaceColor")
+        self.__textColor = fileJSON.lectureJSON("interfaceTextColor")
+        self.__icon = fileJSON.lectureJSON("iconAssistant")
+        self.__name = fileJSON.lectureJSON("name")
+        self.__emplacementBIP = fileJSON.lectureJSON("emplacementAssetHorloge")
           
     def _fenetreTK(self):
-        self.screen = Toplevel()
-        self.screen.iconphoto(False,PhotoImage(file=self.icon))
-        self.screen.title(self.name+" : Horloge")
-        self.screen.minsize(500,500)
-        self.screen.maxsize(500,500)
-        self.screen.config(bg=self.mainColor)
-        self.frameBottom = Frame(self.screen,bg=self.mainColor,width=500,height=35)
-        self.frameChrono = Frame(self.screen,bg=self.mainColor,height=465,width=500)
-        self.frameMinuteur = Frame(self.screen,bg=self.mainColor,height=465,width=500)
-        self.frameHorloge = Frame(self.screen,bg=self.mainColor,height=465,width=500)
-        self.btn2 = Button(self.frameBottom,text="Chronometre",font=("arial","13"),bg=self.mainColor,fg=self.textColor,command=self._affichageChrono)
-        self.btn3 = Button(self.frameBottom,text="Minuteur",font=("arial","13"),bg=self.mainColor,fg=self.textColor,command=self._affichageMinuteur)
-        self.btn4 = Button(self.frameBottom,text="Horloge",font=("arial","13"),bg=self.mainColor,fg=self.textColor,command=self._affichageHorloge)
-        self.objetChrono = CHRONOMETRE(self.frameChrono,self.mainColor,self.textColor)
-        self.objetAppMinuteur = AppMinuteur(self.frameMinuteur,self.mainColor,self.textColor,self.emplacementBIP)
-        self.objetHorloge = Clock(self.frameHorloge,self.mainColor,self.textColor)
-        self._affichageBottom()
+        self.__screen = Toplevel()
+        self.__screen.iconphoto(False,PhotoImage(file=self.__icon))
+        self.__screen.title(self.__name+" : Horloge")
+        self.__screen.minsize(500,500)
+        self.__screen.maxsize(500,500)
+        self.__screen.config(bg=self.__mainColor)
+        self.__frameBottom = Frame(self.__screen,bg=self.__mainColor,width=500,height=35)
+        self.__frameChrono = Frame(self.__screen,bg=self.__mainColor,height=465,width=500)
+        self.__frameMinuteur = Frame(self.__screen,bg=self.__mainColor,height=465,width=500)
+        self.__frameHorloge = Frame(self.__screen,bg=self.__mainColor,height=465,width=500)
+        self.__btn2 = Button(self.__frameBottom,text="Chronometre",font=("arial","13"),bg=self.__mainColor,fg=self.__textColor,command=self.__affichageChrono)
+        self.__btn3 = Button(self.__frameBottom,text="Minuteur",font=("arial","13"),bg=self.__mainColor,fg=self.__textColor,command=self.__affichageMinuteur)
+        self.__btn4 = Button(self.__frameBottom,text="Horloge",font=("arial","13"),bg=self.__mainColor,fg=self.__textColor,command=self.__affichageHorloge)
+        self.__objetChrono = CHRONOMETRE(self.__frameChrono,self.__mainColor,self.__textColor)
+        self.__objetAppMinuteur = AppMinuteur(self.__frameMinuteur,self.__mainColor,self.__textColor,self.__emplacementBIP)
+        self.__objetHorloge = Clock(self.__frameHorloge,self.__mainColor,self.__textColor)
+        self.__affichageBottom()
     
-    def _affichageBottom(self):
-        self.btn2.place(x=0,y=0)
-        self.btn3.place(x=150,y=0)
-        self.btn4.place(x=260,y=0)
-        self.frameBottom.pack(side="bottom")
+    def __affichageBottom(self):
+        self.__btn2.place(x=0,y=0)
+        self.__btn3.place(x=150,y=0)
+        self.__btn4.place(x=260,y=0)
+        self.__frameBottom.pack(side="bottom")
     
     def resetAffichage(self):
-        self.frameChrono.place_forget()
-        self.frameHorloge.place_forget()
-        self.frameMinuteur.place_forget()
+        self.__frameChrono.place_forget()
+        self.__frameHorloge.place_forget()
+        self.__frameMinuteur.place_forget()
     
     def modeChrono(self):
         self._fenetreToplevel()
-        self.objetChrono.bootChrono()
-        self.frameChrono.place(x=0,y=0)
+        self.__objetChrono.bootChrono()
+        self.__frameChrono.place(x=0,y=0)
     
     def modeMinuteur(self):
         self._fenetreToplevel()
-        self.objetAppMinuteur.bootAppMinuteur()
-        self.frameMinuteur.place(x=0,y=0)
+        self.__objetAppMinuteur.bootAppMinuteur()
+        self.__frameMinuteur.place(x=0,y=0)
     
     def modeBootMinuteur(self,duration:int) :
         self._fenetreToplevel()
-        self.objetAppMinuteur.bootMinuteurInstentaner(duration)
-        self.frameMinuteur.place(x=0,y=0)
+        self.__objetAppMinuteur.bootMinuteurInstentaner(duration)
+        self.__frameMinuteur.place(x=0,y=0)
     
     def modeHorloge(self):
         self._fenetreToplevel()
-        self.objetHorloge.bootClock()
-        self.frameHorloge.place(x=0,y=0)
+        self.__objetHorloge.bootClock()
+        self.__frameHorloge.place(x=0,y=0)
     
-    def _affichageChrono(self):
+    def __affichageChrono(self):
         self.resetAffichage() 
-        self.objetChrono.bootChrono()
-        self.frameChrono.place(x=0,y=0)
+        self.__objetChrono.bootChrono()
+        self.__frameChrono.place(x=0,y=0)
     
-    def _affichageMinuteur(self):
+    def __affichageMinuteur(self):
         self.resetAffichage()
-        self.objetAppMinuteur.bootAppMinuteur()
-        self.frameMinuteur.place(x=0,y=0)
+        self.__objetAppMinuteur.bootAppMinuteur()
+        self.__frameMinuteur.place(x=0,y=0)
     
-    def _affichageHorloge(self):
+    def __affichageHorloge(self):
         self.resetAffichage()
-        self.objetHorloge.bootClock()
-        self.frameHorloge.place(x=0,y=0)
+        self.__objetHorloge.bootClock()
+        self.__frameHorloge.place(x=0,y=0)
         
         
 class CHRONOMETRE:
     def __init__(self,master,mainColor,textColor):
-        self.master = master
-        self.mainColor = mainColor
-        self.textColor = textColor
-        self.label = Label(self.master, text="00:00", font=("arial", 40),bg=self.mainColor,fg=self.textColor)
-        self.start_button = Button(self.master, text="Start", command=self.start ,font=("arial", 15),bg=self.mainColor,fg=self.textColor)
-        self.stop_button = Button(self.master, text="Stop", command=self.stop ,font=("arial", 15),bg=self.mainColor,fg=self.textColor)
-        self.reset_button = Button(self.master, text="Reset", command=self.reset ,font=("arial", 15),bg=self.mainColor,fg=self.textColor)
-        self.is_running = bool
-        self.current_time = int
-        self.start_time = int
-        self.elapsed_time = int
+        self.__master = master
+        self.__mainColor = mainColor
+        self.__textColor = textColor
+        self.__label = Label(self.__master, text="00:00", font=("arial", 40),bg=self.__mainColor,fg=self.__textColor)
+        self.__startButton = Button(self.__master, text="Start", command=self.start ,font=("arial", 15),bg=self.__mainColor,fg=self.__textColor)
+        self.__stopButton = Button(self.__master, text="Stop", command=self.stop ,font=("arial", 15),bg=self.__mainColor,fg=self.__textColor)
+        self.__resetButton = Button(self.__master, text="Reset", command=self.reset ,font=("arial", 15),bg=self.__mainColor,fg=self.__textColor)
+        self.__isRunning = bool
+        self.__currentTime = int
+        self.__startTime = int
+        self.__elapsedTime = int
 
     def bootChrono(self):
-        self.label.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.start_button.place(x=40,y=215)
-        self.stop_button.place(x=400,y=215)
-        self.reset_button.place(x=215,y=315)
-        self.is_running = False
-        self.current_time = 0
-        self.start_time = 0
-        self.elapsed_time = 0
+        self.__label.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.__startButton.place(x=40,y=215)
+        self.__stopButton.place(x=400,y=215)
+        self.__resetButton.place(x=215,y=315)
+        self.__isRunning = False
+        self.__currentTime = 0
+        self.__startTime = 0
+        self.__elapsedTime = 0
 
     def start(self):
-        if not self.is_running:
-            self.start_time = time.time()
-            self.is_running = True
+        if not self.__isRunning:
+            self.__startTime = time.time()
+            self.__isRunning = True
             self.UpdateTemps()
 
     def stop(self):
-        if self.is_running:
-            self.is_running = False
+        if self.__isRunning:
+            self.__isRunning = False
 
     def reset(self):
-        self.current_time = 0
-        self.start_time = 0
-        self.elapsed_time = 0
-        self.label.configure(text="00:00")
+        self.__currentTime = 0
+        self.__startTime = 0
+        self.__elapsedTime = 0
+        self.__label.configure(text="00:00")
 
     def UpdateTemps(self):
-        if self.is_running:
-            self.current_time = time.time()
-            self.elapsed_time = self.current_time - self.start_time
-            minutes, seconds = divmod(self.elapsed_time, 60)
-            self.label.configure(text=f"{int(minutes):02d}:{int(seconds):02d}")
-            self.master.after(10, self.UpdateTemps)
+        if self.__isRunning:
+            self.__currentTime = time.time()
+            self.__elapsedTime = self.__currentTime - self.__startTime
+            minutes, seconds = divmod(self.__elapsedTime, 60)
+            self.__label.configure(text=f"{int(minutes):02d}:{int(seconds):02d}")
+            self.__master.after(10, self.UpdateTemps)
 
         
 class MINUTEUR:
     def __init__(self, master,mainColor,textColor,emplacementBIP:str):
-        self.master = master
-        self.mainColor = mainColor
-        self.textColor =  textColor
-        self.emplacementBIP =  emplacementBIP
-        self.duration = int
-        self.label = Label(master, font=("arial", 40),bg=self.mainColor,fg=self.textColor)
-        self.stopBTN = Button(master, text="Stop", command=self.stop,font=("arial", 15),bg=self.mainColor,fg=self.textColor)
-        self.running = False
-        self.currentTime = 0
-        self.startTime = 0
-        self.elapsedTime = 0
+        self.__master = master
+        self.__mainColor = mainColor
+        self.__textColor =  textColor
+        self.__emplacementBIP =  emplacementBIP
+        self.__duration = int
+        self.__label = Label(master, font=("arial", 40),bg=self.__mainColor,fg=self.__textColor)
+        self.__stopBTN = Button(master, text="Stop", command=self.stop,font=("arial", 15),bg=self.__mainColor,fg=self.__textColor)
+        self.__running = False
+        self.__currentTime = 0
+        self.__startTime = 0
+        self.__elapsedTime = 0
 
         
     def bootMinuteur(self,duration:int):
-        self.duration = duration
-        self.objetAPP = AppMinuteur(self.master,self.mainColor,self.textColor,self.emplacementBIP)
-        self.label.configure(text=self.FormatTemps(self.duration))
-        self.label.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.stopBTN.place(x=215,y=315)
-        self.currentTime = 0
-        self.startTime = 0
-        self.elapsedTime = 0
-        self.objetAPP.setOlminuteur(duration)
-        if not self.running:
-            self.startTime = time.time()
-            self.running = True
+        self.__duration = duration
+        self.__objetAPP = AppMinuteur(self.__master,self.__mainColor,self.__textColor,self.__emplacementBIP)
+        self.__label.configure(text=self.FormatTemps(self.__duration))
+        self.__label.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.__stopBTN.place(x=215,y=315)
+        self.__currentTime = 0
+        self.__startTime = 0
+        self.__elapsedTime = 0
+        self.__objetAPP.setOlminuteur(duration)
+        if not self.__running:
+            self.__startTime = time.time()
+            self.__running = True
             self.UpdateHorloge()
 
     def stop(self):
-        self.label.place_forget()
-        self.stopBTN.place_forget()
-        self.objetAPP.bootAppMinuteur()
-        if self.running:
-            self.running = False
+        self.__label.place_forget()
+        self.__stopBTN.place_forget()
+        self.__objetAPP.bootAppMinuteur()
+        if self.__running:
+            self.__running = False
 
 
     def UpdateHorloge(self):
-        if self.running:
-            self.currentTime = time.time()
-            self.elapsedTime = self.currentTime - self.startTime
-            remaining_time = self.duration - self.elapsedTime
+        if self.__running:
+            self.__currentTime = time.time()
+            self.__elapsedTime = self.__currentTime - self.__startTime
+            remaining_time = self.__duration - self.__elapsedTime
             if remaining_time <= 0:
-                playsound(self.emplacementBIP)
+                playsound(self.__emplacementBIP)
                 time.sleep(0.5)
                 self.stop()
-                self.label.place_forget()
-                self.stopBTN.place_forget()
-                self.objetAPP.bootAppMinuteur()
-            self.label.configure(text=self.FormatTemps(remaining_time))
-            self.master.after(10, self.UpdateHorloge)
+                self.__label.place_forget()
+                self.__stopBTN.place_forget()
+                self.__objetAPP.bootAppMinuteur()
+            self.__label.configure(text=self.FormatTemps(remaining_time))
+            self.__master.after(10, self.UpdateHorloge)
 
     def FormatTemps(self, time):
         minutes, seconds = divmod(time, 60)
@@ -202,61 +202,61 @@ class MINUTEUR:
 
 class AppMinuteur :
     def __init__(self,master,mainColor:str,textColor:str,emplacementBIP:str):
-        self.master = master
-        self.mainColor = mainColor
-        self.textColor = textColor
-        self.emplacementBIP = emplacementBIP
-        self.oldMinuteur = 0
-        self.zoneEntrer = Frame(master,bg=mainColor)
-        self.entryMin = Entry(self.zoneEntrer,width=5,font=("arial","15"))
-        self.entrySec = Entry(self.zoneEntrer,width=5,font=("arial","15"))
-        self.labelMin = Label(self.zoneEntrer,text="min",font=("arial","15"),bg=mainColor,fg=textColor)
-        self.labelSec = Label(self.zoneEntrer,text="s",font=("arial","15"),bg=mainColor,fg=textColor)
-        self.btnBoot = Button(master,text="Demarrer",bg=mainColor,fg=textColor,font=("arial","15"),command=self._boot)
-        self.btnPrereglage1 = Button(master,text="15 minutes",bg=mainColor,fg=textColor,command=self._prereglage1,font=("arial","15"))
-        self.btnPrereglage2 = Button(master,text="30 minutes",bg=mainColor,fg=textColor,command=self._prereglage2,font=("arial","15"))
-        self.btnOldMinuteur = Button(master,text="Relancer minuteur",bg=mainColor,fg=textColor,font=("arial","15"),command=self._bootOldMinuteur)
-        self.objetMinuteur = MINUTEUR(self.master,self.mainColor,self.textColor,self.emplacementBIP)
+        self.__master = master
+        self.__mainColor = mainColor
+        self.__textColor = textColor
+        self.__emplacementBIP = emplacementBIP
+        self.__oldMinuteur = 0
+        self.__zoneEntrer = Frame(master,bg=mainColor)
+        self.__entryMin = Entry(self.__zoneEntrer,width=5,font=("arial","15"))
+        self.__entrySec = Entry(self.__zoneEntrer,width=5,font=("arial","15"))
+        self.__labelMin = Label(self.__zoneEntrer,text="min",font=("arial","15"),bg=mainColor,fg=textColor)
+        self.__labelSec = Label(self.__zoneEntrer,text="s",font=("arial","15"),bg=mainColor,fg=textColor)
+        self.__btnBoot = Button(master,text="Demarrer",bg=mainColor,fg=textColor,font=("arial","15"),command=self._boot)
+        self.__btnPrereglage1 = Button(master,text="15 minutes",bg=mainColor,fg=textColor,command=self._prereglage1,font=("arial","15"))
+        self.__btnPrereglage2 = Button(master,text="30 minutes",bg=mainColor,fg=textColor,command=self._prereglage2,font=("arial","15"))
+        self.__btnOldMinuteur = Button(master,text="Relancer minuteur",bg=mainColor,fg=textColor,font=("arial","15"),command=self._bootOldMinuteur)
+        self.__objetMinuteur = MINUTEUR(self.__master,self.__mainColor,self.__textColor,self.__emplacementBIP)
     
     def bootAppMinuteur(self):    
-        self.zoneEntrer.place(relx=0.5, rely=0.5, anchor=CENTER)
-        self.entryMin.pack(side="left")
-        self.labelMin.pack(side="left")
-        self.entrySec.pack(side="left")
-        self.labelSec.pack(side="left")
-        self.btnBoot.place(x=185,y=315)
-        self.btnPrereglage1.place(x=15,y=315)
-        self.btnPrereglage2.place(x=370,y=315)
-        if self.oldMinuteur != 0 :
-            self.btnOldMinuteur.place(x=205,y=415)
+        self.__zoneEntrer.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.__entryMin.pack(side="left")
+        self.__labelMin.pack(side="left")
+        self.__entrySec.pack(side="left")
+        self.__labelSec.pack(side="left")
+        self.__btnBoot.place(x=185,y=315)
+        self.__btnPrereglage1.place(x=15,y=315)
+        self.__btnPrereglage2.place(x=370,y=315)
+        if self.__oldMinuteur != 0 :
+            self.__btnOldMinuteur.place(x=205,y=415)
             
     def bootMinuteurInstentaner(self,duration:int):
-        self.objetMinuteur.bootMinuteur(duration)
+        self.__objetMinuteur.bootMinuteur(duration)
         
     def setOlminuteur(self,nb:int):
-        self.oldMinuteur =  nb
+        self.__oldMinuteur =  nb
     
     def _noAffichage(self):
-        self.zoneEntrer.place_forget()
-        self.btnBoot.place_forget()
-        self.btnPrereglage1.place_forget()
-        self.btnPrereglage2.place_forget()
+        self.__zoneEntrer.place_forget()
+        self.__btnBoot.place_forget()
+        self.__btnPrereglage1.place_forget()
+        self.__btnPrereglage2.place_forget()
     
     def _prereglage1(self):
         self._noAffichage()
-        self.objetMinuteur.bootMinuteur(900)
+        self.__objetMinuteur.bootMinuteur(900)
     
     def _prereglage2(self):
         self._noAffichage()
-        self.objetMinuteur.bootMinuteur(1800)
+        self.__objetMinuteur.bootMinuteur(1800)
         
     def _bootOldMinuteur(self):
         self._noAffichage() 
-        self.objetMinuteur.bootMinuteur(self.oldMinuteur)
+        self.__objetMinuteur.bootMinuteur(self.__oldMinuteur)
     
     def _boot(self):
-        valMin = self.entryMin.get()
-        valSec = self.entrySec.get()
+        valMin = self.__entryMin.get()
+        valSec = self.__entrySec.get()
         if valMin == "" :
             min = 0
         else :       
@@ -270,20 +270,20 @@ class AppMinuteur :
         else :
             self._noAffichage()      
             temps = min + sec
-            self.objetMinuteur.bootMinuteur(temps)
+            self.__objetMinuteur.bootMinuteur(temps)
             
         
 class Clock() :
     def __init__(self,master,mainColor,textColor):
-        self.master = master
-        self.clock = Label(master, font = ("arial", 60, "bold"),bg=mainColor,fg=textColor)
+        self.__master = master
+        self.__clock = Label(master, font = ("arial", 60, "bold"),bg=mainColor,fg=textColor)
 
     def bootClock(self):
-        self.clock.place(relx=0.5, rely=0.5, anchor=CENTER)
+        self.__clock.place(relx=0.5, rely=0.5, anchor=CENTER)
         self.time()
     
     def time(self): 
         self.running = True
         current_time = time.strftime("%H:%M:%S")
-        self.clock.config(text=current_time)
-        self.master.after(10,self.time)
+        self.__clock.config(text=current_time)
+        self.__master.after(10,self.time)

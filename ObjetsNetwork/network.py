@@ -3,9 +3,9 @@ class network:
     def __init__(self) :
         try:
             _ = requests.get("https://duckduckgo.com",timeout=5)
-            self.etatConnexion = True
+            self.__etatConnexion = True
         except requests.ConnectionError :
-            self.etatConnexion = False
+            self.__etatConnexion = False
     
     def getEtatInternet(self):
-        return self.etatConnexion
+        return self.__etatConnexion

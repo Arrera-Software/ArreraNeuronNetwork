@@ -6,33 +6,33 @@ import os
 class OpenSoftware :
     def __init__(self,objetGestion:gestionNetwork,name:str):
         detecteurOS = OS()
-        self.windowsOS = detecteurOS.osWindows()
-        self.linuxOS = detecteurOS.osLinux()
-        self.emplacement = ""
-        self.etat = bool
+        self.__windowsOS = detecteurOS.osWindows()
+        self.__linuxOS = detecteurOS.osLinux()
+        self.__emplacement = ""
+        self.__etat = bool
         if name == "":
-            self.etat = False
+            self.__etat = False
         else :
-            if self.windowsOS == True and self.linuxOS == False :
-                self.emplacement = os.path.abspath(objetGestion.getEmplacementSoftwareWindows()+name+".lnk")
-                self.etat = True
+            if self.__windowsOS == True and self.__linuxOS == False :
+                self.__emplacement = os.path.abspath(objetGestion.getEmplacementSoftwareWindows()+name+".lnk")
+                self.__etat = True
             else :
-                if self.windowsOS == False and self.linuxOS == True : 
-                        self.emplacement = name
-                        self.etat = True
+                if self.__windowsOS == False and self.__linuxOS == True : 
+                        self.__emplacement = name
+                        self.__etat = True
                 else :
-                    self.etat = False
+                    self.__etat = False
                
     def open(self):
-        if self.etat == False:
+        if self.__etat == False:
             return False
         else :
-            if self.windowsOS == False and self.linuxOS == True :
-                subprocess.Popen([self.emplacement],stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if self.__windowsOS == False and self.__linuxOS == True :
+                subprocess.Popen([self.__emplacement],stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 return True 
             else :
-                if self.windowsOS == True and self.linuxOS == False :
-                    subprocess.Popen(["cmd", "/c", "start", self.emplacement])
+                if self.__windowsOS == True and self.__linuxOS == False :
+                    subprocess.Popen(["cmd", "/c", "start", self.__emplacement])
                     return True
                 else :
                     return False

@@ -5,7 +5,7 @@ from ObjetsNetwork.chaineCarractere import *
 class neuroneTime :
     def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork) :
         #Init objet
-        self.gestionNeuron = gestionnaire
+        self.__gestionNeuron = gestionnaire
         self.fonctionArreraNetwork = fncArreraNetwork
 
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
@@ -14,15 +14,15 @@ class neuroneTime :
         text = ""
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.oldrequette = oldRequette
-        self.oldsortie = oldSortie
-        self.nbDiscution = self.gestionNeuron.getNbDiscution()
-        self.name = self.gestionNeuron.getName()
-        self.etatVous = self.gestionNeuron.getVous()
-        self.genre = self.gestionNeuron.getGenre()
-        self.user = self.gestionNeuron.getUser()
-        self.bute = self.gestionNeuron.getBute()
-        self.createur = self.gestionNeuron.getCreateur()
+        self.__oldrequette = oldRequette
+        self.__oldsortie = oldSortie
+        self.__nbDiscution = self.__gestionNeuron.getNbDiscution()
+        self.__name = self.__gestionNeuron.getName()
+        self.__etatVous = self.__gestionNeuron.getVous()
+        self.__genre = self.__gestionNeuron.getGenre()
+        self.__user = self.__gestionNeuron.getUser()
+        self.__bute = self.__gestionNeuron.getBute()
+        self.__createur = self.__gestionNeuron.getCreateur()
         #reponse neuron time
         if "heure" in requette :
             text = self.fonctionArreraNetwork.sortieHeure()
@@ -50,6 +50,6 @@ class neuroneTime :
                                     
             
         #Mise a jour de la valeur                                                               
-        valeur = self.gestionNeuron.verrifSortie(text)
+        valeur = self.__gestionNeuron.verrifSortie(text)
         #Retour des valeur
         return valeur , text

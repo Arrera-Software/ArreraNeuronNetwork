@@ -22,49 +22,49 @@ from arreraSoftware.fonctionCalendar import *
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
         #Recuperation des objet
-        self.configNeuron = fichierConfigurationNeuron
-        self.gestionNeuron = gestionNeuron
-        self.detecteurOS = decteurOS
-        self.objetNetwork =  network
-        self.icon = self.configNeuron.lectureJSON("iconAssistant")
+        self.__configNeuron = fichierConfigurationNeuron
+        self.__gestionNeuron = gestionNeuron
+        self.__detecteurOS = decteurOS
+        self.__objetNetwork =  network
+        self.__icon = self.__configNeuron.lectureJSON("iconAssistant")
         #Recuperation varriable
-        self.color = self.configNeuron.lectureJSON("interfaceColor")
-        self.textColor = self.configNeuron.lectureJSON("interfaceTextColor")
-        self.etatVous = self.gestionNeuron.getVous()
-        self.name = self.gestionNeuron.getName()
-        self.user = self.gestionNeuron.getUser()
-        self.genre = self.gestionNeuron.getGenre()
+        self.__color = self.__configNeuron.lectureJSON("interfaceColor")
+        self.__textColor = self.__configNeuron.lectureJSON("interfaceTextColor")
+        self.__etatVous = self.__gestionNeuron.getVous()
+        self.__name = self.__gestionNeuron.getName()
+        self.__user = self.__gestionNeuron.getUser()
+        self.__genre = self.__gestionNeuron.getGenre()
         #Recuperation etat de la connextion internet
-        etatConnextion = self.objetNetwork.getEtatInternet()
+        etatConnextion = self.__objetNetwork.getEtatInternet()
         #initialisation objet 
-        self.fncReading = fncLecture(self.configNeuron,self.detecteurOS)
-        self.actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
-        self.gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
-        self.meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
-        self.itineraires = GPSItineraires()
-        self.traducteur = fncArreraTrad(self.configNeuron)
-        self.downloader = fncArreraVideoDownload(self.configNeuron)
-        self.calculatrice = fncCalculatrice(self.configNeuron)  
-        self.objetRecherche = fncArreraSearch(etatConnextion)
-        self.objetDate = fncDate()
-        self.objetHorloge = fncArreraHorloge()
-        self.objetCalendar = fncArreraCalendar(self.configNeuron,self.gestionNeuron)
-        self.objetHorloge.setAtributJSON(self.configNeuron)    
+        self.__fncReading = fncLecture(self.__configNeuron,self.__detecteurOS)
+        self.__actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
+        self.__gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
+        self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
+        self.__itineraires = GPSItineraires()
+        self.__traducteur = fncArreraTrad(self.__configNeuron)
+        self.__downloader = fncArreraVideoDownload(self.__configNeuron)
+        self.__calculatrice = fncCalculatrice(self.__configNeuron)  
+        self.__objetRecherche = fncArreraSearch(etatConnextion)
+        self.__objetDate = fncDate()
+        self.__objetHorloge = fncArreraHorloge()
+        self.__objetCalendar = fncArreraCalendar(self.__configNeuron,self.__gestionNeuron)
+        self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         
     def reading(self):
-        self.fncReading.fenetreLecture()
-        if self.etatVous == True :
-            text = "Voila "+self.genre+" J'éspére que sa vous sera utile"
+        self.__fncReading.fenetreLecture()
+        if self.__etatVous == True :
+            text = "Voila "+self.__genre+" J'éspére que sa vous sera utile"
         else :
-            text = "Voila "+self.user+".Je suis toujour la si tu as besoin de moi."
+            text = "Voila "+self.__user+".Je suis toujour la si tu as besoin de moi."
         return text
 
     def sortieActualités(self):
-        listActu = self.actu.Actu()
+        listActu = self.__actu.Actu()
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)
-        if self.etatVous == True :
+        if self.__etatVous == True :
             text = "Les actualites du jour sont "+listActu[nbrand1]+" , "+listActu[nbrand2] + " et "+listActu[nbrand3]+"."
         else :
             text = "Les news du jour sont "+listActu[nbrand1]+" , "+listActu[nbrand2] + " et "+listActu[nbrand3]+"."
@@ -72,87 +72,87 @@ class fncArreraNetwork:
     
     def sortieMeteo(self,ville):
         if ville == "" :
-            sortieGPS = self.gps.recuperationCordonneePossition()
+            sortieGPS = self.__gps.recuperationCordonneePossition()
             if sortieGPS == True :
-                sortieGPS = self.gps.recuperationNameVillePosition()
+                sortieGPS = self.__gps.recuperationNameVillePosition()
                 if sortieGPS == True :
-                    nameVille = self.gps.getNameVille()
-                    lon = self.gps.getlonPossition()
-                    lat = self.gps.getlatPossition()
-                    sortiMeteo = self.meteo.recuperationDataMeteo(lat,lon)
+                    nameVille = self.__gps.getNameVille()
+                    lon = self.__gps.getlonPossition()
+                    lat = self.__gps.getlatPossition()
+                    sortiMeteo = self.__meteo.recuperationDataMeteo(lat,lon)
                     if sortiMeteo == True :
-                        if self.etatVous == True :
+                        if self.__etatVous == True :
                             nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" est "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C",
-                                            "La meteo a votre localisation est "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C"]
+                            listReponse = ["La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
+                                            "La meteo a votre localisation est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
                             text =  listReponse[nbrand]
                         else :
                             nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" est "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C",
-                                            "La meteo a ta localisation est de "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C"]
+                            listReponse = ["La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
+                                            "La meteo a ta localisation est de "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
                         
                             text =  listReponse[nbrand]
                     else :
-                        if self.etatVous == True :
-                            text = "Je suis désoler "+self.genre+" "+self.user+". Mais je ne parvien pas a recuperer la meteo"
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                         else :
-                            text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."  
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
                 else :
-                        if self.etatVous == True :
-                            text = "Je suis désoler "+self.genre+" "+self.user+". Mais je ne parvien pas a recuperer la meteo"
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                         else :
-                            text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."
             else :
-                        if self.etatVous == True :
-                            text = "Je suis désoler "+self.genre+" "+self.user+". Mais je ne parvien pas a recuperer la meteo"
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                         else :
-                            text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."
         else :
-            sortieGPS = self.gps.recuperationCordonneeVille(ville)
+            sortieGPS = self.__gps.recuperationCordonneeVille(ville)
             if sortieGPS == True :
-                lat = self.gps.getlatVille()
-                lon = self.gps.getLonVille()
-                sortiMeteo = self.meteo.recuperationDataMeteo(lat,lon)
+                lat = self.__gps.getlatVille()
+                lon = self.__gps.getLonVille()
+                sortiMeteo = self.__meteo.recuperationDataMeteo(lat,lon)
                 if  sortiMeteo == True:
                     nameVille =  ville
-                    if self.etatVous == True :
-                        text= "La meteo a "+nameVille+" est "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C"             
+                    if self.__etatVous == True :
+                        text= "La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"             
                     else :
-                        text = "La meteo a "+nameVille+" est "+self.meteo.getdescription()+" avec une température de "+self.meteo.gettemperature()+" °C"            
+                        text = "La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"            
                 else :
-                        if self.etatVous == True :
-                            text = "Je suis désoler "+self.genre+" "+self.user+". Mais je ne parvien pas a recuperer la meteo"
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                         else :
-                            text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."  
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
             else :
-                if self.etatVous == True :
-                    text = "Je suis désoler "+self.genre+" "+self.user+". Mais je ne parvien pas a recuperer la meteo"
+                if self.__etatVous == True :
+                    text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                 else :
-                    text = "Je suis désoler "+self.user+" je n'arrive pas a savoir la meteo."  
+                    text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
         return text   
     
     def sortieTemperature(self):
-        sortieGPS = self.gps.recuperationCordonneePossition()
+        sortieGPS = self.__gps.recuperationCordonneePossition()
         if sortieGPS == True :
-            lat = self.gps.getlatPossition()
-            lon = self.gps.getlonPossition()
-            sortieMeteo = self.meteo.recuperationDataMeteo(lat,lon)
+            lat = self.__gps.getlatPossition()
+            lon = self.__gps.getlonPossition()
+            sortieMeteo = self.__meteo.recuperationDataMeteo(lat,lon)
             if sortieMeteo == True :
-                if self.etatVous == True :
-                    text = "La temperature actuel dehors et de "+self.meteo.gettemperature()+"°C"
+                if self.__etatVous == True :
+                    text = "La temperature actuel dehors et de "+self.__meteo.gettemperature()+"°C"
                 else :
-                    text = "If fais "+self.meteo.gettemperature()+"°C"     
+                    text = "If fais "+self.__meteo.gettemperature()+"°C"     
         return text
     
     def sortieGPS(self):
-        sortieGPS = self.gps.recuperationCordonneePossition()
+        sortieGPS = self.__gps.recuperationCordonneePossition()
         if sortieGPS == True :
-            sortieGPS = self.gps.recuperationNameVillePosition()
+            sortieGPS = self.__gps.recuperationNameVillePosition()
             if sortieGPS == True :
-                lat = self.gps.getlatPossition()
-                lon = self.gps.getlonPossition()
-                nameVille = self.gps.getNameVille()
-                if self.etatVous == True :
+                lat = self.__gps.getlatPossition()
+                lon = self.__gps.getlonPossition()
+                nameVille = self.__gps.getNameVille()
+                if self.__etatVous == True :
                     text = "Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+"."
                 else :
                     text = "Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" ."
@@ -160,293 +160,293 @@ class fncArreraNetwork:
     
     def sortieItineraires(self,loc1:str,loc2:str):
         if loc1 == "loc" :
-            sortieGPS = self.gps.recuperationCordonneePossition()
+            sortieGPS = self.__gps.recuperationCordonneePossition()
             if sortieGPS == True :
-                self.gps.recuperationNameVillePosition()
-                loc = self.gps.getNameVille()
-                sortieGPS = self.itineraires.ouvertureItineraires(loc,loc2)
+                self.__gps.recuperationNameVillePosition()
+                loc = self.__gps.getNameVille()
+                sortieGPS = self.__itineraires.ouvertureItineraires(loc,loc2)
         else :
-            sortieGPS = self.itineraires.ouvertureItineraires(loc1,loc2)
+            sortieGPS = self.__itineraires.ouvertureItineraires(loc1,loc2)
         return sortieGPS
     
     def ResumerActualite(self):
         #Recuperation nom des villes
-        domicile = self.gestionNeuron.getValeurfichierUtilisateur("lieuDomicile")
-        travail = self.gestionNeuron.getValeurfichierUtilisateur("lieuTravail")
+        domicile = self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile")
+        travail = self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail")
         #Recuperation coordonne GPS
-        sortieGPS = self.gps.recuperationCordonneeVille(domicile)
+        sortieGPS = self.__gps.recuperationCordonneeVille(domicile)
         if sortieGPS == True :
-            sortieMeteo = self.meteo.recuperationDataMeteo(self.gps.getlatVille(),self.gps.getLonVille())
+            sortieMeteo = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
             if sortieMeteo == True:
-                tempDomicile = self.meteo.gettemperature()
-                descripDomicile = self.meteo.getdescription()
-                sortieGPS = self.gps.recuperationCordonneeVille(travail)
+                tempDomicile = self.__meteo.gettemperature()
+                descripDomicile = self.__meteo.getdescription()
+                sortieGPS = self.__gps.recuperationCordonneeVille(travail)
                 if sortieGPS == True :
-                    sortieMeteo = self.meteo.recuperationDataMeteo(self.gps.getlatVille(),self.gps.getLonVille())
+                    sortieMeteo = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
                     if sortieMeteo == True:
-                        tempTravail = self.meteo.gettemperature() 
-                        descripTravail = self.meteo.getdescription()
-                        if self.etatVous == True :
+                        tempTravail = self.__meteo.gettemperature() 
+                        descripTravail = self.__meteo.getdescription()
+                        if self.__etatVous == True :
                             text = "Le meteo a votre domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle a de votre lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
                         else :
                             text =  "Le meteo a ton domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle de ton lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
                     else :
-                        if self.etatVous == True :
-                            return  "Desoler "+self.genre+" mais il a un probleme"
+                        if self.__etatVous == True :
+                            return  "Desoler "+self.__genre+" mais il a un probleme"
                         else :
-                            return  "Desoler "+self.user+" mais il a un probleme"
+                            return  "Desoler "+self.__user+" mais il a un probleme"
                 else :
-                    if self.etatVous == True :
-                        return  "Desoler "+self.genre+" mais il a un probleme"
+                    if self.__etatVous == True :
+                        return  "Desoler "+self.__genre+" mais il a un probleme"
                     else :
-                        return  "Desoler "+self.user+" mais il a un probleme"
+                        return  "Desoler "+self.__user+" mais il a un probleme"
             else :
-                if self.etatVous == True :
-                    return  "Desoler "+self.genre+" mais il a un probleme"
+                if self.__etatVous == True :
+                    return  "Desoler "+self.__genre+" mais il a un probleme"
                 else :
-                    return  "Desoler "+self.user+" mais il a un probleme"
+                    return  "Desoler "+self.__user+" mais il a un probleme"
         else :
-            if self.etatVous == True :
-                return  "Desoler "+self.genre+" mais il a un probleme"
+            if self.__etatVous == True :
+                return  "Desoler "+self.__genre+" mais il a un probleme"
             else :
-                return "Desoler "+self.user+" mais il a un probleme"
-        feteJour = self.gestionNeuron.getFeteJour()
+                return "Desoler "+self.__user+" mais il a un probleme"
+        feteJour = self.__gestionNeuron.getFeteJour()
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)
-        listeActu = self.actu.Actu()
+        listeActu = self.__actu.Actu()
         text2 = text+" Les actualites son "+listeActu[nbrand1]+"."+listeActu[nbrand2]+"."+listeActu[nbrand3]
         text3 = text2+".Et aujourd'hui on fete les "+feteJour
         return text3
     
     def sortieTraducteur(self,langInt:str,langOut:int):
-        self.traducteur.fenetreTrad(langInt,langOut)
+        self.__traducteur.fenetreTrad(langInt,langOut)
         
     
     def sortieDownload(self,mode):
-        self.downloader.fenetreDownload(mode)
-        if self.etatVous == True:
+        self.__downloader.fenetreDownload(mode)
+        if self.__etatVous == True:
             if mode == "music" :
-                text = "J'espère que la musique que vous avez téléchargée vous rendra heureux "+self.genre+" ."
+                text = "J'espère que la musique que vous avez téléchargée vous rendra heureux "+self.__genre+" ."
             else :
-                text = "J'espère que la vidéo que vous avez téléchargée vous rendra heureux "+self.genre+" ."
+                text = "J'espère que la vidéo que vous avez téléchargée vous rendra heureux "+self.__genre+" ."
         else :
             if mode == "music" :
-                text =  "J'espère que la musique que vous avez téléchargée vous fera plaisir "+self.user+"."
+                text =  "J'espère que la musique que vous avez téléchargée vous fera plaisir "+self.__user+"."
             else :
-                text =  "J'espère que la vidéo que vous avez téléchargée vous fera plaisir "+self.user+"."
+                text =  "J'espère que la vidéo que vous avez téléchargée vous fera plaisir "+self.__user+"."
         
         return text
     
     def sortieCalculatrice(self,mode):
         if mode == "0":
-            if self.etatVous == True :
-                text = "Voila votre calculatrice "+self.genre
+            if self.__etatVous == True :
+                text = "Voila votre calculatrice "+self.__genre
             else :
                 text = "Voici la calculatrice"
         else :
             if mode == "1":
-                if self.etatVous == True :
-                    text = "Voila votre calculatrice en mode nombre complex "+self.genre
+                if self.__etatVous == True :
+                    text = "Voila votre calculatrice en mode nombre complex "+self.__genre
                 else :
                     text = "Voici la calculatrice en mode complexe" 
             else :
-                if self.etatVous == True :
-                    text = "Voila votre calculatrice en mode pythagore "+self.genre
+                if self.__etatVous == True :
+                    text = "Voila votre calculatrice en mode pythagore "+self.__genre
                 else :
                     text = "Voici la calculatrice en mode pythagore" 
-        self.calculatrice.calculatrice(mode)
+        self.__calculatrice.calculatrice(mode)
         return text
     
     def sortieOpenSoftware(self,soft):
-        dictionnaireSoft = self.gestionNeuron.getDictionnaireLogiciel()
-        objet = OpenSoftware(self.gestionNeuron,dictionnaireSoft[soft])
+        dictionnaireSoft = self.__gestionNeuron.getDictionnaireLogiciel()
+        objet = OpenSoftware(self.__gestionNeuron,dictionnaireSoft[soft])
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
-                text = "Ok je vous ouvre "+soft+" "+self.genre
+            if self.__etatVous == True :
+                text = "Ok je vous ouvre "+soft+" "+self.__genre
             else :
                 text = "Voici "+soft
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir "+soft
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir "+soft
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir "+soft
         return text
     
     def sortieOpenTraitementTexte(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("wordWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("wordWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("wordLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("wordLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de traitement de texte "+self.genre+" "+self.user,
-                               "Je vous ai ouvert votre logiciel de traitement de texte. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                listReponse = ["Voici votre logiciel de traitement de texte "+self.__genre+" "+self.__user,
+                               "Je vous ai ouvert votre logiciel de traitement de texte. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
                 text = listReponse[nbrand]
             else :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de traitement de texte " +self.user,
-                                "Je t'ai ouvert ton logiciel de traitement de texte. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                listReponse = ["Voici ton logiciel de traitement de texte " +self.__user,
+                                "Je t'ai ouvert ton logiciel de traitement de texte. En quoi puis-je t'aider de plus " + self.__user + " ?"]
                 text = listReponse[nbrand]
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel traitement de texte"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel traitement de texte"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel traitement de texte"
         return text
     
     def sortieOpenTableur(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("exelWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("exelWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("exelLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("exelLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de tableur "+self.genre+" "+self.user,
-                               "Je vous ai ouvert votre logiciel de tableur. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                listReponse = ["Voici votre logiciel de tableur "+self.__genre+" "+self.__user,
+                               "Je vous ai ouvert votre logiciel de tableur. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
                 text = listReponse[nbrand]
             else :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de tableur " +self.user,
-                                "Je t'ai ouvert ton logiciel de tableur. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                listReponse = ["Voici ton logiciel de tableur " +self.__user,
+                                "Je t'ai ouvert ton logiciel de tableur. En quoi puis-je t'aider de plus " + self.__user + " ?"]
                 text = listReponse[nbrand]
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel tableur"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel tableur"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel tableur"
         return text
     
     def sortieOpenDiapo(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("diapoWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de diaporama "+self.genre+" "+self.user,
-                               "Je vous ai ouvert votre logiciel de présentation. En quoi puis-je vous aider de plus "+self.genre+" ?"]
+                listReponse = ["Voici votre logiciel de diaporama "+self.__genre+" "+self.__user,
+                               "Je vous ai ouvert votre logiciel de présentation. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
                 text = listReponse[nbrand]
             else :
                 nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de présentation " +self.user,
-                                "Je t'ai ouvert ton logiciel de diaporama. En quoi puis-je t'aider de plus " + self.user + " ?"]
+                listReponse = ["Voici ton logiciel de présentation " +self.__user,
+                                "Je t'ai ouvert ton logiciel de diaporama. En quoi puis-je t'aider de plus " + self.__user + " ?"]
                 text = listReponse[nbrand]
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel de présentation"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel de présentation"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel de présentation"
         return text
     
     def sortieOpenBrowser(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("browserWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("browserLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 nbrand = random.randint(0,5)
-                listReponse = ["Voici votre navigateur web "+self.genre+" "+self.user,
-                               "Ok je vous ouvre votre explorateur web "+self.genre+" "+self.user,
-                               "Voila votre explorateur web "+self.genre,
-                               "Voici votre navigateur internet "+self.genre+" "+self.user,
-                               "Ok je vous ouvre votre explorateur internet "+self.genre+" "+self.user,
-                               "Voila votre explorateur internet "+self.genre,]
+                listReponse = ["Voici votre navigateur web "+self.__genre+" "+self.__user,
+                               "Ok je vous ouvre votre explorateur web "+self.__genre+" "+self.__user,
+                               "Voila votre explorateur web "+self.__genre,
+                               "Voici votre navigateur internet "+self.__genre+" "+self.__user,
+                               "Ok je vous ouvre votre explorateur internet "+self.__genre+" "+self.__user,
+                               "Voila votre explorateur internet "+self.__genre,]
                 text = listReponse[nbrand]
             else :
                 nbrand = random.randint(0,5)
-                listReponse = ["Voici ton navigateur web "+self.genre+" "+self.user,
-                               "Ok je t'ouvre ton explorateur web "+self.genre+" "+self.user,
-                               "Voila ton explorateur web "+self.genre,
-                               "Voici ton navigateur internet "+self.genre+" "+self.user,
-                               "Ok je t'ouvre ton explorateur internet "+self.genre+" "+self.user,
-                               "Voila ton explorateur internet "+self.genre,]
+                listReponse = ["Voici ton navigateur web "+self.__genre+" "+self.__user,
+                               "Ok je t'ouvre ton explorateur web "+self.__genre+" "+self.__user,
+                               "Voila ton explorateur web "+self.__genre,
+                               "Voici ton navigateur internet "+self.__genre+" "+self.__user,
+                               "Ok je t'ouvre ton explorateur internet "+self.__genre+" "+self.__user,
+                               "Voila ton explorateur internet "+self.__genre,]
                 text = listReponse[nbrand]
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre navigateur internet"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre navigateur internet"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton navigateur internet"
         return text
     
     def sortieOpenNote(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("noteWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("noteWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("noteLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("noteLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
-               text = "Voici vos notes "+self.genre
+            if self.__etatVous == True :
+               text = "Voici vos notes "+self.__genre
             else :
-                text = "Voici tes notes "+self.user
+                text = "Voici tes notes "+self.__user
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir vos notes"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir vos notes"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir tes notes"
         return text
     
     def sortieOpenMusic(self):
-        etatWindows = self.detecteurOS.osWindows()
-        etatLinux = self.detecteurOS.osLinux()
+        etatWindows = self.__detecteurOS.osWindows()
+        etatLinux = self.__detecteurOS.osLinux()
         if etatWindows == True and etatLinux == False :
-            logiciel = self.gestionNeuron.getValeurfichierUtilisateur("musicWindows")
+            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("musicWindows")
         else :
             if etatWindows == False and etatLinux == True :
-                logiciel = self.gestionNeuron.getValeurfichierUtilisateur("musicLinux")
-        objet = OpenSoftware(self.gestionNeuron,logiciel)
+                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("musicLinux")
+        objet = OpenSoftware(self.__gestionNeuron,logiciel)
         sortie = objet.open()
         if sortie == True :
-            if self.etatVous == True :
-               text = "Voici "+self.genre+" ,bonne écoute"
+            if self.__etatVous == True :
+               text = "Voici "+self.__genre+" ,bonne écoute"
             else :
-                text = "Voici "+self.user+" ,bonne écoute"
+                text = "Voici "+self.__user+" ,bonne écoute"
 
         else :
-            if self.etatVous == True :
-                text = "Je suis desoler "+self.genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel d'écoute musicale"
+            if self.__etatVous == True :
+                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel d'écoute musicale"
             else :
                 text = "Il un probleme qui m'empeche d'ouvrir ton logiciel d'écoute musicale"
         return text
     
     def sortieOpenYoutube(self):
         webbrowser.open("https://www.youtube.com/")
-        if self.etatVous == True :
+        if self.__etatVous == True :
             text = "Ok, je vous ai ouvert YouTube."
         else :
             text = "Ok, je t'ai ouvert YouTube."
@@ -454,9 +454,9 @@ class fncArreraNetwork:
         return text
     
     def sortieOpenCloud(self):
-        lien= self.gestionNeuron.getValeurfichierUtilisateur("lienCloud")
+        lien= self.__gestionNeuron.getValeurfichierUtilisateur("lienCloud")
         webbrowser.open(lien)
-        if self.etatVous == True :
+        if self.__etatVous == True :
             text = "Ok, je vous ai ouvert votre stokage distant."
         else :
             text = "Ok, je t'ai ouvert ton stokage distant."
@@ -464,16 +464,16 @@ class fncArreraNetwork:
         return text
     
     def sortieOpenSite(self,site):
-        dictionnaireSoft = self.gestionNeuron.getDictionnaireWeb()
+        dictionnaireSoft = self.__gestionNeuron.getDictionnaireWeb()
         webbrowser.open(dictionnaireSoft[site])
-        if self.etatVous == True :
-            text = "Ok je vous ouvre "+site+" "+self.genre
+        if self.__etatVous == True :
+            text = "Ok je vous ouvre "+site+" "+self.__genre
         else :
             text = "Voici "+site  
             
     def sortieRechercheSimple(self,requette:str):
-        moteurDefault = self.gestionNeuron.getMoteurRechercheDefault()
-        moteurUser = self.gestionNeuron.getValeurfichierUtilisateur("moteurRecherche")
+        moteurDefault = self.__gestionNeuron.getMoteurRechercheDefault()
+        moteurUser = self.__gestionNeuron.getValeurfichierUtilisateur("moteurRecherche")
         recherche = requette.replace("search","")
         recherche = recherche.replace("recherche","")
         if moteurUser == "":
@@ -483,126 +483,126 @@ class fncArreraNetwork:
     
         match moteur :
             case "duckduckgo" :
-                sortieRecherche = self.objetRecherche.duckduckgoSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.duckduckgoSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "google" :
-                sortieRecherche = self.objetRecherche.googleSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.googleSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "qwant" :
-                sortieRecherche = self.objetRecherche.QwantSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.QwantSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "ecosia" :
-                sortieRecherche = self.objetRecherche.EcosiaSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.EcosiaSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "brave" :
-                sortieRecherche = self.objetRecherche.braveSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.braveSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case "bing":
-                sortieRecherche = self.objetRecherche.bingSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.bingSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
                 else :
                     text = "Voici ta recherche "
             case other :
-                sortieRecherche = self.objetRecherche.duckduckgoSearch(recherche)
-                if self.etatVous ==  True:
+                sortieRecherche = self.__objetRecherche.duckduckgoSearch(recherche)
+                if self.__etatVous ==  True:
                     text = "Je vous ai fais votre recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
                 else :
                     text = "Je t'ai fais ta recherche sur duckduckgo car il un probleme avec mes fichier de configuration"
         if sortieRecherche == False :
-            if self.etatVous ==  True:
-                return "Je suis désoler "+self.genre+" . Mais je peux pas faire votre recherche si je ne suis pas connecter a internet"
+            if self.__etatVous ==  True:
+                return "Je suis désoler "+self.__genre+" . Mais je peux pas faire votre recherche si je ne suis pas connecter a internet"
             else :
-                return "Désoler "+self.user+" je suis pas connecter a internet"
+                return "Désoler "+self.__user+" je suis pas connecter a internet"
         else :
             return text
     
     def sortieGrandRecherche(self,requette:str):
         recherche = requette.replace("bigsearch","")
         recherche = recherche.replace("grand recherche","")
-        sortieRecheche = self.objetRecherche.GrandRecherche(recherche)
+        sortieRecheche = self.__objetRecherche.GrandRecherche(recherche)
         if sortieRecheche == True :
-            if self.etatVous == True :
-                text = "Voici le resultat de votre recherche sur plusieur moteur de recherche "+self.genre
+            if self.__etatVous == True :
+                text = "Voici le resultat de votre recherche sur plusieur moteur de recherche "+self.__genre
             else :
                 text = "Voici ton resultat " 
         else :
-            if self.etatVous == True :
-                text = "Votre appareil n'est pas connecter internet "+self.genre
+            if self.__etatVous == True :
+                text = "Votre appareil n'est pas connecter internet "+self.__genre
             else :
                 text = "Je suis desoler mais je suis pas connecter a internet"
                 
         return text
     
     def sortieHeure(self):
-        self.objetDate.rafraichisement()
-        heure = self.objetDate.heure()
-        minute = self.objetDate.minute()
+        self.__objetDate.rafraichisement()
+        heure = self.__objetDate.heure()
+        minute = self.__objetDate.minute()
         return "Il est "+heure+" heure "+minute + "  minute" 
     
     def sortieDate(self):
-        self.objetDate.rafraichisement()
-        jour = self.objetDate.jour()
-        mois = self.objetDate.mois()
-        annes = self.objetDate.annes()
+        self.__objetDate.rafraichisement()
+        jour = self.__objetDate.jour()
+        mois = self.__objetDate.mois()
+        annes = self.__objetDate.annes()
         return "On est le "+jour+" "+mois+" "+annes
     
     def sortieOpenChrono(self):
-        if self.etatVous == True :
-            text = "Tres bien je vous lance le chronométre "+self.genre
+        if self.__etatVous == True :
+            text = "Tres bien je vous lance le chronométre "+self.__genre
         else :
             text = "Okay je te lance le chronométre"
-        self.objetHorloge.modeChrono()
+        self.__objetHorloge.modeChrono()
         return text
 
     def sortieOpenHorloge(self):
-        if self.etatVous == True :
-            text = "Tres bien je vous lance l'horloge "+self.genre
+        if self.__etatVous == True :
+            text = "Tres bien je vous lance l'horloge "+self.__genre
         else :
             text = "Okay je te lance l'horloge"
-        self.objetHorloge.modeHorloge()
+        self.__objetHorloge.modeHorloge()
         return text
     
     def sortieOpenSimpleMinuteur(self):
-        if self.etatVous == True :
-            text = "Tres bien je vous lance l'application minuteur "+self.genre
+        if self.__etatVous == True :
+            text = "Tres bien je vous lance l'application minuteur "+self.__genre
         else :
             text = "Okay je te lance l'application minuteur"
-        self.objetHorloge.modeMinuteur()
+        self.__objetHorloge.modeMinuteur()
         return text   
     
     def sortieAjoutEvent(self):
-        self.objetCalendar.addEvenemnt()
+        self.__objetCalendar.addEvenemnt()
         return "Ok"    
     
     def sortieSupprEvent(self):
-        self.objetCalendar.supprEvenement()
+        self.__objetCalendar.supprEvenement()
         return "Ok"    
     
     def sortieEvenementDay(self):
-        nb , listEvent = self.objetCalendar.checkEvenement()  
+        nb , listEvent = self.__objetCalendar.checkEvenement()  
         if nb == 0 :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 return "Vous avez aucun évenement aujourd'hui"
             else :
                 return "Tu as rien de prévu aujourd'hui"  
         else :
-            if self.etatVous == True :
+            if self.__etatVous == True :
                 text = "Vous avez "+str(nb)+" prévu évenement aujourd'hui "
             else :
                 text = "Tu as "+str(nb)+" prévu évenement aujourd'hui "

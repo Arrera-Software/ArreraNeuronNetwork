@@ -6,11 +6,11 @@ from translate import*
 
 class fncArreraSearch :
     def __init__(self,etatConnextion:bool):
-        self.etatConnexion = etatConnextion
+        self.__etatConnexion = etatConnextion
         
     
     def braveSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://search.brave.com/search?q='
             urllink = requests.get(url+query+"&source=web")
             lienBrave = urllink.url
@@ -20,7 +20,7 @@ class fncArreraSearch :
             return False
 
     def AmazonSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://www.amazon.fr/s?k='
             urllink = requests.get(url+query)
             lienAmazon = urllink.url
@@ -30,7 +30,7 @@ class fncArreraSearch :
             return False
 
     def googleSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://www.google.com/search?q'
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -41,7 +41,7 @@ class fncArreraSearch :
             return False
 
     def duckduckgoSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://duckduckgo.com/?q='
             lienduck = url+query
             webbrowser.open(lienduck) 
@@ -50,7 +50,7 @@ class fncArreraSearch :
             return False 
 
     def QwantSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://www.qwant.com/?l=fr&q'
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -62,7 +62,7 @@ class fncArreraSearch :
 
 
     def EcosiaSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = 'https://www.ecosia.org/search'
             query = {'q': query}
             urllink = requests.get(url,query)
@@ -73,7 +73,7 @@ class fncArreraSearch :
             return False
 
     def bingSearch(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             url = "https://www.bing.com/search"
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -84,7 +84,7 @@ class fncArreraSearch :
             return False
     
     def GrandRecherche(self,query:str):
-        if self.etatConnexion == True :
+        if self.__etatConnexion == True :
             i = 0
             while(i!=7):
                 if (i==1) :
