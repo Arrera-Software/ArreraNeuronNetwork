@@ -384,7 +384,8 @@ class neuroneDiscution :
                                                                     if i == 0 :
                                                                         text = text + listFonction[i]
                                                                     else :
-                                                                        text = text + ","+listFonction[i]   
+                                                                        text = text + ","+listFonction[i]  
+                                                            text = text+" ." 
                                                     else :
                                                         if "non" in requette : 
                                                             if self.__etatVous == True :
@@ -393,7 +394,7 @@ class neuroneDiscution :
                                                                 text = "Ok "+self.__user+" ,Je reste la si tu a besoin de moi."
                                                         else :
                                                             if "oui" in requette : 
-                                                                text = "OK parfais" 
+                                                                text = "OK parfais ." 
                                                             else :
                                                                 if "merci" in requette :
                                                                     if self.__etatVous == True :
