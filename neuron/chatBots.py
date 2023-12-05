@@ -374,6 +374,7 @@ class neuroneDiscution :
                                                                         text = text + listFonction[i]
                                                                     else :
                                                                         text = text + ","+listFonction[i]
+                                                            text = text+" ."
                                                         else :
                                                             text = "je peux t'aidez a faire "
                                                             for i in range(0,nbFonction) :
