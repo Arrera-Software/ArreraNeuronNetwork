@@ -14,7 +14,6 @@ from neuron.search import*
 from neuron.time import*
 from ObjetsNetwork.chaineCarractere import *
 
-
 class ArreraNetwork :
     def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
         #Ouverture fichier de configuration
@@ -57,7 +56,6 @@ class ArreraNetwork :
         hour = datetime.datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)
-    
     
     def neuron(self,var:str) :
         requette = chaine.netoyage(str(var))

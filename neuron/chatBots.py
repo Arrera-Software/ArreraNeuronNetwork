@@ -53,7 +53,7 @@ class neuroneDiscution :
         else :
             if "raconter une blague" in requette or "raconte moi une blague" in requette or "raconte une blague" in requette :
                 if "vous etes pas drole" in self.__oldrequette or "tu es pas drole" in self.__oldrequette or "c'est pas drole" in self.__oldrequette or "pas drole" in self.__oldrequette :
-                    text ="Je peux pas raconter un blague si je suis pas drole"
+                    text ="Je peux pas raconter un blague si je suis pas drole."
                 else :
                     nbRand = random.randint(0,8)
                     text = self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
@@ -61,22 +61,22 @@ class neuroneDiscution :
                 if "vous etes pas drole" in requette  or "tu es pas drole" in requette or "c'est pas drole" in requette or "pas drole" in requette :
                     if "raconter une blague" in self.__oldrequette or "raconte moi une blague" in self.__oldrequette or "raconte une blague" in self.__oldrequette or "je vous en raconte une" in self.__oldsortie or "je t'en raconte une" in self.__oldsortie:
                         nbRand = random.randint(0,2)
-                        listReponse1 =  ["Désoler de ne pas etre drole pour vous "+self.__genre,
-                                        "Désoler si je ne suis pas drole "+self.__genre,
-                                        "Je peux vous en racontez une autre"]
-                        listReponse2 =  ["Désoler de ne pas etre drole pour toi "+self.__user,
-                                        "Désoler si je ne suis pas drole "+self.__user,
-                                        "Je peux t'en raconter une autre"]
+                        listReponse1 =  ["Désoler de ne pas etre drole pour vous "+self.__genre+" .",
+                                        "Désoler si je ne suis pas drole "+self.__genre+" .",
+                                        "Je peux vous en racontez une autre."]
+                        listReponse2 =  ["Désoler de ne pas etre drole pour toi "+self.__user+" .",
+                                        "Désoler si je ne suis pas drole "+self.__user+" .",
+                                        "Je peux t'en raconter une autre."]
                         if self.__etatVous == True:
                             text = listReponse1[nbRand]
                         else :
                             text = listReponse2[nbRand]
                     else :
                         nbRand = random.randint(0,1)
-                        listReponse1 = ["Pourquoi vous dites sa je ne vous es meme pas racompter une blague",
-                                        "Avant de dire sa , laissez-vous en raconter une"]
-                        listReponse2 = ["Pourquoi tu dit sa je ne t'en ai meme pas raconter une",
-                                        "Avant de dire sa , laisse t'en raconter une"]
+                        listReponse1 = ["Pourquoi vous dites sa je ne vous es meme pas racompter une blague.",
+                                        "Avant de dire sa , laissez-vous en raconter une."]
+                        listReponse2 = ["Pourquoi tu dit sa je ne t'en ai meme pas raconter une.",
+                                        "Avant de dire sa , laisse t'en raconter une."]
                         if self.__etatVous == True:
                             text = listReponse1[nbRand]
                         else :
@@ -85,10 +85,10 @@ class neuroneDiscution :
                     if "Avant de dire sa , laisse t'en raconter une" in self.__oldsortie or "Avant de dire sa , laissez-vous en raconter une" in self.__oldsortie :
                         if "non" in requette :
                             nbRand = random.randint(0,1)
-                            listReponse1 = ["Ok commme vous voulez "+self.__genre,
-                                            "Etes-vous vraiment sur "+self.__genre]
-                            listReponse2 = ["Ok comme tu veux "+self.__user,
-                                            "Es-tu vraiment sure de toi "+self.__user]
+                            listReponse1 = ["Ok commme vous voulez "+self.__genre+" .",
+                                            "Etes-vous vraiment sur "+self.__genre+" ."]
+                            listReponse2 = ["Ok comme tu veux "+self.__user+" .",
+                                            "Es-tu vraiment sure de toi "+self.__user+" ."]
                             if self.__etatVous == True:
                                 text = listReponse1[nbRand]
                             else :
@@ -97,53 +97,53 @@ class neuroneDiscution :
                             if "oui" in requette :
                                 nbRand = random.randint(0,8) 
                                 if self.__etatVous == True:
-                                    text = "Ok "+self.__genre+"."+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                                    text = "Ok "+self.__genre+","+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                                 else :
-                                    text = "Ok "+self.__user+"."+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                                    text = "Ok "+self.__user+","+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                             else :
                                 if "vasy" in requette or "comme tu veux" in requette or "si vous voulez" in requette :
                                     nbRand = random.randint(0,8) 
                                     if self.__etatVous == True:
-                                        text = "Ok "+self.__genre+" je vous en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                                        text = "Ok "+self.__genre+" je vous en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                                     else :
-                                        text = "Ok "+self.__user+" je t'en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand] 
+                                        text = "Ok "+self.__user+" je t'en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                                 else :
                                     if "pas besoin" in requette :
                                         nbRand = random.randint(0,1)
-                                        listReponse1 = ["Ok commme vous voulez "+self.__genre,
-                                                        "Etes-vous vraiment sur "+self.__genre]
-                                        listReponse2 = ["Ok comme tu veux "+self.__user,
-                                                        "Es-tu vraiment sure de toi "+self.__user]
+                                        listReponse1 = ["Ok commme vous voulez "+self.__genre+" .",
+                                                        "Etes-vous vraiment sur "+self.__genre+" ."]
+                                        listReponse2 = ["Ok comme tu veux "+self.__user+" .",
+                                                        "Es-tu vraiment sure de toi "+self.__user+" ."]
                                         if self.__etatVous == True:
-                                            text = listReponse1[nbRand]
+                                            text = listReponse1[nbRand]+" ."
                                         else :
-                                            text = listReponse2[nbRand] 
+                                            text = listReponse2[nbRand]+" ."
                     else :
                         if "Je peux vous en racontez une autre" in self.__oldsortie or "Je peux t'en raconter une autre" in self.__oldsortie or "Si tu veux je peux t'en raconter une autre" in self.__oldsortie :
                             if "vasy" in requette or "comme tu veux" in requette or "si vous voulez" in requette :
                                 nbRand = random.randint(0,8) 
                                 if self.__etatVous == True:
-                                    text = "Ok "+self.__genre+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                                    text = "Ok "+self.__genre+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                                 else :
-                                    text = "Ok "+self.__user+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                                    text = "Ok "+self.__user+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
                         else :
                             if "Désoler de ne pas etre drole pour vous " in self.__oldsortie or "Désoler si je ne suis pas drole" in self.__oldsortie or "Désoler de ne pas etre drole pour toi" in self.__oldsortie :
                                 if "pas grave" in requette :
                                     if self.__etatVous == True:
                                         text = "Je veux pas rester sur un echec " + self.__genre + ". Je peux vous en racontez une autre si vous voulez bien."
                                     else :
-                                        text = "Je ne peux pas rester sur un echec . Si tu veux je peux t'en raconter une autre"
+                                        text = "Je ne peux pas rester sur un echec . Si tu veux je peux t'en raconter une autre."
                                 else :
                                     if "ne sois pas desoler" in requette or "c'est tres grave" in requette :
                                         if self.__etatVous == True :
                                             text = "Veuillez m'excusez "+self.__genre+" je peux servir a autre chose."
                                         else :
-                                            text =  "Excuse moi .Veux-tu faire autre chose ?"
+                                            text =  "Excuse moi. Veux-tu faire autre chose ?"
                             else :
                                 if "comment ça va " in requette or "ca va" in requette or "ça va" in requette or "comment vas tu" in requette or "comment allez vous" in requette or "tu vas bien" in requette or "vous allez bien" in requette or "est ce que tout va bien" in requette or "tout va bien pour toi" in requette or "tout va bien pour vous" in requette: 
                                     nbRand = random.randint(0,1)
                                     listReponse = ["Je suis un programme informatique je resent pas de sentiment.",
-                                                    "Je ne peut pas resentir de sentiment, je suis qu'un programmme informatique"]
+                                                    "Je ne peut pas resentir de sentiment, je suis qu'un programmme informatique."]
                                     text = listReponse[nbRand]
                                 else :
                                     if "tu peux me parler de toi" in requette or "tu peux te presenter" in requette or "presente toi" in requette :
@@ -165,16 +165,16 @@ class neuroneDiscution :
                                                 debutPhrase = str("Je suis Six , l'assistant personnelle Vocal de "+self.__genre+" "+self.__user+" "+". Crée par Baptiste Pauchet pour simplifier et automatiser l'uttilisation de son ordinateur et pour le divertire.")
                                             else :
                                                 if self.__name == "Ryley" :
-                                                    debutPhrase = str("Je suis Ryley un assistant textuel crée a l'origine par Baptiste Pauchet et Wiruto2 .Pour les assister dans leurs etude et par la suite les aider dans le developement informatique")
+                                                    debutPhrase = str("Je suis Ryley un assistant textuel crée a l'origine par Baptiste Pauchet et Wiruto2 .Pour les assister dans leurs etude et par la suite les aider dans le developement informatique.")
                                                 else : 
-                                                    debutPhrase = str("Je suis "+self.__name+" crée par "+ self.__createur + ". Qui a pour bute "+ self.__bute+ ". Et qui utilise un algorythme d'assistant personnelle developper par Arrera Software")
+                                                    debutPhrase = str("Je suis "+self.__name+" crée par "+ self.__createur + ". Qui a pour bute "+ self.__bute+ ". Et qui utilise un algorythme d'assistant personnelle developper par Arrera Software.")
                                             text = debutPhrase+finPhrase
                                         else :
                                             if "toujours la"  in requette  or "es tu la" in requette or self.__name in requette or "tu es la" in requette or "vous étes la" in requette or "vous etes la" in requette :
                                                 nbRand = random.randint(0,2)
-                                                listReponse = ["Je ne peut pas partir de tout façon",
-                                                                "Je ne pas partir tant que je peux servir",
-                                                                "A moin de m'arréter qui serait un acte horible je suis toujour la"]
+                                                listReponse = ["Je ne peut pas partir de tout façon .",
+                                                                "Je ne pas partir tant que je peux servir .",
+                                                                "A moin de m'arréter qui serait un acte horible je suis toujour la ."]
                                                 if self.__etatVous == True :
                                                     text ="Oui, je suis toujours la "+self.__genre+" "+self.__user+"." + listReponse[nbRand]
                                                 else :
@@ -186,19 +186,19 @@ class neuroneDiscution :
                                                             nbRand = random.randint(0,1)
                                                             listReponse = ["Tant mieux dit moi si vous avez besoin de moi",
                                                                            "Je suis content de savoir sa" ]
-                                                            text = listReponse[nbRand]+" "+self.__genre
+                                                            text = listReponse[nbRand]+" "+self.__genre+" ."
                                                         else:
                                                             if "Êtes-vous prêt à travailler ?" in self.__oldsortie :
                                                                 nbRand = random.randint(0,1)
                                                                 listReponse =["Okay je peux vous aider sur quoi "+self.__genre,
-                                                                              "Super sur quoi vous voulez travailler sur quoi" ]
-                                                                text = listReponse[nbRand]
+                                                                              "Super sur quoi vous voulez travailler" ]
+                                                                text = listReponse[nbRand] +" ."
                                                             else :
                                                                 if "J'espère que vous avez passé une bonne nuit." in self.__oldsortie :
-                                                                    text = "Super sur quoi vous voulez travaille "+self.__genre
+                                                                    text = "Super sur quoi vous voulez travailler "+self.__genre+" ."
                                                                 else :
                                                                     if "J'espère que vous avez bien dormi." in self.__oldsortie :
-                                                                        text = "Super sur quoi je peux vous aider "+self.__genre
+                                                                        text = "Super sur quoi je peux vous aider "+self.__genre+" ."
                                                                     else :
                                                                         if "J'espère que vous passez une bonne matinée." in self.__oldsortie :
                                                                             text = "Formidable sur quoi vous occupez votre début de matinée"
@@ -207,89 +207,89 @@ class neuroneDiscution :
                                                                                 text = "Formidable, vous travaillez sur quoi ?"
                                                                             else :
                                                                                 if "J'espère que vous passez une bonne après-midi ?" in self.__oldsortie :
-                                                                                    text = "Formidable que fais-vous de votre après-midi"
+                                                                                    text = "Formidable que fais-vous de votre après-midi ."
                                                                                 else :
                                                                                     if "Comment se passe votre début de soirée ?" in self.__oldsortie :
-                                                                                        text = "Ceci me réjouit genre vous voulez faire quoi "+self.__genre
+                                                                                        text = "Ceci me réjouit genre vous voulez faire quoi "+self.__genre+" ."
                                                                                     else :
                                                                                         if "J'espère que votre début de soirée se passe bien." in self.__oldsortie :
-                                                                                            text = "Formidable vous voulez faire quoi ce soir"
+                                                                                            text = "Formidable vous voulez faire quoi ce soir ."
                                                                                         else :
                                                                                             if "Comment se passe votre soirée ?" in self.__oldsortie :
                                                                                                 text = "Parfais je peux vous aidez ce soir "+self.__genre
                                                                                             else :
                                                                                                 if "J'espère que votre soirée s'est bien passée." in self.__oldsortie :
-                                                                                                    text = "Ok vous vouliez faire quoi cette nuit"
+                                                                                                    text = "Ok vous vouliez faire quoi cette nuit ."
                                                                                                 else :
                                                                                                     if "As-tu bien dormi ?" in self.__oldsortie :
-                                                                                                        text = "C'est surper pour toi"
+                                                                                                        text = "C'est surper pour toi ."
                                                                                                     else :
                                                                                                         if "As-tu passé une bonne nuit ?" in self.__oldsortie :
-                                                                                                            text = "Tant mieux pour toi tu veux travailler sur quoi aujourd'hui"
+                                                                                                            text = "Tant mieux pour toi tu veux travailler sur quoi aujourd'hui ."
                                                                                                         else :
                                                                                                             if "Comment se passe ta matinée ?" in self.__oldsortie :
-                                                                                                                text = "Parfais sur quoi on travaille aujourd'hui"
+                                                                                                                text = "Parfais sur quoi on travaille aujourd'hui  ."
                                                                                                             else :
                                                                                                                 if "Prêt à travailler ?" in self.__oldsortie :
-                                                                                                                    text = "Ok on travaille sur quoi aujourd'hui"
+                                                                                                                    text = "Ok on travaille sur quoi aujourd'hui ."
                                                                                                                 else :
                                                                                                                     if "es-tu prêt à travailler cet après-midi ?" in self.__oldsortie :
-                                                                                                                        text = "Ok on travaille sur quoi cette aprem"
+                                                                                                                        text = "Ok on travaille sur quoi cette aprem ."
                                                     else :
                                                        if "non" in requette : 
                                                             if "J'espère que vous avez un peu dormi" in self.__oldsortie :
                                                                 nbRand = random.randint(0,1)
                                                                 listReponse = ["Je suis désolé pour vous je suis la pour vous aidez si vous a besoin "+self.__genre,
                                                                                 "Vous dormirez mieux ce soir en attendant en quoi je peux vous aider"]    
-                                                                text = listReponse[nbRand]  
+                                                                text = listReponse[nbRand]+" ."
                                                             else :
                                                                 if "Êtes-vous prêt à travailler ?" in self.__oldsortie :
                                                                     nbRand = random.randint(0,1)
                                                                     listReponse = ["Okay, vous voulez faire quoi",
                                                                                     "OK je reste disponible pour vous "+self.__genre]
-                                                                    text = listReponse[nbRand]
+                                                                    text = listReponse[nbRand]+" ."
                                                                 else :
                                                                     if "J'espère que vous avez passé une bonne nuit." in self.__oldsortie :
                                                                         text ="Dommage je reste disponible si vous avez besoin de moi "+self.__genre
                                                                     else :
                                                                         if "J'espère que vous avez bien dormi." in self.__oldsortie :
-                                                                            text ="Dommage si vous avez besoin de moi je suis la"
+                                                                            text ="Dommage si vous avez besoin de moi je suis la ."
                                                                         else :  
                                                                             if "J'espère que vous passez une bonne matinée." in self.__oldsortie :
-                                                                                text ="OK je suis à votre service si vous avez besoin de moi"
+                                                                                text ="OK je suis à votre service si vous avez besoin de moi ."
                                                                             else :   
                                                                                 if "J'espère que vous passez un bon début de journée." in self.__oldsortie :
-                                                                                    text = "Dommage comment je peux vous la rendre meilleure genre"
+                                                                                    text = "Dommage comment je peux vous la rendre meilleure genre ."
                                                                                 else :    
                                                                                     if "J'espère que vous passez une bonne après-midi ?" in self.__oldsortie :
-                                                                                        text ="Ha, je reste la si vous avez besoin de moi je suis la "
+                                                                                        text ="Ha, je reste la si vous avez besoin de moi je suis la ."
                                                                                     else :
                                                                                         if "Comment se passe votre début de soirée ?" in self.__oldsortie :
-                                                                                            text ="Comment je peux la rendre meilleur genre"
+                                                                                            text ="Comment je peux la rendre meilleur "+self.__genre
                                                                                         else :  
                                                                                             if "J'espère que votre début de soirée se passe bien." in self.__oldsortie :
-                                                                                                text ="Comment je peux rendre votre soirée exceptionnelle"
+                                                                                                text ="Comment je peux rendre votre soirée exceptionnelle ."
                                                                                             else :
                                                                                                 if "Comment se passe votre soirée ?" in self.__oldsortie :
-                                                                                                    text ="Ceci me rend triste"
+                                                                                                    text ="Ceci me rend triste ."
                                                                                                 else :
                                                                                                     if "J'espère que votre soirée s'est bien passée." in self.__oldsortie :
-                                                                                                        text = "Je vous conseiller d'allez dormir"
+                                                                                                        text = "Je vous conseiller d'allez dormir ."
                                                                                                     else :
                                                                                                         if "As-tu bien dormi ?" in self.__oldsortie :
                                                                                                             text ="Dommage je peux d'aidez sur quoi ?"
                                                                                                         else :  
                                                                                                             if"As-tu passé une bonne nuit ?"in self.__oldsortie :
-                                                                                                                text ="Dommage comment je peux t'aider aujourd'hui"
+                                                                                                                text ="Dommage comment je peux t'aider aujourd'hui ?"
                                                                                                             else :   
                                                                                                                 if "Prêt à travailler ?" in self.__oldsortie :
-                                                                                                                    text ="Ok je reste la au besoin"
+                                                                                                                    text ="Ok je reste la au besoin ."
                                                                                                                 else :    
                                                                                                                     if "Prêt à travailler ?" in self.__oldsortie :
-                                                                                                                        text ="Ok je reste la au besoin"
+                                                                                                                        text ="Ok je reste la au besoin ."
                                                                                                                     else :
                                                                                                                         if "Es-tu prêt à travailler cet après-midi ?" in self.__oldsortie :
-                                                                                                                            text ="Ok dit moi quand tu sera prét"                                    
+                                                                                                                            text ="Ok dit moi quand tu sera prét ."                                    
                                                        else :
                                                             if "bien" in requette :
                                                                 if "Comment se passe votre début de soirée ?" in self.__oldsortie :
@@ -309,19 +309,19 @@ class neuroneDiscution :
                                                                 else :
                                                                     if "je suis pret" in requette and "Êtes-vous prêt à travailler ?" in self.__oldsortie:
                                                                         nbRand = random.randint(0,1)
-                                                                        listReponse = ["Parfait sur quoi on travaille aujourd'hui " +self.__genre, 
-                                                                                       "Sur quoi l’on travaille aujourd'hui"]
+                                                                        listReponse = ["Parfait sur quoi on travaille aujourd'hui " +self.__genre+" .", 
+                                                                                       "Sur quoi l’on travaille aujourd'hui ."]
                                                                         text = listReponse[nbRand]
                                                                     else :
                                                                         if "j'ai un truc a faire" in requette :
                                                                             if "Il faudrait peut-être dormir, non ?" in self.__oldsortie :
-                                                                                text = "Tres bien je vais t'aider "
+                                                                                text = "Tres bien je vais t'aider ."
                                                                             else :
                                                                                 if "Comment peux-tu travailler si tard ?" in self.__oldsortie :
-                                                                                    text = "C'est pas une bonne idée de travailler" 
+                                                                                    text = "C'est pas une bonne idée de travailler ." 
                                                                                 else :
                                                                                     if "Il faudrait peut-être dormir, non ?" in self.__oldsortie :
-                                                                                        text = "Ok je peux d'aider comment"
+                                                                                        text = "Ok je peux d'aider comment ?"
                                                                                     else :
                                                                                         if "Que fais-tu si tard ?" in self.__oldsortie:
                                                                                             text = "Comment je peux t'aider ?"
@@ -387,7 +387,7 @@ class neuroneDiscution :
                                                     else :
                                                         if "non" in requette : 
                                                             if self.__etatVous == True :
-                                                                text = "OK "+self.__genre+" je reste la au besoin"
+                                                                text = "OK "+self.__genre+" "+self.__user+ " je reste la au besoin."
                                                             else :
                                                                 text = "Ok "+self.__user+" ,Je reste la si tu a besoin de moi."
                                                         else :
@@ -396,9 +396,9 @@ class neuroneDiscution :
                                                             else :
                                                                 if "merci" in requette :
                                                                     if self.__etatVous == True :
-                                                                        text = "De rien "+self.__genre+" je reste a votre servie si vous avez besoin de moi" 
+                                                                        text = "De rien "+self.__genre+",je reste a votre servie si vous avez besoin de moi ?" 
                                                                     else :
-                                                                        text = "De rien "+self.__user+" je peux encore t'aider"                                         
+                                                                        text = "De rien "+self.__user+",sur quoi je peux encore t'aider ?"                                         
                                                                                                                                                              
         #Mise a jour de la valeur                                                               
         valeur = self.__gestionNeuron.verrifSortie(text)
