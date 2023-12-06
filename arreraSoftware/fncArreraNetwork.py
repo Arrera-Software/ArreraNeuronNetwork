@@ -60,11 +60,8 @@ class fncArreraNetwork:
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)
-        if self.__etatVous == True :
-            text = "Les actualites du jour sont "+listActu[nbrand1]+" , "+listActu[nbrand2] + " et "+listActu[nbrand3]+"."
-        else :
-            text = "Les news du jour sont "+listActu[nbrand1]+" , "+listActu[nbrand2] + " et "+listActu[nbrand3]+"."
-        return str(text)
+        return 3 , [listActu[nbrand1],listActu[nbrand2],listActu[nbrand3]]
+        
     
     def sortieMeteo(self,ville):
         if ville == "" :
@@ -125,7 +122,8 @@ class fncArreraNetwork:
                     text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
                 else :
                     text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
-        return text   
+        
+        return 4 , [text,""]
     
     def sortieTemperature(self):
         sortieGPS = self.__gps.recuperationCordonneePossition()
@@ -135,12 +133,13 @@ class fncArreraNetwork:
             sortieMeteo = self.__meteo.recuperationDataMeteo(lat,lon)
             if sortieMeteo == True :
                 if self.__etatVous == True :
-                    text = "La temperature actuel dehors et de "+self.__meteo.gettemperature()+"°C"
+                    text = ["La temperature actuel dehors et de "+self.__meteo.gettemperature()+"°C",""]
                 else :
-                    text = "If fais "+self.__meteo.gettemperature()+"°C"     
-        return text
+                    text = ["Il fais "+self.__meteo.gettemperature()+"°C",""]     
+        return 4 , text
     
     def sortieGPS(self):
+        text = []
         sortieGPS = self.__gps.recuperationCordonneePossition()
         if sortieGPS == True :
             sortieGPS = self.__gps.recuperationNameVillePosition()
@@ -149,10 +148,10 @@ class fncArreraNetwork:
                 lon = self.__gps.getlonPossition()
                 nameVille = self.__gps.getNameVille()
                 if self.__etatVous == True :
-                    text = "Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+"."
+                    text = ["Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+".",""]
                 else :
-                    text = "Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" ."
-        return text
+                    text = ["Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" .",""]
+        return 0,text
     
     def sortieItineraires(self,loc1:str,loc2:str):
         if loc1 == "loc" :
@@ -166,55 +165,53 @@ class fncArreraNetwork:
         return sortieGPS
     
     def ResumerActualite(self):
-        #Recuperation nom des villes
-        domicile = self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile")
-        travail = self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail")
-        #Recuperation coordonne GPS
-        sortieGPS = self.__gps.recuperationCordonneeVille(domicile)
-        if sortieGPS == True :
-            sortieMeteo = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
-            if sortieMeteo == True:
-                tempDomicile = self.__meteo.gettemperature()
-                descripDomicile = self.__meteo.getdescription()
-                sortieGPS = self.__gps.recuperationCordonneeVille(travail)
-                if sortieGPS == True :
-                    sortieMeteo = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
-                    if sortieMeteo == True:
-                        tempTravail = self.__meteo.gettemperature() 
-                        descripTravail = self.__meteo.getdescription()
-                        if self.__etatVous == True :
-                            text = "Le meteo a votre domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle a de votre lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
-                        else :
-                            text =  "Le meteo a ton domicile est "+descripDomicile+" avec une temperature "+tempDomicile+" °C .Celle de ton lieu de travail est "+descripTravail+" avec une temperature de "+tempTravail+" °C ."
-                    else :
-                        if self.__etatVous == True :
-                            return  "Desoler "+self.__genre+" mais il a un probleme"
-                        else :
-                            return  "Desoler "+self.__user+" mais il a un probleme"
-                else :
-                    if self.__etatVous == True :
-                        return  "Desoler "+self.__genre+" mais il a un probleme"
-                    else :
-                        return  "Desoler "+self.__user+" mais il a un probleme"
-            else :
-                if self.__etatVous == True :
-                    return  "Desoler "+self.__genre+" mais il a un probleme"
-                else :
-                    return  "Desoler "+self.__user+" mais il a un probleme"
-        else :
-            if self.__etatVous == True :
-                return  "Desoler "+self.__genre+" mais il a un probleme"
-            else :
-                return "Desoler "+self.__user+" mais il a un probleme"
-        feteJour = self.__gestionNeuron.getFeteJour()
+        #var 
+        verif = False
+        meteoHome = ""
+        meteoWork =  ""
+        feteJour = ""
         nbrand1 = random.randint(0,1)
         nbrand2 = random.randint(2,3)
         nbrand3 = random.randint(4,5)
-        listeActu = self.__actu.Actu()
-        text2 = text+" Les actualites son "+listeActu[nbrand1]+"."+listeActu[nbrand2]+"."+listeActu[nbrand3]
-        text3 = text2+".Et aujourd'hui on fete les "+feteJour
-        return text3
-    
+        listOut = []
+
+        #meteo home
+        verif = self.__gps.recuperationCordonneeVille(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+        if verif == False :
+            return 11 , ["error",""]
+        else :
+            verif = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
+            if verif == False :
+                return 11 , ["error",""]
+            else : 
+                if self.__etatVous == True :
+                    meteoHome = "La météo a votre domicile est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
+                else :
+                    meteoHome = "La météo chez toi est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
+                
+                #meteo travail
+                verif = self.__gps.recuperationCordonneeVille(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                if verif == False :
+                    return 11 , ["error",""]
+                else :
+                    verif = self.__meteo.recuperationDataMeteo(self.__gps.getlatVille(),self.__gps.getLonVille())
+                    if verif == False :
+                        return 11 , ["error",""]
+                    else :
+                        if self.__etatVous == True :
+                            meteoWork = "La météo a votre lieu de travail est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
+                        else :
+                            meteoWork = "La météo a ton boulot est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature() 
+                        #fete du jour
+                        feteJour = self.__gestionNeuron.getFeteJour()
+                        #Liste des actu
+                        listeActu = self.__actu.Actu()
+                        #Construction de la liste
+
+                        listOut = [meteoHome,meteoWork,feteJour,listeActu[nbrand1],listeActu[nbrand2],listeActu[nbrand3]]
+
+                        return 12 , listOut
+
     def sortieTraducteur(self,langInt:str,langOut:int):
         self.__traducteur.fenetreTrad(langInt,langOut)
         

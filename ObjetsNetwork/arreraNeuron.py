@@ -50,40 +50,50 @@ class ArreraNetwork :
     
     def setOld(self,requette:str,sortie:str):
         self.oldRequette = requette
-        self.oldSorti = sortie
+        self.__oldSorti = sortie
     
     def shutdown(self):
         hour = datetime.datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)
+
+    def transformeListSTR(self,list:list)->str:
+        return str(list[0])
+    
+    def phraseActu(self,actu1:str,actu2:str,actu3:str):
+        if self.__gestionnaire.getVous() == True :
+            return str("Les actualités du jour sont "+actu1+" "+actu2+" "+actu3+".")
+        else :
+            return str("Les actu du jour sont "+actu1+" "+actu2+" "+actu3+".")
     
     def neuron(self,var:str) :
         requette = chaine.netoyage(str(var))
         valeur = 0
+        listOut =  []
         valeur,text = self.__main.neurone(requette,self.__oldSorti,self.__oldRequette)
         if valeur == 0 :
-            #api
-            if self.__etatReseau == True :
-                valeur,text = self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
-            else :
-                valeur = 0 
+            #software
+            valeur,text = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
             if valeur == 0 :
-                #software
-                valeur,text = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
+                #time
+                valeur,text = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
                 if valeur == 0 :
-                    #time
-                    valeur,text = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
+                    #open
+                    valeur,text = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
                     if valeur == 0 :
-                        #open
-                        valeur,text = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
+                        #search
+                        if self.__etatReseau == True :
+                            valeur,text = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
+                        else :
+                            valeur = 0
                         if valeur == 0 :
-                            #search
-                            if self.__etatReseau == True :
-                                valeur,text = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
-                            else :
-                                valeur = 0
+                            valeur,text = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
                             if valeur == 0 :
-                                valeur,text = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
+                                #api
+                                if self.__etatReseau == True :
+                                    valeur,listOut = self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
+                                else :
+                                    valeur = 0
                                 if valeur == 0 :
                                     if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette :
                                         text = self.__formuleNeuron.aurevoir(datetime.datetime.now().hour)
@@ -92,10 +102,16 @@ class ArreraNetwork :
                                         valeur = 0 
                                         text = self.__formuleNeuron.nocomprehension()
                                         self.__gestionnaire.addDiscution()
-                                
+        #Creation de la liste de sortie
+        if ((valeur  != 3) and (valeur != 12) and (valeur != 11) and (valeur!=4)) :
+            listOut =  [text,""]
         #Sauvegarde des sortie                         
         self.__oldRequette = requette
-        self.__oldSorti = text
+        #Sauvegarde de la sortie 
+        if ((valeur  == 3) or (valeur == 12) or (valeur == 11)) :
+            self.__oldSorti = "requette api"      
+        else :
+            self.__oldSorti = listOut[0]
         #Ajout d'une discution
         self.__gestionnaire.addDiscution() 
-        return valeur , text
+        return valeur , listOut

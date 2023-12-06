@@ -21,23 +21,19 @@ class neuroneAPI :
         
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         #Initilisation des variable nbRand et text et valeur
-        text = ""
+        listOut = []
         valeur = 0
         #Recuperation atribut de l'assistant
-        self.__oldrequette = oldRequette
         self.__oldsortie = oldSortie
-        self.__nbDiscution = self.__gestionNeuron.getNbDiscution()
         self.__name = self.__gestionNeuron.getName()
         self.__etatVous = self.__gestionNeuron.getVous()
         self.__genre = self.__gestionNeuron.getGenre()
         self.__user = self.__gestionNeuron.getUser()
-        self.__bute = self.__gestionNeuron.getBute()
-        self.__createur = self.__gestionNeuron.getCreateur()
         #reponse du neuron main
         if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette :
-            text = self.__fonctionArreraNetwork.ResumerActualite()
+            valeur,listOut = self.__fonctionArreraNetwork.ResumerActualite()
         if "actualites" in requette :
-            text = self.__fonctionArreraNetwork.sortieActualités()
+            valeur,listOut = self.__fonctionArreraNetwork.sortieActualités()
         else :
             if "meteo" in requette :
                 nb = self.__gestionNeuron.getnbVilleMeteo()
@@ -46,7 +42,7 @@ class neuroneAPI :
                 for i in range(0,nb):
                     ville = chaine.netoyage(villes[i])
                     if ville in requette :
-                        text = self.__fonctionArreraNetwork.sortieMeteo(villes[i])
+                        valeur,listOut = self.__fonctionArreraNetwork.sortieMeteo(villes[i])
                         resultat = 1
                         break
                     else :
@@ -54,20 +50,20 @@ class neuroneAPI :
                 if resultat == 0 :
                     if self.__etatVilleDomicile == True or self.__etatVilleTravail == True : 
                         if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                            text = self.__fonctionArreraNetwork.sortieMeteo(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                            valeur,listOut = self.__fonctionArreraNetwork.sortieMeteo(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
                         else :
                             if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                text = self.__fonctionArreraNetwork.sortieMeteo(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                                valeur,listOut = self.__fonctionArreraNetwork.sortieMeteo(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
                             else :
-                                text = self.__fonctionArreraNetwork.sortieMeteo("")
+                                valeur,listOut = self.__fonctionArreraNetwork.sortieMeteo("")
                     else :    
-                        text = self.__fonctionArreraNetwork.sortieMeteo("")
+                        valeur,listOut = self.__fonctionArreraNetwork.sortieMeteo("")
             else :
                 if "temperature" in requette :
-                    text = self.__fonctionArreraNetwork.sortieTemperature()
+                    valeur,listOut = self.__fonctionArreraNetwork.sortieTemperature()
                 else :
                     if "coordonnee gps" in requette or "position gps" in requette :
-                        text = self.__fonctionArreraNetwork.sortieGPS()
+                        valeur,listOut = self.__fonctionArreraNetwork.sortieGPS()
                     else :
                         if "itineraire" in requette or "comment aller" in requette :
                             sortieFnc = False
@@ -104,20 +100,25 @@ class neuroneAPI :
                                             sortieFnc= self.__fonctionArreraNetwork.sortieItineraires("loc",loc)
                             if sortieFnc== True :
                                 if self.__etatVous == True :
-                                    text = "J'espére que sa vous aidera "+self.__genre+" "+self.__user
+                                    listOut = ["J'espére que sa vous aidera "+self.__genre+" "+self.__user,""]
                                 else :
-                                    text ="Voila "+self.__user
+                                    listOut =["Voila "+self.__user,""]
+                                valeur = 4 
                             else :
                                 if etatde == True :
                                     if self.__etatVous == True :
-                                        text = "Quelle est votre destination "+self.__genre
+                                        listOut = ["Quelle est votre destination "+self.__genre,""]
+                                        valeur = 4
                                     else :
-                                        text = "Quelle est ta destination final "+self.__user
+                                        listOut = ["Quelle est ta destination final "+self.__user,""]
+                                        valeur = 4
                                 else :
                                     if self.__etatVous == True :
-                                        text = "Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire"
+                                        listOut = ["Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
+                                        valeur = 4
                                     else :
-                                        text ="Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire"
+                                        listOut =["Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire",""]
+                                        valeur = 4
                         if "Quelle est votre destination" in self.__oldsortie or "Quelle est ta destination final" in self.__oldsortie :
                             sortieFnc = False
                             if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
@@ -134,14 +135,19 @@ class neuroneAPI :
                                     sortieFnc = self.__fonctionArreraNetwork.sortieItineraires(self.__villeGPS1,loc)
                             if sortieFnc== True :
                                 if self.__etatVous == True :
-                                    text = "J'espére que sa vous aidera "+self.__genre+" "+self.__user
+                                    listOut = ["J'espére que sa vous aidera "+self.__genre+" "+self.__user,""]
+                                    valeur = 4
                                 else :
-                                    text ="Voila "+self.__user
+                                    listOut =["Voila "+self.__user,""]
+                                    valeur = 4
                             else :
                                 if self.__etatVous == True :
-                                    text = "Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire"
+                                    listOut = ["Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
+                                    valeur = 4
                                 else :
-                                    text ="Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire"
+                                    listOut =["Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire",""]
+                                    valeur = 4
+                        
                         else :
                             if "traduis" in requette or "traduction" in requette or "traduire" in requette :
                                 chaineCarractere = str(requette).lower()
@@ -162,23 +168,25 @@ class neuroneAPI :
                                         secondLang = chaine.firstMots(chaineCarractere,self.__listeLang)
                                         self.__fonctionArreraNetwork.sortieTraducteur(self.__dictLang[firstLang],self.__dictLang[secondLang])
                                         if self.__etatVous == True :
-                                            text="J'espère que cet outil de traduction vous a sera utile "+self.__genre
+                                            listOut=["J'espère que cet outil de traduction vous a sera utile "+self.__genre,""]
+                                            valeur = 4
                                         else :
-                                            text= "J'espère que sa te sera utile  "+self.__name
+                                            listOut= ["J'espère que sa te sera utile  "+self.__name,""]
+                                            valeur = 4
                                     else :
                                         if self.__etatVous == True :
-                                            text="Desoler "+self.__genre+". Mais les langues que vous demander ne son pas disponible."
+                                            listOut=["Desoler "+self.__genre+". Mais les langues que vous demander ne son pas disponible.",""]
+                                            valeur = 4
                                         else :
-                                            text="Desoler,les langues que tu demande n'est pas disponible"
+                                            listOut=["Desoler,les langues que tu demande n'est pas disponible",""]
+                                            valeur = 4
                                 else :
                                     if self.__etatVous == True :
-                                        text="Desoler "+self.__genre+". Mais les langue que vous demander ne son pas disponible."
+                                        listOut=["Desoler "+self.__genre+". Mais les langue que vous demander ne son pas disponible.",""]
+                                        valeur = 4
                                     else :
-                                        text="Desoler,les langues que tu demande n'est pas disponible"
-                                
-      
-                                
-                            
+                                        listOut=["Desoler,les langues que tu demande n'est pas disponible",""]
+                                        valeur = 4
+                  
         #Mise a jour de la valeur                                                               
-        valeur = self.__gestionNeuron.verrifSortie(text)
-        return valeur , text
+        return valeur , listOut

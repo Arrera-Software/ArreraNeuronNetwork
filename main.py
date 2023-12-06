@@ -19,4 +19,12 @@ while valeur != 15 :
     else :
         valeur , sortie = neuron.neuron(requette)
         print(valeur)
-        print(nom + " $ "+sortie)               
+        if ((valeur==12) or (valeur==11) or (valeur==3)) :
+            if (valeur == 3) : 
+                print(nom+" $ Actu :\n"+sortie[0]+"\n"+sortie[1]+"\n"+sortie[2])
+            else :
+                if (valeur == 12 or valeur == 11):
+                    print("Opale : Voici votre resumer")
+                    print(sortie)
+        else :
+            print(nom + " $ "+sortie[0])               
