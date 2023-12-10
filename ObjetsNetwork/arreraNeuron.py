@@ -49,7 +49,7 @@ class ArreraNetwork :
         return str(text)
     
     def setOld(self,requette:str,sortie:str):
-        self.oldRequette = requette
+        self.__oldRequette = requette
         self.__oldSorti = sortie
     
     def shutdown(self):

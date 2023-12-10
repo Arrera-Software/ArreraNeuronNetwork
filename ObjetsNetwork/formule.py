@@ -8,7 +8,7 @@ class formule :
     
     def nocomprehension(self):
         if self.__vous == True:
-            text = "Je ne comprend pas ce que vous m'avez dit ."
+            text = "Je ne comprend pas ce que vous m'avez dit."
         else : 
             text = "Je ne comprend pas ce que tu m'as dit ou ce que tu demande."   
         return text

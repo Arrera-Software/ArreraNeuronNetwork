@@ -30,7 +30,7 @@ class neuroneAPI :
         self.__genre = self.__gestionNeuron.getGenre()
         self.__user = self.__gestionNeuron.getUser()
         #reponse du neuron main
-        if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette :
+        if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette or "resume" in requette :
             valeur,listOut = self.__fonctionArreraNetwork.ResumerActualite()
         if "actualites" in requette :
             valeur,listOut = self.__fonctionArreraNetwork.sortieActualités()
