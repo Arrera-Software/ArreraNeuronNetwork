@@ -4,17 +4,20 @@ import subprocess
 import os
 
 class OpenSoftware :
-    def __init__(self,objetGestion:gestionNetwork,name:str):
+    def __init__(self,objetGestion:gestionNetwork):
         detecteurOS = OS()
         self.__windowsOS = detecteurOS.osWindows()
         self.__linuxOS = detecteurOS.osLinux()
         self.__emplacement = ""
         self.__etat = bool
+        self.__objetGestion = objetGestion
+    
+    def setName(self,name:str) ->bool:
         if name == "":
             self.__etat = False
         else :
             if self.__windowsOS == True and self.__linuxOS == False :
-                self.emplacement = os.path.abspath(objetGestion.getEmplacementSoftwareWindows()+"/"+name+".lnk")
+                self.__emplacement = self.__objetGestion.getEmplacementSoftwareWindows()+"/"+name+".lnk"
                 self.__etat = True
             else :
                 if self.__windowsOS == False and self.__linuxOS == True : 
@@ -22,6 +25,7 @@ class OpenSoftware :
                         self.__etat = True
                 else :
                     self.__etat = False
+        return self.__etat
                
     def open(self):
         if self.__etat == False:
@@ -32,7 +36,8 @@ class OpenSoftware :
                 return True 
             else :
                 if self.__windowsOS == True and self.__linuxOS == False :
-                    subprocess.Popen(["cmd", "/c", "start", self.__emplacement])
+                    print(self.__emplacement)
+                    os.startfile(self.__emplacement)
                     return True
                 else :
                     return False

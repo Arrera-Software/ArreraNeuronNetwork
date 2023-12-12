@@ -46,6 +46,7 @@ class fncArreraNetwork:
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraCalendar(self.__configNeuron,self.__gestionNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
+        self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
     def reading(self):
         self.__fncReading.fenetreLecture()
@@ -253,10 +254,10 @@ class fncArreraNetwork:
     
     def sortieOpenSoftware(self,soft):
         dictionnaireSoft = self.__gestionNeuron.getDictionnaireLogiciel()
-        objet = OpenSoftware(self.__gestionNeuron,dictionnaireSoft[soft])
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(dictionnaireSoft[soft])
         if sortie == True :
             if self.__etatVous == True :
+                self.__objetOpenSoft.open()
                 text = "Ok je vous ouvre "+soft+" "+self.__genre
             else :
                 text = "Voici "+soft
@@ -275,8 +276,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("wordLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                 nbrand = random.randint(0,1)
@@ -304,8 +305,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("exelLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                 nbrand = random.randint(0,1)
@@ -333,8 +334,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                 nbrand = random.randint(0,1)
@@ -362,8 +363,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                 nbrand = random.randint(0,5)
@@ -399,8 +400,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("noteLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                text = "Voici vos notes "+self.__genre
@@ -422,8 +423,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("musicLinux")
-        objet = OpenSoftware(self.__gestionNeuron,logiciel)
-        sortie = objet.open()
+        sortie = self.__objetOpenSoft.setName(logiciel)
+        self.__objetOpenSoft.open()
         if sortie == True :
             if self.__etatVous == True :
                text = "Voici "+self.__genre+" ,bonne écoute"
