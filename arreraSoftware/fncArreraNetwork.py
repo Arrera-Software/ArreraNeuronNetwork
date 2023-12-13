@@ -257,10 +257,10 @@ class fncArreraNetwork:
         sortie = self.__objetOpenSoft.setName(dictionnaireSoft[soft])
         if sortie == True :
             if self.__etatVous == True :
-                self.__objetOpenSoft.open()
                 text = "Ok je vous ouvre "+soft+" "+self.__genre
             else :
                 text = "Voici "+soft
+            self.__objetOpenSoft.open()
         else :
             if self.__etatVous == True :
                 text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir "+soft
