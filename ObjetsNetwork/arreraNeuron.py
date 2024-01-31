@@ -33,13 +33,27 @@ class ArreraNetwork :
         #recuperation etat du reseau
         self.__etatReseau = self.__network.getEtatInternet()
         #initilisation des neuron
-        self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron)
-        self.__main = neuroneMain(self.__fonctionAssistant,self.__gestionnaire)
-        self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire)
-        self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire)
-        self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire)
-        self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire)
-        self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire)
+        self.__etatNeuron = [self.__configNeuron.lectureJSON("chatBot"),
+                         self.__configNeuron.lectureJSON("main"),
+                         self.__configNeuron.lectureJSON("API"),
+                         self.__configNeuron.lectureJSON("software"),
+                         self.__configNeuron.lectureJSON("open"),
+                         self.__configNeuron.lectureJSON("search"),
+                         self.__configNeuron.lectureJSON("time")]
+        if self.__etatNeuron[0] == "1":
+            self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron)
+        if self.__etatNeuron[1] == "1":
+            self.__main = neuroneMain(self.__fonctionAssistant,self.__gestionnaire)
+        if self.__etatNeuron[2] == "1":
+            self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire)
+        if self.__etatNeuron[3] == "1":
+            self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire)
+        if self.__etatNeuron[4] == "1":
+            self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire)
+        if self.__etatNeuron[5] == "1":
+            self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire)
+        if self.__etatNeuron[6] == "1":
+            self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire)
     
     def boot(self):
         hour = datetime.datetime.now().hour
@@ -71,30 +85,30 @@ class ArreraNetwork :
         valeur = 0
         listOut =  []
         valeur,text = self.__main.neurone(requette,self.__oldSorti,self.__oldRequette)
-        if valeur == 0 :
+        if valeur == 0  and self.__etatNeuron[0] == "1":
             #software
             valeur,text = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
-            if valeur == 0 :
+            if valeur == 0  and self.__etatNeuron[1] == "1":
                 #time
                 valeur,text = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
                 if valeur == 0 :
                     #open
                     valeur,text = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
-                    if valeur == 0 :
+                    if valeur == 0 and self.__etatNeuron[2] == "1" :
                         #search
                         if self.__etatReseau == True :
                             valeur,text = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
                         else :
                             valeur = 0
-                        if valeur == 0 :
+                        if valeur == 0 and self.__etatNeuron[3] == "1" :
                             valeur,text = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
-                            if valeur == 0 :
+                            if valeur == 0 and self.__etatNeuron[4] == "1" :
                                 #api
                                 if self.__etatReseau == True :
                                     valeur,listOut = self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
                                 else :
                                     valeur = 0
-                                if valeur == 0 :
+                                if valeur == 0  nd self.__etatNeuron[1] == "1":
                                     if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette or "arreter" in requette :
                                         text = self.__formuleNeuron.aurevoir(datetime.datetime.now().hour)
                                         valeur = 15
