@@ -1,11 +1,11 @@
 {
-    "user":"Dev",
-    "genre":"Monsieur",
-    "listVille":["La-Capelle-les-boulogne","Calais"],
-    "lieuDomicile":"Landrethun-le-nord",
-    "lieuTravail":"Boulogne-sur-mer",
-    "adresseDomicile" : "Landrethun-le-nord",
-    "adresseTravail":"Boulogne-sur-mer",
+    "user":"",
+    "genre":"",
+    "listVille":[],
+    "lieuDomicile":"",
+    "lieuTravail":"",
+    "adresseDomicile" : "",
+    "adresseTravail":"",
     "nbSoft" : "0",
     "dictSoftWindows" :{
     },
