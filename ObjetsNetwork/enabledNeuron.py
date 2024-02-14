@@ -11,43 +11,43 @@ class GestArreraNeuron :
         self.__etatApi = configNeuron.lectureJSON("etatApi")
         
     def getService(self):
-        if self.__etatService == 1 :
+        if self.__etatService == "1" :
             return True
         else :
             return False
 
     def getSoftware(self):
-        if self.__etatSoftware == 1 :
+        if self.__etatSoftware == "1" :
             return True
         else :
             return False
 
     def getTime(self):
-        if self.__etatTime == 1 :
+        if self.__etatTime == "1" :
             return True
         else :
             return False
     
     def getOpen(self):
-        if self.__etatOpen == 1 :
+        if self.__etatOpen =="1" :
             return True
         else :
             return False
     
     def getSearch(self):
-        if self.__etatSearch == 1 :
+        if self.__etatSearch == "1" :
             return True
         else :
             return False
     
     def getChatbot(self):
-        if self.__etatChatbot == 1 :
+        if self.__etatChatbot == "1" :
             return True
         else :
             return False
     
     def getAPI(self):
-        if self.__etatApi == 1 :
+        if self.__etatApi == "1" :
             return True
         else :
             return False
