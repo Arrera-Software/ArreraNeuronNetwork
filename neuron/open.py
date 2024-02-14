@@ -17,7 +17,7 @@ class neuroneOpen :
         listeLogiciel = self.__gestionNeuron.getListLogiciel()
         nbLogiciel = int(self.__gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
         listeSite = self.__gestionNeuron.getListWeb()
-        nbSite = int(self.__gestionNeuron.getValeurfichierUtilisateur("nbSite"))
+        nbSite = len(listeSite)
         #varriable
         logOuverture = 0
         #fonction neuron Open
@@ -53,8 +53,8 @@ class neuroneOpen :
                                                 text = self.__fonctionArreraNetwork.sortieOpenCloud()
                                             else :
                                                 for i in range(0,nbSite):
-                                                    if listeSite[i-1] in requette:
-                                                        text = self.__fonctionArreraNetwork.sortieOpenSite(listeLogiciel[i-1])
+                                                    if listeSite[i] in requette:
+                                                        text = self.__fonctionArreraNetwork.sortieOpenSite(listeSite[i])
                                                         break
                                         
                                             
