@@ -12,6 +12,7 @@ from neuron.open import *
 from neuron.search import*
 from neuron.time import*
 from ObjetsNetwork.chaineCarractere import *
+from ObjetsNetwork.enabledNeuron import*
 
 class ArreraNetwork :
     def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
@@ -21,6 +22,7 @@ class ArreraNetwork :
         self.__fichierVille = jsonWork(fileFete)
         #initilisation du gestionnaire du reseau de neuron
         self.__detecteurOS = OS()
+        self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
         self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur,self.__configNeuron,self.__detecteurOS,self.__fichierVille)
         self.__network = network()
         #set des atribut
@@ -32,13 +34,13 @@ class ArreraNetwork :
         #recuperation etat du reseau
         self.__etatReseau = self.__network.getEtatInternet()
         #initilisation des neuron
-        self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron)
-        self.__service = neuroneService(self.__fonctionAssistant,self.__gestionnaire)
-        self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire)
-        self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire)
-        self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire)
-        self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire)
-        self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire)
+        self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron,self.__etatNeuron)
+        self.__service = neuroneService(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
     
     def boot(self):
         hour = datetime.datetime.now().hour

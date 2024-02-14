@@ -15,11 +15,11 @@
    "toucheCalculatrice":"image/calculatrice",
    "moteurRechercheDefault":"duckduckgo",
    "emplacementSoftWindows":"racourcie",
-   "API":"1",
-   "chatBot":"1",
-   "open":"1",
-   "main":"1",
-   "search":"1",
-   "software":"1",
-   "time":"1"
+   "etatService":"1",
+   "etatSoftware":"1",
+   "etatTime":"1",
+   "etatOpen":"1",
+   "etatSearch":"1",
+   "etatChatbot":"1",
+   "etatApi":"1"
 }
