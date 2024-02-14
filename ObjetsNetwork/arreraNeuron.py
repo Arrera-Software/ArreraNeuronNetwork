@@ -1,12 +1,11 @@
 import datetime
-import random
 from librairy.dectectionOS import*
 from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import *
 from ObjetsNetwork.network import*
-from neuron.main import*
+from neuron.service import*
 from neuron.API import*
 from neuron.software import*
 from neuron.open import *
@@ -34,7 +33,7 @@ class ArreraNetwork :
         self.__etatReseau = self.__network.getEtatInternet()
         #initilisation des neuron
         self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron)
-        self.__main = neuroneMain(self.__fonctionAssistant,self.__gestionnaire)
+        self.__service = neuroneService(self.__fonctionAssistant,self.__gestionnaire)
         self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire)
         self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire)
         self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire)
@@ -70,7 +69,7 @@ class ArreraNetwork :
         requette = chaine.netoyage(str(var))
         valeur = 0
         listOut =  []
-        valeur,text = self.__main.neurone(requette,self.__oldSorti,self.__oldRequette)
+        valeur,text = self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
         if valeur == 0 :
             #software
             valeur,text = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
