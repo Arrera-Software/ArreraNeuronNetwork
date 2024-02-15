@@ -11,7 +11,7 @@ class neuroneSearch:
         self.__fonctionArreraNetwork = fncArreraNetwork
 
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
-        if self.__gestNeuron == True :
+        if self.__gestNeuron.getSearch() == True :
             #Initilisation des variable nbRand et text et valeur
             text = ""
             valeur = 0
@@ -20,8 +20,7 @@ class neuroneSearch:
                 text = self.__fonctionArreraNetwork.sortieGrandRecherche(requette)
             else :
                 if "search" in requette or "recherche" in requette :
-                    text = self.__fonctionArreraNetwork.sortieRechercheSimple(requette)
-                
+                    text = self.__fonctionArreraNetwork.sortieRechercheSimple(requette)    
             #Mise a jour de la valeur                                                               
             valeur = self.__gestionNeuron.verrifSortie(text)
             #Retour des valeur

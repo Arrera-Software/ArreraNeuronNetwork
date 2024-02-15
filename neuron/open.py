@@ -58,6 +58,12 @@ class neuroneOpen :
                                                         if listeSite[i] in requette:
                                                             text = self.__fonctionArreraNetwork.sortieOpenSite(listeSite[i])
                                                             break
+                                                    if self.__gestionNeuron.verrifSortie(text) == 0 :
+                                                        if self.__gestionNeuron.getVous() == True :
+                                                            text = "Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que vous me demandez"
+                                                        else :
+                                                            text = "Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que tu me demande"
+                                                    
                                             
                                                 
             #Mise a jour de la valeur                                                               
