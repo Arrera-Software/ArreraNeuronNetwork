@@ -262,7 +262,7 @@ class neuroneDiscution :
                                                                                     text ="OK je suis à votre service si vous avez besoin de moi ."
                                                                                 else :   
                                                                                     if "J'espère que vous passez un bon début de journée." in self.__oldsortie :
-                                                                                        text = "Dommage comment je peux vous la rendre meilleure genre ."
+                                                                                        text = "Dommage comment je peux vous la rendre meilleure "+self.__genre+"."
                                                                                     else :    
                                                                                         if "J'espère que vous passez une bonne après-midi ?" in self.__oldsortie :
                                                                                             text ="Ha, je reste la si vous avez besoin de moi je suis la ."
@@ -403,7 +403,14 @@ class neuroneDiscution :
                                                                         if self.__etatVous == True :
                                                                             text = "De rien "+self.__genre+",je reste a votre servie si vous avez besoin de moi ?" 
                                                                         else :
-                                                                            text = "De rien "+self.__user+",sur quoi je peux encore t'aider ?"                                         
+                                                                            text = "De rien "+self.__user+",sur quoi je peux encore t'aider ?" 
+                                                                    else:
+                                                                        if  "ta gueule" in requette or "tais toi" in requette :
+                                                                            if (self.__etatVous):
+                                                                                text = "Ok "+self.__genre+" je me tais"
+                                                                            else :
+                                                                                text= "Ok"
+
                                                                                                                                                                 
             #Mise a jour de la valeur                                                               
             valeur = self.__gestionNeuron.verrifSortie(text)
