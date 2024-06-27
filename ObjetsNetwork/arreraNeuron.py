@@ -49,23 +49,10 @@ class ArreraNetwork :
         self.__oldSorti = text
         return str(text)
     
-    def setOld(self,requette:str,sortie:str):
-        self.__oldRequette = requette
-        self.__oldSorti = sortie
-    
     def shutdown(self):
         hour = datetime.datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)
-
-    def transformeListSTR(self,list:list)->str:
-        return str(list[0])
-    
-    def phraseActu(self,actu1:str,actu2:str,actu3:str):
-        if self.__gestionnaire.getVous() == True :
-            return str("Les actualités du jour sont "+actu1+" "+actu2+" "+actu3+".")
-        else :
-            return str("Les actu du jour sont "+actu1+" "+actu2+" "+actu3+".")
     
     def neuron(self,var:str) :
         requette = chaine.netoyage(str(var))
