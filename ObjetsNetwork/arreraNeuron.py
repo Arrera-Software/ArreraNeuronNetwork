@@ -54,28 +54,31 @@ class ArreraNetwork :
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)
     
+    #def getListSortie(self)->list :
+
+    
     def neuron(self,var:str) :
         requette = chaine.netoyage(str(var))
         valeur = 0
         listOut =  []
-        valeur,text = self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
+        valeur,listOut = self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
         if valeur == 0 :
             #software
-            valeur,text = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
+            valeur,listOut = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
             if valeur == 0 :
                 #time
-                valeur,text = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
+                valeur,listOut = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
                 if valeur == 0 :
                     #open
-                    valeur,text = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
+                    valeur,listOut = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
                     if valeur == 0 :
                         #search
                         if self.__etatReseau == True :
-                            valeur,text = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
+                            valeur,listOut = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
                         else :
                             valeur = 0
                         if valeur == 0 :
-                            valeur,text = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
+                            valeur,listOut = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
                             if valeur == 0 :
                                 #api
                                 if self.__etatReseau == True :
@@ -84,15 +87,13 @@ class ArreraNetwork :
                                     valeur = 0
                                 if valeur == 0 :
                                     if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette or "arreter" in requette :
-                                        text = self.__formuleNeuron.aurevoir(datetime.datetime.now().hour)
+                                        listOut = [self.__formuleNeuron.aurevoir(datetime.datetime.now().hour),""]
                                         valeur = 15
                                     else : 
                                         valeur = 0 
-                                        text = self.__formuleNeuron.nocomprehension()
+                                        listOut = [self.__formuleNeuron.nocomprehension(),""]
                                         self.__gestionnaire.addDiscution()
-        #Creation de la liste de sortie
-        if ((valeur  != 3) and (valeur != 12) and (valeur != 11) and (valeur!=4)) :
-            listOut =  [text,""]
+        
         #Sauvegarde des sortie                         
         self.__oldRequette = requette
         #Sauvegarde de la sortie 

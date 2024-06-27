@@ -27,4 +27,5 @@ while valeur != 15 :
                     print("Opale : Voici votre resumer")
                     print(sortie)
         else :
-            print(nom + " $ "+sortie[0])               
+            print(sortie[0])
+            #print(nom + " $ "+sortie[0])               
