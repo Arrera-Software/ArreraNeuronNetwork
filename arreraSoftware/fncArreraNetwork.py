@@ -152,7 +152,7 @@ class fncArreraNetwork:
                     text = ["Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+".",""]
                 else :
                     text = ["Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" .",""]
-        return 0,text
+        return 4,text
     
     def sortieItineraires(self,loc1:str,loc2:str):
         if loc1 == "loc" :

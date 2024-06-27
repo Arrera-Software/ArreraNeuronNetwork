@@ -31,7 +31,12 @@ class neuroneDiscution :
                             ,"Parce qu'ils n'ont pas de FISH de paie"
                             ,"En fait, dans tous les gels douches. Qu’une fois dans la salle de bain il n’y ait aucune issue possible."]
         self.__listSortie = ["",""]
-        
+    
+    def getListSortie(self)->list :
+        return self.__listSortie  
+
+    def getValeurSortie(self)->int :
+        return self.__valeurOut
         
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         if self.__gestNeuron.getChatbot() == True : 
@@ -41,7 +46,7 @@ class neuroneDiscution :
             nbRand = 0
             text = ""
             self.__listSortie = ["",""]
-            valeur = 0
+            self.__valeurOut = 0
             #Recuperation atribut de l'assistant
             self.__oldrequette = oldRequette
             self.__oldsortie = oldSortie
@@ -439,9 +444,6 @@ class neuroneDiscution :
 
                                                                                                                                                                 
             #Mise a jour de la valeur                                                               
-            valeur = self.__gestionNeuron.verrifSortie(text)
+            self.__valeurOut = self.__gestionNeuron.verrifSortie(text)
             #Retour des valeur
             self.__listSortie = [text,""]
-            return valeur , self.__listSortie
-        else :
-            return 0 , ""

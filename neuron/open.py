@@ -10,11 +10,18 @@ class neuroneOpen :
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__gestNeuron = neuronGest
         self.__listSortie = ["",""]
+        self.__valeurOut = int
+
+    def getListSortie(self)->list:
+        return self.__listSortie
+    
+    def getValeurSortie(self)->int :
+        return self.__valeurOut
 
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         if self.__gestNeuron.getOpen() == True :
             #Initilisation des variable nbRand et text et valeur
-            valeur = 0
+            self.__valeurOut = 0
             self.__listSortie = ["",""]
             #Recuperation atribut de l'assistant
             listeLogiciel = self.__gestionNeuron.getListLogiciel()
@@ -63,7 +70,7 @@ class neuroneOpen :
                                 or ("microsoft edge" in requette) or ("edge" in requette) 
                                 or ("opera" in requette) or ("brave" in requette) 
                                 or ("vivaldi" in requette) or ("tor browser" in requette) 
-                                or ("tor browser" in requette) or ("arc" in requests)) :
+                                or ("tor browser" in requette) or ("arc" in requette)) :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenBrowser(),""]
                             else :
                                 if (("note" in requette) or ("bloc-notes" in requette) 
@@ -109,8 +116,4 @@ class neuroneOpen :
                                             
                                                 
             #Mise a jour de la valeur                                                               
-            valeur = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
-            #Retour des valeur
-            return valeur , self.__listSortie
-        else :
-            return 0 , ""
+            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])

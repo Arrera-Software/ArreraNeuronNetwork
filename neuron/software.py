@@ -10,12 +10,19 @@ class neuroneSoftware :
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__gestNeuron = neuronGest
         self.__listSortie = ["",""]
+        self.__valeurOut = int 
+
+    def getListSortie(self)->list:
+        return self.__listSortie
+    
+    def getValeurSortie(self)->int :
+        return self.__valeurOut
 
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         if self.__gestNeuron.getSoftware() == True :
             #Initilisation des variable nbRand et text et valeur
             self.__listSortie = ["",""]
-            valeur = 0
+            self.__valeurOut = 0
             #Recuperation atribut de l'assistant
             self.__etatVous = self.__gestionNeuron.getVous()
             self.__genre = self.__gestionNeuron.getGenre()
@@ -43,8 +50,4 @@ class neuroneSoftware :
                     
                                         
             #Mise a jour de la valeur                                                               
-            valeur = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
-            #Retour des valeur
-            return valeur , self.__listSortie
-        else :
-            return 0 , ""
+            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])

@@ -17,7 +17,9 @@ while valeur != 15 :
     if requette == "github" :
         webbrowser.open("https://github.com/Arrera-Software/ArreraChatBots")
     else :
-        valeur , sortie = neuron.neuron(requette)
+        neuron.neuron(requette)
+        valeur = neuron.getValeurSortie()
+        sortie = neuron.getListSortie()
         print(valeur)
         if ((valeur==12) or (valeur==11) or (valeur==3)) :
             if (valeur == 3) : 
@@ -27,5 +29,4 @@ while valeur != 15 :
                     print("Opale : Voici votre resumer")
                     print(sortie)
         else :
-            print(sortie[0])
-            #print(nom + " $ "+sortie[0])               
+            print(nom + " $ "+sortie[0])               

@@ -16,6 +16,9 @@ from ObjetsNetwork.enabledNeuron import*
 
 class ArreraNetwork :
     def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
+        # Declaration des diferente var 
+        self.__listOut =  [] 
+        self.__valeurOut = int
         #Ouverture fichier de configuration
         self.__fichierUtilisateur = jsonWork(userFile)
         self.__configNeuron = jsonWork(fichierConfiguration)
@@ -54,53 +57,104 @@ class ArreraNetwork :
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)
     
-    #def getListSortie(self)->list :
+    def getListSortie(self)->list :
+        return self.__listOut 
+
+    def getValeurSortie(self)->int :
+        """
+        0 : Aucun sortie
+        1 : Sortie normale
+        4 : Meteo / temperature / GPS
+        11 : Erreur du resumer 
+        12 : Reussite du resumer
+        15 : Arret de l'assistant
+        """
+        return self.__valeurOut
 
     
     def neuron(self,var:str) :
+        # Var local
         requette = chaine.netoyage(str(var))
-        valeur = 0
-        listOut =  []
-        valeur,listOut = self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
-        if valeur == 0 :
+        # Var de l'objet
+        self.__valeurOut = 0
+        self.__listOut =  []
+
+        # Service
+        self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
+        self.__valeurOut = self.__service.getValeurSortie()
+         
+        if self.__valeurOut == 0 :
             #software
-            valeur,listOut = self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
-            if valeur == 0 :
+            self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
+            self.__valeurOut = self.__software.getValeurSortie()
+            
+            if self.__valeurOut == 0 :
                 #time
-                valeur,listOut = self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
-                if valeur == 0 :
+                self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
+                self.__valeurOut = self.__time.getValeurSortie()
+                
+                if self.__valeurOut == 0 :
                     #open
-                    valeur,listOut = self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
-                    if valeur == 0 :
+                    self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
+                    self.__valeurOut = self.__open.getValeurSortie()
+                    
+                    if self.__valeurOut == 0 :
                         #search
                         if self.__etatReseau == True :
-                            valeur,listOut = self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
+                            self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
+                            self.__valeurOut = self.__search.getValeurSortie()
                         else :
-                            valeur = 0
-                        if valeur == 0 :
-                            valeur,listOut = self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
-                            if valeur == 0 :
+                            self.__valeurOut = 0
+                        
+                        if self.__valeurOut == 0 :
+                            self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
+                            self.__valeurOut = self.__chatBot.getValeurSortie()
+                            
+                            if self.__valeurOut == 0 :
                                 #api
                                 if self.__etatReseau == True :
-                                    valeur,listOut = self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
+                                    self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
+                                    self.__valeurOut = self.__api.getValeurSortie()
                                 else :
-                                    valeur = 0
-                                if valeur == 0 :
+                                    self.__valeurOut = 0
+                                
+                                if self.__valeurOut == 0 :
                                     if "stop" in requette or "au revoir" in requette or "quitter" in requette or "bonne nuit" in requette or "adieu" in requette or "bonne soirée" in requette or "arreter" in requette :
-                                        listOut = [self.__formuleNeuron.aurevoir(datetime.datetime.now().hour),""]
-                                        valeur = 15
+                                        self.__listOut = [self.__formuleNeuron.aurevoir(datetime.datetime.now().hour),""]
+                                        self.__valeurOut = 15
                                     else : 
-                                        valeur = 0 
-                                        listOut = [self.__formuleNeuron.nocomprehension(),""]
+                                        self.__valeurOut = 0 
+                                        self.__listOut = [self.__formuleNeuron.nocomprehension(),""]
                                         self.__gestionnaire.addDiscution()
-        
+                                else :
+                                    self.__listOut = self.__api.getListSortie()
+                            else :
+                                self.__listOut = self.__chatBot.getListSortie()
+                        else :
+                            self.__listOut = self.__search.getListSortie()
+                    else :
+                        self.__listOut = self.__open.getListSortie()
+                else :
+                    self.__listOut = self.__time.getListSortie()
+            else :
+                self.__listOut = self.__software.getListSortie()
+        else :
+            self.__listOut = self.__service.getListSortie()
         #Sauvegarde des sortie                         
         self.__oldRequette = requette
+        """
+        1 : Service 
+        2 : software
+        3 : Time
+        4 : open 
+        5 : seach 
+        6 : Chatbot
+        7 : Api 
+        """
         #Sauvegarde de la sortie 
-        if ((valeur  == 3) or (valeur == 12) or (valeur == 11)) :
+        if ((self.__valeurOut  == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11)) :
             self.__oldSorti = "requette api"      
         else :
-            self.__oldSorti = listOut[0]
+            self.__oldSorti = self.__listOut[0]
         #Ajout d'une discution
         self.__gestionnaire.addDiscution() 
-        return valeur , listOut

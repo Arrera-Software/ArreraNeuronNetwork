@@ -11,10 +11,16 @@ class neuroneSearch:
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__listSortie = ["",""]
 
+    def getListSortie(self)->list:
+        return self.__listSortie
+    
+    def getValeurSortie(self)->int :
+        return self.__valeurOut
+
     def neurone(self,requette:str,oldSortie:str,oldRequette:str):
         if self.__gestNeuron.getSearch() == True :
             #Initilisation des variable nbRand et text et valeur
-            valeur = 0
+            self.__valeurOut = 0
             self.__listSortie = ["",""]
             #reponse neuron search
             if (("bigsearch" in requette )or ("grand recherche" in requette)) :
@@ -23,9 +29,4 @@ class neuroneSearch:
                 if (("search" in requette) or ("recherche" in requette)) :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieRechercheSimple(requette),""]    
             #Mise a jour de la valeur                                                               
-            valeur = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
-            #Retour des valeur
-            return valeur , self.__listSortie
-        else :
-            return 0 , ""
-            
+            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
