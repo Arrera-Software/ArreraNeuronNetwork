@@ -18,7 +18,7 @@ class neuroneOpen :
     def getValeurSortie(self)->int :
         return self.__valeurOut
 
-    def neurone(self,requette:str,oldSortie:str,oldRequette:str):
+    def neurone(self,requette:str):
         if self.__gestNeuron.getOpen() == True :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0

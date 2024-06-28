@@ -27,17 +27,17 @@ class neuroneAPI :
     def getValeurSortie(self)->int :
         return self.__valeurOut
 
-    def neurone(self,requette:str,oldSortie:str,oldRequette:str):
+    def neurone(self,requette:str):
         if self.__gestNeuron.getAPI() == True :
             #Initilisation des variable nbRand et text et valeur
             self.__listSortie = []
             self.__valeurOut = 0
             #Recuperation atribut de l'assistant
-            self.__oldsortie = oldSortie
-            self.__name = self.__gestionNeuron.getName()
-            self.__etatVous = self.__gestionNeuron.getVous()
-            self.__genre = self.__gestionNeuron.getGenre()
-            self.__user = self.__gestionNeuron.getUser()
+            oldsortie = self.__gestionNeuron.getOld()
+            name = self.__gestionNeuron.getName()
+            etatVous = self.__gestionNeuron.getVous()
+            genre = self.__gestionNeuron.getGenre()
+            user = self.__gestionNeuron.getUser()
             #reponse du neuron main
             if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette or "resume" in requette :
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.ResumerActualite()
@@ -108,27 +108,27 @@ class neuroneAPI :
                                                 loc = requette.replace("moi","")
                                                 sortieFnc= self.__fonctionArreraNetwork.sortieItineraires("loc",loc)
                                 if sortieFnc== True :
-                                    if self.__etatVous == True :
-                                        self.__listSortie = ["J'espére que sa vous aidera "+self.__genre+" "+self.__user,""]
+                                    if etatVous == True :
+                                        self.__listSortie = ["J'espére que sa vous aidera "+genre+" "+user,""]
                                     else :
-                                        self.__listSortie =["Voila "+self.__user,""]
+                                        self.__listSortie =["Voila "+user,""]
                                     self.__valeurOut = 4 
                                 else :
                                     if etatde == True :
-                                        if self.__etatVous == True :
-                                            self.__listSortie = ["Quelle est votre destination "+self.__genre,""]
+                                        if etatVous == True :
+                                            self.__listSortie = ["Quelle est votre destination "+genre,""]
                                             self.__valeurOut = 4
                                         else :
-                                            self.__listSortie = ["Quelle est ta destination final "+self.__user,""]
+                                            self.__listSortie = ["Quelle est ta destination final "+user,""]
                                             self.__valeurOut = 4
                                     else :
-                                        if self.__etatVous == True :
-                                            self.__listSortie = ["Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
+                                        if etatVous == True :
+                                            self.__listSortie = ["Je suis desoler "+genre+" "+user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
                                             self.__valeurOut = 4
                                         else :
-                                            self.__listSortie =["Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire",""]
+                                            self.__listSortie =["Desoler"+user+" Je ne peux pas te fournir ton itinéraire",""]
                                             self.__valeurOut = 4
-                            if "Quelle est votre destination" in self.__oldsortie or "Quelle est ta destination final" in self.__oldsortie :
+                            if "Quelle est votre destination" in oldsortie or "Quelle est ta destination final" in oldsortie :
                                 sortieFnc = False
                                 if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
                                     sortieFnc = self.__fonctionArreraNetwork.sortieItineraires(self.__villeGPS1,self.__gestionNeuron.getValeurfichierUtilisateur("adresseDomicile"))
@@ -143,18 +143,18 @@ class neuroneAPI :
                                         loc = requette.replace("moi","")
                                         sortieFnc = self.__fonctionArreraNetwork.sortieItineraires(self.__villeGPS1,loc)
                                 if sortieFnc== True :
-                                    if self.__etatVous == True :
-                                        self.__listSortie = ["J'espére que sa vous aidera "+self.__genre+" "+self.__user,""]
+                                    if etatVous == True :
+                                        self.__listSortie = ["J'espére que sa vous aidera "+genre+" "+user,""]
                                         self.__valeurOut = 4
                                     else :
-                                        self.__listSortie =["Voila "+self.__user,""]
+                                        self.__listSortie =["Voila "+user,""]
                                         self.__valeurOut = 4
                                 else :
-                                    if self.__etatVous == True :
-                                        self.__listSortie = ["Je suis desoler "+self.__genre+" "+self.__user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
+                                    if etatVous == True :
+                                        self.__listSortie = ["Je suis desoler "+genre+" "+user+" mais je subis un probleme qui m'empeche de vous montrer l'itinéraire",""]
                                         self.__valeurOut = 4
                                     else :
-                                        self.__listSortie =["Desoler"+self.__user+" Je ne peux pas te fournir ton itinéraire",""]
+                                        self.__listSortie =["Desoler"+user+" Je ne peux pas te fournir ton itinéraire",""]
                                         self.__valeurOut = 4
                             
                             else :
@@ -176,22 +176,22 @@ class neuroneAPI :
                                         if presenceLang == True :
                                             secondLang = chaine.firstMots(chaineCarractere,self.__listeLang)
                                             self.__fonctionArreraNetwork.sortieTraducteur(self.__dictLang[firstLang],self.__dictLang[secondLang])
-                                            if self.__etatVous == True :
-                                                self.__listSortie=["J'espère que cet outil de traduction vous a sera utile "+self.__genre,""]
+                                            if etatVous == True :
+                                                self.__listSortie=["J'espère que cet outil de traduction vous a sera utile "+genre,""]
                                                 self.__valeurOut = 4
                                             else :
-                                                self.__listSortie= ["J'espère que sa te sera utile  "+self.__name,""]
+                                                self.__listSortie= ["J'espère que sa te sera utile  "+name,""]
                                                 self.__valeurOut = 4
                                         else :
-                                            if self.__etatVous == True :
-                                                self.__listSortie=["Desoler "+self.__genre+". Mais les langues que vous demander ne son pas disponible.",""]
+                                            if etatVous == True :
+                                                self.__listSortie=["Desoler "+genre+". Mais les langues que vous demander ne son pas disponible.",""]
                                                 self.__valeurOut = 4
                                             else :
                                                 self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]
                                                 self.__valeurOut = 4
                                     else :
-                                        if self.__etatVous == True :
-                                            self.__listSortie=["Desoler "+self.__genre+". Mais les langue que vous demander ne son pas disponible.",""]
+                                        if etatVous == True :
+                                            self.__listSortie=["Desoler "+genre+". Mais les langue que vous demander ne son pas disponible.",""]
                                             self.__valeurOut = 4
                                         else :
                                             self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]

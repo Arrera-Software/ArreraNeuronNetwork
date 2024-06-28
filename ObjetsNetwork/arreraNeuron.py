@@ -48,8 +48,7 @@ class ArreraNetwork :
     def boot(self):
         hour = datetime.datetime.now().hour
         text= self.__formuleNeuron.salutation(hour)
-        self.__oldRequette = "boot"
-        self.__oldSorti = text
+        self.__gestionnaire.setOld("boot","boot")
         return str(text)
     
     def shutdown(self):
@@ -80,40 +79,40 @@ class ArreraNetwork :
         self.__listOut =  []
 
         # Service
-        self.__service.neurone(requette,self.__oldSorti,self.__oldRequette)
+        self.__service.neurone(requette)
         self.__valeurOut = self.__service.getValeurSortie()
          
         if self.__valeurOut == 0 :
             #software
-            self.__software.neurone(requette,self.__oldSorti,self.__oldRequette)
+            self.__software.neurone(requette)
             self.__valeurOut = self.__software.getValeurSortie()
             
             if self.__valeurOut == 0 :
                 #time
-                self.__time.neurone(requette,self.__oldSorti,self.__oldRequette)
+                self.__time.neurone(requette)
                 self.__valeurOut = self.__time.getValeurSortie()
                 
                 if self.__valeurOut == 0 :
                     #open
-                    self.__open.neurone(requette,self.__oldSorti,self.__oldRequette)
+                    self.__open.neurone(requette)
                     self.__valeurOut = self.__open.getValeurSortie()
                     
                     if self.__valeurOut == 0 :
                         #search
                         if self.__etatReseau == True :
-                            self.__search.neurone(requette,self.__oldSorti,self.__oldSorti)
+                            self.__search.neurone(requette)
                             self.__valeurOut = self.__search.getValeurSortie()
                         else :
                             self.__valeurOut = 0
                         
                         if self.__valeurOut == 0 :
-                            self.__chatBot.neurone(requette,self.__oldSorti,self.__oldRequette)
+                            self.__chatBot.neurone(requette)
                             self.__valeurOut = self.__chatBot.getValeurSortie()
                             
                             if self.__valeurOut == 0 :
                                 #api
                                 if self.__etatReseau == True :
-                                    self.__api.neurone(requette,self.__oldSorti,self.__oldRequette)
+                                    self.__api.neurone(requette)
                                     self.__valeurOut = self.__api.getValeurSortie()
                                 else :
                                     self.__valeurOut = 0
@@ -140,12 +139,11 @@ class ArreraNetwork :
                 self.__listOut = self.__software.getListSortie()
         else :
             self.__listOut = self.__service.getListSortie()
-        #Sauvegarde des sortie                         
-        self.__oldRequette = requette
-        #Sauvegarde de la sortie 
+
+        #Sauvegarde de la sortie et de l'entré 
         if ((self.__valeurOut  == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11)) :
-            self.__oldSorti = "requette api"      
+            self.__gestionnaire.setOld("requette api",requette)     
         else :
-            self.__oldSorti = self.__listOut[0]
+            self.__gestionnaire.setOld(self.__listOut[0],requette)
         #Ajout d'une discution
         self.__gestionnaire.addDiscution() 

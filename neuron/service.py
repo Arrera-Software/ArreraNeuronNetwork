@@ -16,15 +16,15 @@ class neuroneService :
     def getValeurSortie(self)->int :
         return self.__valeurOut
         
-    def neurone(self,requette:str,oldSortie:str,oldRequette:str):
+    def neurone(self,requette:str):
         if self.__gestNeuron.getService() == True :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
             #Recuperation atribut de l'assistant
-            self.__etatVous = self.__gestionNeuron.getVous()
-            self.__genre = self.__gestionNeuron.getGenre()
-            self.__user = self.__gestionNeuron.getUser()
+            etatVous = self.__gestionNeuron.getVous()
+            genre = self.__gestionNeuron.getGenre()
+            user = self.__gestionNeuron.getUser()
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]
@@ -38,13 +38,13 @@ class neuroneService :
                         or( "0" in requette) and ("+" in requette) or ("-" in requette) 
                         or ( "*" in requette) or ("/" in requette)) :
                         resultat =  eval(requette)
-                        if self.__etatVous == True :
-                            self.__listSortie = ["Voici le resultat de votre calcule "+self.__genre+" est "+str(resultat),""]
+                        if etatVous == True :
+                            self.__listSortie = ["Voici le resultat de votre calcule "+genre+" est "+str(resultat),""]
                         else :
-                            self.__listSortie = ["Voici le resultat de ton calcule "+self.__user+" est "+str(resultat),""]
+                            self.__listSortie = ["Voici le resultat de ton calcule "+user+" est "+str(resultat),""]
                     else :
-                        if self.__etatVous == True :
-                            self.__listSortie = ["Le calcule que vous me demander de faire "+self.__genre+" est imposible a faire.",""]
+                        if etatVous == True :
+                            self.__listSortie = ["Le calcule que vous me demander de faire "+genre+" est imposible a faire.",""]
                         else :
                             self.__listSortie = ["Le calcule que tu me demande de faire est imposible.",""]
             #Mise a jour de la valeur                                                               
