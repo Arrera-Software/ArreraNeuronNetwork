@@ -5,6 +5,7 @@
    "lieuDomicile":"1",
    "lieuTravail":"1",
    "iconAssistant":"image/icon.png",
+   "emplacementAssetHorloge":"assetHorloge/bip.mp3",
    "interfaceColor" : "white",
    "interfaceTextColor":"black",
    "utilisationVous":"0",
