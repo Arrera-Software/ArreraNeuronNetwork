@@ -612,6 +612,34 @@ class fncArreraNetwork:
                         text = text + listEvent[i] + " et "
                     else :
                         text = text + listEvent[i] + "," 
-                
-            
             return text
+    
+    def sortieListLogiciel(self,nb:int,listSoft:list):
+        if (nb==0):
+            if (self.__etatVous == True) :
+                return "Vous n'avez pas de logiciel enregisté. Ouvrez les paramétres pour en enregistrer un."
+            else :
+                return "Tu n'as pas de logiciel enregisté. Ouvre les paramétres pour en enregister un"
+        else :
+            if (nb == 1) :
+                if (self.__etatVous == True) :
+                    return "Vous avez qu'un seul logiciel enregisté. Qui est "+listSoft[0]
+                else :
+                    return "Tu as un seul logiciel enregisté. Qui est "+listSoft[0]
+            else :
+                if (self.__etatVous == True) :
+                    baseTexte = "Vous avez "+str(nb)+" de logiciels enregistré. Qui sont"
+                else :
+                    baseTexte = "Tu as "+str(nb)+" de logiciels enregistré. Qui sont"
+                
+                for i in range(0,nb):
+                    if (i == 0):
+                        texte = baseTexte+" "+listSoft[i]
+                    else :
+                        if (i == (nb-1)):
+                            texte = texte + " et "+ listSoft[i]
+                        else :
+                            texte = texte +", "+ listSoft[i]
+                
+                return texte
+                        

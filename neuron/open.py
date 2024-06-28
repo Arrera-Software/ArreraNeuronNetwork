@@ -112,7 +112,10 @@ class neuroneOpen :
                                                             self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que vous me demandez",""]
                                                         else :
                                                             self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que tu me demande",""]
-                                                    
+            else :
+                if (("liste les logiciels" in requette)or("quelles sont les logiciels enregister" in requette) 
+                    or ("fais une liste de logiciels"in requette) or ("liste les logiciel" in requette)):
+                    self.__listSortie = [self.__fonctionArreraNetwork.sortieListLogiciel(nbLogiciel,listeLogiciel),""]                                     
                                             
                                                 
             #Mise a jour de la valeur                                                               
