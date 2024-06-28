@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.messagebox import*
 from librairy.travailJSON import *
 import math
 
@@ -24,23 +25,28 @@ class fncCalculatrice :
         self.__fclavier = Frame(self.__wCalc,width=500,height=250,bg=self.__color)
         self.__fhistorique = Frame(self.__wCalc,width=500,height=500,bg=self.__color)
         self.__fnbComplex = Frame(self.__wCalc,width=500,height=500,bg=self.__color)
-        self.__foperateurComplex = Frame(self.__fnbComplex)
-        self.__fcomplex1 = Frame(self.__fnbComplex)
-        self.__fcomplex2 = Frame(self.__fnbComplex)
+        self.__fCalculeComplex = Frame(self.__fnbComplex,width=500,height=120,bg=self.__color)
+        self.__fResultatComplex = Frame(self.__fnbComplex,width=500,height=80,bg=self.__color)
+        self.__foperateurComplex = Frame(self.__fCalculeComplex)
+        self.__fcomplex1 = Frame(self.__fCalculeComplex)
+        self.__fcomplex2 = Frame(self.__fCalculeComplex)
         self.__fpythagore = Frame(self.__wCalc,width=500,height=500,bg=self.__color)
         self.__fchooseCal = Frame(self.__fpythagore,width=400,height=50,bg=self.__color)
         self.__fnbPythagore = Frame(self.__fpythagore,width=500,height=100,bg=self.__color)
         #widget
         self.__zoneCalcule = Text(self.__wCalc,width=50, height=10,highlightthickness=2, highlightbackground="black",font=("arial","25"))
-        self.__affichageComplexOut = Entry(self.__fnbComplex,state="disabled",width=42,highlightthickness=2, highlightbackground="black",font=("arial","15"))
+        
         self.__zoneComplex1A = Entry(self.__fcomplex1,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.__zoneComplex1B = Entry(self.__fcomplex1,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.__zoneComplex2A = Entry(self.__fcomplex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.__zoneComplex2B = Entry(self.__fcomplex2,highlightthickness=1, highlightbackground="black",font=("arial","15"))
+        
         self.__zonePythagore1 = Entry(self.__fnbPythagore,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         self.__zonePythagore2 = Entry(self.__fnbPythagore,highlightthickness=1, highlightbackground="black",font=("arial","15"))
         # Label
         self.__labelTitrePythagore = Label(self.__fnbPythagore,text="Calcule du théoréme de pythagore"
+                                  ,font=("arial","25"),bg=self.__color,fg=self.__textColor)
+        self.__labelTitreNbComplex = Label(self.__fnbComplex,text="Calcule de nombre complex"
                                   ,font=("arial","25"),bg=self.__color,fg=self.__textColor)
         #touche clavier
         #chiffre
@@ -119,7 +125,7 @@ class fncCalculatrice :
         self.__btnNbComplex = Button(self.__fclavier,text="Nombre Complex",font=("arial","15")
                                      ,bg=self.__color,fg=self.__textColor,command=self.__modeComplex)
         #btn nb complex
-        self.__btnEgalComplex = Button(self.__fnbComplex,image=self.imgEgal
+        self.__btnEgalComplex = Button(self.__fResultatComplex,image=self.imgEgal
                                        ,command= lambda : self.__calculeComplex())
         self.__btnplusComplex = Button(self.__foperateurComplex,image=self.imgPlus
                                        ,command= lambda : self.__setOperateurComplex("+"))
@@ -130,7 +136,7 @@ class fncCalculatrice :
         self.__btnDiviserComplex = Button(self.__foperateurComplex,image=self.imgDiviser
                                           ,command= lambda : self.__setOperateurComplex("/"))
         self.__btnCancelComplex = Button(self.__fnbComplex,text="Annuler",font=("arial","15")
-                                         ,bg=self.__color,fg=self.__textColor,command=self.__cancelOperateurComplex)
+                                         ,bg=self.__color,fg=self.__textColor,command=self.__resetOperateurComplex)
         self.__btnRetourComplex = Button(self.__fnbComplex,text="Retour",font=("arial","15")
                                          ,bg=self.__color,fg=self.__textColor,command=self.__modeCalcule)
         #bouton pythagore
@@ -147,7 +153,7 @@ class fncCalculatrice :
         self.__labelFois = Label(self.__foperateurComplex,image=self.imgFois)
         self.__affichageHistorique = Label(self.__fhistorique,text="Historique :"
                                            ,width=30,bg=self.__color,fg=self.__textColor,font=("arial","20"), anchor="w")
-        self.__affichageComplexOut = Label(self.__fnbComplex,width=42,font=("arial","15"),bg="grey",fg="white")
+        self.__affichageComplexOut = Label(self.__fResultatComplex,width=42,font=("arial","15"),bg="grey",fg="white")
         self.__complex1L = Label(self.__fcomplex1,text="j",font=("arial","15"),bg=self.__color)
         self.__complex2L = Label(self.__fcomplex2,text="j",font=("arial","15"),bg=self.__color)
         self.__affichagePythagoreOut =  Label(self.__fpythagore,width=42,font=("arial","15"),bg="grey",fg="white")
@@ -368,12 +374,15 @@ class fncCalculatrice :
     def __modeComplex(self):
         self.__fclavier.pack_forget()
         self.__zoneCalcule.pack_forget()
+        self.__labelTitreNbComplex.place(relx=0.5, rely=0.0, anchor="n") 
         self.__fnbComplex.pack(side="left")  
-        self.__fcomplex1.place(x=15,y=25)
-        self.__foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-self.__foperateurComplex.winfo_reqwidth())//2),y=75)
-        self.__fcomplex2.place(x=15,y=125)
-        self.__btnEgalComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-self.__btnEgalComplex.winfo_reqwidth())//2),y=175)
-        self.__affichageComplexOut.place(x=15,y=225)
+        self.__fcomplex1.place(relx=0.5, rely=0.0, anchor="n")
+        self.__foperateurComplex.place(relx=0.5, rely=0.5, anchor="center")
+        self.__fcomplex2.place(relx=0.5, rely=1.0, anchor="s")
+        self.__fCalculeComplex.place(x=0,y=80)
+        self.__fResultatComplex.place(x=0,y=220)
+        self.__btnEgalComplex.place(relx=0.5, rely=0.0, anchor="n")
+        self.__affichageComplexOut.place(relx=0.5, rely=1.0, anchor="s")
         self.__btnCancelComplex.place(x=(500-self.__btnCancelComplex.winfo_reqwidth()),y=(500-self.__btnCancelComplex.winfo_reqheight()))
         self.__btnRetourComplex.place(x=0,y=(500-self.__btnCancelComplex.winfo_reqheight()))
         self.__affichageComplexOut.configure(text="")
@@ -404,7 +413,7 @@ class fncCalculatrice :
         self.__foperateurComplex.update()
         self.__foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-self.__foperateurComplex.winfo_reqwidth())//2),y=75)
         
-    def __cancelOperateurComplex(self):
+    def __resetOperateurComplex(self):
         if self.__operateurChooseComplex == "":
             self.__operateurChooseComplex = ""
         else :
@@ -427,7 +436,12 @@ class fncCalculatrice :
         nb1B = self.__zoneComplex1B.get()
         nb2A = self.__zoneComplex2A.get()
         nb2B = self.__zoneComplex2B.get()
+        self.__zoneComplex1A.delete(0,END)
+        self.__zoneComplex1B.delete(0,END)
+        self.__zoneComplex2A.delete(0,END)
+        self.__zoneComplex2B.delete(0,END)
         if self.__operateurChooseComplex == "" or nb1A.strip() == "" or nb1B.strip() == "" or nb2A.strip() == "" or nb2B.strip() == "" :
+            showerror("Assistant","Il a une erreur qui empéche de faire le calcule")
             self.__affichageComplexOut.configure(text="Erreur")
         else :
             calcule = CalculeNbComplexe(int(nb1A),int(nb1B),int(nb2A),int(nb2B))
@@ -454,7 +468,7 @@ class fncCalculatrice :
                             nb2 = calcule.recuperationNb2()
                             resultat = calcule.divisionNbComplex()
                             self.__affichageHistorique.configure(text="Historique :\n" + nb1+"/"+nb2 + " = " + str(resultat))
-            self.__operateurChooseComplex = ""
+            self.__resetOperateurComplex()
             self.__affichageComplexOut.configure(text=str(resultat))
     
 
