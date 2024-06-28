@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from librairy.travailJSON import *
 from librairy.dectectionOS import*
 
@@ -97,6 +97,9 @@ class gestionNetwork:
     
     def getMoteurRechercheDefault(self):
         return self.__moteurRechercheDefault
+
+    def getEmplacementFileAgenda(self)->str :
+        return self.__fileUser.lectureJSON("emplacementEvenenement")
     
     def getDictionnaireLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
@@ -129,7 +132,7 @@ class gestionNetwork:
             return 1 
     
     def getFeteJour(self):
-        date= datetime.datetime.now()
+        date= datetime.now()
         jours = str(date.day)
         mois = str(date.month)
         return self.__fichierVille.lectureJSONMultiFlag(mois,jours)
