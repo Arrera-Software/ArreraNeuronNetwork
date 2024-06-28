@@ -114,8 +114,16 @@ class neuroneOpen :
                                                             self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que tu me demande",""]
             else :
                 if (("liste les logiciels" in requette)or("quelles sont les logiciels enregister" in requette) 
-                    or ("fais une liste de logiciels"in requette) or ("liste les logiciel" in requette)):
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieListLogiciel(nbLogiciel,listeLogiciel),""]                                     
+                    or("quelles sont les logiciel enregister" in requette) or("quelles sont les logiciels enregiste" in requette) 
+                    or("quelles sont les logiciels enregiste" in requette) or ("fais une liste des logiciel"in requette)
+                    or ("fais une liste des logiciels"in requette) or ("liste les logiciel" in requette)):
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListLogiciel(nbLogiciel,listeLogiciel),""]  
+                else :
+                    if (("liste les sites" in requette)or("quelles sont les sites enregister" in requette) 
+                    or("quelles sont les site enregister" in requette) or("quelles sont les sites enregiste" in requette) 
+                    or("quelles sont les sites enregiste" in requette) or ("fais une liste des site"in requette)
+                    or ("fais une liste des sites"in requette) or ("liste les site" in requette)): 
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListSite(nbSite,listeSite),""]                               
                                             
                                                 
             #Mise a jour de la valeur                                                               

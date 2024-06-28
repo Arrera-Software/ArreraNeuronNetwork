@@ -641,5 +641,33 @@ class fncArreraNetwork:
                         else :
                             texte = texte +", "+ listSoft[i]
                 
-                return texte
-                        
+                return texte 
+
+    def sortieListSite(self,nb:int,listSite:list):
+        if (nb==0):
+            if (self.__etatVous == True) :
+                return "Vous n'avez pas de site internet enregisté dans l'assistant. Ouvrez les paramétres pour en enregistrer un."
+            else :
+                return "Tu n'as pas de site internet enregisté dans l'assistant. Ouvre les paramétres pour en enregister un"
+        else :
+            if (nb == 1) :
+                if (self.__etatVous == True) :
+                    return "Vous avez qu'un seul site internet enregisté. Qui est "+listSite[0]
+                else :
+                    return "Tu as un seul site internet enregisté. Qui est "+listSite[0]
+            else :
+                if (self.__etatVous == True) :
+                    baseTexte = "Vous avez "+str(nb)+" de site internet enregistré. Qui sont"
+                else :
+                    baseTexte = "Tu as "+str(nb)+" de site internet enregistré. Qui sont"
+                
+                for i in range(0,nb):
+                    if (i == 0):
+                        texte = baseTexte+" "+listSite[i]
+                    else :
+                        if (i == (nb-1)):
+                            texte = texte + " et "+ listSite[i]
+                        else :
+                            texte = texte +", "+ listSite[i]
+                
+                return texte                      
