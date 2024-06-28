@@ -41,7 +41,7 @@ class neuroneDiscution :
     def neurone(self,requette:str):
         if self.__gestNeuron.getChatbot() == True : 
             #Recuperation de l'heure
-            hour = datetime.datetime.now().hour
+            hour = datetime.now().hour
             #Initilisation des variable nbRand et text et valeur
             nbRand = 0
             text = ""

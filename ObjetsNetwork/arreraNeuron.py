@@ -1,4 +1,3 @@
-import datetime
 from librairy.dectectionOS import*
 from librairy.travailJSON import *
 from neuron.chatBots import*
@@ -51,7 +50,7 @@ class ArreraNetwork :
         self.__gestionnaire.setAll()
 
     def boot(self):
-        hour = datetime.datetime.now().hour
+        hour = datetime.now().hour
         text= self.__formuleNeuron.salutation(hour)
         self.__gestionnaire.setOld("boot","boot")
         return str(text)
