@@ -175,10 +175,14 @@ class gestionNetwork:
         return self.__configFile.lectureJSON("emplacementSoftWindows")
     
     def setOld(self,output:str,input:str):
-        # Methode qui peremt de sauvegarder oldSortie et oldRequette
+        """
+        Methode qui peremt de sauvegarder oldSortie et oldRequette
+        """
         self.__oldRequette = input 
         self.__oldSorti = output 
     
     def getOld(self):
-        # Methode qui retourne une liste qui se presente comme sa [oldRequette,self.__oldSorti]
+        """
+        Methode qui retourne une liste qui se presente comme sa [oldRequette,self.__oldSorti]
+        """
         return [self.__oldRequette,self.__oldSorti]
