@@ -25,7 +25,7 @@ class neuroneOpen :
             self.__listSortie = ["",""]
             #Recuperation atribut de l'assistant
             listeLogiciel = self.__gestionNeuron.getListLogiciel()
-            nbLogiciel = int(self.__gestionNeuron.getValeurfichierUtilisateur("nbSoft"))
+            nbLogiciel = len(listeLogiciel)
             listeSite = self.__gestionNeuron.getListWeb()
             nbSite = len(listeSite)
             #varriable
