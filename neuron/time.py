@@ -23,6 +23,8 @@ class neuroneTime :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
+            etatVous = self.__gestionNeuron.getVous()
+            genre = self.__gestionNeuron.getGenre()
             #reponse neuron time
             if ("heure" in requette) :
                 self.__listSortie = [self.fonctionArreraNetwork.sortieHeure(),""]
@@ -60,6 +62,11 @@ class neuroneTime :
                                         if (("evenement d'aujourd'hui" in requette) or ("evenement du jour" in requette) 
                                             or ("rendez-vous d'aujourd'hui" in requette) or ("rappel aujourd'hui" in requette)):
                                             self.__listSortie = [self.fonctionArreraNetwork.sortieEvenementDay(),""]
+                                            self.__valeurOut = 5
+                                        else :
+                                            if(("ouvre l'agenda" in requette) or ("ouvre le calendrier" in requette)):
+                                                self.__listSortie = [self.fonctionArreraNetwork.sortieOpenAgenda(),""]
+                                                self.__valeurOut = 5
                                         
                 
             #Mise a jour de la valeur 

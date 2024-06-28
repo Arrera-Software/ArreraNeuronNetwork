@@ -44,7 +44,7 @@ class fncArreraNetwork:
         self.__objetRecherche = fncArreraSearch(etatConnextion)
         self.__objetDate = fncDate()
         self.__objetHorloge = fncArreraHorloge()
-        self.__objetCalendar = fncArreraCalendar(self.__configNeuron,self.__gestionNeuron)
+        self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -581,38 +581,59 @@ class fncArreraNetwork:
         return text   
     
     def sortieAjoutEvent(self):
-        self.__objetCalendar.addEvenemnt()
-        return "Ok"    
+        self.__objetCalendar.activeAddWindows()
+        if (self.__etatVous==True):
+            text = "Ok, je vous ouvre la fenetre de l'agenda pour ajouter un événement"
+        else :
+            text = "Ok, je t'ouvre la fenetre de l'agenda pour ajouter un événement"
+        return text  
     
     def sortieSupprEvent(self):
-        self.__objetCalendar.supprEvenement()
-        return "Ok"    
+        self.__objetCalendar.activeSupprWindows()
+        if (self.__etatVous==True):
+            text = "Ok, je vous ouvre la fenetre de l'agenda pour supprimer un événement"
+        else :
+            text = "Ok, je t'ouvre la fenetre de l'agenda pour supprimer un événement"
+        return text   
     
     def sortieEvenementDay(self):
-        nb , listEvent = self.__objetCalendar.checkEvenement()  
-        if nb == 0 :
-            if self.__etatVous == True :
-                return "Vous avez aucun évenement aujourd'hui"
+        nbEvent= self.__objetCalendar.getNbEventToday()
+        if (nbEvent==0):
+            if (self.__etatVous==True):
+                text = "Vous n'avez pas d'événement enregister pour aujourd'hui"
             else :
-                return "Tu as rien de prévu aujourd'hui"  
+                text = "Tu as rien de prévu ajourd'hui"
         else :
-            if self.__etatVous == True :
-                text = "Vous avez "+str(nb)+" prévu évenement aujourd'hui "
-            else :
-                text = "Tu as "+str(nb)+" prévu évenement aujourd'hui "
-            if nb > 1 :
-                text = text + "qui sont "
-            else :
-                text = text + "qui est "
-            for i in range(0,nb) :
-                if i == nb-1:
-                    text = text + listEvent[i] + "."  
+            listEvent = self.__objetCalendar.getEventToday()
+            if(nbEvent==1):
+                if (self.__etatVous==True):
+                    text = "Vous avez qu'un seul événement pour aujourd'hui qui est "+listEvent[0]
                 else :
-                    if i == nb-2 :
-                        text = text + listEvent[i] + " et "
+                    text = "Tu as qu'un seul événement aujourd'hui qui est "+listEvent[0]
+            else :
+                if (self.__etatVous==True):
+                    baseTexte = "Vous avez "+str(nbEvent)+" pour ajourd'hui qui sont "
+                else :
+                    baseTexte = "Tu as "+str(nbEvent)+" pour ajourd'hui qui sont "
+                for i in range(0,nbEvent):
+                    if (i==0):
+                        text = baseTexte+listEvent[i]
                     else :
-                        text = text + listEvent[i] + "," 
-            return text
+                        if (i==(nbEvent-1)):
+                            text = text+" et "+listEvent[i]
+                        else :
+                            text = text +", "+listEvent[i]
+            
+        return text
+    
+    def sortieOpenAgenda(self):
+        if (self.__etatVous==True):
+            text = "Je vous ai ouvert l'agenda. J'espére que sa vous sera utile."
+        else :
+            text = "Okay, je t'ouvre l'application agenda."
+        
+        self.__objetCalendar.activeAgenda()
+        return text
     
     def sortieListLogiciel(self,nb:int,listSoft:list):
         if (nb==0):
