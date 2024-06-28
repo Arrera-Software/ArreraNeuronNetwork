@@ -23,44 +23,9 @@ class gestionNetwork:
         self.__moteurRechercheDefault = ""
         self.__oldRequette = str
         self.__oldSorti = str
-    
-    def setVous(self):
-        if self.__configFile.lectureJSON("utilisationVous") == "1":
-            self.__vous = True
-        else :
-            self.__vous = False
-    
-    def setGenre(self):
-        self.__genre =  self.__fileUser.lectureJSON("genre")
-        
-    def setName(self):
-        self.__name =  self.__configFile.lectureJSON("name").lower
-        
-    def setUser(self):
-        self.__user =  self.__fileUser.lectureJSON("user")
-    
-    def setBute(self):
-        self.__bute =   self.__configFile.lectureJSON("bute")
-    
-    def setCreateur(self):
-        self.__createur = self.__configFile.lectureJSON("createur")
-    
-    def setListFonction(self):
-        self.__listFonction = self.__configFile.lectureJSON("listFonction")
-      
-    def setLieu(self):
-        if self.__configFile.lectureJSON("lieuDomicile") == "1":
-            self.__lieuDomicile = True
-        else :
-            self.__lieuDomicile = False
-        if self.__configFile.lectureJSON("lieuTravail") == "1":
-            self.__lieuTravail = True
-        else :
-            self.__lieuTravail = False
         
     def addDiscution(self):
         self.__nbDiscution =+ 1
-    
     
     def setAll(self):
         if self.__configFile.lectureJSON("utilisationVous") == "1":
@@ -83,8 +48,6 @@ class gestionNetwork:
         self.__listFonction = self.__configFile.lectureJSONList("listFonction")
         self.__nbVilleMeteo = int(self.__configFile.lectureJSON("nombreVilleMeteo"))
         self.__moteurRechercheDefault = str(self.__configFile.lectureJSON("moteurRechercheDefault"))
-    
-    def setVilleMeteo(self):
         self.__listVille = self.__fileUser.lectureJSONList("listVille")
     
     def getVous(self):

@@ -30,7 +30,6 @@ class ArreraNetwork :
         self.__network = network()
         #set des atribut
         self.__gestionnaire.setAll()
-        self.__gestionnaire.setVilleMeteo()
         #initialisation objet
         self.__formuleNeuron = formule(self.__gestionnaire)
         self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
@@ -50,7 +49,6 @@ class ArreraNetwork :
         Methode qui permet de recharger tout les donnée utilisateur
         """
         self.__gestionnaire.setAll()
-        self.__gestionnaire.setVilleMeteo()
 
     def boot(self):
         hour = datetime.datetime.now().hour
