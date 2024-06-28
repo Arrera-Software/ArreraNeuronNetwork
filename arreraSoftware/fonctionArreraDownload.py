@@ -55,14 +55,12 @@ class fncArreraVideoDownload :
         if mode == "video" :
             self.__labelindiction.configure(text="Copier L'URL d'une video")
             self.downloadView()
-            self.__boutonDownload.config(command=self.downloadVideo)
-            self.__screen.mainloop()
+            self.__boutonDownload.config(command=self.downloadVideo)    
         else :
             if mode == "music" :
                 self.__labelindiction.configure(text="Copier L'URL d'une musique")
                 self.downloadView()
                 self.__boutonDownload.config(command=self.downloadMusique)
-                self.__screen.mainloop()
             else :
                 messagebox.showwarning("Attention", "Le mode que vous demandez n'existe pas.")
     
