@@ -69,6 +69,7 @@ class ArreraNetwork :
         0 : Aucun sortie
         1 : Sortie normale
         4 : Meteo / temperature / GPS
+        5 : Sortie avec fenetre tkinter
         11 : Erreur du resumer 
         12 : Reussite du resumer
         15 : Arret de l'assistant

@@ -31,9 +31,11 @@ class neuroneSoftware :
             if ("telecharge" in requette) :
                 if "video" in requette :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("video"),""]
+                    self.__valeurOut = 5
                 else :
                     if ("musique" in requette) :
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("music"),""]
+                        self.__valeurOut = 5
                     else :
                         if (etatVous == True) :
                             self.__listSortie = ["Je suis désoler "+genre+" mais je ne peux télécharger que des vidéo ou de musique",""]
@@ -42,12 +44,16 @@ class neuroneSoftware :
             if (("calculatrice" in requette) or ("calculette" in requette)) :
                 if "nombre complex" in requette or "nb complex" in requette :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("1"),""]
+                    self.__valeurOut = 5
                 else :
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("0"),""]
-            else :
-                if ("pythagore" in requette) :
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("2"),""]
+                    if ("pythagore" in requette) :
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("2"),""]
+                        self.__valeurOut = 5
+                    else :
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("0"),""]
+                        self.__valeurOut = 5
                     
                                         
-            #Mise a jour de la valeur                                                               
-            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+            #Mise a jour de la valeur 
+            if (self.__valeurOut==0):                                                              
+                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])

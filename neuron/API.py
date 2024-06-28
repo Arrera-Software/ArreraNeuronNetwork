@@ -178,21 +178,21 @@ class neuroneAPI :
                                             self.__fonctionArreraNetwork.sortieTraducteur(self.__dictLang[firstLang],self.__dictLang[secondLang])
                                             if etatVous == True :
                                                 self.__listSortie=["J'espère que cet outil de traduction vous a sera utile "+genre,""]
-                                                self.__valeurOut = 4
+                                                self.__valeurOut = 3
                                             else :
                                                 self.__listSortie= ["J'espère que sa te sera utile  "+name,""]
-                                                self.__valeurOut = 4
+                                                self.__valeurOut = 3
                                         else :
                                             if etatVous == True :
                                                 self.__listSortie=["Desoler "+genre+". Mais les langues que vous demander ne son pas disponible.",""]
-                                                self.__valeurOut = 4
+                                                self.__valeurOut = 1
                                             else :
                                                 self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]
-                                                self.__valeurOut = 4
+                                                self.__valeurOut = 1
                                     else :
                                         if etatVous == True :
                                             self.__listSortie=["Desoler "+genre+". Mais les langue que vous demander ne son pas disponible.",""]
-                                            self.__valeurOut = 4
+                                            self.__valeurOut = 1
                                         else :
                                             self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]
-                                            self.__valeurOut = 4
+                                            self.__valeurOut = 1

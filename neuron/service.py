@@ -28,6 +28,7 @@ class neuroneService :
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]
+                self.__valeurOut = 52 
             else :
                 if "calcule" in requette :
                     requette = requette.replace("calcule","")
@@ -47,5 +48,6 @@ class neuroneService :
                             self.__listSortie = ["Le calcule que vous me demander de faire "+genre+" est imposible a faire.",""]
                         else :
                             self.__listSortie = ["Le calcule que tu me demande de faire est imposible.",""]
-            #Mise a jour de la valeur                                                               
-            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+            #Mise a jour de la valeur 
+            if (self.__valeurOut==0):                                                            
+                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
