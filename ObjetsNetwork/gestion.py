@@ -21,6 +21,8 @@ class gestionNetwork:
         self.__listVille = []
         self.__detecteurOS = detecteurOS
         self.__moteurRechercheDefault = ""
+        self.__oldRequette = str
+        self.__oldSorti = str
     
     def setVous(self):
         if self.__configFile.lectureJSON("utilisationVous") == "1":
@@ -171,3 +173,12 @@ class gestionNetwork:
     
     def getEmplacementSoftwareWindows(self):
         return self.__configFile.lectureJSON("emplacementSoftWindows")
+    
+    def setOld(self,output:str,input:str):
+        # Methode qui peremt de sauvegarder oldSortie et oldRequette
+        self.__oldRequette = input 
+        self.__oldSorti = output 
+    
+    def getOld(self):
+        # Methode qui retourne une liste qui se presente comme sa [oldRequette,self.__oldSorti]
+        return [self.__oldRequette,self.__oldSorti]
