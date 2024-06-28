@@ -45,6 +45,13 @@ class ArreraNetwork :
         self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
     
+    def realoadUserData(self):
+        """
+        Methode qui permet de recharger tout les donnée utilisateur
+        """
+        self.__gestionnaire.setAll()
+        self.__gestionnaire.setVilleMeteo()
+
     def boot(self):
         hour = datetime.datetime.now().hour
         text= self.__formuleNeuron.salutation(hour)
