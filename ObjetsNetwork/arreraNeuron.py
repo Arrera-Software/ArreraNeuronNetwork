@@ -142,15 +142,6 @@ class ArreraNetwork :
             self.__listOut = self.__service.getListSortie()
         #Sauvegarde des sortie                         
         self.__oldRequette = requette
-        """
-        1 : Service 
-        2 : software
-        3 : Time
-        4 : open 
-        5 : seach 
-        6 : Chatbot
-        7 : Api 
-        """
         #Sauvegarde de la sortie 
         if ((self.__valeurOut  == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11)) :
             self.__oldSorti = "requette api"      
