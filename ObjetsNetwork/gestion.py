@@ -80,7 +80,7 @@ class gestionNetwork:
         self.__user =  str(self.__fileUser.lectureJSON("user"))
         self.__bute =   self.__configFile.lectureJSON("bute")
         self.__createur =   str(self.__configFile.lectureJSON("createur"))
-        self.__listFonction = self.__configFile.lectureJSON("listFonction")
+        self.__listFonction = self.__configFile.lectureJSONList("listFonction")
         self.__nbVilleMeteo = int(self.__configFile.lectureJSON("nombreVilleMeteo"))
         self.__moteurRechercheDefault = str(self.__configFile.lectureJSON("moteurRechercheDefault"))
     
