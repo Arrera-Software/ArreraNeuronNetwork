@@ -13,19 +13,25 @@ class fncArreraTache :
 
     def __windows(self):
         screen = Toplevel()
-        screen.minsize(500,450)
-        screen.maxsize(500,450)
+        screen.minsize(500,500)
+        screen.maxsize(500,500)
         screen.configure(bg=self.__mainColor)
         screen.title(self.__nameAssistant+" : Tache")
         screen.iconphoto(False,PhotoImage(file=self.__icon))
         # Varriable 
         self.__choixSuppr = StringVar(screen)
         # Frame
-        self.__frameTask = Frame(screen,width=500,height=400,bg=self.__mainColor)
-        self.__frameAdd = Frame(screen,width=500,height=400,bg=self.__mainColor)
-        self.__frameSuppr = Frame(screen,width=500,height=400,bg=self.__mainColor)
-        self.__frameCheck = Frame(screen,width=500,height=400,bg=self.__mainColor)
+        self.__frameTask = Frame(screen,width=500,height=450,bg=self.__mainColor)
+        self.__frameAdd = Frame(screen,width=500,height=450,bg=self.__mainColor)
+        self.__frameSuppr = Frame(screen,width=500,height=450,bg=self.__mainColor)
+        self.__frameCheck = Frame(screen,width=500,height=450,bg=self.__mainColor)
         frameNavigation = Frame(screen,width=500,height=50,bg=self.__mainColor)
+        self.__frameShowTache = [Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
+                               Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
+                               Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
+                               Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
+                               Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
+                               Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor)]
         # Widget FrameNavigation
         btnAddNav = Button(frameNavigation,text="Ajouter",font=("arial","15"),
                            fg=self.__textColor,bg=self.__mainColor,command=self.__showAddFrame)
@@ -34,10 +40,9 @@ class fncArreraTache :
         btnCheckNav = Button(frameNavigation,text="Finir un tache",font=("arial","15"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showCheckFrame)
         # Widget frameTask
-        labelTitreTask = Label(self.__frameTask,text="Tache :",font=("arial","15","bold"),
+        labelTitreTask = Label(self.__frameTask,text=self.__nameAssistant+" tache",font=("arial","15","bold"),
                                fg=self.__textColor,bg=self.__mainColor)
-        self.__labelListTask = Label(self.__frameTask,text="Tache :",font=("arial","15"),
-                                     fg=self.__textColor,bg=self.__mainColor)
+        
         # Widget framAdd
         labelTitreAdd = Label(self.__frameAdd,text="Ajouter une tache :",font=("arial","15"),
                               fg=self.__textColor,bg=self.__mainColor)
@@ -61,14 +66,13 @@ class fncArreraTache :
         btnAnnulerCheck = Button(self.__frameCheck,text="Annuler",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__showTaskFrame)
         # Affichage Main
-        frameNavigation.place(x=0,y=self.__frameAdd.winfo_reqheight())
+        frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
         # Affichage FrameNavigation 
         btnAddNav.place(relx=0.0, rely=0.5, anchor="w")  
         btnSupprNav.place(relx=1.0, rely=0.5, anchor="e") 
         btnCheckNav.place(relx=0.5, rely=0.5, anchor="center")
         # Affichage FrameTask
-        labelTitreTask.place(x=0,y=0)
-        self.__labelListTask.place(x=0,y=labelTitreTask.winfo_reqheight())
+        labelTitreTask.place(relx=0.5, rely=0.0, anchor="n")
         # Affichage frameAdd 
         labelTitreAdd.place(x=0,y=0)
         nameTaskEntry.place(relx=0.5, rely=0.5, anchor="center")
@@ -82,6 +86,17 @@ class fncArreraTache :
         labelTitreSuppr.place(x=0,y=0)
         btnValiderSuppr.place(relx=1, rely=1, anchor='se')
         btnAnnulerSuppr.place(relx=0, rely=1, anchor='sw')
+        self.__frameShowTache[0].place(x=0,y=labelTitreTask.winfo_reqheight())
+        self.__frameShowTache[1].place(x=self.__frameShowTache[0].winfo_reqwidth(),
+                                       y=labelTitreTask.winfo_reqheight())
+        self.__frameShowTache[2].place(x=self.__frameShowTache[0].winfo_reqwidth()+self.__frameShowTache[1].winfo_reqwidth(),
+                                       y=labelTitreTask.winfo_reqheight())
+        
+        self.__frameShowTache[3].place(x=0,y=labelTitreTask.winfo_reqheight()+self.__frameShowTache[0].winfo_reqheight())
+        self.__frameShowTache[4].place(x=self.__frameShowTache[3].winfo_reqwidth(),
+                                       y=labelTitreTask.winfo_reqheight()+self.__frameShowTache[0].winfo_reqheight())
+        self.__frameShowTache[5].place(x=self.__frameShowTache[3].winfo_reqwidth()+self.__frameShowTache[4].winfo_reqwidth(),
+                                       y=labelTitreTask.winfo_reqheight()+self.__frameShowTache[0].winfo_reqheight())
     
     def activeViewTask(self):
         self.__windows()
@@ -112,7 +127,7 @@ class fncArreraTache :
         self.__frameAdd.place(x=0,y=0)
     
     def __showTaskFrame(self):
-        self.__labelListTask.configure(text="")
+        #self.__labelListTask.configure(text="")
         self.__frameTask.place(x=0,y=0)
         self.__frameCheck.place_forget()
         self.__frameSuppr.place_forget()
@@ -120,12 +135,12 @@ class fncArreraTache :
         dictTache = self.__taskFile.dictJson()
         if(len(dictTache)!=0):
             nbTache = self.__taskFile.compteurFlagJSON()
-            self.__labelListTask.configure(text=dictTache["0"]+"\n")
+            #self.__labelListTask.configure(text=dictTache["0"]+"\n")
             for i in range(1,nbTache):
                 texte = self.__labelListTask.cget('text')
                 self.__labelListTask.configure(text=texte+dictTache[str(i)]+"\n")
-        else :
-            self.__labelListTask.configure(text="Aucun tache")
+        #else :
+            #self.__labelListTask.configure(text="Aucun tache")
 
     def __checkIsTache(self):
         if(len(self.__taskFile.dictJson())==0):
