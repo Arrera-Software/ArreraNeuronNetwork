@@ -100,6 +100,9 @@ class gestionNetwork:
 
     def getEmplacementFileAgenda(self)->str :
         return self.__fileUser.lectureJSON("emplacementEvenenement")
+
+    def getEmplacemntfileTache(self)->str:
+        return self.__fileUser.lectureJSON("emplacementTache")
     
     def getDictionnaireLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()

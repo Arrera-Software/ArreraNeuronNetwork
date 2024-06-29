@@ -28,5 +28,6 @@
         
     },
     "moteurRecherche":"",
-    "emplacementEvenenement" :"evenementUser.json"
+    "emplacementEvenenement" :"evenementUser.json",
+    "emplacementTache":"tache.json"
 }
