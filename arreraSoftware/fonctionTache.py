@@ -34,7 +34,7 @@ class fncArreraTache :
         btnCheckNav = Button(frameNavigation,text="Finir un tache",font=("arial","12"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showCheckFrame)
         # Widget frameTask
-        labelTitreTask = Label(self.__frameTask,text="Tache :",font=("arial","15"),
+        labelTitreTask = Label(self.__frameTask,text="Tache :",font=("arial","15","bold"),
                                fg=self.__textColor,bg=self.__mainColor)
         self.__labelListTask = Label(self.__frameTask,text="Tache :",font=("arial","15"),
                                      fg=self.__textColor,bg=self.__mainColor)
@@ -124,6 +124,8 @@ class fncArreraTache :
             for i in range(1,nbTache):
                 texte = self.__labelListTask.cget('text')
                 self.__labelListTask.configure(text=texte+dictTache[str(i)]+"\n")
+        else :
+            self.__labelListTask.configure(text="Aucun tache")
 
     def __checkIsTache(self):
         if(len(self.__taskFile.dictJson())==0):
