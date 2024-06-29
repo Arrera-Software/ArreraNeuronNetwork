@@ -18,6 +18,7 @@ from arreraSoftware.fonctionRecherche import *
 from arreraSoftware.fonctionDate import *
 from arreraSoftware.fonctionHorloge import*
 from arreraSoftware.fonctionCalendar import *
+from arreraSoftware.fonctionTache import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -45,6 +46,7 @@ class fncArreraNetwork:
         self.__objetDate = fncDate()
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
+        self.__objetTache = fncArreraTache(self.__configNeuron,self.__gestionNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -691,4 +693,40 @@ class fncArreraNetwork:
                         else :
                             texte = texte +", "+ listSite[i]
                 
-                return texte                      
+                return texte
+    
+    def sortieViewTache(self):
+        if (self.__etatVous==True) :
+            text = "Trés bien je vous ouvre l'application tache "+self.__genre 
+        else :
+            text = "Okay je t'ouvre l'application tache "+self.__user
+        
+        self.__objetTache.activeViewTask()
+        return text
+    
+    def sortieViewTacheAdd(self):
+        if (self.__etatVous==True) :
+            text = "Je vous ouvre le programme d'ajout de tache. Suivez bien l'interface "+self.__genre 
+        else :
+            text = "Okay je t'ouvre l'application pour ajouter une nouvelle tache "+self.__user
+        
+        self.__objetTache.activeViewAdd()
+        return text
+    
+    def sortieViewTacheSuppr(self):
+        if (self.__etatVous==True) :
+            text = "Je vous ouvre le programme de suppression de tache. Suivez bien l'interface "+self.__genre 
+        else :
+            text = "Okay je t'ouvre l'application pour supprimer une nouvelle tache "+self.__user
+        
+        self.__objetTache.activeViewSuppr()
+        return text
+    
+    def sortieViewTacheCheck(self):
+        if (self.__etatVous==True) :
+            text = "Je vous ouvre le programme qui vous permet de définir un tache fini" 
+        else :
+            text = "Okay je t'ouvre l'application pour finir une tache "
+        
+        self.__objetTache.activeViewCheck()
+        return text
