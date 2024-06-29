@@ -27,11 +27,11 @@ class fncArreraTache :
         self.__frameCheck = Frame(screen,width=500,height=400,bg=self.__mainColor)
         frameNavigation = Frame(screen,width=500,height=50,bg=self.__mainColor)
         # Widget FrameNavigation
-        btnAddNav = Button(frameNavigation,text="Ajouter",font=("arial","12"),
+        btnAddNav = Button(frameNavigation,text="Ajouter",font=("arial","15"),
                            fg=self.__textColor,bg=self.__mainColor,command=self.__showAddFrame)
-        btnSupprNav = Button(frameNavigation,text="Supprimer",font=("arial","12"),
+        btnSupprNav = Button(frameNavigation,text="Supprimer",font=("arial","15"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showSupprFrame)
-        btnCheckNav = Button(frameNavigation,text="Finir un tache",font=("arial","12"),
+        btnCheckNav = Button(frameNavigation,text="Finir un tache",font=("arial","15"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showCheckFrame)
         # Widget frameTask
         labelTitreTask = Label(self.__frameTask,text="Tache :",font=("arial","15","bold"),
