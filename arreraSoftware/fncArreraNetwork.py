@@ -714,19 +714,31 @@ class fncArreraNetwork:
         return text
     
     def sortieViewTacheSuppr(self):
-        if (self.__etatVous==True) :
-            text = "Je vous ouvre le programme de suppression de tache. Suivez bien l'interface "+self.__genre 
+        sortie = self.__objetTache.activeViewSuppr()
+        if (sortie==True):
+            if (self.__etatVous==True) :
+                text = "Je vous ouvre le programme de suppression de tache. Suivez bien l'interface "+self.__genre 
+            else :
+                text = "Okay je t'ouvre l'application pour supprimer une nouvelle tache "+self.__user
         else :
-            text = "Okay je t'ouvre l'application pour supprimer une nouvelle tache "+self.__user
+            if (self.__etatVous==True) :
+                text = "Désoler "+self.__genre+". Il est imposible de supprimer un tache si il en a aucun de crée " 
+            else :
+                text = "Désoler "+self.__user+". Il est imposible de supprimer un tache si il en a aucun de crée " 
         
-        self.__objetTache.activeViewSuppr()
         return text
     
     def sortieViewTacheCheck(self):
-        if (self.__etatVous==True) :
-            text = "Je vous ouvre le programme qui vous permet de définir un tache fini" 
+        sortie = self.__objetTache.activeViewCheck()
+        if (sortie==True):
+            if (self.__etatVous==True) :
+                text = "Je vous ouvre le programme qui vous permet de définir un tache fini" 
+            else :
+                text = "Okay je t'ouvre l'application pour finir une tache "
         else :
-            text = "Okay je t'ouvre l'application pour finir une tache "
+            if (self.__etatVous==True) :
+                text = "Désoler "+self.__genre+". Il est imposible de finir un tache si il en a aucun de crée " 
+            else :
+                text = "Désoler "+self.__user+". Il est imposible de finir un tache si il en a aucun de crée "
         
-        self.__objetTache.activeViewCheck()
         return text
