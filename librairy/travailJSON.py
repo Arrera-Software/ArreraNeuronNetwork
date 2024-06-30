@@ -129,3 +129,11 @@ class jsonWork :
             # Écriture des modifications dans le fichier JSON
             with open(self.fichier, 'w', encoding='utf-8') as fichier_modifie:
                 json.dump(data, fichier_modifie, indent=2)
+    
+    def supprDictByFlag(self,flag, name):
+        with open(self.fichier, 'r', encoding='utf-8') as fichier_json:
+            data = json.load(fichier_json)
+        
+        for key, value in data.items():
+            if value.get(flag) == name:
+                self.supprDictReorg(key)
