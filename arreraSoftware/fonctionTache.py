@@ -28,21 +28,23 @@ class fncArreraTache :
         self.__frameAdd = [Frame(screen,width=500,height=450,bg=self.__mainColor),
                            Frame(screen,width=500,height=450,bg=self.__mainColor),
                            Frame(screen,width=500,height=450,bg=self.__mainColor)]
+        self.__frameTaskInfo = Frame(screen,width=500,height=500,bg=self.__mainColor)
         self.__frameSuppr = Frame(screen,width=500,height=450,bg=self.__mainColor)
         self.__frameCheck = Frame(screen,width=500,height=450,bg=self.__mainColor)
-        frameNavigation = Frame(screen,width=500,height=50,bg=self.__mainColor)
+        self.__frameNavigation = Frame(screen,width=500,height=50,bg=self.__mainColor)
         self.__frameShowTache = [Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
                                Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
                                Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
                                Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
                                Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor),
                                Frame(self.__frameTask,width=165,height=210,borderwidth=2, relief="solid",bg=self.__mainColor)]
+        self.__frameChangeDateInfo = Frame(screen,width=500,height=500,bg=self.__mainColor)
         # Widget FrameNavigation
-        btnAddNav = Button(frameNavigation,text="Ajouter",font=("arial","15"),
+        btnAddNav = Button(self.__frameNavigation,text="Ajouter",font=("arial","15"),
                            fg=self.__textColor,bg=self.__mainColor,command=self.__showAddFrame)
-        btnSupprNav = Button(frameNavigation,text="Supprimer",font=("arial","15"),
+        btnSupprNav = Button(self.__frameNavigation,text="Supprimer",font=("arial","15"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showSupprFrame)
-        btnCheckNav = Button(frameNavigation,text="Finir un tache",font=("arial","15"),
+        btnCheckNav = Button(self.__frameNavigation,text="Finir un tache",font=("arial","15"),
                              fg=self.__textColor,bg=self.__mainColor,command=self.__showCheckFrame)
         # Widget frameTask
         labelTitreTask = Label(self.__frameTask,text=self.__nameAssistant+" tache",font=("arial","15","bold"),
@@ -112,8 +114,33 @@ class fncArreraTache :
                                          font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
                                   Button(self.__frameShowTache[5],text="Plus d'info",
                                          font=("arial","15"),fg=self.__textColor,bg=self.__mainColor)]
+        # Widget frame Task Info
+        self.__labelTaskInfoName = Label(self.__frameTaskInfo,font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,justify="left",wraplength=450)
+        
+        self.__labelTaskInfoDate = Label(self.__frameTaskInfo,font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,justify="left",wraplength=200)
+        
+        self.__labelTaskInfoDescription = Label(self.__frameTaskInfo,font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,justify="left",wraplength=450)
+        
+        self.__btnInfochangeDate = Button(self.__frameTaskInfo,text="Changer la date",font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,command=self.__changeDate)
+
+        btnBackInfo = Button(self.__frameTaskInfo,text="Retour",font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,command=self.__backInfoTache)
+        # Widget frame Change Date Info
+        labelTitreChangeDateInfo = Label(self.__frameChangeDateInfo,font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor,text="Changer la date")
+        self.__chooseDateTask = DateEntry(self.__frameChangeDateInfo, width=15, background=self.__mainColor, 
+                               foreground=self.__textColor, borderwidth=2,year=tomorrow.year, 
+                               month=tomorrow.month, day=tomorrow.day)
+        self.__btnValiderChangeDate = Button(self.__frameChangeDateInfo,text="Valider",font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor)
+        btnAnulerChangeDate = Button(self.__frameChangeDateInfo,text="Annuler",font=("arial","15"),
+                                 fg=self.__textColor,bg=self.__mainColor)
         # Affichage Main
-        frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
+        self.__frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
         # Affichage FrameNavigation 
         btnAddNav.place(relx=0.0, rely=0.5, anchor="w")  
         btnSupprNav.place(relx=1.0, rely=0.5, anchor="e") 
@@ -150,6 +177,17 @@ class fncArreraTache :
                                        y=labelTitreTask.winfo_reqheight()+self.__frameShowTache[0].winfo_reqheight())
         self.__frameShowTache[5].place(x=self.__frameShowTache[3].winfo_reqwidth()+self.__frameShowTache[4].winfo_reqwidth(),
                                        y=labelTitreTask.winfo_reqheight()+self.__frameShowTache[0].winfo_reqheight())
+        
+        btnBackInfo.place(relx=1, rely=1, anchor='se')
+
+        self.__labelTaskInfoName.place(x=0,y=0)
+        self.__labelTaskInfoDate.place(x=0,y=100)
+        self.__labelTaskInfoDescription.place(x=0,y=200)
+
+        labelTitreChangeDateInfo.place(x=0,y=0)
+        self.__chooseDateTask.place(relx=0.5, rely=0.5, anchor="center")
+        self.__btnValiderChangeDate.place(relx=1, rely=1, anchor='se')
+        btnAnulerChangeDate.place(relx=0, rely=1, anchor='sw')
     
     def activeViewTask(self):
         self.__windows()
@@ -292,8 +330,11 @@ class fncArreraTache :
         showinfo("événement","Tache supprimer")  
         self.__showTaskFrame()
 
-    def __checkEvent(self):
-        nameTache = self.__choixSuppr.get()
+    def __checkEvent(self,name="null"):
+        if (name == "null") :
+            nameTache = self.__choixSuppr.get()
+        else :
+            nameTache = name
         self.__taskFile.supprDictByFlag("name",nameTache)
         showinfo("événement","Tache fini et supprimer")
         self.__showTaskFrame() 
@@ -308,9 +349,46 @@ class fncArreraTache :
         dictTache = self.__taskFile.dictJson()
         for i in range(0,6) :
             self.__labelNameShowTask[i].place(relx=0.5, rely=0.5, anchor="center")
-            self.__labelNameShowTask[i].configure(text="Pas de tache",justify="center",wraplength=200)
+            self.__labelNameShowTask[i].configure(text="Pas de tache",justify="center",wraplength=120)
+            self.__btnInfoShowTask[i].place_forget()
         for i in range(0,nb):
             if (i < 6):
                 self.__labelNameShowTask[i].place_forget()
                 self.__labelNameShowTask[i].place(x=0,y=0)
-                self.__labelNameShowTask[i].configure(text= dictTache[str(i)]["name"],wraplength=100,justify="left")
+                self.__labelNameShowTask[i].configure(text= dictTache[str(i)]["name"],wraplength=120,justify="left")
+                self.__btnInfoShowTask[i].place(relx=0.5, rely=1.0, anchor="s")
+                self.__btnInfoShowTask[i].configure(command=lambda:self.__viewInfoTacheFrame(str(i)))
+    
+    def __viewInfoTacheFrame(self,nb:str):
+        dictTache = self.__taskFile.dictJson()[nb]
+        name = dictTache["name"]
+        date = dictTache["date"]
+        description = dictTache["description"]
+        
+        self.__labelTaskInfoName.configure(text="Name : "+name)
+        self.__labelTaskInfoDate.configure(text="Date : "+date)
+        self.__labelTaskInfoDescription.configure(text="Description : "+description)
+
+        self.__btnValiderChangeDate.configure(command=lambda :self.__changeEventDate(nb))
+
+        self.__btnInfochangeDate.place(relx=1.0, y=100, anchor='ne')
+
+        self.__frameNavigation.place_forget()
+        self.__frameTask.place_forget()
+        self.__frameTaskInfo.place(x=0,y=0)
+    
+    def __backInfoTache(self):
+        self.__frameTaskInfo.place_forget()
+        self.__frameChangeDateInfo.place_forget()
+        self.__frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
+        self.__frameTask.place(x=0,y=0)
+    
+    def __changeDate(self):
+        self.__frameTaskInfo.place_forget()
+        self.__frameChangeDateInfo.place(x=0,y=0)
+
+    def __changeEventDate(self,nb:str):
+        date = self.__formatageDateEntry(self.__chooseDateTask)
+        self.__taskFile.ajouterFlagDict(nb,"date",date)
+        self.__backInfoTache()
+        showinfo("Tache","Date changer")
