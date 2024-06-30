@@ -74,14 +74,14 @@ class fncArreraTache :
         
         self.__descriptionEntryTask =  Entry(self.__frameAdd[2],font=("arial",15),highlightthickness=2, highlightbackground="black")
         # Widget frameSuppr
-        labelTitreSuppr = Label(self.__frameSuppr,text="Suprimmer une tache :",font=("arial","15"),
+        labelTitreSuppr = Label(self.__frameSuppr,text="Suprimmer une tache :",font=("arial","15","bold"),
                                 fg=self.__textColor,bg=self.__mainColor)
         btnValiderSuppr = Button(self.__frameSuppr,text="Supprimer",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__supprEvent)
         btnAnnulerSuppr = Button(self.__frameSuppr,text="Annuler",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__showTaskFrame)
         # Widget frameCheck
-        labelTitreCheck = Label(self.__frameCheck,text="Finir une tache :",font=("arial","15"),
+        labelTitreCheck = Label(self.__frameCheck,text="Finir une tache :",font=("arial","15","bold"),
                                 fg=self.__textColor,bg=self.__mainColor)
         btnValiderCheck = Button(self.__frameCheck,text="Finir",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__checkEvent)
@@ -190,7 +190,7 @@ class fncArreraTache :
             nbTache = self.__taskFile.compteurFlagJSON()
             listTache = []
             for i in range(0,nbTache):
-                listTache.append(dictTache[str(i)])
+                listTache.append(dictTache[str(i)]["name"])
             OptionMenu(self.__frameSuppr,self.__choixSuppr,*listTache).place(relx=0.5,rely=0.5,anchor="center")
             self.__choixSuppr.set(listTache[0])
         else :
@@ -207,7 +207,7 @@ class fncArreraTache :
             nbTache = self.__taskFile.compteurFlagJSON()
             listTache = []
             for i in range(0,nbTache):
-                listTache.append(dictTache[str(i)])
+                listTache.append(dictTache[str(i)]["name"])
             OptionMenu(self.__frameCheck,self.__choixSuppr,*listTache).place(relx=0.5,rely=0.5,anchor="center")
             self.__choixSuppr.set(listTache[0])
         else :
@@ -268,13 +268,8 @@ class fncArreraTache :
             showwarning("Tache","Imposible d'ajouter une description vide")
     
     def __supprEvent(self):
-        nameTache = self.__choixSuppr.get()
-        dictTache = self.__taskFile.dictJson()
-        nbTache = self.__taskFile.compteurFlagJSON()
-        for i in range(0,nbTache):
-            if (dictTache[str(i)]==nameTache):
-                break
-        self.__taskFile.supprDictReorg(str(i))
+        nameTache = self.__choixSuppr.get()       
+        self.__taskFile.supprDictByFlag("name",nameTache)
         showinfo("événement","Tache supprimer")  
         self.__showTaskFrame()
 
