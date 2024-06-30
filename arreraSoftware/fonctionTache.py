@@ -227,10 +227,12 @@ class fncArreraTache :
             if (reponseDate) :
                 self.__addDate(str(nb))
             else :
+                self.__taskFile.ajouterFlagDict(str(nb),"date","none")
                 reponseDes = askyesno("Tache", "Voulez-vous mettre une description ?")
                 if (reponseDes) :
                     self.__addDescription(str(nb))
                 else :
+                    self.__taskFile.ajouterFlagDict(str(nb),"description","none")
                     showinfo("Tache","Tache ajouter")
                     self.__showTaskFrame()
 
@@ -254,12 +256,14 @@ class fncArreraTache :
         if (reponseDes) :
             self.__addDescription(nb)
         else :
+            self.__taskFile.ajouterFlagDict(nb,"description","none")
             showinfo("Tache","Tache ajouter")
             self.__showTaskFrame()
 
 
     def __addEventDescription(self,nb:str):
         description = self.__descriptionEntryTask.get()
+        self.__descriptionEntryTask.delete(0,END)
         if (description != ""):
             self.__taskFile.ajouterFlagDict(nb,"description",description)
             showinfo("Tache","Tache ajouter")
