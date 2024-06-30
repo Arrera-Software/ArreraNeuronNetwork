@@ -198,8 +198,8 @@ class fncArreraTache :
 
     
     def __showCheckFrame(self):
-        dictTache = self.__taskFile.dictJson()
-        if(self.__checkIsTache==True):
+        if(self.__checkIsTache()==True):
+            dictTache = self.__taskFile.dictJson()
             self.__frameTask.place_forget()
             self.__frameCheck.place(x=0,y=0)
             self.__frameSuppr.place_forget()
