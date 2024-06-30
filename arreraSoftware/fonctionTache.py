@@ -87,6 +87,31 @@ class fncArreraTache :
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__checkEvent)
         btnAnnulerCheck = Button(self.__frameCheck,text="Annuler",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor,command=self.__showTaskFrame)
+        # Widget Frame Show Task 
+        self.__labelNameShowTask = [Label(self.__frameShowTache[0],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor),
+                                    Label(self.__frameShowTache[1],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor),
+                                    Label(self.__frameShowTache[2],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor),
+                                    Label(self.__frameShowTache[3],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor),
+                                    Label(self.__frameShowTache[4],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor),
+                                    Label(self.__frameShowTache[5],font=("arial","15"),
+                                          fg=self.__textColor,bg=self.__mainColor)]
+        self.__btnInfoShowTask = [Button(self.__frameShowTache[0],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
+                                  Button(self.__frameShowTache[1],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
+                                  Button(self.__frameShowTache[2],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
+                                  Button(self.__frameShowTache[3],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
+                                  Button(self.__frameShowTache[4],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor),
+                                  Button(self.__frameShowTache[5],text="Plus d'info",
+                                         font=("arial","15"),fg=self.__textColor,bg=self.__mainColor)]
         # Affichage Main
         frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
         # Affichage FrameNavigation 
@@ -155,7 +180,7 @@ class fncArreraTache :
         self.__frameAdd[0].place(x=0,y=0)
     
     def __showTaskFrame(self):
-        #self.__labelListTask.configure(text="")
+        self.__viewTacheFrame()
         self.__frameTask.place(x=0,y=0)
         self.__frameCheck.place_forget()
         self.__frameSuppr.place_forget()
@@ -163,16 +188,6 @@ class fncArreraTache :
         self.__frameAdd[1].place_forget()
         self.__frameAdd[2].place_forget()
         dictTache = self.__taskFile.dictJson()
-        if(len(dictTache)!=0):
-            nbTache = self.__taskFile.compteurFlagJSON()
-            """
-            self.__labelListTask.configure(text=dictTache["0"]+"\n")
-            for i in range(1,nbTache):
-                texte = self.__labelListTask.cget('text')
-                self.__labelListTask.configure(text=texte+dictTache[str(i)]+"\n")
-        #else :
-            #self.__labelListTask.configure(text="Aucun tache")
-        """
 
     def __checkIsTache(self):
         if(len(self.__taskFile.dictJson())==0):
@@ -287,3 +302,15 @@ class fncArreraTache :
         date_obj = dateEntry.get_date()  # Obtenir la date sous forme d'objet datetime.date
         formatted_date = f"{date_obj.year}-{date_obj.month}-{date_obj.day}"  # Formatter la date
         return formatted_date 
+    
+    def __viewTacheFrame(self):
+        nb = self.__taskFile.compteurFlagJSON()
+        dictTache = self.__taskFile.dictJson()
+        for i in range(0,6) :
+            self.__labelNameShowTask[i].place(relx=0.5, rely=0.5, anchor="center")
+            self.__labelNameShowTask[i].configure(text="Pas de tache",justify="center",wraplength=200)
+        for i in range(0,nb):
+            if (i < 6):
+                self.__labelNameShowTask[i].place_forget()
+                self.__labelNameShowTask[i].place(x=0,y=0)
+                self.__labelNameShowTask[i].configure(text= dictTache[str(i)]["name"],wraplength=100,justify="left")
