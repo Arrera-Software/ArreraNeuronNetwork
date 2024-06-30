@@ -275,12 +275,7 @@ class fncArreraTache :
 
     def __checkEvent(self):
         nameTache = self.__choixSuppr.get()
-        dictTache = self.__taskFile.dictJson()
-        nbTache = self.__taskFile.compteurFlagJSON()
-        for i in range(0,nbTache):
-            if (dictTache[str(i)]==nameTache):
-                break
-        self.__taskFile.supprDictReorg(str(i))
+        self.__taskFile.supprDictByFlag("name",nameTache)
         showinfo("événement","Tache fini et supprimer")
         self.__showTaskFrame() 
 
