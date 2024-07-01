@@ -5,7 +5,7 @@ class fncDate :
         self.__date= datetime.now()
     
     def rafraichisement(self):
-        self.__date= datetime.datetime.now()
+        self.__date= datetime.now()
         
     def heure(self):
         return str(self.__date.time().hour)
@@ -23,12 +23,19 @@ class fncDate :
         else :
             return str(jour)
     
+    def jourSimple(self):
+        return str(self.__date.day)
+    
     def nbMois(self):
         mois = self.__date.month
         if mois < 10 :
             return "0"+str(mois)
         else :
-            return str(mois)    
+            return str(mois)
+
+    def nbMoisSimple(self):
+        return str(self.__date.month)
+           
     
     def mois(self):
         mois = int(self.__date.month)
