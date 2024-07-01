@@ -3,15 +3,16 @@ from tkinter.messagebox import *
 from librairy.travailJSON import*
 from ObjetsNetwork.gestion import *
 from tkcalendar import DateEntry
-from datetime import datetime, timedelta
+from arreraSoftware.fonctionDate import*
 
 class fncArreraTache :
-    def __init__(self,fichierConfig:jsonWork,gest:gestionNetwork):
+    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,gest:gestionNetwork):
         self.__taskFile = jsonWork(gest.getEmplacemntfileTache())
         self.__mainColor = fichierConfig.lectureJSON("interfaceColor")
         self.__textColor = fichierConfig.lectureJSON("interfaceTextColor")
         self.__icon = fichierConfig.lectureJSON("iconAssistant")
         self.__nameAssistant = fichierConfig.lectureJSON("name")
+        self.__objDate = fncDate
 
     def __windows(self):
         screen = Toplevel()
@@ -67,7 +68,7 @@ class fncArreraTache :
                          Button(self.__frameAdd[2],text="Valider",font=("arial","15"),
                                 fg=self.__textColor,bg=self.__mainColor)]
         
-        self.__chooseDateTask = DateEntry(self.__frameAdd[1], width=15, background=self.__mainColor, 
+        self.__chooseDate = DateEntry(self.__frameAdd[1], width=15, background=self.__mainColor, 
                                foreground=self.__textColor, borderwidth=2,year=tomorrow.year, 
                                month=tomorrow.month, day=tomorrow.day)
         
@@ -138,7 +139,7 @@ class fncArreraTache :
         self.__btnValiderChangeDate = Button(self.__frameChangeDateInfo,text="Valider",font=("arial","15"),
                                  fg=self.__textColor,bg=self.__mainColor)
         btnAnulerChangeDate = Button(self.__frameChangeDateInfo,text="Annuler",font=("arial","15"),
-                                 fg=self.__textColor,bg=self.__mainColor)
+                                 fg=self.__textColor,bg=self.__mainColor,command = self.__backInfoTache)
         # Affichage Main
         self.__frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
         # Affichage FrameNavigation 
@@ -158,6 +159,7 @@ class fncArreraTache :
         self.__descriptionEntryTask.place(relx=0.5, rely=0.5, anchor="center")
         self.__nameTaskEntry.place(relx=0.5, rely=0.5, anchor="center")
         self.__chooseDateTask.place(relx=0.5, rely=0.5, anchor="center")
+        self.__chooseDate.place(relx=0.5, rely=0.5, anchor="center")
         # Affichage frameSuppr
         labelTitreCheck.place(x=0,y=0)
         btnValiderCheck.place(relx=1, rely=1, anchor='se')
@@ -225,7 +227,6 @@ class fncArreraTache :
         self.__frameAdd[0].place_forget()
         self.__frameAdd[1].place_forget()
         self.__frameAdd[2].place_forget()
-        dictTache = self.__taskFile.dictJson()
 
     def __checkIsTache(self):
         if(len(self.__taskFile.dictJson())==0):
@@ -304,7 +305,7 @@ class fncArreraTache :
         self.__btnValiderAdd[2].configure(command=lambda:self.__addEventDescription(nb))
     
     def __addEventDate(self,nb:str):
-        self.__taskFile.ajouterFlagDict(nb,"date",self.__formatageDateEntry(self.__chooseDateTask))
+        self.__taskFile.ajouterFlagDict(nb,"date",self.__formatageDateEntry(self.__chooseDate))
         reponseDes = askyesno("Tache", "Voulez-vous mettre une description ?")
         if (reponseDes) :
             self.__addDescription(nb)
@@ -358,6 +359,14 @@ class fncArreraTache :
                 self.__labelNameShowTask[i].configure(text= dictTache[str(i)]["name"],wraplength=120,justify="left")
                 self.__btnInfoShowTask[i].place(relx=0.5, rely=1.0, anchor="s")
                 self.__btnInfoShowTask[i].configure(command=lambda:self.__viewInfoTacheFrame(str(i)))
+                checkDate = self.__checkDateTache(str(i))
+                if (checkDate == True):
+                    self.__frameShowTache[i].configure(bg="red")
+                    self.__labelNameShowTask[i].configure(bg="red",fg="white")
+                else :
+                    self.__frameShowTache[i].configure(bg=self.__mainColor)
+                    self.__labelNameShowTask[i].configure(bg=self.__mainColor,fg=self.__textColor)
+
     
     def __viewInfoTacheFrame(self,nb:str):
         dictTache = self.__taskFile.dictJson()[nb]
@@ -390,5 +399,17 @@ class fncArreraTache :
     def __changeEventDate(self,nb:str):
         date = self.__formatageDateEntry(self.__chooseDateTask)
         self.__taskFile.ajouterFlagDict(nb,"date",date)
-        self.__backInfoTache()
+        self.__frameTaskInfo.place_forget()
+        self.__frameChangeDateInfo.place_forget()
+        self.__frameNavigation.place(relx=0.5, rely=1.0, anchor="s")
+        self.__showTaskFrame()
         showinfo("Tache","Date changer")
+    
+    def __checkDateTache(self,nb:str):
+        self.__objDate.rafraichisement()
+        dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
+        dateTask = self.__taskFile.dictJson()[nb]["date"]
+        if (dateToday==dateTask):
+            return True
+        else :
+            return False
