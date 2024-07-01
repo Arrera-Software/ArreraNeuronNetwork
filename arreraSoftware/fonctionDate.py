@@ -82,7 +82,10 @@ class fncDate :
         dateHier = self.__date - timedelta(days=1)
         return str(dateHier.strftime("%Y-%m-%d"))
 
-    def otherDate(self,delta:int):
+    def otherPastDate(self,delta:int):
         date = self.__date - timedelta(days=delta)
         return str(str(date.year)+"-"+str(date.month)+"-"+str(date.day))
-        
+
+    def otherAfterDate(self,delta:int):
+        date = self.__date + timedelta(days=delta)
+        return str(str(date.year)+"-"+str(date.month)+"-"+str(date.day))

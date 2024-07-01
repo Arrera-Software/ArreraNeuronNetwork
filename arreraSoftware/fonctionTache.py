@@ -408,8 +408,8 @@ class fncArreraTache :
     def __checkDateTache(self,nb:str):
         self.__objDate.rafraichisement()
         dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
-        hier = self.__objDate.otherDate(1)
-        avantHier = self.__objDate.otherDate(2)
+        hier = self.__objDate.otherPastDate(1)
+        avantHier = self.__objDate.otherPastDate(2)
         dateTask = self.__taskFile.dictJson()[nb]["date"]
         
         if ((dateTask==hier)or(dateTask==avantHier)):
