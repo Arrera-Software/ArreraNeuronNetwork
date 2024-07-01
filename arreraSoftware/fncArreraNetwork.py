@@ -742,3 +742,47 @@ class fncArreraNetwork:
                 text = "Désoler "+self.__user+". Il est imposible de finir un tache si il en a aucun de crée "
         
         return text
+
+    def sortieNbSpeakTache(self):
+        nbTache = self.__objetTache.getNbTache()
+        nbToday = self.__objetTache.getNbTacheToday()
+        if (nbTache==0) :
+            if (self.__etatVous==True):
+                text = "Vous avez aucune tache enregister"
+            else :
+                text = "Tu as aucune tache enregistrer"
+        else :
+            if (nbTache == 1) :
+                if (nbToday == 1) :
+                    if (self.__etatVous==True):
+                        text = "Vous avez une tache enregistrer et elle est à finir aujourd'hui"
+                    else :
+                        text = "Tu as une seul tache . Et tu dois l'avoir fini ce soir."
+                else :
+                    if (self.__etatVous==True):
+                        text = "Vous avez une tache enregistrer."
+                    else :
+                        text = "Tu as une seul tache. "
+            else :
+                if (self.__etatVous==True):
+                    baseText = "Vous avec "+str(nbTache)+" enregistrer."
+                else :
+                    baseText = "Tu as "+str(nbTache)+" enregistrer."
+                if (nbTache==1) :
+                    if (self.__etatVous==True):
+                        text = baseText+" Dont une tache a finir ajourd'hui."
+                    else :
+                        text = baseText+" Avec une tache que tu dois finir aujourd'hui."
+                else :
+                    if (nbTache>1):
+                        if (self.__etatVous==True):
+                            text = baseText+" Dont "+str(nbToday)+" tache a finir ajourd'hui."
+                        else :
+                            text = baseText+" Avec "+str(nbToday)+" tache que tu dois finir aujourd'hui."
+                    else :
+                        if (self.__etatVous==True):
+                            text = baseText + " Et aucune tache ajourd'hui."
+                        else :
+                            text = baseText + " Et aucune tache ajourd'hui."
+
+        return text

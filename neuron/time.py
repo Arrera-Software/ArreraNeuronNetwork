@@ -87,6 +87,10 @@ class neuroneTime :
                                                                or ("termine une tache" in requette) or ("fini une tache" in requette)):
                                                                 self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheCheck(),""]
                                                                 self.__valeurOut = 5
+                                                            else :
+                                                                if (("nombre de taches" in requette) or ("dit moi le nombre de taches")
+                                                                    or ("nombre de tache" in requette) or ("dit moi le nombre de tache")):
+                                                                    self.__listSortie = [self.fonctionArreraNetwork.sortieNbSpeakTache(),""]
                 
             #Mise a jour de la valeur 
             if (self.__valeurOut==0):                                                              
