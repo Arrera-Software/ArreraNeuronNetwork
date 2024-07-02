@@ -88,14 +88,12 @@ class neuroneTime :
                                                                 self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheCheck(),""]
                                                                 self.__valeurOut = 5
                                                             else :
-                                                                if (("nombre de taches" in requette) or ("dit moi le nombre de taches" in requette)
-                                                                    or ("nombre de tache" in requette) or ("dit moi le nombre de tache" in requette)):
+                                                                if (((("dit moi" in requette) and ("nombre" in requette)) or ("j'ai combien" in requette)) 
+                                                                    and (("tache" in requette) or ("taches" in requette))) :
                                                                     self.__listSortie = [self.fonctionArreraNetwork.sortieNbSpeakTache(),""]
                                                                 else :
-                                                                    if  (("dit moi mes tache pour aujourd'hui" in requette) or ("dit moi mes taches pour aujourd'hui" in requette) 
-                                                                         or ("dit moi mes tache du jour" in requette) or ("dit moi mes taches du jour" in requette) 
-                                                                         or ("dit moi les tache que j'ai pour aujourd'hui" in requette) or ("dit moi les taches que j'ai pour aujourd'hui" in requette) 
-                                                                         or ("dit moi les tache que j'ai a faire pour ajourd'hui" in requette) or ("dit moi les taches que j'ai a faire pour aujourd'hui" in requette))  :
+                                                                    if  ((("dit moi" in requette) and ("tache" in requette) or ("taches" in requette)  
+                                                                          and (("jour" in requette) or ("aujourd'hui" in requette))))  :
                                                                         self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheToday(),""]   
                 
             #Mise a jour de la valeur 
