@@ -432,3 +432,12 @@ class fncArreraTache :
             if (dictTache[str(i)]["date"] == dateToday):
                 nbTache = nbTache+1
         return nbTache
+    
+    def getTacheToday(self):
+        dictTache = self.__taskFile.dictJson()
+        dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
+        listTache = []
+        for i in range(0,len(dictTache)):
+            if (dictTache[str(i)]["date"] == dateToday) :
+                listTache.append(dictTache[str(i)]["name"])
+        return listTache

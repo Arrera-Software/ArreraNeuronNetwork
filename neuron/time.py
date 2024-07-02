@@ -88,9 +88,15 @@ class neuroneTime :
                                                                 self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheCheck(),""]
                                                                 self.__valeurOut = 5
                                                             else :
-                                                                if (("nombre de taches" in requette) or ("dit moi le nombre de taches")
-                                                                    or ("nombre de tache" in requette) or ("dit moi le nombre de tache")):
+                                                                if (("nombre de taches" in requette) or ("dit moi le nombre de taches" in requette)
+                                                                    or ("nombre de tache" in requette) or ("dit moi le nombre de tache" in requette)):
                                                                     self.__listSortie = [self.fonctionArreraNetwork.sortieNbSpeakTache(),""]
+                                                                else :
+                                                                    if  (("dit moi mes tache pour aujourd'hui" in requette) or ("dit moi mes taches pour aujourd'hui" in requette) 
+                                                                         or ("dit moi mes tache du jour" in requette) or ("dit moi mes taches du jour" in requette) 
+                                                                         or ("dit moi les tache que j'ai pour aujourd'hui" in requette) or ("dit moi les taches que j'ai pour aujourd'hui" in requette) 
+                                                                         or ("dit moi les tache que j'ai a faire pour ajourd'hui" in requette) or ("dit moi les taches que j'ai a faire pour aujourd'hui" in requette))  :
+                                                                        self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheToday(),""]   
                 
             #Mise a jour de la valeur 
             if (self.__valeurOut==0):                                                              

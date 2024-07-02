@@ -786,3 +786,34 @@ class fncArreraNetwork:
                             text = baseText + " Et aucune tache ajourd'hui."
 
         return text
+    
+    def sortieSpeakTacheToday(self):
+        listTache = self.__objetTache.getTacheToday()
+        nbTache = len(listTache)
+        if (nbTache==0) :
+            if (self.__etatVous==True):
+                text = "Vous avez aucune tache aujourd'hui "+self.__genre+"."
+            else :
+                text = "Tu as aucune tache a faire aujourd'hui"
+        else :
+            if (nbTache==1):
+                if (self.__etatVous==True):
+                    baseText = "Vous avez une seul tache à faire ajourd'huit qui est "
+                else :
+                    baseText = "Tu as uns seul tache à finir pour ajourd'hui qui est "
+            else :
+                if (self.__etatVous==True):
+                    baseText = "Vous avez "+str(nbTache)+" tache à faire ajourd'huit qui sont "
+                else :
+                    baseText = "Tu as "+str(nbTache)+" à finir pour ajourd'hui qui sont "
+            
+            for i in range(0,nbTache):
+                if (i == 0):
+                    text = baseText + listTache[i]
+                else :
+                    if ( i == (nbTache-1)):
+                        text = text + " et " + listTache[i]
+                    else :
+                        text = text+", "+listTache[i]
+        
+        return text
