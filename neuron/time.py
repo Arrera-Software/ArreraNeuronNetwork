@@ -92,9 +92,14 @@ class neuroneTime :
                                                                     and (("tache" in requette) or ("taches" in requette))) :
                                                                     self.__listSortie = [self.fonctionArreraNetwork.sortieNbSpeakTache(),""]
                                                                 else :
-                                                                    if  ((("dit moi" in requette) and ("tache" in requette) or ("taches" in requette)  
+                                                                    if  ((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette)) 
                                                                           and (("jour" in requette) or ("aujourd'hui" in requette))))  :
-                                                                        self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheToday(),""]   
+                                                                        self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheToday(),""]  
+                                                                    else :
+                                                                        if  ((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette))  
+                                                                          and ("demain" in requette)))  :
+                                                                            self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheTowmorow(),""] 
+                                                                    
                 
             #Mise a jour de la valeur 
             if (self.__valeurOut==0):                                                              

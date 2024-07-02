@@ -798,14 +798,45 @@ class fncArreraNetwork:
         else :
             if (nbTache==1):
                 if (self.__etatVous==True):
-                    baseText = "Vous avez une seul tache à faire ajourd'huit qui est "
+                    baseText = "Vous avez une seul tache à faire ajourd'hui qui est "
                 else :
                     baseText = "Tu as uns seul tache à finir pour ajourd'hui qui est "
             else :
                 if (self.__etatVous==True):
-                    baseText = "Vous avez "+str(nbTache)+" tache à faire ajourd'huit qui sont "
+                    baseText = "Vous avez "+str(nbTache)+" tache à faire ajourd'hui qui sont "
                 else :
                     baseText = "Tu as "+str(nbTache)+" à finir pour ajourd'hui qui sont "
+            
+            for i in range(0,nbTache):
+                if (i == 0):
+                    text = baseText + listTache[i]
+                else :
+                    if ( i == (nbTache-1)):
+                        text = text + " et " + listTache[i]
+                    else :
+                        text = text+", "+listTache[i]
+        
+        return text
+    
+    def sortieSpeakTacheTowmorow(self):
+        listTache = self.__objetTache.getTacheTowmorow()
+        nbTache = len(listTache)
+        if (nbTache==0) :
+            if (self.__etatVous==True):
+                text = "Vous avez aucune tache pour demain "+self.__genre+"."
+            else :
+                text = "Tu as aucune tache a faire demain"
+        else :
+            if (nbTache==1):
+                if (self.__etatVous==True):
+                    baseText = "Vous avez une seul tache à faire pour demain qui est "
+                else :
+                    baseText = "Tu as uns seul tache à finir pour demain qui est "
+            else :
+                if (self.__etatVous==True):
+                    baseText = "Vous avez "+str(nbTache)+" tache à faire pour demain qui sont "
+                else :
+                    baseText = "Tu as "+str(nbTache)+" à finir pour demain qui sont "
             
             for i in range(0,nbTache):
                 if (i == 0):
