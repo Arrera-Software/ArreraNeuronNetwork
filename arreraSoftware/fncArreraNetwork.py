@@ -128,6 +128,68 @@ class fncArreraNetwork:
         
         return 4 , [text,""]
     
+    def sortieMeteoTowmorNoon(self,ville):
+        if ville == "" :
+            sortieGPS = self.__gps.recuperationCordonneePossition()
+            if sortieGPS == True :
+                sortieGPS = self.__gps.recuperationNameVillePosition()
+                if sortieGPS == True :
+                    nameVille = self.__gps.getNameVille()
+                    lon = self.__gps.getlonPossition()
+                    lat = self.__gps.getlatPossition()
+                    sortiMeteo = self.__meteo.getDateMetoTowmorowNoon(lat,lon)
+                    if sortiMeteo == True :
+                        if self.__etatVous == True :
+                            nbrand = random.randint(0,1)
+                            listReponse = ["La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
+                                            "La meteo a votre localisation pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
+                            text =  listReponse[nbrand]
+                        else :
+                            nbrand = random.randint(0,1)
+                            listReponse = ["La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
+                                            "La meteo a ta localisation pour demain midi est de "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
+                        
+                            text =  listReponse[nbrand]
+                    else :
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi"
+                        else :
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+                else :
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
+                        else :
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."
+            else :
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi"
+                        else :
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."
+        else :
+            sortieGPS = self.__gps.recuperationCordonneeVille(ville)
+            if sortieGPS == True :
+                lat = self.__gps.getlatVille()
+                lon = self.__gps.getLonVille()
+                sortiMeteo = self.__meteo.getDateMetoTowmorowNoon(lat,lon)
+                if  sortiMeteo == True:
+                    nameVille =  ville
+                    if self.__etatVous == True :
+                        text= "La meteo a "+nameVille+"  pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"             
+                    else :
+                        text = "La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"            
+                else :
+                        if self.__etatVous == True :
+                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
+                        else :
+                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+            else :
+                if self.__etatVous == True :
+                    text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
+                else :
+                    text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+        
+        return 4 , [text,""]
+    
     def sortieMeteoToday(self,ville):
         if ville == "" :
             sortieGPS = self.__gps.recuperationCordonneePossition()

@@ -67,6 +67,31 @@ class Meteo :
                 self.__description =  str(reponseDescription["description"])
                 self.__icon =  str(reponseDescription['icon'])
             return True
+    
+    def getDateMetoTowmorowNoon(self,latitude:str,longitude:str):
+        self.__latitude = latitude
+        self.__longitude = longitude
+        reponse=requests.get(self.__url+"forecast?lat="+str(self.__latitude)+"&lon="+str(self.__longitude)+"&lang=fr&units=metric&appid="+self.__keyApi).json()
+        if reponse["cod"] == "401" or reponse["cod"] == "400" :
+            return False
+        else :
+            tomorrow = (datetime.now() + timedelta(days=1)).date()
+            # Filtrer les prévisions pour demain midi
+            forecast_tomorrow_noon = [
+                forecast for forecast in reponse['list']
+                if datetime.strptime(forecast['dt_txt'], '%Y-%m-%d %H:%M:%S').date() == tomorrow and
+                datetime.strptime(forecast['dt_txt'], '%Y-%m-%d %H:%M:%S').hour == 12
+            ]
+
+            # Afficher les prévisions pour demain midi
+            for forecast in forecast_tomorrow_noon:
+                reponseData = forecast['main']
+                reponseDescription = forecast['weather'][0]
+                self.__temperature = str(reponseData["temp"])
+                self.__humiditer =  str(reponseData["humidity"])
+                self.__description =  str(reponseDescription["description"])
+                self.__icon =  str(reponseDescription['icon'])
+            return True
 
        
     def gettemperature(self):#permet de recuperé la temperature
