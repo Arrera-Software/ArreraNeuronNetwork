@@ -23,8 +23,6 @@ class neuroneTime :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
             #reponse neuron time
             if ("heure" in requette) :
                 self.__listSortie = [self.fonctionArreraNetwork.sortieHeure(),""]
