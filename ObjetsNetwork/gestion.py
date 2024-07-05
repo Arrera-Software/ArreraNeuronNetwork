@@ -6,7 +6,7 @@ class gestionNetwork:
     def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork,detecteurOS:OS,fileFete:jsonWork):
         self.__fileUser = fileUser
         self.__configFile = ConfigFile
-        self.__fichierVille = fileFete
+        self.__fichierFete = fileFete
         self.__vous = False
         self.__lieuDomicile = False
         self.__lieuTravail = False
@@ -138,7 +138,7 @@ class gestionNetwork:
         date= datetime.now()
         jours = str(date.day)
         mois = str(date.month)
-        return self.__fichierVille.lectureJSONMultiFlag(mois,jours)
+        return self.__fichierFete.lectureJSONMultiFlag(mois,jours)
     
     def getEmplacementSoftwareWindows(self):
         return self.__configFile.lectureJSON("emplacementSoftWindows")
@@ -155,3 +155,9 @@ class gestionNetwork:
         Methode qui retourne une liste qui se presente comme sa [oldRequette,self.__oldSorti]
         """
         return [self.__oldRequette,self.__oldSorti]
+
+    def getLinkDoc(self):
+        """
+        Methode pour donner le lien de la doc 
+        """
+        return self.__configFile.lectureJSON("lienDoc")

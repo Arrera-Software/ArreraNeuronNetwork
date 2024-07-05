@@ -48,6 +48,13 @@ class neuroneService :
                             self.__listSortie = ["Le calcule que vous me demander de faire "+genre+" est imposible a faire.",""]
                         else :
                             self.__listSortie = ["Le calcule que tu me demande de faire est imposible.",""]
+                else :
+                    if (("ouvre la documentation" in requette)or("montre la documentation" in requette)):
+                        if etatVous == True :
+                            self.__listSortie = ["Okay je vous ouvre ma documentation. J'éspére que vous sa sera utile pour me comprendre",""]
+                        else :
+                            self.__listSortie = ["Okay je t'ouvre ma documentation. J'éspére qu'elle sera utile pour me comprendre",""]
+                        webbrowser.open(self.__gestionNeuron.getLinkDoc())
             #Mise a jour de la valeur 
             if (self.__valeurOut==0):                                                            
                 self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
