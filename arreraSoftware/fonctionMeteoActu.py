@@ -1,5 +1,5 @@
 import requests
-import geocoder
+from datetime import datetime, timedelta
 
 class Actu :
     def __init__(self,keyActu:str,nbPage:int,pay:str,lang:str):
@@ -21,17 +21,17 @@ class Actu :
 class Meteo : 
     def __init__(self,keyAPI : str):
         self.__keyApi= keyAPI
-        self.__url="https://api.openweathermap.org/data/2.5/weather?"
+        self.__url="https://api.openweathermap.org/data/2.5/"
         
         self.__temperature = ""
         self.__humiditer =  ""
         self.__description =  ""
         self.__icon =  ""
     
-    def recuperationDataMeteo(self,latitude:str,longitude:str):
+    def getDataMeteoNow(self,latitude:str,longitude:str):
         self.__latitude = latitude
         self.__longitude = longitude
-        reponse=requests.get(self.__url+"lat="+str(self.__latitude)+"&lon="+str(self.__longitude)+"&lang=fr&units=metric&appid="+self.__keyApi).json()
+        reponse=requests.get(self.__url+"weather?lat="+str(self.__latitude)+"&lon="+str(self.__longitude)+"&lang=fr&units=metric&appid="+self.__keyApi).json()
         if reponse["cod"] == "401" or reponse["cod"] == "400" :
             return False
         else :
@@ -42,7 +42,32 @@ class Meteo :
             self.__description =  str(reponseDescription["description"])
             self.__icon =  str(reponseDescription['icon'])
             return True
-            
+
+    def getDateMetoTowmorowMorning(self,latitude:str,longitude:str):
+        self.__latitude = latitude
+        self.__longitude = longitude
+        reponse=requests.get(self.__url+"forecast?lat="+str(self.__latitude)+"&lon="+str(self.__longitude)+"&lang=fr&units=metric&appid="+self.__keyApi).json()
+        if reponse["cod"] == "401" or reponse["cod"] == "400" :
+            return False
+        else :
+            tomorrow = (datetime.now() + timedelta(days=1)).date()
+            # Filtrer les prévisions pour demain midi
+            forecast_tomorrow_noon = [
+                forecast for forecast in reponse['list']
+                if datetime.strptime(forecast['dt_txt'], '%Y-%m-%d %H:%M:%S').date() == tomorrow and
+                datetime.strptime(forecast['dt_txt'], '%Y-%m-%d %H:%M:%S').hour == 9
+            ]
+
+            # Afficher les prévisions pour demain midi
+            for forecast in forecast_tomorrow_noon:
+                reponseData = forecast['main']
+                reponseDescription = forecast['weather'][0]
+                self.__temperature = str(reponseData["temp"])
+                self.__humiditer =  str(reponseData["humidity"])
+                self.__description =  str(reponseDescription["description"])
+                self.__icon =  str(reponseDescription['icon'])
+            return True
+
        
     def gettemperature(self):#permet de recuperé la temperature
         return self.__temperature
