@@ -984,3 +984,43 @@ class fncArreraNetwork:
         self.__objetCodehelp.activeOrgaVar()
         
         return text
+    
+    def sortieSearchDoc(self,requette:str):
+        """
+        Flag recherche : 
+            - recherche devdoc / rdevdoc / sdevdoc : Recherche dans sur devdoc 
+            - recherche microsoft / rmicrosoft / smicrosoft : recherche microsoft learn
+            - recheche python / rpython / spython : recherche sur le site python.org
+        """
+        if (("recherche devdoc" in requette) or ("rdevdoc" in requette) or ("sdevdoc" in requette)):
+            recherche = requette.replace("recherche devdoc","")
+            recherche = recherche.replace("rdevdoc","")
+            recherche = recherche.replace("sdevdoc","")
+            self.__objetCodehelp.rechercheDoc(1,recherche)
+            if (self.__etatVous==True):
+                text = "Tres bien je vous fais la recherche sur le site DevDoc."
+            else :
+                text = "Okay je t'ai ouvert la recherche sur le site DevDoc dans ton navigateur."
+        else :
+            if (("recherche microsoft" in requette) or ("rmicrosoft" in requette) or ("smicrosoft" in requette)):
+                recherche = requette.replace("recherche microsoft","")
+                recherche = recherche.replace("rmicrosoft","")
+                recherche = recherche.replace("smicrosoft","")
+                self.__objetCodehelp.rechercheDoc(2,recherche)
+                if (self.__etatVous==True):
+                    text = "Tres bien je vous fais la recherche sur la documentation Learn de microsoft."
+                else :
+                    text = "Okay je t'ai ouvert la recherche dans la documentation Learn de microsoft dans ton navigateur."
+            else :
+                if (("recheche python" in requette) or ("rpython" in requette) or ("spython" in requette)):
+                    recherche = requette.replace("recheche python","")
+                    recherche = recherche.replace("rpython","")
+                    recherche = recherche.replace("spython","")
+                    self.__objetCodehelp.rechercheDoc(3,recherche)
+                    if (self.__etatVous==True):
+                        text = "Tres bien je vous fais la recherche sur le site du language de programation python."
+                    else :
+                        text = "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur."
+        
+        return text
+            

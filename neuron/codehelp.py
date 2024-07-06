@@ -18,13 +18,22 @@ class neuroneCodehelp :
     def neurone(self,requette:str):
         if self.__gestNeuron.getCodeHelp() == True:
             #Initilisation des variable nbRand et text et valeur
-            self.__listSortie = []
+            self.__listSortie = ["",""]
             self.__valeurOut = 0
 
             if ("ouvre" in requette):
                 if (("organisateur de varriable" in requette)or("orga var" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenOrgaVar(),""]
                     self.__valeurOut = 5
+            else :
+                if (("recherche devdoc" in requette) or ("rdevdoc" in requette)
+                     or ("sdevdoc" in requette) or ("recherche microsoft" in requette) 
+                     or ("rmicrosoft" in requette) or ("smicrosoft" in requette) 
+                     or ("recheche python" in requette) or ("rpython" in requette) 
+                     or ("spython" in requette)):
+                    self.__listSortie = [self.__fonctionArreraNetwork.sortieSearchDoc(requette),""]
+                    self.__valeurOut = 1 
             
-            #Mise a jour de la valeur                                                               
-            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+            #Mise a jour de la valeur
+            if (self.__valeurOut == 0):                                                               
+                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
