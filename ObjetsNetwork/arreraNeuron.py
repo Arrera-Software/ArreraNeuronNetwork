@@ -10,6 +10,7 @@ from neuron.software import*
 from neuron.open import *
 from neuron.search import*
 from neuron.time import*
+from neuron.codehelp import*
 from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
 
@@ -42,6 +43,7 @@ class ArreraNetwork :
         self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
         self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
     
     def realoadUserData(self):
         """
@@ -99,49 +101,55 @@ class ArreraNetwork :
                 self.__valeurOut = self.__time.getValeurSortie()
                 
                 if self.__valeurOut == 0 :
-                    #open
-                    self.__open.neurone(requette)
-                    self.__valeurOut = self.__open.getValeurSortie()
-                    
-                    if self.__valeurOut == 0 :
-                        #search
-                        if self.__etatReseau == True :
-                            self.__search.neurone(requette)
-                            self.__valeurOut = self.__search.getValeurSortie()
-                        else :
-                            self.__valeurOut = 0
+                    #code help 
+                    self.__codehelp.neurone(requette)
+                    self.__valeurOut = self.__codehelp.getValeurSortie()
+                    if (self.__valeurOut == 0 ):
+                        #open
+                        self.__open.neurone(requette)
+                        self.__valeurOut = self.__open.getValeurSortie()
                         
                         if self.__valeurOut == 0 :
-                            self.__chatBot.neurone(requette)
-                            self.__valeurOut = self.__chatBot.getValeurSortie()
+                            #search
+                            if self.__etatReseau == True :
+                                self.__search.neurone(requette)
+                                self.__valeurOut = self.__search.getValeurSortie()
+                            else :
+                                self.__valeurOut = 0
                             
                             if self.__valeurOut == 0 :
-                                #api
-                                if self.__etatReseau == True :
-                                    self.__api.neurone(requette)
-                                    self.__valeurOut = self.__api.getValeurSortie()
-                                else :
-                                    self.__valeurOut = 0
+                                self.__chatBot.neurone(requette)
+                                self.__valeurOut = self.__chatBot.getValeurSortie()
                                 
                                 if self.__valeurOut == 0 :
-                                    if (("stop" in requette) or ("au revoir" in requette) 
-                                        or ("quitter" in requette) or ("bonne nuit" in requette) 
-                                        or ("adieu" in requette) or ("bonne soirée" in requette) 
-                                        or ("arreter" in requette)) :
-                                        self.__listOut = [self.__formuleNeuron.aurevoir(datetime.now().hour),""]
-                                        self.__valeurOut = 15
-                                    else : 
-                                        self.__valeurOut = 0 
-                                        self.__listOut = [self.__formuleNeuron.nocomprehension(),""]
-                                        self.__gestionnaire.addDiscution()
+                                    #api
+                                    if self.__etatReseau == True :
+                                        self.__api.neurone(requette)
+                                        self.__valeurOut = self.__api.getValeurSortie()
+                                    else :
+                                        self.__valeurOut = 0
+                                    
+                                    if self.__valeurOut == 0 :
+                                        if (("stop" in requette) or ("au revoir" in requette) 
+                                            or ("quitter" in requette) or ("bonne nuit" in requette) 
+                                            or ("adieu" in requette) or ("bonne soirée" in requette) 
+                                            or ("arreter" in requette)) :
+                                            self.__listOut = [self.__formuleNeuron.aurevoir(datetime.now().hour),""]
+                                            self.__valeurOut = 15
+                                        else : 
+                                            self.__valeurOut = 0 
+                                            self.__listOut = [self.__formuleNeuron.nocomprehension(),""]
+                                            self.__gestionnaire.addDiscution()
+                                    else :
+                                        self.__listOut = self.__api.getListSortie()
                                 else :
-                                    self.__listOut = self.__api.getListSortie()
+                                    self.__listOut = self.__chatBot.getListSortie()
                             else :
-                                self.__listOut = self.__chatBot.getListSortie()
+                                self.__listOut = self.__search.getListSortie()
                         else :
-                            self.__listOut = self.__search.getListSortie()
+                            self.__listOut = self.__open.getListSortie()
                     else :
-                        self.__listOut = self.__open.getListSortie()
+                        self.__listOut = self.__codehelp.getListSortie()
                 else :
                     self.__listOut = self.__time.getListSortie()
             else :

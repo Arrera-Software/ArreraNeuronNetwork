@@ -19,6 +19,7 @@ from arreraSoftware.fonctionDate import *
 from arreraSoftware.fonctionHorloge import*
 from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionTache import*
+from arreraSoftware.fonctionCodeHelp import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -47,6 +48,7 @@ class fncArreraNetwork:
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
+        self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -970,5 +972,15 @@ class fncArreraNetwork:
                         text = text + " et " + listTache[i]
                     else :
                         text = text+", "+listTache[i]
+        
+        return text
+    
+    def sortieOpenOrgaVar(self):
+        if (self.__etatVous==True):
+            text = "Ok je vous ouvre l'organisateur de varriable "+self.__genre+"."
+        else :
+            text = "Okay je t'ouvre l'organisateur de varriable j'espére que sa t'aidera sur ton projet de programation."
+        
+        self.__objetCodehelp.activeOrgaVar()
         
         return text
