@@ -29,5 +29,6 @@
     },
     "moteurRecherche":"",
     "emplacementEvenenement" :"evenementUser.json",
-    "emplacementTache":"tache.json"
+    "emplacementTache":"tache.json",
+    "tokenGithub":""
 }

@@ -161,3 +161,9 @@ class gestionNetwork:
         Methode pour donner le lien de la doc 
         """
         return self.__configFile.lectureJSON("lienDoc")
+    
+    def getTokenGithub(self):
+        """
+        Methode qui permet de recuperer les token github
+        """
+        return self.__fileUser.lectureJSON("tokenGithub")
