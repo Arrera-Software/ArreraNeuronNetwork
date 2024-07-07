@@ -48,7 +48,7 @@ class fncArreraNetwork:
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
-        self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS)
+        self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1033,3 +1033,26 @@ class fncArreraNetwork:
         self.__objetCodehelp.activeColorSelecteur()
 
         return text
+
+    def sortieSearchGithub(self,requette:str):
+        """
+        Flag de recherche : 
+            recherche github 
+            rgithub
+            sgithub
+            search github
+        """
+        if (self.__etatVous==True):
+            text = "Ok je vous fais la recherche sur github "+self.__genre+"."
+        else :
+            text = "Okay voici ta recherche github."
+
+        recherche = requette.replace("recherche github","")
+        recherche = recherche.replace("rgithub","")
+        recherche = recherche.replace("sgithub","")
+        recherche = recherche.replace("search github","")
+
+        self.__objetCodehelp.searchGithub(recherche)
+
+        return text
+        

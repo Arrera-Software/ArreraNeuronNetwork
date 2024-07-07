@@ -37,7 +37,11 @@ class neuroneCodehelp :
                      or ("recheche python" in requette) or ("rpython" in requette) 
                      or ("spython" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieSearchDoc(requette),""]
-                    self.__valeurOut = 1 
+                else :
+                    if (("recherche github" in requette) or ("rgithub" in requette) or
+                        ("sgithub" in requette) or ("search github" in requette)):
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieSearchGithub(requette),""]
+
             
             #Mise a jour de la valeur
             if (self.__valeurOut == 0):                                                               

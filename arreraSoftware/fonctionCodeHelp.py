@@ -1,13 +1,15 @@
 from objet.CHOrgraVarriable import*
 from objet.CHsearchDoc import*
 from objet.CCHcolorSelector import*
+from objet.CHGithub import*
 from librairy.dectectionOS import*
 
 class fncCodehelp :
-    def __init__(self,configNeuron:jsonWork,dectOs:OS) -> None:
+    def __init__(self,configNeuron:jsonWork,dectOs:OS,gestNeuron:gestionNetwork) -> None:
         self.__orgaVar = CHOrgraVarriable(configNeuron,dectOs)
         self.__searchDoc = CHsearchDoc()
         self.__colorSelector = CCHcolorSelector(configNeuron)
+        self.__githubObjet = CHGithub(configNeuron,gestNeuron)
     
     def activeOrgaVar(self):
         self.__orgaVar.bootOrganisateur()
@@ -31,3 +33,6 @@ class fncCodehelp :
     
     def activeColorSelecteur(self):
         self.__colorSelector.bootSelecteur()
+    
+    def searchGithub(self,requette:str):
+        self.__githubObjet.search(requette)
