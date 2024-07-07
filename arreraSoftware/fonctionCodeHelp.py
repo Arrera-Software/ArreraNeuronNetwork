@@ -36,3 +36,6 @@ class fncCodehelp :
     
     def searchGithub(self,requette:str):
         self.__githubObjet.search(requette)
+    
+    def openSiteGithub(self):
+        w.open("www.github.com")

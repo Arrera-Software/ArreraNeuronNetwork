@@ -1055,4 +1055,12 @@ class fncArreraNetwork:
         self.__objetCodehelp.searchGithub(recherche)
 
         return text
-        
+    
+    def sortieOpenSiteGithub(self):
+        if (self.__etatVous == True):
+            text = "Voici le site github "+self.__genre+" j'espére que sa vous sera utile."
+        else :
+            text = "Voila le site github"
+
+        self.__objetCodehelp.openSiteGithub()
+        return text 
