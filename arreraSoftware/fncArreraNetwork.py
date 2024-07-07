@@ -1023,4 +1023,13 @@ class fncArreraNetwork:
                         text = "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur."
         
         return text
-            
+    
+    def sortieOpenColorSelecteur(self):
+        if (self.__etatVous == True):
+            text = "Ok je vous ouvre la fonctionnalité codehelp Color Selecteur."
+        else :
+            text = "Okay voici ton color sélecteur"
+        
+        self.__objetCodehelp.activeColorSelecteur()
+
+        return text

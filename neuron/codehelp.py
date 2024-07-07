@@ -25,6 +25,11 @@ class neuroneCodehelp :
                 if (("organisateur de varriable" in requette)or("orga var" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenOrgaVar(),""]
                     self.__valeurOut = 5
+                else :
+                    if (("color selecteur" in requette) or ("couleur selecteur" in requette) 
+                        or ("selecteur de couleur" in requette)):
+                        self.__listSortie=[self.__fonctionArreraNetwork.sortieOpenColorSelecteur(),""]
+                        self.__valeurOut = 5
             else :
                 if (("recherche devdoc" in requette) or ("rdevdoc" in requette)
                      or ("sdevdoc" in requette) or ("recherche microsoft" in requette) 
