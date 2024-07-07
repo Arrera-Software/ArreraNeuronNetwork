@@ -3,6 +3,7 @@ from objet.CHsearchDoc import*
 from objet.CCHcolorSelector import*
 from objet.CHGithub import*
 from librairy.dectectionOS import*
+from objet.CHLibrairy import*
 
 class fncCodehelp :
     def __init__(self,configNeuron:jsonWork,dectOs:OS,gestNeuron:gestionNetwork) -> None:
@@ -10,6 +11,7 @@ class fncCodehelp :
         self.__searchDoc = CHsearchDoc()
         self.__colorSelector = CCHcolorSelector(configNeuron)
         self.__githubObjet = CHGithub(configNeuron,gestNeuron)
+        self.__librairyCodehelp = CHLibrairy(configNeuron)
     
     def activeOrgaVar(self):
         self.__orgaVar.bootOrganisateur()
@@ -42,3 +44,6 @@ class fncCodehelp :
     
     def openGestionGithub(self):
         self.__githubObjet.GUI()
+    
+    def openOutilLibrairy(self):
+        self.__librairyCodehelp.librairy()

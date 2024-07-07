@@ -1074,3 +1074,13 @@ class fncArreraNetwork:
         self.__objetCodehelp.openGestionGithub()
 
         return text
+
+    def sortieOpenLibrairy(self):
+        if (self.__etatVous==True):
+            text = "Je vous es ouvert le l'interface qui vous permet d'acceder au librairy Codehelp"
+        else :
+            text = "Je t'ai ouvert la librairy github"
+        
+        self.__objetCodehelp.openOutilLibrairy()
+
+        return text
