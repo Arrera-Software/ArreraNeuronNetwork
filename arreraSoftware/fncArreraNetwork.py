@@ -1064,3 +1064,13 @@ class fncArreraNetwork:
 
         self.__objetCodehelp.openSiteGithub()
         return text 
+    
+    def sortieOpenGuiGithub(self):
+        if (self.__etatVous==True):
+            text = "Voci mon outil de gestion github "+self.__genre+" "+self.__user+"."
+        else :
+            text = "Voila le logiciel de gestion github"
+        
+        self.__objetCodehelp.openGestionGithub()
+
+        return text

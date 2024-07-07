@@ -33,6 +33,10 @@ class neuroneCodehelp :
                     else :
                         if ("site github" in requette):
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSiteGithub(),""]
+                        else :
+                            if (("gestion github" in requette) or ("gest github" in requette)):
+                                self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenGuiGithub(),""]
+                                self.__valeurOut = 5
             else :
                 if (("recherche devdoc" in requette) or ("rdevdoc" in requette)
                      or ("sdevdoc" in requette) or ("recherche microsoft" in requette) 

@@ -39,3 +39,6 @@ class fncCodehelp :
     
     def openSiteGithub(self):
         w.open("www.github.com")
+    
+    def openGestionGithub(self):
+        self.__githubObjet.GUI()
