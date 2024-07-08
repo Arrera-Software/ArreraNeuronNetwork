@@ -22,7 +22,7 @@ class neuroneCodehelp :
             self.__valeurOut = 0
 
             if ("ouvre" in requette):
-                if (("organisateur de varriable" in requette)or("orga var" in requette)):
+                if (("organisateur de variable" in requette)or("orga var" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenOrgaVar(),""]
                     self.__valeurOut = 5
                 else :
