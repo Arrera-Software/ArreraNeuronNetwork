@@ -16,6 +16,8 @@ class gestionNetwork:
         self.__bute =""
         self.__listFonction = []
         self.__createur =""
+        self.__adresseDomicile = ""
+        self.__adresseTravail = ""
         self.__nbDiscution =0
         self.__nbVilleMeteo = 0
         self.__listVille = []
@@ -49,6 +51,8 @@ class gestionNetwork:
         self.__nbVilleMeteo = int(self.__configFile.lectureJSON("nombreVilleMeteo"))
         self.__moteurRechercheDefault = str(self.__configFile.lectureJSON("moteurRechercheDefault"))
         self.__listVille = self.__fileUser.lectureJSONList("listVille")
+        self.__adresseDomicile = self.__fileUser.lectureJSON("adresseDomicile")
+        self.__adresseTravail = self.__fileUser.lectureJSON("adresseTravail")
     
     def getVous(self):
         return bool(self.__vous)
@@ -167,3 +171,15 @@ class gestionNetwork:
         Methode qui permet de recuperer les token github
         """
         return self.__fileUser.lectureJSON("tokenGithub")
+
+    def getAdresseDomicile(self):
+        """
+        Methode pour retourner l'adresse du domicile
+        """
+        return  self.__adresseDomicile 
+    
+    def getAdresseTravil(self) :
+        """
+        Methode pour retourner l'adresse du lieu de travail
+        """
+        return  self.__adresseTravail 
