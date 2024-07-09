@@ -1,6 +1,7 @@
 import geocoder
 import requests
 import webbrowser
+import urllib.parse
 import platform
 import os
 import subprocess
@@ -87,5 +88,30 @@ class GPSItineraires :
         if etat == True :
             webbrowser.get(self.__chrome).open(self.__baseURL+loc1+"/"+loc2)
             return True
+        else :
+            return False
+    
+
+    def launchGoogleMapItineraire(self,depart:str, arrivee:str):
+        """
+        Lance un itinéraire Google Maps depuis l'adresse de départ jusqu'à l'adresse d'arrivée.
+        
+        Parameters:
+        depart (str): Adresse de départ en langage naturel.
+        arrivee (str): Adresse d'arrivée en langage naturel.
+        """
+        if (depart!="" and arrivee!=""):
+            base_url = "https://www.google.com/maps/dir/?api=1"
+            params = {
+                "origin": depart,
+                "destination": arrivee
+            }
+            
+            # Encoder les paramètres pour les inclure dans l'URL
+            url_params = urllib.parse.urlencode(params)
+            full_url = f"{base_url}&{url_params}"
+            
+            # Ouvrir l'URL dans le navigateur par défaut
+            return webbrowser.open(full_url)
         else :
             return False

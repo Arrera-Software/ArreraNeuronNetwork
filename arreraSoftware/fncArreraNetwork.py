@@ -1,6 +1,6 @@
 #module pyhon
-from tkinter import*
 import random
+import re
 #librairy Arrera
 from librairy.travailJSON import *
 from librairy.openSoftware import*
@@ -282,7 +282,7 @@ class fncArreraNetwork:
                     text = ["Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" .",""]
         return 4,text
     
-    def sortieItineraires(self,loc1:str,loc2:str):
+    def sortieItinerairesOld(self,loc1:str,loc2:str):
         if loc1 == "loc" :
             sortieGPS = self.__gps.recuperationCordonneePossition()
             if sortieGPS == True :
@@ -292,6 +292,108 @@ class fncArreraNetwork:
         else :
             sortieGPS = self.__itineraires.ouvertureItineraires(loc1,loc2)
         return sortieGPS
+    
+    
+    def sortieItineraire(self,phrase):
+        """
+        Extrait les adresses de départ et d'arrivée d'une phrase donnée.
+        
+        Parameters:
+        phrase (str): La phrase contenant les adresses de départ et d'arrivée.
+        
+        Returns:
+        tuple: Une paire (départ, arrivée) des adresses extraites.
+
+        Phrase a utiliser :
+            indique-moi l'itineraire de [depart] a [arrive] sur le GPS, s'il te plait.
+
+            lance le GPS pour un trajet de [depart] a [arrive], s'il te plaît.
+        Mots qui peuvent compter comme ville : 
+            domicile,residence,maison,appartement,chez moi,foyer,maison,foyer,demeure
+            bureau,lieu de travail,entreprise,societe,boulot,cabinet",college,lycee,ecole,campus,universite
+            la ou je suis , ma localisation
+        """
+        reusite = bool
+        # Expressions régulières pour extraire les parties de la phrase
+        pattern = re.compile(r"de\s+(.*?)\s+(?:a|comme|et)\s+(.*?)\s+(?:comme|et|s'il|destination|aller|sur|,|\.|$)", re.IGNORECASE)
+        match = pattern.search(phrase)
+        
+        if match:
+            depart = match.group(1).strip()
+            arrivee = match.group(2).strip()
+            reusite = True
+        else:
+            reusite = False
+        if (reusite == True ) :
+            if ((depart == "domicile") or (depart =="residence") 
+                or (depart =="maison") or (depart == "appartement") 
+                or (depart =="chez moi") or (depart =="foyer") 
+                or (depart =="maison") or (depart == "foyer") 
+                or (depart =="demeure")):
+                depart = self.__gestionNeuron.getAdresseDomicile()
+            else : 
+                if ((depart =="bureau")or (depart =="lieu de travail")
+                    or (depart =="entreprise")or (depart =="societe")
+                    or (depart =="boulot") or (depart == "cabinet")
+                    or (depart =="college")or (depart =="lycee")
+                    or (depart =="ecole") or (depart =="campus")
+                    or (depart =="universite")):
+                    depart = self.__gestionNeuron.getAdresseTravil()
+                else :
+                    if ((depart =="la ou je suis")or (depart =="ma localisation")) :
+                        if (self.__gps.recuperationNameVillePosition()!= False) :
+                            if (self.__etatVous == True) :
+                                return "Une erreur c'est produite qui m'empeche de vous faire cette itineraire"
+                            else :
+                                return "Une erreur c'est produite qui m'empeche de te faire cette itineraire"
+                        else :
+                            depart = self.__gps.getNameVille()
+            
+            if ((arrivee == "domicile") or (arrivee =="residence") 
+                or (arrivee =="maison") or (arrivee == "appartement") 
+                or (arrivee =="chez moi") or (arrivee =="foyer") 
+                or (arrivee =="maison") or (arrivee == "foyer") 
+                or (arrivee =="demeure")):
+                arrivee = self.__gestionNeuron.getAdresseDomicile()
+            else : 
+                if ((arrivee =="bureau")or (arrivee =="lieu de travail")
+                    or (arrivee =="entreprise")or (arrivee =="societe")
+                    or (arrivee =="boulot") or (arrivee == "cabinet")
+                    or (arrivee =="college")or (arrivee =="lycee")
+                    or (arrivee =="ecole") or (arrivee =="campus")
+                    or (arrivee =="universite")):
+                    arrivee = self.__gestionNeuron.getAdresseTravil()
+                else :
+                    if ((arrivee =="la ou je suis")or (arrivee =="ma localisation")) :
+                        if (self.__gps.recuperationNameVillePosition()!= False) :
+                            if (self.__etatVous == True) :
+                                return "Une erreur c'est produite qui m'empéche de vous faire cette itineraire"
+                            else :
+                                return "Une erreur c'est produite qui m'empéche de te faire cette itineraire"
+                        else :
+                            arrivee = self.__gps.getNameVille()
+            
+
+            sortieGMap = self.__itineraires.launchGoogleMapItineraire(depart,arrivee)
+            if (sortieGMap == True) :
+                if (self.__etatVous==True) :
+                    return "Voici votre itineraire sur google map. J'espére que sa vous sera utile "+self.__genre+" "+self.__user
+                else :
+                    return "Je t'ai fais ton itinaire sur google map"
+            else :
+                if (self.__etatVous==True) :
+                    return "Désolé "+self.__genre+" "+self.__user+". Il a un probleme qui m'empéche de faire l'itineraires."
+                else :
+                    return "Désolé il a un souci qui m'empéche de te donne cette route"
+        else :
+            if (self.__etatVous==True):
+                return "Désoler "+self.__genre+" mais je n'arrive pas a savoir ou vous aller et ou vous allez partir"
+            else :
+                return "Désoler "+self.__user+" mais je n'arrive pas a savoir ou tu veux te rendre et de ou tu part"     
+            
+
+                    
+            
     
     def ResumerActualite(self):
         #var 
