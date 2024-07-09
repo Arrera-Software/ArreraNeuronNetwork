@@ -41,7 +41,7 @@ class neuroneAPI :
             #reponse du neuron main
             if "resumer actualites" in requette or "resumer actu" in requette or "resumer" in requette or "resume" in requette :
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.ResumerActualite()
-            if "actualites" in requette :
+            if "actualites" in requette or "actu" in requette:
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieActualités()
             else :
                 if "meteo" in requette :

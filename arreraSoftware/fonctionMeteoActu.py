@@ -2,20 +2,36 @@ import requests
 from datetime import datetime, timedelta
 
 class Actu :
-    def __init__(self,keyActu:str,nbPage:int,pay:str,lang:str):
-        self.__nbPage = int(nbPage)
-        self.__pay = pay
+    def __init__(self,keyActu:str):
         self.__keyActu = keyActu
-        self.__langue = lang
-        self.__URLActu = "https://newsapi.org/v2/top-headlines?"+"apiKey="+self.__keyActu+"&country="+self.__pay+"&category=general"+"&pageSize="+str(self.__nbPage)+"&language="+self.__langue
-        
-    def Actu(self):
-        retourActu = requests.get(self.__URLActu).json()["articles"]
-        listeDescription = []
-        for i in range(0,self.__nbPage) :
-            listeDescription.append(retourActu[i]["title"])
-        
-        return listeDescription
+        self.__nbPage = 0
+        self.__URLbase = "https://newsapi.org/v2/top-headlines?apiKey="
+
+    def setActu(self,nbPage:str,pay:str,lang:str):
+        listFlag = ["&country=","&category=general",
+                    "&pageSize=","&language="]
+        self.__jsonActu = requests.get(self.__URLbase+self.__keyActu+listFlag[0]+pay
+                                     +listFlag[1]+
+                                     listFlag[2]+nbPage+
+                                     listFlag[3]+lang).json()
+        sortieRequest = self.__jsonActu["status"]
+        if (sortieRequest=="ok"):
+            self.__nbPage = int(nbPage)
+            return True
+        else :
+            self.__nbPage = 0
+            return False
+
+
+    def getActu(self):
+        if (self.__nbPage!=0):
+            listeDescription = []
+            retourActu = self.__jsonActu["articles"]
+            for i in range(0,self.__nbPage) :
+                listeDescription.append(retourActu[i]["title"])
+            return listeDescription
+        else :
+            return ["error","error"]
     
     
 class Meteo : 

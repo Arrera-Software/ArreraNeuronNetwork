@@ -36,7 +36,7 @@ class fncArreraNetwork:
         etatConnextion = self.__objetNetwork.getEtatInternet()
         #initialisation objet 
         self.__fncReading = fncLecture(self.__configNeuron,self.__detecteurOS)
-        self.__actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
+        self.__actu = Actu("3b43e18afcf945888748071d177b8513")
         self.__gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
         self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.__traducteur = fncArreraTrad(self.__configNeuron)
@@ -60,11 +60,18 @@ class fncArreraNetwork:
         return text
 
     def sortieActualités(self):
-        listActu = self.__actu.Actu()
-        nbrand1 = random.randint(0,1)
-        nbrand2 = random.randint(2,3)
-        nbrand3 = random.randint(4,5)
-        return 3 , [listActu[nbrand1],listActu[nbrand2],listActu[nbrand3]]
+        sortie = self.__actu.setActu("6","fr","fr")
+        if (sortie == True):
+            listActu = self.__actu.getActu()
+            if ((listActu[0]=="error") and (listActu[1] == "error")):
+                return 6 , ["Désoler une erreur c'est produite pour la récupération des actulités",""]
+            else :
+                nbrand1 = random.randint(0,1)
+                nbrand2 = random.randint(2,3)
+                nbrand3 = random.randint(4,5)
+                return 3, [listActu[nbrand1],listActu[nbrand2],listActu[nbrand3]]
+        else :
+            return 6 , ["Désoler une erreur c'est produite pour la récupération des actulités",""]
         
     
     def sortieMeteoTowmoroMorning(self,ville):
@@ -423,7 +430,7 @@ class fncArreraNetwork:
                         #fete du jour
                         feteJour = self.__gestionNeuron.getFeteJour()
                         #Liste des actu
-                        listeActu = self.__actu.Actu()
+                        listeActu = self.__actu.getActu()
                         #Construction de la liste
 
                         listOut = [meteoHome,meteoWork,feteJour,listeActu[nbrand1],listeActu[nbrand2],listeActu[nbrand3]]
