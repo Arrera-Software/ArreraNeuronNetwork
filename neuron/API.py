@@ -48,11 +48,11 @@ class neuroneAPI :
                     nb = self.__gestionNeuron.getnbVilleMeteo()
                     villes = self.__gestionNeuron.getListVilleMeteo()
                     resultat = 0
-                    if ("demain matin" in requette):
+                    if ("demain midi" in requette):
                         for i in range(0,nb):
                             ville = chaine.netoyage(villes[i])
                             if ville in requette :
-                                self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(villes[i])
+                                self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(villes[i])
                                 resultat = 1
                                 break
                             else :
@@ -60,20 +60,20 @@ class neuroneAPI :
                         if resultat == 0 :
                             if self.__etatVilleDomicile == True or self.__etatVilleTravail == True : 
                                 if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
                                 else :
                                     if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
                                     else :
-                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
+                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon("")
                             else :    
-                                self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
+                                self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon("")
                     else :
-                        if ("demain midi" in requette):
+                        if (("demain matin" in requette) or ("demain" in requette)):
                             for i in range(0,nb):
                                 ville = chaine.netoyage(villes[i])
                                 if ville in requette :
-                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(villes[i])
+                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(villes[i])
                                     resultat = 1
                                     break
                                 else :
@@ -81,14 +81,14 @@ class neuroneAPI :
                             if resultat == 0 :
                                 if self.__etatVilleDomicile == True or self.__etatVilleTravail == True : 
                                     if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                                        self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
                                     else :
                                         if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                            self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                                            self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
                                         else :
-                                            self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon("")
+                                            self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
                                 else :    
-                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmorNoon("")
+                                    self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
                         else :
                             for i in range(0,nb):
                                 ville = chaine.netoyage(villes[i])
