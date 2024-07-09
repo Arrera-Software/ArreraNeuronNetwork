@@ -73,8 +73,8 @@ class ArreraNetwork :
         4 : Meteo / temperature / GPS
         5 : Sortie avec fenetre tkinter
         6 : Erreur actu
-        11 : Erreur du resumer 
-        12 : Reussite du resumer
+        11 : Erreur du resumer actulités
+        12 : Reussite du resumer actulités
         15 : Arret de l'assistant
         """
         return self.__valeurOut
