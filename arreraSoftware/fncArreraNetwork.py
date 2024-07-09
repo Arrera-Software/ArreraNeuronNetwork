@@ -39,7 +39,6 @@ class fncArreraNetwork:
         self.__actu = Actu("3b43e18afcf945888748071d177b8513","6","fr","fr")
         self.__gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
         self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
-        self.__itineraires = GPSItineraires()
         self.__traducteur = fncArreraTrad(self.__configNeuron)
         self.__downloader = fncArreraVideoDownload(self.__configNeuron)
         self.__calculatrice = fncCalculatrice(self.__configNeuron)  
@@ -282,18 +281,6 @@ class fncArreraNetwork:
                     text = ["Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" .",""]
         return 4,text
     
-    def sortieItinerairesOld(self,loc1:str,loc2:str):
-        if loc1 == "loc" :
-            sortieGPS = self.__gps.recuperationCordonneePossition()
-            if sortieGPS == True :
-                self.__gps.recuperationNameVillePosition()
-                loc = self.__gps.getNameVille()
-                sortieGPS = self.__itineraires.ouvertureItineraires(loc,loc2)
-        else :
-            sortieGPS = self.__itineraires.ouvertureItineraires(loc1,loc2)
-        return sortieGPS
-    
-    
     def sortieItineraire(self,phrase):
         """
         Extrait les adresses de départ et d'arrivée d'une phrase donnée.
@@ -374,7 +361,7 @@ class fncArreraNetwork:
                             arrivee = self.__gps.getNameVille()
             
 
-            sortieGMap = self.__itineraires.launchGoogleMapItineraire(depart,arrivee)
+            sortieGMap = self.__gps.launchGoogleMapItineraire(depart,arrivee)
             if (sortieGMap == True) :
                 if (self.__etatVous==True) :
                     return "Voici votre itineraire sur google map. J'espére que sa vous sera utile "+self.__genre+" "+self.__user
