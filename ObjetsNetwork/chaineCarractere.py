@@ -1,14 +1,14 @@
 class chaine :
     def netoyage(chaine):
         chaine = str(chaine)
-        chaine.replace("-"," ")
-        chaine.replace('"'," ")
-        chaine.replace("_"," ")
-        chaine.replace('/'," ")
-        chaine.replace("é","e")
-        chaine.replace("è","e")
-        chaine.replace("à","a")
-        chaine.replace("ç","c")
+        chaine = chaine.replace("-"," ")
+        chaine = chaine.replace('"'," ")
+        chaine = chaine.replace("_"," ")
+        chaine = chaine.replace('/'," ")
+        chaine = chaine.replace("é","e")
+        chaine = chaine.replace("è","e")
+        chaine = chaine.replace("à","a")
+        chaine = chaine.replace("ç","c")
         return chaine.lower()
     
     def firstMots(chaine:str,liste:list):
