@@ -28,7 +28,6 @@ class neuroneAPI :
         return self.__valeurOut
 
     def neurone(self,requette:str):
-        print(requette)
         if self.__gestNeuron.getAPI() == True :
             #Initilisation des variable nbRand et text et valeur
             self.__listSortie = []
