@@ -26,7 +26,10 @@ while valeur != 15 :
                 print(nom+" $ Actu :\n"+sortie[0]+"\n"+sortie[1]+"\n"+sortie[2])
             else :
                 if (valeur == 12 or valeur == 11):
-                    print("Opale : Voici votre resumer")
-                    print(sortie)
+                    if (valeur == 12):
+                        print(nom+" $ "+sortie[6]+"\n \n")
+                        print(sortie[0]+"\n"+sortie[1]+"\n"+sortie[2]+"\n"+sortie[3]+"\n"+sortie[4]+"\n"+sortie[5])
+                    else :
+                        print(nom+" $ "+"Erreur resumer actulitees")
         else :
             print(nom + " $ "+sortie[0])               

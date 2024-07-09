@@ -389,7 +389,7 @@ class fncArreraNetwork:
                     
             
     
-    def ResumerActualite(self):
+    def sortieResumerActualite(self):
         #var 
         verif = False
         meteoHome = ""
@@ -400,42 +400,86 @@ class fncArreraNetwork:
         nbrand3 = random.randint(4,5)
         listOut = []
 
-        #meteo home
-        verif = self.__gps.recuperationCordonneeVille(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
-        if verif == False :
-            return 11 , ["error",""]
-        else :
-            verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
-            if verif == False :
-                return 11 , ["error",""]
-            else : 
-                if self.__etatVous == True :
-                    meteoHome = "La météo a votre domicile est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
-                else :
-                    meteoHome = "La météo chez toi est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
-                
-                #meteo travail
-                verif = self.__gps.recuperationCordonneeVille(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
-                if verif == False :
-                    return 11 , ["error",""]
-                else :
-                    verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
-                    if verif == False :
-                        return 11 , ["error",""]
+        if (self.__etatVous == True):
+            textSpeak = "Voici un tour d'horizon des nouvelles du jour et des prévisions météorologiques."
+        else : 
+            textSpeak = "Voici un résumé des dernières actualités et de la météo pour aujourd'hui."
+
+        # Partie Meteo 
+
+        domicile = self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile")
+        travail = self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail")
+
+        # Meteo a domicile
+        if (domicile != ""):
+            verif = self.__gps.recuperationCordonneeVille(domicile)
+            if (verif == True) :
+                verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
+                if (verif == True) :
+                    if self.__etatVous == True :
+                        textSpeak = textSpeak + "La météo a votre domicile est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
                     else :
-                        if self.__etatVous == True :
-                            meteoWork = "La météo a votre lieu de travail est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()
-                        else :
-                            meteoWork = "La météo a ton boulot est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature() 
-                        #fete du jour
-                        feteJour = self.__gestionNeuron.getFeteJour()
-                        #Liste des actu
-                        listeActu = self.__actu.getActu()
-                        #Construction de la liste
+                        textSpeak = textSpeak + "La météo chez toi est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
+                    
+                    meteoHome = "Meteo lieu de residence :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
+                else :
+                   meteoHome = "error" 
+            else :
+                meteoHome = "error"
+        else :
+            meteoHome = "error"
+        
+        # Meteo sur le lieu de travail
+        if (travail != "") :
+            verif = self.__gps.recuperationCordonneeVille(travail)
+            if (verif==True) :
+                verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
+                if (verif == True) :
+                    if self.__etatVous == True :
+                        textSpeak = textSpeak +"La météo a votre lieu de travail est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
+                    else :
+                        textSpeak = textSpeak +"La météo a ton boulot est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
+                    
+                    meteoWork = "Meteo lieu de travail :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
+                else :
+                    meteoWork = "error" 
+            else :
+                meteoWork = "error" 
+        else :
+            meteoWork = "error" 
 
-                        listOut = [meteoHome,meteoWork,feteJour,listeActu[nbrand1],listeActu[nbrand2],listeActu[nbrand3]]
+        # Meteo sur la position que si la meteo au lieu de travail et au domicile a echouer
+        if (meteoHome == "error" and meteoWork == "error") :
+            verif = self.__gps.recuperationCordonneePossition()
+            if (verif == True):
+                verif = self.__meteo.getDataMeteoNow(self.__gps.getlatPossition(),self.__gps.getlonPossition())
+                if (verif == True) :
+                    if self.__etatVous == True :
+                        textSpeak = textSpeak + "La meteo a votre localisation est "+self.__meteo.getdescription+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
+                    else :
+                        textSpeak = textSpeak + "La meteo a ta localisation est "+self.__meteo.getdescription+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
+                
+                    meteoWork = "Meteo a votre position :\nDescription : "+self.__meteo.getdescription()
+                    +"\nTemperature : "+self.__meteo.gettemperature()+"°C"
+                else :
+                    meteoWork = "error" 
+            else :
+                meteoWork = "error"  
+                
+        #fete du jour
+        feteJour = self.__gestionNeuron.getFeteJour()
+        textSpeak = textSpeak + "La fête du jour est "+feteJour+". "
 
-                        return 12 , listOut
+        #Liste des actu
+        verif = self.__actu.setActu("6","fr","fr")
+        if (verif == True) :
+            listeActu = self.__actu.getActu()
+            textSpeak = textSpeak + "Et enfin les actualités sont "+listeActu[nbrand1]+", "+listeActu[nbrand2]+" et "+listeActu[nbrand3]
+            #Construction de la liste
+            listOut = [meteoHome,meteoWork,feteJour,listeActu[nbrand1],listeActu[nbrand2],listeActu[nbrand3],textSpeak]
+            return 12 , listOut
+        else :
+            return 11 , ["error","error"]
 
     def sortieTraducteur(self,langInt:str,langOut:int):
         self.__traducteur.fenetreTrad(langInt,langOut)
