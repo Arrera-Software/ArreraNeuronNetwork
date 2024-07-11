@@ -78,6 +78,10 @@ class fncDate :
     def annes(self):
         return str(self.__date.year)
 
+    def getDateToday(self):
+        date = self.__date
+        return str(str(date.year)+"-"+str(date.month)+"-"+str(date.day))
+
     def dateTowmoro(self):
         dateHier = self.__date - timedelta(days=1)
         return str(dateHier.strftime("%Y-%m-%d"))
