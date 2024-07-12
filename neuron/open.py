@@ -41,6 +41,7 @@ class neuroneOpen :
                     or ("zoho writer" in requette) or ("calligra words" in requette) 
                     or ("scrivener" in requette)) :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTraitementTexte(),""]
+                    self.__objHistorique.setAction("Ouverture du logiciel de traitement de texte")
                 else :
                     if (("tableur" in requette) or ("microsoft excel" in requette) 
                         or ("excel"in requette) or ("google sheets" in requette) 
@@ -50,6 +51,7 @@ class neuroneOpen :
                         or  ("gnumeric" in requette) or ("onlyoffice spreadsheet editor" in requette) 
                         or ("calligra sheets" in requette)) :
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableur(),""]
+                        self.__objHistorique.setAction("Ouverture du logiciel tableur")
                     else :
                         if (("logiciel de présentation" in requette) or ("logiciel de diaporama" in requette) 
                             or ("diaporama" in requette) or ("microsoft powerpoint" in requette) 
@@ -60,6 +62,7 @@ class neuroneOpen :
                             or ("visme" in requette) or ("haiku deck" in requette) 
                             or ("powtoon" in requette)) :
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenDiapo(),""]
+                            self.__objHistorique.setAction("Ouverture du logciel de présentation")
                         else :
                             if (("navigateur internet" in requette) or ("browser" in requette) 
                                 or ("logiciel de navigation" in requette) or ("client web" in requette) 
@@ -74,12 +77,14 @@ class neuroneOpen :
                                 or ("vivaldi" in requette) or ("tor browser" in requette) 
                                 or ("tor browser" in requette) or ("arc" in requette)) :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenBrowser(),""]
+                                self.__objHistorique.setAction("Ouverture du navigateur internet")
                             else :
                                 if (("note" in requette) or ("bloc-notes" in requette) 
                                     or ("bloc-note" in requette) or ("journal electronique" in requette) 
                                     or ("microsoft onenote" in requette) or ("onenote" in requette) 
                                     or ("simplenote" in requette) or ("bear" in requette)) :
                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenNote(),""]
+                                    self.__objHistorique.setAction("Ouverture du logiciel de note")
                                 else :
                                     if (("musique" in requette) or ("music" in requette) 
                                         or ("windows media player" in requette) or ("vlc" in requette) 
@@ -87,15 +92,18 @@ class neuroneOpen :
                                         or ("spotify" in requette) or ("deezer" in requette) 
                                         or ("youTube music" in requette)) :
                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenMusic(),""]
+                                        self.__objHistorique.setAction("Ouverture du logiciel d'ecoute du musique")
                                     else :
                                         for i in range(0,nbLogiciel):
                                             if listeLogiciel[i-1] in requette:
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1]),""]
+                                                self.__objHistorique.setAction("Ouverture du logiciel "+listeLogiciel[i-1])
                                                 logOuverture = 1
                                                 break
                                         if (logOuverture == 0) :
                                             if ("youtube" in requette ):
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenYoutube(),""]
+                                                self.__objHistorique.setAction("Ouverture de youtube")
                                             else :
                                                 if (("stockage en ligne" in requette) or ("stockage sur le cloud" in requette) 
                                                     or ("drive" in requette) or ("stokage cloud" in requette) 
@@ -104,10 +112,12 @@ class neuroneOpen :
                                                     or ("amazon drive" in requette) or ("box" in requette) 
                                                     or ("nextcloud" in requette)) :
                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenCloud(),""]
+                                                    self.__objHistorique.setAction("Ouverture du site de stokage cloud")
                                                 else :
                                                     for i in range(0,nbSite):
                                                         if (listeSite[i] in requette):
                                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSite(listeSite[i]),""]
+                                                            self.__objHistorique.setAction("Ouverture du site "+listeSite)
                                                             break
                                                     if (self.__gestionNeuron.verrifSortie(self.__listSortie) == 0) :
                                                         if (self.__gestionNeuron.getVous() == True) :
@@ -119,7 +129,7 @@ class neuroneOpen :
                     or("quelles sont les logiciel enregister" in requette) or("quelles sont les logiciels enregiste" in requette) 
                     or("quelles sont les logiciels enregiste" in requette) or ("fais une liste des logiciel"in requette)
                     or ("fais une liste des logiciels"in requette) or ("liste les logiciel" in requette)):
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListLogiciel(nbLogiciel,listeLogiciel),""]  
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListLogiciel(nbLogiciel,listeLogiciel),""] 
                 else :
                     if (("liste les sites" in requette)or("quelles sont les sites enregister" in requette) 
                     or("quelles sont les site enregister" in requette) or("quelles sont les sites enregiste" in requette) 
