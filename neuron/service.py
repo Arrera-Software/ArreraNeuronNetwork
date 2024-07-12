@@ -30,7 +30,7 @@ class neuroneService :
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]
-                self.__valeurOut = 52 
+                self.__valeurOut = 5
             else :
                 if "calcule" in requette :
                     requette = requette.replace("calcule","")
