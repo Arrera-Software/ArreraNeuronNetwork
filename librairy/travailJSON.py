@@ -3,6 +3,11 @@ import json
 class jsonWork : 
     def __init__(self,file):
         self.fichier = file
+    
+    def getContenuJSON(self):
+        with open(self.fichier, 'r' , encoding='utf-8') as openfile:
+            dict = json.load(openfile)
+        return dict
         
     def lectureJSON(self,flag): # Permet de lire la valeur du flag defini a l'appel de la fonction
         with open(self.fichier, 'r' , encoding='utf-8') as openfile:
@@ -137,3 +142,7 @@ class jsonWork :
         for key, value in data.items():
             if value.get(flag) == name:
                 self.supprDictReorg(key)
+    
+    def writeDictOnJson(self,dict:dict):
+        with open(self.fichier, 'w', encoding='utf-8') as fichier_modifie:
+                json.dump(dict, fichier_modifie, indent=2)
