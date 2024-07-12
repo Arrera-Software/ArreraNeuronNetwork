@@ -13,6 +13,7 @@ from neuron.time import*
 from neuron.codehelp import*
 from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
+from  ObjetsNetwork.historique import*
 
 class ArreraNetwork :
     def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
@@ -28,6 +29,7 @@ class ArreraNetwork :
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
         self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur,self.__configNeuron,self.__detecteurOS,self.__fichierVille)
         self.__network = network()
+        self.__historique = CHistorique(self.__configNeuron)
         #set des atribut
         self.__gestionnaire.setAll()
         #initialisation objet
@@ -58,6 +60,7 @@ class ArreraNetwork :
         return str(text)
     
     def shutdown(self):
+        self.__historique.saveHistorique()
         hour = datetime.datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
         return str(text)

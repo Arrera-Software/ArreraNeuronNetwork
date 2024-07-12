@@ -23,5 +23,6 @@
    "etatChatbot":"1",
    "etatApi":"1",
    "etatCodehelp":"1",
-   "lienDoc":"www.google.com"
+   "lienDoc":"www.google.com",
+   "emplacementFileHist":"neuronHist.json"
 }
