@@ -1141,6 +1141,7 @@ class fncArreraNetwork:
                 text = "Tres bien je vous fais la recherche sur le site DevDoc."
             else :
                 text = "Okay je t'ai ouvert la recherche sur le site DevDoc dans ton navigateur."
+            r = "devdoc "+recherche
         else :
             if (("recherche microsoft" in requette) or ("rmicrosoft" in requette) or ("smicrosoft" in requette)):
                 recherche = requette.replace("recherche microsoft","")
@@ -1151,6 +1152,7 @@ class fncArreraNetwork:
                     text = "Tres bien je vous fais la recherche sur la documentation Learn de microsoft."
                 else :
                     text = "Okay je t'ai ouvert la recherche dans la documentation Learn de microsoft dans ton navigateur."
+                r = "microsoft "+recherche
             else :
                 if (("recheche python" in requette) or ("rpython" in requette) or ("spython" in requette)):
                     recherche = requette.replace("recheche python","")
@@ -1161,8 +1163,9 @@ class fncArreraNetwork:
                         text = "Tres bien je vous fais la recherche sur le site du language de programation python."
                     else :
                         text = "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur."
+                    r = "python "+recherche
         
-        return text
+        return text,r
     
     def sortieOpenColorSelecteur(self):
         if (self.__etatVous == True):
@@ -1194,7 +1197,7 @@ class fncArreraNetwork:
 
         self.__objetCodehelp.searchGithub(recherche)
 
-        return text
+        return text,recherche
     
     def sortieOpenSiteGithub(self):
         if (self.__etatVous == True):
