@@ -792,7 +792,7 @@ class fncArreraNetwork:
             else :
                 return "Désoler "+self.__user+" je suis pas connecter a internet"
         else :
-            return text
+            return text,recherche
     
     def sortieGrandRecherche(self,requette:str):
         recherche = requette.replace("bigsearch","")
@@ -809,7 +809,7 @@ class fncArreraNetwork:
             else :
                 text = "Je suis desoler mais je suis pas connecter a internet"
                 
-        return text
+        return text,recherche
     
     def sortieHeure(self):
         self.__objetDate.rafraichisement()
