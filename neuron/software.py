@@ -34,10 +34,12 @@ class neuroneSoftware :
                 if "video" in requette :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("video"),""]
                     self.__valeurOut = 5
+                    self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode video")
                 else :
                     if ("musique" in requette) :
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("music"),""]
                         self.__valeurOut = 5
+                        self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode musique")
                     else :
                         if (etatVous == True) :
                             self.__listSortie = ["Je suis désoler "+genre+" mais je ne peux télécharger que des vidéo ou de musique",""]
@@ -46,13 +48,16 @@ class neuroneSoftware :
             if (("calculatrice" in requette) or ("calculette" in requette)) :
                 if "nombre complex" in requette or "nb complex" in requette :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("1"),""]
+                    self.__objHistorique.setAction("Ouverture de la calculatrice en mode nombre complex")
                     self.__valeurOut = 5
                 else :
                     if ("pythagore" in requette) :
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("2"),""]
+                        self.__objHistorique.setAction("Ouverture de la calculatrice en mode pythagore")
                         self.__valeurOut = 5
                     else :
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("0"),""]
+                        self.__objHistorique.setAction("Ouverture de la calculatrice")
                         self.__valeurOut = 5
                     
                                         
