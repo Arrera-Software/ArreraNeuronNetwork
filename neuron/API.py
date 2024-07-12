@@ -2,13 +2,15 @@ from ObjetsNetwork.gestion import*
 from arreraSoftware.fncArreraNetwork import*
 from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
+from ObjetsNetwork.historique import*
 
 class neuroneAPI :
-    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron) :
+    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron,objHist:CHistorique) :
         #Init objet
         self.__gestionNeuron = gestionnaire
         self.__gestNeuron = neuronGest
         self.__fonctionArreraNetwork = fncArreraNetwork
+        self.__objHistorique = objHist
         self.__etatVilleDomicile = self.__gestionNeuron.getEtatLieuDomicile()
         self.__etatVilleTravail = self.__gestionNeuron.getEtatLieuTravail()
         self.__villeGPS1 = ""

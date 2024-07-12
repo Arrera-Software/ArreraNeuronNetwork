@@ -1,12 +1,14 @@
 from ObjetsNetwork.gestion import*
 from arreraSoftware.fncArreraNetwork import*
 from ObjetsNetwork.enabledNeuron import*
+from ObjetsNetwork.historique import*
 class neuroneService :
-    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron) :
+    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron,objHist:CHistorique) :
         #Init objet
         self.__gestionNeuron = gestionnaire
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__gestNeuron = neuronGest
+        self.__objHistorique = objHist
         self.__listSortie = ["",""]
         self.__valeurOut = int
 
