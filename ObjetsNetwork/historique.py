@@ -5,13 +5,14 @@ class CHistorique :
     def __init__(self,configNeuron:jsonWork):
         # Declaration des varriable est de objet
         self.__fileHist = jsonWork(configNeuron.lectureJSON("emplacementFileHist"))
-        self.__dateToday = str
-        self.__dateTowmorow = str
+        self.__dateToday = ""
+        self.__dateTowmorow = ""
         self.__objDate = fncDate()
         self.__dictHist = dict
-        self.__histToday = list
-        self.__histTowmorow = list
+        self.__histToday = []
+        self.__histTowmorow = []
 
+        self.__setDateToday()
         self.__loadFile()
 
     
@@ -45,4 +46,3 @@ class CHistorique :
             return True
         else :
             return False
-        
