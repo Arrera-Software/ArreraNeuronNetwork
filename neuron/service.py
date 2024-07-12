@@ -30,6 +30,7 @@ class neuroneService :
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]
+                self.__objHistorique.setAction("Lecture")
                 self.__valeurOut = 5
             else :
                 if "calcule" in requette :
@@ -45,11 +46,12 @@ class neuroneService :
                             self.__listSortie = ["Voici le resultat de votre calcule "+genre+" est "+str(resultat),""]
                         else :
                             self.__listSortie = ["Voici le resultat de ton calcule "+user+" est "+str(resultat),""]
+                        self.__objHistorique.setAction("Calcule par texte")
                     else :
                         if etatVous == True :
                             self.__listSortie = ["Le calcule que vous me demander de faire "+genre+" est imposible a faire.",""]
                         else :
-                            self.__listSortie = ["Le calcule que tu me demande de faire est imposible.",""]
+                            self.__listSortie = ["Le calcule que tu me demande de faire est imposible.",""]                   
                 else :
                     if (("ouvre la documentation" in requette)or("montre la documentation" in requette)):
                         if etatVous == True :
