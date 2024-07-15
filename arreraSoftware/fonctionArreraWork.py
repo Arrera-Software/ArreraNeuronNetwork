@@ -3,7 +3,7 @@ from tkinter.messagebox import*
 from objet.arreradocument import*
 from objet.arreratableur import*
 
-class CArreraWork :
+class fncArreraWork :
     def __init__(self):
         # Variable etat ouverture fichier
         self.__tableurOpen = False
