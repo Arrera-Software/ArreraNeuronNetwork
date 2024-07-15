@@ -122,3 +122,9 @@ class CArreraWork :
             return True
         else :
             return False
+    
+    def getEtatTableur(self):
+        return self.__tableurOpen
+    
+    def getEtatWord(self):
+        return self.__wordOpen
