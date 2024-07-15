@@ -36,13 +36,14 @@ class CArreraWork :
             showinfo("Work","Choisissez votre fichier exel")
             emplacementFile = filedialog.asksaveasfilename(
                     defaultextension='.xlsx', 
-                    filetypes=[('Fichiers Word', '*.docx')])
+                    filetypes=[('Fichiers Word', '*.docx'),
+                               ("Texte OpenDocument","*.odt")])
             if (emplacementFile == ""):
                 showwarning("Work","Aucun fichier selectionner")
                 return False
             else :
                 self.__objWord = CArreraDocx(emplacementFile)
-                showinfo("Work","Exel ouvert")
+                showinfo("Work","Word ouvert")
                 self.__wordOpen = True
                 return True
         else :
@@ -101,4 +102,23 @@ class CArreraWork :
         else :
             return False
 
+    def writeDocxFile(self,text:str):
+        if (self.__wordOpen == True):
+            return self.__objWord.write(text)
+        else :
+            return False
+    
+    def readDocxFile(self):
+        if (self.__wordOpen == True):
+            return self.__objWord.read()
+        else :
+            return "error"
 
+    def closeDocx(self):
+        if (self.__wordOpen == True) :
+            del self.__objWord
+            self.__objWord = None
+            self.__wordOpen = False
+            return True
+        else :
+            return False
