@@ -1283,7 +1283,7 @@ class fncArreraNetwork:
         return text
     
     def sortieCloseDocx(self):
-        sortie = self.__objetArreraWork.closeTableur()
+        sortie = self.__objetArreraWork.closeDocx()
         if (sortie == True) :
             if (self.__etatVous == True):
                 text = "Je vous es bien fermé votre fichier word."
