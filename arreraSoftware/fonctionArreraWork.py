@@ -16,7 +16,7 @@ class fncArreraWork :
         if (self.__tableurOpen==False):
             # Demande de l'emplacement du fichier
             showinfo("Work","Choisissez votre fichier exel")
-            emplacementFile = filedialog.asksaveasfilename(
+            emplacementFile = filedialog.askopenfilename(
                     defaultextension='.xlsx', 
                     filetypes=[("Fichiers Excel", "*.xlsx")])
             if (emplacementFile == ""):
@@ -34,7 +34,7 @@ class fncArreraWork :
         if (self.__wordOpen == False):
             # Demande de l'emplacement du fichier
             showinfo("Work","Choisissez votre fichier exel")
-            emplacementFile = filedialog.asksaveasfilename(
+            emplacementFile = filedialog.askopenfilename(
                     defaultextension='.xlsx', 
                     filetypes=[('Fichiers Word', '*.docx'),
                                ("Texte OpenDocument","*.odt")])
