@@ -11,6 +11,9 @@ class fncArreraWork :
         # Varriable des objet 
         self.__objTableur = None
         self.__objWord = None
+        # Varriable de nom du fichier
+        self.__fileTableur = ""
+        self.__fileWork = ""
 
     def openTableur(self) : 
         if (self.__tableurOpen==False):
@@ -19,6 +22,7 @@ class fncArreraWork :
             emplacementFile = filedialog.askopenfilename(
                     defaultextension='.xlsx', 
                     filetypes=[("Fichiers Excel", "*.xlsx")])
+            self.__fileTableur = emplacementFile
             if (emplacementFile == ""):
                 showwarning("Work","Aucun fichier selectionner")
                 return False
@@ -38,6 +42,7 @@ class fncArreraWork :
                     defaultextension='.xlsx', 
                     filetypes=[('Fichiers Word', '*.docx'),
                                ("Texte OpenDocument","*.odt")])
+            self.__fileWork = emplacementFile
             if (emplacementFile == ""):
                 showwarning("Work","Aucun fichier selectionner")
                 return False
@@ -98,6 +103,7 @@ class fncArreraWork :
             self.__objTableur.closeFile()
             del self.__objTableur
             self.__objTableur = None
+            self.__fileTableur = ""
             return True
         else :
             return False
@@ -118,6 +124,7 @@ class fncArreraWork :
         if (self.__wordOpen == True) :
             del self.__objWord
             self.__objWord = None
+            self.__fileWork = ""
             self.__wordOpen = False
             return True
         else :
@@ -128,3 +135,9 @@ class fncArreraWork :
     
     def getEtatWord(self):
         return self.__wordOpen
+    
+    def getNameFileTableur(self):
+        return self.__fileTableur
+    
+    def getNameFileWord(self):
+        return self.__fileWork

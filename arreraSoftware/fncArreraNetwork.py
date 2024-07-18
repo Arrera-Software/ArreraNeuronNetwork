@@ -1237,6 +1237,12 @@ class fncArreraNetwork:
     def getTableurOpen(self):
         return self.__objetArreraWork.getEtatTableur()
     
+    def getFileTableur(self):
+        return self.__objetArreraWork.getNameFileTableur()
+    
+    def getFileWord(self):
+        return self.__objetArreraWork.getNameFileWord()
+    
     def sortieOpenTableur(self):
         sortie = self.__objetArreraWork.openTableur()
         if (sortie == True) :

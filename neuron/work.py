@@ -29,12 +29,12 @@ class neuronWork :
             if (("ouvre" in requette) and ("fichier" in requette)):
                 if ("exel" in requette):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableur(),""]
-                    self.__objHistorique.setAction("Ouverture d'un fichier exel")
+                    self.__objHistorique.setAction("Ouverture d'un fichier exel "+self.__fonctionArreraNetwork.getFileTableur())
                     self.__valeurOut = 7 
                 else :
                     if ("word" in requette):
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
-                        self.__objHistorique.setAction("Ouverture d'un fichier word")
+                        self.__objHistorique.setAction("Ouverture d'un fichier word ",self.__fonctionArreraNetwork.getFileWord())
                         self.__valeurOut = 7
             else :
                 if ("ferme" in requette) :
