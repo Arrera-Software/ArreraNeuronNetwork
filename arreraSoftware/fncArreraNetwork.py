@@ -20,6 +20,7 @@ from arreraSoftware.fonctionHorloge import*
 from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionTache import*
 from arreraSoftware.fonctionCodeHelp import*
+from arreraSoftware.fonctionArreraWork import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -48,6 +49,7 @@ class fncArreraNetwork:
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
+        self.__objetArreraWork = fncArreraWork()
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1226,4 +1228,71 @@ class fncArreraNetwork:
         
         self.__objetCodehelp.openOutilLibrairy()
 
+        return text
+
+    # Partie Arrera Work 
+    def getWordOpen(self):
+        return self.__objetArreraWork.getEtatWord()
+    
+    def getTableurOpen(self):
+        return self.__objetArreraWork.getEtatTableur()
+    
+    def sortieOpenTableur(self):
+        sortie = self.__objetArreraWork.openTableur()
+        if (sortie == True) :
+            if (self.__etatVous == True) :
+                text = "Votre fichier Exel a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a travailler dessus."
+            else :
+                text = "Je t'ai bien ouvert ton fichier exel. Aller travaillons dessus."
+        else :
+            if (self.__etatVous == True) :
+                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier exel"
+            else :
+                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Exel."
+        
+        return text
+    
+    def sortieOpenWord(self):
+        sortie = self.__objetArreraWork.openWord()
+        if (sortie == True) :
+            if (self.__etatVous == True) :
+                text = "Votre fichier de traitement de texte a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a ecrire dessus."
+            else :
+                text = "Je t'ai bien ouvert ton fichier Word. Aller travaillons dessus."
+        else :
+            if (self.__etatVous == True) :
+                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier Word"
+            else :
+                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Word."
+        
+        return text
+    
+    def sortieCloseTableur(self):
+        sortie = self.__objetArreraWork.closeTableur()
+        if (sortie == True) :
+            if (self.__etatVous == True):
+                text = "Je vous es bien fermé votre fichier Exel."
+            else :
+                text ="Je t'ai fermée ton Exel."
+        else:
+            if (self.__etatVous == True):
+                text = "Il imposible de femer un fichier Exel. Si vous en avez pas ouvert un."
+            else :
+                text ="Il n'a pas de fichier exel ouvert. Il en a aucun ouvert."
+        
+        return text
+    
+    def sortieCloseDocx(self):
+        sortie = self.__objetArreraWork.closeTableur()
+        if (sortie == True) :
+            if (self.__etatVous == True):
+                text = "Je vous es bien fermé votre fichier word."
+            else :
+                text ="Je t'ai fermée ton word."
+        else:
+            if (self.__etatVous == True):
+                text = "Il imposible de femer un fichier word. Si vous en avez pas ouvert un."
+            else :
+                text ="Il n'a pas de fichier word ouvert. Il en a aucun ouvert."
+        
         return text

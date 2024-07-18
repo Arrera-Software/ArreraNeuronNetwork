@@ -81,6 +81,12 @@ class ArreraNetwork :
         15 : Arret de l'assistant
         """
         return self.__valeurOut
+    
+    def getTableur(self):
+        return self.__fonctionAssistant.getTableurOpen()
+    
+    def getWord(self):
+        return self.__fonctionAssistant.getWordOpen()
 
     
     def neuron(self,var:str) :
