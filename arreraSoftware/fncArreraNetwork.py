@@ -1341,3 +1341,32 @@ class fncArreraNetwork:
             text = sortie
         
         return text
+    
+    def sortieFileOpen(self):
+        tableur = self.getTableurOpen()
+        word = self.getWordOpen()
+
+        if ((tableur == True) and (word == True)):
+            if (self.__etatVous) :
+                text = "Vous avez un fichier de traitement de texte ouvert ainsi q'un tableur"
+            else :
+                text = "Tu as un tableur d'ouvert et un traitement de texte"
+        else :
+            if ((tableur == True) and (word == False)):
+                if (self.__etatVous) :
+                    text = "Vous avez juste ouvert un fichier tableur"
+                else :
+                    text = "Tu as juste un fichier tableur d'ouvert"
+            else :
+                if ((tableur == False) and (word == True)):
+                    if (self.__etatVous) :
+                        text = "Vous avez qu'un fichier de traitement de texte ouvert."
+                    else :
+                        text = "Tu as qu'un traitement de texte ouvert."
+                else :
+                    if (self.__etatVous) :
+                        text = "Vous avez aucun fichier d'ouvert"
+                    else :
+                        text = "Tu as aucun fichier d'ouvert"
+        
+        return text
