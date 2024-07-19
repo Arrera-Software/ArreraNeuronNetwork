@@ -34,7 +34,7 @@ class neuronWork :
                 else :
                     if ("word" in requette):
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
-                        self.__objHistorique.setAction("Ouverture d'un fichier word ",self.__fonctionArreraNetwork.getFileWord())
+                        self.__objHistorique.setAction("Ouverture d'un fichier word "+self.__fonctionArreraNetwork.getFileWord())
                         self.__valeurOut = 7
             else :
                 if ("ferme" in requette) :
@@ -47,3 +47,14 @@ class neuronWork :
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieCloseDocx(),""]
                             self.__objHistorique.setAction("Fermeture d'un fichier word")
                             self.__valeurOut = 8
+                else :
+                    if ("lit" in requette):
+                        if ("word" in requette):
+                            self.__listSortie = [self.__fonctionArreraNetwork.sortieReadDocx(),""]
+                            self.__objHistorique.setAction("Lecture du fichier word "+self.__fonctionArreraNetwork.getFileWord())
+                            self.__valeurOut = 9
+                    else :
+                        if ("ecrit dans le word" in requette) :
+                            self.__listSortie = [self.__fonctionArreraNetwork.sortieWriteDocx(requette),""]
+                            self.__objHistorique.setAction("Ecriture dans le fichier docx"+self.__fonctionArreraNetwork.getFileWord())
+                            self.__valeurOut = 1

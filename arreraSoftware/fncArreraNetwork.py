@@ -1302,3 +1302,42 @@ class fncArreraNetwork:
                 text ="Il n'a pas de fichier word ouvert. Il en a aucun ouvert."
         
         return text
+    
+    def sortieWriteDocx(self,texte:str):
+        if (texte != ""):
+            ligne = texte.replace("ecrit dans le word","")
+            ligne = ligne.replace("ecrit" ,"")
+            
+            sortie = self.__objetArreraWork.writeDocxFile(ligne)
+            
+            if (sortie == True):
+                if (self.__etatVous == True):
+                    text = "Je vous es bien écrit ce que vous voulez dans le fichier .docx"
+                else :
+                    text ="Tout c'est bien passé j'ai pu écrire ce que vous voulez dans le fichier."
+            else :
+                if (self.__etatVous == True):
+                    text = "Il a un probleme qui m'a empeché d'écrire dans le fichier ce que vous m'avez demandé. Il peut etre pas ouvert."
+                else :
+                    text = "Un probleme est survenu. Tu n'a surment pas ouvert un fichier word."
+        else :
+            if (self.__etatVous == True):
+                text = "Je ne pas ecrire dans le fichier si vous me disais pas ce que je dois ecrire."
+            else :
+                text ="Il es impossible pour moi d'écrire si tu me donne pas ce que je dois écrire."
+        
+        return text
+    
+    def sortieReadDocx(self):
+        sortie = self.__objetArreraWork.readDocxFile()
+
+        if (sortie == "error"):
+            if (self.__etatVous == True):
+                text = "Je pense que le fichier dois etre fermé je peux pas le lire "+self.__genre+". Essayez de le reouvrir"
+            else :
+                text ="Je ne peux pas lire le fichier . Vérifie si tu la bien ouvert "+self.__user+"."
+            
+        else :
+            text = sortie
+        
+        return text
