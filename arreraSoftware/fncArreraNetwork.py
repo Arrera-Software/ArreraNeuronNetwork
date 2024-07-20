@@ -1370,3 +1370,7 @@ class fncArreraNetwork:
                         text = "Tu as aucun fichier d'ouvert"
         
         return text
+    
+    def sortieReadTableur(self):
+        return self.__objetArreraWork.readTableur()
+        

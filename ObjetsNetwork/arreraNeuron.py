@@ -83,6 +83,7 @@ class ArreraNetwork :
         9 : Lecture fichier
         11 : Erreur du resumer actulités
         12 : Reussite du resumer actulités
+        13 : Lecture tableur
         15 : Arret de l'assistant
         """
         return self.__valeurOut

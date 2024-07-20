@@ -88,6 +88,16 @@ class fncArreraWork :
                     return False
         else :
             return False
+    
+    def readTableur(self):
+        if (self.__tableurOpen==True):
+            listSorti = []
+            contenu = self.__objTableur.read()
+            for cell_position, cell_value in contenu.items():
+                listSorti.append("Cellule "+str(cell_position)+" : "+str(cell_value))
+            return listSorti
+        else :
+            return ["error",""]
         
     def setValeurTableur(self,case:str,valeur):
         if ((self.__tableurOpen==True) and (case != "")):

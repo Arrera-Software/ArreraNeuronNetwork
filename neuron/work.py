@@ -25,6 +25,9 @@ class neuronWork :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
+            etatVous = self.__gestionNeuron.getVous()
+            genre = self.__gestionNeuron.getGenre()
+            user = self.__gestionNeuron.getUser()
 
             if (("ouvre" in requette) and ("fichier" in requette)):
                 if ("exel" in requette):
@@ -48,11 +51,25 @@ class neuronWork :
                             self.__objHistorique.setAction("Fermeture d'un fichier word")
                             self.__valeurOut = 8
                 else :
-                    if ("lit" in requette):
+                    if (("lit" in requette) or ("lis" in requette)):
                         if ("word" in requette):
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieReadDocx(),""]
                             self.__objHistorique.setAction("Lecture du fichier word "+self.__fonctionArreraNetwork.getFileWord())
                             self.__valeurOut = 9
+                        else :
+                            if ("tableur" in requette):
+                                sortieTableur = self.__fonctionArreraNetwork.sortieReadTableur()
+                                if (sortieTableur[0] == "error"):
+                                    self.__valeurOut = 1
+                                    if (etatVous == True):
+                                        self.__listSortie = ["Désoler "+genre+" "+user+" mais il a un probleme qui m'empéche de lire le tableur",""]
+                                    else :
+                                        self.__listSortie = ["Je ne peux pas faire ce que tu m'as demandé.",""]
+                                else :
+                                    self.__listSortie = sortieTableur
+                                    self.__valeurOut = 13
+                                    self.__objHistorique.setAction("Lecture du fichier tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                    
                     else :
                         if ("ecrit dans le word" in requette) :
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieWriteDocx(requette),""]
