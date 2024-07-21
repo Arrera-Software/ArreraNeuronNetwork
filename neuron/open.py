@@ -68,7 +68,7 @@ class neuroneOpen :
                                 or ("logiciel de navigation" in requette) or ("client web" in requette) 
                                 or ("explorateur web" in requette) or ("navigateur web" in requette) 
                                 or ("fureteur web" in requette) or ("visualiseur web" in requette) 
-                                or ("programme de navigation en ligne" in requette) or ("nagivateur de pages web" in requette) 
+                                or ("programme de navigation en ligne" in requette) or ("navigateur de pages web" in requette) 
                                 or ("visionneuse web" in requette) or ("google chrome" in requette) 
                                 or ("chrome" in requette) or ("mozilla firefox" in requette) 
                                 or ("mozilla" in requette) or ("firefox" in requette) 
