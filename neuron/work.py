@@ -81,3 +81,9 @@ class neuronWork :
                                  or ("fichier" in requette) or ("word" in requette))):
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieFileOpen(),""]
                                 self.__valeurOut = 1
+                            else :
+                                if ((("ajoute" in requette)  or ("rajoute" in requette)) 
+                                    and ("tableur" in requette) and ("valeur" in requette)):
+                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieAddValeurTableur(),""]
+                                    self.__objHistorique.setAction("Ajout d'un valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                    self.__valeurOut = 5

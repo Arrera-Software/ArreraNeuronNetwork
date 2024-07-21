@@ -49,7 +49,7 @@ class fncArreraNetwork:
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
-        self.__objetArreraWork = fncArreraWork()
+        self.__objetArreraWork = fncArreraWork(self.__configNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1373,4 +1373,18 @@ class fncArreraNetwork:
     
     def sortieReadTableur(self):
         return self.__objetArreraWork.readTableur()
-        
+    
+    def sortieAddValeurTableur(self):
+        sortie = self.__objetArreraWork.guiAddValeur()
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Suivez bien l'interface graphique pour ajouter une valeur au tableur."
+            else :
+                text = "Suis bien l'interface pour ajouter une valeur au tableur."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+" mais je ne peux pas ajouter une valeur."
+            else :
+                text = "Désoler il a probleme qui m'empéche d'ajouter ta valeur."
+
+        return text
