@@ -173,11 +173,14 @@ class fncArreraWork :
             frameCase = Frame(tab,bg=self.__guiColor)
             frameValeur = Frame(tab,bg=self.__guiColor)
             # Declaration des widget
-            labelCase = Label(frameCase,text="Case :",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            labelCase = Label(frameCase,text="Case :",font=("arial","15"),
+                              bg=self.__guiColor,fg=self.__textColor)
             entryCase = Entry(frameCase,font=("arial","15"),relief=SOLID)
-            labelValeur = Label(frameValeur,text="Valeur :",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            labelValeur = Label(frameValeur,text="Valeur :",font=("arial","15"),
+                                bg=self.__guiColor,fg=self.__textColor)
             entryValeur = Entry(frameValeur,font=("arial","15"),relief=SOLID)
-            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                                fg=self.__textColor,command= lambda : self.__fncAddValeurTk(tab,entryValeur,entryCase))
             # Affichage de widget
             labelCase.pack(side="left")
             labelValeur.pack(side="left")
@@ -194,6 +197,18 @@ class fncArreraWork :
             showerror("Work","Il n'a pas de tableur ouvert")
             return False
     
+    def __fncAddValeurTk(self,w:Toplevel,evaleur:Entry,ecase:Entry):
+        valeur = evaleur.get()
+        case = ecase.get()
+        if (case == ""):
+            showerror("Work","Vous avez pas définie de case.")
+        else :
+            self.__addValeur(case,valeur)
+        
+        evaleur.delete(0,END)
+        ecase.delete(0,END)
+        w.destroy()
+
     def __addValeur(self,case:str,valeur):
         if (self.__tableurOpen == True):
             if (self.__verifChaine(case)== True):
