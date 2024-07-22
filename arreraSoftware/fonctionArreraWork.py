@@ -211,7 +211,7 @@ class fncArreraWork :
 
     def __addValeur(self,case:str,valeur):
         if (self.__tableurOpen == True):
-            if (self.__verifChaine(case)== True):
+            if (self.__verifTableurCase(case)== True):
                 self.__objTableur.write(case,valeur)
                 self.__objTableur.saveFile()
                 showinfo("Work","Valeur ecrite")
@@ -220,7 +220,7 @@ class fncArreraWork :
         else :
             showerror("Work","Il n'a pas de tableur ouvert")
 
-    def __verifChaine(self,chaine):
+    def __verifTableurCase(self,chaine):
         # Expression régulière pour vérifier la chaîne
         regex = r"^[A-Z]\d$"
 
@@ -266,7 +266,8 @@ class fncArreraWork :
             entryCaseFin = Entry(frameCaseFin,font=("arial","15"),relief=SOLID)
             # Valider
             btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
-                                fg=self.__textColor)
+                                fg=self.__textColor,
+                                command= lambda :self.__fncAddFormuleTableurTk(mode,tab,entryCaseDest,entryCaseDebut,entryCaseFin))
             
             # Definition du texte du label indication et de la bonne fnc
             match mode :
@@ -300,3 +301,26 @@ class fncArreraWork :
             return True
         else :
             return False
+    
+    def __fncAddFormuleTableurTk(self,mode:int,w:Toplevel,edest:Entry,edebut:Entry,eFin:Entry):
+        dest = edest.get()
+        debut = edebut.get()
+        fin = eFin.get()
+
+        if ((self.__verifTableurCase(dest) == True) 
+            and (self.__verifTableurCase(debut)== True) 
+            and (self.__verifTableurCase(fin) == True)):
+
+            sortie = self.__setFormuleTableur(mode,debut,fin,dest)
+
+            if (sortie == True):
+                showinfo("Work","Formule ajouter")
+            else :
+                showerror("Work","Formule non ajouter")
+        else :
+            showerror("Work","Les cases ne sont pas valide")
+        
+        edest.delete(0,END)
+        edebut.delete(0,END)
+        eFin.delete(0,END)
+        w.destroy()
