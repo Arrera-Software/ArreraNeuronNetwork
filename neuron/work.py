@@ -88,3 +88,28 @@ class neuronWork :
                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieAddValeurTableur(),""]
                                         self.__objHistorique.setAction("Ajout d'un valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
                                         self.__valeurOut = 5
+                                    else :
+                                        if ("somme" in requette) :
+                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(1),""]
+                                            self.__objHistorique.setAction("Ajout d'une formule somme au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                            self.__valeurOut = 5
+                                        else :
+                                            if ("moyenne" in requette):
+                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(2),""]
+                                                self.__objHistorique.setAction("Ajout d'une formule moyenne au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                                self.__valeurOut = 5 
+                                            else :
+                                                if ("comptage" in requette):
+                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(3),""]
+                                                    self.__objHistorique.setAction("Ajout d'une formule comptage au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                                    self.__valeurOut = 5
+                                                else :
+                                                    if ("minimun" in requette):
+                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(4),""]
+                                                        self.__objHistorique.setAction("Ajout d'une formule minimun au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                                        self.__valeurOut = 5
+                                                    else :
+                                                        if ("maximun" in requette):
+                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(1),""]
+                                                            self.__objHistorique.setAction("Ajout d'une formule maximun au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                                            self.__valeurOut = 5

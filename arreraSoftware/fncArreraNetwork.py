@@ -1388,3 +1388,80 @@ class fncArreraNetwork:
                 text = "Désoler il a probleme qui m'empéche d'ajouter ta valeur."
 
         return text
+    
+    def sortieAddFormuleTableur(self,mode:int):
+        """
+        1: Somme
+        2: Moyenne
+        3: Comptage
+        4: Minimun
+        5: Maximun
+        """
+        match mode :
+            case 1 :
+                sortie = self.__objetArreraWork.guiAddFormule(1)
+                if (sortie == True) :
+                    if (self.__etatVous == True) :
+                        text = "Trés bien je vous ouvre l'interface pour ajouter une somme a votre tableur."
+                    else :
+                        text = "Okay , je t'ouvre l'interface pour que tu ajoute une somme au tableur"
+                else :
+                    if (self.__etatVous == True) :
+                        text = "Désoler "+self.__genre+" mais il a un probleme."
+                    else :
+                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+            case 2 :
+                sortie = self.__objetArreraWork.guiAddFormule(2)
+                if (sortie == True) :
+                    if (self.__etatVous == True) :
+                        text = "Trés bien je vous ouvre l'interface pour ajouter une moyenne a votre tableur."
+                    else :
+                        text = "Okay , je t'ouvre l'interface pour que tu ajoute une moyenne au tableur"
+                else :
+                    if (self.__etatVous == True) :
+                        text = "Désoler "+self.__genre+" mais il a un probleme."
+                    else :
+                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+            case 3 :
+                sortie = self.__objetArreraWork.guiAddFormule(3)
+                if (sortie == True) :
+                    if (self.__etatVous == True) :
+                        text = "Trés bien je vous ouvre l'interface pour ajouter un comptage de valeur a votre tableur."
+                    else :
+                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un comptage de valeur au tableur"
+                else :
+                    if (self.__etatVous == True) :
+                        text = "Désoler "+self.__genre+" mais il a un probleme."
+                    else :
+                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+            case 4 :
+                sortie = self.__objetArreraWork.guiAddFormule(4)
+                if (sortie == True) :
+                    if (self.__etatVous == True) :
+                        text = "Trés bien je vous ouvre l'interface pour ajouter un minimun a votre tableur."
+                    else :
+                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un minimun au tableur"
+                else :
+                    if (self.__etatVous == True) :
+                        text = "Désoler "+self.__genre+" mais il a un probleme."
+                    else :
+                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+            case 5 :
+                sortie = self.__objetArreraWork.guiAddFormule(5)
+                if (sortie == True) :
+                    if (self.__etatVous == True) :
+                        text = "Trés bien je vous ouvre l'interface pour ajouter un maximun a votre tableur."
+                    else :
+                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un maximun au tableur"
+                else :
+                    if (self.__etatVous == True) :
+                        text = "Désoler "+self.__genre+" mais il a un probleme."
+                    else :
+                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+            case other :
+                if (self.__etatVous == True) :
+                    text = "Désoler "+self.__genre+" mais il a un probleme."
+                else :
+                    text = "Désoler "+self.__user+" mais je rancontre un probléme "
+        
+        return text

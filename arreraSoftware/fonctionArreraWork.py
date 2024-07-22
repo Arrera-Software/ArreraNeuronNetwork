@@ -229,3 +229,74 @@ class fncArreraWork :
             return True
         else:
             return False
+    
+    def guiAddFormule(self,mode:int):
+        """
+        1: Somme
+        2: Moyenne
+        3: Comptage
+        4: Minimun
+        5: Maximun
+        """
+        if ((self.__tableurOpen == True)and (mode < 5)):
+            tab = Toplevel()
+            tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            tab.title(self.__nameAssistant+" Work : Tableur")
+            tab.configure(background=self.__guiColor)
+            tab.maxsize(300,175)
+            tab.minsize(300,175)
+            frameCaseDest = Frame(tab,bg=self.__guiColor)
+            frameCaseDebut = Frame(tab,bg=self.__guiColor)
+            frameCaseFin = Frame(tab,bg=self.__guiColor)
+            # Declaration des widget
+            # Indication
+            labelIndication = Label(tab,font=("arial","20"),
+                              bg=self.__guiColor,fg=self.__textColor)
+            # Destination
+            labelCaseDest = Label(frameCaseDest,text="Destination :",font=("arial","15"),
+                              bg=self.__guiColor,fg=self.__textColor)
+            entryCaseDest = Entry(frameCaseDest,font=("arial","15"),relief=SOLID)
+            # Debut
+            labelCaseDebut = Label(frameCaseDebut,text="Debut :",font=("arial","15"),
+                                bg=self.__guiColor,fg=self.__textColor)
+            entryCaseDebut = Entry(frameCaseDebut,font=("arial","15"),relief=SOLID)
+            # Fin
+            labelCaseFin = Label(frameCaseFin,text="Fin :",font=("arial","15"),
+                                bg=self.__guiColor,fg=self.__textColor)
+            entryCaseFin = Entry(frameCaseFin,font=("arial","15"),relief=SOLID)
+            # Valider
+            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                                fg=self.__textColor)
+            
+            # Definition du texte du label indication et de la bonne fnc
+            match mode :
+                case 1 :
+                    labelIndication.configure(text="Somme")
+                case 2 :
+                    labelIndication.configure(text="Moyenne")
+                case 3:
+                    labelIndication.configure(text="Comptage")
+                case 4 :
+                    labelIndication.configure(text="Minimun")
+                case 5 :
+                    labelIndication.configure(text="Maximun")
+            # Affichage 
+            # Widget in frame
+            labelCaseDest.pack(side="left")
+            entryCaseDest.pack(side="right")
+
+            labelCaseDebut.pack(side="left")
+            entryCaseDebut.pack(side="right")
+
+            labelCaseFin.pack(side="left")
+            entryCaseFin.pack(side="right")
+
+            # Windows
+            labelIndication.pack()
+            frameCaseDest.pack()
+            frameCaseDebut.pack()
+            frameCaseFin.pack()
+            btnValider.pack()
+            return True
+        else :
+            return False
