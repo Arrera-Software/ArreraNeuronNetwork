@@ -30,15 +30,25 @@ class neuronWork :
             user = self.__gestionNeuron.getUser()
 
             if (("ouvre" in requette) and ("fichier" in requette)):
-                if ("exel" in requette):
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableur(),""]
-                    self.__objHistorique.setAction("Ouverture d'un fichier exel "+self.__fonctionArreraNetwork.getFileTableur())
-                    self.__valeurOut = 7 
+                if ((("exel" in requette) or ("tableur" in requette)) and ("logiciel" in requette)):
+                    self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftTableurFile(),""]
+                    self.__objHistorique.setAction("Ouverture du fichier tableur "+self.__fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
+                    self.__valeurOut = 1
                 else :
-                    if ("word" in requette):
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
-                        self.__objHistorique.setAction("Ouverture d'un fichier word "+self.__fonctionArreraNetwork.getFileWord())
-                        self.__valeurOut = 7
+                    if ((("word" in requette) or ("traitement de texte" in requette)) and ("logiciel" in requette)):
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftWorkFile(),""]
+                        self.__objHistorique.setAction("Ouverture du fichier word "+self.__fonctionArreraNetwork.getFileWord()+" sur l'ordinateur")
+                        self.__valeurOut = 1
+                    else :
+                        if (("exel" in requette) or ("tableur" in requette)):
+                            self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableur(),""]
+                            self.__objHistorique.setAction("Ouverture d'un fichier exel "+self.__fonctionArreraNetwork.getFileTableur())
+                            self.__valeurOut = 7 
+                        else :
+                            if (("word" in requette) or ("traitement de texte" in requette)):
+                                self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
+                                self.__objHistorique.setAction("Ouverture d'un fichier word "+self.__fonctionArreraNetwork.getFileWord())
+                                self.__valeurOut = 7
             else :
                 if ("ferme" in requette) :
                     if (("exel" in requette) or ("tableur" in requette)):

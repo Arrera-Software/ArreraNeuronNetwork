@@ -4,11 +4,16 @@ from tkinter.messagebox import*
 from objet.arreradocument import*
 from objet.arreratableur import*
 from librairy.travailJSON import*
+from librairy.dectectionOS import*
+import subprocess
 import re
+import os
 
 
 class fncArreraWork :
-    def __init__(self,neuronfile:jsonWork):
+    def __init__(self,neuronfile:jsonWork,dectOs:OS):
+        # Objet 
+        self.__dectOs = dectOs
         # Variable etat ouverture fichier
         self.__tableurOpen = False
         self.__wordOpen = False 
@@ -324,3 +329,35 @@ class fncArreraWork :
         edebut.delete(0,END)
         eFin.delete(0,END)
         w.destroy()
+
+    def openTableurOs(self):
+        if (self.__tableurOpen==True):
+            if ((self.__dectOs.osLinux() == True) 
+                and (self.__dectOs.osWindows() == False)):
+                subprocess.call(["xdg-open",self.__fileTableur])
+                return True
+            else :
+                if ((self.__dectOs.osLinux() == False) 
+                and (self.__dectOs.osWindows() == True)):
+                    os.startfile(self.__fileTableur)
+                    return True
+                else :
+                    return False                    
+        else :
+            return False
+        
+    def openWordOs(self):
+        if (self.__tableurOpen==True):
+            if ((self.__dectOs.osLinux() == True) 
+                and (self.__dectOs.osWindows() == False)):
+                subprocess.call(["xdg-open",self.__fileWork])
+                return True
+            else :
+                if ((self.__dectOs.osLinux() == False) 
+                and (self.__dectOs.osWindows() == True)):
+                    os.startfile(self.__fileWork)
+                    return True
+                else :
+                    return False                    
+        else :
+            return False

@@ -49,7 +49,7 @@ class fncArreraNetwork:
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
-        self.__objetArreraWork = fncArreraWork(self.__configNeuron)
+        self.__objetArreraWork = fncArreraWork(self.__configNeuron,self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1464,4 +1464,32 @@ class fncArreraNetwork:
                 else :
                     text = "Désoler "+self.__user+" mais je rancontre un probléme "
         
+        return text
+    
+    def sortieOpenSoftTableurFile(self):
+        sortie = self.__objetArreraWork.openTableurOs()
+        if (sortie==True):
+            if (self.__etatVous == True):
+                text = "Je vous es ouvert votre fichier tableur avec logiciel par défault de votre ordinateur."
+            else :
+                text = "Trés bien votre tableur est ouvert dans le logiciel par défault de votre ordinateur."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas ouvrir le tableur dans le logiciel par défault de votre ordinateur"
+            else :
+                text = "Désoler "+self.__user+". Je ne peux pas ouvrir le tableur dans le logiciel par défault de votre ordinateur"
+        return text
+    
+    def sortieOpenSoftWorkFile(self):
+        sortie = self.__objetArreraWork.openWordOs()
+        if (sortie==True):
+            if (self.__etatVous == True):
+                text = "Je vous es ouvert votre fichier word avec logiciel par défault de votre ordinateur."
+            else :
+                text = "Trés bien votre word est ouvert dans le logiciel par défault de votre ordinateur."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas ouvrir le word dans le logiciel par défault de votre ordinateur"
+            else :
+                text = "Désoler "+self.__user+". Je ne peux pas ouvrir le word dans le logiciel par défault de votre ordinateur"
         return text
