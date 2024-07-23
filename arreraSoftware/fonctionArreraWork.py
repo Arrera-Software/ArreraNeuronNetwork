@@ -217,7 +217,10 @@ class fncArreraWork :
     def __addValeur(self,case:str,valeur):
         if (self.__tableurOpen == True):
             if (self.__verifTableurCase(case)== True):
-                self.__objTableur.write(case,valeur)
+                if (str(valeur).isdigit() == True):
+                    self.__objTableur.write(case,int(valeur))
+                else :
+                    self.__objTableur.write(valeur)
                 self.__objTableur.saveFile()
                 showinfo("Work","Valeur ecrite")
             else :
