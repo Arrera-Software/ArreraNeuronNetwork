@@ -1,5 +1,6 @@
 from tkinter import filedialog 
 from tkinter import*
+from tkinter.scrolledtext import *
 from tkinter.messagebox import*
 from objet.arreradocument import*
 from objet.arreratableur import*
@@ -364,3 +365,56 @@ class fncArreraWork :
                     return False                    
         else :
             return False
+
+    def guiTableurWork(self):
+        if (self.__tableurOpen == True):
+            # Declaration de la fenetre
+            tabGUI = Toplevel()
+            tabGUI.title(self.__nameAssistant+" Work : Tableur")
+            tabGUI.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            tabGUI.configure(bg=self.__guiColor)
+            tabGUI.maxsize(800,500)
+            tabGUI.minsize(800,500)
+            #Frame
+            frameGestion = Frame(tabGUI,bg=self.__guiColor,width=440,height=450)
+            # Declaration widget
+            viewTableur = ScrolledText(tabGUI,wrap=WORD,width =40,height=50)
+            # Frame gestion
+            labelTitre = Label(frameGestion,text="Gestion du tableur",
+                               font=("arial","25"),bg=self.__guiColor,
+                               fg=self.__textColor)
+            btnAddFormule = Button(frameGestion,text="Ajouter une Formule",font=("arial","15"),
+                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+            btnAddValeur = Button(frameGestion,text="Ajouter une valeur",font=("arial","15"),
+                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+            btnSuppr = Button(frameGestion,text="Supprimer",font=("arial","15"),
+                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+            # Recuperation des valeur du tableur
+            #viewTableur.insert(INSERT,"")
+            self.__setValeurTableurGUI(viewTableur)
+            # Affichage
+            viewTableur.pack(side="left")
+            frameGestion.pack(side="right")
+
+            labelTitre.place(relx=0.5, rely=0.0, anchor="n") 
+            btnAddFormule.place(x=((frameGestion.winfo_reqwidth()
+                                    -btnAddFormule.winfo_reqwidth())//2),
+                                    y=100)  
+            btnAddValeur.place(x=((frameGestion.winfo_reqwidth()
+                                    -btnAddValeur.winfo_reqwidth())//2),
+                                    y=300) 
+            btnSuppr.place(relx=0.5, rely=0.5, anchor="center")
+
+            return True
+        else :
+            return False
+    
+    def __setValeurTableurGUI(self,wText:ScrolledText):
+        wText.configure(state="normal")
+        wText.delete(1.0,END)
+        listSortie = self.readTableur()
+        texte = ""
+        for i in range(0,len(listSortie)):
+            texte = texte + listSortie[i]+"\n"
+        wText.insert(INSERT,texte)
+        wText.configure(state="disabled")

@@ -123,3 +123,9 @@ class neuronWork :
                                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieAddFormuleTableur(1),""]
                                                             self.__objHistorique.setAction("Ajout d'une formule maximun au tableur "+self.__fonctionArreraNetwork.getFileTableur())
                                                             self.__valeurOut = 5
+                                else :
+                                    if ("montre" in requette):
+                                        if ((("exel" in requette) or ("tableur" in requette))):
+                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableurGUI(),""]
+                                            self.__objHistorique.setAction("Ouverture du tableur "+self.__fonctionArreraNetwork.getFileTableur()+" dans l'interface de l'assistant")
+                                            self.__valeurOut = 5 
