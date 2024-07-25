@@ -168,7 +168,7 @@ class fncArreraWork :
     def getNameFileWord(self):
         return self.__fileWork
     
-    def guiAddValeur(self):
+    def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
             tab = Toplevel()
             tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
@@ -186,7 +186,7 @@ class fncArreraWork :
                                 bg=self.__guiColor,fg=self.__textColor)
             entryValeur = Entry(frameValeur,font=("arial","15"),relief=SOLID)
             btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
-                                fg=self.__textColor,command= lambda : self.__fncAddValeurTk(tab,entryValeur,entryCase))
+                                fg=self.__textColor,command= lambda : self.__fncAddValeurParole(tab,entryValeur,entryCase))
             # Affichage de widget
             labelCase.pack(side="left")
             labelValeur.pack(side="left")
@@ -203,21 +203,21 @@ class fncArreraWork :
             showerror("Work","Il n'a pas de tableur ouvert")
             return False
     
-    def guiSuppValeur(self):
+    def tkSuppValeurParole(self):
         if (self.__tableurOpen == True):
             tab = Toplevel()
             tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
             tab.title(self.__nameAssistant+" Work : Tableur")
             tab.configure(background=self.__guiColor)
-            tab.maxsize(200,100)
-            tab.minsize(200,100)
+            tab.maxsize(300,100)
+            tab.minsize(300,100)
             frameCase = Frame(tab,bg=self.__guiColor)
             # Declaration des widget
             labelCase = Label(frameCase,text="Case :",font=("arial","15"),
                               bg=self.__guiColor,fg=self.__textColor)
             entryCase = Entry(frameCase,font=("arial","15"),relief=SOLID)
             btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
-                                fg=self.__textColor,command= lambda : self.__fncSupprValeurTk(tab,entryCase))
+                                fg=self.__textColor,command= lambda : self.__fncSupprValeurParole(tab,entryCase))
             # Affichage de widget
             labelCase.pack(side="left")
             entryCase.pack(side="right")
@@ -231,7 +231,7 @@ class fncArreraWork :
             showerror("Work","Il n'a pas de tableur ouvert")
             return False
     
-    def __fncAddValeurTk(self,w:Toplevel,evaleur:Entry,ecase:Entry):
+    def __fncAddValeurParole(self,w:Toplevel,evaleur:Entry,ecase:Entry):
         valeur = evaleur.get()
         case = ecase.get()
         if (case == ""):
@@ -243,7 +243,7 @@ class fncArreraWork :
         ecase.delete(0,END)
         w.destroy()
     
-    def __fncSupprValeurTk(self,w:Toplevel,ecase:Entry):
+    def __fncSupprValeurParole(self,w:Toplevel,ecase:Entry):
         case = ecase.get()
         if (case == ""):
             showerror("Work","Vous avez pas définie de case.")
@@ -271,6 +271,7 @@ class fncArreraWork :
         if (self.__tableurOpen == True):
             if (self.__verifTableurCase(case) == True):
                 self.__objTableur.deleteValeur(case)
+                self.__objTableur.saveFile()
                 showinfo("Work","Valeur supprimer")
             else :
                 showerror("Work","La case n'est pas valide")
@@ -287,7 +288,7 @@ class fncArreraWork :
         else:
             return False
     
-    def guiAddFormule(self,mode:int):
+    def tkAddFormuleParole(self,mode:int):
         """
         1: Somme
         2: Moyenne
@@ -432,13 +433,12 @@ class fncArreraWork :
                                font=("arial","25"),bg=self.__guiColor,
                                fg=self.__textColor)
             btnAddFormule = Button(frameGestion,text="Ajouter une Formule",font=("arial","15"),
-                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+                                   fg=self.__textColor,bg=self.__guiColor,width=30,command=lambda:self.__tkAddFormuleGUI(viewTableur))
             btnAddValeur = Button(frameGestion,text="Ajouter une valeur",font=("arial","15"),
-                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+                                   fg=self.__textColor,bg=self.__guiColor,width=30,command= lambda : self.__tkAddValeurGUI(viewTableur))
             btnSuppr = Button(frameGestion,text="Supprimer",font=("arial","15"),
-                                   fg=self.__textColor,bg=self.__guiColor,width=30)
+                                   fg=self.__textColor,bg=self.__guiColor,width=30,command= lambda :self.__tkSuppValeurGUI(viewTableur))
             # Recuperation des valeur du tableur
-            #viewTableur.insert(INSERT,"")
             self.__setValeurTableurGUI(viewTableur)
             # Affichage
             viewTableur.pack(side="left")
@@ -466,3 +466,172 @@ class fncArreraWork :
             texte = texte + listSortie[i]+"\n"
         wText.insert(INSERT,texte)
         wText.configure(state="disabled")
+
+    def __fncAddValeurGUI(self,w:Toplevel,evaleur:Entry,ecase:Entry,wText:ScrolledText):
+        valeur = evaleur.get()
+        case = ecase.get()
+        if (case == ""):
+            showerror("Work","Vous avez pas définie de case.")
+        else :
+            self.__addValeur(case,valeur)
+            self.__setValeurTableurGUI(wText)
+        evaleur.delete(0,END)
+        ecase.delete(0,END)
+        w.destroy()
+    
+    def __tkAddValeurGUI(self,wText:ScrolledText):
+        if (self.__tableurOpen == True):
+            tab = Toplevel()
+            tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            tab.title(self.__nameAssistant+" Work : Tableur")
+            tab.configure(background=self.__guiColor)
+            tab.maxsize(300,100)
+            tab.minsize(300,100)
+            frameCase = Frame(tab,bg=self.__guiColor)
+            frameValeur = Frame(tab,bg=self.__guiColor)
+            # Declaration des widget
+            labelCase = Label(frameCase,text="Case :",font=("arial","15"),
+                              bg=self.__guiColor,fg=self.__textColor)
+            entryCase = Entry(frameCase,font=("arial","15"),relief=SOLID)
+            labelValeur = Label(frameValeur,text="Valeur :",font=("arial","15"),
+                                bg=self.__guiColor,fg=self.__textColor)
+            entryValeur = Entry(frameValeur,font=("arial","15"),relief=SOLID)
+            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                                fg=self.__textColor,command= lambda : self.__fncAddValeurGUI(tab,entryValeur,entryCase,wText))
+            # Affichage de widget
+            labelCase.pack(side="left")
+            labelValeur.pack(side="left")
+            entryCase.pack(side="right")
+            entryValeur.pack(side="right")
+            
+            frameCase.pack()
+            frameValeur.pack()
+
+            btnValider.pack(side="bottom")
+
+            return True
+        else :
+            showerror("Work","Il n'a pas de tableur ouvert")
+            return False
+    
+    def __tkSuppValeurGUI(self,wText:ScrolledText):
+        if (self.__tableurOpen == True):
+            tab = Toplevel()
+            tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            tab.title(self.__nameAssistant+" Work : Tableur")
+            tab.configure(background=self.__guiColor)
+            tab.maxsize(300,100)
+            tab.minsize(300,100)
+            frameCase = Frame(tab,bg=self.__guiColor)
+            # Declaration des widget
+            labelCase = Label(frameCase,text="Case :",font=("arial","15"),
+                              bg=self.__guiColor,fg=self.__textColor)
+            entryCase = Entry(frameCase,font=("arial","15"),relief=SOLID)
+            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                                fg=self.__textColor,command= lambda : self.__fncSupprValeurGUI(tab,entryCase,wText))
+            # Affichage de widget
+            labelCase.pack(side="left")
+            entryCase.pack(side="right")
+            
+            frameCase.pack()
+
+            btnValider.pack(side="bottom")
+
+            return True
+        else :
+            showerror("Work","Il n'a pas de tableur ouvert")
+            return False
+    
+    def __fncSupprValeurGUI(self,w:Toplevel,ecase:Entry,wText:ScrolledText):
+        case = ecase.get()
+        if (case == ""):
+            showerror("Work","Vous avez pas définie de case.")
+        else :
+            self.__supprValeur(case)
+            self.__setValeurTableurGUI(wText)
+        
+        ecase.delete(0,END)
+        w.destroy()
+    
+    def __tkAddFormuleGUI(self,wText:ScrolledText):
+        tab = Toplevel()
+        tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+        tab.title(self.__nameAssistant+" Work : Tableur")
+        tab.configure(background=self.__guiColor)
+        tab.maxsize(300,175)
+        tab.minsize(300,175)
+        frameCaseDest = Frame(tab,bg=self.__guiColor)
+        frameCaseDebut = Frame(tab,bg=self.__guiColor)
+        frameCaseFin = Frame(tab,bg=self.__guiColor)
+        # String var 
+        formuleVar = StringVar(tab)
+        # List formule
+        listFormule = ["Somme","Moyenne","Comptage","Minimun","Maximun"]
+        # Declaration des widget
+        # Indication
+        menuFormule = OptionMenu(tab,formuleVar,*listFormule)
+        # Destination
+        labelCaseDest = Label(frameCaseDest,text="Destination :",font=("arial","15"),
+                            bg=self.__guiColor,fg=self.__textColor)
+        entryCaseDest = Entry(frameCaseDest,font=("arial","15"),relief=SOLID)
+        # Debut
+        labelCaseDebut = Label(frameCaseDebut,text="Debut :",font=("arial","15"),
+                            bg=self.__guiColor,fg=self.__textColor)
+        entryCaseDebut = Entry(frameCaseDebut,font=("arial","15"),relief=SOLID)
+        # Fin
+        labelCaseFin = Label(frameCaseFin,text="Fin :",font=("arial","15"),
+                            bg=self.__guiColor,fg=self.__textColor)
+        entryCaseFin = Entry(frameCaseFin,font=("arial","15"),relief=SOLID)
+        # Valider
+        btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                            fg=self.__textColor,command=lambda:self.__fncaddFormuleGUI(tab,wText,formuleVar,
+                                                                                       entryCaseDest,
+                                                                                       entryCaseDebut,
+                                                                                       entryCaseFin))
+        # Affichage 
+        # Widget in frame
+        labelCaseDest.pack(side="left")
+        entryCaseDest.pack(side="right")
+
+        labelCaseDebut.pack(side="left")
+        entryCaseDebut.pack(side="right")
+
+        labelCaseFin.pack(side="left")
+        entryCaseFin.pack(side="right")
+        # Set de la valeur 
+        formuleVar.set(listFormule[0])
+        # Windows
+        menuFormule.pack()
+        frameCaseDest.pack()
+        frameCaseDebut.pack()
+        frameCaseFin.pack()
+        btnValider.pack()
+
+    def __fncaddFormuleGUI(self,w:Toplevel,wText:ScrolledText,var:StringVar,
+                           eDest:Entry,eDebut:Entry,eFin:Entry):
+
+        mode = var.get()
+
+        caseDest = eDest.get()
+        caseDebut = eDebut.get()
+        caseFin = eFin.get()
+
+        if ((self.__verifTableurCase(caseDest)==True) 
+            and (self.__verifTableurCase(caseFin)==True) 
+            and (self.__verifTableurCase(caseDebut)==True)):
+
+            match mode : 
+                case "Somme" :
+                    self.__setFormuleTableur(1,caseDebut,caseFin,caseDest)
+                case "Moyenne" :
+                    self.__setFormuleTableur(2,caseDebut,caseFin,caseDest)
+                case "Comptage" :
+                    self.__setFormuleTableur(3,caseDebut,caseFin,caseDest)
+                case "Minimun" :
+                    self.__setFormuleTableur(4,caseDebut,caseFin,caseDest)
+                case "Maximun" :
+                    self.__setFormuleTableur(5,caseDebut,caseFin,caseDest)
+            
+            showinfo("Work","Formule ajouter")
+            w.destroy()
+            self.__setValeurTableurGUI(wText)

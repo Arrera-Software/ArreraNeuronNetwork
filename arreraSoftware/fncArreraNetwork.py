@@ -1375,7 +1375,7 @@ class fncArreraNetwork:
         return self.__objetArreraWork.readTableur()
     
     def sortieAddValeurTableur(self):
-        sortie = self.__objetArreraWork.guiAddValeur()
+        sortie = self.__objetArreraWork.tkAddValeurParole()
         if (sortie == True):
             if (self.__etatVous == True):
                 text = "Suivez bien l'interface graphique pour ajouter une valeur au tableur."
@@ -1390,7 +1390,7 @@ class fncArreraNetwork:
         return text
     
     def sortieSupprValeurTableur(self):
-        sortie = self.__objetArreraWork.guiSuppValeur()
+        sortie = self.__objetArreraWork.tkSuppValeurParole()
         if (sortie == True):
             if (self.__etatVous == True):
                 text = "Suivez bien l'interface graphique pour supprimer une valeur au tableur."
@@ -1414,7 +1414,7 @@ class fncArreraNetwork:
         """
         match mode :
             case 1 :
-                sortie = self.__objetArreraWork.guiAddFormule(1)
+                sortie = self.__objetArreraWork.tkAddFormuleParole(1)
                 if (sortie == True) :
                     if (self.__etatVous == True) :
                         text = "Trés bien je vous ouvre l'interface pour ajouter une somme a votre tableur."
@@ -1426,7 +1426,7 @@ class fncArreraNetwork:
                     else :
                         text = "Désoler "+self.__user+" mais je rancontre un probléme "
             case 2 :
-                sortie = self.__objetArreraWork.guiAddFormule(2)
+                sortie = self.__objetArreraWork.tkAddFormuleParole(2)
                 if (sortie == True) :
                     if (self.__etatVous == True) :
                         text = "Trés bien je vous ouvre l'interface pour ajouter une moyenne a votre tableur."
@@ -1438,7 +1438,7 @@ class fncArreraNetwork:
                     else :
                         text = "Désoler "+self.__user+" mais je rancontre un probléme "
             case 3 :
-                sortie = self.__objetArreraWork.guiAddFormule(3)
+                sortie = self.__objetArreraWork.tkAddFormuleParole(3)
                 if (sortie == True) :
                     if (self.__etatVous == True) :
                         text = "Trés bien je vous ouvre l'interface pour ajouter un comptage de valeur a votre tableur."
@@ -1450,7 +1450,7 @@ class fncArreraNetwork:
                     else :
                         text = "Désoler "+self.__user+" mais je rancontre un probléme "
             case 4 :
-                sortie = self.__objetArreraWork.guiAddFormule(4)
+                sortie = self.__objetArreraWork.tkAddFormuleParole(4)
                 if (sortie == True) :
                     if (self.__etatVous == True) :
                         text = "Trés bien je vous ouvre l'interface pour ajouter un minimun a votre tableur."
@@ -1462,7 +1462,7 @@ class fncArreraNetwork:
                     else :
                         text = "Désoler "+self.__user+" mais je rancontre un probléme "
             case 5 :
-                sortie = self.__objetArreraWork.guiAddFormule(5)
+                sortie = self.__objetArreraWork.tkAddFormuleParole(5)
                 if (sortie == True) :
                     if (self.__etatVous == True) :
                         text = "Trés bien je vous ouvre l'interface pour ajouter un maximun a votre tableur."
