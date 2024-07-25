@@ -96,7 +96,7 @@ class neuronWork :
                                     and ("tableur" in requette)):
                                     if (("valeur" in requette)):
                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieAddValeurTableur(),""]
-                                        self.__objHistorique.setAction("Ajout d'un valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                        self.__objHistorique.setAction("Ajout d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
                                         self.__valeurOut = 5
                                     else :
                                         if ("somme" in requette) :
@@ -129,3 +129,8 @@ class neuronWork :
                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableurGUI(),""]
                                             self.__objHistorique.setAction("Ouverture du tableur "+self.__fonctionArreraNetwork.getFileTableur()+" dans l'interface de l'assistant")
                                             self.__valeurOut = 5 
+                                    if (("supprime" in requette) or ("suppr" in requette)):
+                                        if (("tableur" in requette) or ("exel" in requette)):
+                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieSupprValeurTableur(),""]
+                                            self.__objHistorique.setAction("Suppression d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
+                                            self.__valeurOut = 5

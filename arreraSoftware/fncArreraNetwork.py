@@ -1389,6 +1389,21 @@ class fncArreraNetwork:
 
         return text
     
+    def sortieSupprValeurTableur(self):
+        sortie = self.__objetArreraWork.guiSuppValeur()
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Suivez bien l'interface graphique pour supprimer une valeur au tableur."
+            else :
+                text = "Suis bien l'interface pour supprimer une valeur au tableur."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+" mais je ne peux pas supprimer une valeur."
+            else :
+                text = "Désoler il a probleme qui m'empéche de supprimer ta valeur."
+
+        return text
+    
     def sortieAddFormuleTableur(self,mode:int):
         """
         1: Somme

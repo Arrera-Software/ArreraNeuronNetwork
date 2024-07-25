@@ -203,6 +203,34 @@ class fncArreraWork :
             showerror("Work","Il n'a pas de tableur ouvert")
             return False
     
+    def guiSuppValeur(self):
+        if (self.__tableurOpen == True):
+            tab = Toplevel()
+            tab.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            tab.title(self.__nameAssistant+" Work : Tableur")
+            tab.configure(background=self.__guiColor)
+            tab.maxsize(200,100)
+            tab.minsize(200,100)
+            frameCase = Frame(tab,bg=self.__guiColor)
+            # Declaration des widget
+            labelCase = Label(frameCase,text="Case :",font=("arial","15"),
+                              bg=self.__guiColor,fg=self.__textColor)
+            entryCase = Entry(frameCase,font=("arial","15"),relief=SOLID)
+            btnValider = Button(tab,text="Valider",font=("arial","15"),bg=self.__guiColor,
+                                fg=self.__textColor,command= lambda : self.__fncSupprValeurTk(tab,entryCase))
+            # Affichage de widget
+            labelCase.pack(side="left")
+            entryCase.pack(side="right")
+            
+            frameCase.pack()
+
+            btnValider.pack(side="bottom")
+
+            return True
+        else :
+            showerror("Work","Il n'a pas de tableur ouvert")
+            return False
+    
     def __fncAddValeurTk(self,w:Toplevel,evaleur:Entry,ecase:Entry):
         valeur = evaleur.get()
         case = ecase.get()
@@ -212,6 +240,16 @@ class fncArreraWork :
             self.__addValeur(case,valeur)
         
         evaleur.delete(0,END)
+        ecase.delete(0,END)
+        w.destroy()
+    
+    def __fncSupprValeurTk(self,w:Toplevel,ecase:Entry):
+        case = ecase.get()
+        if (case == ""):
+            showerror("Work","Vous avez pas définie de case.")
+        else :
+            self.__supprValeur(case)
+        
         ecase.delete(0,END)
         w.destroy()
 
@@ -224,6 +262,16 @@ class fncArreraWork :
                     self.__objTableur.write(valeur)
                 self.__objTableur.saveFile()
                 showinfo("Work","Valeur ecrite")
+            else :
+                showerror("Work","La case n'est pas valide")
+        else :
+            showerror("Work","Il n'a pas de tableur ouvert")
+    
+    def __supprValeur(self,case:str):
+        if (self.__tableurOpen == True):
+            if (self.__verifTableurCase(case) == True):
+                self.__objTableur.deleteValeur(case)
+                showinfo("Work","Valeur supprimer")
             else :
                 showerror("Work","La case n'est pas valide")
         else :
