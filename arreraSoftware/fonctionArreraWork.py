@@ -53,10 +53,11 @@ class fncArreraWork :
     def openWord(self):
         if (self.__wordOpen == False):
             # Demande de l'emplacement du fichier
-            showinfo("Work","Choisissez votre fichier exel")
+            showinfo("Work","Choisissez votre fichier word")
             emplacementFile = filedialog.askopenfilename(
                     defaultextension='.xlsx', 
-                    filetypes=[('Fichiers Word', '*.docx'),
+                    filetypes=[('Tout les fichier', '*.*'),
+                               ('Fichiers Word', '*.docx'),
                                ("Texte OpenDocument","*.odt")])
             self.__fileWork = emplacementFile
             if (emplacementFile == ""):
