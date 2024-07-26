@@ -1522,3 +1522,17 @@ class fncArreraNetwork:
             else :
                 text = "Désoler "+self.__user+". Il est impossible pour moi de t'ouvrir le tableur avec mon interface"
         return text
+    
+    def sortieOpenWordGUI(self):
+        sortie = self.__objetArreraWork.guiWordWork()
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous es ouvert mon interface pour travailler sur votre fichier de traitement de texte"
+            else :
+                text = "Je t'ai bien ouvert ton traitement de texte avec mon interface de travail"
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Il est impossible pour moi de vous ouvrir le traitement de texte avec mon interface"
+            else :
+                text = "Désoler "+self.__user+". Il est impossible pour moi de t'ouvrir le traitement de texte avec mon interface"
+        return text

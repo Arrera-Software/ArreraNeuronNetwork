@@ -635,3 +635,27 @@ class fncArreraWork :
             showinfo("Work","Formule ajouter")
             w.destroy()
             self.__setValeurTableurGUI(wText)
+    
+    def guiWordWork(self):
+        if (self.__wordOpen == True):
+            gWord = Toplevel()
+            gWord.title(self.__nameAssistant+" Work : Traitement de texte")
+            gWord.iconphoto(False,PhotoImage(file=self.__iconAssistant))
+            gWord.configure(bg=self.__guiColor)
+            gWord.maxsize(650,650)
+            gWord.minsize(650,650)
+            # Frame 
+            fBottom = Frame(gWord,width=650,height=50,bg="red")
+            # Widget 
+            viewWord = ScrolledText(gWord,wrap=WORD,width=75,height=60)
+
+            # Recuperation du contenu du word
+            sortie = self.readDocxFile()
+            viewWord.delete(1.0,END)
+            viewWord.insert(INSERT,sortie)
+
+            fBottom.pack(side="bottom")
+            viewWord.pack()
+            return True
+        else :
+            return False
