@@ -646,15 +646,19 @@ class fncArreraWork :
             gWord.maxsize(650,650)
             gWord.minsize(650,650)
             # Frame 
-            fBottom = Frame(gWord,width=650,height=50,bg="red")
+            fBottom = Frame(gWord,width=650,height=50,bg=self.__guiColor)
             # Widget 
             viewWord = ScrolledText(gWord,wrap=WORD,width=75,height=60)
-
+            # Widget frame bottom
+            btnSave = Button(fBottom,text="Sauvegarder",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            btnQuitter = Button(fBottom,text="Quitter",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
             # Recuperation du contenu du word
             sortie = self.readDocxFile()
             viewWord.delete(1.0,END)
             viewWord.insert(INSERT,sortie)
-
+            # Affichage 
+            btnSave.place(relx=0.0, rely=0.5, anchor="w") 
+            btnQuitter.place(relx=1.0, rely=0.5, anchor="e") 
             fBottom.pack(side="bottom")
             viewWord.pack()
             return True
