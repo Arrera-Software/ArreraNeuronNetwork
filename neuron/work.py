@@ -28,14 +28,15 @@ class neuronWork :
             etatVous = self.__gestionNeuron.getVous()
             genre = self.__gestionNeuron.getGenre()
             user = self.__gestionNeuron.getUser()
+            oldRequette,oldSortie = self.__gestionNeuron.getOld()
 
-            if (("ouvre" in requette) and ("fichier" in requette)):
+            if (("ouvre" in requette) and (("fichier" in requette) or ("un" in requette))):
                 if ((("exel" in requette) or ("tableur" in requette)) and ("logiciel" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftTableurFile(),""]
                     self.__objHistorique.setAction("Ouverture du fichier tableur "+self.__fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
                     self.__valeurOut = 1
                 else :
-                    if ((("word" in requette) or ("traitement de texte" in requette)) and ("logiciel" in requette)):
+                    if ((("word" in requette) or ("traitement de texte" in requette) or ("document" in requette)) and ("logiciel" in requette)):
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftWorkFile(),""]
                         self.__objHistorique.setAction("Ouverture du fichier word "+self.__fonctionArreraNetwork.getFileWord()+" sur l'ordinateur")
                         self.__valeurOut = 1
@@ -45,7 +46,7 @@ class neuronWork :
                             self.__objHistorique.setAction("Ouverture d'un fichier exel "+self.__fonctionArreraNetwork.getFileTableur())
                             self.__valeurOut = 7 
                         else :
-                            if (("word" in requette) or ("traitement de texte" in requette)):
+                            if (("word" in requette) or ("traitement de texte" in requette) or ("document" in requette)):
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
                                 self.__objHistorique.setAction("Ouverture d'un fichier word "+self.__fonctionArreraNetwork.getFileWord())
                                 self.__valeurOut = 7
@@ -130,13 +131,31 @@ class neuronWork :
                                             self.__objHistorique.setAction("Ouverture du tableur "+self.__fonctionArreraNetwork.getFileTableur()+" dans l'interface de l'assistant")
                                             self.__valeurOut = 5 
                                         else :
-                                            if (("word" in requette) or ("traitement de texte" in requette)):
+                                            if (("word" in requette) or ("traitement de texte" in requette) or ("document" in requette) ):
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWordGUI(),""]
                                                 self.__objHistorique.setAction("Ouverture du word "+self.__fonctionArreraNetwork.getFileWord()+" dans l'interface de l'assistant")
                                                 self.__valeurOut = 5
+                                            else :
+                                                if ("fichier" in requette):
+                                                    if (etatVous == True):
+                                                        self.__listSortie = ["Quelle fichier voulez-vous que je vous montre "+genre+". Le exel ou le word ?",""]
+                                                    else : 
+                                                        self.__listSortie = ["Quelle fichier veut tu que je te montre. Le exel ou le word ?",""]
+                                                    self.__valeurOut = 1
                                     if (("supprime" in requette) or ("suppr" in requette)):
                                         if (("tableur" in requette) or ("exel" in requette)):
                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieSupprValeurTableur(),""]
                                             self.__objHistorique.setAction("Suppression d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
                                             self.__valeurOut = 5
-                                        
+                                    else : 
+                                        if (((oldSortie == "Quelle fichier voulez-vous que je vous montre "+genre+". Le exel ou le word ?") or 
+                                            (oldSortie == "Quelle fichier veut tu que je te montre. Le exel ou le word ?")) and ("le" in requette)):
+                                            if (("word" in requette) or ("traitement de texte" in requette) or ("document" in requette) ):
+                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWordGUI(),""]
+                                                self.__objHistorique.setAction("Ouverture du word "+self.__fonctionArreraNetwork.getFileWord()+" dans l'interface de l'assistant")
+                                                self.__valeurOut = 5
+                                            else :
+                                                if ((("exel" in requette) or ("tableur" in requette))):
+                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenTableurGUI(),""]
+                                                    self.__objHistorique.setAction("Ouverture du tableur "+self.__fonctionArreraNetwork.getFileTableur()+" dans l'interface de l'assistant")
+                                                    self.__valeurOut = 5 
