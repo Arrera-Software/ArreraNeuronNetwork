@@ -538,63 +538,6 @@ class fncArreraNetwork:
                 text = "Il un probleme qui m'empeche d'ouvrir "+soft
         return text
     
-    def sortieOpenTraitementTexte(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("wordWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("wordLinux")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            if self.__etatVous == True :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de traitement de texte "+self.__genre+" "+self.__user,
-                               "Je vous ai ouvert votre logiciel de traitement de texte. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
-                text = listReponse[nbrand]
-            else :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de traitement de texte " +self.__user,
-                                "Je t'ai ouvert ton logiciel de traitement de texte. En quoi puis-je t'aider de plus " + self.__user + " ?"]
-                text = listReponse[nbrand]
-
-        else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel traitement de texte"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel traitement de texte"
-        return text
-    
-    def sortieOpenTableur(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("exelWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("exelLinux")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            if self.__etatVous == True :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de tableur "+self.__genre+" "+self.__user,
-                               "Je vous ai ouvert votre logiciel de tableur. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
-                text = listReponse[nbrand]
-            else :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de tableur " +self.__user,
-                                "Je t'ai ouvert ton logiciel de tableur. En quoi puis-je t'aider de plus " + self.__user + " ?"]
-                text = listReponse[nbrand]
-
-        else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel tableur"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel tableur"
-        return text
     
     def sortieOpenDiapo(self):
         etatWindows = self.__detecteurOS.osWindows()
