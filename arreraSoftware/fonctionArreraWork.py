@@ -650,7 +650,9 @@ class fncArreraWork :
             # Widget 
             viewWord = ScrolledText(gWord,wrap=WORD,width=75,height=60)
             # Widget frame bottom
-            btnSave = Button(fBottom,text="Sauvegarder",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            btnSave = Button(fBottom,text="Sauvegarder",
+                             font=("arial","15"),command= lambda : self.__fncSaveGUIWord(viewWord),
+                             bg=self.__guiColor,fg=self.__textColor)
             btnQuitter = Button(fBottom,text="Quitter",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
             # Recuperation du contenu du word
             sortie = self.readDocxFile()
@@ -664,3 +666,11 @@ class fncArreraWork :
             return True
         else :
             return False
+    
+    def __fncSaveGUIWord(self,wText:ScrolledText):
+        content = wText.get(1.0,END)
+        sortie = self.__objWord.writeEcrase(content)
+        if (sortie == True):
+            showinfo("Word","Document sauvegarder")
+        else :
+            showerror("Word","Le document ne c'est pas sauvergarder")
