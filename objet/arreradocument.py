@@ -50,7 +50,7 @@ class CArreraDocx :
                     self.__document = load(self.__fileName)
                     content = ""
                     for para in self.__document.getElementsByType(text.P):
-                        content += teletype.extractText(para)
+                        content += teletype.extractText(para)+"\n"
                     return content
         else :
             return "error"

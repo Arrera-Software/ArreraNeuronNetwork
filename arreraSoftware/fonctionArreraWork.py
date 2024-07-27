@@ -401,7 +401,7 @@ class fncArreraWork :
             return False
         
     def openWordOs(self):
-        if (self.__tableurOpen==True):
+        if (self.__wordOpen==True):
             if ((self.__dectOs.osLinux() == True) 
                 and (self.__dectOs.osWindows() == False)):
                 subprocess.call(["xdg-open",self.__fileWork])
