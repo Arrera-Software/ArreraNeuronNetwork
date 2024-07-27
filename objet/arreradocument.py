@@ -1,6 +1,7 @@
 from docx import Document
 from odf import text, opendocument ,teletype
 from odf.opendocument import load
+from odf.text import P
 
 class CArreraDocx :
     def __init__(self,fileName:str) :
@@ -32,6 +33,27 @@ class CArreraDocx :
                         p = text.P()
                         p.addText(line)
                         self.__document.text.addElement(p)
+                    self.__document.save(self.__fileName)
+                    return True
+        else :
+            return False
+    
+    def writeEcrase(self,content:str):
+        if (self.__init==True):
+            if (self.__typeFile=="docx"):
+                del self.__document
+                self.__document = None 
+                self.__document = Document()
+                self.__document.add_paragraph(content)
+                self.__document.save(self.__fileName)
+                return True
+            else :
+                if (self.__typeFile=="odt"):
+                    del self.__document
+                    self.__document = None 
+                    self.__document = opendocument.OpenDocumentText()
+                    paragraphe = P(text=content)
+                    self.__document.text.addElement(paragraphe)
                     self.__document.save(self.__fileName)
                     return True
         else :
