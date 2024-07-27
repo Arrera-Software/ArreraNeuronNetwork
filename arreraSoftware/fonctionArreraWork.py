@@ -653,7 +653,9 @@ class fncArreraWork :
             btnSave = Button(fBottom,text="Sauvegarder",
                              font=("arial","15"),command= lambda : self.__fncSaveGUIWord(viewWord),
                              bg=self.__guiColor,fg=self.__textColor)
-            btnQuitter = Button(fBottom,text="Quitter",font=("arial","15"),bg=self.__guiColor,fg=self.__textColor)
+            btnQuitter = Button(fBottom,text="Quitter",
+                                font=("arial","15"),command= lambda : self.__fncQuitGUIWord(viewWord,gWord),
+                                bg=self.__guiColor,fg=self.__textColor)
             # Recuperation du contenu du word
             sortie = self.readDocxFile()
             viewWord.delete(1.0,END)
@@ -674,3 +676,9 @@ class fncArreraWork :
             showinfo("Word","Document sauvegarder")
         else :
             showerror("Word","Le document ne c'est pas sauvergarder")
+    
+    def __fncQuitGUIWord(self,wText:Scrollbar,w:Toplevel):
+        content = wText.get(1.0,END)
+        self.__objWord.writeEcrase(content)
+        w.destroy()
+       
