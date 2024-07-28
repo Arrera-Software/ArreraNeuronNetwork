@@ -26,6 +26,7 @@ class fncArreraWork :
         # Varriable de nom du fichier
         self.__fileTableur = ""
         self.__fileWork = ""
+        self.__folderProject = ""
         # Chargement des variable
         self.__nameAssistant = neuronfile.lectureJSON("name")
         self.__iconAssistant = neuronfile.lectureJSON("iconAssistant")
@@ -688,10 +689,19 @@ class fncArreraWork :
 
     def createProject(self,name:str):
         if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
+            dataJson = {"name":"","type":"","tache":{}}
             folder = self.__wordEmplacement+"/"+name
+            dataJson["name"] = name
             try : 
                 os.makedirs(folder,exist_ok=True)
-                return True
+                self.__folderProject = folder
+                jsonPath = os.path.join(folder,name+".apr")
+                try :
+                    with open(jsonPath,"w",encoding="utf-8") as file :
+                        json.dump(dataJson,file,ensure_ascii=False,indent=4)
+                        return True
+                except Exception as e :
+                    return False
             except Exception as e :
                 return False
         else :
