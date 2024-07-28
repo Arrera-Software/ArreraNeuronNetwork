@@ -23,6 +23,7 @@ class gestionNetwork:
         self.__listVille = []
         self.__detecteurOS = detecteurOS
         self.__moteurRechercheDefault = ""
+        self.__workEmplacement = ""
         self.__oldRequette = str
         self.__oldSorti = str
         
@@ -53,6 +54,7 @@ class gestionNetwork:
         self.__listVille = self.__fileUser.lectureJSONList("listVille")
         self.__adresseDomicile = self.__fileUser.lectureJSON("adresseDomicile")
         self.__adresseTravail = self.__fileUser.lectureJSON("adresseTravail")
+        self.__workEmplacement = self.__fileUser.lectureJSON("wordFolder")
     
     def getVous(self):
         return bool(self.__vous)
@@ -183,3 +185,6 @@ class gestionNetwork:
         Methode pour retourner l'adresse du lieu de travail
         """
         return  self.__adresseTravail 
+
+    def getWorkEmplacement(self):
+        return self.__workEmplacement

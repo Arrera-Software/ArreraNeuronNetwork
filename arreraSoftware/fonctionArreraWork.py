@@ -1,3 +1,4 @@
+from ObjetsNetwork.gestion import*
 from tkinter import filedialog 
 from tkinter import*
 from tkinter.scrolledtext import *
@@ -12,12 +13,13 @@ import os
 
 
 class fncArreraWork :
-    def __init__(self,neuronfile:jsonWork,dectOs:OS):
+    def __init__(self,gestion:gestionNetwork,neuronfile:jsonWork,dectOs:OS):
         # Objet 
         self.__dectOs = dectOs
         # Variable etat ouverture fichier
         self.__tableurOpen = False
         self.__wordOpen = False 
+        self.__projectOpen = False
         # Varriable des objet 
         self.__objTableur = None
         self.__objWord = None
@@ -29,7 +31,8 @@ class fncArreraWork :
         self.__iconAssistant = neuronfile.lectureJSON("iconAssistant")
         self.__guiColor = neuronfile.lectureJSON("interfaceColor")
         self.__textColor =  neuronfile.lectureJSON("interfaceTextColor")
-
+        # Recupertion de l'emplacement de travail de assistant
+        self.__wordEmplacement = gestion.getWorkEmplacement()
 
     def openTableur(self) : 
         if (self.__tableurOpen==False):
@@ -681,4 +684,15 @@ class fncArreraWork :
         content = wText.get(1.0,END)
         self.__objWord.writeEcrase(content)
         w.destroy()
-       
+    
+
+    def createProject(self,name:str):
+        if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
+            folder = self.__wordEmplacement+"/"+name
+            try : 
+                os.makedirs(folder,exist_ok=True)
+                return True
+            except Exception as e :
+                return False
+        else :
+            return False

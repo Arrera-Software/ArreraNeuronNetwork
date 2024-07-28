@@ -49,7 +49,7 @@ class fncArreraNetwork:
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
-        self.__objetArreraWork = fncArreraWork(self.__configNeuron,self.__detecteurOS)
+        self.__objetArreraWork = fncArreraWork(self.__gestionNeuron,self.__configNeuron,self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1478,4 +1478,20 @@ class fncArreraNetwork:
                 text = "Désoler "+self.__genre+". Il est impossible pour moi de vous ouvrir le traitement de texte avec mon interface"
             else :
                 text = "Désoler "+self.__user+". Il est impossible pour moi de t'ouvrir le traitement de texte avec mon interface"
+        return text
+
+    def sortieCreateFolder(self,requette:str):
+        name = requette.replace("cree un projet nommer","")
+        sortie = self.__objetArreraWork.createProject(name)
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous es bien crée votre projet "+name+". En quoi ce project consiste ?"
+            else :
+                text  = "Ton projet nommer "+name+" a bien etais crée. En quoi ce project consiste ?"
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler mais un probleme m'empéche de crée ton projet "+name
+            else :
+                text  = "Désoler mais un probleme m'empéche de crée ton projet "+name
+        
         return text

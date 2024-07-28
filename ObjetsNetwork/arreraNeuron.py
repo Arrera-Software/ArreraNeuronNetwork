@@ -81,6 +81,7 @@ class ArreraNetwork :
         7 : Ouverture de fichier
         8 : Fermeture de fichier
         9 : Lecture fichier
+        10 : Creation d'un projet
         11 : Erreur du resumer actulités
         12 : Reussite du resumer actulités
         13 : Lecture tableur

@@ -26,5 +26,6 @@
     "moteurRecherche":"",
     "emplacementEvenenement" :"evenementUser.json",
     "emplacementTache":"tache.json",
-    "tokenGithub":""
+    "tokenGithub":"",
+    "wordFolder":"C:/Users/bapti/OneDrive/Bureau"
 }
