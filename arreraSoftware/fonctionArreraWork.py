@@ -689,11 +689,20 @@ class fncArreraWork :
         w.destroy()
     
     def openProjet(self,project:str):
-        repertoir = Path(self.__wordEmplacement)
+        if (self.__projectOpen == False):
+            repertoir = Path(self.__wordEmplacement)
+            dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+            for i in range(0,len(dossier)):
+                if (project == dossier[i]):
+                    self.__folderProject = self.__wordEmplacement+"/"+project
+                    self.__jsonFileProject = jsonWork(os.path.join(self.__folderProject,project+".apr"))
+                    self.__projectOpen = True
+                    return True
+            return False
+        else :
+            return False
 
-        dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
-
-        print(dossier)
+        
 
     def createProject(self,name:str):
         if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
