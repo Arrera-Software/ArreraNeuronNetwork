@@ -61,6 +61,11 @@ class neuronWork :
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieCloseDocx(),""]
                             self.__objHistorique.setAction("Fermeture d'un fichier word")
                             self.__valeurOut = 8
+                        else :
+                            if ("projet" in requette):
+                                self.__listSortie = [self.__fonctionArreraNetwork.sortieCloseProject(),""]
+                                self.__objHistorique.setAction("Fermeture d'un projet")
+                                self.__valeurOut = 1
                 else :
                     if (("lit" in requette) or ("lis" in requette)):
                         if ("word" in requette):
@@ -170,3 +175,8 @@ class neuronWork :
                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieSetTypeProjet(requette),""]
                                                     self.__objHistorique.setAction("Mise en place d'un type au projet")
                                                     self.__valeurOut = 5
+                                                else :
+                                                    if (("ouvre le projet nommer" in requette) or ("ouvre le projet nommer" in requette)):
+                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenProjet(),""]
+                                                        self.__objHistorique.setAction("Ouverture d'un projet")
+                                                        self.__valeurOut = 14

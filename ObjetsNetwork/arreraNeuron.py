@@ -85,6 +85,7 @@ class ArreraNetwork :
         11 : Erreur du resumer actulités
         12 : Reussite du resumer actulités
         13 : Lecture tableur
+        14 : Ouverture d'un projet
         15 : Arret de l'assistant
         """
         return self.__valeurOut

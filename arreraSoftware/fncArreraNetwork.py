@@ -1485,6 +1485,7 @@ class fncArreraNetwork:
         tampon = tampon.replace("cree un nouveau projet nommer","")
         tampon = tampon.replace("cree un projet nomme","")
         name = tampon.replace("cree un nouveau projet nomme","")
+        name = name.replace(" ","")
         sortie = self.__objetArreraWork.createProject(name)
         if (sortie == True):
             if (self.__etatVous == True):
@@ -1512,4 +1513,26 @@ class fncArreraNetwork:
                 text = "Désoler mais un probleme m'empéche de mettre le type sur votre projet."
             else :
                 text  = "Désoler mais un probleme m'empéche de mettre le type sur ton projet."
+        return text
+    
+    def sortieOpenProjet(self):
+
+        self.__objetArreraWork.openProjet("test")
+
+        return ""
+    
+    def sortieCloseProject(self):
+        sortie = self.__objetArreraWork.closeProject()
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien fermer votre projet "+self.__genre+"."
+            else :
+                text  = "Je t'ai bien fermer ton projet"
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+" mais il semble pas avoir de projet ouvert"
+            else :
+                text  = "Désoler "+self.__name+" mais il semble pas avoir de projet ouvert"
+        
         return text

@@ -10,7 +10,7 @@ from librairy.dectectionOS import*
 import subprocess
 import re
 import os
-
+from pathlib import Path
 
 class fncArreraWork :
     def __init__(self,gestion:gestionNetwork,neuronfile:jsonWork,dectOs:OS):
@@ -688,6 +688,12 @@ class fncArreraWork :
         self.__objWord.writeEcrase(content)
         w.destroy()
     
+    def openProjet(self,project:str):
+        repertoir = Path(self.__wordEmplacement)
+
+        dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+
+        print(dossier)
 
     def createProject(self,name:str):
         if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
@@ -714,6 +720,15 @@ class fncArreraWork :
     def setTypeProject(self,type:str):
         if ((type != "") and (self.__projectOpen == True)) :
             self.__jsonFileProject.EcritureJSON("type",type)
+            return True
+        else :
+            return False
+    
+    def closeProject(self):
+        if (self.__projectOpen == True):
+            self.__projectOpen = False
+            self.__folderProject = ""
+            self.__jsonFileProject = None
             return True
         else :
             return False
