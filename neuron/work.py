@@ -164,3 +164,8 @@ class neuronWork :
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFolder(requette),""]
                                                 self.__objHistorique.setAction("Creation d'un projet")
                                                 self.__valeurOut = 10
+                                            else :
+                                                if (("Quelle est le type de projet ?" in oldSortie) or ("le type est" in requette)):
+                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieSetTypeProjet(requette),""]
+                                                    self.__objHistorique.setAction("Mise en place d'un type au projet")
+                                                    self.__valeurOut = 5

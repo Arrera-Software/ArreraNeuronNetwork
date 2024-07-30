@@ -1485,13 +1485,28 @@ class fncArreraNetwork:
         sortie = self.__objetArreraWork.createProject(name)
         if (sortie == True):
             if (self.__etatVous == True):
-                text = "Je vous es bien crée votre projet "+name+". En quoi ce project consiste ?"
+                text = "Je vous es bien crée votre projet "+name+". Quelle est le type de projet ?"
             else :
-                text  = "Ton projet nommer "+name+" a bien etais crée. En quoi ce project consiste ?"
+                text  = "Ton projet nommer "+name+" a bien etais crée. Quelle est le type de projet ?"
         else :
             if (self.__etatVous == True):
                 text = "Désoler mais un probleme m'empéche de crée ton projet "+name
             else :
                 text  = "Désoler mais un probleme m'empéche de crée ton projet "+name
         
+        return text
+    
+    def sortieSetTypeProjet(self,requette:str):
+        type = requette.replace("le type est","")
+        sortie = self.__objetArreraWork.setTypeProject(type)
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien mit le type sur votre projet."
+            else :
+                text  = "Je t'ai bien mit le type sur ton projet."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler mais un probleme m'empéche de mettre le type sur votre projet."
+            else :
+                text  = "Désoler mais un probleme m'empéche de mettre le type sur ton projet."
         return text

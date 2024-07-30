@@ -23,6 +23,8 @@ class fncArreraWork :
         # Varriable des objet 
         self.__objTableur = None
         self.__objWord = None
+        # File JSON Project
+        self.__jsonFileProject = None
         # Varriable de nom du fichier
         self.__fileTableur = ""
         self.__fileWork = ""
@@ -699,10 +701,19 @@ class fncArreraWork :
                 try :
                     with open(jsonPath,"w",encoding="utf-8") as file :
                         json.dump(dataJson,file,ensure_ascii=False,indent=4)
-                        return True
+                    self.__jsonFileProject = jsonWork(jsonPath)
+                    self.__projectOpen = True
+                    return True
                 except Exception as e :
                     return False
             except Exception as e :
                 return False
+        else :
+            return False
+    
+    def setTypeProject(self,type:str):
+        if ((type != "") and (self.__projectOpen == True)) :
+            self.__jsonFileProject.EcritureJSON("type",type)
+            return True
         else :
             return False
