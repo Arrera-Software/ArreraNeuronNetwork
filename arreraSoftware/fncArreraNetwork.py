@@ -1481,7 +1481,10 @@ class fncArreraNetwork:
         return text
 
     def sortieCreateFolder(self,requette:str):
-        name = requette.replace("cree un projet nommer","")
+        tampon = requette.replace("cree un projet nommer","")
+        tampon = tampon.replace("cree un nouveau projet nommer","")
+        tampon = tampon.replace("cree un projet nomme","")
+        name = tampon.replace("cree un nouveau projet nomme","")
         sortie = self.__objetArreraWork.createProject(name)
         if (sortie == True):
             if (self.__etatVous == True):

@@ -160,7 +160,8 @@ class neuronWork :
                                                     self.__objHistorique.setAction("Ouverture du tableur "+self.__fonctionArreraNetwork.getFileTableur()+" dans l'interface de l'assistant")
                                                     self.__valeurOut = 5 
                                         else :
-                                            if ("cree un projet nommer" in requette):
+                                            if (("cree un projet nommer" in requette) or ("cree un nouveau projet nommer" in requette)
+                                                or ("cree un projet nomme" in requette) or ("cree un nouveau projet nomme" in requette)):
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFolder(requette),""]
                                                 self.__objHistorique.setAction("Creation d'un projet")
                                                 self.__valeurOut = 10
