@@ -741,3 +741,94 @@ class fncArreraWork :
             return True
         else :
             return False
+    
+    def createFileProject(self,mode:int,nameFile:str):
+        """
+        in : 
+            1 : exel 
+            2 : word
+            3 : odt
+            4 : txt
+            5 : python 
+            6 : h 
+            7 : json
+            8 : html
+            9 : css
+            10 : md
+            11 : cpp
+            12 : c
+        """
+        if ((self.__projectOpen == True) and (nameFile != "")):
+            emplacementFile = self.__folderProject+"/"
+            match mode :
+                case 1 : # Exel
+                    wb = Workbook()
+                    ws = wb.active
+                    ws.title = nameFile
+                    ws['A1'] = ""
+                    wb.save(emplacementFile+nameFile+".xlsx")
+                    del ws
+                    wb.close()
+                    del wb
+                    return True
+                case 2 : # word
+                    doc = Document()
+                    doc.add_paragraph("")
+                    doc.save(emplacementFile+nameFile+'.docx')
+                    return True
+                case 3 : # Odt
+                    doc = OpenDocumentText()
+                    p1 = P(text="")
+                    doc.text.addElement(p1)
+                    doc.save(emplacementFile+nameFile+".odt")
+                    return True
+                case 4 : # txt
+                    filePath = os.path.join(emplacementFile,nameFile+".txt")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("Texte file named "+nameFile)
+                    return True
+                case 5 : # python
+                    filePath = os.path.join(emplacementFile,nameFile+".py")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("# Python file named "+nameFile)
+                    return True
+                case 6 : # h
+                    filePath = os.path.join(emplacementFile,nameFile+".h")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// hearder file create named "+nameFile)
+                    return True
+                case 7 : # json
+                    dataJson = {}
+                    jsonPath = os.path.join(emplacementFile,nameFile+".json")
+                    with open(jsonPath,"w",encoding="utf-8") as file :
+                        json.dump(dataJson,file,ensure_ascii=False,indent=4)
+                    return True
+                case 8 : # html
+                    filePath = os.path.join(emplacementFile,nameFile+".html")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
+                    return True
+                case 9 : # css
+                    filePath = os.path.join(emplacementFile,nameFile+".css")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("/* CSS file named "+nameFile+" */")
+                    return True
+                case 10 : # md
+                    filePath = os.path.join(emplacementFile,nameFile+".md")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("File readme named "+nameFile)
+                    return True
+                case 11 : # cpp
+                    filePath = os.path.join(emplacementFile,nameFile+".cpp")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// C++ file named "+nameFile)
+                    return True
+                case 12 : # c
+                    filePath = os.path.join(emplacementFile,nameFile+".c")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// C file named "+nameFile)
+                    return True
+                case other :
+                    return False
+        else :
+            return False

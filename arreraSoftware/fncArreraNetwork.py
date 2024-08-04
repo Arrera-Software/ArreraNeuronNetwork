@@ -1515,11 +1515,23 @@ class fncArreraNetwork:
                 text  = "Désoler mais un probleme m'empéche de mettre le type sur ton projet."
         return text
     
-    def sortieOpenProjet(self):
-
-        self.__objetArreraWork.openProjet("test")
-
-        return ""
+    def sortieOpenProjet(self,requette:str):
+        projet = requette.replace("ouvre le projet nommer","")
+        projet = projet.replace("ouvre le projet nomme","")
+        projet = projet.replace("ouvre le projet","")
+        projet = projet.replace(" ","")
+        sortie = self.__objetArreraWork.openProjet(projet)
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien ouvert le projet "+projet+" "+self.__genre+". Que voulez vous faire ?"
+            else :
+                text = "Le projet "+projet+" est bien ouvert. Que veux-tu faire ?"
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+" mais je ne peux pas t'ouvrir le projet "+projet+". Il n'existe peut-étre pas"
+            else :
+                text = "Désoler mais je trouve pas le projet "+projet+"."
+        return projet,text
     
     def sortieCloseProject(self):
         sortie = self.__objetArreraWork.closeProject()
@@ -1536,3 +1548,126 @@ class fncArreraNetwork:
                 text  = "Désoler "+self.__name+" mais il semble pas avoir de projet ouvert"
         
         return text
+    
+    def sortieAddfile(self,type:str,name:str):
+        """
+        Type:
+            exel 
+            word
+            odt
+            txt
+            python 
+            h 
+            json
+            html
+            css
+            md
+            cpp
+            c
+        """
+        mode = int 
+        typeName = ""
+        match type :
+            case "exel" :
+                mode  = 1
+                typeName = "exel"
+            case "word" :
+                mode = 2
+                typeName = "word"
+            case "odt" :
+                mode = 3
+                typeName = "open document texte"
+            case "txt":
+                mode = 4
+                typeName = "texte"
+            case "python" :
+                mode = 5 
+                typeName = "python"
+            case "h" :
+                mode = 6
+                typeName = "en tête c++"
+            case "json":
+                mode = 7
+                typeName = "json"
+            case "html":
+                mode = 8
+                typeName = "html"
+            case "css":
+                mode = 9 
+                typeName = "css"
+            case "md":
+                mode = 10
+                typeName = "md"
+            case "cpp":
+                mode = 11
+                typeName = "laguage c++"
+            case "c" :
+                mode = 12
+                typeName = "language c"
+            
+        sortie = self.__objetArreraWork.createFileProject(mode,name)
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien crée votre fichier "+typeName+". Voulez-vous l'ouvrir ?"
+            else : 
+                text = "Je t'ai bien crée ton fichier "+typeName+". Es que tu veux que je te l'ouvre ?"
+        else :
+            if (self.__etatVous == True):
+                text = "Je pense que vous avez pas de projet d'ouvert. Car je ne peux pas crée votre fichier."
+            else :
+                text = "Je pense que tu n'a pas ouvert un projet. Je ne peux pas crée ton fichier."
+        
+        return text
+
+    def sortieCreateFileDirect(self,requette:str):
+        """
+        Phrase possible : 
+            cree un fichier #type#  #nom#
+        """
+        nom = requette.replace("cree un fichier","").replace("word","").replace("odt","").replace("txt","").replace("python","")
+        nom = nom.replace("h","").replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","")
+        nom = nom.replace("c","").replace("language c","").replace("exel","").replace("nommer","")
+        nom = nom.replace(" ","")
+
+        chaine = requette.replace("cree un fichier","")
+        chaine = chaine.replace("nommer","")
+
+        if ("word" in chaine):
+            typeFile = "word"
+        else :
+            if ("odt"in chaine):
+                typeFile = "odt"
+            else :
+                if ("txt"in chaine):
+                    typeFile = "txt"
+                else :
+                    if ("python"in chaine):
+                        typeFile = "python"
+                    else :
+                        if ("h" in chaine):
+                            typeFile = "h"
+                        else :
+                            if ("json" in chaine):
+                                typeFile ="json"
+                            else :
+                                if ("html" in chaine):
+                                    typeFile = "html"
+                                else :
+                                    if ("css" in chaine):
+                                        typeFile = "css"
+                                    else :
+                                        if ("md" in chaine):
+                                            typeFile = "md"
+                                        else :
+                                            if ("cpp" in chaine):
+                                                typeFile = "cpp"
+                                            else :
+                                                if ("language c" in chaine):
+                                                    typeFile = "c"
+                                                else :
+                                                    if ( "exel" in chaine):
+                                                        typeFile = "exel"
+                                                    else :
+                                                        typeFile = ""
+        return self.sortieAddfile(typeFile,nom)

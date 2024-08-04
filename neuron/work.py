@@ -176,7 +176,20 @@ class neuronWork :
                                                     self.__objHistorique.setAction("Mise en place d'un type au projet")
                                                     self.__valeurOut = 5
                                                 else :
-                                                    if (("ouvre le projet nommer" in requette) or ("ouvre le projet nommer" in requette)):
-                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenProjet(),""]
-                                                        self.__objHistorique.setAction("Ouverture d'un projet")
+                                                    if (("ouvre le projet nommer" in requette) or ("ouvre le projet nomme" in requette) or ("ouvre le projet" in requette)):
+                                                        projet,text = self.__fonctionArreraNetwork.sortieOpenProjet(requette)
+                                                        self.__listSortie = [text,""]
+                                                        self.__objHistorique.setAction("Ouverture du projet "+projet)
                                                         self.__valeurOut = 14
+                                                    else :
+                                                        if ("cree un fichier" in requette):
+                                                            if ("nommer" in requette and ( 
+                                                                ("word"in requette) or ("odt"in requette) or 
+                                                                ("txt"in requette) or ("python" in requette) or (
+                                                                "h" in requette) or ("json" in requette) or 
+                                                                ("html" in requette) or ("css" in requette) or
+                                                                ("md" in requette) or ("cpp" in requette) or 
+                                                                ("c" in requette) or ("exel" in requette)
+                                                                )):
+                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
+                                                                self.__valeurOut = 16
