@@ -9,6 +9,7 @@ class chaine :
         chaine = chaine.replace("è","e")
         chaine = chaine.replace("à","a")
         chaine = chaine.replace("ç","c")
+        chaine = chaine.replace("ê","e")
         return chaine.lower()
     
     def firstMots(chaine:str,liste:list):
