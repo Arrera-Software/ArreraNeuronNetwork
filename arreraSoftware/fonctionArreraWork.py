@@ -877,5 +877,11 @@ class fncArreraWork :
         else :
             return False
     
+    def getNameProjet(self):
+        if (self.__projectOpen == True):
+            return self.__jsonFileProject.lectureJSON("name")
+        else :
+            return ""
+
     def getNameLastFileCreate(self):
         return self.__lastCreateFile
