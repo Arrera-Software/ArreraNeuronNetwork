@@ -196,4 +196,5 @@ class neuronWork :
                                                                 ("js" in requette) or ("java" in requette) or 
                                                                 ("kotlin" in requette )or ("kt" in requette))):
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
+                                                                self.__objHistorique.setAction("Creation du fichier "+self.__fonctionArreraNetwork.getNameLastFile()+" dans le projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                 self.__valeurOut = 16
