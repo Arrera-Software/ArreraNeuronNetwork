@@ -189,7 +189,9 @@ class neuronWork :
                                                                 "h" in requette) or ("json" in requette) or 
                                                                 ("html" in requette) or ("css" in requette) or
                                                                 ("md" in requette) or ("cpp" in requette) or 
-                                                                ("c" in requette) or ("exel" in requette)
-                                                                )):
+                                                                ("c" in requette) or ("exel" in requette) or
+                                                                ("texte" in requette) or ("en tete" in requette)or
+                                                                ("open texte document " in requette) or ("tableur" in requette)
+                                                                or ("language c++" in requette))):
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
                                                                 self.__valeurOut = 16

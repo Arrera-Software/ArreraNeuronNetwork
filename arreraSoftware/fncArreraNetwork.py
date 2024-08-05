@@ -1627,46 +1627,43 @@ class fncArreraNetwork:
         """
         nom = requette.replace("cree un fichier","").replace("word","").replace("odt","").replace("txt","").replace("python","")
         nom = nom.replace("h","").replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","")
-        nom = nom.replace("c","").replace("language c","").replace("exel","").replace("nommer","")
-        nom = nom.replace(" ","")
+        nom = nom.replace("c","").replace("language c","").replace("exel","").replace("nommer","").replace("texte","")
+        nom = nom.replace("en tete","").replace("open texte document","").replace("tableur","").replace("language c++","").replace(" ","")
 
-        chaine = requette.replace("cree un fichier","")
-        chaine = chaine.replace("nommer","")
-
-        if ("word" in chaine):
+        if ("word" in requette):
             typeFile = "word"
         else :
-            if ("odt"in chaine):
+            if (("odt"in requette) or ("open texte document" in requette)):
                 typeFile = "odt"
             else :
-                if ("txt"in chaine):
+                if (("txt"in requette) or ("texte" in requette)):
                     typeFile = "txt"
                 else :
-                    if ("python"in chaine):
+                    if ("python"in requette):
                         typeFile = "python"
                     else :
-                        if ("h" in chaine):
+                        if (("h" in requette) or ("en tete" in requette)):
                             typeFile = "h"
                         else :
-                            if ("json" in chaine):
+                            if ("json" in requette):
                                 typeFile ="json"
                             else :
-                                if ("html" in chaine):
+                                if ("html" in requette):
                                     typeFile = "html"
                                 else :
-                                    if ("css" in chaine):
+                                    if ("css" in requette):
                                         typeFile = "css"
                                     else :
-                                        if ("md" in chaine):
+                                        if ("md" in requette):
                                             typeFile = "md"
                                         else :
-                                            if ("cpp" in chaine):
+                                            if (("cpp" in requette )or ("language c++" in requette)):
                                                 typeFile = "cpp"
                                             else :
-                                                if ("language c" in chaine):
+                                                if (("language c" in requette) ):
                                                     typeFile = "c"
                                                 else :
-                                                    if ( "exel" in chaine):
+                                                    if (("exel" in requette) or ("tableur" in requette)):
                                                         typeFile = "exel"
                                                     else :
                                                         typeFile = ""
