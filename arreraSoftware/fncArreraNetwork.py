@@ -1698,3 +1698,9 @@ class fncArreraNetwork:
                                                                     else :
                                                                         typeFile = ""
         return self.sortieAddfile(typeFile,nom)
+    
+    def getNameProjetOpen(self):
+        return self.__objetArreraWork.getNameProjet()
+
+    def getNameLastFile(self):
+        return self.__objetArreraWork.getNameLastFileCreate()
