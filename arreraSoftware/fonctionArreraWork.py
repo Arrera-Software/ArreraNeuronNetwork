@@ -29,6 +29,7 @@ class fncArreraWork :
         self.__fileTableur = ""
         self.__fileWork = ""
         self.__folderProject = ""
+        self.__lastCreateFile = ""
         # Chargement des variable
         self.__nameAssistant = neuronfile.lectureJSON("name")
         self.__iconAssistant = neuronfile.lectureJSON("iconAssistant")
@@ -737,6 +738,7 @@ class fncArreraWork :
         if (self.__projectOpen == True):
             self.__projectOpen = False
             self.__folderProject = ""
+            self.__lastCreateFile = ""
             self.__jsonFileProject = None
             return True
         else :
@@ -766,89 +768,107 @@ class fncArreraWork :
             emplacementFile = self.__folderProject+"/"
             match mode :
                 case 1 : # Exel
+                    self.__lastCreateFile = nameFile+".xlsx"
                     wb = Workbook()
                     ws = wb.active
                     ws.title = nameFile
                     ws['A1'] = ""
-                    wb.save(emplacementFile+nameFile+".xlsx")
+                    wb.save(emplacementFile+self.__lastCreateFile)
                     del ws
                     wb.close()
                     del wb
                     return True
                 case 2 : # word
+                    self.__lastCreateFile = nameFile+'.docx'
                     doc = Document()
                     doc.add_paragraph("")
-                    doc.save(emplacementFile+nameFile+'.docx')
+                    doc.save(emplacementFile+self.__lastCreateFile)
                     return True
                 case 3 : # Odt
+                    self.__lastCreateFile = nameFile+".odt"
                     doc = OpenDocumentText()
                     p1 = P(text="")
                     doc.text.addElement(p1)
-                    doc.save(emplacementFile+nameFile+".odt")
+                    doc.save(emplacementFile+self.__lastCreateFile)
                     return True
                 case 4 : # txt
-                    filePath = os.path.join(emplacementFile,nameFile+".txt")
+                    self.__lastCreateFile = nameFile+".txt"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("Texte file named "+nameFile)
                     return True
                 case 5 : # python
-                    filePath = os.path.join(emplacementFile,nameFile+".py")
+                    self.__lastCreateFile = nameFile+".py"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("# Python file named "+nameFile)
                     return True
                 case 6 : # h
-                    filePath = os.path.join(emplacementFile,nameFile+".h")
+                    self.__lastCreateFile = nameFile+".h"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// hearder file create named "+nameFile)
                     return True
                 case 7 : # json
+                    self.__lastCreateFile = nameFile+".json"
                     dataJson = {}
-                    jsonPath = os.path.join(emplacementFile,nameFile+".json")
+                    jsonPath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(jsonPath,"w",encoding="utf-8") as file :
                         json.dump(dataJson,file,ensure_ascii=False,indent=4)
                     return True
                 case 8 : # html
-                    filePath = os.path.join(emplacementFile,nameFile+".html")
+                    self.__lastCreateFile = nameFile+".html"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
-                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
+                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">'
+                                   +'\n<meta name="viewport" content="width=device-width, initial-scale=1.0">'+
+                                   '\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
                     return True
                 case 9 : # css
-                    filePath = os.path.join(emplacementFile,nameFile+".css")
+                    self.__lastCreateFile = nameFile+".css"
+                    filePath = os.path.join(emplacementFile,)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("/* CSS file named "+nameFile+" */")
                     return True
                 case 10 : # md
-                    filePath = os.path.join(emplacementFile,nameFile+".md")
+                    self.__lastCreateFile = nameFile+".md"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("File readme named "+nameFile)
                     return True
                 case 11 : # cpp
-                    filePath = os.path.join(emplacementFile,nameFile+".cpp")
+                    self.__lastCreateFile = nameFile+".cpp"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// C++ file named "+nameFile)
                     return True
                 case 12 : # c
-                    filePath = os.path.join(emplacementFile,nameFile+".c")
+                    self.__lastCreateFile = nameFile+".c"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// C file named "+nameFile)
                     return True
                 case 13 : # php
-                    filePath = os.path.join(emplacementFile,nameFile+".php")
+                    self.__lastCreateFile = nameFile+".php"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// PHP file named "+nameFile)
                     return True
                 case 14 : # javascript
-                    filePath = os.path.join(emplacementFile,nameFile+".js")
+                    self.__lastCreateFile = nameFile+".js"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// JavaScript file named "+nameFile)
                     return True
                 case 15 : # java
-                    filePath = os.path.join(emplacementFile,nameFile+".java")
+                    self.__lastCreateFile = nameFile+".java"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// Java file named "+nameFile)
                     return True
                 case 16 : # kt
-                    filePath = os.path.join(emplacementFile,nameFile+".kt")
+                    self.__lastCreateFile = nameFile+".kt"
+                    filePath = os.path.join(emplacementFile,self.__lastCreateFile)
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// Kotlin file named "+nameFile)
                     return True
@@ -856,3 +876,6 @@ class fncArreraWork :
                     return False
         else :
             return False
+    
+    def getNameLastFileCreate(self):
+        return self.__lastCreateFile
