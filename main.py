@@ -10,7 +10,7 @@ if mode == 1 :
     neuron = ArreraNetwork("configUser.json","configNeuron1.json","listFete.json") 
 else :
     neuron = ArreraNetwork("configUser.json","configNeuron2.json","listFete.json")
-print("Programme de teste d'algorythme de chatBots.\nPour stopper la discution avec le chats bots marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
+print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 print(nom+" $ "+ neuron.boot())
 while valeur != 15 :
     requette =  str(input("Vous $ "))
