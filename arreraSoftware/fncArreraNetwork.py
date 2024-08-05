@@ -1564,6 +1564,10 @@ class fncArreraNetwork:
             md
             cpp
             c
+            php
+            js
+            java
+            kt
         """
         mode = int 
         typeName = ""
@@ -1604,6 +1608,18 @@ class fncArreraNetwork:
             case "c" :
                 mode = 12
                 typeName = "language c"
+            case "php" :
+                mode = 13 
+                typeName = "PHP"
+            case "js" :
+                mode = 14 
+                typeName = "JavaScript"
+            case "java" :
+                mode = 15
+                typeName = "Java"
+            case "kt" :
+                mode = 16
+                typeName = "Kotlin"
             
         sortie = self.__objetArreraWork.createFileProject(mode,name)
 
@@ -1626,9 +1642,11 @@ class fncArreraNetwork:
             cree un fichier #type#  #nom#
         """
         nom = requette.replace("cree un fichier","").replace("word","").replace("odt","").replace("txt","").replace("python","")
-        nom = nom.replace("h","").replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","")
-        nom = nom.replace("c","").replace("language c","").replace("exel","").replace("nommer","").replace("texte","")
-        nom = nom.replace("en tete","").replace("open texte document","").replace("tableur","").replace("language c++","").replace(" ","")
+        nom = nom.replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","").replace("language c","")
+        nom = nom.replace("exel","").replace("nommer","").replace("texte","").replace("en tete","").replace("open texte document","").replace("tableur","")
+        nom = nom.replace("language c++","").replace("php","").replace("javascript","").replace("java script","").replace("java","").replace("kotlin","")
+        nom = nom.replace("kt","").replace("js","")
+        nom = nom.replace(" ","") # Pas touche
 
         if ("word" in requette):
             typeFile = "word"
@@ -1642,7 +1660,7 @@ class fncArreraNetwork:
                     if ("python"in requette):
                         typeFile = "python"
                     else :
-                        if (("h" in requette) or ("en tete" in requette)):
+                        if (("en tete" in requette)):
                             typeFile = "h"
                         else :
                             if ("json" in requette):
@@ -1666,5 +1684,17 @@ class fncArreraNetwork:
                                                     if (("exel" in requette) or ("tableur" in requette)):
                                                         typeFile = "exel"
                                                     else :
-                                                        typeFile = ""
+                                                        if ("php" in requette):
+                                                            typeFile = "php"
+                                                        else :
+                                                            if (("javascript" in requette) or ("java script" in requette) or ("js" in requette)):
+                                                                typeFile = "js"
+                                                            else :
+                                                                if ("java" in requette):
+                                                                    typeFile = "java"
+                                                                else :
+                                                                    if (("kotlin" in requette )or ("kt" in requette)):
+                                                                        typeFile = "kt"
+                                                                    else :
+                                                                        typeFile = ""
         return self.sortieAddfile(typeFile,nom)

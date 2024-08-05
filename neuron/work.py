@@ -185,13 +185,15 @@ class neuronWork :
                                                         if ("cree un fichier" in requette):
                                                             if ("nommer" in requette and ( 
                                                                 ("word"in requette) or ("odt"in requette) or 
-                                                                ("txt"in requette) or ("python" in requette) or (
-                                                                "h" in requette) or ("json" in requette) or 
-                                                                ("html" in requette) or ("css" in requette) or
-                                                                ("md" in requette) or ("cpp" in requette) or 
-                                                                ("c" in requette) or ("exel" in requette) or
+                                                                ("txt"in requette) or ("python" in requette)  
+                                                                or ("json" in requette) or ("html" in requette) or 
+                                                                ("css" in requette) or("md" in requette) or 
+                                                                ("cpp" in requette) or ("exel" in requette) or
                                                                 ("texte" in requette) or ("en tete" in requette)or
                                                                 ("open texte document " in requette) or ("tableur" in requette)
-                                                                or ("language c++" in requette))):
+                                                                or ("language c++" in requette) or ("php" in requette) or
+                                                                ("javascript" in requette) or ("java script" in requette) or 
+                                                                ("js" in requette) or ("java" in requette) or 
+                                                                ("kotlin" in requette )or ("kt" in requette))):
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
                                                                 self.__valeurOut = 16

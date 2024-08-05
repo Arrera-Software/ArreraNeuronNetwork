@@ -757,6 +757,10 @@ class fncArreraWork :
             10 : md
             11 : cpp
             12 : c
+            13 : php
+            14 : js
+            15 : java
+            16 : kt (kotlin)
         """
         if ((self.__projectOpen == True) and (nameFile != "")):
             emplacementFile = self.__folderProject+"/"
@@ -827,6 +831,26 @@ class fncArreraWork :
                     filePath = os.path.join(emplacementFile,nameFile+".c")
                     with open(filePath,"w",encoding="utf-8") as file :
                         file.write("// C file named "+nameFile)
+                    return True
+                case 13 : # php
+                    filePath = os.path.join(emplacementFile,nameFile+".php")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// PHP file named "+nameFile)
+                    return True
+                case 14 : # javascript
+                    filePath = os.path.join(emplacementFile,nameFile+".js")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// JavaScript file named "+nameFile)
+                    return True
+                case 15 : # java
+                    filePath = os.path.join(emplacementFile,nameFile+".java")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// Java file named "+nameFile)
+                    return True
+                case 16 : # kt
+                    filePath = os.path.join(emplacementFile,nameFile+".kt")
+                    with open(filePath,"w",encoding="utf-8") as file :
+                        file.write("// Kotlin file named "+nameFile)
                     return True
                 case other :
                     return False
