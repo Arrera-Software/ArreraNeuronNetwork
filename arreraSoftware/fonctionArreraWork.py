@@ -885,6 +885,38 @@ class fncArreraWork :
 
     def getNameLastFileCreate(self):
         return self.__lastCreateFile
+    
+    def openFileProject(self,file:str):
+        """
+        0 : Error 
+        1 : Open by os 
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__projectOpen == True) and (file != "")):
+            if (("docx"in file) or ("odt" in file)):
+                self.__objWord = CArreraDocx(self.__folderProject+"/"+file)
+                self.__fileWord = self.__folderProject+"/"+self.__lastCreateFile
+                self.__wordOpen = True
+                return 2
+            else :
+                if ("xlsx" in file):
+                    self.__objTableur = CArreraTableur(self.__folderProject+"/"+file)
+                    self.__fileTableur = self.__folderProject+"/"+file
+                    self.__tableurOpen = True
+                    return 3
+                else :
+                    if ((self.__dectOs.osLinux() == True) 
+                        and (self.__dectOs.osWindows() == False)):
+                        subprocess.call(["xdg-open",self.__folderProject+"/"+file])
+                        return 1
+                    else :
+                        if ((self.__dectOs.osLinux() == False) 
+                        and (self.__dectOs.osWindows() == True)):
+                            os.startfile(self.__folderProject+"/"+file)
+                            return 1
+                        else :
+                            return 0
 
     def openLastFileCreate(self):
         """
@@ -893,33 +925,9 @@ class fncArreraWork :
         2 : Open by ArreraDocx
         3 : Open bu ArreraTableur
         """
-        if ((self.__projectOpen == True) and (self.__lastCreateFile != "")):
-            if (("docx"in self.__lastCreateFile) or ("odt" in self.__lastCreateFile)):
-                self.__objWord = CArreraDocx(self.__folderProject+"/"+self.__lastCreateFile)
-                self.__fileWord = self.__folderProject+"/"+self.__lastCreateFile
-                self.__lastCreateFile = ""
-                self.__wordOpen = True
-                return 2
-            else :
-                if ("xlsx" in self.__lastCreateFile):
-                    self.__objTableur = CArreraTableur(self.__folderProject+"/"+self.__lastCreateFile)
-                    self.__fileTableur = self.__folderProject+"/"+self.__lastCreateFile
-                    self.__lastCreateFile = ""
-                    self.__tableurOpen = True
-                    return 3
-                else :
-                    if ((self.__dectOs.osLinux() == True) 
-                        and (self.__dectOs.osWindows() == False)):
-                        subprocess.call(["xdg-open",self.__folderProject+"/"+self.__lastCreateFile])
-                        self.__lastCreateFile = ""
-                        return 1
-                    else :
-                        if ((self.__dectOs.osLinux() == False) 
-                        and (self.__dectOs.osWindows() == True)):
-                            os.startfile(self.__folderProject+"/"+self.__lastCreateFile)
-                            self.__lastCreateFile = ""
-                            return 1
-                        else :
-                            return 0
+        if ((self.__lastCreateFile != "")):
+            sortie = self.openFileProject(self.__lastCreateFile)
+            self.__lastCreateFile = ""
+            return sortie
         else :
             return 0
