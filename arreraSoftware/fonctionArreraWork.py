@@ -30,6 +30,7 @@ class fncArreraWork :
         self.__fileWord = ""
         self.__folderProject = ""
         self.__lastCreateFile = ""
+        self.__listFileProjet = []
         # Chargement des variable
         self.__nameAssistant = neuronfile.lectureJSON("name")
         self.__iconAssistant = neuronfile.lectureJSON("iconAssistant")
@@ -740,6 +741,7 @@ class fncArreraWork :
             self.__folderProject = ""
             self.__lastCreateFile = ""
             self.__jsonFileProject = None
+            self.__listFileProjet = []
             return True
         else :
             return False
@@ -931,3 +933,22 @@ class fncArreraWork :
             return sortie
         else :
             return 0
+    
+    def setlistFileProject(self):
+        if (self.__projectOpen == True):
+            try:
+                # Liste les fichiers et dossiers dans le répertoire
+                self.__listFileProjet = os.listdir(self.__folderProject)
+                self.__listFileProjet.remove(self.__jsonFileProject.lectureJSON("name")+".apr")
+                return True
+            except FileNotFoundError:
+                return False
+            except PermissionError:
+                return False
+            except Exception as e:
+                return False
+        else :
+            return False
+    
+    def getListFileProjet(self):
+        return self.__listFileProjet

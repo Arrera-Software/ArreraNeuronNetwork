@@ -67,7 +67,7 @@ class neuronWork :
                                 self.__objHistorique.setAction("Fermeture d'un projet")
                                 self.__valeurOut = 1
                 else :
-                    if (("lit" in requette) or ("lis" in requette)):
+                    if (("lis" in requette) and ("liste" not in requette)):
                         if ("word" in requette):
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieReadDocx(),""]
                             self.__objHistorique.setAction("Lecture du fichier word "+self.__fonctionArreraNetwork.getFileWord())
@@ -205,4 +205,10 @@ class neuronWork :
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieopenFileCreated(),""]
                                                                 self.__objHistorique.setAction("Ouverture du fichier "+nameFile+" du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                 self.__valeurOut = 7
+                                                            else :
+                                                                if (("liste" in requette) and ("fichier" in requette) and (("projet" in requette ) or ("project" in requette ))):
+                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieListFileProject(),""]
+                                                                    self.__objHistorique.setAction("Liste de fichier du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
+                                                                    self.__valeurOut = 1
+                                                                
                                                                 

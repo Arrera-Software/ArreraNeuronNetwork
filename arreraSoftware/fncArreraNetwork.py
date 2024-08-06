@@ -1732,4 +1732,30 @@ class fncArreraNetwork:
                         else :
                             text = "Désoler mais il semble avoir un probleme."
         
-        return text            
+        return text    
+
+    def sortieListFileProject(self):
+        sortie = self.__objetArreraWork.setlistFileProject()
+
+        if (sortie == True):
+            liste = self.__objetArreraWork.getListFileProjet()
+            finTexte = ""
+            for i in range(0,len(liste)):
+                if (i == 0):
+                    finTexte = liste[i]
+                else :
+                    if (i==(len(liste)-1)):
+                        finTexte = finTexte + " et " + liste[i]
+                    else :
+                        finTexte = finTexte+", "+liste[i]
+            if (self.__etatVous == True):
+                text = "Les fichier de votre projet sont "+finTexte+"."
+            else :
+                text = "Les fichier present dans votre projet sont "+finTexte+"."
+        else :
+            if (self.__etatVous == True):
+                text = "Pardonner moi "+self.__genre+" mais je ne peux pas lister les fichiers de votre projet."
+            else :
+                text = "Pardonne moi "+self.__name+" mais je ne peux pas lister les fichiers de ton projet." 
+
+        return text  
