@@ -1643,9 +1643,9 @@ class fncArreraNetwork:
         """
         nom = requette.replace("cree un fichier","").replace("word","").replace("odt","").replace("txt","").replace("python","")
         nom = nom.replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","").replace("language c","")
-        nom = nom.replace("exel","").replace("nommer","").replace("texte","").replace("en tete","").replace("open texte document","").replace("tableur","")
+        nom = nom.replace("exel","").replace("nommer","").replace("texte","").replace("en tete","").replace("open","").replace("tableur","")
         nom = nom.replace("language c++","").replace("php","").replace("javascript","").replace("java script","").replace("java","").replace("kotlin","")
-        nom = nom.replace("kt","").replace("js","")
+        nom = nom.replace("kt","").replace("js","").replace("document","")
         nom = nom.replace(" ","") # Pas touche
 
         if ("word" in requette):
