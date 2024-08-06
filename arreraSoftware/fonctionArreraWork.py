@@ -27,7 +27,7 @@ class fncArreraWork :
         self.__jsonFileProject = None
         # Varriable de nom du fichier
         self.__fileTableur = ""
-        self.__fileWork = ""
+        self.__fileWord = ""
         self.__folderProject = ""
         self.__lastCreateFile = ""
         # Chargement des variable
@@ -66,7 +66,7 @@ class fncArreraWork :
                     filetypes=[('Tout les fichier', '*.*'),
                                ('Fichiers Word', '*.docx'),
                                ("Texte OpenDocument","*.odt")])
-            self.__fileWork = emplacementFile
+            self.__fileWord = emplacementFile
             if (emplacementFile == ""):
                 showwarning("Work","Aucun fichier selectionner")
                 return False
@@ -158,7 +158,7 @@ class fncArreraWork :
         if (self.__wordOpen == True) :
             del self.__objWord
             self.__objWord = None
-            self.__fileWork = ""
+            self.__fileWord = ""
             self.__wordOpen = False
             return True
         else :
@@ -174,7 +174,7 @@ class fncArreraWork :
         return self.__fileTableur
     
     def getNameFileWord(self):
-        return self.__fileWork
+        return self.__fileWord
     
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
@@ -411,12 +411,12 @@ class fncArreraWork :
         if (self.__wordOpen==True):
             if ((self.__dectOs.osLinux() == True) 
                 and (self.__dectOs.osWindows() == False)):
-                subprocess.call(["xdg-open",self.__fileWork])
+                subprocess.call(["xdg-open",self.__fileWord])
                 return True
             else :
                 if ((self.__dectOs.osLinux() == False) 
                 and (self.__dectOs.osWindows() == True)):
-                    os.startfile(self.__fileWork)
+                    os.startfile(self.__fileWord)
                     return True
                 else :
                     return False                    
@@ -885,3 +885,41 @@ class fncArreraWork :
 
     def getNameLastFileCreate(self):
         return self.__lastCreateFile
+
+    def openLastFileCreate(self):
+        """
+        0 : Error 
+        1 : Open by os 
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__projectOpen == True) and (self.__lastCreateFile != "")):
+            if (("docx"in self.__lastCreateFile) or ("odt" in self.__lastCreateFile)):
+                self.__objWord = CArreraDocx(self.__folderProject+"/"+self.__lastCreateFile)
+                self.__fileWord = self.__folderProject+"/"+self.__lastCreateFile
+                self.__lastCreateFile = ""
+                self.__wordOpen = True
+                return 2
+            else :
+                if ("xlsx" in self.__lastCreateFile):
+                    self.__objTableur = CArreraTableur(self.__folderProject+"/"+self.__lastCreateFile)
+                    self.__fileTableur = self.__folderProject+"/"+self.__lastCreateFile
+                    self.__lastCreateFile = ""
+                    self.__tableurOpen = True
+                    return 3
+                else :
+                    if ((self.__dectOs.osLinux() == True) 
+                        and (self.__dectOs.osWindows() == False)):
+                        subprocess.call(["xdg-open",self.__folderProject+"/"+self.__lastCreateFile])
+                        self.__lastCreateFile = ""
+                        return 1
+                    else :
+                        if ((self.__dectOs.osLinux() == False) 
+                        and (self.__dectOs.osWindows() == True)):
+                            os.startfile(self.__folderProject+"/"+self.__lastCreateFile)
+                            self.__lastCreateFile = ""
+                            return 1
+                        else :
+                            return 0
+        else :
+            return 0

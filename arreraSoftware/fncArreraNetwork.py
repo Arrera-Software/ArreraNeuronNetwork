@@ -1704,3 +1704,32 @@ class fncArreraNetwork:
 
     def getNameLastFile(self):
         return self.__objetArreraWork.getNameLastFileCreate()
+    
+    def sortieopenFileCreated(self):
+        sortie = self.__objetArreraWork.openLastFileCreate()
+        print(sortie)
+        if (sortie == 1) :
+            if (self.__etatVous == True):
+                text = "Je vous ai bien ouvert votre fichier avec le logiciel par default de votre ordinateur "+self.__genre+"."
+            else :
+                text = "Je t'ai bien ouvert ton fichier."
+        else :
+            if (sortie == 2):
+                if (self.__etatVous == True):
+                    text = "Je vous ai ouvert votre fichier de traitement texte. Que voulez-vous ecrire ?"
+                else :
+                    text = "Je t'ai bien ouvert ton fichier. Que veux-tu faire ?"
+            else :
+                if (sortie == 3):
+                    if (self.__etatVous == True):
+                        text = "Votre a tableur a bien été ouvert que voulez-vous ajouter."
+                    else :
+                        text = "Ton tableur est ouvert que veux-tu faire avec ?"
+                else :
+                    if (sortie == 0):
+                        if (self.__etatVous == True):
+                            text = "Désoler mais il semble avoir un probleme."
+                        else :
+                            text = "Désoler mais il semble avoir un probleme."
+        
+        return text            

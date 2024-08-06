@@ -198,3 +198,11 @@ class neuronWork :
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
                                                                 self.__objHistorique.setAction("Creation du fichier "+self.__fonctionArreraNetwork.getNameLastFile()+" dans le projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                 self.__valeurOut = 16
+                                                        else :
+                                                            if (("Voulez-vous l'ouvrir ?" in oldSortie or "Es que tu veux que je te l'ouvre ?" in oldSortie) and
+                                                                ("oui" in requette or "ouvre le" in requette or "vasy" in requette or "comme tu veux" in requette)):
+                                                                nameFile = self.__fonctionArreraNetwork.getNameLastFile()
+                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieopenFileCreated(),""]
+                                                                self.__objHistorique.setAction("Ouverture du fichier "+nameFile+" du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
+                                                                self.__valeurOut = 7
+                                                                
