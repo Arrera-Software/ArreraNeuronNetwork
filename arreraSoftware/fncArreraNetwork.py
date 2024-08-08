@@ -47,7 +47,7 @@ class fncArreraNetwork:
         self.__objetDate = fncDate()
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron,self.__gestionNeuron)
-        self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron)
+        self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron.getEmplacemntfileTache())
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
         self.__objetArreraWork = fncArreraWork(self.__gestionNeuron,self.__configNeuron,self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    

@@ -6,8 +6,8 @@ from tkcalendar import DateEntry
 from arreraSoftware.fonctionDate import*
 
 class fncArreraTache :
-    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,gest:gestionNetwork):
-        self.__taskFile = jsonWork(gest.getEmplacemntfileTache())
+    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,taskFile:str):
+        self.__taskFile = jsonWork(taskFile)
         self.__mainColor = fichierConfig.lectureJSON("interfaceColor")
         self.__textColor = fichierConfig.lectureJSON("interfaceTextColor")
         self.__icon = fichierConfig.lectureJSON("iconAssistant")
