@@ -888,7 +888,7 @@ class fncArreraWork :
     def getNameLastFileCreate(self):
         return self.__lastCreateFile
     
-    def openFileProject(self,file:str):
+    def openFileProjet(self,file:str):
         """
         0 : Error 
         1 : Open by os 
@@ -928,7 +928,7 @@ class fncArreraWork :
         3 : Open bu ArreraTableur
         """
         if ((self.__lastCreateFile != "")):
-            sortie = self.openFileProject(self.__lastCreateFile)
+            sortie = self.openFileProjet(self.__lastCreateFile)
             self.__lastCreateFile = ""
             return sortie
         else :
@@ -952,3 +952,24 @@ class fncArreraWork :
     
     def getListFileProjet(self):
         return self.__listFileProjet
+    
+    def openFileOtherProjet(self,file:str):
+        """
+        0 : Error 
+        1 : Open by os 
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__projectOpen == True) and (self.setlistFileProject() == True)
+            and ("." in file) and (file != "")):
+            listFile = self.getListFileProjet()
+            nbFile = len(listFile)
+
+            for i in range(0,nbFile):
+                if (listFile[i] == file):
+                    return self.openFileProjet(listFile[i])
+
+            return 0
+
+        else :
+            return 0

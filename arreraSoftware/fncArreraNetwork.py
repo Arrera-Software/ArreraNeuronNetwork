@@ -1758,4 +1758,42 @@ class fncArreraNetwork:
             else :
                 text = "Pardonne moi "+self.__name+" mais je ne peux pas lister les fichiers de ton projet." 
 
-        return text  
+        return text 
+
+    def sortieOpenFileProject(self,requette:str):
+        """
+        Phrase  :
+            ouvre le fichier du projet nommer #name#
+            ouvre le fichier nommer #name#
+        """
+        nameFile = requette.replace("ouvre le fichier du projet nommer","")
+        nameFile = nameFile.replace("ouvre le fichier nommer","")
+        nameFile = nameFile.replace(" ","")
+
+        sortie = self.__objetArreraWork.openFileOtherProjet(nameFile)
+
+        if (sortie == 1):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien le fichier "+nameFile+". Je reste a votre service "+self.__genre+". "
+            else :
+                text = "Le fichier "+nameFile+" est bien ouvert."
+        else :
+            if (sortie == 0):
+                if (self.__etatVous == True):
+                    text = "Désoler "+self.__genre+". Mais je ne peux pas ouvrir ce que vous demmander. Il a peux être pas un projet ouvert."
+                else :
+                    text = "Il a probleme je ne peux pas t'ouvrir ce que tu veux. Il a peux être pas un projet ouvert."
+            else :
+                if (sortie == 2):
+                    if (self.__etatVous == True):
+                        text = "Je vous ai bien ouvert ton fichier de traitement de texte "+nameFile+". Je suis prêt à travailler dessus "+self.__genre+"."
+                    else :
+                        text = "Ton fichier "+nameFile+" est bien ouvert. Que veux tu ecrire dessus."
+                else :
+                    if (sortie == 3):
+                        if (self.__etatVous == True):
+                            text = "Votre fichier "+nameFile+" est bien ouvert. Quelle formule voulez-vous dessus "+self.__genre+"."
+                        else :
+                            text = "Ton fichier exel "+nameFile+" est bien ouvert."
+        
+        return text,nameFile

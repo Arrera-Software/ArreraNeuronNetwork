@@ -50,6 +50,16 @@ class neuronWork :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWord(),""]
                                 self.__objHistorique.setAction("Ouverture d'un fichier word "+self.__fonctionArreraNetwork.getFileWord())
                                 self.__valeurOut = 7
+                            else :
+                                if (("projet" in requette) or ("nommer" in requette) and ("le" in requette)):
+                                    text,file = self.__fonctionArreraNetwork.sortieOpenFileProject(requette)
+                                    self.__listSortie = [text,""]
+                                    if ("Il a peux être pas un projet ouvert." not in requette):
+                                        self.__objHistorique.setAction("Ouverture du fichier "+file+" du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
+                                        self.__valeurOut = 7
+                                    else :
+                                        self.__valeurOut = 1
+
             else :
                 if ("ferme" in requette) :
                     if (("exel" in requette) or ("tableur" in requette)):
@@ -206,9 +216,8 @@ class neuronWork :
                                                                 self.__objHistorique.setAction("Ouverture du fichier "+nameFile+" du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                 self.__valeurOut = 7
                                                             else :
-                                                                if (("liste" in requette) and ("fichier" in requette) and (("projet" in requette ) or ("project" in requette ))):
+                                                                if (("liste" in requette) and ("fichier" in requette) and 
+                                                                    (("projet" in requette ) or ("project" in requette ))):
                                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieListFileProject(),""]
                                                                     self.__objHistorique.setAction("Liste de fichier du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                     self.__valeurOut = 1
-                                                                
-                                                                
