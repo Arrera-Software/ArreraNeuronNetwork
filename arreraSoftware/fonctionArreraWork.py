@@ -41,6 +41,8 @@ class fncArreraWork :
         self.__lastCreateFile = ""
         self.__listFileProjet = []
         self.__fncTaskProjet = None # Correspont au tache du projet
+        self.__listTaskProjetToday = []
+        self.__listTaskProjetTowmorow = []
         # Recupertion de l'emplacement de travail de assistant
         self.__wordEmplacement = gestion.getWorkEmplacement()
 
@@ -767,6 +769,8 @@ class fncArreraWork :
             self.__jsonFileProject = None
             self.__fncTaskProjet = None
             self.__listFileProjet = []
+            self.__listTaskProjetToday = []
+            self.__listTaskProjetTowmorow = []
             return True
         else :
             return False
@@ -998,3 +1002,69 @@ class fncArreraWork :
 
         else :
             return 0
+    
+    def showTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewTask()
+            return True
+        else :
+            return False
+    
+    def addTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewAdd()
+            return True
+        else :
+            return False
+    
+    def supprTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewSuppr()
+            return True
+        else :
+            return False
+    
+    def checkTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewCheck()
+            return True
+        else :
+            return False
+    
+    def getNbTacheProjet(self):
+        """
+        -1 : Error
+        """
+        if (self.__projectOpen == True) :
+            return self.__fncTaskProjet.getNbTache()
+        else :
+            return -1 
+
+    def getNBTacheToday(self):
+        """
+        -1 : error
+        """
+        if (self.__projectOpen == True):
+            return self.__fncTaskProjet.getNbTacheToday()
+        else :
+            return -1
+    
+    def setListTacheTodayProjet(self):
+        if (self.__projectOpen == True):
+            self.__listTaskProjetToday = self.__fncTaskProjet.getTacheToday()
+            return True
+        else :
+            return False
+    
+    def getListTacheTodayProjet(self):
+        return self.__listTaskProjetToday
+    
+    def setListTacheTowmorowProjet(self):
+        if (self.__projectOpen == True):
+            self.__listTaskProjetTowmorow = self.__fncTaskProjet.getTacheTowmorow()
+            return True
+        else :
+            return False
+    
+    def getListTacheTowmorowProjet(self):
+        return self.__listTaskProjetTowmorow
