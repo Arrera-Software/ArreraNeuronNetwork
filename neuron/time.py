@@ -66,36 +66,40 @@ class neuroneTime :
                                                 self.__listSortie = [self.fonctionArreraNetwork.sortieOpenAgenda(),""]
                                                 self.__valeurOut = 5
                                             else :
-                                                if(("montre mes taches"in requette)or("fais voir mes taches"in requette) 
-                                                   or ("montre mes tache"in requette)or("fais voir mes tache"in requette)):
+                                                if((("montre mes taches"in requette)or("fais voir mes taches"in requette) 
+                                                   or ("montre mes tache"in requette)or("fais voir mes tache"in requette))
+                                                   and ("projet" not in requette)):
                                                     self.__listSortie = [self.fonctionArreraNetwork.sortieViewTache(),""]
                                                     self.__valeurOut = 5 
                                                 else :
-                                                    if(("ajoute une tache"in requette) or ("ajouter une tache" in requette) 
-                                                       or ("ajout tache" in requette) or ("add tache" in requette)):
+                                                    if((("ajoute une tache"in requette) or ("ajouter une tache" in requette) 
+                                                       or ("ajout tache" in requette) or ("add tache" in requette))
+                                                       and ("projet" not in requette)):
                                                         self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheAdd(),""]
                                                         self.__valeurOut = 5
                                                     else :
-                                                        if(("supprime une tache" in requette)or ("supprimer une tache" in requette) 
-                                                       or ("suppr une tache" in requette) or ("suppr tache" in requette)):
+                                                        if((("supprime une tache" in requette)or ("supprimer une tache" in requette) 
+                                                       or ("suppr une tache" in requette) or ("suppr tache" in requette))
+                                                       and ("projet" not in requette)):
                                                             self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheSuppr(),""]
                                                             self.__valeurOut = 5
                                                         else :
-                                                            if(("finir une tache" in requette) or ("terminer une tache" in requette) 
-                                                               or ("termine une tache" in requette) or ("fini une tache" in requette)):
+                                                            if((("finir une tache" in requette) or ("terminer une tache" in requette) 
+                                                               or ("termine une tache" in requette) or ("fini une tache" in requette))
+                                                               and ("projet" not in requette)):
                                                                 self.__listSortie = [self.fonctionArreraNetwork.sortieViewTacheCheck(),""]
                                                                 self.__valeurOut = 5
                                                             else :
-                                                                if (((("dit moi" in requette) and ("nombre" in requette)) or ("j'ai combien" in requette)) 
-                                                                    and (("tache" in requette) or ("taches" in requette))) :
+                                                                if ((((("dit moi" in requette) and ("nombre" in requette)) or ("j'ai combien" in requette)) 
+                                                                    and (("tache" in requette) or ("taches" in requette)))and ("projet" not in requette)) :
                                                                     self.__listSortie = [self.fonctionArreraNetwork.sortieNbSpeakTache(),""]
                                                                 else :
-                                                                    if  ((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette)) 
-                                                                          and (("jour" in requette) or ("aujourd'hui" in requette))))  :
+                                                                    if  (((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette)) 
+                                                                          and (("jour" in requette) or ("aujourd'hui" in requette))))and ("projet" not in requette))  :
                                                                         self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheToday(),""]  
                                                                     else :
-                                                                        if  ((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette))  
-                                                                          and ("demain" in requette)))  :
+                                                                        if  (((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette))  
+                                                                          and ("demain" in requette)))and ("projet" not in requette))  :
                                                                             self.__listSortie = [self.fonctionArreraNetwork.sortieSpeakTacheTowmorow(),""] 
                                                                     
                 
