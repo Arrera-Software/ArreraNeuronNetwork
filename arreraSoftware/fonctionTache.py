@@ -250,7 +250,6 @@ class fncArreraTache :
         else :
             showwarning("Avertisement","Vous pouvez supprimer une tache avant d'en ajouter")
 
-    
     def __showCheckFrame(self):
         if(self.__checkIsTache()==True):
             dictTache = self.__taskFile.dictJson()
@@ -267,7 +266,6 @@ class fncArreraTache :
         else :
             showwarning("Avertisement","Vous pouvez finir une tache avant d'en ajouter")
 
-    
     def __addEvent(self):
         name = self.__nameTaskEntry.get()
         if(name==""):
@@ -290,8 +288,6 @@ class fncArreraTache :
                     showinfo("Tache","Tache ajouter")
                     self.__showTaskFrame()
 
-                
-    
     def __addDate(self,nb:str):
         self.__frameAdd[0].place_forget()
         self.__frameAdd[2].place_forget()
@@ -313,7 +309,6 @@ class fncArreraTache :
             self.__taskFile.ajouterFlagDict(nb,"description","none")
             showinfo("Tache","Tache ajouter")
             self.__showTaskFrame()
-
 
     def __addEventDescription(self,nb:str):
         description = self.__descriptionEntryTask.get()
@@ -367,7 +362,6 @@ class fncArreraTache :
                     self.__frameShowTache[i].configure(bg=self.__mainColor)
                     self.__labelNameShowTask[i].configure(bg=self.__mainColor,fg=self.__textColor)
 
-    
     def __viewInfoTacheFrame(self,nb:str):
         dictTache = self.__taskFile.dictJson()[nb]
         name = dictTache["name"]
