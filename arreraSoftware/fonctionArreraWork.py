@@ -1,4 +1,5 @@
 from ObjetsNetwork.gestion import*
+from arreraSoftware.fonctionTache import*
 from tkinter import filedialog 
 from tkinter import*
 from tkinter.scrolledtext import *
@@ -13,9 +14,11 @@ import os
 from pathlib import Path
 
 class fncArreraWork :
-    def __init__(self,gestion:gestionNetwork,neuronfile:jsonWork,dectOs:OS):
+    def __init__(self,fncDate:fncDate,gestion:gestionNetwork,neuronfile:jsonWork,dectOs:OS):
         # Objet 
         self.__dectOs = dectOs
+        self.__fncDate = fncDate
+        self.__configFile = neuronfile
         # Variable etat ouverture fichier
         self.__tableurOpen = False
         self.__wordOpen = False 
@@ -28,14 +31,16 @@ class fncArreraWork :
         # Varriable de nom du fichier
         self.__fileTableur = ""
         self.__fileWord = ""
+        # Chargement des variable
+        self.__nameAssistant = self.__configFile.lectureJSON("name")
+        self.__iconAssistant = self.__configFile.lectureJSON("iconAssistant")
+        self.__guiColor = self.__configFile.lectureJSON("interfaceColor")
+        self.__textColor =  self.__configFile.lectureJSON("interfaceTextColor")
+        # Varriable Projet
         self.__folderProject = ""
         self.__lastCreateFile = ""
         self.__listFileProjet = []
-        # Chargement des variable
-        self.__nameAssistant = neuronfile.lectureJSON("name")
-        self.__iconAssistant = neuronfile.lectureJSON("iconAssistant")
-        self.__guiColor = neuronfile.lectureJSON("interfaceColor")
-        self.__textColor =  neuronfile.lectureJSON("interfaceTextColor")
+        self.__fncTaskProjet = None # Correspont au tache du projet
         # Recupertion de l'emplacement de travail de assistant
         self.__wordEmplacement = gestion.getWorkEmplacement()
 
@@ -696,8 +701,13 @@ class fncArreraWork :
             dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
             for i in range(0,len(dossier)):
                 if (project == dossier[i]):
+                    # Ecriture de l'emplacement du projet
                     self.__folderProject = self.__wordEmplacement+"/"+project
-                    self.__jsonFileProject = jsonWork(os.path.join(self.__folderProject,project+".apr"))
+                    # Ouverture du fichier de config
+                    self.__jsonFileProject = jsonWork(os.path.join(self.__folderProject+"/.arreraProjet",project+".apr"))
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,self.__folderProject+"/.arreraProjet/TaskProjet.json")
+                    # Mise de la var a true
                     self.__projectOpen = True
                     return True
             return False
@@ -708,17 +718,31 @@ class fncArreraWork :
 
     def createProject(self,name:str):
         if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
-            dataJson = {"name":"","type":"","tache":{}}
+            dataJson = {"name":"","type":""}
             folder = self.__wordEmplacement+"/"+name
             dataJson["name"] = name
             try : 
+                # Creation du projet
                 os.makedirs(folder,exist_ok=True)
+                # Creation du sous dossier de config du projet
+                os.makedirs(folder+"/.arreraProjet")
+                # Enregistrement de l'emplacement du projet
                 self.__folderProject = folder
-                jsonPath = os.path.join(folder,name+".apr")
+                # Creation du fichier de config
+                configPath = os.path.join(folder+"/.arreraProjet",name+".apr")
+                # Creation du fichier de tache
+                taskPath = os.path.join(folder+"/.arreraProjet","TaskProjet.json")
                 try :
-                    with open(jsonPath,"w",encoding="utf-8") as file :
+                    # Ecriture dans les deux fichier
+                    with open(configPath,"w",encoding="utf-8") as file :
                         json.dump(dataJson,file,ensure_ascii=False,indent=4)
-                    self.__jsonFileProject = jsonWork(jsonPath)
+                    with open(taskPath,"w",encoding="utf-8") as file :
+                        json.dump({},file,ensure_ascii=False,indent=4)
+                    # Ouverture du fichier de config
+                    self.__jsonFileProject = jsonWork(configPath)
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,taskPath)
+                    # Mise a true de la var de projet ouvert
                     self.__projectOpen = True
                     return True
                 except Exception as e :
@@ -741,6 +765,7 @@ class fncArreraWork :
             self.__folderProject = ""
             self.__lastCreateFile = ""
             self.__jsonFileProject = None
+            self.__fncTaskProjet = None
             self.__listFileProjet = []
             return True
         else :
@@ -939,7 +964,7 @@ class fncArreraWork :
             try:
                 # Liste les fichiers et dossiers dans le répertoire
                 self.__listFileProjet = os.listdir(self.__folderProject)
-                self.__listFileProjet.remove(self.__jsonFileProject.lectureJSON("name")+".apr")
+                self.__listFileProjet.remove(".arreraProjet")
                 return True
             except FileNotFoundError:
                 return False
