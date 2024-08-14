@@ -45,7 +45,7 @@ class ArreraNetwork :
         self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__open = neuroneOpen(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__search = neuroneSearch(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
-        self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron)
+        self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__work = neuronWork(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
     
