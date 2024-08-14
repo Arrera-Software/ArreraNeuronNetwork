@@ -108,8 +108,10 @@ class neuronWork :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieFileOpen(),""]
                                 self.__valeurOut = 1
                             else :
-                                if ((("ajoute" in requette)  or ("rajoute" in requette) or ("ajout" in requette)) 
-                                    and ("tableur" in requette)):
+                                if (((("ajoute" in requette)  or ("rajoute" in requette) 
+                                    or ("ajout" in requette)) and ("tableur" in requette)) 
+                                    and (("ajoute une tache" not in requette) or ("ajouter une tache"  not in  requette) 
+                                    or ("ajout tache" not in requette) or ("add tache" not in requette))):
                                     if (("valeur" in requette)):
                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieAddValeurTableur(),""]
                                         self.__objHistorique.setAction("Ajout d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
@@ -157,7 +159,9 @@ class neuronWork :
                                                     else : 
                                                         self.__listSortie = ["Quelle fichier veut tu que je te montre. Le exel ou le word ?",""]
                                                     self.__valeurOut = 1
-                                    if (("supprime" in requette) or ("suppr" in requette)):
+                                    if ((("supprime" in requette) or ("suppr" in requette))
+                                        and (("supprime une tache" in requette)or ("supprimer une tache" in requette) 
+                                        or ("suppr une tache" in requette) or ("suppr tache" in requette))):
                                         if (("tableur" in requette) or ("exel" in requette)):
                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieSupprValeurTableur(),""]
                                             self.__objHistorique.setAction("Suppression d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
@@ -221,3 +225,39 @@ class neuronWork :
                                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieListFileProject(),""]
                                                                     self.__objHistorique.setAction("Liste de fichier du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                     self.__valeurOut = 1
+                                                                else :
+                                                                    if((("montre mes taches"in requette) or ("fais voir mes taches"in requette) 
+                                                                    or ("montre mes tache"in requette) or("fais voir mes tache"in requette))
+                                                                    or ("montre les taches"in requette) and ("projet" in requette)):
+                                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieShowTacheProjet(),""]
+                                                                        self.__valeurOut = 5 
+                                                                    else :
+                                                                        if((("ajoute une tache" in requette) or ("ajouter une tache" in requette) 
+                                                                        or ("ajout tache" in requette) or ("add tache" in requette)) and ("projet" in requette)):
+                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieAddTacheProjet(),""]
+                                                                            self.__valeurOut = 5
+                                                                        else :
+                                                                            if((("supprime une tache" in requette)or ("supprimer une tache" in requette) 
+                                                                            or ("suppr une tache" in requette) or ("suppr tache" in requette))
+                                                                            and ("projet" in requette)):
+                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieSupprTacheProjet(),""]
+                                                                                self.__valeurOut = 5
+                                                                            else :
+                                                                                if((("finir une tache" in requette) or ("terminer une tache" in requette) 
+                                                                                or ("termine une tache" in requette) or ("fini une tache" in requette))
+                                                                                and ("projet" in requette)):
+                                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieSupprTacheProjet(),""]
+                                                                                    self.__valeurOut = 5
+                                                                                else :
+                                                                                    if ("dit moi" in requette) and (("nombre" in requette) or ("j'ai combien" in requette) 
+                                                                                        and (("tache" in requette) or ("taches" in requette)) and ("projet" in requette)) :
+                                                                                        if  (("jour" in requette) or ("aujourd'hui" in requette)) :
+                                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieListeTacheTodayProjet(),""] 
+                                                                                            self.__valeurOut = 1
+                                                                                        else :
+                                                                                            if ("demain" in requette):
+                                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieListTacheTowmorowProjet(),""]
+                                                                                                self.__valeurOut = 1
+                                                                                            else :
+                                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieNbTacheProjet(),""]
+                                                                                                self.__valeurOut = 1

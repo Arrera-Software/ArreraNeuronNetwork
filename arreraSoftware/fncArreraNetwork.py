@@ -815,7 +815,7 @@ class fncArreraNetwork:
             if (self.__etatVous==True):
                 text = "Vous n'avez pas d'événement enregister pour aujourd'hui"
             else :
-                text = "Tu as rien de prévu ajourd'hui"
+                text = "Tu as rien de prévu aujourd'hui"
         else :
             listEvent = self.__objetCalendar.getEventToday()
             if(nbEvent==1):
@@ -825,9 +825,9 @@ class fncArreraNetwork:
                     text = "Tu as qu'un seul événement aujourd'hui qui est "+listEvent[0]
             else :
                 if (self.__etatVous==True):
-                    baseTexte = "Vous avez "+str(nbEvent)+" pour ajourd'hui qui sont "
+                    baseTexte = "Vous avez "+str(nbEvent)+" pour aujourd'hui qui sont "
                 else :
-                    baseTexte = "Tu as "+str(nbEvent)+" pour ajourd'hui qui sont "
+                    baseTexte = "Tu as "+str(nbEvent)+" pour aujourd'hui qui sont "
                 for i in range(0,nbEvent):
                     if (i==0):
                         text = baseTexte+listEvent[i]
@@ -981,20 +981,20 @@ class fncArreraNetwork:
                     baseText = "Tu as "+str(nbTache)+" enregistrer."
                 if (nbTache==1) :
                     if (self.__etatVous==True):
-                        text = baseText+" Dont une tache a finir ajourd'hui."
+                        text = baseText+" Dont une tache a finir aujourd'hui."
                     else :
                         text = baseText+" Avec une tache que tu dois finir aujourd'hui."
                 else :
                     if (nbTache>1):
                         if (self.__etatVous==True):
-                            text = baseText+" Dont "+str(nbToday)+" tache a finir ajourd'hui."
+                            text = baseText+" Dont "+str(nbToday)+" tache a finir aujourd'hui."
                         else :
                             text = baseText+" Avec "+str(nbToday)+" tache que tu dois finir aujourd'hui."
                     else :
                         if (self.__etatVous==True):
-                            text = baseText + " Et aucune tache ajourd'hui."
+                            text = baseText + " Et aucune tache aujourd'hui."
                         else :
-                            text = baseText + " Et aucune tache ajourd'hui."
+                            text = baseText + " Et aucune tache aujourd'hui."
 
         return text
     
@@ -1009,14 +1009,14 @@ class fncArreraNetwork:
         else :
             if (nbTache==1):
                 if (self.__etatVous==True):
-                    baseText = "Vous avez une seul tache à faire ajourd'hui qui est "
+                    baseText = "Vous avez une seul tache à faire aujourd'hui qui est "
                 else :
-                    baseText = "Tu as uns seul tache à finir pour ajourd'hui qui est "
+                    baseText = "Tu as uns seul tache à finir pour aujourd'hui qui est "
             else :
                 if (self.__etatVous==True):
-                    baseText = "Vous avez "+str(nbTache)+" tache à faire ajourd'hui qui sont "
+                    baseText = "Vous avez "+str(nbTache)+" tache à faire aujourd'hui qui sont "
                 else :
-                    baseText = "Tu as "+str(nbTache)+" à finir pour ajourd'hui qui sont "
+                    baseText = "Tu as "+str(nbTache)+" à finir pour aujourd'hui qui sont "
             
             for i in range(0,nbTache):
                 if (i == 0):
@@ -1797,3 +1797,170 @@ class fncArreraNetwork:
                             text = "Ton fichier exel "+nameFile+" est bien ouvert."
         
         return text,nameFile
+
+    def sortieShowTacheProjet(self):
+        sortie = self.__objetArreraWork.showTacheProjet()
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert mon interface pour voir vos taches sur le projet "+self.getNameProjetOpen()+"."
+            else :
+                text = "Je t'ai ouvert l'interface pour voir les taches du projet "+self.getNameProjetOpen()+"."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas montrer les tache de votre projet."
+            else :
+                text = "Pardonne moi "+self.__user+". Je ne peux pas te montrer tes taches."
+        
+        return text
+    
+    def sortieAddTacheProjet(self):
+        sortie = self.__objetArreraWork.addTacheProjet()
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert mon interface pour ajouter une tache au projet "+self.getNameProjetOpen()+"."
+            else :
+                text = "Je t'ai ouvert l'interface pour que tu ajoute une tache au projet "+self.getNameProjetOpen()+"."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas ajouter une tache de votre projet."
+            else :
+                text = "Pardonne moi "+self.__user+". Je ne peux pas te ajouter une tache."
+        
+        return text
+    
+    def sortieSupprTacheProjet(self):
+        sortie = self.__objetArreraWork.supprTacheProjet()
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert mon interface pour supprimer une tache au projet "+self.getNameProjetOpen()+"."
+            else :
+                text = "Je t'ai ouvert l'interface pour que tu supprime une tache au projet "+self.getNameProjetOpen()+"."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas supprimer une tache de votre projet."
+            else :
+                text = "Pardonne moi "+self.__user+". Je ne peux pas te supprimer une tache."
+        
+        return text
+    
+    def sortieSupprTacheProjet(self):
+        sortie = self.__objetArreraWork.checkTacheProjet()
+
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert mon interface pour terminer une tache au projet "+self.getNameProjetOpen()+"."
+            else :
+                text = "Je t'ai ouvert l'interface pour que tu termine une tache au projet "+self.getNameProjetOpen()+"."
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+". Je ne peux pas terminer une tache de votre projet."
+            else :
+                text = "Pardonne moi "+self.__user+". Je ne peux pas te terminer une tache."
+        
+        return text
+    
+    def sortieNbTacheProjet(self):
+        sortie = self.__objetArreraWork.getNbTacheProjet()
+        sortie2 = self.__objetArreraWork.getNBTacheToday()
+
+        if ((sortie != -1) and (sortie2 != -1) and (sortie != 0)):
+            if (self.__etatVous == True):
+                text = "Dans le projet "+self.getNameProjetOpen()+" vous avez "+str(sortie)+" tache enregistrer dont "+str(sortie2)+" a finir aujourd'hui."
+            else :
+                text = "Tu as "+str(sortie)+" tache enregistrer dont "+str(sortie2)+" a finir aujourd'hui dans le projet"+self.getNameProjetOpen()
+        else :
+            if (sortie == 0) :
+                if (self.__etatVous == True):
+                    text = "Vous avez aucune tache enregistrer dans le projet "+self.getNameProjetOpen()+"."
+                else :
+                    text = "Tu as aucune tache dans le projet "+self.getNameProjetOpen()+"."
+            else :
+                if (self.__etatVous == True):
+                    text = "Pardonner-moi "+self.__genre+" mais je ne pas vous donner le nombre de tache dans votre projet."
+                else :
+                    text = "Désoler "+self.__user+" un probleme est survenu qui m'empéche de te donner le nombre de tache dans votre projet."
+        
+        return text
+
+    def sortieListeTacheTodayProjet(self):
+        sortie = self.__objetArreraWork.setListTacheTodayProjet()
+
+        if (sortie == True) :
+            listTache = self.__objetArreraWork.getListTacheTodayProjet()
+            nbTache = len(listTache)
+
+            if (nbTache==0) :
+                if (self.__etatVous==True):
+                    text = "Vous avez aucune tache aujourd'hui pour le projet "+self.getNameProjetOpen()+"."
+                else :
+                    text = "Tu as aucune tache a faire aujourd'hui pour le projet "+self.getNameProjetOpen()+"."
+            else :
+                if (nbTache==1):
+                    if (self.__etatVous==True):
+                        baseText = "Vous avez une seul tache à faire aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui est "
+                    else :
+                        baseText = "Tu as uns seul tache à finir pour aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui est "
+                else :
+                    if (self.__etatVous==True):
+                        baseText = "Vous avez "+str(nbTache)+" tache à faire aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui sont "
+                    else :
+                        baseText = "Tu as "+str(nbTache)+" à finir pour aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui sont "
+                
+                for i in range(0,nbTache):
+                    if (i == 0):
+                        text = baseText + listTache[i]
+                    else :
+                        if ( i == (nbTache-1)):
+                            text = text + " et " + listTache[i]
+                        else :
+                            text = text+", "+listTache[i]
+        else :
+            if (self.__etatVous==True) :
+                text = "Excuser moi "+self.__genre+" mais je peux pas vous donner les taches d'aujourd'hui pour le projet."
+            else :
+                text = "Pardonne moi mais je peux pas te donner les taches d'aujourd'hui pour le projet"
+        
+        return text
+    
+    def sortieListTacheTowmorowProjet(self):
+        sortie = self.__objetArreraWork.setListTacheTowmorowProjet()
+
+        if (sortie == True) :
+            listTache = self.__objetArreraWork.getListTacheTowmorowProjet()
+            nbTache = len(listTache)
+
+            if (nbTache==0) :
+                if (self.__etatVous==True):
+                    text = "Vous avez aucune tache a faire pour demain pour le projet "+self.getNameProjetOpen()+"."
+                else :
+                    text = "Tu as aucune tache a faire pour demain pour le projet "+self.getNameProjetOpen()+"."
+            else :
+                if (nbTache==1):
+                    if (self.__etatVous==True):
+                        baseText = "Vous avez une seul tache a faire pour demain pour le projet "+self.getNameProjetOpen()+" qui est "
+                    else :
+                        baseText = "Tu as uns seul tache à finir pour demain pour le projet "+self.getNameProjetOpen()+" qui est "
+                else :
+                    if (self.__etatVous==True):
+                        baseText = "Vous avez "+str(nbTache)+" tache à faire pour demain le projet "+self.getNameProjetOpen()+" qui sont "
+                    else :
+                        baseText = "Tu as "+str(nbTache)+" à finir pour demain le projet "+self.getNameProjetOpen()+" qui sont "
+                
+                for i in range(0,nbTache):
+                    if (i == 0):
+                        text = baseText + listTache[i]
+                    else :
+                        if ( i == (nbTache-1)):
+                            text = text + " et " + listTache[i]
+                        else :
+                            text = text+", "+listTache[i]
+        else :
+            if (self.__etatVous==True) :
+                text = "Excuser moi "+self.__genre+" mais je peux pas vous donner les taches pour demain pour le projet."
+            else :
+                text = "Pardonne moi mais je peux pas te donner les taches pour demain pour le projet."
+        
+        return text
