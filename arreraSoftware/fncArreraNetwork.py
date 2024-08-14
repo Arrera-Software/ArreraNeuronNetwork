@@ -1847,7 +1847,7 @@ class fncArreraNetwork:
         return text
     
     def sortieSupprTacheProjet(self):
-        sortie = self.__objetArreraWork.checkTacheProjet()
+        sortie = self.__objetArreraWork.supprTacheProjet()
 
         if (sortie == True):
             if (self.__etatVous == True):
