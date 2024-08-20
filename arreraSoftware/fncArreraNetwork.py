@@ -1502,6 +1502,7 @@ class fncArreraNetwork:
     
     def sortieSetTypeProjet(self,requette:str):
         type = requette.replace("le type est","")
+        type = type.replace("le type du projet est","")
         sortie = self.__objetArreraWork.setTypeProject(type)
         if (sortie == True):
             if (self.__etatVous == True):

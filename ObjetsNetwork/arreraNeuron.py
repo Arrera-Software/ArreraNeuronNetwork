@@ -88,6 +88,7 @@ class ArreraNetwork :
         14 : Ouverture d'un projet
         15 : Arret de l'assistant
         16 : Creation d'un fichier dans un projet
+        17 : Affichage aide
         """
         return self.__valeurOut
     
