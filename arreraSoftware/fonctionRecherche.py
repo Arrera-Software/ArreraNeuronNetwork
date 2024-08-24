@@ -94,7 +94,7 @@ class fncArreraSearch :
     def bigRecherche(self,query:str):
         if self.__etatConnexion == True :
             i = 0
-            while(i!=7):
+            while(i!=6):
                 if (i==1) :
                     self.googleSearch(query)
                     time.sleep(1.5)
@@ -108,16 +108,13 @@ class fncArreraSearch :
                             time.sleep(1.5)
                         else :
                             if(i==4):
-                                self.ecosiaSearch(query)
+                                self.bingSearch(query)
                                 time.sleep(1.5)
                             else :
                                 if(i==5):
-                                    self.braveSearch(query)
+                                    self.perplexitySearch(query)
                                     time.sleep(1.5)
-                                else :
-                                    if(i==6):
-                                        self.bingSearch(query)
-                                        time.sleep(1.5)
+                                        
                 i = i + 1
             return True
         else :
