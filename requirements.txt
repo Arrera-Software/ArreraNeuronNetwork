@@ -1,0 +1,13 @@
+pytube
+pathlib
+tkcalendar
+datetime
+geocoder
+requests
+playsound==1.3.0
+gTTS
+translate
+python-docx
+odfpy
+openpyxl
+PyGithub
