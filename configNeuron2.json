@@ -25,5 +25,6 @@
    "etatCodehelp":"1",
    "etatWork":"1",
    "lienDoc":"www.google.com",
-   "emplacementFileHist":"neuronHist.json"
+   "emplacementFileHist":"neuronHist.json",
+   "emplacementFileRoutine":"routineFile.json"
 }
