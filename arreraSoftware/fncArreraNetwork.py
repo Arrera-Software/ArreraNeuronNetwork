@@ -21,7 +21,6 @@ from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionTache import*
 from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
-from arreraSoftware.fonctionRoutine import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -51,7 +50,6 @@ class fncArreraNetwork:
         self.__objetTache = fncArreraTache(self.__objetDate,self.__configNeuron,self.__gestionNeuron.getEmplacemntfileTache())
         self.__objetCodehelp = fncCodehelp(self.__configNeuron,self.__detecteurOS,self.__gestionNeuron)
         self.__objetArreraWork = fncArreraWork(self.__objetDate,self.__gestionNeuron,self.__configNeuron,self.__detecteurOS)
-        self.__objRoutine = fncRoutine(self.__configNeuron)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         
@@ -1944,14 +1942,5 @@ class fncArreraNetwork:
                 text = "Excuser moi "+self.__genre+" mais je peux pas vous donner les taches pour demain pour le projet."
             else :
                 text = "Pardonne moi mais je peux pas te donner les taches pour demain pour le projet."
-        
-        return text
-
-    def sortieOpenGUIRoutine(self):
-        self.__objRoutine.activeAcceuil()
-        if (self.__etatVous == True):
-            text = "Je vous ai ouvert l'interface des routine."
-        else :
-            text = "Je t'ai ouvert l'interface des routine."
         
         return text
