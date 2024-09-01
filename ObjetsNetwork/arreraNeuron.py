@@ -90,6 +90,8 @@ class ArreraNetwork :
         16 : Creation d'un fichier dans un projet
         17 : Affichage aide
         18 : Resumer tache / agenda
+        19 : Resumer all ok 
+        20 : Resumer all fail
         """
         return self.__valeurOut
     

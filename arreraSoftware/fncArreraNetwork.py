@@ -392,6 +392,11 @@ class fncArreraNetwork:
             
     
     def sortieResumerActualite(self):
+        """
+
+        Returns:
+            meteoHome,meteoWork,feteJour,Actu 1,Actu 2,Actu 3,textSpeak
+        """
         #var 
         verif = False
         meteoHome = ""
@@ -2022,4 +2027,29 @@ class fncArreraNetwork:
                                 eventTXT = eventTXT+", "+listEvent[i]
         
         return 18,[tacheTXT,eventTXT]
+    
+    def sortieResumerAll(self):
+        """
+        Sortie NB  :
+        - 19 -> OK
+        - 20 -> Fail
+        Sortie list : 
+            [Meteo home , Meteo Work , fete , Actu 1 , Actu 2 , Actu 3 , textSpeak , tache , agenda]
+        """
+        nb1,listAgendaTache = self.sortieResumerTacheAgenda()
+        nb2,listActuMeto = self.sortieResumerActualite()
+        
+        if (nb2 == 11):
+            if (self.__etatVous == True) :
+                text = "Imposible de vous faire le résumer "+self.__genre
+            else :
+                text = "Imposible de te faire le resumer "+self.__user
+            return 20,[text,""]
+        else :
+            listOut = listActuMeto+listAgendaTache
+            if (self.__etatVous == True) :
+                listOut[6]= "Voici votre résumer des actulitée du jour avec la meteo ainsi des taches que vous avez a faire et des événement du jour."
+            else :
+                listOut[6]= "Voici ton résumer des actulitée du jour avec la meteo ainsi des taches que tu as faire et des événement du jour."
             
+            return 19,listOut        
