@@ -1944,3 +1944,82 @@ class fncArreraNetwork:
                 text = "Pardonne moi mais je peux pas te donner les taches pour demain pour le projet."
         
         return text
+    
+    def sortieResumerTacheAgenda(self):
+        """
+        Return  : tache,agenda
+        
+        """
+        # Recuperation des liste
+        listEvent = self.__objetCalendar.getEventToday()
+        listTache = self.__objetTache.getTacheToday()
+        # Recuperation du nombre de tache et event
+        nbEvent = self.__objetCalendar.getNbEventToday()
+        nbTache = len(listTache)
+        
+        if (self.__etatVous == True):
+            if (nbTache == 0):
+                tacheTXT = "Vous avez aucune tache pour aujourd'hui" 
+            else :
+                if (nbTache == 1):
+                    tacheTXT = "Vous avez "+str(nbTache)+" tache qui est "+listTache[0]+"."
+                else :
+                    tacheTXT = "Vous avez "+str(nbTache)+" taches qui sont "
+                    for i in range(0,nbTache):
+                        if (i == 0):
+                            tacheTXT = tacheTXT+listTache[i]
+                        else :
+                            if (i == (nbTache-1)):
+                                tacheTXT = tacheTXT+" et "+listTache[i]    
+                            else :
+                                tacheTXT = tacheTXT+", "+listTache[i]      
+            if (nbEvent == 0):
+                eventTXT = "Vous avez aucun événement aujourd'hui" 
+            else :
+                if (nbEvent == 1):
+                    eventTXT = "Vous avez "+str(nbEvent)+" evénement aujourd'hui qui est "+listEvent[0]+"."
+                else :
+                    eventTXT = "Vous avez "+str(nbEvent)+" evénement aujourd'hui qui sont "
+                    for i in range(0,nbEvent):
+                        if (i == 0):
+                            eventTXT = eventTXT +listEvent[i]
+                        else :
+                            if (i == (nbEvent-1)):
+                                eventTXT = eventTXT+" et "+listEvent[i]    
+                            else :
+                                eventTXT = eventTXT+", "+listEvent[i]
+            
+        else :
+            if (nbTache == 0):
+                tacheTXT = "Vous avez aucune tache pour aujourd'hui" 
+            else :
+                if (nbTache == 1):
+                    tacheTXT = "Tu as "+str(nbTache)+" tache qui est "+listTache[0]+"."
+                else :
+                    tacheTXT = "Tu as "+str(nbTache)+" taches qui sont "
+                    for i in range(0,nbTache):
+                        if (i == 0):
+                            tacheTXT = tacheTXT+listTache[i]
+                        else :
+                            if (i == (nbTache-1)):
+                                tacheTXT = tacheTXT+" et "+listTache[i]    
+                            else :
+                                tacheTXT = tacheTXT+", "+listTache[i]
+            if (nbEvent == 0):
+                eventTXT = "Tu as aucun événement aujourd'hui" 
+            else :
+                if (nbEvent == 1):
+                    eventTXT = "Tu as "+str(nbEvent)+" evénement aujourd'hui qui est "+listEvent[0]+"."
+                else :
+                    eventTXT = "Tu as "+str(nbEvent)+" evénement aujourd'hui qui sont "
+                    for i in range(0,nbEvent):
+                        if (i == 0):
+                            eventTXT = eventTXT +listEvent[i]
+                        else :
+                            if (i == (nbEvent-1)):
+                                eventTXT = eventTXT+" et "+listEvent[i]    
+                            else :
+                                eventTXT = eventTXT+", "+listEvent[i]
+        
+        return 18,[tacheTXT,eventTXT]
+            

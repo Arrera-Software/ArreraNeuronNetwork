@@ -21,7 +21,7 @@ while valeur != 15 :
         valeur = neuron.getValeurSortie()
         sortie = neuron.getListSortie()
         print(valeur)
-        if ((valeur==12) or (valeur==11) or (valeur==3) or (valeur ==13)) :
+        if ((valeur==12) or (valeur==11) or (valeur==3) or (valeur ==13) or (valeur == 18)) :
             if (valeur == 3) : 
                 print(nom+" $ Actu :\n"+sortie[0]+"\n"+sortie[1]+"\n"+sortie[2])
             else :
@@ -32,8 +32,11 @@ while valeur != 15 :
                     else :
                         print(nom+" $ "+"Erreur resumer actulitees")
                 else :
-                    nb = len(sortie)
-                    for i in range(0,nb):
-                        print("\n"+str(sortie[i]))
+                    if (valeur == 18):
+                        print(nom + " $ "+sortie[0]+"\n"+nom + " $ "+sortie[1])
+                    else :
+                        nb = len(sortie)
+                        for i in range(0,nb):
+                            print("\n"+str(sortie[i]))
         else :
             print(nom + " $ "+sortie[0])               

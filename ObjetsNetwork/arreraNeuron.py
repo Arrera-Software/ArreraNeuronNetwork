@@ -89,6 +89,7 @@ class ArreraNetwork :
         15 : Arret de l'assistant
         16 : Creation d'un fichier dans un projet
         17 : Affichage aide
+        18 : Resumer tache / agenda
         """
         return self.__valeurOut
     

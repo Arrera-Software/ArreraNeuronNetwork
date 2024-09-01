@@ -114,6 +114,13 @@ class neuroneTime :
                                                                           and ("demain" in requette)))and ("projet" not in requette))  :
                                                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieSpeakTacheTowmorow(),""] 
                                                                             self.__objHistorique.setAction("Consultation du nombre de tache enregistrer pour demain")
+                                                                        else :
+                                                                            if ((("resumer" in requette) and ("tache" in requette)) or 
+                                                                                (("resumer" in requette) and ("agenda" in requette))):
+                                                                                nb,listout = self.__fonctionArreraNetwork.sortieResumerTacheAgenda()
+                                                                                self.__listSortie = listout
+                                                                                self.__valeurOut = nb
+                                                                                self.__objHistorique.setAction("Resumer des tache et des evenement du jour")
                                                                     
                 
             #Mise a jour de la valeur 
