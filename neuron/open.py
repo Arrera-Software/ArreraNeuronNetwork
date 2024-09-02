@@ -77,42 +77,55 @@ class neuroneOpen :
                             else :
                                 if ("europe 1" in requette):
                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(1),""]
+                                    self.__objHistorique.setAction("Lancement de la radio europe 1")
                                 else :
                                     if ("europe 2" in requette):
                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(2),""]
+                                        self.__objHistorique.setAction("Lancement de la radio europe 2")
                                     else :
                                         if ("france info" in requette):
                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(3),""]
+                                            self.__objHistorique.setAction("Lancement de la radio france info")
                                         else :
                                             if ("france inter" in requette):
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(4),""]
+                                                self.__objHistorique.setAction("Lancement de la radio france inter")
                                             else :
                                                 if ("france musique" in requette):
                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(5),""]
+                                                    self.__objHistorique.setAction("Lancement de la radio france musique")
                                                 else :
                                                     if ("france culture" in requette):
                                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(6),""]
+                                                        self.__objHistorique.setAction("Lancement de la radio france culture")
                                                     else :
                                                         if ("france bleu" in requette):
                                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(7),""]
+                                                            self.__objHistorique.setAction("Lancement de la radio france bleu")
                                                         else :
                                                             if ("fun radio" in requette):
                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(8),""]
+                                                                self.__objHistorique.setAction("Lancement de la radio fun radio")
                                                             else :
                                                                 if ("nrj" in requette):
                                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(9),""]
+                                                                    self.__objHistorique.setAction("Lancement de la radio nrj")
                                                                 else :
                                                                     if ("rfm" in requette):
                                                                         self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(10),""]
+                                                                        self.__objHistorique.setAction("Lancement de la radio rfm")
                                                                     else :
                                                                         if ("nostalgi" in requette):
                                                                             self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(11),""]
+                                                                            self.__objHistorique.setAction("Lancement de la radio nostalgi")
                                                                         else :
                                                                             if ("skyrock" in requette):
                                                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(12),""]
+                                                                                self.__objHistorique.setAction("Lancement de la radio skyrock")
                                                                             else :
                                                                                 if ("rtl" in requette):
                                                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(13),""]
+                                                                                    self.__objHistorique.setAction("Lancement de la radio rtl")
                                                                                 else :
                                                                                     for i in range(0,nbLogiciel):
                                                                                         if listeLogiciel[i-1] in requette:
