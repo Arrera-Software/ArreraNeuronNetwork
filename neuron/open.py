@@ -67,11 +67,11 @@ class neuroneOpen :
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenNote(),""]
                             self.__objHistorique.setAction("Ouverture du logiciel de note")
                         else :
-                            if (("musique" in requette) or ("music" in requette) 
+                            if ((("musique" in requette) or ("music" in requette) 
                                 or ("windows media player" in requette) or ("vlc" in requette) 
                                 or ("clementine" in requette) or ("groove music" in requette) 
                                 or ("spotify" in requette) or ("deezer" in requette) 
-                                or ("youTube music" in requette)) :
+                                or ("youTube music" in requette)) and ("france musique" not in requette)) :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenMusic(),""]
                                 self.__objHistorique.setAction("Ouverture du logiciel d'ecoute du musique")
                             else :
