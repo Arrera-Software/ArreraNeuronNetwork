@@ -21,6 +21,7 @@ from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionTache import*
 from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
+from arreraSoftware.fonctionRadio import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -52,6 +53,7 @@ class fncArreraNetwork:
         self.__objetArreraWork = fncArreraWork(self.__objetDate,self.__gestionNeuron,self.__configNeuron,self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
+        self.__objRadio = fncRadio(self.__objetNetwork)
         
     def reading(self):
         self.__fncReading.fenetreLecture()
@@ -2052,4 +2054,74 @@ class fncArreraNetwork:
             else :
                 listOut[6]= "Voici ton résumer des actulitée du jour avec la meteo ainsi des taches que tu as faire et des événement du jour."
             
-            return 19,listOut        
+            return 19,listOut 
+    
+    def sortieStartRadio(self,radio:int):
+        """
+        1 = Europe 1 
+        2 = Europe 2 
+        3 = France Info
+        4 = France Inter
+        5 = France Musique
+        6 = France Culture
+        7 = France Bleu
+        8 = Fun Radio
+        9 = NRJ
+        10 = RFM 
+        11 = Nostalgi 
+        12 = Skyrock
+        13 = RTL
+        """    
+        if (self.__etatVous == True):
+            text1 = "Je vous lance la radio "
+            text2 = ". Bonne ecoute "+self.__genre
+        else :
+            text1 = "Voici la radio "
+            text2 = ". Profite bien de ton ecoute "+self.__user
+        
+        match radio :
+            case 1 :
+                txtRadio = "Europe 1"
+                sortieRadio = self.__objRadio.startEurope1()
+            case 2 :
+                sortieRadio = self.__objRadio.startEurope2()
+                txtRadio = "Europe 2"
+            case 3 :
+                sortieRadio = self.__objRadio.startFranceInfo()
+                txtRadio = "France Info"
+            case 4 :
+                sortieRadio = self.__objRadio.startFranceInter()
+                txtRadio = "France Inter"
+            case 5 :
+                sortieRadio = self.__objRadio.startFranceMusique()
+                txtRadio = "France Musique"
+            case 6 :
+                sortieRadio = self.__objRadio.startFranceCulture()
+                txtRadio = "France culture"
+            case 7 :
+                sortieRadio = self.__objRadio.startFranceBleu()
+                txtRadio = "France Bleu"
+            case 8 :
+                sortieRadio = self.__objRadio.startFunRadio()
+                txtRadio = "Fun Radio"
+            case 9 :
+                sortieRadio = self.__objRadio.startNRJ()
+                txtRadio = "NRJ"
+            case 10 :
+                sortieRadio = self.__objRadio.startRFM()
+                txtRadio = "RFM"
+            case 11 :
+                sortieRadio = self.__objRadio.startNostalgi()
+                txtRadio = "Nostalgi"
+            case 12 :
+                sortieRadio = self.__objRadio.startSkyrock()
+                txtRadio = "Skyrock"
+            case 13 :
+                sortieRadio = self.__objRadio.startRTL()
+                txtRadio = "RTL"
+        
+        
+        if (sortieRadio == True):
+            return text1+txtRadio+text2
+        else :
+            return "Je ne peux pas lancer une radio. Un probléme est survenu."

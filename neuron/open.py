@@ -75,36 +75,75 @@ class neuroneOpen :
                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenMusic(),""]
                                 self.__objHistorique.setAction("Ouverture du logiciel d'ecoute du musique")
                             else :
-                                for i in range(0,nbLogiciel):
-                                    if listeLogiciel[i-1] in requette:
-                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1]),""]
-                                        self.__objHistorique.setAction("Ouverture du logiciel "+listeLogiciel[i-1])
-                                        logOuverture = 1
-                                        break
-                                if (logOuverture == 0) :
-                                    if ("youtube" in requette ):
-                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenYoutube(),""]
-                                        self.__objHistorique.setAction("Ouverture de youtube")
+                                if ("europe 1" in requette):
+                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(1),""]
+                                else :
+                                    if ("europe 2" in requette):
+                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(2),""]
                                     else :
-                                        if (("stockage en ligne" in requette) or ("stockage sur le cloud" in requette) 
-                                            or ("drive" in requette) or ("stokage cloud" in requette) 
-                                            or ("stockage distant" in requette) or ("google drive" in requette) 
-                                            or ("dropbox" in requette) or ("onedrive" in requette) 
-                                            or ("amazon drive" in requette) or ("box" in requette) 
-                                            or ("nextcloud" in requette)) :
-                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenCloud(),""]
-                                            self.__objHistorique.setAction("Ouverture du site de stokage cloud")
+                                        if ("france info" in requette):
+                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(3),""]
                                         else :
-                                            for i in range(0,nbSite):
-                                                if (listeSite[i] in requette):
-                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSite(listeSite[i]),""]
-                                                    self.__objHistorique.setAction("Ouverture du site "+listeSite)
-                                                    break
-                                            if (self.__gestionNeuron.verrifSortie(self.__listSortie) == 0) :
-                                                if (self.__gestionNeuron.getVous() == True) :
-                                                    self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que vous me demandez",""]
+                                            if ("france inter" in requette):
+                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(4),""]
+                                            else :
+                                                if ("france musique" in requette):
+                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(5),""]
                                                 else :
-                                                    self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que tu me demande",""]
+                                                    if ("france culture" in requette):
+                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(6),""]
+                                                    else :
+                                                        if ("france bleu" in requette):
+                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(7),""]
+                                                        else :
+                                                            if ("fun radio" in requette):
+                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(8),""]
+                                                            else :
+                                                                if ("nrj" in requette):
+                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(9),""]
+                                                                else :
+                                                                    if ("rfm" in requette):
+                                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(10),""]
+                                                                    else :
+                                                                        if ("nostalgi" in requette):
+                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(11),""]
+                                                                        else :
+                                                                            if ("skyrock" in requette):
+                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(12),""]
+                                                                            else :
+                                                                                if ("rtl" in requette):
+                                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieStartRadio(13),""]
+                                                                                else :
+                                                                                    for i in range(0,nbLogiciel):
+                                                                                        if listeLogiciel[i-1] in requette:
+                                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftware(listeLogiciel[i-1]),""]
+                                                                                            self.__objHistorique.setAction("Ouverture du logiciel "+listeLogiciel[i-1])
+                                                                                            logOuverture = 1
+                                                                                            break
+                                                                                    if (logOuverture == 0) :
+                                                                                        if ("youtube" in requette ):
+                                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenYoutube(),""]
+                                                                                            self.__objHistorique.setAction("Ouverture de youtube")
+                                                                                        else :
+                                                                                            if (("stockage en ligne" in requette) or ("stockage sur le cloud" in requette) 
+                                                                                                or ("drive" in requette) or ("stokage cloud" in requette) 
+                                                                                                or ("stockage distant" in requette) or ("google drive" in requette) 
+                                                                                                or ("dropbox" in requette) or ("onedrive" in requette) 
+                                                                                                or ("amazon drive" in requette) or ("box" in requette) 
+                                                                                                or ("nextcloud" in requette)) :
+                                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenCloud(),""]
+                                                                                                self.__objHistorique.setAction("Ouverture du site de stokage cloud")
+                                                                                            else :
+                                                                                                for i in range(0,nbSite):
+                                                                                                    if (listeSite[i] in requette):
+                                                                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSite(listeSite[i]),""]
+                                                                                                        self.__objHistorique.setAction("Ouverture du site "+listeSite)
+                                                                                                        break
+                                                                                                if (self.__gestionNeuron.verrifSortie(self.__listSortie) == 0) :
+                                                                                                    if (self.__gestionNeuron.getVous() == True) :
+                                                                                                        self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que vous me demandez",""]
+                                                                                                    else :
+                                                                                                        self.__listSortie = ["Desoler "+self.__gestionNeuron.getGenre()+" mais je ne peux pas ouvrir ce que tu me demande",""]
             else :
                 if (("liste les logiciels" in requette)or("quelles sont les logiciels enregister" in requette) 
                     or("quelles sont les logiciel enregister" in requette) or("quelles sont les logiciels enregiste" in requette) 
