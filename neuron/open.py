@@ -33,7 +33,7 @@ class neuroneOpen :
             #varriable
             logOuverture = 0
             #fonction neuron Open
-            if (("ouvre" in requette) or ("ouvrir" in requette)):
+            if (("ouvre" in requette) or ("ouvrir" in requette) or ("lance" in requette)):
                 if (("logiciel de présentation" in requette) or ("logiciel de diaporama" in requette) 
                     or ("diaporama" in requette) or ("microsoft powerpoint" in requette) 
                     or ("powerpoint" in requette) or ("google slides" in requette) 
