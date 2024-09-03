@@ -168,7 +168,24 @@ class neuroneOpen :
                     or("quelles sont les site enregister" in requette) or("quelles sont les sites enregiste" in requette) 
                     or("quelles sont les sites enregiste" in requette) or ("fais une liste des site"in requette)
                     or ("fais une liste des sites"in requette) or ("liste les site" in requette)): 
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListSite(nbSite,listeSite),""]                               
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieListSite(nbSite,listeSite),""]     
+                    else :
+                        if (("liste" in requette) and ("radio" in requette)):
+                            self.__listSortie = ["Les radio qui peuvent etre lancer par l'assistant sont :"
+                                                 +"\n- Europe 1"
+                                                 +"\n- Europe 2"
+                                                 +"\n- France Info"
+                                                 +"\n- France Inter"
+                                                 +"\n- France Musique"
+                                                 +"\n- France Culture"
+                                                 +"\n- France Bleu"
+                                                 +"\n- Fun Radio"
+                                                 +"\n- NRJ"
+                                                 +"\n- RFM"
+                                                 +"\n- Nostalgi"
+                                                 +"\n- Skyrock"
+                                                 +"\n- RTL"
+                                                 ,""]                         
                                             
                                                 
             #Mise a jour de la valeur                                                               
