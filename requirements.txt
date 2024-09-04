@@ -1,4 +1,4 @@
-pytube
+yt_dlp
 pathlib
 tkcalendar
 datetime

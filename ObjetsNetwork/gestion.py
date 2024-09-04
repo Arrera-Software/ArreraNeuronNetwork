@@ -24,6 +24,7 @@ class gestionNetwork:
         self.__detecteurOS = detecteurOS
         self.__moteurRechercheDefault = ""
         self.__workEmplacement = ""
+        self.__downloadEmplacment = ""
         self.__oldRequette = str
         self.__oldSorti = str
         
@@ -55,6 +56,7 @@ class gestionNetwork:
         self.__adresseDomicile = self.__fileUser.lectureJSON("adresseDomicile")
         self.__adresseTravail = self.__fileUser.lectureJSON("adresseTravail")
         self.__workEmplacement = self.__fileUser.lectureJSON("wordFolder")
+        self.__downloadEmplacment = self.__fileUser.lectureJSON("videoDownloadFolder")
     
     def getVous(self):
         return bool(self.__vous)
@@ -188,3 +190,6 @@ class gestionNetwork:
 
     def getWorkEmplacement(self):
         return self.__workEmplacement
+    
+    def getEmplacementDownload(self):
+        return self.__downloadEmplacment

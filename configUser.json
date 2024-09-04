@@ -27,5 +27,6 @@
     "emplacementEvenenement" :"evenementUser.json",
     "emplacementTache":"tache.json",
     "tokenGithub":"",
-    "wordFolder":"C:/Users/bapti/OneDrive/Bureau"
+    "wordFolder":"C:/Users/bapti/OneDrive/Bureau",
+    "videoDownloadFolder":"C:/Users/bapti/OneDrive/Bureau"
 }

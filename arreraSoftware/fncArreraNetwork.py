@@ -41,8 +41,8 @@ class fncArreraNetwork:
         self.__actu = Actu("3b43e18afcf945888748071d177b8513")
         self.__gps = GPS("19bfbee6112be5b3d9a64d4ccec72602",etatConnextion)
         self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
-        self.__traducteur = fncArreraTrad(self.__configNeuron)
-        self.__downloader = fncArreraVideoDownload(self.__configNeuron)
+        self.__traducteur = fncArreraTrad(self.__configNeuron,)
+        self.__downloader = fncArreraVideoDownload(self.__configNeuron,self.__gestionNeuron)
         self.__calculatrice = fncCalculatrice(self.__configNeuron)  
         self.__objetRecherche = fncArreraSearch(etatConnextion)
         self.__objetDate = fncDate()
@@ -492,22 +492,6 @@ class fncArreraNetwork:
 
     def sortieTraducteur(self,langInt:str,langOut:int):
         self.__traducteur.fenetreTrad(langInt,langOut)
-        
-    
-    def sortieDownload(self,mode):
-        self.__downloader.fenetreDownload(mode)
-        if self.__etatVous == True:
-            if mode == "music" :
-                text = "J'espère que la musique que vous avez téléchargée vous rendra heureux "+self.__genre+" ."
-            else :
-                text = "J'espère que la vidéo que vous avez téléchargée vous rendra heureux "+self.__genre+" ."
-        else :
-            if mode == "music" :
-                text =  "J'espère que la musique que vous avez téléchargée vous fera plaisir "+self.__user+"."
-            else :
-                text =  "J'espère que la vidéo que vous avez téléchargée vous fera plaisir "+self.__user+"."
-        
-        return text
     
     def sortieCalculatrice(self,mode):
         if mode == "0":
@@ -2125,3 +2109,11 @@ class fncArreraNetwork:
             return text1+txtRadio+text2
         else :
             return "Je ne peux pas lancer une radio. Un probléme est survenu."
+    
+    def sortieDownloadMusic(self):
+        self.__downloader.activeMusique()
+        if (self.__etatVous == True):
+            text = "Okay je vous ouvre l'interface pour télécharger une video youtube en musique."
+        else :
+            text = "Okay je t'ouvre l'interface pour télécharger une video youtube en musique."
+        return text
