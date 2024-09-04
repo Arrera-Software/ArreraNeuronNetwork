@@ -56,7 +56,6 @@ class gestionNetwork:
         self.__adresseDomicile = self.__fileUser.lectureJSON("adresseDomicile")
         self.__adresseTravail = self.__fileUser.lectureJSON("adresseTravail")
         self.__workEmplacement = self.__fileUser.lectureJSON("wordFolder")
-        self.__downloadEmplacment = self.__fileUser.lectureJSON("videoDownloadFolder")
     
     def getVous(self):
         return bool(self.__vous)
@@ -192,4 +191,4 @@ class gestionNetwork:
         return self.__workEmplacement
     
     def getEmplacementDownload(self):
-        return self.__downloadEmplacment
+        return self.__fileUser.lectureJSON("videoDownloadFolder")

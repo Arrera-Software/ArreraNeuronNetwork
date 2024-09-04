@@ -2117,3 +2117,11 @@ class fncArreraNetwork:
         else :
             text = "Okay je t'ouvre l'interface pour télécharger une video youtube en musique."
         return text
+    
+    def sortieDownloadVideo(self):
+        self.__downloader.activeVideo()
+        if (self.__etatVous == True):
+            text = "Okay je vous ouvre l'interface pour télécharger une video youtube."
+        else :
+            text = "Okay je t'ouvre l'interface pour télécharger une video youtube."
+        return text

@@ -32,12 +32,12 @@ class neuroneSoftware :
             #reponse neuron software
             if ("telecharge" in requette) :
                 if "video" in requette :
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("video"),""]
+                    self.__listSortie = [self.__fonctionArreraNetwork.sortieDownloadVideo(),""]
                     self.__valeurOut = 5
                     self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode video")
                 else :
                     if ("musique" in requette) :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieDownload("music"),""]
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieDownloadMusic(),""]
                         self.__valeurOut = 5
                         self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode musique")
                     else :
