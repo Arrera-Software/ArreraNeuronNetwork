@@ -56,7 +56,7 @@ class neuroneCodehelp :
                      or ("spython" in requette)):
                     text , recherche = self.__fonctionArreraNetwork.sortieSearchDoc(requette)
                     self.__listSortie = [text,""]
-                    self.__objHistorique.setAction("Recherche "+recherche)
+                    self.__objHistorique.setAction("Recherche documentation "+recherche)
                 else :
                     if (("recherche github" in requette) or ("rgithub" in requette) or
                         ("sgithub" in requette) or ("search github" in requette)):

@@ -106,7 +106,7 @@ class neuroneAPI :
                                         ville = chaine.netoyage(villes[i])
                                         if ville in requette :
                                             self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoToday(villes[i])
-                                            self.__objHistorique.setAction("Meteo ajourd'hui dans "+ville[i])
+                                            self.__objHistorique.setAction("Meteo aujourd'hui dans "+ville[i])
                                             resultat = 1
                                             break
                                         else :
@@ -115,17 +115,17 @@ class neuroneAPI :
                                         if self.__etatVilleDomicile == True or self.__etatVilleTravail == True : 
                                             if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
                                                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoToday(self.__gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
-                                                self.__objHistorique.setAction("Meteo ajourd'hui au domicile")
+                                                self.__objHistorique.setAction("Meteo aujourd'hui au domicile")
                                             else :
                                                 if "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
                                                     self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoToday(self.__gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
-                                                    self.__objHistorique.setAction("Meteo ajourd'hui au lieu de travail")
+                                                    self.__objHistorique.setAction("Meteo aujourd'hui au lieu de travail")
                                                 else :
                                                     self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoToday("")
-                                                    self.__objHistorique.setAction("Meteo ajourd'hui a la localisation")
+                                                    self.__objHistorique.setAction("Meteo aujourd'hui a la localisation")
                                         else :    
                                             self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieMeteoToday("")
-                                            self.__objHistorique.setAction("Meteo ajourd'hui a la localisation")
+                                            self.__objHistorique.setAction("Meteo aujourd'hui a la localisation")
 
                         else :
                             if "temperature" in requette :
