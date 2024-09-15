@@ -30,12 +30,11 @@ class ArreraNetwork :
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
         self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur,self.__configNeuron,self.__detecteurOS,self.__fichierVille)
         self.__network = network()
-        self.__historique = CHistorique(self.__configNeuron)
-        #set des atribut
-        self.__gestionnaire.setAll()
-        #initialisation objet
         self.__formuleNeuron = formule(self.__gestionnaire)
         self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
+        self.__historique = CHistorique(self.__configNeuron,self.__fonctionAssistant)
+        #set des atribut
+        self.__gestionnaire.setAll()        
         #recuperation etat du reseau
         self.__etatReseau = self.__network.getEtatInternet()
         #initilisation des neuron
@@ -48,6 +47,8 @@ class ArreraNetwork :
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__work = neuronWork(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
+        
+        self.__historique.verfiHist()
     
     def realoadUserData(self):
         """
