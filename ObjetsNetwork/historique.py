@@ -50,6 +50,7 @@ class CHistorique :
             return False
     
     def verfiHist(self):
+        listAction = []
         if (not self.__histTowmorow):
             histTowmorow = False
         else :
@@ -61,18 +62,36 @@ class CHistorique :
         else :
             nbToday = len(self.__histToday)-1
             histToday = True
-            outList = self.__get5oldAction(nbToday,self.__histToday)
             
         if ((histToday == False) and (histTowmorow == False)):
             return False 
         else :
             if ((histToday == True) and (histTowmorow == True)):
+                for i in range(0,nbToday+1):
+                    sortie = self.__verifAction(self.__histToday[i])
+                    if (sortie != "none"):
+                        listAction.append(sortie)
+                for i in range(0,nbTowmorow+1):
+                    sortie = self.__verifAction(self.__histTowmorow[i])
+                    if (sortie != "none"):
+                        listAction.append(sortie)
+                self.__listAction = listAction
                 return True
             else :
                 if ((histToday == True) and (histTowmorow == False)):
+                    for i in range(0,nbToday+1):
+                        sortie = self.__verifAction(self.__histToday[i])
+                        if (sortie != "none"):
+                            listAction.append(sortie)
+                    self.__listAction = listAction
                     return True
                 else :
                     if ((histToday == False) and (histTowmorow == True)):
+                        for i in range(0,nbTowmorow+1):
+                            sortie = self.__verifAction(self.__histTowmorow[i])
+                            if (sortie != "none"):
+                                listAction.append(sortie)
+                        self.__listAction = listAction                
                         return True
     
     def __get5oldAction(self,index:int,vlist:list):
@@ -172,4 +191,9 @@ class CHistorique :
                                                                                                     else :
                                                                                                         if (("Ouverture du projet" in action) or ("Creation d'un projet nommer" in action)):
                                                                                                             project = action.replace("Ouverture du projet","").replace("Creation d'un projet nommer","").replace(" ","")
-                                                                                                            return "open projet "+project                                                              
+                                                                                                            return "open projet "+project 
+                                                                                                        else :
+                                                                                                            return "none" 
+    
+    def getListAction(self):
+        return self.__listAction                                                                                                                                                        

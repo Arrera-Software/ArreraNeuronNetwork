@@ -47,6 +47,9 @@ class ArreraNetwork :
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__work = neuronWork(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
+        # Recuperation Action
+        self.__historique.verfiHist()
+        print(self.__historique.getListAction())
         
         self.__historique.verfiHist()
     
