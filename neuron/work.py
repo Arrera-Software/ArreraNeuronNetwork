@@ -65,13 +65,15 @@ class neuronWork :
             else :
                 if ("ferme" in requette) :
                     if (("exel" in requette) or ("tableur" in requette)):
+                        name = self.__fonctionArreraNetwork.getFileTableur()
                         self.__listSortie = [self.__fonctionArreraNetwork.sortieCloseTableur(),""]
-                        self.__objHistorique.setAction("Fermeture d'un fichier exel")
+                        self.__objHistorique.setAction("Fermeture du fichier exel "+name)
                         self.__valeurOut = 8
                     else :
                         if (("word" in requette) or ("traitement de texte" in requette)):
+                            name = self.__fonctionArreraNetwork.getFileWord()
                             self.__listSortie = [self.__fonctionArreraNetwork.sortieCloseDocx(),""]
-                            self.__objHistorique.setAction("Fermeture d'un fichier word")
+                            self.__objHistorique.setAction("Fermeture du fichier word "+name)
                             self.__valeurOut = 8
                         else :
                             if ("projet" in requette):
