@@ -13,7 +13,7 @@ class formule :
             text = "Je ne comprend pas ce que tu m'as dit ou ce que tu demande."   
         return text
         
-    def salutation(self, hour):
+    def bootNoHist(self, hour):
         if hour >= 0 and hour < 3:
             if self.__vous:
                 formule = "Bonjour,"

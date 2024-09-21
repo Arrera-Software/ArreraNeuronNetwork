@@ -60,7 +60,7 @@ class neuroneDiscution :
             createur = self.__gestionNeuron.getCreateur()
             #Reponse chat bot
             if  (("salut" in requette)   or ("bonjour" in requette)  or( "bonsoir" in requette)):
-                text = self.__formule.salutation(hour)
+                text = self.__formule.bootNoHist(hour)
             else :
                 if (("raconter une blague" in requette) or ("raconte moi une blague" in requette) or ("raconte une blague" in requette)) :
                     if (("vous etes pas drole" in oldrequette) or( "tu es pas drole" in oldrequette) 

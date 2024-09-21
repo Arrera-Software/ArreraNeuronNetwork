@@ -59,7 +59,7 @@ class ArreraNetwork :
 
     def boot(self):
         hour = datetime.now().hour
-        text= self.__formuleNeuron.salutation(hour)
+        text= self.__formuleNeuron.bootNoHist(hour)
         self.__gestionnaire.setOld("boot","boot")
         return str(text)
     
