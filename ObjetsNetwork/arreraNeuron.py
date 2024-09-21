@@ -50,8 +50,6 @@ class ArreraNetwork :
         # Recuperation Action
         self.__historique.verfiHist()
         print(self.__historique.getListAction())
-        
-        self.__historique.verfiHist()
     
     def realoadUserData(self):
         """
