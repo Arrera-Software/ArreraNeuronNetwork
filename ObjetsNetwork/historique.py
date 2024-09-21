@@ -75,7 +75,8 @@ class CHistorique :
                     sortie = self.__verifAction(self.__histTowmorow[i])
                     if (sortie != "none"):
                         listAction.append(sortie)
-                self.__listAction = listAction
+                self.__listAction = self.__verifClose(listAction,self.__histToday)
+                self.__listAction = self.__verifClose(listAction,self.__histTowmorow)
                 return True
             else :
                 if ((histToday == True) and (histTowmorow == False)):
@@ -83,7 +84,7 @@ class CHistorique :
                         sortie = self.__verifAction(self.__histToday[i])
                         if (sortie != "none"):
                             listAction.append(sortie)
-                    self.__listAction = listAction
+                    self.__listAction = self.__verifClose(listAction,self.__histToday)
                     return True
                 else :
                     if ((histToday == False) and (histTowmorow == True)):
@@ -91,7 +92,7 @@ class CHistorique :
                             sortie = self.__verifAction(self.__histTowmorow[i])
                             if (sortie != "none"):
                                 listAction.append(sortie)
-                        self.__listAction = listAction                
+                        self.__listAction = self.__verifClose(listAction,self.__histTowmorow)           
                         return True
     
     def __get5oldAction(self,index:int,vlist:list):
@@ -106,6 +107,34 @@ class CHistorique :
             outList.append(vlist[i])
         
         return outList
+    
+    def __verifClose(self, listAction: list, listHist: list) -> list:
+        newListAction = listAction.copy()
+        
+        for hist_item in listHist:
+            if "Fermeture du fichier exel" in hist_item:
+                file = hist_item.replace("Fermeture du fichier exel", "").strip()
+                actions_to_remove = [
+                    f"{file} open computer tableur",
+                    f"open exel {file}",
+                    f"{file} open tableur assistant"
+                ]
+            elif "Fermeture du fichier word" in hist_item:
+                file = hist_item.replace("Fermeture du fichier word", "").strip()
+                actions_to_remove = [
+                    f"{file} open computer word",
+                    f"open word {file}",
+                    f"{file} open word assistant"
+                ]
+            elif "Fermeture du projet" in hist_item:
+                project = hist_item.replace("Fermeture du projet", "").strip()
+                actions_to_remove = [f"open projet {project}"]
+            else:
+                continue
+            
+            newListAction = [action for action in newListAction if action not in actions_to_remove]
+        
+        return newListAction
     
     def __verifAction(self,action:str):
         if ("Lancement de la radio" in action):
