@@ -31,7 +31,7 @@ class ArreraNetwork :
         self.__network = network()
         self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
         self.__historique = CHistorique(self.__configNeuron,self.__fonctionAssistant)
-        self.__formuleNeuron = formule(self.__gestionnaire)
+        self.__formuleNeuron = formule(self.__gestionnaire,self.__historique)
         #set des atribut
         self.__gestionnaire.setAll()        
         #recuperation etat du reseau
@@ -53,9 +53,20 @@ class ArreraNetwork :
         """
         self.__gestionnaire.setAll()
 
-    def boot(self):
+    def boot(self,mode:int):
+        """_summary_
+
+        Args:
+            mode (int): 1.no hist | 2. Hist
+
+        Returns:
+            _type_: _description_
+        """
         hour = datetime.now().hour
-        text= self.__formuleNeuron.bootNoHist(hour)
+        if mode == 1 :
+            text= self.__formuleNeuron.bootNoHist(hour)
+        else :
+            text= self.__formuleNeuron.bootWithHist(hour)
         self.__gestionnaire.setOld("boot","boot")
         return str(text)
     
