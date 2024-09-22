@@ -1,10 +1,12 @@
 import random
 from ObjetsNetwork.gestion import*
+from  ObjetsNetwork.historique import*
 class formule : 
-    def __init__(self,gestionnaireNeuron:gestionNetwork):
+    def __init__(self,gestionnaireNeuron:gestionNetwork,fncHist:CHistorique):
         self.__vous = bool(gestionnaireNeuron.getVous())
         self.__genre = str(gestionnaireNeuron.getGenre())
         self.__user  = str(gestionnaireNeuron.getUser())
+        self.__fncHist = fncHist
     
     def nocomprehension(self):
         if self.__vous == True:
@@ -224,6 +226,11 @@ class formule :
             return str(formule+" "+cmp+" "+phrase[nbrand])
     
     def bootWithHist(self,hour):
+        
+        sortie = self.__fncHist.verfiHist()
+        if (sortie == True):
+            self.__fncHist.startHistAction()
+        
         if hour >= 0 and hour < 3:
             if self.__vous:
                 formule = "Bonjour,"

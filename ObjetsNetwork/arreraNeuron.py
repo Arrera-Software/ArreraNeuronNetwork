@@ -13,7 +13,6 @@ from neuron.time import*
 from neuron.codehelp import*
 from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
-from  ObjetsNetwork.historique import*
 from neuron.work import*
 
 class ArreraNetwork :
@@ -30,9 +29,9 @@ class ArreraNetwork :
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
         self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur,self.__configNeuron,self.__detecteurOS,self.__fichierVille)
         self.__network = network()
-        self.__formuleNeuron = formule(self.__gestionnaire)
         self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
         self.__historique = CHistorique(self.__configNeuron,self.__fonctionAssistant)
+        self.__formuleNeuron = formule(self.__gestionnaire)
         #set des atribut
         self.__gestionnaire.setAll()        
         #recuperation etat du reseau
@@ -47,9 +46,6 @@ class ArreraNetwork :
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__work = neuronWork(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
-        # Recuperation Action
-        self.__historique.verfiHist()
-        print(self.__historique.getListAction())
     
     def realoadUserData(self):
         """
