@@ -222,3 +222,106 @@ class formule :
             
             nbrand = random.randrange(0,1)
             return str(formule+" "+cmp+" "+phrase[nbrand])
+    
+    def bootWithHist(self,hour):
+        if hour >= 0 and hour < 3:
+            if self.__vous:
+                formule = "Bonjour,"
+                cmp = self.__genre + " " + self.__user
+                phrase = "Je vous ai relancée votre travail. Mais il faudrais que tu dorme."
+            else:
+                formule = "Zzzz"
+                cmp = self.__user
+                phrase = "J'ai relancer la ou vous etais arriver. Mais il faudrais que tu dorme."
+        else:
+            if hour >= 3 and hour <= 6:
+                if self.__vous:
+                    formule = "Bonjour,"
+                    cmp = self.__genre + " " + self.__user
+                    phrase = "Je vous ai relancée votre travail. Mais il faudrais que tu dorme."
+                else:
+                    formule = "Zzzz"
+                    cmp = self.__user
+                    phrase =" J'ai relancer la ou vous etais arriver. Mais il faudrais que tu dorme."
+            else:
+                if hour >= 6 and hour <= 10:
+                    if self.__vous:
+                        formule = "Bonjour, "
+                        cmp = self.__genre + " " + self.__user
+                        phrase = "J'espère que vous avez passé une bonne nuit. J'ai relancer la ou vous etais arriver."
+                    else:
+                        formule = "Hey,"
+                        cmp = self.__user
+                        phrase = "J'espère tu as passé une bonne nuit. J'ai relancer la ou tu etais arriver."
+                else:
+                    if hour >= 10 and hour <= 12:
+                        if self.__vous:
+                            formule = "Bonjour, "
+                            cmp = self.__genre + " " + self.__user
+                            phrase = "J'espère que vous passez une bonne matinée. Je vous ai relancer ou vous etiez"
+                        else:
+                            formule = "Salut,"
+                            cmp = self.__user
+                            phrase = "Comment se passe ta matinée ?. J'ai relancer la ou tu etais arriver."
+                    else:
+                        if hour >= 13 and hour <= 14:
+                            if self.__vous:
+                                formule = "Bonjour,"
+                                cmp = self.__genre + " " + self.__user
+                                phrase = "J'espère que vous passez une bonne après-midi ? J'ai relancer la ou vous etais arriver."
+                            else:
+                                formule = "Alors"
+                                cmp = self.__user
+                                phrase = "Prêt à travailler ? Je t'ai relancer ou tu etais"
+                        else:
+                            if hour >= 15 and hour <= 18:
+                                if self.__vous:
+                                    formule = "Bonjour,"
+                                    cmp = self.__genre + " " + self.__user
+                                    phrase = "Sur quoi puis-je vous aider cet après-midi ? Je vous ai relancer ou vous etiez."
+                                else:
+                                    formule = "Salut,"
+                                    cmp = self.__user
+                                    phrase = "En quoi puis-je t'aider ? Je t'ai relancer ou tu etais"
+                            else:
+                                if hour >= 18 and hour <= 20:
+                                    if self.__vous:
+                                        formule = "Bonsoir,"
+                                        cmp = self.__genre + " " + self.__user
+                                        phrase = "J'espère que votre début de soirée se passe bien. J'ai relancer la ou vous etais arriver."
+                                    else:
+                                        formule = "Alors"
+                                        cmp = self.__user
+                                        phrase = "Prét a travailler ce soir. Je t'ai relancer ou tu etais."
+                                else:
+                                    if hour >= 20 and hour <= 23:
+                                        if self.__vous:
+                                            formule = "Bonsoir,"
+                                            cmp = self.__genre + " " + self.__user
+                                            phrase = "J'espère que votre soirée s'est bien passée. J'ai relancer la ou vous etais arriver."
+                                        else:
+                                            formule = "*bâille*"
+                                            cmp = self.__user
+                                            phrase = "Pourquoi me réveilles-tu si tard ?. Je t'ai relancer ou tu etais."
+                                    else:
+                                        if hour >= 0 and hour < 3:
+                                            if self.__vous:
+                                                formule = "Bonjour,"
+                                                cmp = self.__genre + " " + self.__user
+                                                phrase = "J'espère que vous avez un peu dormi. J'ai relancer la ou vous etais arriver."
+                                            else:
+                                                formule = "Zzzz"
+                                                cmp = self.__user
+                                                phrase = "Comment peux-tu travailler si tard ? Je vous ai relancer ou vous etiez."
+                                        else:
+                                            if self.__vous:
+                                                formule = "Bonjour,"
+                                                cmp = self.__genre + " " + self.__user
+                                                phrase = "J'ai relancer la ou vous etais arriver."
+                                            else:
+                                                formule = "Salut,"
+                                                cmp = self.__user
+                                                phrase = "Je t'ai relancer ou tu etais. "
+
+            
+            return str(formule+" "+cmp+" "+phrase)
