@@ -2125,3 +2125,47 @@ class fncArreraNetwork:
         else :
             text = "Okay je t'ouvre l'interface pour télécharger une video youtube."
         return text
+    
+    def sortieOpenProjetDirect(self,projet:str):
+        sortie = self.__objetArreraWork.openProjet(projet)
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai bien ouvert le projet "+projet+" "+self.__genre+". Que voulez vous faire ?"
+            else :
+                text = "Le projet "+projet+" est bien ouvert. Que veux-tu faire ?"
+        else :
+            if (self.__etatVous == True):
+                text = "Désoler "+self.__genre+" mais je ne peux pas t'ouvrir le projet "+projet+". Il n'existe peut-étre pas"
+            else :
+                text = "Désoler mais je trouve pas le projet "+projet+"."
+        return projet,text
+    
+    def sortieOpenTableurDirect(self,file:str):
+        sortie = self.__objetArreraWork.openTableurDirectly(file)
+        if (sortie == True) :
+            if (self.__etatVous == True) :
+                text = "Votre fichier Exel a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a travailler dessus."
+            else :
+                text = "Je t'ai bien ouvert ton fichier exel. Aller travaillons dessus."
+        else :
+            if (self.__etatVous == True) :
+                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier exel"
+            else :
+                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Exel."
+        
+        return text
+    
+    def sortieOpenWordDirect(self,file:str):
+        sortie = self.__objetArreraWork.openWordDirectly(file)
+        if (sortie == True) :
+            if (self.__etatVous == True) :
+                text = "Votre fichier de traitement de texte a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a ecrire dessus."
+            else :
+                text = "Je t'ai bien ouvert ton fichier Word. Aller travaillons dessus."
+        else :
+            if (self.__etatVous == True) :
+                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier Word"
+            else :
+                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Word."
+        
+        return text

@@ -63,6 +63,16 @@ class fncArreraWork :
                 self.__tableurOpen = True
                 return True
         else :
+            return False
+    
+    def openTableurDirectly(self,file:str) : 
+        if (self.__tableurOpen==False and file != ""):
+            self.__fileTableur = file
+            self.__objTableur = CArreraTableur(file)
+            showinfo("Work","Exel ouvert")
+            self.__tableurOpen = True
+            return True
+        else :
             return False   
 
     def openWord(self):
@@ -83,6 +93,16 @@ class fncArreraWork :
                 showinfo("Work","Word ouvert")
                 self.__wordOpen = True
                 return True
+        else :
+            return False 
+    
+    def openWordDirectly(self,file:str):
+        if (self.__wordOpen == False and file != ""):
+            self.__fileWord = file
+            self.__objWord = CArreraDocx(file)
+            showinfo("Work","Word ouvert")
+            self.__wordOpen = True
+            return True
         else :
             return False       
 
