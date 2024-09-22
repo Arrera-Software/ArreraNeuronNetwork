@@ -8,6 +8,7 @@ class CHistorique :
         self.__fileHist = jsonWork(configNeuron.lectureJSON("emplacementFileHist"))
         self.__dateToday = ""
         self.__dateTowmorow = ""
+        self.__objFNCArrera = fncArreraNetwork
         self.__objDate = fncDate()
         self.__dictHist = dict
         self.__histToday = []
@@ -77,7 +78,7 @@ class CHistorique :
                         listAction.append(sortie)
                 self.__listAction = self.__verifClose(listAction,self.__histToday)
                 self.__listAction = self.__verifClose(listAction,self.__histTowmorow)
-                return True
+                
             else :
                 if ((histToday == True) and (histTowmorow == False)):
                     for i in range(0,nbToday+1):
@@ -85,7 +86,7 @@ class CHistorique :
                         if (sortie != "none"):
                             listAction.append(sortie)
                     self.__listAction = self.__verifClose(listAction,self.__histToday)
-                    return True
+                    
                 else :
                     if ((histToday == False) and (histTowmorow == True)):
                         for i in range(0,nbTowmorow+1):
@@ -93,20 +94,11 @@ class CHistorique :
                             if (sortie != "none"):
                                 listAction.append(sortie)
                         self.__listAction = self.__verifClose(listAction,self.__histTowmorow)           
-                        return True
-    
-    def __get5oldAction(self,index:int,vlist:list):
-        """_summary_
-
-        Args:
-            index (int): L'index le plus grand possible dans la liste
-            vlist (list): La liste
-        """
-        outList = []
-        for i in range ((index-5),index):
-            outList.append(vlist[i])
-        
-        return outList
+        if (len(self.__listAction) == 0 ):
+            return False
+        else :
+            return True
+                        
     
     def __verifClose(self, listAction: list, listHist: list) -> list:
         newListAction = listAction.copy()
@@ -198,31 +190,167 @@ class CHistorique :
                                                                                     file = action.replace("Ouverture du fichier tableur","").replace("sur l'ordinateur","").replace(" ","")
                                                                                     return file+" open computer tableur"
                                                                                 else :
-                                                                                    if (("Ouverture du fichier word" in action) and ("sur l'ordinateur" in action)):
-                                                                                        file = action.replace("Ouverture du fichier word","").replace("sur l'ordinateur","").replace(" ","")
-                                                                                        return file+" open computer word"
+                                                                                    if (("Ouverture d'un fichier exel" in action) or 
+                                                                                        (("Ouverture du fichier tableur" in action) and ("sur l'ordinateur" in action)) or 
+                                                                                        (("Ouverture du tableur" in action) and ("dans l'interface de l'assistant" in action))):
+                                                                                        file = action.replace("Ouverture d'un fichier exel","").replace(" ","")
+                                                                                        file = file.replace("Ouverture du fichier tableur","").replace("sur l'ordinateur","").replace(" ","")
+                                                                                        file = file.replace("Ouverture du tableur","").replace("dans l'interface de l'assistant","").replace(" ","")
+                                                                                        return "open exel "+file
                                                                                     else :
-                                                                                        if ("Ouverture d'un fichier exel" in action):
-                                                                                            file = action.replace("Ouverture d'un fichier exel","").replace(" ","")
-                                                                                            return "open exel "+file
+                                                                                        if (("Ouverture d'un fichier word" in action) or 
+                                                                                            (("Ouverture du word" in action) and ("dans l'interface de l'assistant" in action)) or 
+                                                                                            (("Ouverture du fichier word" in action) and ("sur l'ordinateur" in action))):
+                                                                                            file = action.replace("Ouverture d'un fichier word","").replace(" ","")
+                                                                                            file = file.replace("Ouverture du word","").replace("dans l'interface de l'assistant","").replace(" ","")
+                                                                                            file = file.replace("Ouverture du fichier word","").replace("sur l'ordinateur","").replace(" ","")
+                                                                                            return "open word "+file
                                                                                         else :
-                                                                                            if ("Ouverture d'un fichier word" in action):
-                                                                                                file = action.replace("Ouverture d'un fichier word","").replace(" ","")
-                                                                                                return "open word "+file
+                                                                                            if (("Ouverture du projet" in action) or ("Creation d'un projet nommer" in action)):
+                                                                                                project = action.replace("Ouverture du projet","").replace("Creation d'un projet nommer","").replace(" ","")
+                                                                                                return "open projet "+project 
                                                                                             else :
-                                                                                                if (("Ouverture du tableur" in action) and ("dans l'interface de l'assistant" in action)):
-                                                                                                    file = action.replace("Ouverture du tableur","").replace("dans l'interface de l'assistant","").replace(" ","")
-                                                                                                    return file+" open tableur assistant"
-                                                                                                else :
-                                                                                                    if (("Ouverture du word" in action) and ("dans l'interface de l'assistant" in action)):
-                                                                                                        file = action.replace("Ouverture du word","").replace("dans l'interface de l'assistant","").replace(" ","")
-                                                                                                        return file+" open word assistant"
-                                                                                                    else :
-                                                                                                        if (("Ouverture du projet" in action) or ("Creation d'un projet nommer" in action)):
-                                                                                                            project = action.replace("Ouverture du projet","").replace("Creation d'un projet nommer","").replace(" ","")
-                                                                                                            return "open projet "+project 
-                                                                                                        else :
-                                                                                                            return "none" 
+                                                                                                return "none" 
     
-    def getListAction(self):
-        return self.__listAction                                                                                                                                                        
+    def startHistAction(self):
+        if (len(self.__listAction) == 0):
+            return False
+        else :
+            for i in (0,len(self.__listAction)):
+                sortie = self.__launchAction(self.__listAction[i])
+                if (sortie == False):
+                    return False
+            return True
+            
+    def __launchAction(self,action:str):
+        if (action != ""):
+            match action :
+                case "calculatrice"  :
+                    self.__objFNCArrera.sortieCalculatrice("0")
+                    return True
+                case "calculatrice pythagore"  :
+                    self.__objFNCArrera.sortieCalculatrice("1")
+                    return True
+                case "calculatrice complex"  :
+                    self.__objFNCArrera.sortieCalculatrice("2")
+                    return True
+                case "soft arrera download music" :
+                    self.__objFNCArrera.sortieDownloadMusic()
+                    return True
+                case "soft arrera download video" :
+                    self.__objFNCArrera.sortieDownloadVideo()
+                    return True
+                case "site cloud" :
+                    self.__objFNCArrera.sortieOpenCloud()
+                    return True
+                case "radio launch europe 1" :
+                    self.__objFNCArrera.sortieStartRadio(1)
+                    return True
+                case "radio launch europe 2" :
+                    self.__objFNCArrera.sortieStartRadio(2)
+                    return True
+                case "radio launch france info" :
+                    self.__objFNCArrera.sortieStartRadio(3)
+                    return True
+                case "radio launch france inter" :
+                    self.__objFNCArrera.sortieStartRadio(4)
+                    return True
+                case "radio launch france musique" :
+                    self.__objFNCArrera.sortieStartRadio(5)
+                    return True
+                case "radio launch france culture" :
+                    self.__objFNCArrera.sortieStartRadio(6)
+                    return True
+                case "radio launch france bleu" :
+                    self.__objFNCArrera.sortieStartRadio(7)
+                    return True
+                case "radio launch fun radio" :
+                    self.__objFNCArrera.sortieStartRadio(8)
+                    return True
+                case "radio launch nrj " :
+                    self.__objFNCArrera.sortieStartRadio(9)
+                    return True
+                case "radio launch rfm" :
+                    self.__objFNCArrera.sortieStartRadio(10)
+                    return True
+                case "radio launch nostalgi" :
+                    self.__objFNCArrera.sortieStartRadio(11)
+                    return True
+                case "radio launch skyrock" :
+                    self.__objFNCArrera.sortieStartRadio(12)
+                    return True
+                case "radio launch rtl" :
+                    self.__objFNCArrera.sortieStartRadio(13)
+                    return True
+                case "open orga var" :
+                    self.__objFNCArrera.sortieOpenOrgaVar()
+                    return True
+                case "open select color" :
+                    self.__objFNCArrera.sortieOpenColorSelecteur()
+                    return True
+                case "open gest github" :
+                    self.__objFNCArrera.sortieOpenGuiGithub()
+                    return True
+                case "lib codehelp" :
+                    self.__objFNCArrera.sortieOpenLibrairy()
+                    return True
+                case "soft presentation" :
+                    self.__objFNCArrera.sortieOpenDiapo()
+                    return True
+                case "soft internet" :
+                    self.__objFNCArrera.sortieOpenBrowser()
+                    return True
+                case "soft note" :
+                    self.__objFNCArrera.sortieOpenNote()
+                    return True
+                case "soft music"  :
+                    self.__objFNCArrera.sortieOpenMusic()
+                    return True
+                case "site youtube" :
+                    self.__objFNCArrera.sortieOpenYoutube()
+                    return True
+            if ("site" in action):
+                site = action.replace("site","").replace(" ","")
+                self.__objFNCArrera.sortieOpenSite(site)
+                return True
+            else : 
+                if ("soft" in action):
+                    soft = action.replace("soft","").replace(" ","")
+                    self.__objFNCArrera.sortieOpenSoftware(soft)
+                    return True
+                else :
+                    if ("open exel" in action):
+                        exel = action.replace("open exel","").replace(" ","")
+                        self.__objFNCArrera.sortieOpenTableurDirect(exel)
+                        return True
+                    else :
+                        if ("open word" in action):
+                            word = action.replace("open word","").replace(" ","")
+                            self.__objFNCArrera.sortieOpenWordDirect(word)
+                            return True
+                        else :
+                            if ("open projet" in action):
+                                projet = action.replace("open projet","").replace(" ","")
+                                self.__objFNCArrera.sortieOpenProjetDirect(projet)
+                                return True
+                            else :
+                                return False
+                
+        else :
+            return False  
+        
+        
+    """
+    def __get5oldAction(self,index:int,vlist:list):
+        _summary_
+
+        Args:
+            index (int): L'index le plus grand possible dans la liste
+            vlist (list): La liste
+        
+        outList = []
+        for i in range ((index-5),index):
+            outList.append(vlist[i])
+        
+        return outList
+    """                                                                                                                                                   
