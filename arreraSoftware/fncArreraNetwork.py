@@ -22,6 +22,7 @@ from arreraSoftware.fonctionTache import*
 from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
 from arreraSoftware.fonctionRadio import*
+from arreraSoftware.fonctionArreraPenseBete import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -54,6 +55,7 @@ class fncArreraNetwork:
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         self.__objRadio = fncRadio(self.__objetNetwork)
+        self.__objPenseBete = fncArreraPostite()
         
     def reading(self):
         self.__fncReading.fenetreLecture()
@@ -2168,4 +2170,19 @@ class fncArreraNetwork:
             else :
                 text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Word."
         
+        return text
+
+    def sortieOpenPostite(self):
+        sortie = self.__objPenseBete.windows()
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert l'outil de pense bete "+self.__genre+" "+self.__user
+            else :
+                text = "Je t'ai l'outil de pense bete"
+        else :
+            if (self.__etatVous == True):
+                text = "Un probleme est survenu je ne peux pas vous ouvrir l'outil de pense bete"
+            else :
+                text = "Il est imposible pour moi de d'ouvrir l'outil de pense bete"
+
         return text
