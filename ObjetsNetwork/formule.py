@@ -328,7 +328,7 @@ class formule :
                                             else:
                                                 formule = "Salut,"
                                                 cmp = self.__user
-                                                phrase = "Je t'ai relancer ou tu etais. "
+                                                phrase = "Je t'ai relancer ou tu etais."
 
             
             return str(formule+" "+cmp+" "+phrase)

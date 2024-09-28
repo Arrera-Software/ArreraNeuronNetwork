@@ -7,102 +7,72 @@ class gestionNetwork:
         self.__fileUser = fileUser
         self.__configFile = ConfigFile
         self.__fichierFete = fileFete
-        self.__vous = False
-        self.__lieuDomicile = False
-        self.__lieuTravail = False
-        self.__genre =""
-        self.__name  =""
-        self.__user =""
-        self.__bute =""
-        self.__listFonction = []
-        self.__createur =""
-        self.__adresseDomicile = ""
-        self.__adresseTravail = ""
         self.__nbDiscution =0
-        self.__nbVilleMeteo = 0
-        self.__listVille = []
         self.__detecteurOS = detecteurOS
-        self.__moteurRechercheDefault = ""
-        self.__workEmplacement = ""
-        self.__downloadEmplacment = ""
         self.__oldRequette = str
         self.__oldSorti = str
         
     def addDiscution(self):
         self.__nbDiscution =+ 1
     
-    def setAll(self):
-        if self.__configFile.lectureJSON("utilisationVous") == "1":
-            self.__vous = True
-        else :
-            self.__vous = False
-        if self.__configFile.lectureJSON("lieuDomicile") == "1":
-            self.__lieuDomicile = True
-        else :
-            self.__lieuDomicile = False
-        if self.__configFile.lectureJSON("lieuTravail") == "1":
-            self.__lieuTravail = True
-        else :
-            self.__lieuTravail = False
-        self.__genre =  self.__fileUser.lectureJSON("genre")
-        self.__name =  str(self.__configFile.lectureJSON("name")).lower()
-        self.__user =  str(self.__fileUser.lectureJSON("user"))
-        self.__bute =   self.__configFile.lectureJSON("bute")
-        self.__createur =   str(self.__configFile.lectureJSON("createur"))
-        self.__listFonction = self.__configFile.lectureJSONList("listFonction")
-        self.__nbVilleMeteo = int(self.__configFile.lectureJSON("nombreVilleMeteo"))
-        self.__moteurRechercheDefault = str(self.__configFile.lectureJSON("moteurRechercheDefault"))
-        self.__listVille = self.__fileUser.lectureJSONList("listVille")
-        self.__adresseDomicile = self.__fileUser.lectureJSON("adresseDomicile")
-        self.__adresseTravail = self.__fileUser.lectureJSON("adresseTravail")
-    
     def getVous(self):
-        return bool(self.__vous)
+        if self.__configFile.lectureJSON("utilisationVous") == "1":
+            vous = True
+        else :
+            vous = False
+        
+        return bool(vous)
     
     def getGenre(self):
-        return str(self.__genre) 
+        return str(self.__fileUser.lectureJSON("genre")) 
         
     def getName(self):
-        return  str(self.__name )
+        return  str(self.__configFile.lectureJSON("name"))
         
     def getUser(self):
-        return  str(self.__user )
+        return str(self.__fileUser.lectureJSON("user"))
     
     def getBute(self):
-        return  str(self.__bute )
+        return  str(self.__configFile.lectureJSON("bute"))
     
     def getCreateur(self):
-        return  str(self.__createur )
-        
-    def getDiscution(self):
-        return  str(self.__nbDiscution)
+        return  str(self.__configFile.lectureJSON("createur"))
 
     def getNbDiscution(self):
         return int(self.__nbDiscution)
     
     def getNbListFonction(self):
-        return len(self.__listFonction)
+        return len(self.__configFile.lectureJSONList("listFonction"))
     
     def getListFonction(self):
-        return self.__listFonction
+        return self.__configFile.lectureJSONList("listFonction")
     
     def getnbVilleMeteo(self):
-        return self.__nbVilleMeteo
+        return int(self.__configFile.lectureJSON("nombreVilleMeteo"))
     
     def getListVilleMeteo(self):
-        return self.__listVille
+        
+        return self.__fileUser.lectureJSONList("listVille")
 
     def getEtatLieuDomicile(self):
-        return self.__lieuDomicile
+        if self.__configFile.lectureJSON("lieuDomicile") == "1":
+            lieuDomicile = True
+        else :
+            lieuDomicile = False
+        return lieuDomicile
 
     def getEtatLieuTravail(self):
-        return self.__lieuTravail
+        if self.__configFile.lectureJSON("lieuTravail") == "1":
+            lieuTravail = True
+        else :
+            lieuTravail = False
+        return lieuTravail
     
     def getValeurfichierUtilisateur(self,flag:str):
         return self.__fileUser.lectureJSON(flag)
     
     def getMoteurRechercheDefault(self):
-        return self.__moteurRechercheDefault
+        return str(self.__configFile.lectureJSON("moteurRechercheDefault"))
 
     def getEmplacementFileAgenda(self)->str :
         return self.__fileUser.lectureJSON("emplacementEvenenement")
@@ -178,13 +148,13 @@ class gestionNetwork:
         """
         Methode pour retourner l'adresse du domicile
         """
-        return  self.__adresseDomicile 
+        return  self.__fileUser.lectureJSON("adresseDomicile")
     
     def getAdresseTravil(self) :
         """
         Methode pour retourner l'adresse du lieu de travail
         """
-        return  self.__adresseTravail 
+        return  self.__fileUser.lectureJSON("adresseTravail")
 
     def getWorkEmplacement(self):
         return self.__fileUser.lectureJSON("wordFolder")
