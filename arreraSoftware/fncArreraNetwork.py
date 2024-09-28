@@ -2173,7 +2173,7 @@ class fncArreraNetwork:
         return text
 
     def sortieOpenPostite(self):
-        sortie = self.__objPenseBete.windows()
+        sortie = self.__objPenseBete.activePenseBete(1)
         if (sortie == True):
             if (self.__etatVous == True):
                 text = "Je vous ai ouvert l'outil de pense bete "+self.__genre+" "+self.__user
