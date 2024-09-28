@@ -2172,8 +2172,24 @@ class fncArreraNetwork:
         
         return text
 
-    def sortieOpenPostite(self):
+    def sortieOpenPostiteWithFile(self):
         sortie = self.__objPenseBete.activePenseBete(1)
+        if (sortie == True):
+            nameFile = self.__objPenseBete.getNamefile()
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert votre pense bete "+nameFile+" "+self.__genre+" "+self.__user
+            else :
+                text = "Je t'ai l'outil le pense bete "+nameFile
+        else :
+            if (self.__etatVous == True):
+                text = "Un probleme est survenu je ne peux pas vous ouvrir l'outil de pense bete"
+            else :
+                text = "Il est imposible pour moi de d'ouvrir l'outil de pense bete"
+
+        return sortie,text
+
+    def sortieOpenPostiteNoFile(self):
+        sortie = self.__objPenseBete.activePenseBete(2)
         if (sortie == True):
             if (self.__etatVous == True):
                 text = "Je vous ai ouvert l'outil de pense bete "+self.__genre+" "+self.__user
@@ -2186,3 +2202,6 @@ class fncArreraNetwork:
                 text = "Il est imposible pour moi de d'ouvrir l'outil de pense bete"
 
         return text
+
+    def getNamePenseBete(self):
+        return self.__objPenseBete.getNamefile()

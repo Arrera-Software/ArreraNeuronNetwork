@@ -30,7 +30,7 @@ class neuronWork :
             user = self.__gestionNeuron.getUser()
             oldRequette,oldSortie = self.__gestionNeuron.getOld()
 
-            if (("ouvre" in requette) and (("un" in requette) or ("fichier" in requette))):
+            if (("ouvre" in requette) and ((("un" in requette) and ("une" not in requette)) or ("fichier" in requette))):
                 if ((("exel" in requette) or ("tableur" in requette)) 
                     and  ("ordinateur" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftTableurFile(),""]
@@ -290,8 +290,18 @@ class neuronWork :
                                                                                                 self.__valeurOut = 17 
                                                                                             else :
                                                                                                 if (("ouvre" in requette) and ("pense bete" in requette)):
-                                                                                                    text = self.__fonctionArreraNetwork.sortieOpenPostite()
-                                                                                                    self.__valeurOut = 5
+                                                                                                    if ("une" in requette):
+                                                                                                        sortie,text = self.__fonctionArreraNetwork.sortieOpenPostiteWithFile()
+                                                                                                        if (sortie == True):
+                                                                                                            self.__objHistorique.setAction("Ouverture du pense bete "+self.__fonctionArreraNetwork.getNamePenseBete())
+                                                                                                            self.__valeurOut = 5
+                                                                                                        else :
+                                                                                                            self.__valeurOut = 1
+                                                                                                    else :
+                                                                                                        text = self.__fonctionArreraNetwork.sortieOpenPostiteNoFile()
+                                                                                                        self.__objHistorique.setAction("Ouverture d'un nouveau pense bete")
+                                                                                                        self.__valeurOut = 5
+                                                                                                    self.__listSortie = [text,""]
                                                                                                 else :
                                                                                                     if ("aide tableur" in requette):
                                                                                                         self.__listSortie = ["Les fonction d'edition de tableur d'Arrera Work sont :"+

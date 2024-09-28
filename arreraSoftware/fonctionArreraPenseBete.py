@@ -8,6 +8,7 @@ class fncArreraPostite:
         self.__icon = fileConf.lectureJSON("iconAssistant")
         self.__color = fileConf.lectureJSON("interfaceColor")
         self.__textColor = fileConf.lectureJSON("interfaceTextColor")
+        self.__nameFile = ""
     
     def __windows(self):
         # Création de la fenêtre Toplevel
@@ -30,7 +31,7 @@ class fncArreraPostite:
         self.zoneTexte.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
         
         # Création du bouton "Enregistrer"
-        btnSave = Button(self.__penseBete, text="Enregistrer", font=("Arial", 14),bg=self.__color)
+        btnSave = Button(self.__penseBete, text="Enregistrer", font=("Arial", 14),bg=self.__color,fg=self.__textColor)
         btnSave.grid(row=1, column=0, pady=10)  # Placer le bouton en dessous de la zone de texte
 
         # Rendre la fenêtre responsive
@@ -53,13 +54,21 @@ class fncArreraPostite:
                 emplacementFile = filedialog.askopenfilename(
                             defaultextension='.ab', 
                             filetypes=[("Fichier Pense-bete", "*.ab")])
-                if (emplacementFile == ""):
-                    return False
-                else :
+                if (emplacementFile):
                     self.__windows()
                     with open(emplacementFile, 'r', encoding='utf-8') as file:
                         file_content = file.read()
                         self.zoneTexte.delete(1.0,END)
                         self.zoneTexte.insert(END,file_content) 
-                    return True    
+                    self.__nameFile = emplacementFile
+                    return True      
+                else :
+                    return False  
+            case 2 :
+                self.__windows()
+                return True
+        return False
+    
+    def getNamefile(self):
+        return self.__nameFile
                           
