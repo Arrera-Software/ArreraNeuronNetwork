@@ -12,11 +12,11 @@ else :
     neuron = ArreraNetwork("configUser.json","configNeuron2.json","listFete.json")
 print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
-hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.OUI\n2.NON\n(1,2) $"))
+hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
 if (hist == 1):
-    print(nom+" $ "+ neuron.boot(2))
-else :
     print(nom+" $ "+ neuron.boot(1))
+else :
+    print(nom+" $ "+ neuron.boot(2))
 
 while valeur != 15 :
     requette =  str(input("Vous $ "))
