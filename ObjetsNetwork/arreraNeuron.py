@@ -117,7 +117,6 @@ class ArreraNetwork :
         # Var de l'objet
         self.__valeurOut = 0
         self.__listOut =  []
-
         # Service
         self.__service.neurone(requette)
         self.__valeurOut = self.__service.getValeurSortie()

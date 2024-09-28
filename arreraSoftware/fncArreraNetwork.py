@@ -55,7 +55,7 @@ class fncArreraNetwork:
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         self.__objRadio = fncRadio(self.__objetNetwork)
-        self.__objPenseBete = fncArreraPostite()
+        self.__objPenseBete = fncArreraPostite(self.__configNeuron)
         
     def reading(self):
         self.__fncReading.fenetreLecture()
