@@ -59,6 +59,9 @@ class neuroneService :
                         else :
                             self.__listSortie = ["Okay je t'ouvre ma documentation. J'éspére qu'elle sera utile pour me comprendre",""]
                         webbrowser.open(self.__gestionNeuron.getLinkDoc())
+                    else :
+                        if ("corrige" in requette):
+                            self.__listSortie = [self.__fonctionArreraNetwork.sortieCorrection(requette),""]
             #Mise a jour de la valeur 
             if (self.__valeurOut==0):                                                            
                 self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])

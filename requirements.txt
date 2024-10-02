@@ -11,3 +11,4 @@ python-docx
 odfpy
 openpyxl
 PyGithub
+language_tool_python

@@ -23,6 +23,7 @@ from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
 from arreraSoftware.fonctionRadio import*
 from arreraSoftware.fonctionArreraPenseBete import*
+from arreraSoftware.fncOrthographe import*
 
 class fncArreraNetwork:
     def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
@@ -56,6 +57,8 @@ class fncArreraNetwork:
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         self.__objRadio = fncRadio(self.__objetNetwork)
         self.__objPenseBete = fncArreraPostite(self.__configNeuron)
+        self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
+                                               self.__configNeuron.lectureJSON("interfaceTextColor"))
         
     def reading(self):
         self.__fncReading.fenetreLecture()
@@ -2205,3 +2208,18 @@ class fncArreraNetwork:
 
     def getNamePenseBete(self):
         return self.__objPenseBete.getNamefile()
+    
+    def sortieCorrection(self,requette:str):
+        texte = requette.replace("corrige","").strip()
+        sortie = self.__objOrthographe.active(texte)
+        if (sortie == True):
+            if (self.__etatVous == True):
+                text = "Je vous ai ouvert l'outil pour corriger votre phrase."
+            else :
+                text = "Je t'ai ouvert l'outil pour corriger votre phrase."
+        else :
+            if (self.__etatVous == True):
+                text = "Il est imposible d'ouvrir l'outil"
+            else :
+                text = "Il est imposible d'ouvrir l'outil"
+        return text
