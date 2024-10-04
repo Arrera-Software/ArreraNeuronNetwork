@@ -9,6 +9,7 @@ class fncOrthagraphe:
         self.corrector = COrthographe()  # Instancie l'objet de correction de texte
         self.error_vars = []  # Pour stocker les variables associées aux suggestions de correction
         self.__textCorrect = ""
+        self.__oginalText = ""
         # Couleur et taille des texte 
         self.__styleText = ("Arial","15")
         self.__styleTitre = ("Arial","25")
@@ -43,9 +44,9 @@ class fncOrthagraphe:
         boutonCopy.place(relx=0.5, rely=1.0, anchor="s")
         
     
-    def __checkTexte(self,texte:str):
+    def __checkTexte(self):
         
-        text = texte  # Récupère le texte de la zone de saisie
+        text = self.__oginalText  # Récupère le texte de la zone de saisie
         self.matches = self.corrector.check_text(text)  # Vérifie le texte
         self.__frameCorrect.pack()
 
@@ -77,11 +78,13 @@ class fncOrthagraphe:
             return False
         else :
             self.__windows()
-            self.__checkTexte(texte)
+            self.__oginalText = texte
+            self.__checkTexte()
             return True
         
     
     def __applyCorrection(self):
+        corrected_text = self.__oginalText
         if not self.matches:
             messagebox.showinfo("Info", "Aucune correction à appliquer.")
             self.__frameCorrect.pack_forget()
