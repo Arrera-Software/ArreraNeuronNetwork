@@ -73,42 +73,35 @@ class formule :
                             else:
                                 if hour >= 18 and hour <= 20:
                                     if self.__vous:
-                                        formule = "Bonsoir,"
-                                        cmp = self.__genre + " " + self.__user
-                                        phrase = ["Comment se passe votre début de soirée ?", "J'espère que votre début de soirée se passe bien."]
+                                        formule = ["Bonsoir, "+self.__genre+" "+self.__user+" Comment se passe votre début de soirée ?",
+                                                   "Bonsoir, "+self.__genre+" "+self.__user+" J'espère que votre début de soirée se passe bien."]
                                     else:
-                                        formule = "Alors"
-                                        cmp = self.__user
-                                        phrase = ["Que veux-tu faire ce soir ?", "Veux-tu travailler ou te divertir ce soir ?"]
+                                        formule = ["Alors "+self.__user+" Que veux-tu faire ce soir ?",
+                                                   "Alors "+self.__user+" Veux-tu travailler ou te divertir ce soir ?"]
+                                    return formule[nbrand]
                                 else:
                                     if hour >= 20 and hour <= 23:
                                         if self.__vous:
-                                            formule = "Bonsoir,"
-                                            cmp = self.__genre + " " + self.__user
-                                            phrase = ["Comment se passe votre soirée ?", "J'espère que votre soirée s'est bien passée."]
+                                            formule = ["Bonsoir, "+self.__genre+" "+self.__user+" Comment se passe votre soirée ?",
+                                                       "Bonsoir, "+self.__genre+" "+self.__user+" J'espère que votre soirée s'est bien passée."]
                                         else:
-                                            formule = "*bâille*"
-                                            cmp = self.__user
-                                            phrase = ["Que fais-tu si tard ?", "Pourquoi me réveilles-tu si tard ?"]
+                                            formule = ["*bâille* "+self.__user+"  Que fais-tu si tard ?",
+                                                       "*bâille* "+self.__user+" Pourquoi me réveilles-tu si tard ?"]
                                     else:
                                         if hour >= 0 and hour < 3:
                                             if self.__vous:
-                                                formule = "Bonjour,"
-                                                cmp = self.__genre + " " + self.__user
-                                                phrase = ["Que faites-vous si tôt ?", "J'espère que vous avez un peu dormi."]
+                                                formule = ["Bonjour, "+self.__genre+" "+self.__user+"  Que faites-vous si tôt ?",
+                                                           "Bonjour, "+self.__genre+" "+self.__user+" J'espère que vous avez un peu dormi."]
                                             else:
-                                                formule = "Zzzz"
-                                                cmp = self.__user
-                                                phrase = ["Il faudrait peut-être dormir, non ?", "Comment peux-tu travailler si tard ?"]
+                                                formule = ["Zzzz "+self.__user+" . Il faudrait peut-être dormir, non ?",
+                                                           "Zzzz "+self.__user+" . Comment peux-tu travailler si tard ?"]
+                                            return formule[nbrand]
                                         else:
                                             if self.__vous:
-                                                formule = "Bonjour,"
-                                                cmp = self.__genre + " " + self.__user
-                                                phrase = ["Que voulez-vous qu'on fasse ?", ""]
+                                                formule = "Bonjour, "+self.__genre+" "+self.__user+" Que voulez-vous qu'on fasse ?"
                                             else:
-                                                formule = "Salut,"
-                                                cmp = self.__user
-                                                phrase = ["Que veux-tu que je t'aide à faire ?", ""]
+                                                formule = "Salut, "+self.__user+" Que veux-tu que je t'aide à faire ?"
+                                            return formule
         
     def aurevoir(self, hour):
         if hour >= 0 and hour < 3:
