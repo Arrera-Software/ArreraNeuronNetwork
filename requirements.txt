@@ -12,3 +12,4 @@ odfpy
 openpyxl
 PyGithub
 language_tool_python
+pyperclip
