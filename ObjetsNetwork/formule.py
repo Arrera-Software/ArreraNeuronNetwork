@@ -104,111 +104,92 @@ class formule :
                                             return formule
         
     def aurevoir(self, hour):
+        nbrand = random.randrange(0,1)
         if hour >= 0 and hour < 3:
             if self.__vous:
-                formule = "Bonne nuit,"
-                cmp = self.__genre + " " + self.__user
-                phrase = ["Reposez-vous bien.", "Passez une bonne nuit."]
+                formule = ["Bonne nuit, "+self.__genre+" "+self.__user+" . Reposez-vous bien.",
+                           "Bonne nuit, "+self.__genre+" "+self.__user+" . Passez une bonne nuit."]
             else:
-                formule = "Au revoir,"
-                cmp = self.__user
-                phrase = ["Bonne nuit.", "Bonne nuit, repose-toi bien."]
+                formule = ["Au revoir, "+self.__user+". Bonne nuit.",
+                           "Au revoir, "+self.__user+" . Bonne nuit, repose-toi bien."]
+            return formule[nbrand]
         else:
             if hour >= 3 and hour <= 6:
                 if self.__vous:
-                    formule = "Bonne nuit,"
-                    cmp = self.__genre + " " + self.__user
-                    phrase = ["Essayez de vous reposer.", "Reposez-vous bien."]
+                    formule = ["Bonne nuit, "+self.__genre+" "+self.__user+". Essayez de vous reposer.",
+                               "Bonne nuit, "+self.__genre+" "+self.__user+" Reposez-vous bien."]
                 else:
-                    formule = "Bonne nuit,"
-                    cmp = self.__user
-                    phrase = ["Essaie de te reposer un peu.", "Repose-toi un peu."]
+                    formule = ["Bonne nuit, "+self.__user+" Essaie de te reposer un peu.",
+                               "Bonne nuit, "+self.__user+" Essaie de te reposer un peu."]
+                return formule[nbrand]
             else:
                 if hour >= 6 and hour <= 10:
                     if self.__vous:
-                        formule = "Bonne journée,"
-                        cmp = self.__genre + " " + self.__user
-                        phrase = ["Passez une bonne journée.", "Profitez bien de votre journée."]
+                        formule = ["Bonne journée, "+self.__genre+" "+self.__user+" Passez une bonne journée. ",
+                                   "Bonne journée, "+self.__genre+" "+self.__user+" Profitez bien de votre journée."]
                     else:
-                        formule = "Au revoir,"
-                        cmp = self.__user
-                        phrase = ["Passe une bonne journée.", "Profite bien de ta journée."]
+                        formule = ["Au revoir, "+self.__user+" Passe une bonne journée.",
+                                   "Au revoir, "+self.__user+" Profite bien de ta journée."]
+                    return formule[nbrand]
                 else:
                     if hour >= 10 and hour <= 12:
                         if self.__vous:
-                            formule = "Au revoir,"
-                            cmp = self.__genre + " " + self.__user
-                            phrase = ["Passez une bonne fin de matinée.", "Profitez bien de votre fin de matinée."]
+                            formule = ["Au revoir, "+self.__genre+" "+self.__user+" . Passez une bonne fin de matinée.",
+                                       "Au revoir, "+self.__genre+" "+self.__user+" Profitez bien de votre fin de matinée."]
                         else:
-                            formule = "Au revoir,"
-                            cmp = self.__user
-                            phrase = ["Passe une bonne fin de matinée.", "Profite bien de ta fin de matinée."]
+                            formule = ["Au revoir, Passe une bonne fin de matinée.",
+                                       "Au revoir, Profite bien de ta fin de matinée."]
                     else:
-                        if hour >= 13 and hour <= 14:
+                        if hour >= 13 and hour <= 16:
                             if self.__vous:
-                                formule = "Bonne après-midi,"
-                                cmp = self.__genre + " " + self.__user
-                                phrase = ["Profitez bien.", ""]
+                                formule = ["Bonne après-midi, "+self.__genre+" "+self.__user+" Profitez bien.",
+                                           "Au revoir, "+self.__genre+" "+self.__user+" Passez une bonne fin d'après-midi."]
                             else:
-                                formule = "Bonne après-midi,"
-                                cmp = self.__user
-                                phrase = ["", "Profite bien."]
+                                formule = ["Au revoir, "+self.__user+" .Profite bien de ta fin d'après-midi.",
+                                           "Au revoir, "+self.__user+" .Profite bien de ta fin d'après-midi."]
+                            return formule[nbrand]
                         else:
-                            if hour >= 15 and hour <= 18:
+                            if hour >= 16 and hour <= 18:
                                 if self.__vous:
-                                    formule = "Au revoir,"
-                                    cmp = self.__genre + " " + self.__user
-                                    phrase = ["Passez une bonne fin d'après-midi.", "Profitez bien de votre fin de soirée."]
+                                    formule = ["Au revoir, "+self.__genre+" "+self.__user+" Profitez bien de votre fin de soirée.",
+                                               "Bonne soirée, "+self.__genre+" "+self.__user+" Profitez bien"]
                                 else:
-                                    formule = "Au revoir,"
-                                    cmp = self.__user
-                                    phrase = ["Profite bien de ta fin d'après-midi.", ""]
+                                    formule = ["Au revoir, "+self.__user+" Profite bien de ta soirée.",
+                                               "Au revoir, "+self.__user+" Profite bien de ta soirée."]
+                                return formule[nbrand]
                             else:
                                 if hour >= 18 and hour <= 20:
                                     if self.__vous:
-                                        formule = "Bonne soirée,"
-                                        cmp = self.__genre + " " + self.__user
-                                        phrase = ["Profitez bien ", "Reposez-vous bien ce soir."]
+                                        formule = ["Bonne soirée, "+self.__genre+" "+self.__user+" Profitez bien",
+                                                   "Bonne soirée, "+self.__genre+" "+self.__user+" Reposez-vous bien ce soir."]
                                     else:
-                                        formule = "Au revoir,"
-                                        cmp = self.__user
-                                        phrase = ["Profite bien de ta soirée.", "Repose-toi bien ce soir."]
+                                        formule = ["Au revoir, "+self.__user+" Profite bien de ta soirée.",
+                                                   "Au revoir, "+self.__user+" Repose-toi bien ce soir."]
+                                    return formule[nbrand]
                                 else:
                                     if hour >= 20 and hour <= 23:
                                         if self.__vous:
-                                            formule = "Bonne nuit,"
-                                            cmp = self.__genre + " " + self.__user
-                                            phrase = ["Dormez bien.", "Reposez-vous bien."]
+                                            formule = ["Bonne nuit, "+self.__genre+" "+self.__user+" Dormez bien.",
+                                                       "Bonne nuit, "+self.__genre+" "+self.__user+" Reposez-vous bien."]
                                         else:
-                                            formule = "Bonne nuit,"
-                                            cmp = self.__user
-                                            phrase = ["Dors bien.", "Repose-toi bien."]
+                                            formule = ["Bonne nuit, "+self.__user+" Dors bien.",
+                                                       "Bonne nuit, "+self.__user+" Repose-toi bien."]
+                                        return formule[nbrand]
                                     else:
                                         if hour >= 0 and hour < 3:
                                             if self.__vous:
-                                                formule = "Bonne nuit,"
-                                                cmp = self.__genre + " " + self.__user
-                                                phrase = ["Dormez bien, soyez en forme pour demain.",
-                                                        "Reposez-vous bien pour demain."]
+                                                formule = ["Bonne nuit, "+self.__genre+" "+self.__user+" Dormez bien, soyez en forme pour demain.",
+                                                           "Bonne nuit, "+self.__genre+" "+self.__user+" Reposez-vous bien pour demain."]
                                             else:
-                                                formule = "Bonne nuit,"
-                                                cmp = self.__user
-                                                phrase = ["Dors bien, sois en forme pour demain.",
-                                                        "Repose-toi bien pour demain."]
+                                                formule = ["Bonne nuit, "+self.__user+" Dors bien, sois en forme pour demain.",
+                                                           "Bonne nuit, "+self.__user+" Repose-toi bien pour demain."]
+                                            return formule[nbrand]
                                         else:
                                             if self.__vous:
-                                                formule = "Au revoir,"
-                                                cmp = self.__genre + " " + self.__user
-                                                phrase = ["J'espère vous revoir bientôt.", ""]
+                                                formule = "Au revoir,  "+self.__genre+" "+self.__user+" J'espère vous revoir bientôt."
                                             else:
-                                                formule = "Au revoir,"
-                                                cmp = self.__user
-                                                phrase = ["J'espère te revoir bientôt.", ""]
-    
-            
-            nbrand = random.randrange(0,1)
-            return str(formule+" "+cmp+" "+phrase[nbrand])
-    
+                                                formule = "Au revoir, "+self.__user+" J'espère te revoir bientôt."
+                                            return formule    
     def bootWithHist(self,hour):
         
         sortie = self.__fncHist.verfiHist()
