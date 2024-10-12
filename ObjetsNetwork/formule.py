@@ -87,6 +87,7 @@ class formule :
                                         else:
                                             formule = ["*bâille* "+self.__user+"  Que fais-tu si tard ?",
                                                        "*bâille* "+self.__user+" Pourquoi me réveilles-tu si tard ?"]
+                                        return formule[nbrand]
                                     else:
                                         if hour >= 0 and hour < 3:
                                             if self.__vous:
