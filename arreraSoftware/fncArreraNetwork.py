@@ -69,7 +69,7 @@ class fncArreraNetwork:
         return text
 
     def sortieActualités(self):
-        sortie = self.__actu.setActu("6","fr","fr")
+        sortie = self.__actu.setActu("6","fr")
         if (sortie == True):
             listActu = self.__actu.getActu()
             if ((listActu[0]=="error") and (listActu[1] == "error")):
