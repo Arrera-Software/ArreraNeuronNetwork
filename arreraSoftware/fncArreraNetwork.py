@@ -469,12 +469,11 @@ class fncArreraNetwork:
                 verif = self.__meteo.getDataMeteoNow(self.__gps.getlatPossition(),self.__gps.getlonPossition())
                 if (verif == True) :
                     if self.__etatVous == True :
-                        textSpeak = textSpeak + "La meteo a votre localisation est "+self.__meteo.getdescription+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
+                        textSpeak = textSpeak + "La meteo a votre localisation est "+self.__meteo.getdescription()+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
                     else :
-                        textSpeak = textSpeak + "La meteo a ta localisation est "+self.__meteo.getdescription+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
+                        textSpeak = textSpeak + "La meteo a ta localisation est "+self.__meteo.getdescription()+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
                 
-                    meteoWork = "Meteo a votre position :\nDescription : "+self.__meteo.getdescription()
-                    +"\nTemperature : "+self.__meteo.gettemperature()+"°C"
+                    meteoWork = "Meteo a votre position :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
                 else :
                     meteoWork = "error" 
             else :
@@ -485,7 +484,7 @@ class fncArreraNetwork:
         textSpeak = textSpeak + "La fête du jour est "+feteJour+". "
 
         #Liste des actu
-        verif = self.__actu.setActu("6","fr","fr")
+        verif = self.__actu.setActu("6","fr")
         if (verif == True) :
             listeActu = self.__actu.getActu()
             textSpeak = textSpeak + "Et enfin les actualités sont "+listeActu[nbrand1]+", "+listeActu[nbrand2]+" et "+listeActu[nbrand3]
