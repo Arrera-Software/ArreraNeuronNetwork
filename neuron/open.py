@@ -185,8 +185,10 @@ class neuroneOpen :
                                                  +"\n- Nostalgi"
                                                  +"\n- Skyrock"
                                                  +"\n- RTL"
-                                                 ,""]                         
+                                                 ,""]
+                            self.__valeurOut = 17                         
                                             
                                                 
-            #Mise a jour de la valeur                                                               
-            self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+            #Mise a jour de la valeur 
+            if (self.__valeurOut == 0):                                                              
+                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
