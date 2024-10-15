@@ -185,7 +185,7 @@ class neuroneOpen :
                                                  +"\n- Nostalgi"
                                                  +"\n- Skyrock"
                                                  +"\n- RTL"
-                                                 ,""]
+                                                 ,"radio"]
                             self.__valeurOut = 17                         
                                             
                                                 
