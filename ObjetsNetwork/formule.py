@@ -18,42 +18,42 @@ class formule:
     def bootNoHist(self, hour):
         nbrand = random.randrange(0, 1)
         if hour >= 0 and hour < 3:
-            formule = self.__calanguage.getPhraseBootNormale("1",self.__genre, self.__user)
+            formule = self.__calanguage.getPhraseBootNormale("1")
             return formule[nbrand]
         else:
             if hour >= 3 and hour <= 6:
-                formule = self.__calanguage.getPhraseBootNormale("2",self.__genre, self.__user)
+                formule = self.__calanguage.getPhraseBootNormale("2")
                 return formule[nbrand]
             else:
                 if hour >= 6 and hour <= 10:
-                    formule = self.__calanguage.getPhraseBootNormale("3",self.__genre, self.__user)
+                    formule = self.__calanguage.getPhraseBootNormale("3")
                     return formule[nbrand]
                 else:
                     if hour >= 10 and hour <= 12:
-                        formule = self.__calanguage.getPhraseBootNormale("4",self.__genre, self.__user)
+                        formule = self.__calanguage.getPhraseBootNormale("4")
                         return formule[nbrand]
                     else:
                         if hour >= 13 and hour <= 14:
-                            formule = self.__calanguage.getPhraseBootNormale("5",self.__genre, self.__user)
+                            formule = self.__calanguage.getPhraseBootNormale("5")
                             return formule[nbrand]
                         else:
                             if hour >= 15 and hour <= 18:
-                                formule = self.__calanguage.getPhraseBootNormale("6",self.__genre, self.__user)
+                                formule = self.__calanguage.getPhraseBootNormale("6")
                                 return formule[nbrand]
                             else:
                                 if hour >= 18 and hour <= 20:
-                                    formule = self.__calanguage.getPhraseBootNormale("7",self.__genre, self.__user)
+                                    formule = self.__calanguage.getPhraseBootNormale("7")
                                     return formule[nbrand]
                                 else:
                                     if hour >= 20 and hour <= 23:
-                                        formule = self.__calanguage.getPhraseBootNormale("8",self.__genre, self.__user)
+                                        formule = self.__calanguage.getPhraseBootNormale("8")
                                         return formule[nbrand]
                                     else:
                                         if hour >= 0 and hour < 3:
-                                            formule = self.__calanguage.getPhraseBootNormale("9",self.__genre, self.__user)
+                                            formule = self.__calanguage.getPhraseBootNormale("9")
                                             return formule[nbrand]
                                         else:
-                                            formule = self.__calanguage.getPhraseBootNormale("10",self.__genre, self.__user)
+                                            formule = self.__calanguage.getPhraseBootNormale("10")
                                             return formule
 
     def aurevoir(self, hour):

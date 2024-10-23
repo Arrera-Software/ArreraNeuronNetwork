@@ -25,12 +25,14 @@ class ArreraNetwork :
         self.__configNeuron = jsonWork(fichierConfiguration)
         self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
         self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
-        # initilisation du module de language
-        mLanguage = CAlanguage(self.__configNeuron)
-        #initilisation du gestionnaire du reseau de neuron
+        # Gestionnaire
         self.__detecteurOS = OS()
+        self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur, self.__configNeuron, self.__detecteurOS,
+                                             self.__fichierVille)
+        # initilisation du module de language
+        mLanguage = CAlanguage(self.__configNeuron,self.__gestionnaire)
+        #initilisation du gestionnaire du reseau de neuron
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
-        self.__gestionnaire = gestionNetwork(self.__fichierUtilisateur,self.__configNeuron,self.__detecteurOS,self.__fichierVille)
         self.__network = network()
         self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
         self.__historique = CHistorique(self.__configNeuron,self.__fonctionAssistant)
