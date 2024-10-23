@@ -229,14 +229,14 @@ class fncArreraTache :
         self.__frameAdd[2].place_forget()
 
     def __checkIsTache(self):
-        if(len(self.__taskFile.dictJson())==0):
+        if(len(self.__taskFile.getContenuJSON())==0):
             return False
         else :
             return True
 
     def __showSupprFrame(self):
         if (self.__checkIsTache() == True) :
-            dictTache = self.__taskFile.dictJson()
+            dictTache = self.__taskFile.getContenuJSON()
             self.__frameTask.place_forget()
             self.__frameCheck.place_forget()
             self.__frameSuppr.place(x=0,y=0)
@@ -252,7 +252,7 @@ class fncArreraTache :
 
     def __showCheckFrame(self):
         if(self.__checkIsTache()==True):
-            dictTache = self.__taskFile.dictJson()
+            dictTache = self.__taskFile.getContenuJSON()
             self.__frameTask.place_forget()
             self.__frameCheck.place(x=0,y=0)
             self.__frameSuppr.place_forget()
@@ -342,7 +342,7 @@ class fncArreraTache :
     
     def __viewTacheFrame(self):
         nb = self.__taskFile.compteurFlagJSON()
-        dictTache = self.__taskFile.dictJson()
+        dictTache = self.__taskFile.getContenuJSON()
         for i in range(0,6) :
             self.__labelNameShowTask[i].place(relx=0.5, rely=0.5, anchor="center")
             self.__labelNameShowTask[i].configure(text="Pas de tache",justify="center",wraplength=120)
@@ -363,7 +363,7 @@ class fncArreraTache :
                     self.__labelNameShowTask[i].configure(bg=self.__mainColor,fg=self.__textColor)
 
     def __viewInfoTacheFrame(self,nb:str):
-        dictTache = self.__taskFile.dictJson()[nb]
+        dictTache = self.__taskFile.getContenuJSON()[nb]
         name = dictTache["name"]
         date = dictTache["date"]
         description = dictTache["description"]
@@ -404,11 +404,11 @@ class fncArreraTache :
         dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
         hier = self.__objDate.otherPastDate(1)
         avantHier = self.__objDate.otherPastDate(2)
-        dateTask = self.__taskFile.dictJson()[nb]["date"]
+        dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
         
         if ((dateTask==hier)or(dateTask==avantHier)):
             self.__taskFile.ajouterFlagDict(nb,"date",dateToday)
-            dateTask = self.__taskFile.dictJson()[nb]["date"]
+            dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
             
         if (dateToday==dateTask):
             return True
@@ -416,10 +416,10 @@ class fncArreraTache :
             return False
     
     def getNbTache(self):
-        return len(self.__taskFile.dictJson())
+        return len(self.__taskFile.getContenuJSON())
     
     def getNbTacheToday(self):
-        dictTache = self.__taskFile.dictJson()
+        dictTache = self.__taskFile.getContenuJSON()
         dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
         nbTache = 0
         for i in range(0,len(dictTache)):
@@ -428,7 +428,7 @@ class fncArreraTache :
         return nbTache
     
     def getTacheToday(self):
-        dictTache = self.__taskFile.dictJson()
+        dictTache = self.__taskFile.getContenuJSON()
         dateToday = self.__objDate.annes()+"-"+self.__objDate.nbMoisSimple()+"-"+self.__objDate.jourSimple()
         listTache = []
         for i in range(0,len(dictTache)):
@@ -437,7 +437,7 @@ class fncArreraTache :
         return listTache
 
     def getTacheTowmorow(self):
-        dictTache = self.__taskFile.dictJson()
+        dictTache = self.__taskFile.getContenuJSON()
         dateTowmorow = self.__objDate.otherAfterDate(1)
         listTache = []
         for i in range(0,len(dictTache)):

@@ -152,7 +152,7 @@ class fncArreraAgenda :
         self.__labelResumer.place(x=0,y=40)
     
     def __showFrameSuppr(self):
-        dictEvenement = self.__agendaFile.dictJson()
+        dictEvenement = self.__agendaFile.getContenuJSON()
         if len(dictEvenement) == 0 :
             messagebox.showwarning("Avertisement","Vous pouvez supprimer d'evenement avant d'en ajouter")
         else :
@@ -218,7 +218,7 @@ class fncArreraAgenda :
     
     def __supprEvent(self):
         nameEvent = self.__choixSuppr.get()
-        dictEvenement = self.__agendaFile.dictJson()
+        dictEvenement = self.__agendaFile.getContenuJSON()
         for flag, valeurs in dictEvenement.items():
             deuxieme_valeur = valeurs[1]  # Deuxième valeur de la liste
             if deuxieme_valeur == nameEvent:
@@ -256,7 +256,7 @@ class fncArreraAgenda :
     def __checkEvent(self,date:str):
         nbEvent = 0
         listEvent = []
-        dictEvent = self.__agendaFile.dictJson()
+        dictEvent = self.__agendaFile.getContenuJSON()
         nb = self.__agendaFile.compteurFlagJSON()
         if (nb==0):
             return 0 , ["",""]
