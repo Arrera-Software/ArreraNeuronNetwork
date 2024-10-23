@@ -16,14 +16,14 @@ from ObjetsNetwork.enabledNeuron import*
 from neuron.work import*
 
 class ArreraNetwork :
-    def __init__(self,userFile:str,fichierConfiguration:str,fileFete:str):
+    def __init__(self,fichierConfiguration:str):
         # Declaration des diferente var 
         self.__listOut =  [] 
         self.__valeurOut = int
         #Ouverture fichier de configuration
-        self.__fichierUtilisateur = jsonWork(userFile)
         self.__configNeuron = jsonWork(fichierConfiguration)
-        self.__fichierVille = jsonWork(fileFete)
+        self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
+        self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
         #initilisation du gestionnaire du reseau de neuron
         self.__detecteurOS = OS()
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)

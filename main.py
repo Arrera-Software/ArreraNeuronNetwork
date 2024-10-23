@@ -7,13 +7,9 @@ valeur =  0
 print("Beinvenu sur le programme des assistants Arrera. ")
 mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
 if mode == 1 : 
-    neuron = ArreraNetwork("JSON/configUser.json",
-                           "JSON/configNeuron1.json",
-                           "JSON/listFete.json")
+    neuron = ArreraNetwork("JSON/configNeuron1.json")
 else :
-    neuron = ArreraNetwork("JSON/configUser.json",
-                           "JSON/configNeuron2.json",
-                           "JSON/listFete.json")
+    neuron = ArreraNetwork("JSON/configNeuron2.json")
 print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
 hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
@@ -31,7 +27,9 @@ while valeur != 15 :
         valeur = neuron.getValeurSortie()
         sortie = neuron.getListSortie()
         print(valeur)
-        if ((valeur==12) or (valeur==11) or (valeur==3) or (valeur ==13) or (valeur == 18) or (valeur == 19) or (valeur == 20)) :
+        if ((valeur==12) or (valeur==11) or (valeur==3)
+                or (valeur ==13) or (valeur == 18) or (valeur == 19)
+                or (valeur == 20)) :
             if (valeur == 3) : 
                 print(nom+" $ Actu :\n"+sortie[0]+"\n"+sortie[1]+"\n"+sortie[2])
             else :
