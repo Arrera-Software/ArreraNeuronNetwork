@@ -24,8 +24,8 @@
         
     },
     "moteurRecherche":"",
-    "emplacementEvenenement" :"evenementUser.json",
-    "emplacementTache":"tache.json",
+    "emplacementEvenenement" :"JSON/evenementUser.json",
+    "emplacementTache":"JSON/tache.json",
     "tokenGithub":"",
     "wordFolder":"C:/Users/bapti/OneDrive/Bureau",
     "videoDownloadFolder":"C:/Users/bapti/OneDrive/Bureau"

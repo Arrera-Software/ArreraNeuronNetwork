@@ -2,14 +2,18 @@ from ObjetsNetwork.arreraNeuron import *
 import webbrowser
 from librairy.travailJSON import *
 
-nom =  jsonWork("configNeuron1.json").lectureJSON("name")
+nom =  jsonWork("JSON/configNeuron1.json").lectureJSON("name")
 valeur =  0 
 print("Beinvenu sur le programme des assistants Arrera. ")
 mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
 if mode == 1 : 
-    neuron = ArreraNetwork("configUser.json","configNeuron1.json","listFete.json") 
+    neuron = ArreraNetwork("JSON/configUser.json",
+                           "JSON/configNeuron1.json",
+                           "JSON/listFete.json")
 else :
-    neuron = ArreraNetwork("configUser.json","configNeuron2.json","listFete.json")
+    neuron = ArreraNetwork("JSON/configUser.json",
+                           "JSON/configNeuron2.json",
+                           "JSON/listFete.json")
 print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
 hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
