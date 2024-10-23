@@ -1,3 +1,33 @@
-  {
-
+{
+  "nc":"Je ne comprend pas ce que vous m'avez dit.",
+  "bootN1": [
+    "Bonjour {genre} {user}. Que faites-vous à cette heure matinale ?",
+    "Bonjour {genre} {user}. J'espère que vous avez suffisamment dormi."],
+  "bootN2": [
+    "Bonjour {genre} {user}. Êtes-vous prêt à travailler ?",
+    "Désirez-vous poursuivre votre travail à une heure pareille {genre} {user}?"],
+  "bootN3": [
+    "Bonjour {genre} {user}. J'espère que votre nuit fut reposante.",
+    "Bonjour {genre} {user}. J'espère que vous avez bien dormi."],
+  "bootN4": [
+    "Bonjour {genre} {user}. J'espère que vous passez une belle matinée.",
+    "Bonjour {genre} {user}. Avez-vous bien débuté votre journée ?"],
+  "bootN5": [
+    "Bonjour {genre} {user}. J'espère que vous passez une belle après-midi.",
+    "Bonjour {genre} {user}. J'espère que vous passez une belle après-midi."],
+  "bootN6": [
+    "Bonjour {genre} {user}. En quoi puis-je vous aider cette après-midi ?",
+    "Bonjour {genre} {user}. Que puis-je faire pour vous aider ?"],
+  "bootN7": [
+    "Bonsoir, {genre} {user}. Comment se passe votre début de soirée ?",
+    "Bonsoir, {genre} {user}. J'espère que votre début de soirée se passe bien."],
+  "bootN8": [
+    "Bonsoir, {genre} {user}. Comment se passe votre soirée ?",
+    "Bonsoir, {genre} {user}. J'espère que votre soirée s'est bien passée."],
+  "bootN9": [
+    "Bonjour, {genre} {user}. Que faites-vous si tôt ?",
+    "Bonjour, {genre} {user}. J'espère que vous avez un peu dormi."],
+  "bootN10": [
+    "Bonjour, {genre} {user}. Que voulez-vous qu'on fasse ?",
+    "Bonjour, {genre} {user}. Que voulez-vous qu'on fasse ?"]
 }

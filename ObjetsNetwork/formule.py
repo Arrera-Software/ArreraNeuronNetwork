@@ -1,118 +1,59 @@
 import random
 from ObjetsNetwork.gestion import *
 from ObjetsNetwork.historique import *
+from ObjetsNetwork.CAlanguage import *
 
 
 class formule:
-    def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique):
+    def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique,canguage:CAlanguage):
         self.__vous = bool(gestionnaireNeuron.getVous())
         self.__genre = str(gestionnaireNeuron.getGenre())
         self.__user = str(gestionnaireNeuron.getUser())
         self.__fncHist = fncHist
+        self.__calanguage = canguage
 
     def nocomprehension(self):
-        if self.__vous == True:
-            text = "Je ne comprend pas ce que vous m'avez dit."
-        else:
-            text = "Je ne comprend pas ce que tu m'as dit ou ce que tu demande."
-        return text
+        return self.__calanguage.getNoComprehension()
 
     def bootNoHist(self, hour):
         nbrand = random.randrange(0, 1)
         if hour >= 0 and hour < 3:
-            if self.__vous:
-                formule = ["Bonjour " + self.__genre + " " + self.__user + ". Que faites-vous à cette heure matinale ?",
-                           "Bonjour " + self.__genre + " " + self.__user + ". J'espère que vous avez suffisamment dormi."]
-
-            else:
-                formule = ["Zzzz... Il faudrait peut-être dormir " + self.__user + ", non ?",
-                           "Zzzz... Comment peux-tu travailler si tard " + self.__user + " ?"]
-                return formule[nbrand]
+            formule = self.__calanguage.getPhraseBootNormale("1",self.__genre, self.__user)
+            return formule[nbrand]
         else:
             if hour >= 3 and hour <= 6:
-                if self.__vous:
-                    formule = ["Bonjour " + self.__genre + " " + self.__user + ". Êtes-vous prêt à travailler ?",
-                               "Désirez-vous poursuivre votre travail à une heure pareille " + self.__genre + " " + self.__user + " ?"]
-                else:
-                    formule = ["Zzzz... " + self.__user + "... Il faudrait peut-être dormir, non ?",
-                               "Zzzz... Il est tard... Pourquoi travailles-tu encore " + self.__user + " ?"]
+                formule = self.__calanguage.getPhraseBootNormale("2",self.__genre, self.__user)
                 return formule[nbrand]
             else:
                 if hour >= 6 and hour <= 10:
-                    if self.__vous:
-                        formule = [
-                            "Bonjour " + self.__genre + " " + self.__user + ". J'espère que votre nuit fut reposante.",
-                            "Bonjour " + self.__genre + " " + self.__user + ". J'espère que vous avez bien dormi."]
-                    else:
-                        formule = ["Hey " + self.__user + " ! Bien dormi ?",
-                                   "Hey " + self.__user + " ! As-tu passé une bonne nuit ?"]
+                    formule = self.__calanguage.getPhraseBootNormale("3",self.__genre, self.__user)
                     return formule[nbrand]
                 else:
                     if hour >= 10 and hour <= 12:
-                        if self.__vous:
-                            formule = [
-                                "Bonjour " + self.__genre + " " + self.__user + ". J'espère que vous passez une belle matinée.",
-                                "Bonjour " + self.__genre + " " + self.__user + ". Avez-vous bien débuté votre journée ?"]
-                        else:
-                            formule = ["Salut " + self.__user + ". Que fais-tu de beau ce matin ?",
-                                       "Alors " + self.__user + ", prêt à travailler ?"]
+                        formule = self.__calanguage.getPhraseBootNormale("4",self.__genre, self.__user)
                         return formule[nbrand]
                     else:
                         if hour >= 13 and hour <= 14:
-                            if self.__vous:
-                                formule = [
-                                    "Bonjour " + self.__genre + " " + self.__user + ". J'espère que vous passez une belle après-midi.",
-                                    "Bonjour " + self.__genre + " " + self.__user + ". J'espère que vous passez une belle après-midi."]
-                            else:
-                                formule = ["Alors " + self.__user + ", prêt à travailler ?",
-                                           "Alors " + self.__user + ", es-tu prêt à travailler cet après-midi ?"]
+                            formule = self.__calanguage.getPhraseBootNormale("5",self.__genre, self.__user)
                             return formule[nbrand]
                         else:
                             if hour >= 15 and hour <= 18:
-                                if self.__vous:
-                                    formule = [
-                                        "Bonjour " + self.__genre + " " + self.__user + ". En quoi puis-je vous aider cette après-midi ?",
-                                        "Bonjour " + self.__genre + " " + self.__user + ". Que puis-je faire pour vous aider ?"]
-                                else:
-                                    formule = ["Salut, " + self.__user + " ! En quoi consiste ton travail ?",
-                                               "Salut, " + self.__user + " ! Dis-moi comment je peux t'aider ?"]
+                                formule = self.__calanguage.getPhraseBootNormale("6",self.__genre, self.__user)
                                 return formule[nbrand]
                             else:
                                 if hour >= 18 and hour <= 20:
-                                    if self.__vous:
-                                        formule = [
-                                            "Bonsoir, " + self.__genre + " " + self.__user + " Comment se passe votre début de soirée ?",
-                                            "Bonsoir, " + self.__genre + " " + self.__user + " J'espère que votre début de soirée se passe bien."]
-                                    else:
-                                        formule = ["Alors " + self.__user + " Que veux-tu faire ce soir ?",
-                                                   "Alors " + self.__user + " Veux-tu travailler ou te divertir ce soir ?"]
+                                    formule = self.__calanguage.getPhraseBootNormale("7",self.__genre, self.__user)
                                     return formule[nbrand]
                                 else:
                                     if hour >= 20 and hour <= 23:
-                                        if self.__vous:
-                                            formule = [
-                                                "Bonsoir, " + self.__genre + " " + self.__user + " Comment se passe votre soirée ?",
-                                                "Bonsoir, " + self.__genre + " " + self.__user + " J'espère que votre soirée s'est bien passée."]
-                                        else:
-                                            formule = ["*bâille* " + self.__user + "  Que fais-tu si tard ?",
-                                                       "*bâille* " + self.__user + " Pourquoi me réveilles-tu si tard ?"]
+                                        formule = self.__calanguage.getPhraseBootNormale("8",self.__genre, self.__user)
                                         return formule[nbrand]
                                     else:
                                         if hour >= 0 and hour < 3:
-                                            if self.__vous:
-                                                formule = [
-                                                    "Bonjour, " + self.__genre + " " + self.__user + "  Que faites-vous si tôt ?",
-                                                    "Bonjour, " + self.__genre + " " + self.__user + " J'espère que vous avez un peu dormi."]
-                                            else:
-                                                formule = [
-                                                    "Zzzz " + self.__user + " . Il faudrait peut-être dormir, non ?",
-                                                    "Zzzz " + self.__user + " . Comment peux-tu travailler si tard ?"]
+                                            formule = self.__calanguage.getPhraseBootNormale("9",self.__genre, self.__user)
                                             return formule[nbrand]
                                         else:
-                                            if self.__vous:
-                                                formule = "Bonjour, " + self.__genre + " " + self.__user + " Que voulez-vous qu'on fasse ?"
-                                            else:
-                                                formule = "Salut, " + self.__user + " Que veux-tu que je t'aide à faire ?"
+                                            formule = self.__calanguage.getPhraseBootNormale("10",self.__genre, self.__user)
                                             return formule
 
     def aurevoir(self, hour):
