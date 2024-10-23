@@ -1,5 +1,3 @@
-from numpy.distutils.command.config import config
-
 from librairy.travailJSON import *
 
 class CAlanguage:
