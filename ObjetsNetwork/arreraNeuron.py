@@ -14,6 +14,7 @@ from neuron.codehelp import*
 from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
 from neuron.work import*
+from ObjetsNetwork.CAlanguage import *
 
 class ArreraNetwork :
     def __init__(self,fichierConfiguration:str):
@@ -24,6 +25,8 @@ class ArreraNetwork :
         self.__configNeuron = jsonWork(fichierConfiguration)
         self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
         self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
+        # initilisation du module de language
+        mLanguage = CAlanguage(self.__configNeuron)
         #initilisation du gestionnaire du reseau de neuron
         self.__detecteurOS = OS()
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)

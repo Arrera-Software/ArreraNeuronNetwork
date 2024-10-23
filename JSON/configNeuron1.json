@@ -28,5 +28,6 @@
    "emplacementFileHist":"JSON/neuronHist.json",
    "emplacementFileRoutine":"JSON/routineFile.json",
    "fileUser": "JSON/configUser.json",
-   "fileFete": "JSON/listFete.json"
+   "fileFete": "JSON/listFete.json",
+   "moduleLanguage": "language/vouvoiment/"
 }
