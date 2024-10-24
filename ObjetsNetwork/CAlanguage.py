@@ -10,6 +10,9 @@ class CAlanguage:
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
+        self.__createur = self.__gestionnaire.getCreateur()
+        self.__bute = self.__gestionnaire.getBute()
+        self.__nameAssistant = self.__gestionnaire.getName()
 
     def setUserGenre(self,genre:str):
         self.__user = self.__gestionnaire.getUser()
@@ -36,3 +39,26 @@ class CAlanguage:
         :return:
         """
         return self.__formule.lectureJSONList("reponse")[nb]
+
+    def getPhraseChatBotNormal(self, index:str):
+        phrases = self.__chatbot.lectureJSON(index)
+        return phrases.format(genre=self.__genre, user=self.__user,bute = self.__bute,name=self.__nameAssistant,createur=self.__createur)
+
+    def getPhraseChatBotList(self, index:str):
+        phrases = self.__formule.lectureJSONList(index)
+        return [phrase.format(genre=self.__genre, user=self.__user,bute = self.__bute,name=self.__nameAssistant,createur=self.__createur) for phrase in phrases]
+
+    def getPhraseListeFonction(self):
+        listFonction = self.__gestionnaire.getListFonction()
+        nbFonction = self.__gestionnaire.getNbListFonction()
+        nb = nbFonction - 1
+        text = self.__chatbot.lectureJSON("phListFonc")
+        for i in range(0, nbFonction):
+            if i == nb:
+                text = text + " et " + listFonction[i]
+            else:
+                if i == 0:
+                    text = text + listFonction[i]
+                else:
+                    text = text + ", " + listFonction[i]
+        return text + " ."

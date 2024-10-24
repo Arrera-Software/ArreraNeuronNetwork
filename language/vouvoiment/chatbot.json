@@ -22,5 +22,38 @@
       ,"La conductrice."
       ,"Parce qu'ils n'ont pas de FISH de paie"
       ,"En fait, dans tous les gels douches. Qu’une fois dans la salle de bain il n’y ait aucune issue possible."
-  ]
+  ],
+  "ph1Blague" : "Je peux pas raconter un blague si je suis pas drole.",
+  "ph2Blague" : [
+    "Désoler de ne pas etre drole pour vous {genre}.",
+    "Désoler si je ne suis pas drole {genre}.",
+    "Je peux vous en racontez une autre."],
+  "ph3Blague" :  [
+    "Pourquoi vous dites sa je ne vous es meme pas racompter une blague.",
+    "Avant de dire sa , laissez-vous en raconter une."],
+  "ph4Blague" : [
+    "Ok commme vous voulez {genre}.",
+    "Etes-vous vraiment sur {genre}."],
+  "ph5Blague": "Ok {genre}, je vous en raconte une ",
+  "php6Blague": [
+    "Ok commme vous voulez {genre}.",
+    "Etes-vous vraiment sur {genre}."],
+  "ph7Blague": "Ok {genre} en voici une autre .",
+  "ph8Phrase": "Je veux pas rester sur un echec {genre}. Je peux vous en racontez une autre si vous voulez bien.",
+  "ph9Phrase": "Veuillez m'excusez {genre} je peux servir a autre chose.",
+  "ph10Phrase" : [
+    "Je suis un programme informatique je resent pas de sentiment.",
+    "Je ne peut pas resentir de sentiment, je suis qu'un programmme informatique."],
+  "ph1Presentation": "Je vous l'ai deja dit {genre} je peux pas trop vous dire plus je n'est pas de passion ni de hobbie je ne suis qu'un programme informatique qui a pour bute {bute}.",
+  "ph2Presentation": "Je suis un assistant personnelle nommer {name} qui a été crée par {createur}. Je n'ai pas pas de passion ni de hobbie du a ma conditions de programme informatique.",
+  "ph1Other": [
+    "Oui, je suis toujours la {genre} {user}. Je ne peut pas partir de tout façon .",
+    "Oui, je suis toujours la {genre} {user}. Je ne pas partir tant que je peux servir .",
+    "Oui, je suis toujours la {genre} {user}. A moin de m'arréter qui serait un acte horible je suis toujour la ."
+  ],
+  "phNon" : "OK {genre} {user} je reste la au besoin.",
+  "phOui": "OK parfais .",
+  "phMerci": "De rien {genre},je reste a votre servie si vous avez besoin de moi ?",
+  "phTG" : "Okay je me tais",
+  "phListFonc" : "Je peux vous aidez a "
 }

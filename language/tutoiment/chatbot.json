@@ -22,5 +22,38 @@
       ,"La conductrice."
       ,"Parce qu'ils n'ont pas de FISH de paie"
       ,"En fait, dans tous les gels douches. Qu’une fois dans la salle de bain il n’y ait aucune issue possible."
-  ]
+  ],
+  "ph1Blague" : "Je peux pas raconter un blague si je suis pas drole.",
+  "ph2Blague" : [
+    "Désoler de ne pas etre drole pour toi {user}.",
+    "Désoler si je ne suis pas drole {user}.",
+    "Je peux t'en raconter une autre."],
+  "ph3Blague" : [
+    "Pourquoi tu dit sa je ne t'en ai meme pas raconter une.",
+    "Avant de dire sa , laisse t'en raconter une."],
+  "ph4Blague" : [
+    "Ok comme tu veux {user}.",
+    "Es-tu vraiment sure de toi {user}."],
+  "ph5Blague": "Ok {user}, je t'en raconte une ",
+  "php6Blague": [
+    "Ok comme tu veux {user}.",
+    "Es-tu vraiment sure de toi {user}."],
+  "ph7Blague": "Ok {user} en voici une autre .",
+  "ph8Phrase": "Je ne peux pas rester sur un echec . Si tu veux je peux t'en raconter une autre.",
+  "ph9Phrase": "Excuse moi. Veux-tu faire autre chose ?",
+  "ph10Phrase" : [
+    "Je suis un programme informatique je resent pas de sentiment.",
+    "Je ne peut pas resentir de sentiment, je suis qu'un programmme informatique."],
+   "ph1Presentation": "Je te l'ai deja dit {user} je peux pas trop t'en dire plus je n'est pas de passion ni de hobbie je ne suis qu'un programme informatique qui a pour bute {bute}.",
+  "ph2Presentation": "Je suis un assistant personnelle nommer {name} qui a été crée par {createur}. Je n'ai pas pas de passion ni de hobbie du a ma conditions de programme informatique.",
+  "ph1Other": [
+    "Oui, je suis toujours la {user}. Je ne peut pas partir de tout façon .",
+    "Oui, je suis toujours la {user}. Je ne pas partir tant que je peux servir .",
+    "Oui, je suis toujours la {user}. A moin de m'arréter qui serait un acte horible je suis toujour la ."
+  ],
+  "phNon" : "Ok {user}, Je reste la si tu a besoin de moi.",
+  "phOui": "OK parfais .",
+  "phMerci": "De rien {user},sur quoi je peux encore t'aider ?",
+  "phTG" : "Okay je me tais",
+  "phListFonc" : "Je peux t'aidez a faire "
 }
