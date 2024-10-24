@@ -5,11 +5,12 @@ from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import*
 from ObjetsNetwork.enabledNeuron import*
 class neuroneDiscution :
-    def __init__(self,gestionnaireNeuron:gestionNetwork,gestionnaireFormule:formule,neuronGest:GestArreraNeuron) :
+    def __init__(self,gestionnaireNeuron:gestionNetwork,gestionnaireFormule:formule,neuronGest:GestArreraNeuron,language:CAlanguage):
         #Init objet
         self.__gestionNeuron = gestionnaireNeuron
         self.__formule = gestionnaireFormule
         self.__gestNeuron = neuronGest
+        self.__language = language
         #liste
         self.__blague = ["Que dit une noisette quand elle tombe dans l’eau ?"
                         ,"Comment est-ce que les abeilles communiquent entre elles ?"
@@ -68,7 +69,7 @@ class neuroneDiscution :
                         text ="Je peux pas raconter un blague si je suis pas drole."
                     else :
                         nbRand = random.randint(0,8)
-                        text = self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]
+                        text = self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)
                 else :
                     if (("vous etes pas drole" in requette)  or ("tu es pas drole" in requette) 
                         or ("c'est pas drole" in requette) or ("pas drole" in requette)) :
@@ -113,17 +114,17 @@ class neuroneDiscution :
                                 if ("oui" in requette) :
                                     nbRand = random.randint(0,8) 
                                     if etatVous == True:
-                                        text = "Ok "+genre+","+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                        text = "Ok "+genre+","+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                                     else :
-                                        text = "Ok "+user+","+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                        text = "Ok "+user+","+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                                 else :
                                     if (("vasy" in requette) or ("comme tu veux" in requette) 
                                         or ("si vous voulez" in requette)) :
                                         nbRand = random.randint(0,8) 
                                         if (etatVous == True):
-                                            text = "Ok "+genre+" je vous en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                            text = "Ok "+genre+" je vous en raconte une . "+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                                         else :
-                                            text = "Ok "+user+" je t'en raconte une . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                            text = "Ok "+user+" je t'en raconte une . "+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                                     else :
                                         if ("pas besoin" in requette) :
                                             nbRand = random.randint(0,1)
@@ -142,9 +143,9 @@ class neuroneDiscution :
                                 if (("vasy" in requette) or ("comme tu veux" in requette) or ("si vous voulez" in requette)) :
                                     nbRand = random.randint(0,8) 
                                     if etatVous == True:
-                                        text = "Ok "+genre+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                        text = "Ok "+genre+" en voici une autre . "+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                                     else :
-                                        text = "Ok "+user+" en voici une autre . "+self.__blague[nbRand]+" "+self.__reponseBlague[nbRand]+" ."
+                                        text = "Ok "+user+" en voici une autre . "+self.__language.getBlague(nbRand)+" "+self.__language.getReponseBlague(nbRand)+" ."
                             else :
                                 if (("Désoler de ne pas etre drole pour vous " in oldsortie) 
                                     or ("Désoler si je ne suis pas drole" in oldsortie) 
