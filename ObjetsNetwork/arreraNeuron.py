@@ -40,7 +40,7 @@ class ArreraNetwork :
         #recuperation etat du reseau
         self.__etatReseau = self.__network.getEtatInternet()
         #initilisation des neuron
-        self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron,self.__etatNeuron)
+        self.__chatBot = neuroneDiscution(self.__gestionnaire,self.__formuleNeuron,self.__etatNeuron,mLanguage)
         self.__service = neuroneService(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__api = neuroneAPI(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
         self.__software = neuroneSoftware(self.__fonctionAssistant,self.__gestionnaire,self.__etatNeuron,self.__historique)
