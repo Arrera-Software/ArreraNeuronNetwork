@@ -9,6 +9,7 @@ class CAlanguage:
         index = jsonWork(emplacement+"index.json")
         self.__formule = jsonWork(emplacement+index.lectureJSON("formule"))
         self.__chatbot = jsonWork(emplacement+index.lectureJSON("chatbot"))
+        self.__codeHelp = jsonWork(emplacement+index.lectureJSON("codeHelp"))
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
@@ -72,3 +73,7 @@ class CAlanguage:
                 else:
                     text = text + ", " + listFonction[i]
         return text + " ."
+
+    def getPhraseCodehelp(self,nb:str):
+        formule = self.__codeHelp.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)

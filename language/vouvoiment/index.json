@@ -1,4 +1,5 @@
 {
   "formule": "formule.json",
-  "chatbot": "chatbot.json"
+  "chatbot": "chatbot.json",
+  "codeHelp": "codeHelp.json"
 }

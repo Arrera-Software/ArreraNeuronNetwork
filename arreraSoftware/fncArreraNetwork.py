@@ -1,13 +1,6 @@
-#module pyhon
+
 import random
-import re
-#librairy Arrera
-from librairy.travailJSON import *
 from librairy.openSoftware import*
-#objet de fonctionement du reseau
-from ObjetsNetwork.gestion import*
-from ObjetsNetwork.network import*
-#differente fonctionnalitée
 from arreraSoftware.fonctionLecture import *
 from arreraSoftware.fonctionMeteoActu import *
 from arreraSoftware.fonctionGPS import*
@@ -15,10 +8,9 @@ from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
 from arreraSoftware.fonctionRecherche import *
-from arreraSoftware.fonctionDate import *
+from ObjetsNetwork.CAlanguage import *
 from arreraSoftware.fonctionHorloge import*
 from arreraSoftware.fonctionCalendar import *
-from arreraSoftware.fonctionTache import*
 from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
 from arreraSoftware.fonctionRadio import*
@@ -26,7 +18,10 @@ from arreraSoftware.fonctionArreraPenseBete import*
 from arreraSoftware.fncOrthographe import*
 
 class fncArreraNetwork:
-    def __init__(self,fichierConfigurationNeuron:jsonWork,gestionNeuron:gestionNetwork,decteurOS:OS,network:network):
+    def __init__(self,fichierConfigurationNeuron:jsonWork,
+                 gestionNeuron:gestionNetwork,
+                 decteurOS:OS,network:network,
+                 clanguage:CAlanguage):
         #Recuperation des objet
         self.__configNeuron = fichierConfigurationNeuron
         self.__gestionNeuron = gestionNeuron
@@ -59,6 +54,7 @@ class fncArreraNetwork:
         self.__objPenseBete = fncArreraPostite(self.__configNeuron)
         self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
                                                self.__configNeuron.lectureJSON("interfaceTextColor"))
+        self.__mLanguage = clanguage
         
     def reading(self):
         self.__fncReading.fenetreLecture()
@@ -1035,13 +1031,8 @@ class fncArreraNetwork:
         return text
     
     def sortieOpenOrgaVar(self):
-        if (self.__etatVous==True):
-            text = "Ok je vous ouvre l'organisateur de varriable "+self.__genre+"."
-        else :
-            text = "Okay je t'ouvre l'organisateur de varriable j'espére que sa t'aidera sur ton projet de programation."
-        
+        text = self.__mLanguage.getPhraseCodehelp("1")
         self.__objetCodehelp.activeOrgaVar()
-        
         return text
     
     def sortieSearchDoc(self,requette:str):
@@ -1056,10 +1047,7 @@ class fncArreraNetwork:
             recherche = recherche.replace("rdevdoc","")
             recherche = recherche.replace("sdevdoc","")
             self.__objetCodehelp.rechercheDoc(1,recherche)
-            if (self.__etatVous==True):
-                text = "Tres bien je vous fais la recherche sur le site DevDoc."
-            else :
-                text = "Okay je t'ai ouvert la recherche sur le site DevDoc dans ton navigateur."
+            text = self.__mLanguage.getPhraseCodehelp("6")
             r = "devdoc "+recherche
         else :
             if (("recherche microsoft" in requette) or ("rmicrosoft" in requette) or ("smicrosoft" in requette)):
@@ -1067,10 +1055,7 @@ class fncArreraNetwork:
                 recherche = recherche.replace("rmicrosoft","")
                 recherche = recherche.replace("smicrosoft","")
                 self.__objetCodehelp.rechercheDoc(2,recherche)
-                if (self.__etatVous==True):
-                    text = "Tres bien je vous fais la recherche sur la documentation Learn de microsoft."
-                else :
-                    text = "Okay je t'ai ouvert la recherche dans la documentation Learn de microsoft dans ton navigateur."
+                text = self.__mLanguage.getPhraseCodehelp("7")
                 r = "microsoft "+recherche
             else :
                 if (("recheche python" in requette) or ("rpython" in requette) or ("spython" in requette)):
@@ -1078,22 +1063,14 @@ class fncArreraNetwork:
                     recherche = recherche.replace("rpython","")
                     recherche = recherche.replace("spython","")
                     self.__objetCodehelp.rechercheDoc(3,recherche)
-                    if (self.__etatVous==True):
-                        text = "Tres bien je vous fais la recherche sur le site du language de programation python."
-                    else :
-                        text = "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur."
+                    text = self.__mLanguage.getPhraseCodehelp("8")
                     r = "python "+recherche
         
         return text,r
     
     def sortieOpenColorSelecteur(self):
-        if (self.__etatVous == True):
-            text = "Ok je vous ouvre la fonctionnalité codehelp Color Selecteur."
-        else :
-            text = "Okay voici ton color sélecteur"
-        
+        text = self.__mLanguage.getPhraseCodehelp("2")
         self.__objetCodehelp.activeColorSelecteur()
-
         return text
 
     def sortieSearchGithub(self,requette:str):
@@ -1119,32 +1096,18 @@ class fncArreraNetwork:
         return text,recherche
     
     def sortieOpenSiteGithub(self):
-        if (self.__etatVous == True):
-            text = "Voici le site github "+self.__genre+" j'espére que sa vous sera utile."
-        else :
-            text = "Voila le site github"
-
+        text = self.__mLanguage.getPhraseCodehelp("3")
         self.__objetCodehelp.openSiteGithub()
         return text 
     
     def sortieOpenGuiGithub(self):
-        if (self.__etatVous==True):
-            text = "Voci mon outil de gestion github "+self.__genre+" "+self.__user+"."
-        else :
-            text = "Voila le logiciel de gestion github"
-        
+        text = self.__mLanguage.getPhraseCodehelp("4")
         self.__objetCodehelp.openGestionGithub()
-
         return text
 
     def sortieOpenLibrairy(self):
-        if (self.__etatVous==True):
-            text = "Je vous es ouvert le l'interface qui vous permet d'acceder au librairy Codehelp"
-        else :
-            text = "Je t'ai ouvert la librairy github"
-        
+        text = self.__mLanguage.getPhraseCodehelp("5")
         self.__objetCodehelp.openOutilLibrairy()
-
         return text
 
     # Partie Arrera Work 

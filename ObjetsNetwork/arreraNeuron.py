@@ -34,7 +34,8 @@ class ArreraNetwork :
         #initilisation du gestionnaire du reseau de neuron
         self.__etatNeuron = GestArreraNeuron(self.__configNeuron)
         self.__network = network()
-        self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,self.__detecteurOS,self.__network)
+        self.__fonctionAssistant = fncArreraNetwork(self.__configNeuron,self.__gestionnaire,
+                                                    self.__detecteurOS,self.__network,mLanguage)
         self.__historique = CHistorique(self.__configNeuron,self.__fonctionAssistant)
         self.__formuleNeuron = formule(self.__gestionnaire,self.__historique,mLanguage)
         #recuperation etat du reseau
