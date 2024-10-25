@@ -3,6 +3,7 @@ import datetime
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import*
 from ObjetsNetwork.enabledNeuron import*
+
 class neuroneDiscution :
     def __init__(self,gestionnaireNeuron:gestionNetwork,gestionnaireFormule:formule,neuronGest:GestArreraNeuron,language:CAlanguage):
         #Init objet

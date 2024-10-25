@@ -10,6 +10,7 @@ class CAlanguage:
         self.__formule = jsonWork(emplacement+index.lectureJSON("formule"))
         self.__chatbot = jsonWork(emplacement+index.lectureJSON("chatbot"))
         self.__codeHelp = jsonWork(emplacement+index.lectureJSON("codeHelp"))
+        self.__open = jsonWork(emplacement+index.lectureJSON("open"))
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
@@ -77,3 +78,46 @@ class CAlanguage:
     def getPhraseCodehelp(self,nb:str):
         formule = self.__codeHelp.lectureJSON("ph"+nb)
         return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseOpen(self,nb:str):
+        formule = self.__open.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseOpenList(self,nb:str):
+        phrases = self.__open.lectureJSON("ph"+nb)
+        return [phrase.format(genre=self.__genre, user=self.__user) for phrase in phrases]
+
+    def getPhraseOpenError(self,nb:str):
+        formule = self.__open.lectureJSON("phError"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseOpenRadio(self, radio:str, etat:bool):
+        if etat:
+            formule = self.__open.lectureJSON("phRadio")
+            return formule.format(genre=self.__genre, user=self.__user, radio=radio)
+        else:
+            formule = self.__open.lectureJSON("phRadioError")
+            return formule.format(genre=self.__genre, user=self.__user, radio=radio)
+
+    def getPhraseOpenSite(self,site:str,etat:bool):
+        if etat :
+            formule = self.__open.lectureJSON("phSite")
+            return formule.format(genre=self.__genre,user=self.__user,site=site)
+        else :
+            formule = self.__open.lectureJSON("phSiteError")
+            return formule.format(genre=self.__genre,user=self.__user,site=site)
+
+    def getPhraseNbOpenSoftware(self, nb:str):
+        formule = self.__open.lectureJSON("phNbSite")
+        return formule.format(genre=self.__genre,user=self.__user,nombre=nb)
+
+    def getPhraseNbOpenSite(self, nb: str):
+        formule = self.__open.lectureJSON("phNbSoftware")
+        return formule.format(genre=self.__genre, user=self.__user, nombre=nb)
+
+    def getPhraseListeRadio(self):
+        listRadio = self.__open.lectureJSONList("phListRadion")
+        text = listRadio[0]
+        for i in range(1, len(listRadio)):
+            text = text + "\n- " + listRadio[i]
+        return text

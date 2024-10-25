@@ -541,22 +541,11 @@ class fncArreraNetwork:
         sortie = self.__objetOpenSoft.setName(logiciel)
         self.__objetOpenSoft.open()
         if sortie == True :
-            if self.__etatVous == True :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici votre logiciel de diaporama "+self.__genre+" "+self.__user,
-                               "Je vous ai ouvert votre logiciel de présentation. En quoi puis-je vous aider de plus "+self.__genre+" ?"]
-                text = listReponse[nbrand]
-            else :
-                nbrand = random.randint(0,1)
-                listReponse = ["Voici ton logiciel de présentation " +self.__user,
-                                "Je t'ai ouvert ton logiciel de diaporama. En quoi puis-je t'aider de plus " + self.__user + " ?"]
-                text = listReponse[nbrand]
+            nbrand = random.randint(0, 1)
+            text = self.__mLanguage.getPhraseOpenList("1")[nbrand]
 
         else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel de présentation"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel de présentation"
+            text = self.__mLanguage.getPhraseOpenError("1")
         return text
     
     def sortieOpenBrowser(self):
@@ -570,30 +559,10 @@ class fncArreraNetwork:
         sortie = self.__objetOpenSoft.setName(logiciel)
         self.__objetOpenSoft.open()
         if sortie == True :
-            if self.__etatVous == True :
-                nbrand = random.randint(0,5)
-                listReponse = ["Voici votre navigateur web "+self.__genre+" "+self.__user,
-                               "Ok je vous ouvre votre explorateur web "+self.__genre+" "+self.__user,
-                               "Voila votre explorateur web "+self.__genre,
-                               "Voici votre navigateur internet "+self.__genre+" "+self.__user,
-                               "Ok je vous ouvre votre explorateur internet "+self.__genre+" "+self.__user,
-                               "Voila votre explorateur internet "+self.__genre,]
-                text = listReponse[nbrand]
-            else :
-                nbrand = random.randint(0,5)
-                listReponse = ["Voici ton navigateur web "+self.__genre+" "+self.__user,
-                               "Ok je t'ouvre ton explorateur web "+self.__genre+" "+self.__user,
-                               "Voila ton explorateur web "+self.__genre,
-                               "Voici ton navigateur internet "+self.__genre+" "+self.__user,
-                               "Ok je t'ouvre ton explorateur internet "+self.__genre+" "+self.__user,
-                               "Voila ton explorateur internet "+self.__genre,]
-                text = listReponse[nbrand]
-
+            nbrand = random.randint(0, 5)
+            text = self.__mLanguage.getPhraseOpenList("2")[nbrand]
         else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre navigateur internet"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir ton navigateur internet"
+            text = self.__mLanguage.getPhraseOpenError("2")
         return text
     
     def sortieOpenNote(self):
@@ -607,16 +576,9 @@ class fncArreraNetwork:
         sortie = self.__objetOpenSoft.setName(logiciel)
         self.__objetOpenSoft.open()
         if sortie == True :
-            if self.__etatVous == True :
-               text = "Voici vos notes "+self.__genre
-            else :
-                text = "Voici tes notes "+self.__user
-
+            text = self.__mLanguage.getPhraseOpen("3")
         else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir vos notes"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir tes notes"
+            text = self.__mLanguage.getPhraseOpenError("3")
         return text
     
     def sortieOpenMusic(self):
@@ -630,44 +592,36 @@ class fncArreraNetwork:
         sortie = self.__objetOpenSoft.setName(logiciel)
         self.__objetOpenSoft.open()
         if sortie == True :
-            if self.__etatVous == True :
-               text = "Voici "+self.__genre+" ,bonne écoute"
-            else :
-                text = "Voici "+self.__user+" ,bonne écoute"
-
+            text = self.__mLanguage.getPhraseOpen("4")
         else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir votre logiciel d'écoute musicale"
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir ton logiciel d'écoute musicale"
+            text = self.__mLanguage.getPhraseOpenError("4")
         return text
     
     def sortieOpenYoutube(self):
-        webbrowser.open("https://www.youtube.com/")
-        if self.__etatVous == True :
-            text = "Ok, je vous ai ouvert YouTube."
+        sortie = webbrowser.open("https://www.youtube.com/")
+        if sortie :
+            text = self.__mLanguage.getPhraseOpen("6")
         else :
-            text = "Ok, je t'ai ouvert YouTube."
+            text = self.__mLanguage.getPhraseOpenError("6")
         
         return text
     
     def sortieOpenCloud(self):
         lien= self.__gestionNeuron.getValeurfichierUtilisateur("lienCloud")
-        webbrowser.open(lien)
-        if self.__etatVous == True :
-            text = "Ok, je vous ai ouvert votre stokage distant."
+        sortie = webbrowser.open(lien)
+        if sortie :
+            text = self.__mLanguage.getPhraseOpen("5")
         else :
-            text = "Ok, je t'ai ouvert ton stokage distant."
-        
+            text = self.__mLanguage.getPhraseOpenError("5")
         return text
     
     def sortieOpenSite(self,site):
         dictionnaireSoft = self.__gestionNeuron.getDictionnaireWeb()
-        webbrowser.open(dictionnaireSoft[site])
-        if self.__etatVous == True :
-            text = "Ok je vous ouvre "+site+" "+self.__genre
-        else :
-            text = "Voici "+site  
+        sortie = webbrowser.open(dictionnaireSoft[site])
+        return self.__mLanguage.getPhraseOpenSite(site,sortie)
+
+    def sortieNoOpen(self):
+        return self.__mLanguage.getPhraseOpen("7")
             
     def sortieRechercheSimple(self,requette:str):
         moteurDefault = self.__gestionNeuron.getMoteurRechercheDefault()
@@ -820,22 +774,12 @@ class fncArreraNetwork:
     
     def sortieListLogiciel(self,nb:int,listSoft:list):
         if (nb==0):
-            if (self.__etatVous == True) :
-                return "Vous n'avez pas de logiciel enregisté. Ouvrez les paramétres pour en enregistrer un."
-            else :
-                return "Tu n'as pas de logiciel enregisté. Ouvre les paramétres pour en enregister un"
+            return self.__mLanguage.getPhraseOpen("8")
         else :
             if (nb == 1) :
-                if (self.__etatVous == True) :
-                    return "Vous avez qu'un seul logiciel enregisté. Qui est "+listSoft[0]
-                else :
-                    return "Tu as un seul logiciel enregisté. Qui est "+listSoft[0]
+                return self.__mLanguage.getPhraseOpen("9")+listSoft[0]
             else :
-                if (self.__etatVous == True) :
-                    baseTexte = "Vous avez "+str(nb)+" de logiciels enregistré. Qui sont"
-                else :
-                    baseTexte = "Tu as "+str(nb)+" de logiciels enregistré. Qui sont"
-                
+                baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
                 for i in range(0,nb):
                     if (i == 0):
                         texte = baseTexte+" "+listSoft[i]
@@ -849,21 +793,12 @@ class fncArreraNetwork:
 
     def sortieListSite(self,nb:int,listSite:list):
         if (nb==0):
-            if (self.__etatVous == True) :
-                return "Vous n'avez pas de site internet enregisté dans l'assistant. Ouvrez les paramétres pour en enregistrer un."
-            else :
-                return "Tu n'as pas de site internet enregisté dans l'assistant. Ouvre les paramétres pour en enregister un"
+           return self.__mLanguage.getPhraseOpen("10")
         else :
             if (nb == 1) :
-                if (self.__etatVous == True) :
-                    return "Vous avez qu'un seul site internet enregisté. Qui est "+listSite[0]
-                else :
-                    return "Tu as un seul site internet enregisté. Qui est "+listSite[0]
+               return self.__mLanguage.getPhraseOpen("11")+listSite[0]
             else :
-                if (self.__etatVous == True) :
-                    baseTexte = "Vous avez "+str(nb)+" de site internet enregistré. Qui sont"
-                else :
-                    baseTexte = "Tu as "+str(nb)+" de site internet enregistré. Qui sont"
+                baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
                 
                 for i in range(0,nb):
                     if (i == 0):
@@ -873,8 +808,10 @@ class fncArreraNetwork:
                             texte = texte + " et "+ listSite[i]
                         else :
                             texte = texte +", "+ listSite[i]
-                
                 return texte
+
+    def sortieListRadio(self):
+        return self.__mLanguage.getPhraseListeRadio()
     
     def sortieViewTache(self):
         if (self.__etatVous==True) :
@@ -2022,14 +1959,7 @@ class fncArreraNetwork:
         11 = Nostalgi 
         12 = Skyrock
         13 = RTL
-        """    
-        if (self.__etatVous == True):
-            text1 = "Je vous lance la radio "
-            text2 = ". Bonne ecoute "+self.__genre
-        else :
-            text1 = "Voici la radio "
-            text2 = ". Profite bien de ton ecoute "+self.__user
-        
+        """
         match radio :
             case 1 :
                 txtRadio = "Europe 1"
@@ -2070,12 +2000,11 @@ class fncArreraNetwork:
             case 13 :
                 sortieRadio = self.__objRadio.startRTL()
                 txtRadio = "RTL"
-        
-        
+
         if (sortieRadio == True):
-            return text1+txtRadio+text2
+            return self.__mLanguage.getPhraseOpenRadio(txtRadio,sortieRadio)
         else :
-            return "Je ne peux pas lancer une radio. Un probléme est survenu."
+            return self.__mLanguage.getPhraseOpenRadio("",sortieRadio)
     
     def sortieDownloadMusic(self):
         self.__downloader.activeMusique()
