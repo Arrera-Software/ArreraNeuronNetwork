@@ -24,7 +24,6 @@ class neuroneDiscution :
             #Recuperation de l'heure
             hour = datetime.now().hour
             #Initilisation des variable nbRand et text et valeur
-            nbRand = 0
             text = ""
             self.__listSortie = ["",""]
             self.__valeurOut = 0
@@ -33,9 +32,6 @@ class neuroneDiscution :
             oldrequette = listOldSortie[0]
             oldsortie = listOldSortie[1]
             name = self.__gestionNeuron.getName()
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
-            user = self.__gestionNeuron.getUser()
             #Reponse chat bot
             if  (("salut" in requette)   or ("bonjour" in requette)  or( "bonsoir" in requette)):
                 text = self.__formule.bootNoHist(hour)
