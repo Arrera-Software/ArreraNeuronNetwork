@@ -11,6 +11,7 @@ class CAlanguage:
         self.__chatbot = jsonWork(emplacement+index.lectureJSON("chatbot"))
         self.__codeHelp = jsonWork(emplacement+index.lectureJSON("codeHelp"))
         self.__open = jsonWork(emplacement+index.lectureJSON("open"))
+        self.__search = jsonWork(emplacement+index.lectureJSON("search"))
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
@@ -121,3 +122,7 @@ class CAlanguage:
         for i in range(1, len(listRadio)):
             text = text + "\n- " + listRadio[i]
         return text
+
+    def getPhraseSearch(self,nb:str):
+        formule = self.__search.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)

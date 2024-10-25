@@ -1,0 +1,6 @@
+{
+  "ph1":"Voici le resultat de votre recherche sur plusieur moteur de recherche {genre}.",
+  "ph2": "Votre appareil n'est pas connecter internet {genre}.",
+  "ph3": "Je suis désoler {genre} . Mais je peux pas faire votre recherche si je ne suis pas connecter a internet",
+  "ph4": "Voici votre recherche. Voulez vous rechercher autre chose ?"
+}

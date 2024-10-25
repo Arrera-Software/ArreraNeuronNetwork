@@ -651,15 +651,9 @@ class fncArreraNetwork:
             case other :
                 sortieRecherche = self.__objetRecherche.duckduckgoSearch(recherche)
         if sortieRecherche == False :
-            if self.__etatVous ==  True:
-                return "Je suis désoler "+self.__genre+" . Mais je peux pas faire votre recherche si je ne suis pas connecter a internet"
-            else :
-                return "Désoler "+self.__user+" je suis pas connecter a internet"
+            text = self.__mLanguage.getPhraseSearch("3")
         else :
-            if self.__etatVous ==  True:
-                text = "Voici votre recherche. Voulez vous rechercher autre chose ?"
-            else :
-                text = "Voici ta recherche "
+            text = self.__mLanguage.getPhraseSearch("4")
        
         return text,recherche
     
@@ -668,16 +662,10 @@ class fncArreraNetwork:
         recherche = recherche.replace("grand recherche","")
         sortieRecheche = self.__objetRecherche.bigRecherche(recherche)
         if sortieRecheche == True :
-            if self.__etatVous == True :
-                text = "Voici le resultat de votre recherche sur plusieur moteur de recherche "+self.__genre
-            else :
-                text = "Voici ton resultat " 
+            text = self.__mLanguage.getPhraseSearch("1")
         else :
             if self.__etatVous == True :
-                text = "Votre appareil n'est pas connecter internet "+self.__genre
-            else :
-                text = "Je suis desoler mais je suis pas connecter a internet"
-                
+                text = self.__mLanguage.getPhraseSearch("2")
         return text,recherche
     
     def sortieHeure(self):

@@ -1,6 +1,3 @@
-from ObjetsNetwork.gestion import*
-from arreraSoftware.fncArreraNetwork import*
-from ObjetsNetwork.chaineCarractere import *
 from ObjetsNetwork.enabledNeuron import*
 from ObjetsNetwork.historique import*
 
