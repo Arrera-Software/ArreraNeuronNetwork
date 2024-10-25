@@ -59,96 +59,43 @@ class formule:
     def aurevoir(self, hour):
         nbrand = random.randrange(0, 1)
         if hour >= 0 and hour < 3:
-            if self.__vous:
-                formule = ["Bonne nuit, " + self.__genre + " " + self.__user + " . Reposez-vous bien.",
-                           "Bonne nuit, " + self.__genre + " " + self.__user + " . Passez une bonne nuit."]
-            else:
-                formule = ["Au revoir, " + self.__user + ". Bonne nuit.",
-                           "Au revoir, " + self.__user + " . Bonne nuit, repose-toi bien."]
+            formule = self.__calanguage.getPhraseAurevoir("1")
             return formule[nbrand]
         else:
             if hour >= 3 and hour <= 6:
-                if self.__vous:
-                    formule = ["Bonne nuit, " + self.__genre + " " + self.__user + ". Essayez de vous reposer.",
-                               "Bonne nuit, " + self.__genre + " " + self.__user + " Reposez-vous bien."]
-                else:
-                    formule = ["Bonne nuit, " + self.__user + " Essaie de te reposer un peu.",
-                               "Bonne nuit, " + self.__user + " Essaie de te reposer un peu."]
+                formule = self.__calanguage.getPhraseAurevoir("2")
                 return formule[nbrand]
             else:
                 if hour >= 6 and hour <= 10:
-                    if self.__vous:
-                        formule = ["Bonne journée, " + self.__genre + " " + self.__user + " Passez une bonne journée. ",
-                                   "Bonne journée, " + self.__genre + " " + self.__user + " Profitez bien de votre journée."]
-                    else:
-                        formule = ["Au revoir, " + self.__user + " Passe une bonne journée.",
-                                   "Au revoir, " + self.__user + " Profite bien de ta journée."]
+                    formule = self.__calanguage.getPhraseAurevoir("3")
                     return formule[nbrand]
                 else:
                     if hour >= 10 and hour <= 12:
-                        if self.__vous:
-                            formule = [
-                                "Au revoir, " + self.__genre + " " + self.__user + " . Passez une bonne fin de matinée.",
-                                "Au revoir, " + self.__genre + " " + self.__user + " Profitez bien de votre fin de matinée."]
-                        else:
-                            formule = ["Au revoir, Passe une bonne fin de matinée.",
-                                       "Au revoir, Profite bien de ta fin de matinée."]
+                        formule = self.__calanguage.getPhraseAurevoir("4")
+                        return formule[nbrand]
                     else:
                         if hour >= 13 and hour <= 16:
-                            if self.__vous:
-                                formule = ["Bonne après-midi, " + self.__genre + " " + self.__user + " Profitez bien.",
-                                           "Au revoir, " + self.__genre + " " + self.__user + " Passez une bonne fin d'après-midi."]
-                            else:
-                                formule = ["Au revoir, " + self.__user + " .Profite bien de ta fin d'après-midi.",
-                                           "Au revoir, " + self.__user + " .Profite bien de ta fin d'après-midi."]
+                            formule = self.__calanguage.getPhraseAurevoir("5")
                             return formule[nbrand]
                         else:
                             if hour >= 16 and hour <= 18:
-                                if self.__vous:
-                                    formule = [
-                                        "Au revoir, " + self.__genre + " " + self.__user + " Profitez bien de votre fin de soirée.",
-                                        "Bonne soirée, " + self.__genre + " " + self.__user + " Profitez bien"]
-                                else:
-                                    formule = ["Au revoir, " + self.__user + " Profite bien de ta soirée.",
-                                               "Au revoir, " + self.__user + " Profite bien de ta soirée."]
+                                formule = self.__calanguage.getPhraseAurevoir("6")
                                 return formule[nbrand]
                             else:
                                 if hour >= 18 and hour <= 20:
-                                    if self.__vous:
-                                        formule = [
-                                            "Bonne soirée, " + self.__genre + " " + self.__user + " Profitez bien",
-                                            "Bonne soirée, " + self.__genre + " " + self.__user + " Reposez-vous bien ce soir."]
-                                    else:
-                                        formule = ["Au revoir, " + self.__user + " Profite bien de ta soirée.",
-                                                   "Au revoir, " + self.__user + " Repose-toi bien ce soir."]
+                                    formule = self.__calanguage.getPhraseAurevoir("7")
                                     return formule[nbrand]
                                 else:
                                     if hour >= 20 and hour <= 23:
-                                        if self.__vous:
-                                            formule = [
-                                                "Bonne nuit, " + self.__genre + " " + self.__user + " Dormez bien.",
-                                                "Bonne nuit, " + self.__genre + " " + self.__user + " Reposez-vous bien."]
-                                        else:
-                                            formule = ["Bonne nuit, " + self.__user + " Dors bien.",
-                                                       "Bonne nuit, " + self.__user + " Repose-toi bien."]
+                                        formule = self.__calanguage.getPhraseAurevoir("8")
                                         return formule[nbrand]
                                     else:
                                         if hour >= 0 and hour < 3:
-                                            if self.__vous:
-                                                formule = [
-                                                    "Bonne nuit, " + self.__genre + " " + self.__user + " Dormez bien, soyez en forme pour demain.",
-                                                    "Bonne nuit, " + self.__genre + " " + self.__user + " Reposez-vous bien pour demain."]
-                                            else:
-                                                formule = [
-                                                    "Bonne nuit, " + self.__user + " Dors bien, sois en forme pour demain.",
-                                                    "Bonne nuit, " + self.__user + " Repose-toi bien pour demain."]
+                                            formule = self.__calanguage.getPhraseAurevoir("9")
                                             return formule[nbrand]
                                         else:
-                                            if self.__vous:
-                                                formule = "Au revoir,  " + self.__genre + " " + self.__user + " J'espère vous revoir bientôt."
-                                            else:
-                                                formule = "Au revoir, " + self.__user + " J'espère te revoir bientôt."
-                                            return formule
+                                            formule = self.__calanguage.getPhraseAurevoir("10")
+                                            return formule[nbrand]
 
     def bootWithHist(self, hour):
 

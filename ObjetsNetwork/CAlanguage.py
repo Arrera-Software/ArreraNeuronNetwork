@@ -26,6 +26,10 @@ class CAlanguage:
         phrases = self.__formule.lectureJSONList("bootN" + nb)
         return [phrase.format(genre=self.__genre, user=self.__user) for phrase in phrases]
 
+    def getPhraseAurevoir(self,nb:str):
+        phrases = self.__formule.lectureJSONList("stop"+ nb)
+        return [phrase.format(genre=self.__genre, user=self.__user) for phrase in phrases]
+
     def getBlague(self,nb:int):
         """
         :param nb: Max 9

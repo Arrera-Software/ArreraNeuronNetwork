@@ -29,5 +29,35 @@
     "Bonjour, {genre} {user}. J'espère que vous avez un peu dormi."],
   "bootN10": [
     "Bonjour, {genre} {user}. Que voulez-vous qu'on fasse ?",
-    "Bonjour, {genre} {user}. Que voulez-vous qu'on fasse ?"]
+    "Bonjour, {genre} {user}. Que voulez-vous qu'on fasse ?"],
+  "stop1": [
+    "Bonne nuit, {genre} {user} . Reposez-vous bien.",
+    "Bonne nuit, {genre} {user} . Passez une bonne nuit."],
+  "stop2": [
+    "Bonne nuit, {genre} {user}. Essayez de vous reposer.",
+    "Bonne nuit, {genre} {user} Reposez-vous bien."],
+  "stop3": [
+    "Bonne journée, {genre} {user} Passez une bonne journée.",
+    "Bonne journée, {genre} {user} Profitez bien de votre journée."],
+  "stop4": [
+    "Au revoir, {genre} {user} . Passez une bonne fin de matinée.",
+    "Au revoir, {genre} {user} Profitez bien de votre fin de matinée."],
+  "stop5": [
+    "Bonne après-midi, {genre} {user} Profitez bien.",
+    "Au revoir, {genre} {user} Passez une bonne fin d'après-midi."],
+  "stop6": [
+    "Au revoir, {genre} {user} Profitez bien de votre fin de soirée.",
+    "Bonne soirée, {genre} {user} Profitez bien"],
+  "stop7": [
+    "Bonne soirée, {genre} {user} Profitez bien",
+    "Bonne soirée, {genre} {user} Reposez-vous bien ce soir."],
+  "stop8": [
+    "Bonne nuit, {genre} {user} Dormez bien.",
+    "Bonne nuit, {genre} {user} Reposez-vous bien."],
+  "stop9": [
+    "Bonne nuit, {genre} {user} Dormez bien, soyez en forme pour demain.",
+    "Bonne nuit, {genre} {user} Reposez-vous bien pour demain."],
+  "stop10": [
+    "Au revoir,  {genre} {user} J'espère vous revoir bientôt.",
+    "Au revoir,  {genre} {user} J'espère vous revoir bientôt."]
 }

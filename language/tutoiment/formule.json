@@ -29,5 +29,35 @@
     "Zzzz {user} . Comment peux-tu travailler si tard ?"],
   "bootN10": [
     "Salut, {user} Que veux-tu que je t'aide à faire ?",
-    "Salut, {user} Que veux-tu que je t'aide à faire ?"]
+    "Salut, {user} Que veux-tu que je t'aide à faire ?"],
+  "stop1": [
+    "Au revoir, {user}. Bonne nuit.",
+    "Au revoir, {user}. Bonne nuit, repose-toi bien."],
+  "stop2":  [
+    "Bonne nuit, {user}. Essaie de te reposer un peu.",
+    "Bonne nuit, {user}. Essaie de te reposer un peu."],
+  "stop3": [
+    "Au revoir, {user}. Passe une bonne journée.",
+    "Au revoir, {user}. Profite bien de ta journée."],
+  "stop4": [
+    "Au revoir, Passe une bonne fin de matinée.",
+    "Au revoir, Profite bien de ta fin de matinée."],
+  "stop5": [
+    "Au revoir, {user}. Profite bien de ta fin d'après-midi.",
+    "Au revoir, {user}. Profite bien de ta fin d'après-midi."],
+  "stop6":[
+    "Au revoir, {user}. Profite bien de ta soirée.",
+    "Au revoir, {user}. Profite bien de ta soirée."],
+  "stop7":[
+    "Au revoir, {user}. Profite bien de ta soirée.",
+    "Au revoir, {user}. Repose-toi bien ce soir."],
+  "stop8": [
+    "Bonne nuit, {user}. Dors bien.",
+    "Bonne nuit, {user} Repose-toi bien."],
+  "stop9": [
+    "Bonne nuit, {user}. Dors bien, sois en forme pour demain.",
+    "Bonne nuit, {user}. Repose-toi bien pour demain."],
+  "stop10": [
+    "Au revoir, {user}. J'espère te revoir bientôt.",
+    "Au revoir, {user}. J'espère te revoir bientôt."]
 }
