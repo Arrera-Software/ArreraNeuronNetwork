@@ -1,5 +1,4 @@
 import datetime
-import random
 #fichier
 from ObjetsNetwork.formule import*
 from ObjetsNetwork.gestion import*
