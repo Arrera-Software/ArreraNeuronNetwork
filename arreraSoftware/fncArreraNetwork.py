@@ -495,21 +495,12 @@ class fncArreraNetwork:
     
     def sortieCalculatrice(self,mode):
         if mode == "0":
-            if self.__etatVous == True :
-                text = "Voila votre calculatrice "+self.__genre
-            else :
-                text = "Voici la calculatrice"
+            text = self.__mLanguage.getPhraseSoftware("4")
         else :
             if mode == "1":
-                if self.__etatVous == True :
-                    text = "Voila votre calculatrice en mode nombre complex "+self.__genre
-                else :
-                    text = "Voici la calculatrice en mode complexe" 
+                text = self.__mLanguage.getPhraseSoftware("5")
             else :
-                if self.__etatVous == True :
-                    text = "Voila votre calculatrice en mode pythagore "+self.__genre
-                else :
-                    text = "Voici la calculatrice en mode pythagore" 
+                text = self.__mLanguage.getPhraseSoftware("6")
         self.__calculatrice.calculatrice(mode)
         return text
     
@@ -1996,19 +1987,16 @@ class fncArreraNetwork:
     
     def sortieDownloadMusic(self):
         self.__downloader.activeMusique()
-        if (self.__etatVous == True):
-            text = "Okay je vous ouvre l'interface pour télécharger une video youtube en musique."
-        else :
-            text = "Okay je t'ouvre l'interface pour télécharger une video youtube en musique."
+        text = self.__mLanguage.getPhraseSoftware("1")
         return text
     
     def sortieDownloadVideo(self):
         self.__downloader.activeVideo()
-        if (self.__etatVous == True):
-            text = "Okay je vous ouvre l'interface pour télécharger une video youtube."
-        else :
-            text = "Okay je t'ouvre l'interface pour télécharger une video youtube."
+        text = self.__mLanguage.getPhraseSoftware("2")
         return text
+
+    def sortieNoDownload(self):
+        return self.__mLanguage.getPhraseSoftware("3")
     
     def sortieOpenProjetDirect(self,projet:str):
         sortie = self.__objetArreraWork.openProjet(projet)

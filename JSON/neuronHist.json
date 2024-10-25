@@ -1,5 +1,10 @@
 {
   "2024-10-25": [
-    "Calcule par texte"
+    "Calcule par texte",
+    "Ouverture du logiciel de telechargement en mode video",
+    "Ouverture du logiciel de telechargement en mode musique",
+    "Ouverture de la calculatrice",
+    "Ouverture de la calculatrice en mode nombre complex",
+    "Ouverture de la calculatrice en mode pythagore"
   ]
 }

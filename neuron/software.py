@@ -25,10 +25,6 @@ class neuroneSoftware :
             #Initilisation des variable nbRand et text et valeur
             self.__listSortie = ["",""]
             self.__valeurOut = 0
-            #Recuperation atribut de l'assistant
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
-            user = self.__gestionNeuron.getUser()
             #reponse neuron software
             if ("telecharge" in requette) :
                 if "video" in requette :
@@ -41,10 +37,8 @@ class neuroneSoftware :
                         self.__valeurOut = 5
                         self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode musique")
                     else :
-                        if (etatVous == True) :
-                            self.__listSortie = ["Je suis désoler "+genre+" mais je ne peux télécharger que des vidéo ou de musique",""]
-                        else :
-                            self.__listSortie = [user+" je ne peux télécharger que de video ou de musique. ",""]
+                        self.__listSortie = [self.__fonctionArreraNetwork.sortieNoDownload(),""]
+
             if (("calculatrice" in requette) or ("calculette" in requette)) :
                 if "nombre complex" in requette or "nb complex" in requette :
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("1"),""]
