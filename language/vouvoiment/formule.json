@@ -59,5 +59,15 @@
     "Bonne nuit, {genre} {user} Reposez-vous bien pour demain."],
   "stop10": [
     "Au revoir,  {genre} {user} J'espère vous revoir bientôt.",
-    "Au revoir,  {genre} {user} J'espère vous revoir bientôt."]
+    "Au revoir,  {genre} {user} J'espère vous revoir bientôt."],
+  "bootHist1": "Bonjour, {genre} {user}. Je vous ai relancé votre travail. Mais il faudrait que vous dormiez.",
+  "bootHist2": "Bonjour, {genre} {user}. Je vous ai relancé votre travail. Mais il faudrait que vous dormiez.",
+  "bootHist3": "Bonjour, {genre} {user}. J'espère que vous avez passé une bonne nuit. J'ai relancer la ou vous etais arriver.",
+  "bootHist4": "Bonjour, {genre} {user}. J'espère que vous passez une bonne matinée. Je vous ai relancer ou vous etiez",
+  "bootHist5": "Bonjour, {genre} {user}. J'espère que vous passez une bonne après-midi ? J'ai relancer la ou vous etais arriver.",
+  "bootHist6": "Bonjour, {genre} {user}. Sur quoi puis-je vous aider cet après-midi ? Je vous ai relancer ou vous etiez.",
+  "bootHist7": "Bonsoir, {genre} {user}. J'espère que votre début de soirée se passe bien. J'ai relancer la ou vous etais arriver.",
+  "bootHist8": "Bonsoir, {genre} {user}. J'espère que votre soirée s'est bien passée. J'ai relancer la ou vous etais arriver.",
+  "bootHist9": "Bonjour, {genre} {user}. J'espère que vous avez un peu dormi. J'ai relancer la ou vous etais arriver.",
+  "bootHist10": "Bonjour, {genre} {user}. J'ai relancer la ou vous etais arriver."
 }

@@ -1,3 +1,5 @@
+from lxml.html.defs import phrase_tags
+
 from librairy.travailJSON import *
 from ObjetsNetwork.gestion import *
 
@@ -29,6 +31,10 @@ class CAlanguage:
     def getPhraseAurevoir(self,nb:str):
         phrases = self.__formule.lectureJSONList("stop"+ nb)
         return [phrase.format(genre=self.__genre, user=self.__user) for phrase in phrases]
+
+    def getPhraseBootHist(self,nb:str):
+        phrase = self.__formule.lectureJSON("bootHist"+nb)
+        return phrase.format(genre=self.__genre, user=self.__user)
 
     def getBlague(self,nb:int):
         """
