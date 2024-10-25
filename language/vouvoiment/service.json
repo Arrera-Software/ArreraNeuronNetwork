@@ -1,0 +1,7 @@
+{
+  "phcalcule": "Voici le resultat de votre calcule {genre} est {resultat}",
+  "ph1": "Le calcule que vous me demander de faire {genre} est imposible a faire.",
+  "ph2": "Okay je vous ouvre ma documentation. J'éspére que vous sa sera utile pour me comprendre",
+  "ph3" : "Je vous ai ouvert l'outil pour corriger votre phrase.",
+  "ph4" : "Il est imposible d'ouvrir l'outil"
+}

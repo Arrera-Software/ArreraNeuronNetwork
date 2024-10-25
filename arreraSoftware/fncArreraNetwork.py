@@ -2092,13 +2092,16 @@ class fncArreraNetwork:
         texte = requette.replace("corrige","").strip()
         sortie = self.__objOrthographe.active(texte)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert l'outil pour corriger votre phrase."
-            else :
-                text = "Je t'ai ouvert l'outil pour corriger votre phrase."
+            text = self.__mLanguage.getPhraseService("3")
         else :
-            if (self.__etatVous == True):
-                text = "Il est imposible d'ouvrir l'outil"
-            else :
-                text = "Il est imposible d'ouvrir l'outil"
+            text = self.__mLanguage.getPhraseService("4")
         return text
+
+    def sortieResultatCalcule(self,resultat):
+        return self.__mLanguage.getPhraseResultatCalcule(resultat)
+
+    def sortieErrorCalcule(self):
+        return self.__mLanguage.getPhraseService("1")
+
+    def sortieOpenDocumentation(self):
+        return self.__mLanguage.getPhraseService("2")

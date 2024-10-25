@@ -12,6 +12,7 @@ class CAlanguage:
         self.__codeHelp = jsonWork(emplacement+index.lectureJSON("codeHelp"))
         self.__open = jsonWork(emplacement+index.lectureJSON("open"))
         self.__search = jsonWork(emplacement+index.lectureJSON("search"))
+        self.__service = jsonWork(emplacement+index.lectureJSON("service"))
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
@@ -125,4 +126,12 @@ class CAlanguage:
 
     def getPhraseSearch(self,nb:str):
         formule = self.__search.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseResultatCalcule(self,resultat:str):
+        formule = self.__service.lectureJSON("phcalcule")
+        return formule.format(genre=self.__genre,user=self.__user,resultat=resultat)
+
+    def getPhraseService(self,nb:str):
+        formule = self.__service.lectureJSON("ph"+nb)
         return formule.format(genre=self.__genre,user=self.__user)
