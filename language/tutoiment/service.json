@@ -3,5 +3,6 @@
   "ph1": "Le calcule que tu me demande de faire est imposible.",
   "ph2" : "Okay je t'ouvre ma documentation. J'éspére qu'elle sera utile pour me comprendre",
   "ph3" : "Je t'ai ouvert l'outil pour corriger votre phrase.",
-  "ph4" : "Il est imposible d'ouvrir l'outil"
+  "ph4" : "Il est imposible d'ouvrir l'outil",
+  "ph6" : "Voila {user}. Je suis toujour la si tu as besoin de moi."
 }
