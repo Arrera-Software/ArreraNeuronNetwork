@@ -15,6 +15,7 @@ class CAlanguage:
         self.__service = jsonWork(emplacement+index.lectureJSON("service"))
         self.__software = jsonWork(emplacement+index.lectureJSON("software"))
         self.__api = jsonWork(emplacement+index.lectureJSON("api"))
+        self.__time = jsonWork(emplacement+index.lectureJSON("time"))
 
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
@@ -194,3 +195,22 @@ class CAlanguage:
     def getPhraseErrorLangue(self):
         formule = self.__api.lectureJSON("phErrorLangue")
         return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseHeure(self,heure:str,minute:str):
+        formule = self.__time.lectureJSON("phHeure")
+        return formule.format(genre=self.__genre,user=self.__user,heure=heure,minute=minute)
+
+    def getPhraseDate(self,jour:str,mois:str,annee:str):
+        formule = self.__time.lectureJSON("phDate")
+        return formule.format(genre=self.__genre,user=self.__user,jour=jour,mois=mois,annee=annee)
+
+    def getPhraseTime(self,nb:str):
+        formule = self.__time.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+    def getPhraseEvent(self,nb:str):
+        formule = self.__time.lectureJSON("phEvent")
+        return formule.format(genre=self.__genre,user=self.__user,nombre=nb)
+
+    def getPhraseNBTache(self,nb:str,nombre1:str,nombre2:str):
+        formule = self.__time.lectureJSON("phNBTache"+nb)
+        return formule.format(genre=self.__genre,user=self.__user,nombre1=nombre1,nombre2=nombre2)

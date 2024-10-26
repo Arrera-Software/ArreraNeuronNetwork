@@ -6,5 +6,6 @@
   "open": "open.json",
   "search": "search.json",
   "service": "service.json",
-  "software": "software.json"
+  "software": "software.json",
+  "time": "time.json"
 }

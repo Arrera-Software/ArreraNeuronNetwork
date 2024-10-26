@@ -560,91 +560,64 @@ class fncArreraNetwork:
         self.__objetDate.rafraichisement()
         heure = self.__objetDate.heure()
         minute = self.__objetDate.minute()
-        return "Il est "+heure+" heure "+minute + "  minute" 
+        return self.__mLanguage.getPhraseHeure(heure,minute)
     
     def sortieDate(self):
         self.__objetDate.rafraichisement()
         jour = self.__objetDate.jour()
         mois = self.__objetDate.mois()
         annes = self.__objetDate.annes()
-        return "On est le "+jour+" "+mois+" "+annes
+        return self.__mLanguage.getPhraseDate(jour,mois,annes)
     
     def sortieOpenChrono(self):
-        if self.__etatVous == True :
-            text = "Tres bien je vous lance le chronométre "+self.__genre
-        else :
-            text = "Okay je te lance le chronométre"
+        text = self.__mLanguage.getPhraseTime("1")
         self.__objetHorloge.modeChrono()
         return text
 
     def sortieOpenHorloge(self):
-        if self.__etatVous == True :
-            text = "Tres bien je vous lance l'horloge "+self.__genre
-        else :
-            text = "Okay je te lance l'horloge"
+        text = self.__mLanguage.getPhraseTime("2")
         self.__objetHorloge.modeHorloge()
         return text
     
     def sortieOpenSimpleMinuteur(self):
-        if self.__etatVous == True :
-            text = "Tres bien je vous lance l'application minuteur "+self.__genre
-        else :
-            text = "Okay je te lance l'application minuteur"
+        text = self.__mLanguage.getPhraseTime("3")
         self.__objetHorloge.modeMinuteur()
         return text   
     
     def sortieAjoutEvent(self):
         self.__objetCalendar.activeAddWindows()
-        if (self.__etatVous==True):
-            text = "Ok, je vous ouvre la fenetre de l'agenda pour ajouter un événement"
-        else :
-            text = "Ok, je t'ouvre la fenetre de l'agenda pour ajouter un événement"
+        text = self.__mLanguage.getPhraseTime("4")
         return text  
     
     def sortieSupprEvent(self):
         self.__objetCalendar.activeSupprWindows()
-        if (self.__etatVous==True):
-            text = "Ok, je vous ouvre la fenetre de l'agenda pour supprimer un événement"
-        else :
-            text = "Ok, je t'ouvre la fenetre de l'agenda pour supprimer un événement"
+        text = self.__mLanguage.getPhraseTime("5")
         return text   
     
     def sortieEvenementDay(self):
+        tampons = ""
+        text = ""
         nbEvent= self.__objetCalendar.getNbEventToday()
         if (nbEvent==0):
-            if (self.__etatVous==True):
-                text = "Vous n'avez pas d'événement enregister pour aujourd'hui"
-            else :
-                text = "Tu as rien de prévu aujourd'hui"
+            text = self.__mLanguage.getPhraseTime("6")
         else :
             listEvent = self.__objetCalendar.getEventToday()
             if(nbEvent==1):
-                if (self.__etatVous==True):
-                    text = "Vous avez qu'un seul événement pour aujourd'hui qui est "+listEvent[0]
-                else :
-                    text = "Tu as qu'un seul événement aujourd'hui qui est "+listEvent[0]
+                text = self.__mLanguage.getPhraseTime("7")+listEvent[0]
             else :
-                if (self.__etatVous==True):
-                    baseTexte = "Vous avez "+str(nbEvent)+" pour aujourd'hui qui sont "
-                else :
-                    baseTexte = "Tu as "+str(nbEvent)+" pour aujourd'hui qui sont "
+                baseTexte = self.__mLanguage.getPhraseEvent(str(nbEvent))
                 for i in range(0,nbEvent):
                     if (i==0):
-                        text = baseTexte+listEvent[i]
+                        tampons = baseTexte+listEvent[i]
                     else :
                         if (i==(nbEvent-1)):
-                            text = text+" et "+listEvent[i]
+                            text = tampons+" et "+listEvent[i]
                         else :
-                            text = text +", "+listEvent[i]
-            
+                            text = tampons +", "+listEvent[i]
         return text
     
     def sortieOpenAgenda(self):
-        if (self.__etatVous==True):
-            text = "Je vous ai ouvert l'agenda. J'espére que sa vous sera utile."
-        else :
-            text = "Okay, je t'ouvre l'application agenda."
-        
+        text = self.__mLanguage.getPhraseTime("8")
         self.__objetCalendar.activeAgenda()
         return text
     
@@ -690,117 +663,62 @@ class fncArreraNetwork:
         return self.__mLanguage.getPhraseListeRadio()
     
     def sortieViewTache(self):
-        if (self.__etatVous==True) :
-            text = "Trés bien je vous ouvre l'application tache "+self.__genre 
-        else :
-            text = "Okay je t'ouvre l'application tache "+self.__user
-        
+        text = self.__mLanguage.getPhraseTime("9")
         self.__objetTache.activeViewTask()
         return text
     
     def sortieViewTacheAdd(self):
-        if (self.__etatVous==True) :
-            text = "Je vous ouvre le programme d'ajout de tache. Suivez bien l'interface "+self.__genre 
-        else :
-            text = "Okay je t'ouvre l'application pour ajouter une nouvelle tache "+self.__user
-        
+        text = self.__mLanguage.getPhraseTime("10")
         self.__objetTache.activeViewAdd()
         return text
     
     def sortieViewTacheSuppr(self):
         sortie = self.__objetTache.activeViewSuppr()
         if (sortie==True):
-            if (self.__etatVous==True) :
-                text = "Je vous ouvre le programme de suppression de tache. Suivez bien l'interface "+self.__genre 
-            else :
-                text = "Okay je t'ouvre l'application pour supprimer une nouvelle tache "+self.__user
+            text = self.__mLanguage.getPhraseTime("11")
         else :
-            if (self.__etatVous==True) :
-                text = "Désoler "+self.__genre+". Il est imposible de supprimer un tache si il en a aucun de crée " 
-            else :
-                text = "Désoler "+self.__user+". Il est imposible de supprimer un tache si il en a aucun de crée " 
-        
+            text = self.__mLanguage.getPhraseTime("12")
         return text
     
     def sortieViewTacheCheck(self):
         sortie = self.__objetTache.activeViewCheck()
         if (sortie==True):
-            if (self.__etatVous==True) :
-                text = "Je vous ouvre le programme qui vous permet de définir un tache fini" 
-            else :
-                text = "Okay je t'ouvre l'application pour finir une tache "
+            text = self.__mLanguage.getPhraseTime("13")
         else :
-            if (self.__etatVous==True) :
-                text = "Désoler "+self.__genre+". Il est imposible de finir un tache si il en a aucun de crée " 
-            else :
-                text = "Désoler "+self.__user+". Il est imposible de finir un tache si il en a aucun de crée "
-        
+            text = self.__mLanguage.getPhraseTime("14")
         return text
 
     def sortieNbSpeakTache(self):
         nbTache = self.__objetTache.getNbTache()
         nbToday = self.__objetTache.getNbTacheToday()
         if (nbTache==0) :
-            if (self.__etatVous==True):
-                text = "Vous avez aucune tache enregister"
-            else :
-                text = "Tu as aucune tache enregistrer"
+            text = self.__mLanguage.getPhraseTime("15")
         else :
             if (nbTache == 1) :
                 if (nbToday == 1) :
-                    if (self.__etatVous==True):
-                        text = "Vous avez une tache enregistrer et elle est à finir aujourd'hui"
-                    else :
-                        text = "Tu as une seul tache . Et tu dois l'avoir fini ce soir."
+                    text = self.__mLanguage.getPhraseTime("16")
                 else :
-                    if (self.__etatVous==True):
-                        text = "Vous avez une tache enregistrer."
-                    else :
-                        text = "Tu as une seul tache. "
+                    text = self.__mLanguage.getPhraseTime("17")
             else :
-                if (self.__etatVous==True):
-                    baseText = "Vous avec "+str(nbTache)+" enregistrer."
-                else :
-                    baseText = "Tu as "+str(nbTache)+" enregistrer."
                 if (nbTache==1) :
-                    if (self.__etatVous==True):
-                        text = baseText+" Dont une tache a finir aujourd'hui."
-                    else :
-                        text = baseText+" Avec une tache que tu dois finir aujourd'hui."
+                    text = self.__mLanguage.getPhraseNBTache("1",str(nbTache),"0")
                 else :
                     if (nbTache>1):
-                        if (self.__etatVous==True):
-                            text = baseText+" Dont "+str(nbToday)+" tache a finir aujourd'hui."
-                        else :
-                            text = baseText+" Avec "+str(nbToday)+" tache que tu dois finir aujourd'hui."
+                        text = self.__mLanguage.getPhraseNBTache("1", str(nbTache), str(nbToday))
                     else :
-                        if (self.__etatVous==True):
-                            text = baseText + " Et aucune tache aujourd'hui."
-                        else :
-                            text = baseText + " Et aucune tache aujourd'hui."
-
+                        text = self.__mLanguage.getPhraseNBTache("3",str(nbTache),"0")
         return text
     
     def sortieSpeakTacheToday(self):
         listTache = self.__objetTache.getTacheToday()
         nbTache = len(listTache)
         if (nbTache==0) :
-            if (self.__etatVous==True):
-                text = "Vous avez aucune tache aujourd'hui "+self.__genre+"."
-            else :
-                text = "Tu as aucune tache a faire aujourd'hui"
+            text = self.__mLanguage.getPhraseTime("18")
         else :
             if (nbTache==1):
-                if (self.__etatVous==True):
-                    baseText = "Vous avez une seul tache à faire aujourd'hui qui est "
-                else :
-                    baseText = "Tu as uns seul tache à finir pour aujourd'hui qui est "
+                baseText = self.__mLanguage.getPhraseTime("19")+" "
             else :
-                if (self.__etatVous==True):
-                    baseText = "Vous avez "+str(nbTache)+" tache à faire aujourd'hui qui sont "
-                else :
-                    baseText = "Tu as "+str(nbTache)+" à finir pour aujourd'hui qui sont "
-            
+                baseText = self.__mLanguage.getPhraseNBTache("3",str(nbTache),"0")+" "
             for i in range(0,nbTache):
                 if (i == 0):
                     text = baseText + listTache[i]
@@ -809,29 +727,18 @@ class fncArreraNetwork:
                         text = text + " et " + listTache[i]
                     else :
                         text = text+", "+listTache[i]
-        
         return text
     
     def sortieSpeakTacheTowmorow(self):
         listTache = self.__objetTache.getTacheTowmorow()
         nbTache = len(listTache)
         if (nbTache==0) :
-            if (self.__etatVous==True):
-                text = "Vous avez aucune tache pour demain "+self.__genre+"."
-            else :
-                text = "Tu as aucune tache a faire demain"
+            text = self.__mLanguage.getPhraseTime("20")
         else :
             if (nbTache==1):
-                if (self.__etatVous==True):
-                    baseText = "Vous avez une seul tache à faire pour demain qui est "
-                else :
-                    baseText = "Tu as uns seul tache à finir pour demain qui est "
+                baseText = self.__mLanguage.getPhraseTime("21")+" "
             else :
-                if (self.__etatVous==True):
-                    baseText = "Vous avez "+str(nbTache)+" tache à faire pour demain qui sont "
-                else :
-                    baseText = "Tu as "+str(nbTache)+" à finir pour demain qui sont "
-            
+                baseText = self.__mLanguage.getPhraseNBTache("5",str(nbTache),"0")+" "
             for i in range(0,nbTache):
                 if (i == 0):
                     text = baseText + listTache[i]
@@ -840,7 +747,6 @@ class fncArreraNetwork:
                         text = text + " et " + listTache[i]
                     else :
                         text = text+", "+listTache[i]
-        
         return text
     
     def sortieOpenOrgaVar(self):
@@ -1727,71 +1633,36 @@ class fncArreraNetwork:
         # Recuperation du nombre de tache et event
         nbEvent = self.__objetCalendar.getNbEventToday()
         nbTache = len(listTache)
-        
-        if (self.__etatVous == True):
-            if (nbTache == 0):
-                tacheTXT = "Vous avez aucune tache pour aujourd'hui" 
+        if (nbTache == 0):
+            tacheTXT = self.__mLanguage.getPhraseTime("22")
+        else:
+            if (nbTache == 1):
+                tacheTXT = self.__mLanguage.getPhraseNBTache("6",str(nbTache),"0")+" "+listTache[0]+"."
             else :
-                if (nbTache == 1):
-                    tacheTXT = "Vous avez "+str(nbTache)+" tache qui est "+listTache[0]+"."
-                else :
-                    tacheTXT = "Vous avez "+str(nbTache)+" taches qui sont "
-                    for i in range(0,nbTache):
-                        if (i == 0):
-                            tacheTXT = tacheTXT+listTache[i]
-                        else :
-                            if (i == (nbTache-1)):
-                                tacheTXT = tacheTXT+" et "+listTache[i]    
-                            else :
-                                tacheTXT = tacheTXT+", "+listTache[i]      
-            if (nbEvent == 0):
-                eventTXT = "Vous avez aucun événement aujourd'hui" 
+                tacheTXT = self.__mLanguage.getPhraseNBTache("7",str(nbTache),"0")+" "
+                for i in range(0, nbTache):
+                    if (i == 0):
+                        tacheTXT = tacheTXT + listTache[i]
+                    else:
+                        if (i == (nbTache - 1)):
+                            tacheTXT = tacheTXT + " et " + listTache[i]
+                        else:
+                            tacheTXT = tacheTXT + ", " + listTache[i]
+        if (nbEvent == 0):
+            eventTXT = self.__mLanguage.getPhraseTime("23")
+        else:
+            if (nbTache == 1):
+                eventTXT = self.__mLanguage.getPhraseNBTache("8",str(nbEvent),"0")+" "+listEvent[0]+"."
             else :
-                if (nbEvent == 1):
-                    eventTXT = "Vous avez "+str(nbEvent)+" evénement aujourd'hui qui est "+listEvent[0]+"."
-                else :
-                    eventTXT = "Vous avez "+str(nbEvent)+" evénement aujourd'hui qui sont "
-                    for i in range(0,nbEvent):
-                        if (i == 0):
-                            eventTXT = eventTXT +listEvent[i]
-                        else :
-                            if (i == (nbEvent-1)):
-                                eventTXT = eventTXT+" et "+listEvent[i]    
-                            else :
-                                eventTXT = eventTXT+", "+listEvent[i]
-            
-        else :
-            if (nbTache == 0):
-                tacheTXT = "Vous avez aucune tache pour aujourd'hui" 
-            else :
-                if (nbTache == 1):
-                    tacheTXT = "Tu as "+str(nbTache)+" tache qui est "+listTache[0]+"."
-                else :
-                    tacheTXT = "Tu as "+str(nbTache)+" taches qui sont "
-                    for i in range(0,nbTache):
-                        if (i == 0):
-                            tacheTXT = tacheTXT+listTache[i]
-                        else :
-                            if (i == (nbTache-1)):
-                                tacheTXT = tacheTXT+" et "+listTache[i]    
-                            else :
-                                tacheTXT = tacheTXT+", "+listTache[i]
-            if (nbEvent == 0):
-                eventTXT = "Tu as aucun événement aujourd'hui" 
-            else :
-                if (nbEvent == 1):
-                    eventTXT = "Tu as "+str(nbEvent)+" evénement aujourd'hui qui est "+listEvent[0]+"."
-                else :
-                    eventTXT = "Tu as "+str(nbEvent)+" evénement aujourd'hui qui sont "
-                    for i in range(0,nbEvent):
-                        if (i == 0):
-                            eventTXT = eventTXT +listEvent[i]
-                        else :
-                            if (i == (nbEvent-1)):
-                                eventTXT = eventTXT+" et "+listEvent[i]    
-                            else :
-                                eventTXT = eventTXT+", "+listEvent[i]
-        
+                eventTXT = self.__mLanguage.getPhraseNBTache("9",str(nbEvent),"0")+" "
+                for i in range(0, nbEvent):
+                    if (i == 0):
+                        eventTXT = eventTXT + listEvent[i]
+                    else:
+                        if (i == (nbEvent - 1)):
+                            eventTXT = eventTXT + " et " + listEvent[i]
+                        else:
+                            eventTXT = eventTXT + ", " + listEvent[i]
         return 18,[tacheTXT,eventTXT]
     
     def sortieResumerAll(self):
