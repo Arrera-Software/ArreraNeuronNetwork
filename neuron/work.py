@@ -12,7 +12,7 @@ class neuronWork :
         self.__gestNeuron = neuronGest
         self.__objHistorique = objHist
         self.__listSortie = ["",""]
-        self.__valeurOut = int
+        self.__valeurOut = 0
     
     def getListSortie(self)->list:
         return self.__listSortie
