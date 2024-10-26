@@ -58,10 +58,7 @@ class fncArreraNetwork:
         
     def reading(self):
         self.__fncReading.fenetreLecture()
-        if self.__etatVous == True :
-            text = "Voila "+self.__genre+" J'éspére que sa vous sera utile"
-        else :
-            text = "Voila "+self.__user+".Je suis toujour la si tu as besoin de moi."
+        text = self.__mLanguage.getPhraseService("6")
         return text
 
     def sortieActualités(self):
@@ -69,14 +66,14 @@ class fncArreraNetwork:
         if (sortie == True):
             listActu = self.__actu.getActu()
             if ((listActu[0]=="error") and (listActu[1] == "error")):
-                return 6 , ["Désoler une erreur c'est produite pour la récupération des actulités",""]
+                return 6 , [self.__mLanguage.getPhraseApi("1"),""]
             else :
                 nbrand1 = random.randint(0,1)
                 nbrand2 = random.randint(2,3)
                 nbrand3 = random.randint(4,5)
                 return 3, [listActu[nbrand1],listActu[nbrand2],listActu[nbrand3]]
         else :
-            return 6 , ["Désoler une erreur c'est produite pour la récupération des actulités",""]
+            return 6 , [self.__mLanguage.getPhraseApi("1"),""]
         
     
     def sortieMeteoTowmoroMorning(self,ville):
@@ -90,32 +87,14 @@ class fncArreraNetwork:
                     lat = self.__gps.getlatPossition()
                     sortiMeteo = self.__meteo.getDateMetoTowmorowMorning(lat,lon)
                     if sortiMeteo == True :
-                        if self.__etatVous == True :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" pour demain matin est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a votre localisation pour demain matin est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                            text =  listReponse[nbrand]
-                        else :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" pour demain matin est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a ta localisation pour demain matin est de "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                        
-                            text =  listReponse[nbrand]
+                        nbrand = random.randint(0, 1)
+                        text =  self.__mLanguage.getPhraseMeteo("3",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())[nbrand]
                     else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain matin"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain matin."  
+                        text = self.__mLanguage.getPhraseMeteoError("3")
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain matin."
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain matin."
+                    text = self.__mLanguage.getPhraseMeteoError("3")
             else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain matin"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain matin."
+                text = self.__mLanguage.getPhraseMeteoError("3")
         else :
             sortieGPS = self.__gps.recuperationCordonneeVille(ville)
             if sortieGPS == True :
@@ -124,21 +103,12 @@ class fncArreraNetwork:
                 sortiMeteo = self.__meteo.getDateMetoTowmorowMorning(lat,lon)
                 if  sortiMeteo == True:
                     nameVille =  ville
-                    if self.__etatVous == True :
-                        text= "La meteo a "+nameVille+"  pour demain matin est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"             
-                    else :
-                        text = "La meteo a "+nameVille+" pour demain matin est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"            
+                    nbRand = random.randint(0,1)
+                    text = self.__mLanguage.getPhraseMeteo("4",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())[nbRand]
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain matin."
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain matin."  
+                    text = self.__mLanguage.getPhraseMeteoError("4")
             else :
-                if self.__etatVous == True :
-                    text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain matin."
-                else :
-                    text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain matin."  
-        
+                text = self.__mLanguage.getPhraseMeteoError("4")
         return 4 , [text,""]
     
     def sortieMeteoTowmorNoon(self,ville):
@@ -152,32 +122,15 @@ class fncArreraNetwork:
                     lat = self.__gps.getlatPossition()
                     sortiMeteo = self.__meteo.getDateMetoTowmorowNoon(lat,lon)
                     if sortiMeteo == True :
-                        if self.__etatVous == True :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a votre localisation pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                            text =  listReponse[nbrand]
-                        else :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a ta localisation pour demain midi est de "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                        
-                            text =  listReponse[nbrand]
+                        nbrand = random.randint(0, 1)
+                        listReponse = self.__mLanguage.getPhraseMeteo("1",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())
+                        text =  listReponse[nbrand]
                     else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+                        text = self.__mLanguage.getPhraseMeteoError("1")
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."
+                    text = self.__mLanguage.getPhraseMeteoError("1")
             else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."
+                text = self.__mLanguage.getPhraseMeteoError("1")
         else :
             sortieGPS = self.__gps.recuperationCordonneeVille(ville)
             if sortieGPS == True :
@@ -186,20 +139,12 @@ class fncArreraNetwork:
                 sortiMeteo = self.__meteo.getDateMetoTowmorowNoon(lat,lon)
                 if  sortiMeteo == True:
                     nameVille =  ville
-                    if self.__etatVous == True :
-                        text= "La meteo a "+nameVille+"  pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"             
-                    else :
-                        text = "La meteo a "+nameVille+" pour demain midi est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"            
+                    nbRand = random.randint(0,1)
+                    text = self.__mLanguage.getPhraseMeteo("2",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())[nbRand]
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+                    text = self.__mLanguage.getPhraseMeteoError("2")
             else :
-                if self.__etatVous == True :
-                    text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo pour demain midi."
-                else :
-                    text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo pour demain midi."  
+                text = self.__mLanguage.getPhraseMeteoError("2")
         
         return 4 , [text,""]
     
@@ -214,32 +159,14 @@ class fncArreraNetwork:
                     lat = self.__gps.getlatPossition()
                     sortiMeteo = self.__meteo.getDataMeteoNow(lat,lon)
                     if sortiMeteo == True :
-                        if self.__etatVous == True :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a votre localisation est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                            text =  listReponse[nbrand]
-                        else :
-                            nbrand = random.randint(0,1)
-                            listReponse = ["La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C",
-                                            "La meteo a ta localisation est de "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"]
-                        
-                            text =  listReponse[nbrand]
+                        nbrand = random.randint(0, 1)
+                        text =  self.__mLanguage.getPhraseMeteo("5",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())[nbrand]
                     else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
+                        text = self.__mLanguage.getPhraseMeteoError("5")
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."
+                    text = self.__mLanguage.getPhraseMeteoError("5")
             else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."
+                text = self.__mLanguage.getPhraseMeteoError("5")
         else :
             sortieGPS = self.__gps.recuperationCordonneeVille(ville)
             if sortieGPS == True :
@@ -248,20 +175,12 @@ class fncArreraNetwork:
                 sortiMeteo = self.__meteo.getDataMeteoNow(lat,lon)
                 if  sortiMeteo == True:
                     nameVille =  ville
-                    if self.__etatVous == True :
-                        text= "La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"             
-                    else :
-                        text = "La meteo a "+nameVille+" est "+self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+" °C"            
+                    nbRand = random.randint(0,1)
+                    text = self.__mLanguage.getPhraseMeteo("6",nameVille,self.__meteo.getdescription(),self.__meteo.gettemperature())[nbRand]
                 else :
-                        if self.__etatVous == True :
-                            text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
-                        else :
-                            text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
+                    text = self.__mLanguage.getPhraseMeteoError("6")
             else :
-                if self.__etatVous == True :
-                    text = "Je suis désoler "+self.__genre+" "+self.__user+". Mais je ne parvien pas a recuperer la meteo"
-                else :
-                    text = "Je suis désoler "+self.__user+" je n'arrive pas a savoir la meteo."  
+                text = self.__mLanguage.getPhraseMeteoError("6")
         
         return 4 , [text,""]
     
@@ -272,10 +191,7 @@ class fncArreraNetwork:
             lon = self.__gps.getlonPossition()
             sortieMeteo = self.__meteo.getDataMeteoNow(lat,lon)
             if sortieMeteo == True :
-                if self.__etatVous == True :
-                    text = ["La temperature actuel dehors et de "+self.__meteo.gettemperature()+"°C",""]
-                else :
-                    text = ["Il fais "+self.__meteo.gettemperature()+"°C",""]     
+                text = self.__mLanguage.getPhraseTemperature(self.__meteo.gettemperature())
         return 4 , text
     
     def sortieGPS(self):
@@ -287,10 +203,7 @@ class fncArreraNetwork:
                 lat = self.__gps.getlatPossition()
                 lon = self.__gps.getlonPossition()
                 nameVille = self.__gps.getNameVille()
-                if self.__etatVous == True :
-                    text = ["Votre localisation est latitude "+lat+" longitude "+lon+" Ce qui correspond a la ville de "+nameVille+".",""]
-                else :
-                    text = ["Tu es localiser a la latitude "+lat+" longitude "+lon+" .Ce qui correspond a la ville de "+nameVille+" .",""]
+                text = self.__mLanguage.getPhraseCoordonnees(nameVille,lat,lon)
         return 4,text
     
     def sortieItineraire(self,phrase):
@@ -341,10 +254,7 @@ class fncArreraNetwork:
                 else :
                     if ((depart =="la ou je suis")or (depart =="ma localisation")) :
                         if (self.__gps.recuperationNameVillePosition()!= False) :
-                            if (self.__etatVous == True) :
-                                return "Une erreur c'est produite qui m'empeche de vous faire cette itineraire"
-                            else :
-                                return "Une erreur c'est produite qui m'empeche de te faire cette itineraire"
+                            return self.__mLanguage.getPhraseIteneraireError("1")
                         else :
                             depart = self.__gps.getNameVille()
             
@@ -365,35 +275,20 @@ class fncArreraNetwork:
                 else :
                     if ((arrivee =="la ou je suis")or (arrivee =="ma localisation")) :
                         if (self.__gps.recuperationNameVillePosition()!= False) :
-                            if (self.__etatVous == True) :
-                                return "Une erreur c'est produite qui m'empéche de vous faire cette itineraire"
-                            else :
-                                return "Une erreur c'est produite qui m'empéche de te faire cette itineraire"
+                            return self.__mLanguage.getPhraseIteneraireError("1")
                         else :
                             arrivee = self.__gps.getNameVille()
-            
-
             sortieGMap = self.__gps.launchGoogleMapItineraire(depart,arrivee)
             if (sortieGMap == True) :
-                if (self.__etatVous==True) :
-                    return "Voici votre itineraire sur google map. J'espére que sa vous sera utile "+self.__genre+" "+self.__user
-                else :
-                    return "Je t'ai fais ton itinaire sur google map"
+                return self.__mLanguage.getPhraseIteneraire()
             else :
-                if (self.__etatVous==True) :
-                    return "Désolé "+self.__genre+" "+self.__user+". Il a un probleme qui m'empéche de faire l'itineraires."
-                else :
-                    return "Désolé il a un souci qui m'empéche de te donne cette route"
+                return self.__mLanguage.getPhraseIteneraireError("2")
         else :
-            if (self.__etatVous==True):
-                return "Désoler "+self.__genre+" mais je n'arrive pas a savoir ou vous aller et ou vous allez partir"
-            else :
-                return "Désoler "+self.__user+" mais je n'arrive pas a savoir ou tu veux te rendre et de ou tu part"     
-            
+            return self.__mLanguage.getPhraseIteneraireError("3")
 
-                    
-            
-    
+    def sortieHelpItineraire(self):
+        return self.__mLanguage.getHelpIteneraire()
+
     def sortieResumerActualite(self):
         """
 
@@ -410,10 +305,7 @@ class fncArreraNetwork:
         nbrand3 = random.randint(4,5)
         listOut = []
 
-        if (self.__etatVous == True):
-            textSpeak = "Voici un tour d'horizon des nouvelles du jour et des prévisions météorologiques."
-        else : 
-            textSpeak = "Voici un résumé des dernières actualités et de la météo pour aujourd'hui."
+        textSpeak = self.__mLanguage.getPhraseResumerActu()
 
         # Partie Meteo 
 
@@ -490,8 +382,13 @@ class fncArreraNetwork:
         else :
             return 11 , ["error","error"]
 
-    def sortieTraducteur(self,langInt:str,langOut:int):
+    def sortieTraducteur(self,langInt:str,langOut:str):
         self.__traducteur.fenetreTrad(langInt,langOut)
+        return self.__mLanguage.getPhraseOpenTraducteur()
+
+    def sortieErrorLangue(self):
+        return self.__mLanguage.getPhraseErrorLangue()
+
     
     def sortieCalculatrice(self,mode):
         if mode == "0":
@@ -1909,17 +1806,11 @@ class fncArreraNetwork:
         nb2,listActuMeto = self.sortieResumerActualite()
         
         if (nb2 == 11):
-            if (self.__etatVous == True) :
-                text = "Imposible de vous faire le résumer "+self.__genre
-            else :
-                text = "Imposible de te faire le resumer "+self.__user
+            text = self.__mLanguage.getPhraseResumerAll("1")
             return 20,[text,""]
         else :
             listOut = listActuMeto+listAgendaTache
-            if (self.__etatVous == True) :
-                listOut[6]= "Voici votre résumer des actulitée du jour avec la meteo ainsi des taches que vous avez a faire et des événement du jour."
-            else :
-                listOut[6]= "Voici ton résumer des actulitée du jour avec la meteo ainsi des taches que tu as faire et des événement du jour."
+            listOut[6] = self.__mLanguage.getPhraseResumerAll("2")
             
             return 19,listOut 
     

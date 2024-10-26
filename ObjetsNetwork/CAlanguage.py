@@ -14,6 +14,8 @@ class CAlanguage:
         self.__search = jsonWork(emplacement+index.lectureJSON("search"))
         self.__service = jsonWork(emplacement+index.lectureJSON("service"))
         self.__software = jsonWork(emplacement+index.lectureJSON("software"))
+        self.__api = jsonWork(emplacement+index.lectureJSON("api"))
+
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
         self.__genre = self.__gestionnaire.getGenre()
@@ -139,4 +141,56 @@ class CAlanguage:
 
     def getPhraseSoftware(self,nb:str):
         formule = self.__software.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseResumerActu(self):
+        formule = self.__api.lectureJSON("phResumerActu")
+        return formule.format(genre=self.__genre, user=self.__user)
+
+    def getPhraseResumerAll(self,nb:str):
+        formule = self.__api.lectureJSON("phResumerAll"+nb)
+        return formule.format(genre=self.__genre, user=self.__user)
+
+    def getPhraseApi(self,nb:str):
+        formule = self.__api.lectureJSON("ph"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseMeteo(self,nb:str,ville:str,description:str,temperature:str):
+        phrases = self.__api.lectureJSONList("phMeteo"+nb)
+        return [phrase.format(genre=self.__genre,user=self.__user,ville=ville,description=description,temperature=temperature) for phrase in phrases]
+
+    def getPhraseMeteoError(self,nb:str):
+        formule = self.__api.lectureJSON("phMeteoError"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseCoordonnees(self,ville:str,latitude:str,longitude:str):
+        phrases = self.__api.lectureJSON("phCoordonnees")
+        return [phrase.format(genre=self.__genre,user=self.__user,ville=ville,latitude=latitude,longitude=longitude) for phrase in phrases]
+
+    def getPhraseTemperature(self,temperature:str):
+        formule = self.__api.lectureJSON("phTemperature")
+        return formule.format(genre=self.__genre,user=self.__user,temperature=temperature)
+
+    def getPhraseGPSError(self,nb:str):
+        formule = self.__api.lectureJSON("phGPSError"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseIteneraireError(self,nb:str):
+        formule = self.__api.lectureJSON("phIteneraireError"+nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseIteneraire(self):
+        formule = self.__api.lectureJSON("phIteneraire")
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getHelpIteneraire(self):
+        formule = self.__api.lectureJSON("phhelpIteneraire")
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseOpenTraducteur(self):
+        formule = self.__api.lectureJSON("phTraducteur")
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseErrorLangue(self):
+        formule = self.__api.lectureJSON("phErrorLangue")
         return formule.format(genre=self.__genre,user=self.__user)

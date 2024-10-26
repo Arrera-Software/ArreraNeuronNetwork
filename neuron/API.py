@@ -143,46 +143,34 @@ class neuroneAPI :
                                         self.__objHistorique.setAction("Ouverture d'un itineraire sur google map")
                                     else :
                                         if ("gps aide" in requette):
-                                            if (etatVous == True):
-                                                self.__listSortie = ["Pour que l'assistant vous lance un navigateur avec Google map. Il faut lui demander avec une de ces deux phrase 'Indique-moi l'itinéraire de [depart] à [arrive] sur le GPS' et 'Lance le GPS pour un trajet de [depart] à [arrive]'"]
-                                                self.__valeurOut = 1
-                                            else :
-                                                if "traduis" in requette or "traduction" in requette or "traduire" in requette :
-                                                    chaineCarractere = str(requette).lower()
+                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpItineraire(),""]
+                                            self.__valeurOut = 1
+                                        else :
+                                            if "traduis" in requette or "traduction" in requette or "traduire" in requette :
+                                                chaineCarractere = str(requette).lower()
+                                                presenceLang = False
+                                                self.__objHistorique.setAction("Outil de traduction")
+                                                for i in range(0,len(self.__listeLang)-1):
+                                                    if self.__listeLang[i] in chaineCarractere :
+                                                        presenceLang = True
+                                                        break
+                                                if presenceLang == True :
                                                     presenceLang = False
-                                                    self.__objHistorique.setAction("Outil de traduction")
+                                                    firstLang = chaine.firstMots(chaineCarractere,self.__listeLang)
+                                                    chaineCarractere = chaineCarractere.replace(firstLang,"")
                                                     for i in range(0,len(self.__listeLang)-1):
                                                         if self.__listeLang[i] in chaineCarractere :
                                                             presenceLang = True
                                                             break
                                                     if presenceLang == True :
-                                                        presenceLang = False
-                                                        firstLang = chaine.firstMots(chaineCarractere,self.__listeLang)
-                                                        chaineCarractere = chaineCarractere.replace(firstLang,"")
-                                                        for i in range(0,len(self.__listeLang)-1):
-                                                            if self.__listeLang[i] in chaineCarractere :
-                                                                presenceLang = True
-                                                                break
-                                                        if presenceLang == True :
-                                                            secondLang = chaine.firstMots(chaineCarractere,self.__listeLang)
+                                                        secondLang = chaine.firstMots(chaineCarractere,self.__listeLang)
+                                                        self.__listSortie= [
                                                             self.__fonctionArreraNetwork.sortieTraducteur(self.__dictLang[firstLang],self.__dictLang[secondLang])
-                                                            if etatVous == True :
-                                                                self.__listSortie=["J'espère que cet outil de traduction vous a sera utile "+genre,""]
-                                                                self.__valeurOut = 3
-                                                            else :
-                                                                self.__listSortie= ["J'espère que sa te sera utile  "+name,""]
-                                                                self.__valeurOut = 3
-                                                        else :
-                                                            if etatVous == True :
-                                                                self.__listSortie=["Desoler "+genre+". Mais les langues que vous demander ne son pas disponible.",""]
-                                                                self.__valeurOut = 1
-                                                            else :
-                                                                self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]
-                                                                self.__valeurOut = 1
+                                                            ,""]
+                                                        self.__valeurOut = 3
                                                     else :
-                                                        if etatVous == True :
-                                                            self.__listSortie=["Desoler "+genre+". Mais les langue que vous demander ne son pas disponible.",""]
-                                                            self.__valeurOut = 1
-                                                        else :
-                                                            self.__listSortie=["Desoler,les langues que tu demande n'est pas disponible",""]
-                                                            self.__valeurOut = 1
+                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieErrorLangue(),""]
+                                                        self.__valeurOut = 1
+                                                else :
+                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieErrorLangue(), ""]
+                                                    self.__valeurOut = 1

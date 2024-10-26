@@ -1,0 +1,39 @@
+{
+  "phResumerActu": "Voici un résumé des dernières actualités et de la météo pour aujourd'hui.",
+  "phResumerAll1": "Imposible de te faire le résumer {user}.",
+  "phResumerAll2": "Voici ton résumer des actualitée du jour avec la meteo ainsi des taches que tu as faire et des événement du jour.",
+  "ph1": "Désoler une erreur c'est produite pour la récupération des actualités",
+  "phMeteo1": [
+    "La meteo a {ville} pour demain midi est {description} avec une température de {temperature} °C",
+    "La meteo a ta localisation pour demain midi est de {description} avec une température de {temperature} °C"],
+  "phMeteoError1": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain midi.",
+  "phMeteo2": [
+    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C.",
+    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C."],
+  "phMeteoError2": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain midi.",
+  "phMeteo3": [
+    "La meteo a {ville} pour demain matin est {description} avec une température de {temperature} °C",
+    "La meteo a ta localisation pour demain matin est de {description} avec une température de {temperature} °C"],
+  "phMeteoError3": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain matin.",
+  "phMeteo4": [
+    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C",
+    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C"],
+  "phMeteoError4": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain matin.",
+  "phMeteo5": [
+    "La meteo a {ville} est {description} avec une température de {temperature} °C",
+    "La meteo a votre localisation est {description} avec une température de {temperature} °C"],
+  "phMeteoError5": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour aujourd'hui.",
+  "phMeteo6": [
+    "La meteo a {ville} est {description} avec une température de {temperature} °C",
+  "La meteo a {ville} est {description} avec une température de {temperature} °C"],
+  "phMeteoError6": "Je suis désoler {user} je n'arrive pas a savoir la meteo.",
+  "phCoordonnees" : "Tu es localiser a la latitude {latitude} longitude {longitude}. Ce qui correspond a la ville de {ville}.",
+  "phTemperature" : "Il fais {temperature} °C",
+  "phIteneraireError1" : "Une erreur c'est produite qui m'empeche de te faire cette itineraire",
+  "phIteneraireError2" : "Désolé il a un souci qui m'empéche de te donne cette route",
+  "phIteneraireError3" : "Désoler {user} mais je n'arrive pas a savoir ou tu veux te rendre et de ou tu part",
+  "phIteneraire" : "Je t'ai fais ton itinaire sur google map",
+  "phhelpIteneraire" : "Pour que ton assistant te lance un navigateur avec Google map. Il faut lui demander avec une de ces deux phrase 'Indique-moi l'itinéraire de [depart] à [arrive] sur le GPS' ou 'Lance le GPS pour un trajet de [depart] à [arrive]'",
+  "phTraducteur" : "J'espère que sa te sera utile  {user}.",
+  "phErrorLangue": "Desoler,les langues que tu demande n'est pas disponible"
+}
