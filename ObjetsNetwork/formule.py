@@ -1,8 +1,4 @@
-import random
-from ObjetsNetwork.gestion import *
 from ObjetsNetwork.historique import *
-from ObjetsNetwork.CAlanguage import *
-
 
 class formule:
     def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique):

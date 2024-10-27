@@ -1,8 +1,6 @@
 import webbrowser
 import requests
 import time
-from translate import*
-
 
 class fncArreraSearch :
     def __init__(self,etatConnextion:bool):

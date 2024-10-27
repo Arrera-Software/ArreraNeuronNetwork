@@ -8,7 +8,6 @@ from arreraSoftware.fonctionTraduction import*
 from arreraSoftware.fonctionArreraDownload import *
 from arreraSoftware.fonctionCalculatrice import * 
 from arreraSoftware.fonctionRecherche import *
-from ObjetsNetwork.CAlanguage import *
 from arreraSoftware.fonctionHorloge import*
 from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionCodeHelp import*

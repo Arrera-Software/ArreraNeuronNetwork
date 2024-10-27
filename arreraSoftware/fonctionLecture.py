@@ -1,6 +1,4 @@
 from tkinter import *
-from gtts import gTTS
-from playsound import playsound
 from librairy.travailJSON import *
 from librairy.speak import*
 from librairy.dectectionOS import*

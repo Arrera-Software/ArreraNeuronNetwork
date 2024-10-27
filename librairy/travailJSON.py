@@ -1,6 +1,5 @@
 import json
 
-
 class jsonWork:
     def __init__(self, file):
         self.fichier = file

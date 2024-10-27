@@ -1,5 +1,3 @@
-from librairy.travailJSON import*
-from arreraSoftware.fonctionDate import*
 from arreraSoftware.fncArreraNetwork import*
 
 class CHistorique :

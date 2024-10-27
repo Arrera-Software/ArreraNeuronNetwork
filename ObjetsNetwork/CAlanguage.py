@@ -1,4 +1,3 @@
-from librairy.travailJSON import *
 from ObjetsNetwork.gestion import *
 
 class CAlanguage:

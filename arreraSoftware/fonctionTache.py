@@ -1,6 +1,5 @@
 from tkinter import*
 from tkinter.messagebox import *
-from librairy.travailJSON import*
 from ObjetsNetwork.gestion import *
 from tkcalendar import DateEntry
 from arreraSoftware.fonctionDate import*

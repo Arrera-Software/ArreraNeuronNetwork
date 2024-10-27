@@ -1,9 +1,5 @@
-from librairy.dectectionOS import*
-from librairy.travailJSON import *
 from neuron.chatBots import*
 from ObjetsNetwork.formule import*
-from ObjetsNetwork.gestion import *
-from ObjetsNetwork.network import*
 from neuron.service import*
 from neuron.API import*
 from neuron.software import*
@@ -11,10 +7,7 @@ from neuron.open import *
 from neuron.search import*
 from neuron.time import*
 from neuron.codehelp import*
-from ObjetsNetwork.chaineCarractere import *
-from ObjetsNetwork.enabledNeuron import*
-from neuron.work import*
-from ObjetsNetwork.CAlanguage import *
+from neuron.work import
 
 class ArreraNetwork :
     def __init__(self,fichierConfiguration:str):

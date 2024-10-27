@@ -1,6 +1,6 @@
 class chaine :
-    def netoyage(chaine):
-        chaine = str(chaine)
+    def netoyage(carractere:str):
+        chaine = str(carractere)
         chaine = chaine.replace("-"," ")
         chaine = chaine.replace('"'," ")
         chaine = chaine.replace("_"," ")

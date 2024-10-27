@@ -1,7 +1,5 @@
 from tkinter import*
-from librairy.travailJSON import*
 import webbrowser as w
-import requests
 from github import Github
 from ObjetsNetwork.gestion import*
 

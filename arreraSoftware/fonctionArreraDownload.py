@@ -1,4 +1,3 @@
-from librairy.travailJSON import*
 from objet.CArreraDownload import*
 from ObjetsNetwork.gestion import*
 import threading as th

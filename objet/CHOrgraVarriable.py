@@ -1,6 +1,4 @@
 from tkinter import*
-from librairy.travailJSON import*
-from librairy.dectectionOS import*
 from tkinter.filedialog import*
 from tkinter.messagebox import*
 from ObjetsNetwork.gestion import*
