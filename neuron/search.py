@@ -2,10 +2,10 @@ from ObjetsNetwork.enabledNeuron import*
 from ObjetsNetwork.historique import*
 
 class neuroneSearch:
-    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron,objHist:CHistorique) :
+    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork, objHist:CHistorique) :
         #Init objet
         self.__gestionNeuron = gestionnaire
-        self.__gestNeuron = neuronGest
+        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__objHistorique = objHist
         self.__listSortie = ["",""]

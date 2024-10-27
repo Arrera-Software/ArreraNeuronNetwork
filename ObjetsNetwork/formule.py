@@ -5,9 +5,9 @@ from ObjetsNetwork.CAlanguage import *
 
 
 class formule:
-    def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique,canguage:CAlanguage):
+    def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique):
         self.__fncHist = fncHist
-        self.__calanguage = canguage
+        self.__calanguage = gestionnaireNeuron.getLanguageObjet()
 
     def nocomprehension(self):
         return self.__calanguage.getNoComprehension()

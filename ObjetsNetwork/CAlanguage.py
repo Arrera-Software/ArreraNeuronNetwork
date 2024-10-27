@@ -1,11 +1,8 @@
-from lxml.html.defs import phrase_tags
-
 from librairy.travailJSON import *
 from ObjetsNetwork.gestion import *
 
 class CAlanguage:
-    def __init__(self,configFile:jsonWork,gestionnaire:gestionNetwork):
-        emplacement = configFile.lectureJSON("moduleLanguage")
+    def __init__(self,emplacement:str,fileUser:jsonWork,listVar:list):
         index = jsonWork(emplacement+"index.json")
         self.__formule = jsonWork(emplacement+index.lectureJSON("formule"))
         self.__chatbot = jsonWork(emplacement+index.lectureJSON("chatbot"))
@@ -17,17 +14,19 @@ class CAlanguage:
         self.__api = jsonWork(emplacement+index.lectureJSON("api"))
         self.__time = jsonWork(emplacement+index.lectureJSON("time"))
         self.__work = jsonWork(emplacement + index.lectureJSON("work"))
+        # Fichier JSON
+        self.__fileUser = fileUser
+        # Atribut
+        self.__user = ""
+        self.__genre = ""
+        self.__nameAssistant = listVar[0]
+        self.__bute = listVar[1]
+        self.__createur = listVar[2]
 
-        self.__gestionnaire = gestionnaire
-        self.__user = self.__gestionnaire.getUser()
-        self.__genre = self.__gestionnaire.getGenre()
-        self.__createur = self.__gestionnaire.getCreateur()
-        self.__bute = self.__gestionnaire.getBute()
-        self.__nameAssistant = self.__gestionnaire.getName()
 
-    def setUserGenre(self,genre:str):
-        self.__user = self.__gestionnaire.getUser()
-        self.__genre = self.__gestionnaire.getGenre()
+    def setVarUser(self, genre:str):
+        self.__user = self.__fileUser.lectureJSON("user")
+        self.__genre = self.__fileUser.lectureJSON("genre")
 
 
     def getNoComprehension(self):

@@ -1,6 +1,6 @@
 from librairy.travailJSON import*
 
-class GestArreraNeuron :
+class CArreraEnabledNeuron :
     def __init__(self,configNeuron:jsonWork) -> None:
         self.__etatService = configNeuron.lectureJSON("etatService")
         self.__etatSoftware = configNeuron.lectureJSON("etatSoftware")

@@ -5,11 +5,11 @@ from ObjetsNetwork.enabledNeuron import*
 from ObjetsNetwork.historique import*
 
 class neuroneCodehelp :
-    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork,neuronGest:GestArreraNeuron,objHist:CHistorique):
-        self.__gestNeuron = neuronGest
+    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique):
         self.__fonctionArreraNetwork = fncArreraNetwork
         self.__gestionNeuron= gestionnaire
         self.__objHistorique = objHist
+        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
     
     def getListSortie(self)->list:
         return self.__listSortie

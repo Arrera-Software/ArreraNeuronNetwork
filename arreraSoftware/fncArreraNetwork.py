@@ -18,15 +18,13 @@ from arreraSoftware.fonctionArreraPenseBete import*
 from arreraSoftware.fncOrthographe import*
 
 class fncArreraNetwork:
-    def __init__(self,fichierConfigurationNeuron:jsonWork,
-                 gestionNeuron:gestionNetwork,
-                 decteurOS:OS,network:network,
-                 clanguage:CAlanguage):
+    def __init__(self,gestionNeuron:gestionNetwork):
         #Recuperation des objet
-        self.__configNeuron = fichierConfigurationNeuron
         self.__gestionNeuron = gestionNeuron
-        self.__detecteurOS = decteurOS
-        self.__objetNetwork =  network
+        self.__configNeuron = self.__gestionNeuron.getConfigFile()
+        self.__detecteurOS = self.__gestionNeuron.getOSObjet()
+        self.__objetNetwork =  self.__gestionNeuron.getNetworkObjet()
+        self.__mLanguage = self.__gestionNeuron.getLanguageObjet()
         #Recuperation etat de la connextion internet
         etatConnextion = self.__objetNetwork.getEtatInternet()
         #initialisation objet 
@@ -50,7 +48,6 @@ class fncArreraNetwork:
         self.__objPenseBete = fncArreraPostite(self.__configNeuron)
         self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
                                                self.__configNeuron.lectureJSON("interfaceTextColor"))
-        self.__mLanguage = clanguage
         
     def reading(self):
         self.__fncReading.fenetreLecture()

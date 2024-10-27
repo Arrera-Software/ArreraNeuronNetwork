@@ -1,45 +1,46 @@
 from datetime import datetime, timedelta
 from librairy.travailJSON import *
 from librairy.dectectionOS import*
+from ObjetsNetwork.CAlanguage import *
+from ObjetsNetwork.network import*
+from ObjetsNetwork.enabledNeuron import*
+
 
 class gestionNetwork:
-    def __init__(self,fileUser:jsonWork,ConfigFile:jsonWork,detecteurOS:OS,fileFete:jsonWork):
-        self.__fileUser = fileUser
-        self.__configFile = ConfigFile
-        self.__fichierFete = fileFete
-        self.__nbDiscution =0
-        self.__detecteurOS = detecteurOS
-        self.__oldRequette = str
-        self.__oldSorti = str
-        
-    def addDiscution(self):
-        self.__nbDiscution =+ 1
-    
-    def getVous(self):
-        if self.__configFile.lectureJSON("utilisationVous") == "1":
-            vous = True
-        else :
-            vous = False
-        
-        return bool(vous)
-    
-    def getGenre(self):
-        return str(self.__fileUser.lectureJSON("genre")) 
+    def __init__(self,configFile:str):
+        # Fichier JSON
+        self.__configFile = jsonWork(configFile)
+        self.__fileUser = self.__configFile.lectureJSON("fileUser")
+        self.__fichierFete = self.__configFile.lectureJSON("fileFete")
+        # Objet
+        self.__detecteurOS = OS()
+        self.__mLanguage = CAlanguage(self.__configFile.lectureJSON("moduleLanguage"),
+                                      self.__fileUser,[self.__configFile.lectureJSON("name"),
+                                                       self.__configFile.lectureJSON("bute"),
+                                                       self.__configFile.lectureJSON("createur")])
+        self.__etatNeuron = CArreraEnabledNeuron(self.__configFile)
+        self.__network = network()
+        # Varriable
+        self.__oldRequette = ""
+        self.__oldSorti = ""
+
+    def getConfigFile(self):
+        return self.__configFile
+
+    def getOSObjet(self):
+        return self.__detecteurOS
+
+    def getLanguageObjet(self):
+        return self.__mLanguage
+
+    def getEtatNeuronObjet(self):
+        return self.__etatNeuron
+
+    def getNetworkObjet(self):
+        return self.__network
         
     def getName(self):
         return  str(self.__configFile.lectureJSON("name"))
-        
-    def getUser(self):
-        return str(self.__fileUser.lectureJSON("user"))
-    
-    def getBute(self):
-        return  str(self.__configFile.lectureJSON("bute"))
-    
-    def getCreateur(self):
-        return  str(self.__configFile.lectureJSON("createur"))
-
-    def getNbDiscution(self):
-        return int(self.__nbDiscution)
     
     def getNbListFonction(self):
         return len(self.__configFile.lectureJSONList("listFonction"))

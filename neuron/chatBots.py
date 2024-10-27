@@ -5,12 +5,12 @@ from ObjetsNetwork.gestion import*
 from ObjetsNetwork.enabledNeuron import*
 
 class neuroneDiscution :
-    def __init__(self,gestionnaireNeuron:gestionNetwork,gestionnaireFormule:formule,neuronGest:GestArreraNeuron,language:CAlanguage):
+    def __init__(self, gestionnaireNeuron:gestionNetwork, gestionnaireFormule:formule):
         #Init objet
         self.__gestionNeuron = gestionnaireNeuron
         self.__formule = gestionnaireFormule
-        self.__gestNeuron = neuronGest
-        self.__language = language
+        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
+        self.__language = self.__gestionNeuron.getLanguageObjet()
         self.__listSortie = ["",""]
     
     def getListSortie(self)->list :
