@@ -27,10 +27,6 @@ class fncArreraNetwork:
         self.__gestionNeuron = gestionNeuron
         self.__detecteurOS = decteurOS
         self.__objetNetwork =  network
-        #Recuperation varriable
-        self.__etatVous = self.__gestionNeuron.getVous()
-        self.__user = self.__gestionNeuron.getUser()
-        self.__genre = self.__gestionNeuron.getGenre()
         #Recuperation etat de la connextion internet
         etatConnextion = self.__objetNetwork.getEtatInternet()
         #initialisation objet 
@@ -318,11 +314,7 @@ class fncArreraNetwork:
             if (verif == True) :
                 verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
                 if (verif == True) :
-                    if self.__etatVous == True :
-                        textSpeak = textSpeak + "La météo a votre domicile est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
-                    else :
-                        textSpeak = textSpeak + "La météo chez toi est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
-                    
+                    textSpeak = textSpeak + self.__mLanguage.getPhraseMeteo("7",domicile,self.__meteo.getdescription(),self.__meteo.gettemperature())[random.randint(0,1)]
                     meteoHome = "Meteo lieu de residence :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
                 else :
                    meteoHome = "error" 
@@ -337,11 +329,7 @@ class fncArreraNetwork:
             if (verif==True) :
                 verif = self.__meteo.getDataMeteoNow(self.__gps.getlatVille(),self.__gps.getLonVille())
                 if (verif == True) :
-                    if self.__etatVous == True :
-                        textSpeak = textSpeak +"La météo a votre lieu de travail est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
-                    else :
-                        textSpeak = textSpeak +"La météo a ton boulot est "+ self.__meteo.getdescription()+" avec une température de "+self.__meteo.gettemperature()+"°C. "
-                    
+                    textSpeak = textSpeak + self.__mLanguage.getPhraseMeteo("8",travail,self.__meteo.getdescription(),self.__meteo.gettemperature())[random.randint(0,1)]
                     meteoWork = "Meteo lieu de travail :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
                 else :
                     meteoWork = "error" 
@@ -356,11 +344,7 @@ class fncArreraNetwork:
             if (verif == True):
                 verif = self.__meteo.getDataMeteoNow(self.__gps.getlatPossition(),self.__gps.getlonPossition())
                 if (verif == True) :
-                    if self.__etatVous == True :
-                        textSpeak = textSpeak + "La meteo a votre localisation est "+self.__meteo.getdescription()+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
-                    else :
-                        textSpeak = textSpeak + "La meteo a ta localisation est "+self.__meteo.getdescription()+" avec une temperature de "+self.__meteo.gettemperature()+"°C. "
-                
+                    textSpeak = textSpeak + self.__mLanguage.getPhraseMeteo("9",self.__gps.getNameVille(),self.__meteo.getdescription(),self.__meteo.gettemperature())[random.randint(0,1)]
                     meteoWork = "Meteo a votre position :\nDescription : "+self.__meteo.getdescription()+"\nTemperature : "+self.__meteo.gettemperature()+"°C"
                 else :
                     meteoWork = "error" 
@@ -405,22 +389,17 @@ class fncArreraNetwork:
         dictionnaireSoft = self.__gestionNeuron.getDictionnaireLogiciel()
         sortie = self.__objetOpenSoft.setName(dictionnaireSoft[soft])
         if sortie == True :
-            if self.__etatVous == True :
-                text = "Ok je vous ouvre "+soft+" "+self.__genre
-            else :
-                text = "Voici "+soft
+            text = self.__mLanguage.getPhraseOpenSoftware("1",soft)
             self.__objetOpenSoft.open()
         else :
-            if self.__etatVous == True :
-                text = "Je suis desoler "+self.__genre+" .Mais il a un probleme qui m'empeche d'ouvrir "+soft
-            else :
-                text = "Il un probleme qui m'empeche d'ouvrir "+soft
+            text = self.__mLanguage.getPhraseOpenSoftware("2",soft)
         return text
     
     
     def sortieOpenDiapo(self):
         etatWindows = self.__detecteurOS.osWindows()
         etatLinux = self.__detecteurOS.osLinux()
+        logiciel = ""
         if etatWindows == True and etatLinux == False :
             logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoWindows")
         else :
@@ -552,8 +531,7 @@ class fncArreraNetwork:
         if sortieRecheche == True :
             text = self.__mLanguage.getPhraseSearch("1")
         else :
-            if self.__etatVous == True :
-                text = self.__mLanguage.getPhraseSearch("2")
+            text = self.__mLanguage.getPhraseSearch("2")
         return text,recherche
     
     def sortieHeure(self):
@@ -800,10 +778,7 @@ class fncArreraNetwork:
             sgithub
             search github
         """
-        if (self.__etatVous==True):
-            text = "Ok je vous fais la recherche sur github "+self.__genre+"."
-        else :
-            text = "Okay voici ta recherche github."
+        text = self.__mLanguage.getPhraseWork("9")
 
         recherche = requette.replace("recherche github","")
         recherche = recherche.replace("rgithub","")

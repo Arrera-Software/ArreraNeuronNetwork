@@ -145,6 +145,10 @@ class CAlanguage:
         formule = self.__software.lectureJSON("ph"+nb)
         return formule.format(genre=self.__genre,user=self.__user)
 
+    def getPhraseOpenSoftware(self,nb:str,name:str):
+        formule = self.__software.lectureJSON("phOpen"+nb)
+        return formule.format(genre=self.__genre,user=self.__user,name=name)
+
     def getPhraseResumerActu(self):
         formule = self.__api.lectureJSON("phResumerActu")
         return formule.format(genre=self.__genre, user=self.__user)

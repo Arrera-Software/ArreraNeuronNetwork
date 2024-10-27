@@ -4,5 +4,7 @@
   "ph3" : "{user} je ne peux télécharger que de video ou de musique.",
   "ph4" : "Voici la calculatrice",
   "ph5" : "Voici la calculatrice en mode complexe",
-  "ph6" : "Voici la calculatrice en mode pythagore"
+  "ph6" : "Voici la calculatrice en mode pythagore",
+  "phOpen1" : "Ok je t'ouvre {name} {user}.",
+  "phOpen2" : "Il un probleme qui m'empeche d'ouvrir {name}."
 }

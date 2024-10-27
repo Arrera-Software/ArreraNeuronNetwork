@@ -35,5 +35,15 @@
   "phIteneraire": "Voici votre itineraire sur google map. J'espére que sa vous sera utile {genre} {user}.",
   "phhelpIteneraire" : "Pour que l'assistant vous lance un navigateur avec Google map. Il faut lui demander avec une de ces deux phrase 'Indique-moi l'itinéraire de [depart] à [arrive] sur le GPS' ou 'Lance le GPS pour un trajet de [depart] à [arrive]'",
   "phTraducteur" : "J'espère que cet outil de traduction vous a sera utile {genre}.",
-  "phErrorLangue" : "Desoler {genre}. Mais les langues que vous demander ne son pas disponible."
+  "phErrorLangue" : "Desoler {genre}. Mais les langues que vous demander ne son pas disponible.",
+  "phMeteo7" : [
+    "La météo a votre domicile est {description} avec une température de {temperature}°C.",
+    "La météo a votre domicile est {description} avec une température de {temperature}°C."],
+  "phMeteo8" : [
+    "La météo a votre lieu de travail est {description}  avec une température de {temperature} °C. ",
+    "La météo a votre lieu de travail est {description}  avec une température de {temperature} °C. "
+  ],
+  "phMeteo9" : [
+    "La meteo a votre localisation est {description} avec une temperature de {temperature} °C.",
+    "La meteo a votre localisation est {description} avec une temperature de {temperature} °C. "]
 }

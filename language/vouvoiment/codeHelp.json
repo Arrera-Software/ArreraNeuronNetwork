@@ -6,5 +6,6 @@
   "ph5" : "Je vous es ouvert le l'interface qui vous permet d'acceder au librairy Codehelp",
   "ph6": "Tres bien je vous fais la recherche sur le site DevDoc.",
   "ph7": "Okay je t'ai ouvert la recherche dans la documentation Learn de microsoft dans ton navigateur.",
-  "ph8": "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur."
+  "ph8": "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur.",
+  "ph9" :  "Ok je vous fais la recherche sur github {genre}."
 }

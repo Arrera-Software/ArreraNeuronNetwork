@@ -4,5 +4,7 @@
   "ph3" : "Je suis désoler {genre} mais je ne peux télécharger que des vidéo ou de musique",
   "ph4" : "Voila votre calculatrice {genre}.",
   "ph5" : "Voila votre calculatrice en mode nombre complex {genre}.",
-  "ph6" : "Voila votre calculatrice en mode pythagore {genre}."
+  "ph6" : "Voila votre calculatrice en mode pythagore {genre}.",
+  "phOpen1" : "Ok je vous ouvre {name} {genre}.",
+  "phOpen2" : "Je suis desoler {genre}. Mais il a un probleme qui m'empeche d'ouvrir {name}."
 }
