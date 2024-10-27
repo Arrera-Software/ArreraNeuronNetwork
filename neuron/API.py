@@ -33,12 +33,6 @@ class neuroneAPI :
             #Initilisation des variable nbRand et text et valeur
             self.__listSortie = []
             self.__valeurOut = 0
-            #Recuperation atribut de l'assistant
-            oldsortie = self.__gestionNeuron.getOld()
-            name = self.__gestionNeuron.getName()
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
-            user = self.__gestionNeuron.getUser()
             #reponse du neuron main
             if (("resumer actualites" in requette) or ("resumer actu" in requette)) :
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieResumerActualite()

@@ -23,10 +23,6 @@ class neuroneService :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
-            #Recuperation atribut de l'assistant
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
-            user = self.__gestionNeuron.getUser()
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]

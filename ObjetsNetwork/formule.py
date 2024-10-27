@@ -6,9 +6,6 @@ from ObjetsNetwork.CAlanguage import *
 
 class formule:
     def __init__(self, gestionnaireNeuron: gestionNetwork, fncHist: CHistorique,canguage:CAlanguage):
-        self.__vous = bool(gestionnaireNeuron.getVous())
-        self.__genre = str(gestionnaireNeuron.getGenre())
-        self.__user = str(gestionnaireNeuron.getUser())
         self.__fncHist = fncHist
         self.__calanguage = canguage
 

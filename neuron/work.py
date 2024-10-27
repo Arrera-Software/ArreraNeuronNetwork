@@ -25,9 +25,6 @@ class neuronWork :
             #Initilisation des variable nbRand et text et valeur
             self.__valeurOut = 0
             self.__listSortie = ["",""]
-            etatVous = self.__gestionNeuron.getVous()
-            genre = self.__gestionNeuron.getGenre()
-            user = self.__gestionNeuron.getUser()
             oldRequette,oldSortie = self.__gestionNeuron.getOld()
 
             if (("ouvre" in requette) and ((("un" in requette) and ("une" not in requette)) or ("fichier" in requette))):
@@ -166,7 +163,7 @@ class neuronWork :
                                             self.__objHistorique.setAction("Suppression d'une valeur au tableur "+self.__fonctionArreraNetwork.getFileTableur())
                                             self.__valeurOut = 5
                                     else : 
-                                        if (((oldSortie == "Quelle fichier voulez-vous que je vous montre "+genre+". Le exel ou le word ?") or 
+                                        if ((("Quelle fichier voulez-vous que je vous montre " in oldSortie and ". Le exel ou le word ?" in oldSortie) or
                                             (oldSortie == "Quelle fichier veut tu que je te montre. Le exel ou le word ?")) and ("le" in requette)):
                                             if (("word" in requette) or ("traitement de texte" in requette) or ("document" in requette) ):
                                                 self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenWordGUI(),""]
