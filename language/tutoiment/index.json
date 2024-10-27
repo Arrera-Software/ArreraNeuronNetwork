@@ -7,5 +7,6 @@
   "search": "search.json",
   "service": "service.json",
   "software": "software.json",
-  "time": "time.json"
+  "time": "time.json",
+  "work": "work.json"
 }

@@ -16,6 +16,7 @@ class CAlanguage:
         self.__software = jsonWork(emplacement+index.lectureJSON("software"))
         self.__api = jsonWork(emplacement+index.lectureJSON("api"))
         self.__time = jsonWork(emplacement+index.lectureJSON("time"))
+        self.__work = jsonWork(emplacement + index.lectureJSON("work"))
 
         self.__gestionnaire = gestionnaire
         self.__user = self.__gestionnaire.getUser()
@@ -214,3 +215,26 @@ class CAlanguage:
     def getPhraseNBTache(self,nb:str,nombre1:str,nombre2:str):
         formule = self.__time.lectureJSON("phNBTache"+nb)
         return formule.format(genre=self.__genre,user=self.__user,nombre1=nombre1,nombre2=nombre2)
+
+    def getPhraseWork(self, nb:str):
+        formule = self.__work.lectureJSON("phWork" + nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseProjetFileOpen(self,nb:str,nameFile:str):
+        formule = self.__work.lectureJSON("phProjetFileOpen" + nb)
+        return formule.format(genre=self.__genre,user=self.__user,name=nameFile)
+
+    def getPhraseProjetNbTache(self, nb:str, nombre1:str, nameProjet:str, nombre2:str=""):
+        formule = self.__work.lectureJSON("phProjetNbTache" + nb)
+        return formule.format(genre=self.__genre, user=self.__user, nombre=nombre1, name=nameProjet, nombre2=nombre2)
+
+    def getPhraseHelpArreraWork(self,nb:str):
+        formule = self.__work.lectureJSONList("phHelpArreraWork" + nb)
+        liste = [phrase.format(genre=self.__genre,user=self.__user) for phrase in formule]
+        phraseOut = ""
+        for i in range(0,len(liste)):
+            if i == 0:
+                phraseOut = liste[i]
+            else:
+                phraseOut = phraseOut + "\n\n- " + liste[i]
+        return phraseOut

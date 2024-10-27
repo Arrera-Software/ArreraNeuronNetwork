@@ -845,162 +845,91 @@ class fncArreraNetwork:
     def sortieOpenTableur(self):
         sortie = self.__objetArreraWork.openTableur()
         if (sortie == True) :
-            if (self.__etatVous == True) :
-                text = "Votre fichier Exel a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a travailler dessus."
-            else :
-                text = "Je t'ai bien ouvert ton fichier exel. Aller travaillons dessus."
+            text = self.__mLanguage.getPhraseWork("5")
         else :
-            if (self.__etatVous == True) :
-                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier exel"
-            else :
-                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Exel."
-        
+            text = self.__mLanguage.getPhraseWork("6")
         return text
     
     def sortieOpenWord(self):
         sortie = self.__objetArreraWork.openWord()
         if (sortie == True) :
-            if (self.__etatVous == True) :
-                text = "Votre fichier de traitement de texte a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a ecrire dessus."
-            else :
-                text = "Je t'ai bien ouvert ton fichier Word. Aller travaillons dessus."
+            text = self.__mLanguage.getPhraseWork("7")
         else :
-            if (self.__etatVous == True) :
-                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier Word"
-            else :
-                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Word."
-        
+            text = self.__mLanguage.getPhraseWork("8")
         return text
     
     def sortieCloseTableur(self):
         sortie = self.__objetArreraWork.closeTableur()
         if (sortie == True) :
-            if (self.__etatVous == True):
-                text = "Je vous es bien fermé votre fichier Exel."
-            else :
-                text ="Je t'ai fermée ton Exel."
+            text = self.__mLanguage.getPhraseWork("10")
         else:
-            if (self.__etatVous == True):
-                text = "Il imposible de femer un fichier Exel. Si vous en avez pas ouvert un."
-            else :
-                text ="Il n'a pas de fichier exel ouvert. Il en a aucun ouvert."
-        
+            text = self.__mLanguage.getPhraseWork("11")
         return text
     
     def sortieCloseDocx(self):
         sortie = self.__objetArreraWork.closeDocx()
         if (sortie == True) :
-            if (self.__etatVous == True):
-                text = "Je vous es bien fermé votre fichier word."
-            else :
-                text ="Je t'ai fermée ton word."
+            text = self.__mLanguage.getPhraseWork("12")
         else:
-            if (self.__etatVous == True):
-                text = "Il imposible de femer un fichier word. Si vous en avez pas ouvert un."
-            else :
-                text ="Il n'a pas de fichier word ouvert. Il en a aucun ouvert."
-        
+            text = self.__mLanguage.getPhraseWork("13")
         return text
     
     def sortieWriteDocx(self,texte:str):
         if (texte != ""):
             ligne = texte.replace("ecrit dans le word","")
             ligne = ligne.replace("ecrit" ,"")
-            
             sortie = self.__objetArreraWork.writeDocxFile(ligne)
-            
             if (sortie == True):
-                if (self.__etatVous == True):
-                    text = "Je vous es bien écrit ce que vous voulez dans le fichier .docx"
-                else :
-                    text ="Tout c'est bien passé j'ai pu écrire ce que vous voulez dans le fichier."
+                text = self.__mLanguage.getPhraseMeteoError("18")
             else :
-                if (self.__etatVous == True):
-                    text = "Il a un probleme qui m'a empeché d'écrire dans le fichier ce que vous m'avez demandé. Il peut etre pas ouvert."
-                else :
-                    text = "Un probleme est survenu. Tu n'a surment pas ouvert un fichier word."
+                text = self.__mLanguage.getPhraseMeteoError("19")
         else :
-            if (self.__etatVous == True):
-                text = "Je ne pas ecrire dans le fichier si vous me disais pas ce que je dois ecrire."
-            else :
-                text ="Il es impossible pour moi d'écrire si tu me donne pas ce que je dois écrire."
-        
+            text = self.__mLanguage.getPhraseMeteoError("20")
         return text
     
     def sortieReadDocx(self):
         sortie = self.__objetArreraWork.readDocxFile()
-
         if (sortie == "error"):
-            if (self.__etatVous == True):
-                text = "Je pense que le fichier dois etre fermé je peux pas le lire "+self.__genre+". Essayez de le reouvrir"
-            else :
-                text ="Je ne peux pas lire le fichier . Vérifie si tu la bien ouvert "+self.__user+"."
-            
+            text = self.__mLanguage.getPhraseWork("16")
         else :
             text = sortie
-        
         return text
     
     def sortieFileOpen(self):
         tableur = self.getTableurOpen()
         word = self.getWordOpen()
-
         if ((tableur == True) and (word == True)):
-            if (self.__etatVous) :
-                text = "Vous avez un fichier de traitement de texte ouvert ainsi q'un tableur"
-            else :
-                text = "Tu as un tableur d'ouvert et un traitement de texte"
+            text = self.__mLanguage.getPhraseWork("21")
         else :
             if ((tableur == True) and (word == False)):
-                if (self.__etatVous) :
-                    text = "Vous avez juste ouvert un fichier tableur"
-                else :
-                    text = "Tu as juste un fichier tableur d'ouvert"
+                text = self.__mLanguage.getPhraseWork("22")
             else :
                 if ((tableur == False) and (word == True)):
-                    if (self.__etatVous) :
-                        text = "Vous avez qu'un fichier de traitement de texte ouvert."
-                    else :
-                        text = "Tu as qu'un traitement de texte ouvert."
+                    text = self.__mLanguage.getPhraseWork("23")
                 else :
-                    if (self.__etatVous) :
-                        text = "Vous avez aucun fichier d'ouvert"
-                    else :
-                        text = "Tu as aucun fichier d'ouvert"
-        
+                    text = self.__mLanguage.getPhraseWork("24")
         return text
     
     def sortieReadTableur(self):
         return self.__objetArreraWork.readTableur()
+
+    def sortieErrorReadTableur(self):
+        return [self.__mLanguage.getPhraseWork("17"),""]
     
     def sortieAddValeurTableur(self):
         sortie = self.__objetArreraWork.tkAddValeurParole()
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Suivez bien l'interface graphique pour ajouter une valeur au tableur."
-            else :
-                text = "Suis bien l'interface pour ajouter une valeur au tableur."
+            text = self.__mLanguage.getPhraseWork("25")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+" mais je ne peux pas ajouter une valeur."
-            else :
-                text = "Désoler il a probleme qui m'empéche d'ajouter ta valeur."
-
+            text = self.__mLanguage.getPhraseWork("26")
         return text
     
     def sortieSupprValeurTableur(self):
         sortie = self.__objetArreraWork.tkSuppValeurParole()
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Suivez bien l'interface graphique pour supprimer une valeur au tableur."
-            else :
-                text = "Suis bien l'interface pour supprimer une valeur au tableur."
+            text = self.__mLanguage.getPhraseWork("41")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+" mais je ne peux pas supprimer une valeur."
-            else :
-                text = "Désoler il a probleme qui m'empéche de supprimer ta valeur."
-
+            text = self.__mLanguage.getPhraseWork("42")
         return text
     
     def sortieAddFormuleTableur(self,mode:int):
@@ -1015,126 +944,72 @@ class fncArreraNetwork:
             case 1 :
                 sortie = self.__objetArreraWork.tkAddFormuleParole(1)
                 if (sortie == True) :
-                    if (self.__etatVous == True) :
-                        text = "Trés bien je vous ouvre l'interface pour ajouter une somme a votre tableur."
-                    else :
-                        text = "Okay , je t'ouvre l'interface pour que tu ajoute une somme au tableur"
+                    text = self.__mLanguage.getPhraseWork("27")
                 else :
-                    if (self.__etatVous == True) :
-                        text = "Désoler "+self.__genre+" mais il a un probleme."
-                    else :
-                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                    text = self.__mLanguage.getPhraseWork("28")
             case 2 :
                 sortie = self.__objetArreraWork.tkAddFormuleParole(2)
                 if (sortie == True) :
-                    if (self.__etatVous == True) :
-                        text = "Trés bien je vous ouvre l'interface pour ajouter une moyenne a votre tableur."
-                    else :
-                        text = "Okay , je t'ouvre l'interface pour que tu ajoute une moyenne au tableur"
+                    text = self.__mLanguage.getPhraseWork("29")
                 else :
-                    if (self.__etatVous == True) :
-                        text = "Désoler "+self.__genre+" mais il a un probleme."
-                    else :
-                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                    text = self.__mLanguage.getPhraseWork("30")
             case 3 :
                 sortie = self.__objetArreraWork.tkAddFormuleParole(3)
                 if (sortie == True) :
-                    if (self.__etatVous == True) :
-                        text = "Trés bien je vous ouvre l'interface pour ajouter un comptage de valeur a votre tableur."
-                    else :
-                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un comptage de valeur au tableur"
+                    text = self.__mLanguage.getPhraseWork("64")
                 else :
-                    if (self.__etatVous == True) :
-                        text = "Désoler "+self.__genre+" mais il a un probleme."
-                    else :
-                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                    text = self.__mLanguage.getPhraseWork("65")
             case 4 :
                 sortie = self.__objetArreraWork.tkAddFormuleParole(4)
                 if (sortie == True) :
-                    if (self.__etatVous == True) :
-                        text = "Trés bien je vous ouvre l'interface pour ajouter un minimun a votre tableur."
-                    else :
-                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un minimun au tableur"
+                    text = self.__mLanguage.getPhraseWork("31")
                 else :
-                    if (self.__etatVous == True) :
-                        text = "Désoler "+self.__genre+" mais il a un probleme."
-                    else :
-                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                    text = self.__mLanguage.getPhraseWork("32")
             case 5 :
                 sortie = self.__objetArreraWork.tkAddFormuleParole(5)
                 if (sortie == True) :
-                    if (self.__etatVous == True) :
-                        text = "Trés bien je vous ouvre l'interface pour ajouter un maximun a votre tableur."
-                    else :
-                        text = "Okay , je t'ouvre l'interface pour que tu ajoute un maximun au tableur"
+                    text = self.__mLanguage.getPhraseWork("33")
                 else :
-                    if (self.__etatVous == True) :
-                        text = "Désoler "+self.__genre+" mais il a un probleme."
-                    else :
-                        text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                    text = self.__mLanguage.getPhraseWork("34")
             case other :
-                if (self.__etatVous == True) :
-                    text = "Désoler "+self.__genre+" mais il a un probleme."
-                else :
-                    text = "Désoler "+self.__user+" mais je rancontre un probléme "
+                text = self.__mLanguage.getPhraseWork("35")
         
         return text
     
     def sortieOpenSoftTableurFile(self):
         sortie = self.__objetArreraWork.openTableurOs()
         if (sortie==True):
-            if (self.__etatVous == True):
-                text = "Je vous es ouvert votre fichier tableur avec logiciel par défault de votre ordinateur."
-            else :
-                text = "Trés bien votre tableur est ouvert dans le logiciel par défault de votre ordinateur."
+            text = self.__mLanguage.getPhraseWork("1")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas ouvrir le tableur dans le logiciel par défault de votre ordinateur"
-            else :
-                text = "Désoler "+self.__user+". Je ne peux pas ouvrir le tableur dans le logiciel par défault de votre ordinateur"
+            text = self.__mLanguage.getPhraseWork("2")
         return text
     
     def sortieOpenSoftWorkFile(self):
         sortie = self.__objetArreraWork.openWordOs()
         if (sortie==True):
-            if (self.__etatVous == True):
-                text = "Je vous es ouvert votre fichier word avec logiciel par défault de votre ordinateur."
-            else :
-                text = "Trés bien votre word est ouvert dans le logiciel par défault de votre ordinateur."
+            text = self.__mLanguage.getPhraseWork("3")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas ouvrir le word dans le logiciel par défault de votre ordinateur"
-            else :
-                text = "Désoler "+self.__user+". Je ne peux pas ouvrir le word dans le logiciel par défault de votre ordinateur"
+            text = self.__mLanguage.getPhraseWork("4")
         return text
     
     def sortieOpenTableurGUI(self):
         sortie = self.__objetArreraWork.guiTableurWork()
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous es ouvert mon interface pour travailler sur un tableur"
-            else :
-                text = "Je t'ai bien ouvert le tableur avec mon interface"
+            text = self.__mLanguage.getPhraseWork("36")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Il est impossible pour moi de vous ouvrir le tableur avec mon interface"
-            else :
-                text = "Désoler "+self.__user+". Il est impossible pour moi de t'ouvrir le tableur avec mon interface"
+            text = self.__mLanguage.getPhraseWork("37")
         return text
     
     def sortieOpenWordGUI(self):
         sortie = self.__objetArreraWork.guiWordWork()
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous es ouvert mon interface pour travailler sur votre fichier de traitement de texte"
-            else :
-                text = "Je t'ai bien ouvert ton traitement de texte avec mon interface de travail"
+            text = self.__mLanguage.getPhraseWork("38")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Il est impossible pour moi de vous ouvrir le traitement de texte avec mon interface"
-            else :
-                text = "Désoler "+self.__user+". Il est impossible pour moi de t'ouvrir le traitement de texte avec mon interface"
+            text = self.__mLanguage.getPhraseWork("39")
         return text
+
+    def sortieBadFile(self):
+        return [self.__mLanguage.getPhraseWork("40"),""]
 
     def sortieCreateFolder(self,requette:str):
         tampon = requette.replace("cree un projet nommer","")
@@ -1144,16 +1019,9 @@ class fncArreraNetwork:
         name = name.replace(" ","")
         sortie = self.__objetArreraWork.createProject(name)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous es bien crée votre projet "+name+". Quelle est le type de projet ?"
-            else :
-                text  = "Ton projet nommer "+name+" a bien etais crée. Quelle est le type de projet ?"
+            text = self.__mLanguage.getPhraseProjetFileOpen("4",name)
         else :
-            if (self.__etatVous == True):
-                text = "Désoler mais un probleme m'empéche de crée ton projet "+name
-            else :
-                text  = "Désoler mais un probleme m'empéche de crée ton projet "+name
-        
+            text = self.__mLanguage.getPhraseProjetFileOpen("4",name)
         return text
     
     def sortieSetTypeProjet(self,requette:str):
@@ -1161,15 +1029,9 @@ class fncArreraNetwork:
         type = type.replace("le type du projet est","")
         sortie = self.__objetArreraWork.setTypeProject(type)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien mit le type sur votre projet."
-            else :
-                text  = "Je t'ai bien mit le type sur ton projet."
+            text = self.__mLanguage.getPhraseWork("43")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler mais un probleme m'empéche de mettre le type sur votre projet."
-            else :
-                text  = "Désoler mais un probleme m'empéche de mettre le type sur ton projet."
+            text = self.__mLanguage.getPhraseWork("44")
         return text
     
     def sortieOpenProjet(self,requette:str):
@@ -1179,31 +1041,17 @@ class fncArreraNetwork:
         projet = projet.replace(" ","")
         sortie = self.__objetArreraWork.openProjet(projet)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien ouvert le projet "+projet+" "+self.__genre+". Que voulez vous faire ?"
-            else :
-                text = "Le projet "+projet+" est bien ouvert. Que veux-tu faire ?"
+            text = self.__mLanguage.getPhraseProjetFileOpen("6",projet)
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+" mais je ne peux pas t'ouvrir le projet "+projet+". Il n'existe peut-étre pas"
-            else :
-                text = "Désoler mais je trouve pas le projet "+projet+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("7",projet)
         return projet,text
     
     def sortieCloseProject(self):
         sortie = self.__objetArreraWork.closeProject()
-
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien fermer votre projet "+self.__genre+"."
-            else :
-                text  = "Je t'ai bien fermer ton projet"
+            text = self.__mLanguage.getPhraseWork("14")
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+" mais il semble pas avoir de projet ouvert"
-            else :
-                text  = "Désoler "+self.__name+" mais il semble pas avoir de projet ouvert"
-        
+            text = self.__mLanguage.getPhraseWork("15")
         return text
     
     def sortieAddfile(self,type:str,name:str):
@@ -1281,15 +1129,9 @@ class fncArreraNetwork:
         sortie = self.__objetArreraWork.createFileProject(mode,name)
 
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien crée votre fichier "+typeName+". Voulez-vous l'ouvrir ?"
-            else : 
-                text = "Je t'ai bien crée ton fichier "+typeName+". Es que tu veux que je te l'ouvre ?"
+            text = self.__mLanguage.getPhraseProjetFileOpen("8",name)
         else :
-            if (self.__etatVous == True):
-                text = "Je pense que vous avez pas de projet d'ouvert. Car je ne peux pas crée votre fichier."
-            else :
-                text = "Je pense que tu n'a pas ouvert un projet. Je ne peux pas crée ton fichier."
+            text = self.__mLanguage.getPhraseWork("45")
         
         return text
 
@@ -1366,29 +1208,18 @@ class fncArreraNetwork:
         sortie = self.__objetArreraWork.openLastFileCreate()
         print(sortie)
         if (sortie == 1) :
-            if (self.__etatVous == True):
-                text = "Je vous ai bien ouvert votre fichier avec le logiciel par default de votre ordinateur "+self.__genre+"."
-            else :
-                text = "Je t'ai bien ouvert ton fichier."
+           text = self.__mLanguage.getPhraseWork("46")
         else :
             if (sortie == 2):
-                if (self.__etatVous == True):
-                    text = "Je vous ai ouvert votre fichier de traitement texte. Que voulez-vous ecrire ?"
-                else :
-                    text = "Je t'ai bien ouvert ton fichier. Que veux-tu faire ?"
+                text = self.__mLanguage.getPhraseWork("47")
             else :
                 if (sortie == 3):
-                    if (self.__etatVous == True):
-                        text = "Votre a tableur a bien été ouvert que voulez-vous ajouter."
-                    else :
-                        text = "Ton tableur est ouvert que veux-tu faire avec ?"
+                    text = self.__mLanguage.getPhraseWork("48")
                 else :
                     if (sortie == 0):
-                        if (self.__etatVous == True):
-                            text = "Désoler mais il semble avoir un probleme."
-                        else :
-                            text = "Désoler mais il semble avoir un probleme."
-        
+                        text = self.__mLanguage.getPhraseWork("49")
+                    else :
+                        text = self.__mLanguage.getPhraseWork("49")
         return text    
 
     def sortieListFileProject(self):
@@ -1405,15 +1236,9 @@ class fncArreraNetwork:
                         finTexte = finTexte + " et " + liste[i]
                     else :
                         finTexte = finTexte+", "+liste[i]
-            if (self.__etatVous == True):
-                text = "Les fichier de votre projet sont "+finTexte+"."
-            else :
-                text = "Les fichier present dans votre projet sont "+finTexte+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("9",finTexte)
         else :
-            if (self.__etatVous == True):
-                text = "Pardonner moi "+self.__genre+" mais je ne peux pas lister les fichiers de votre projet."
-            else :
-                text = "Pardonne moi "+self.__name+" mais je ne peux pas lister les fichiers de ton projet." 
+            text = self.__mLanguage.getPhraseWork("50")
 
         return text 
 
@@ -1430,93 +1255,42 @@ class fncArreraNetwork:
         sortie = self.__objetArreraWork.openFileOtherProjet(nameFile)
 
         if (sortie == 1):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien le fichier "+nameFile+". Je reste a votre service "+self.__genre+". "
-            else :
-                text = "Le fichier "+nameFile+" est bien ouvert."
+            text = self.__mLanguage.getPhraseProjetFileOpen("1",nameFile)
         else :
             if (sortie == 0):
-                if (self.__etatVous == True):
-                    text = "Désoler "+self.__genre+". Mais je ne peux pas ouvrir ce que vous demmander. Il a peux être pas un projet ouvert."
-                else :
-                    text = "Il a probleme je ne peux pas t'ouvrir ce que tu veux. Il a peux être pas un projet ouvert."
+                text = self.__mLanguage.getPhraseWork("9")
             else :
                 if (sortie == 2):
-                    if (self.__etatVous == True):
-                        text = "Je vous ai bien ouvert ton fichier de traitement de texte "+nameFile+". Je suis prêt à travailler dessus "+self.__genre+"."
-                    else :
-                        text = "Ton fichier "+nameFile+" est bien ouvert. Que veux tu ecrire dessus."
+                    text = self.__mLanguage.getPhraseProjetFileOpen("2",nameFile)
                 else :
                     if (sortie == 3):
-                        if (self.__etatVous == True):
-                            text = "Votre fichier "+nameFile+" est bien ouvert. Quelle formule voulez-vous dessus "+self.__genre+"."
-                        else :
-                            text = "Ton fichier exel "+nameFile+" est bien ouvert."
-        
+                        text = self.__mLanguage.getPhraseProjetFileOpen("3",nameFile)
         return text,nameFile
 
     def sortieShowTacheProjet(self):
         sortie = self.__objetArreraWork.showTacheProjet()
 
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert mon interface pour voir vos taches sur le projet "+self.getNameProjetOpen()+"."
-            else :
-                text = "Je t'ai ouvert l'interface pour voir les taches du projet "+self.getNameProjetOpen()+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("10",self.getNameProjetOpen())
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas montrer les tache de votre projet."
-            else :
-                text = "Pardonne moi "+self.__user+". Je ne peux pas te montrer tes taches."
+            text = self.__mLanguage.getPhraseWork("51")
         
         return text
     
     def sortieAddTacheProjet(self):
         sortie = self.__objetArreraWork.addTacheProjet()
-
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert mon interface pour ajouter une tache au projet "+self.getNameProjetOpen()+"."
-            else :
-                text = "Je t'ai ouvert l'interface pour que tu ajoute une tache au projet "+self.getNameProjetOpen()+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("11",self.getNameProjetOpen())
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas ajouter une tache de votre projet."
-            else :
-                text = "Pardonne moi "+self.__user+". Je ne peux pas te ajouter une tache."
-        
+            text = self.__mLanguage.getPhraseWork("52")
         return text
     
     def sortieSupprTacheProjet(self):
         sortie = self.__objetArreraWork.supprTacheProjet()
-
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert mon interface pour supprimer une tache au projet "+self.getNameProjetOpen()+"."
-            else :
-                text = "Je t'ai ouvert l'interface pour que tu supprime une tache au projet "+self.getNameProjetOpen()+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("12",self.getNameProjetOpen())
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas supprimer une tache de votre projet."
-            else :
-                text = "Pardonne moi "+self.__user+". Je ne peux pas te supprimer une tache."
-        
-        return text
-    
-    def sortieSupprTacheProjet(self):
-        sortie = self.__objetArreraWork.supprTacheProjet()
-
-        if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert mon interface pour terminer une tache au projet "+self.getNameProjetOpen()+"."
-            else :
-                text = "Je t'ai ouvert l'interface pour que tu termine une tache au projet "+self.getNameProjetOpen()+"."
-        else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+". Je ne peux pas terminer une tache de votre projet."
-            else :
-                text = "Pardonne moi "+self.__user+". Je ne peux pas te terminer une tache."
-        
+            self.__mLanguage.getPhraseWork("53")
         return text
     
     def sortieNbTacheProjet(self):
@@ -1524,48 +1298,27 @@ class fncArreraNetwork:
         sortie2 = self.__objetArreraWork.getNBTacheToday()
 
         if ((sortie != -1) and (sortie2 != -1) and (sortie != 0)):
-            if (self.__etatVous == True):
-                text = "Dans le projet "+self.getNameProjetOpen()+" vous avez "+str(sortie)+" tache enregistrer dont "+str(sortie2)+" a finir aujourd'hui."
-            else :
-                text = "Tu as "+str(sortie)+" tache enregistrer dont "+str(sortie2)+" a finir aujourd'hui dans le projet"+self.getNameProjetOpen()
+            text = self.__mLanguage.getPhraseProjetNbTache("0",str(sortie),self.getNameProjetOpen(),str(sortie2))
         else :
             if (sortie == 0) :
-                if (self.__etatVous == True):
-                    text = "Vous avez aucune tache enregistrer dans le projet "+self.getNameProjetOpen()+"."
-                else :
-                    text = "Tu as aucune tache dans le projet "+self.getNameProjetOpen()+"."
+                text = self.__mLanguage.getPhraseProjetFileOpen("17",self.getNameProjetOpen())
             else :
-                if (self.__etatVous == True):
-                    text = "Pardonner-moi "+self.__genre+" mais je ne pas vous donner le nombre de tache dans votre projet."
-                else :
-                    text = "Désoler "+self.__user+" un probleme est survenu qui m'empéche de te donner le nombre de tache dans votre projet."
-        
+                text = self.__mLanguage.getPhraseWork("56")
         return text
 
     def sortieListeTacheTodayProjet(self):
         sortie = self.__objetArreraWork.setListTacheTodayProjet()
-
+        text = ""
         if (sortie == True) :
             listTache = self.__objetArreraWork.getListTacheTodayProjet()
             nbTache = len(listTache)
-
             if (nbTache==0) :
-                if (self.__etatVous==True):
-                    text = "Vous avez aucune tache aujourd'hui pour le projet "+self.getNameProjetOpen()+"."
-                else :
-                    text = "Tu as aucune tache a faire aujourd'hui pour le projet "+self.getNameProjetOpen()+"."
+                text = self.__mLanguage.getPhraseProjetFileOpen("13",self.getNameProjetOpen())
             else :
                 if (nbTache==1):
-                    if (self.__etatVous==True):
-                        baseText = "Vous avez une seul tache à faire aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui est "
-                    else :
-                        baseText = "Tu as uns seul tache à finir pour aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui est "
+                    baseText = self.__mLanguage.getPhraseProjetFileOpen("14",self.getNameProjetOpen())+" "
                 else :
-                    if (self.__etatVous==True):
-                        baseText = "Vous avez "+str(nbTache)+" tache à faire aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui sont "
-                    else :
-                        baseText = "Tu as "+str(nbTache)+" à finir pour aujourd'hui pour le projet "+self.getNameProjetOpen()+" qui sont "
-                
+                   baseText = self.__mLanguage.getPhraseProjetNbTache("1",str(nbTache),self.getNameProjetOpen())+" "
                 for i in range(0,nbTache):
                     if (i == 0):
                         text = baseText + listTache[i]
@@ -1575,37 +1328,23 @@ class fncArreraNetwork:
                         else :
                             text = text+", "+listTache[i]
         else :
-            if (self.__etatVous==True) :
-                text = "Excuser moi "+self.__genre+" mais je peux pas vous donner les taches d'aujourd'hui pour le projet."
-            else :
-                text = "Pardonne moi mais je peux pas te donner les taches d'aujourd'hui pour le projet"
-        
+            text = self.__mLanguage.getPhraseWork("54")
         return text
     
     def sortieListTacheTowmorowProjet(self):
+        text = ""
         sortie = self.__objetArreraWork.setListTacheTowmorowProjet()
-
         if (sortie == True) :
             listTache = self.__objetArreraWork.getListTacheTowmorowProjet()
             nbTache = len(listTache)
 
             if (nbTache==0) :
-                if (self.__etatVous==True):
-                    text = "Vous avez aucune tache a faire pour demain pour le projet "+self.getNameProjetOpen()+"."
-                else :
-                    text = "Tu as aucune tache a faire pour demain pour le projet "+self.getNameProjetOpen()+"."
+                text = self.__mLanguage.getPhraseProjetFileOpen("15",self.getNameProjetOpen())
             else :
                 if (nbTache==1):
-                    if (self.__etatVous==True):
-                        baseText = "Vous avez une seul tache a faire pour demain pour le projet "+self.getNameProjetOpen()+" qui est "
-                    else :
-                        baseText = "Tu as uns seul tache à finir pour demain pour le projet "+self.getNameProjetOpen()+" qui est "
+                    baseText = self.__mLanguage.getPhraseProjetFileOpen("16",self.getNameProjetOpen())+" "
                 else :
-                    if (self.__etatVous==True):
-                        baseText = "Vous avez "+str(nbTache)+" tache à faire pour demain le projet "+self.getNameProjetOpen()+" qui sont "
-                    else :
-                        baseText = "Tu as "+str(nbTache)+" à finir pour demain le projet "+self.getNameProjetOpen()+" qui sont "
-                
+                    baseText = self.__mLanguage.getPhraseProjetNbTache("2",str(nbTache),self.getNameProjetOpen())+" "
                 for i in range(0,nbTache):
                     if (i == 0):
                         text = baseText + listTache[i]
@@ -1615,11 +1354,7 @@ class fncArreraNetwork:
                         else :
                             text = text+", "+listTache[i]
         else :
-            if (self.__etatVous==True) :
-                text = "Excuser moi "+self.__genre+" mais je peux pas vous donner les taches pour demain pour le projet."
-            else :
-                text = "Pardonne moi mais je peux pas te donner les taches pour demain pour le projet."
-        
+            text = self.__mLanguage.getPhraseWork("55")
         return text
     
     def sortieResumerTacheAgenda(self):
@@ -1763,76 +1498,42 @@ class fncArreraNetwork:
     def sortieOpenProjetDirect(self,projet:str):
         sortie = self.__objetArreraWork.openProjet(projet)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai bien ouvert le projet "+projet+" "+self.__genre+". Que voulez vous faire ?"
-            else :
-                text = "Le projet "+projet+" est bien ouvert. Que veux-tu faire ?"
+           text = self.__mLanguage.getPhraseProjetFileOpen("18",projet)
         else :
-            if (self.__etatVous == True):
-                text = "Désoler "+self.__genre+" mais je ne peux pas t'ouvrir le projet "+projet+". Il n'existe peut-étre pas"
-            else :
-                text = "Désoler mais je trouve pas le projet "+projet+"."
+            text = self.__mLanguage.getPhraseProjetFileOpen("19",projet)
         return projet,text
     
     def sortieOpenTableurDirect(self,file:str):
         sortie = self.__objetArreraWork.openTableurDirectly(file)
         if (sortie == True) :
-            if (self.__etatVous == True) :
-                text = "Votre fichier Exel a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a travailler dessus."
-            else :
-                text = "Je t'ai bien ouvert ton fichier exel. Aller travaillons dessus."
+            text = self.__mLanguage.getPhraseWork("57")
         else :
-            if (self.__etatVous == True) :
-                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier exel"
-            else :
-                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Exel."
-        
+            text = self.__mLanguage.getPhraseWork("58")
         return text
     
     def sortieOpenWordDirect(self,file:str):
         sortie = self.__objetArreraWork.openWordDirectly(file)
         if (sortie == True) :
-            if (self.__etatVous == True) :
-                text = "Votre fichier de traitement de texte a bien etais ouvert correctement "+self.__genre+". Il nous reste plus qu'a ecrire dessus."
-            else :
-                text = "Je t'ai bien ouvert ton fichier Word. Aller travaillons dessus."
+            text = self.__mLanguage.getPhraseWork("59")
         else :
-            if (self.__etatVous == True) :
-                text = "Désoler "+self.__genre+" mais il met imposible de t'ouvrir un fichier Word"
-            else :
-                text = "Un probléme est survenu j'arrive pas a t'ouvrir ton fichier Word."
-        
+            text = self.__mLanguage.getPhraseWork("60")
         return text
 
     def sortieOpenPostiteWithFile(self):
         sortie = self.__objPenseBete.activePenseBete(1)
         if (sortie == True):
             nameFile = self.__objPenseBete.getNamefile()
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert votre pense bete "+nameFile+" "+self.__genre+" "+self.__user
-            else :
-                text = "Je t'ai l'outil le pense bete "+nameFile
+            text = self.__mLanguage.getPhraseProjetFileOpen("20",nameFile)
         else :
-            if (self.__etatVous == True):
-                text = "Un probleme est survenu je ne peux pas vous ouvrir l'outil de pense bete"
-            else :
-                text = "Il est imposible pour moi de d'ouvrir l'outil de pense bete"
-
+            text = self.__mLanguage.getPhraseWork("61")
         return sortie,text
 
     def sortieOpenPostiteNoFile(self):
         sortie = self.__objPenseBete.activePenseBete(2)
         if (sortie == True):
-            if (self.__etatVous == True):
-                text = "Je vous ai ouvert l'outil de pense bete "+self.__genre+" "+self.__user
-            else :
-                text = "Je t'ai l'outil de pense bete"
+            text = self.__mLanguage.getPhraseWork("62")
         else :
-            if (self.__etatVous == True):
-                text = "Un probleme est survenu je ne peux pas vous ouvrir l'outil de pense bete"
-            else :
-                text = "Il est imposible pour moi de d'ouvrir l'outil de pense bete"
-
+            text = self.__mLanguage.getPhraseWork("63")
         return text
 
     def getNamePenseBete(self):
@@ -1855,3 +1556,15 @@ class fncArreraNetwork:
 
     def sortieOpenDocumentation(self):
         return self.__mLanguage.getPhraseService("2")
+
+    def sortieHelpWorkTableur(self):
+        return self.__mLanguage.getPhraseHelpArreraWork("1")
+
+    def sortieHelpWorkTraitementTexte(self):
+        return self.__mLanguage.getPhraseHelpArreraWork("2")
+
+    def sortieHelpArreraWork(self):
+        return self.__mLanguage.getPhraseHelpArreraWork("3")
+
+    def sortieHelpWorkType(self):
+        return self.__mLanguage.getPhraseHelpArreraWork("4")
