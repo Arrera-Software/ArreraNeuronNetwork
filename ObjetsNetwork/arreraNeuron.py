@@ -7,7 +7,7 @@ from neuron.open import *
 from neuron.search import*
 from neuron.time import*
 from neuron.codehelp import*
-from neuron.work import
+from neuron.work import*
 
 class ArreraNetwork :
     def __init__(self,fichierConfiguration:str):
