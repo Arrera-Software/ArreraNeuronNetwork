@@ -6,7 +6,7 @@ class COrthographe:
         Initialise l'outil LanguageTool pour la correction linguistique.
         :param language: Le code de langue pour LanguageTool (par défaut 'fr' pour français).
         """
-        self.tool = language_tool_python.LanguageTool(language)
+        self.tool = language_tool_python.LanguageToolPublicAPI(language)
         self.corrected_text = ""
         self.matches = []
     
