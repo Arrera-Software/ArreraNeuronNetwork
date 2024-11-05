@@ -1,33 +1,33 @@
 {
   "phResumerActu": "Voici un résumé des dernières actualités et de la météo pour aujourd'hui.",
   "phResumerAll1": "Imposible de te faire le résumer {user}.",
-  "phResumerAll2": "Voici ton résumer des actualitée du jour avec la meteo ainsi des taches que tu as faire et des événement du jour.",
+  "phResumerAll2": "Voici ton résumer des actualitée du jour avec la météo ainsi des taches que tu as faire et des événement du jour.",
   "ph1": "Désoler une erreur c'est produite pour la récupération des actualités",
   "phMeteo1": [
-    "La meteo a {ville} pour demain midi est {description} avec une température de {temperature} °C",
-    "La meteo a ta localisation pour demain midi est de {description} avec une température de {temperature} °C"],
-  "phMeteoError1": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain midi.",
+    "La météo à {ville} pour demain midi est {description} avec une température de {temperature} °C",
+    "La météo à ta localisation pour demain midi est de {description} avec une température de {temperature} °C"],
+  "phMeteoError1": "Je suis désoler {user} je n'arrive pas a savoir la météo pour demain midi.",
   "phMeteo2": [
-    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C.",
-    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C."],
-  "phMeteoError2": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain midi.",
+    "La météo à {ville}  pour demain midi est {description} avec une température de {temperature} °C.",
+    "La météo à {ville}  pour demain midi est {description} avec une température de {temperature} °C."],
+  "phMeteoError2": "Je suis désoler {user} je n'arrive pas a savoir la météo pour demain midi.",
   "phMeteo3": [
-    "La meteo a {ville} pour demain matin est {description} avec une température de {temperature} °C",
-    "La meteo a ta localisation pour demain matin est de {description} avec une température de {temperature} °C"],
-  "phMeteoError3": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain matin.",
+    "La météo à {ville} pour demain matin est {description} avec une température de {temperature} °C",
+    "La météo à ta localisation pour demain matin est de {description} avec une température de {temperature} °C"],
+  "phMeteoError3": "Je suis désoler {user} je n'arrive pas a savoir la météo pour demain matin.",
   "phMeteo4": [
-    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C",
-    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C"],
-  "phMeteoError4": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour demain matin.",
+    "La météo à {ville}  pour demain matin est {description} avec une température de {temperature} °C",
+    "La météo à {ville}  pour demain matin est {description} avec une température de {temperature} °C"],
+  "phMeteoError4": "Je suis désoler {user} je n'arrive pas a savoir la météo pour demain matin.",
   "phMeteo5": [
-    "La meteo a {ville} est {description} avec une température de {temperature} °C",
-    "La meteo a votre localisation est {description} avec une température de {temperature} °C"],
-  "phMeteoError5": "Je suis désoler {user} je n'arrive pas a savoir la meteo pour aujourd'hui.",
+    "La météo à {ville} est {description} avec une température de {temperature} °C",
+    "La météo à votre localisation est {description} avec une température de {temperature} °C"],
+  "phMeteoError5": "Je suis désoler {user} je n'arrive pas a savoir la météo pour aujourd'hui.",
   "phMeteo6": [
-    "La meteo a {ville} est {description} avec une température de {temperature} °C",
-  "La meteo a {ville} est {description} avec une température de {temperature} °C"],
+    "La météo à {ville} est {description} avec une température de {temperature} °C",
+    "La météo à {ville} est {description} avec une température de {temperature} °C"],
   "phMeteoError6": "Je suis désoler {user} je n'arrive pas a savoir la meteo.",
-  "phCoordonnees" : "Tu es localiser a la latitude {latitude} longitude {longitude}. Ce qui correspond a la ville de {ville}.",
+  "phCoordonnees" : "Tu es localisé à la latitude {latitude} et longitude {longitude}. Ce qui correspond à la ville de {ville}.",
   "phTemperature" : "Il fais {temperature} °C",
   "phIteneraireError1" : "Une erreur c'est produite qui m'empeche de te faire cette itineraire",
   "phIteneraireError2" : "Désolé il a un souci qui m'empéche de te donne cette route",
@@ -40,11 +40,11 @@
     "La météo chez toi est {description} avec une température de {temperature}°C. ",
     "La météo chez toi est {description} avec une température de {temperature}°C. "],
   "phMeteo8" : [
-    "La météo a ton boulot est {description} avec une température de {temperature} °C. ",
-    "La météo a ton boulot est {description} avec une température de {temperature} °C. "
+    "La météo à ton boulot est {description} avec une température de {temperature} °C. ",
+    "La météo à ton boulot est {description} avec une température de {temperature} °C. "
   ],
   "phMeteo9" : [
-    "La meteo a ta localisation est {description} avec une temperature de {temperature}°C.",
-    "La meteo a ta localisation est {description} avec une temperature de {temperature}°C."
+    "La météo à ta localisation est {description} avec une temperature de {temperature}°C.",
+    "La météo à ta localisation est {description} avec une temperature de {temperature}°C."
   ]
 }

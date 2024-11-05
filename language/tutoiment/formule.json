@@ -1,5 +1,5 @@
 {
-  "nc" : "Je ne comprend pas ce que tu m'as dit ou ce que tu demande.",
+  "nc" : "Je ne comprends pas ce que tu m’as dit ou ce que tu me demandes",
   "bootN1": [
     "Zzzz... Il faudrait peut-être dormir {self.__user}, non ?",
     "Zzzz... Comment peux-tu travailler si tard {self.__user} ?"],
@@ -61,13 +61,13 @@
     "Au revoir, {user}. J'espère te revoir bientôt.",
     "Au revoir, {user}. J'espère te revoir bientôt."],
   "bootHist1": "Zzzz, {user}. J'ai relancé là où tu t'étais arrêté. Mais il faudrait que tu dormes.",
-  "bootHist2": "Hey, {user}. J'espère tu as passé une bonne nuit. J'ai relancer la ou tu etais arriver.",
-  "bootHist3": "Salut, {user}. Comment se passe ta matinée ?. J'ai relancer la ou tu etais arriver.",
-  "bootHist4": "Alors, {user}. Prêt à travailler ? Je t'ai relancer ou tu etais",
-  "bootHist5": "Salut, {user}. En quoi puis-je t'aider ? Je t'ai relancer ou tu etais",
-  "bootHist6": "Alors, {user}. Prét a travailler ce soir. Je t'ai relancer ou tu etais.",
-  "bootHist7": "*bâille*, {user}. Pourquoi me réveilles-tu si tard ?. Je t'ai relancer ou tu etais.",
-  "bootHist8": "Zzzz, {user}. Comment peux-tu travailler si tard ? Je vous ai relancer ou vous etiez.",
-  "bootHist9": "Salut, {user}. Je t'ai relancer ou tu etais.",
-  "bootHist10": "Salut, {user}. Je t'ai relancer ou tu etais."
+  "bootHist2": "Hey, {user}. J’espère que tu as passé une bonne nuit. J’ai relancé là où tu étais arrivé.",
+  "bootHist3": "Salut, {user}. Comment se passe ta matinée ?. J’ai relancé là où tu étais arrivé.",
+  "bootHist4": "Alors {user}, prêt à travailler ? Je t’ai relancé là où tu étais.",
+  "bootHist5": "Salut, {user}. En quoi puis-je t'aider ? Je t’ai relancé là où tu étais.",
+  "bootHist6": "Alors, {user}. Prét a travailler ce soir. Je t’ai relancé là où tu étais.",
+  "bootHist7": "*bâille*, {user}. Pourquoi me réveilles-tu si tard ?. Je t’ai relancé là où tu étais.",
+  "bootHist8": "Zzzz, {user}. Comment peux-tu travailler si tard ? Je t’ai relancé là où tu étais.",
+  "bootHist9": "Salut, {user}. Je t’ai relancé là où tu étais.",
+  "bootHist10": "Salut, {user}. Je t’ai relancé là où tu étais."
 }
