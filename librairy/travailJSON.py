@@ -13,7 +13,7 @@ class jsonWork:
             dict = json.load(openfile)
         return dict
 
-    def lectureJSON(self, flag):
+    def lectureJSON(self, flag:str):
         """
         Lire un flag du fichier json
         :param flag: Flag qui contient la valeur que vous voulez lire

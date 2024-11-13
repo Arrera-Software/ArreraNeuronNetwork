@@ -10,8 +10,8 @@ class gestionNetwork:
     def __init__(self,configFile:str):
         # Fichier JSON
         self.__configFile = jsonWork(configFile)
-        self.__fileUser = self.__configFile.lectureJSON("fileUser")
-        self.__fichierFete = self.__configFile.lectureJSON("fileFete")
+        self.__fileUser = jsonWork(self.__configFile.lectureJSON("fileUser"))
+        self.__fichierFete = jsonWork(self.__configFile.lectureJSON("fileFete"))
         # Objet
         self.__detecteurOS = OS()
         self.__mLanguage = CAlanguage(self.__configFile.lectureJSON("moduleLanguage"),

@@ -21,12 +21,12 @@ class CAlanguage:
         self.__nameAssistant = listVar[0]
         self.__bute = listVar[1]
         self.__createur = listVar[2]
+        self.setVarUser()
 
 
-    def setVarUser(self, genre:str):
+    def setVarUser(self):
         self.__user = self.__fileUser.lectureJSON("user")
         self.__genre = self.__fileUser.lectureJSON("genre")
-
 
     def getNoComprehension(self):
         return self.__formule.lectureJSON("nc")

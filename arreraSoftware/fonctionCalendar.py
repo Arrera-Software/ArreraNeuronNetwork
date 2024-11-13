@@ -10,7 +10,7 @@ from arreraSoftware.fonctionDate import *
 
 class fncArreraAgenda :
     def __init__(self,fichierConfig:jsonWork,gest:gestionNetwork):
-        self.__agendaFile = jsonWork(gest.getEmplacementFileAgenda())
+        self.__agendaFile = jsonWork("")
         self.__mainColor = fichierConfig.lectureJSON("interfaceColor")
         self.__textColor = fichierConfig.lectureJSON("interfaceTextColor")
         self.__icon = fichierConfig.lectureJSON("iconAssistant")
