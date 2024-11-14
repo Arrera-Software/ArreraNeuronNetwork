@@ -46,4 +46,4 @@ class fncCodehelp :
         self.__githubObjet.GUI()
     
     def openOutilLibrairy(self):
-        self.__librairyCodehelp.librairy()
+        self.__librairyCodehelp.active()

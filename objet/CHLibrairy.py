@@ -16,8 +16,19 @@ class CHLibrairy:
         self.__name = ConfigNeuron.lectureJSON("name")
         self.objNET = gest.getNetworkObjet()
     
-    def librairy(self):
+    def active(self):
+        # Test de la connexion internet
+        self.__screenLibrairy = Toplevel()
+        self.__varName = StringVar(self.__screenLibrairy)
+        self.__screenLibrairy.title(self.__name + ": codeHelp librairy")
+        self.__screenLibrairy.iconphoto(False, PhotoImage(file=self.__iconAssistant))
+        self.__screenLibrairy.minsize(700, 500)
+        self.__screenLibrairy.configure(bg=self.__mainColor)
+        Label(self.__screenLibrairy, text="Arrera Librairy", bg=self.__mainColor,
+              fg=self.__textColor,
+              font=("arial", 25)).place(relx=0.5, rely=0.0, anchor="n")
         if (self.objNET.getEtatInternet() == True):
+            # Recuperation de l'index de la librairy
             try:
                 response = requests.get(
                     "https://raw.githubusercontent.com/Arrera-Librairy/index-codehelp/refs/heads/main/index.json")
@@ -31,40 +42,23 @@ class CHLibrairy:
                     dictURLName[contenuJson[str(i)]['name']] = contenuJson[str(i)]['url']
 
             except requests.exceptions.RequestException as e:
+                # Message d'erreur
+                Label(self.__screenLibrairy, text="Impossible de récuper l'index", bg=self.__mainColor,
+                      fg=self.__textColor,
+                      font=("arial", 15)).place(relx=0.5, rely=0.5, anchor="center")
                 return False
-
-
-
-            self.__screenLibrairy = Toplevel()
-            self.__varName = StringVar(self.__screenLibrairy)
-            self.__screenLibrairy.title(self.__name + ": codeHelp librairy")
-            self.__screenLibrairy.iconphoto(False, PhotoImage(file=self.__iconAssistant))
-            self.__screenLibrairy.minsize(700, 500)
-            self.__screenLibrairy.configure(bg=self.__mainColor)
-
+            # Creation de l'interface
+            self.__varName.set(listLib[0])
+            # Widget
             self.__optionName = OptionMenu(self.__screenLibrairy, self.__varName, *listLib)
-
+            btnView = Button(self.__screenLibrairy, text="consulter",bg=self.__mainColor,fg=self.__textColor,
+                             command= lambda : w.open(dictURLName[self.__varName.get()]),font=("arial",15))
+            # affichage
             self.__optionName.place(relx=0.5, rely=0.5, anchor="center")
-
+            btnView.place(relx=0.5, rely=1.0, anchor="s")
             return True
         else:
+            # Message d'erreur
+            Label(self.__screenLibrairy, text="Erreur de connexion internet",bg=self.__mainColor,fg=self.__textColor,
+                  font=("arial",15)).place(relx=0.5, rely=0.5, anchor="center")
             return False
-
-    def __destroyWindows(self):
-        self.__screenLibrairy.destroy()
-
-    def __openLib(self):
-        w.open(self.__lienLibrairy)
-        self.__destroyWindows()
-    
-    def __openReadme(self):
-        w.open(self.__lienReadme)
-        self.__destroyWindows()
-    
-    def __openObjPython(self):
-        w.open(self.__lienObjetPython)
-        self.__destroyWindows()
-    
-    def __openObjCPP(self):
-        w.open(self.__lienObjetCPP)
-        self.__destroyWindows()
