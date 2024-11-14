@@ -45,7 +45,9 @@ class fncArreraNetwork:
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         self.__objRadio = fncRadio(self.__objetNetwork)
         self.__objPenseBete = fncArreraPostite(self.__configNeuron)
-        self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
+        # Fonction qui on besoin d'internet
+        if (etatConnextion == True):
+            self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
                                                self.__configNeuron.lectureJSON("interfaceTextColor"))
         
     def reading(self):
@@ -1511,12 +1513,15 @@ class fncArreraNetwork:
         return self.__objPenseBete.getNamefile()
     
     def sortieCorrection(self,requette:str):
-        texte = requette.replace("corrige","").strip()
-        sortie = self.__objOrthographe.active(texte)
-        if (sortie == True):
-            text = self.__mLanguage.getPhraseService("3")
+        if (self.__objetNetwork.getEtatInternet() == True):
+            texte = requette.replace("corrige","").strip()
+            sortie = self.__objOrthographe.active(texte)
+            if (sortie == True):
+                text = self.__mLanguage.getPhraseService("3")
+            else :
+                text = self.__mLanguage.getPhraseService("4")
         else :
-            text = self.__mLanguage.getPhraseService("4")
+            text = self.__mLanguage.getPhraseService("7")
         return text
 
     def sortieResultatCalcule(self,resultat):
