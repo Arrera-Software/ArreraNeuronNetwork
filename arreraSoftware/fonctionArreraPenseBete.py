@@ -44,35 +44,25 @@ class fncArreraPostite:
     def __responsive(self, widget):
         widget.grid(sticky="nsew")
     
-    def activePenseBete(self,mode:int)->bool:
-        """
-        Args:
-            mode (int): 1 -> Ouverture fichier pense bete 2-> Lancement pense-bete vide
+    def activePenseBete(self)->bool:
+        emplacementFile = filedialog.askopenfilename(
+            defaultextension='.ab',
+            filetypes=[("Fichier Pense-bete", "*.ab")])
+        if (emplacementFile):
+            self.__windows()
+            with open(emplacementFile, 'r', encoding='utf-8') as file:
+                file_content = file.read()
+                self.zoneTexte.delete(1.0, END)
+                self.zoneTexte.insert(END, file_content)
+            self.__nameFile = emplacementFile
+            return True
+        else:
+            self.__nameFile = ""
+            return False
 
-        """
-        match mode :
-            case 1 :
-                emplacementFile = filedialog.askopenfilename(
-                            defaultextension='.ab', 
-                            filetypes=[("Fichier Pense-bete", "*.ab")])
-                if (emplacementFile):
-                    self.__windows()
-                    with open(emplacementFile, 'r', encoding='utf-8') as file:
-                        file_content = file.read()
-                        self.zoneTexte.delete(1.0,END)
-                        self.zoneTexte.insert(END,file_content) 
-                    self.__nameFile = emplacementFile
-                    return True      
-                else :
-                    return False  
-            case 2 :
-                self.__windows()
-                return True
-        return False
-    
     def getNamefile(self):
-        return self.__nameFile
-    
+            return self.__nameFile
+
     def __saveFile(self):
         penseBete = self.zoneTexte.get(1.0,END)
         if (self.__nameFile!=""):
@@ -83,7 +73,7 @@ class fncArreraPostite:
                 self.__penseBete.destroy()
             else :
                 file = filedialog.asksaveasfilename(
-                            defaultextension='.ab', 
+                            defaultextension='.ab',
                             filetypes=[("Fichier Pense-bete", "*.ab")])
                 if (file):
                     with open(file, "w") as fichier:
@@ -93,7 +83,7 @@ class fncArreraPostite:
                     messagebox.showerror(self.__name+" : Postite","Impossible d'enregistrer")
         else :
             file = filedialog.asksaveasfilename(
-                            defaultextension='.ab', 
+                            defaultextension='.ab',
                             filetypes=[("Fichier Pense-bete", "*.ab")])
             if (file):
                 with open(file, "w") as fichier:

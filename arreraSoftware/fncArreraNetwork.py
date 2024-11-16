@@ -1493,7 +1493,7 @@ class fncArreraNetwork:
         return text
 
     def sortieOpenPostiteWithFile(self):
-        sortie = self.__objPenseBete.activePenseBete(1)
+        sortie = self.__objPenseBete.activePenseBete()
         if (sortie == True):
             nameFile = self.__objPenseBete.getNamefile()
             text = self.__mLanguage.getPhraseProjetFileOpen("20",nameFile)
@@ -1501,13 +1501,6 @@ class fncArreraNetwork:
             text = self.__mLanguage.getPhraseWork("61")
         return sortie,text
 
-    def sortieOpenPostiteNoFile(self):
-        sortie = self.__objPenseBete.activePenseBete(2)
-        if (sortie == True):
-            text = self.__mLanguage.getPhraseWork("62")
-        else :
-            text = self.__mLanguage.getPhraseWork("63")
-        return text
 
     def getNamePenseBete(self):
         return self.__objPenseBete.getNamefile()

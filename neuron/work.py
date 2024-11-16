@@ -27,7 +27,7 @@ class neuronWork :
             self.__listSortie = ["",""]
             oldRequette,oldSortie = self.__gestionNeuron.getOld()
 
-            if (("ouvre" in requette) and ((("un" in requette) and ("une" not in requette)) or ("fichier" in requette))):
+            if (("ouvre" in requette)):
                 if ((("exel" in requette) or ("tableur" in requette)) 
                     and  ("ordinateur" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenSoftTableurFile(),""]
@@ -58,6 +58,16 @@ class neuronWork :
                                         self.__valeurOut = 7
                                     else :
                                         self.__valeurOut = 1
+                                else :
+                                    if ("pense bete" in requette) or ("postite" in requette):
+                                        sortie, text = self.__fonctionArreraNetwork.sortieOpenPostiteWithFile()
+                                        if (sortie == True):
+                                            self.__objHistorique.setAction(
+                                                "Ouverture du pense bete " + self.__fonctionArreraNetwork.getNamePenseBete())
+                                        self.__valeurOut = 5
+                                        self.__listSortie = [
+                                            text,
+                                            ""]
             else :
                 if ("ferme" in requette) :
                     if (("exel" in requette) or ("tableur" in requette)):
@@ -280,36 +290,22 @@ class neuronWork :
                                                                                                                      ,""]
                                                                                                 self.__valeurOut = 17 
                                                                                             else :
-                                                                                                if (("ouvre" in requette) and ("pense bete" in requette)):
-                                                                                                    if (("une" in requette) or ("un" in requette)):
-                                                                                                        sortie,text = self.__fonctionArreraNetwork.sortieOpenPostiteWithFile()
-                                                                                                        if (sortie == True):
-                                                                                                            self.__objHistorique.setAction("Ouverture du pense bete "+self.__fonctionArreraNetwork.getNamePenseBete())
-                                                                                                            self.__valeurOut = 5
-                                                                                                        else :
-                                                                                                            self.__valeurOut = 1
-                                                                                                    else :
-                                                                                                        text = self.__fonctionArreraNetwork.sortieOpenPostiteNoFile()
-                                                                                                        self.__objHistorique.setAction("Ouverture d'un nouveau pense bete")
-                                                                                                        self.__valeurOut = 5
-                                                                                                    self.__listSortie = [text,""]
+                                                                                                if ("aide tableur" in requette):
+                                                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkTableur()
+                                                                                                        ,"tableur"]
+                                                                                                    self.__valeurOut = 17
                                                                                                 else :
-                                                                                                    if ("aide tableur" in requette):
-                                                                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkTableur()
-                                                                                                            ,"tableur"]
-                                                                                                        self.__valeurOut = 17 
+                                                                                                    if ("aide word" in requette):
+                                                                                                        self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkTraitementTexte()
+                                                                                                                    ,"word"]
+                                                                                                        self.__valeurOut = 17
                                                                                                     else :
-                                                                                                        if ("aide word" in requette):
-                                                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkTraitementTexte()
-                                                                                                                        ,"word"]
+                                                                                                        if ("aide projet" in requette):
+                                                                                                            self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpArreraWork()
+                                                                                                                    ,"projet"]
                                                                                                             self.__valeurOut = 17
                                                                                                         else :
-                                                                                                            if ("aide projet" in requette):
-                                                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpArreraWork()
-                                                                                                                        ,"projet"]
+                                                                                                            if ("type fichier" in requette):
+                                                                                                                self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkType()
+                                                                                                                                    ,"fichier"]
                                                                                                                 self.__valeurOut = 17
-                                                                                                            else : 
-                                                                                                                if ("type fichier" in requette):
-                                                                                                                    self.__listSortie = [self.__fonctionArreraNetwork.sortieHelpWorkType()
-                                                                                                                                        ,"fichier"]
-                                                                                                                    self.__valeurOut = 17
