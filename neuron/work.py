@@ -281,7 +281,7 @@ class neuronWork :
                                                                                                 self.__valeurOut = 17 
                                                                                             else :
                                                                                                 if (("ouvre" in requette) and ("pense bete" in requette)):
-                                                                                                    if ("une" in requette):
+                                                                                                    if (("une" in requette) or ("un" in requette)):
                                                                                                         sortie,text = self.__fonctionArreraNetwork.sortieOpenPostiteWithFile()
                                                                                                         if (sortie == True):
                                                                                                             self.__objHistorique.setAction("Ouverture du pense bete "+self.__fonctionArreraNetwork.getNamePenseBete())
