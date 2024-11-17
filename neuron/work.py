@@ -209,7 +209,8 @@ class neuronWork :
                                                                     or ("language c++" in requette) or ("php" in requette) or
                                                                     ("javascript" in requette) or ("java script" in requette) or 
                                                                     ("js" in requette) or ("java" in requette) or 
-                                                                    ("kotlin" in requette )or ("kt" in requette))):
+                                                                    ("kotlin" in requette )or ("kt" in requette) or
+                                                                    ("postite" in requette) or ("ab" in requette))):
                                                                     self.__listSortie = [self.__fonctionArreraNetwork.sortieCreateFileDirect(requette),""]
                                                                     self.__objHistorique.setAction("Creation du fichier "+self.__fonctionArreraNetwork.getNameLastFile()+" dans le projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                                                     self.__valeurOut = 16

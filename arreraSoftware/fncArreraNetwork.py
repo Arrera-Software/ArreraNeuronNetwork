@@ -1115,7 +1115,7 @@ class fncArreraNetwork:
         nom = nom.replace("json","").replace("html","").replace("css","").replace("md","").replace("cpp","").replace("language c","")
         nom = nom.replace("exel","").replace("nommer","").replace("texte","").replace("en tete","").replace("open","").replace("tableur","")
         nom = nom.replace("language c++","").replace("php","").replace("javascript","").replace("java script","").replace("java","").replace("kotlin","")
-        nom = nom.replace("kt","").replace("js","").replace("document","")
+        nom = nom.replace("kt","").replace("js","").replace("document","").replace("postite","").replace("ab","")
         nom = nom.replace(" ","") # Pas touche
 
         if ("word" in requette):
@@ -1166,7 +1166,10 @@ class fncArreraNetwork:
                                                                     if (("kotlin" in requette )or ("kt" in requette)):
                                                                         typeFile = "kt"
                                                                     else :
-                                                                        typeFile = ""
+                                                                        if ("postite" in requette) or ("ab" in requette):
+                                                                            typeFile = "ab"
+                                                                        else :
+                                                                            typeFile = ""
         return self.sortieAddfile(typeFile,nom)
     
     def getNameProjetOpen(self):
