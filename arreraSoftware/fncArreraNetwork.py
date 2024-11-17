@@ -13,7 +13,6 @@ from arreraSoftware.fonctionCalendar import *
 from arreraSoftware.fonctionCodeHelp import*
 from arreraSoftware.fonctionArreraWork import*
 from arreraSoftware.fonctionRadio import*
-from arreraSoftware.fonctionArreraPenseBete import*
 from arreraSoftware.fncOrthographe import*
 
 class fncArreraNetwork:
@@ -44,7 +43,6 @@ class fncArreraNetwork:
         self.__objetHorloge.setAtributJSON(self.__configNeuron)    
         self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
         self.__objRadio = fncRadio(self.__objetNetwork)
-        self.__objPenseBete = fncArreraPostite(self.__configNeuron)
         # Fonction qui on besoin d'internet
         if (etatConnextion == True):
             self.__objOrthographe = fncOrthagraphe(self.__configNeuron.lectureJSON("interfaceColor"),
@@ -1491,16 +1489,6 @@ class fncArreraNetwork:
         else :
             text = self.__mLanguage.getPhraseWork("60")
         return text
-
-    def sortieOpenPostiteWithFile(self):
-        sortie = self.__objPenseBete.activePenseBete()
-        if (sortie == True):
-            nameFile = self.__objPenseBete.getNamefile()
-            text = self.__mLanguage.getPhraseProjetFileOpen("20",nameFile)
-        else :
-            text = self.__mLanguage.getPhraseWork("61")
-        return sortie,text
-
 
     def getNamePenseBete(self):
         return self.__objPenseBete.getNamefile()

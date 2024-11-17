@@ -58,16 +58,6 @@ class neuronWork :
                                         self.__valeurOut = 7
                                     else :
                                         self.__valeurOut = 1
-                                else :
-                                    if ("pense bete" in requette) or ("postite" in requette):
-                                        sortie, text = self.__fonctionArreraNetwork.sortieOpenPostiteWithFile()
-                                        if (sortie == True):
-                                            self.__objHistorique.setAction(
-                                                "Ouverture du pense bete " + self.__fonctionArreraNetwork.getNamePenseBete())
-                                        self.__valeurOut = 5
-                                        self.__listSortie = [
-                                            text,
-                                            ""]
             else :
                 if ("ferme" in requette) :
                     if (("exel" in requette) or ("tableur" in requette)):
