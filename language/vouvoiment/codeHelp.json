@@ -1,11 +1,11 @@
 {
-  "ph1": "Ok je vous ouvre l'organisateur de varriable {genre}.",
-  "ph2": "Ok je vous ouvre la fonctionnalité codehelp Color Selecteur.",
-  "ph3": "Voici le site github {genre} j'espére que sa vous sera utile.",
-  "ph4" : "Voci mon outil de gestion github {genre} {user}.",
-  "ph5" : "Je vous es ouvert le l'interface qui vous permet d'acceder au librairy Codehelp",
-  "ph6": "Tres bien je vous fais la recherche sur le site DevDoc.",
-  "ph7": "Okay je t'ai ouvert la recherche dans la documentation Learn de microsoft dans ton navigateur.",
-  "ph8": "Okay je t'ai ouvert la recherche dans le site du language de programation python dans ton navigateur.",
-  "ph9" :  "Ok je vous fais la recherche sur github {genre}."
+  "ph1": "Ok, je vous ouvre l'organisateur de variables {genre}.",
+  "ph2": "Ok, je vous ouvre la fonctionnalité Codehelp Color Selecteur.",
+  "ph3": "Voici le site GitHub {genre}, j'espère que ça vous sera utile.",
+  "ph4": "Voici mon outil de gestion GitHub {genre} {user}.",
+  "ph5": "Je vous ai ouvert l'interface qui vous permet d'accéder à la librairie Codehelp.",
+  "ph6": "Très bien, je vous fais la recherche sur le site DevDoc.",
+  "ph7": "Ok, je t'ai ouvert la recherche dans la documentation Learn de Microsoft dans ton navigateur.",
+  "ph8": "Ok, je t'ai ouvert la recherche sur le site du langage de programmation Python dans ton navigateur.",
+  "ph9": "Ok, je vous fais la recherche sur GitHub {genre}."
 }
