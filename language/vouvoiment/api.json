@@ -1,49 +1,57 @@
 {
-  "phResumerActu" : "Voici un tour d'horizon des nouvelles du jour et des previsions meteorologiques.",
-  "phResumerAll1": "Imposible de vous faire le résumer {genre}.",
-  "phResumerAll2": "Voici votre résumer des actualitée du jour avec la meteo ainsi des taches que vous avez a faire et des événement du jour.",
-  "ph1": "Désoler une erreur c'est produite pour la récupération des actualités",
+  "phResumerActu" : "Voici un tour d'horizon des nouvelles du jour et des prévisions météorologiques.",
+  "phResumerAll1": "Impossible de vous faire le résumé {genre}.",
+  "phResumerAll2": "Voici votre résumé des actualités du jour avec la météo, ainsi que des tâches que vous avez à faire et des événements du jour.",
+  "ph1": "Désolé, une erreur s'est produite pour la récupération des actualités.",
   "phMeteo1": [
-    "La meteo a {ville} pour demain midi est {description} avec une température de {temperature} °C",
-    "La meteo a votre localisation pour demain midi est {description} avec une température de {temperature} °C"],
-  "phMeteoError1" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo pour demain midi",
+    "La météo à {ville} pour demain midi est {description} avec une température de {temperature} °C.",
+    "La météo à votre localisation pour demain midi est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError1" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo pour demain midi.",
   "phMeteo2" : [
-    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C.",
-    "La meteo a {ville}  pour demain midi est {description} avec une température de {temperature} °C."],
-  "phMeteoError2" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo pour demain midi",
+    "La météo à {ville} pour demain midi est {description} avec une température de {temperature} °C.",
+    "La météo à {ville} pour demain midi est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError2" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo pour demain midi.",
   "phMeteo3": [
-    "La meteo a {ville} pour demain matin est {description} avec une température de {temperature} °C",
-    "La meteo a votre localisation pour demain matin est {description} avec une température de {temperature} °C"],
-  "phMeteoError3" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo pour demain matin",
+    "La météo à {ville} pour demain matin est {description} avec une température de {temperature} °C.",
+    "La météo à votre localisation pour demain matin est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError3" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo pour demain matin.",
   "phMeteo4": [
-    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C",
-    "La meteo a {ville}  pour demain matin est {description} avec une température de {temperature} °C"],
-  "phMeteoError4" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo pour demain matin",
-  "phMeteo5":  [
-    "La meteo a {ville} est {description} avec une température de {temperature} °C",
-    "La meteo a votre localisation est {description} avec une température de {temperature} °C"],
-  "phMeteoError5" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo pour aujourd'hui",
+    "La météo à {ville} pour demain matin est {description} avec une température de {temperature} °C.",
+    "La météo à {ville} pour demain matin est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError4" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo pour demain matin.",
+  "phMeteo5": [
+    "La météo à {ville} est {description} avec une température de {temperature} °C.",
+    "La météo à votre localisation est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError5" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo pour aujourd'hui.",
   "phMeteo6": [
-    "La meteo a {ville} est {description} avec une température de {temperature} °C",
-  "La meteo a {ville} est {description} avec une température de {temperature} °C"],
-  "phMeteoError6" : "Je suis désoler {genre} {user}. Mais je ne parvien pas a recuperer la meteo",
-  "phCoordonnees" : "Votre localisation est latitude {latitude} longitude {longitude}. Ce qui correspond a la ville de {ville}.",
-  "phTemperature" : "La temperature actuel dehors et de {temperature} °C",
-  "phIteneraireError1" : "Une erreur c'est produite qui m'empeche de vous faire cette itineraire",
-  "phIteneraireError2" : "Désolé {genre} {user}. Il a un probleme qui m'empéche de faire l'itineraires.",
-  "phIteneraireError3" : "Désoler {genre} mais je n'arrive pas a savoir ou vous aller et ou vous allez partir",
-  "phIteneraire": "Voici votre itineraire sur google map. J'espére que sa vous sera utile {genre} {user}.",
-  "phhelpIteneraire" : "Pour que l'assistant vous lance un navigateur avec Google map. Il faut lui demander avec une de ces deux phrase 'Indique-moi l'itinéraire de [depart] à [arrive] sur le GPS' ou 'Lance le GPS pour un trajet de [depart] à [arrive]'",
-  "phTraducteur" : "J'espère que cet outil de traduction vous a sera utile {genre}.",
-  "phErrorLangue" : "Desoler {genre}. Mais les langues que vous demander ne son pas disponible.",
+    "La météo à {ville} est {description} avec une température de {temperature} °C.",
+    "La météo à {ville} est {description} avec une température de {temperature} °C."
+  ],
+  "phMeteoError6" : "Je suis désolé {genre} {user}. Mais je ne parviens pas à récupérer la météo.",
+  "phCoordonnees" : "Votre localisation est latitude {latitude} et longitude {longitude}. Ce qui correspond à la ville de {ville}.",
+  "phTemperature" : "La température actuelle dehors est de {temperature} °C.",
+  "phIteneraireError1" : "Une erreur s'est produite qui m'empêche de vous faire cet itinéraire.",
+  "phIteneraireError2" : "Désolé {genre} {user}. Il y a un problème qui m'empêche de faire l'itinéraire.",
+  "phIteneraireError3" : "Désolé {genre}, mais je n'arrive pas à savoir où vous allez et d'où vous partez.",
+  "phIteneraire": "Voici votre itinéraire sur Google Maps. J'espère que cela vous sera utile {genre} {user}.",
+  "phhelpIteneraire" : "Pour que l'assistant vous lance un navigateur avec Google Maps, il faut lui demander avec l'une de ces deux phrases : 'Indique-moi l'itinéraire de [départ] à [arrivée] sur le GPS' ou 'Lance le GPS pour un trajet de [départ] à [arrivée]'.",
+  "phTraducteur" : "J'espère que cet outil de traduction vous sera utile {genre}.",
+  "phErrorLangue" : "Désolé {genre}. Mais les langues que vous demandez ne sont pas disponibles.",
   "phMeteo7" : [
-    "La météo a votre domicile est {description} avec une température de {temperature}°C.",
-    "La météo a votre domicile est {description} avec une température de {temperature}°C."],
+    "La météo à votre domicile est {description} avec une température de {temperature}°C.",
+    "La météo à votre domicile est {description} avec une température de {temperature}°C."
+  ],
   "phMeteo8" : [
-    "La météo a votre lieu de travail est {description}  avec une température de {temperature} °C. ",
-    "La météo a votre lieu de travail est {description}  avec une température de {temperature} °C. "
+    "La météo à votre lieu de travail est {description} avec une température de {temperature} °C.",
+    "La météo à votre lieu de travail est {description} avec une température de {temperature} °C."
   ],
   "phMeteo9" : [
-    "La meteo a votre localisation est {description} avec une temperature de {temperature} °C.",
-    "La meteo a votre localisation est {description} avec une temperature de {temperature} °C. "]
+    "La météo à votre localisation est {description} avec une température de {temperature} °C.",
+    "La météo à votre localisation est {description} avec une température de {temperature} °C."
+  ]
 }
