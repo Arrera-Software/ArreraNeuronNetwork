@@ -50,7 +50,7 @@
   "phWork44": "Désolé, mais un problème m'empêche de mettre le type sur votre projet.",
   "phProjetFileOpen6": "Je vous ai bien ouvert le projet {name} {genre} {user}. Que voulez-vous faire ?",
   "phProjetFileOpen7": "Désolé {genre} {user}, mais je ne peux pas t'ouvrir le projet {name}. Il n'existe peut-être pas.",
-  "phProjetFileOpen8": "Je vous ai bien créé votre fichier {name}. Voulez-vous l'ouvrir ?"
+  "phProjetFileOpen8": "Je vous ai bien créé votre fichier {name}. Voulez-vous l'ouvrir ?",
   "phWork45": "Je pense que vous n'avez pas de projet ouvert, car je ne peux pas créer votre fichier.",
   "phWork46": "Je vous ai bien ouvert votre fichier avec le logiciel par défaut de votre ordinateur {genre}.",
   "phWork47": "Je vous ai ouvert votre fichier de traitement de texte. Que voulez-vous écrire ?",
