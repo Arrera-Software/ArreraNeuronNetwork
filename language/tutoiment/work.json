@@ -50,8 +50,8 @@
   "phWork44": "Désolé, mais un problème m'empêche de mettre le type sur ton projet.",
   "phProjetFileOpen6": "Le projet {name} est bien ouvert. Que veux-tu faire ?",
   "phProjetFileOpen7": "Désolé, mais je ne trouve pas le projet {name}.",
-  "phProjetFileOpen8": "Je t'ai bien créé ton fichier {name}. Est-ce que tu veux que je te l'ouvre ?"
-"phWork45": "Je pense que tu n'as pas ouvert de projet. Je ne peux pas créer ton fichier.",
+  "phProjetFileOpen8": "Je t'ai bien créé ton fichier {name}. Est-ce que tu veux que je te l'ouvre ?",
+  "phWork45": "Je pense que tu n'as pas ouvert de projet. Je ne peux pas créer ton fichier.",
   "phWork46": "Je t'ai bien ouvert ton fichier.",
   "phWork47": "Je t'ai bien ouvert ton fichier. Que veux-tu faire ?",
   "phWork48": "Ton tableur est ouvert, que veux-tu faire avec ?",
