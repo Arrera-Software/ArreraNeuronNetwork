@@ -806,6 +806,9 @@ class fncArreraNetwork:
     
     def getTableurOpen(self):
         return self.__objetArreraWork.getEtatTableur()
+
+    def getProjectOpen(self):
+        return self.__objetArreraWork.getEtatProject()
     
     def getFileTableur(self):
         return self.__objetArreraWork.getNameFileTableur()
