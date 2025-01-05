@@ -26,7 +26,6 @@ class neuronWork :
             self.__valeurOut = 0
             self.__listSortie = ["",""]
             oldRequette,oldSortie = self.__gestionNeuron.getOld()
-            print(requette)
             if (("ouvre" in requette) and ("ouvre le projet nommer" not in requette
                 and "ouvre le projet nomme" not in requette and "ouvre le projet" not in requette)):
                 if ((("exel" in requette) or ("tableur" in requette)) 
@@ -281,7 +280,7 @@ class neuronWork :
                                                                                                                      "\n- Edition tableur (Taper aide tableur)"+
                                                                                                                      "\n- Edition fichier de traitement de texte (Taper aide word)"+
                                                                                                                      "\n- Fonction Arrera projet (Taper aide projet)"
-                                                                                                                     ,""]
+                                                                                                                     ,"work"]
                                                                                                 self.__valeurOut = 17 
                                                                                             else :
                                                                                                 if ("aide tableur" in requette):
