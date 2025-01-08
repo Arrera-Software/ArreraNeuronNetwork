@@ -53,7 +53,7 @@ class neuronWork :
                                 if (("projet" in requette) or ("nommer" in requette) and ("le" in requette)):
                                     text,file = self.__fonctionArreraNetwork.sortieOpenFileProject(requette)
                                     self.__listSortie = [text,""]
-                                    if ("Il a peux être pas un projet ouvert." not in requette):
+                                    if ("Il a peux être pas un projet ouvert." not in self.__listSortie[0]):
                                         self.__objHistorique.setAction("Ouverture du fichier "+file+" du projet "+self.__fonctionArreraNetwork.getNameProjetOpen())
                                         self.__valeurOut = 7
                                     else :
