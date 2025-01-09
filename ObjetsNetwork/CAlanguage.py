@@ -28,6 +28,9 @@ class CAlanguage:
         self.__user = self.__fileUser.lectureJSON("user")
         self.__genre = self.__fileUser.lectureJSON("genre")
 
+    def getDataUser(self):
+        return [self.__user,self.__genre]
+
     def getNoComprehension(self):
         return self.__formule.lectureJSON("nc")
 
