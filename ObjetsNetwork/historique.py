@@ -214,7 +214,7 @@ class CHistorique :
         if (len(self.__listAction) == 0):
             return False
         else :
-            for i in (0,len(self.__listAction)):
+            for i in (0,len(self.__listAction)-1):
                 sortie = self.__launchAction(self.__listAction[i])
                 if (sortie == False):
                     return False
