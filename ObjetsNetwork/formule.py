@@ -96,41 +96,44 @@ class formule:
         if (sortie == True):
             self.__fncHist.startHistAction()
 
-        if hour >= 0 and hour < 3:
-            formule = self.__calanguage.getPhraseBootHist("1")
-            return formule
-        else:
-            if hour >= 3 and hour <= 6:
-                formule = self.__calanguage.getPhraseBootHist("2")
+            if hour >= 0 and hour < 3:
+                formule = self.__calanguage.getPhraseBootHist("1")
                 return formule
             else:
-                if hour >= 6 and hour <= 10:
-                    formule = self.__calanguage.getPhraseBootHist("3")
+                if hour >= 3 and hour <= 6:
+                    formule = self.__calanguage.getPhraseBootHist("2")
                     return formule
                 else:
-                    if hour >= 10 and hour <= 12:
-                        formule = self.__calanguage.getPhraseBootHist("4")
+                    if hour >= 6 and hour <= 10:
+                        formule = self.__calanguage.getPhraseBootHist("3")
                         return formule
                     else:
-                        if hour >= 13 and hour <= 14:
-                            formule = self.__calanguage.getPhraseBootHist("5")
+                        if hour >= 10 and hour <= 12:
+                            formule = self.__calanguage.getPhraseBootHist("4")
                             return formule
                         else:
-                            if hour >= 15 and hour <= 18:
-                                formule = self.__calanguage.getPhraseBootHist("6")
+                            if hour >= 13 and hour <= 14:
+                                formule = self.__calanguage.getPhraseBootHist("5")
                                 return formule
                             else:
-                                if hour >= 18 and hour <= 20:
-                                    formule = self.__calanguage.getPhraseBootHist("7")
+                                if hour >= 15 and hour <= 18:
+                                    formule = self.__calanguage.getPhraseBootHist("6")
                                     return formule
                                 else:
-                                    if hour >= 20 and hour <= 23:
-                                        formule = self.__calanguage.getPhraseBootHist("8")
+                                    if hour >= 18 and hour <= 20:
+                                        formule = self.__calanguage.getPhraseBootHist("7")
                                         return formule
                                     else:
-                                        if hour >= 0 and hour < 3:
-                                            formule = self.__calanguage.getPhraseBootHist("9")
+                                        if hour >= 20 and hour <= 23:
+                                            formule = self.__calanguage.getPhraseBootHist("8")
                                             return formule
                                         else:
-                                            formule = self.__calanguage.getPhraseBootHist("10")
-                                            return formule
+                                            if hour >= 0 and hour < 3:
+                                                formule = self.__calanguage.getPhraseBootHist("9")
+                                                return formule
+                                            else:
+                                                formule = self.__calanguage.getPhraseBootHist("10")
+                                                return formule
+
+        else :
+            return self.bootNoHist(hour)
