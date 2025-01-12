@@ -111,6 +111,23 @@
     "Écrire dans le fichier traitement de texte, dis 'écris dans le Word'.",
     "Ouvrir le traitement de texte avec l'interface de l'assistant, dis 'montre le Word', 'montre traitement de texte' ou 'montre document'."
   ],
+  "phHelpArreraWork3": [
+    "Les fonctions de la fonctionnalité Arrera Project :",
+    "Créer un projet : dites 'Crée un projet nommé #name#', 'Crée un nouveau projet nommé #name#', 'Crée un projet nommé #name#' ou 'Crée un nouveau projet nommé #name#'.",
+    "Ouvrir un projet Arrera : dites 'Ouvre un projet nommé #name projet#', 'Crée un nouveau projet nommé #name projet#', 'Crée un projet nommé #name projet#' ou 'Crée un nouveau projet nommé #name projet#'.",
+    "Mettre un type au projet quand il vient d'être créé : dites 'Le type est #type#'.",
+    "Mettre un type au projet : dites 'Le type du projet est #type#'.",
+    "Créer un fichier : dites 'Crée un fichier #Type file# nommé #Name file#'.",
+    "Pour voir les types de fichiers qui peuvent être créés, dites 'Types de fichiers'.",
+    "Fermer le projet : dites 'Ferme le projet'.",
+    "Voir les fichiers dans le projet : dites 'Ouvre le fichier du projet nommé #name file#' ou 'Ouvre le fichier nommé #name file#'.",
+    "Ajouter une tâche au projet : dites 'Ajoute une tâche au projet', 'Ajouter une tâche au projet', 'Ajout tâche au projet' ou 'Ajoute une tâche au projet'.",
+    "Supprimer une tâche au projet : dites 'Supprime une tâche au projet', 'Supprimer une tâche au projet', 'Suppr une tâche au projet' ou 'Suppr tâche projet'.",
+    "Finir une tâche au projet : dites 'Finir une tâche au projet', 'Terminer une tâche au projet', 'Terminer une tâche au projet' ou 'Finir une tâche au projet'.",
+    "Voir les tâches du projet, dites 'Montre mes tâches du projet', 'Fais voir mes tâches du projet' ou 'Montre les tâches du projet'.",
+    "Dire les tâches à faire pour aujourd'hui sur le projet, dites 'Dis-moi le nombre de tâches que j'ai pour aujourd'hui'.",
+    "Dire les tâches à faire pour demain sur le projet, dites 'Dis-moi le nombre de tâches que j'ai demain'.",
+    "Dire le nombre total de tâches sur le projet, dites 'Dis-moi le nombre de tâches que j'ai'."],
   "phHelpArreraWork4": [
     "Les types sont :",
     "word",
