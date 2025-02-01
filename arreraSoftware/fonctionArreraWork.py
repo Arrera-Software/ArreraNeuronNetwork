@@ -44,7 +44,7 @@ class fncArreraWork :
         self.__listTaskProjetToday = []
         self.__listTaskProjetTowmorow = []
         # Recupertion de l'emplacement de travail de assistant
-        self.__wordEmplacement = gestion.getWorkEmplacement()
+        self.__gestionnaireNeuron = gestion
 
     def openTableur(self) : 
         if (self.__tableurOpen==False):
@@ -721,12 +721,13 @@ class fncArreraWork :
     
     def openProjet(self,project:str):
         if (self.__projectOpen == False):
-            repertoir = Path(self.__wordEmplacement)
+            wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+            repertoir = Path(wordEmplacement)
             dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
             for i in range(0,len(dossier)):
                 if (project == dossier[i]):
                     # Ecriture de l'emplacement du projet
-                    self.__folderProject = self.__wordEmplacement+"/"+project
+                    self.__folderProject = wordEmplacement+"/"+project
                     # Ouverture du fichier de config
                     self.__jsonFileProject = jsonWork(os.path.join(self.__folderProject+"/.arreraProjet",project+".apr"))
                     # Ouverture fichier de tache
@@ -741,9 +742,10 @@ class fncArreraWork :
         
 
     def createProject(self,name:str):
-        if ((self.__projectOpen == False) and (self.__wordEmplacement != "")):
+        wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+        if ((self.__projectOpen == False) and (wordEmplacement != "")):
             dataJson = {"name":"","type":""}
-            folder = self.__wordEmplacement+"/"+name
+            folder = (wordEmplacement+"/"+name)
             dataJson["name"] = name
             try : 
                 # Creation du projet

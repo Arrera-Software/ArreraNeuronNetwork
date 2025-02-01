@@ -1,4 +1,4 @@
-from ObjetsNetwork.gestion import *
+from librairy.travailJSON import *
 
 class CAlanguage:
     def __init__(self,emplacement:str,fileUser:jsonWork,listVar:list):
