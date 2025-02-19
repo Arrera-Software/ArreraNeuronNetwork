@@ -99,7 +99,7 @@ class jsonWork:
             with open(self.fichier, 'w', encoding='utf-8') as fichier_modifie:
                 json.dump(data, fichier_modifie, indent=2)
 
-    def supprJSONDict(self, flag, cle):
+    def supprJSONList(self, flag, cle):
         """
          Supprimer un cles choisi dans dictionnaire stoker dans un JSON
         :param flag: Flag ou se trouve le dictionnaire
