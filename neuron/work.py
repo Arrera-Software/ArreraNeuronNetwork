@@ -127,44 +127,47 @@ class neuronWork(neuronBase):
 
     def __neuronProjet(self,requette:str):
         oldRequette,oldSortie = self._gestionNeuron.getOld()
-        if ("ouvre" in requette):
-            if (("projet" in requette) or ("nommer" in requette) and ("le" in requette)):
-                text,file = self._fonctionArreraNetwork.sortieOpenFileProject(requette)
+        projetOpen = self._fonctionArreraNetwork.getProjectOpen()
+
+        if (projetOpen==False):
+            if (("ouvre le projet nommer" in requette) or
+                    ("ouvre le projet nomme" in requette) or
+                    ("ouvre le projet" in requette)):
+                projet,text = self._fonctionArreraNetwork.sortieOpenProjet(requette)
                 self._listSortie = [text, ""]
-                if ("Il a peux être pas un projet ouvert." not in self._listSortie[0]):
-                    self._objHistorique.setAction("Ouverture du fichier " + file + " du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
-                    self._valeurOut = 7
-                else :
-                    self._valeurOut = 1
+                self._objHistorique.setAction("Ouverture du projet " + projet)
+                self._valeurOut = 14
                 return 1
-            else :
-                if (("le projet nommer" in requette) or
-                        ("le projet nomme" in requette) or
-                        ("le projet" in requette)):
-                    projet,text = self._fonctionArreraNetwork.sortieOpenProjet(requette)
-                    self._listSortie = [text, ""]
-                    self._objHistorique.setAction("Ouverture du projet " + projet)
-                    self._valeurOut = 14
-                    return 1
         else :
-            if ("cree un fichier" in requette):
-                if ("nommer" in requette and (
-                        ("word"in requette) or ("odt"in requette) or
-                        ("txt"in requette) or ("python" in requette)
-                        or ("json" in requette) or ("html" in requette) or
-                        ("css" in requette) or("md" in requette) or
-                        ("cpp" in requette) or ("exel" in requette) or
-                        ("texte" in requette) or ("en tete" in requette)or
-                        ("open texte document " in requette) or ("tableur" in requette)
-                        or ("language c++" in requette) or ("php" in requette) or
-                        ("javascript" in requette) or ("java script" in requette) or
-                        ("js" in requette) or ("java" in requette) or
-                        ("kotlin" in requette )or ("kt" in requette) or
-                        ("postite" in requette) or ("ab" in requette))):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieCreateFileDirect(requette), ""]
-                    self._objHistorique.setAction("Creation du fichier " + self._fonctionArreraNetwork.getNameLastFile() + " dans le projet " + self._fonctionArreraNetwork.getNameProjetOpen())
-                    self._valeurOut = 16
+            if ("ouvre" in requette):
+                if (("projet" in requette) and ("nommer" in requette) and ("le" in requette)):
+                    text,file = self._fonctionArreraNetwork.sortieOpenFileProject(requette)
+                    self._listSortie = [text, ""]
+                    if ("Il a peux être pas un projet ouvert." not in self._listSortie[0]):
+                        self._objHistorique.setAction("Ouverture du fichier " + file + " du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                        self._valeurOut = 7
+                    else :
+                        self._valeurOut = 1
                     return 1
+            else :
+                if ("cree un fichier" in requette):
+                    if ("nommer" in requette and (
+                            ("word"in requette) or ("odt"in requette) or
+                            ("txt"in requette) or ("python" in requette)
+                            or ("json" in requette) or ("html" in requette) or
+                            ("css" in requette) or("md" in requette) or
+                            ("cpp" in requette) or ("exel" in requette) or
+                            ("texte" in requette) or ("en tete" in requette)or
+                            ("open texte document " in requette) or ("tableur" in requette)
+                            or ("language c++" in requette) or ("php" in requette) or
+                            ("javascript" in requette) or ("java script" in requette) or
+                            ("js" in requette) or ("java" in requette) or
+                            ("kotlin" in requette )or ("kt" in requette) or
+                            ("postite" in requette) or ("ab" in requette))):
+                        self._listSortie = [self._fonctionArreraNetwork.sortieCreateFileDirect(requette), ""]
+                        self._objHistorique.setAction("Creation du fichier " + self._fonctionArreraNetwork.getNameLastFile() + " dans le projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                        self._valeurOut = 16
+                        return 1
                 else :
                     if (("Voulez-vous l'ouvrir ?" in oldSortie or "Es que tu veux que je te l'ouvre ?" in oldSortie) and
                             ("oui" in requette or "ouvre le" in requette or "vasy" in requette or "comme tu veux" in requette)):
