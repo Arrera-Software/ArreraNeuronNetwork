@@ -28,84 +28,93 @@ class neuronWork(neuronBase):
                     self._valeurOut = 1
 
     def __neuronTableur(self,requette:str):
-        if ("ouvre" in requette):
-            if ((("exel" in requette) or ("tableur" in requette))
-                    and  ("ordinateur" in requette)):
-                self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftTableurFile(), ""]
-                self._objHistorique.setAction("Ouverture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
-                self._valeurOut = 1
-                return 1
-            elif (("exel" in requette) or ("tableur" in requette)):
+        if (self._fonctionArreraNetwork.getTableurOpen() == False):
+            if ("ouvre" in requette and (("exel" in requette) or ("tableur" in requette) or ("excel" in requette))):
                 self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableur(), ""]
                 self._objHistorique.setAction("Ouverture d'un fichier exel "+self._fonctionArreraNetwork.getFileTableur())
                 self._valeurOut = 7
                 return 1
-        elif (("ferme" in requette) and(("exel" in requette) or ("tableur" in requette))):
-            name = self._fonctionArreraNetwork.getFileTableur()
-            self._listSortie = [self._fonctionArreraNetwork.sortieCloseTableur(), ""]
-            self._objHistorique.setAction("Fermeture du fichier exel "+name)
-            self._valeurOut = 8
-            return 1
-        elif (("lis" in requette) and ("liste" not in requette) and ("tableur" in requette)):
-            sortieTableur = self._fonctionArreraNetwork.sortieReadTableur()
-            if (sortieTableur[0] == "error"):
-                self._valeurOut = 1
-                self._listSortie = self._fonctionArreraNetwork.sortieErrorReadTableur()
-            else :
-                self._listSortie = sortieTableur
-                self._valeurOut = 13
-                self._objHistorique.setAction("Lecture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur())
-            return 1
-        elif((("ajoute" in requette)  or ("rajoute" in requette) or ("ajout" in requette)) and ("tableur" in requette)):
-            if (("valeur" in requette)):
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddValeurTableur(), ""]
-                self._objHistorique.setAction("Ajout d'une valeur au tableur "+self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-            elif ("somme" in requette) :
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                self._objHistorique.setAction("Ajout d'une formule somme au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-            elif ("moyenne" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
-                self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-            elif ("comptage" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
-                self._objHistorique.setAction("Ajout d'une formule comptage au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-            elif ("minimun" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(4), ""]
-                self._objHistorique.setAction("Ajout d'une formule minimun au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-            elif ("maximun" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                self._objHistorique.setAction("Ajout d'une formule maximun au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return  1
-            else :
-                return 0
-        elif ((("supprime" in requette) or ("suppr" in requette) ) and (("tableur" in requette) or ("exel" in requette))):
-                self._listSortie = [self._fonctionArreraNetwork.sortieSupprValeurTableur(), ""]
-                self._objHistorique.setAction("Suppression d'une valeur au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                self._valeurOut = 5
-                return 1
-        elif ("aide tableur" in requette):
+            elif ("aide tableur" in requette):
                 self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkTableur()
                     ,"tableur"]
                 self._valeurOut = 17
                 return 1
-        elif (("montre" in requette) and(("exel" in requette) or ("tableur" in requette))):
-            self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableurGUI(), ""]
-            self._objHistorique.setAction("Ouverture du tableur " + self._fonctionArreraNetwork.getFileTableur() + " dans l'interface de l'assistant")
-            self._valeurOut = 5
-            return 1
+            else :
+                return 0
         else :
-            return 0
+            if ("ouvre" in requette):
+                if ((("exel" in requette) or ("tableur" in requette))
+                        and  ("ordinateur" in requette)):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftTableurFile(), ""]
+                    self._objHistorique.setAction("Ouverture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
+                    self._valeurOut = 1
+                    return 1
+            elif (("ferme" in requette) and(("exel" in requette) or ("tableur" in requette))):
+                name = self._fonctionArreraNetwork.getFileTableur()
+                self._listSortie = [self._fonctionArreraNetwork.sortieCloseTableur(), ""]
+                self._objHistorique.setAction("Fermeture du fichier exel "+name)
+                self._valeurOut = 8
+                return 1
+            elif (("lis" in requette) and ("liste" not in requette) and ("tableur" in requette)):
+                sortieTableur = self._fonctionArreraNetwork.sortieReadTableur()
+                if (sortieTableur[0] == "error"):
+                    self._valeurOut = 1
+                    self._listSortie = self._fonctionArreraNetwork.sortieErrorReadTableur()
+                else :
+                    self._listSortie = sortieTableur
+                    self._valeurOut = 13
+                    self._objHistorique.setAction("Lecture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur())
+                return 1
+            elif((("ajoute" in requette)  or ("rajoute" in requette) or ("ajout" in requette)) and ("tableur" in requette)):
+                if (("valeur" in requette)):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddValeurTableur(), ""]
+                    self._objHistorique.setAction("Ajout d'une valeur au tableur "+self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+                elif ("somme" in requette) :
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
+                    self._objHistorique.setAction("Ajout d'une formule somme au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+                elif ("moyenne" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
+                    self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+                elif ("comptage" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
+                    self._objHistorique.setAction("Ajout d'une formule comptage au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+                elif ("minimun" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(4), ""]
+                    self._objHistorique.setAction("Ajout d'une formule minimun au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+                elif ("maximun" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
+                    self._objHistorique.setAction("Ajout d'une formule maximun au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return  1
+                else :
+                    return 0
+            elif ((("supprime" in requette) or ("suppr" in requette) ) and (("tableur" in requette) or ("exel" in requette))):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieSupprValeurTableur(), ""]
+                    self._objHistorique.setAction("Suppression d'une valeur au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._valeurOut = 5
+                    return 1
+            elif ("aide tableur" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkTableur()
+                        ,"tableur"]
+                    self._valeurOut = 17
+                    return 1
+            elif (("montre" in requette) and(("exel" in requette) or ("tableur" in requette))):
+                self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableurGUI(), ""]
+                self._objHistorique.setAction("Ouverture du tableur " + self._fonctionArreraNetwork.getFileTableur() + " dans l'interface de l'assistant")
+                self._valeurOut = 5
+                return 1
+            else :
+                return 0
         return 0
 
     def __neuronProjet(self,requette:str):
