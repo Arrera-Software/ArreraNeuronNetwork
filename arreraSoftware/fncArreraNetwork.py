@@ -1531,3 +1531,26 @@ class fncArreraNetwork:
 
     def sortieHelpWorkType(self):
         return self.__mLanguage.getPhraseHelpArreraWork("4")
+
+    def sortieListeProjet(self):
+
+        listProjet = self.__objetArreraWork.getListProjetCreated()
+
+        if (len(listProjet) == 0):
+            sortie = self.__mLanguage.getPhraseWork("68")
+        elif (len(listProjet) == 1):
+            sortie = self.__mLanguage.getPhraseWork("67")
+        else :
+            sortie = self.__mLanguage.getPhraseWork("66")
+
+        for i in range(0,len(listProjet)):
+            if (i == len(listProjet)-1):
+                if (len(listProjet) == 1):
+                    sortie = sortie+" "+listProjet[i]+"."
+                else :
+                    sortie = sortie+" et "+listProjet[i]+"."
+            elif (i==0) :
+                sortie = sortie+" "+listProjet[i]
+            else :
+                sortie = sortie+" ,"+listProjet[i]
+        return sortie

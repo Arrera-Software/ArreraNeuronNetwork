@@ -127,9 +127,8 @@ class neuronWork(neuronBase):
 
     def __neuronProjet(self,requette:str):
         oldRequette,oldSortie = self._gestionNeuron.getOld()
-        projetOpen = self._fonctionArreraNetwork.getProjectOpen()
 
-        if (projetOpen==False):
+        if (self._fonctionArreraNetwork.getProjectOpen() == False):
             if (("ouvre le projet nommer" in requette) or
                     ("ouvre le projet nomme" in requette) or
                     ("ouvre le projet" in requette)):
@@ -145,6 +144,17 @@ class neuronWork(neuronBase):
                     self._objHistorique.setAction("Creation d'un projet nommer " + self._fonctionArreraNetwork.getNameProjetOpen())
                     self._valeurOut = 10
                     return 1
+                else :
+                    if ("aide projet" in requette):
+                        self._listSortie = [self._fonctionArreraNetwork.sortieHelpArreraWork()
+                            ,"projet"]
+                        self._valeurOut = 17
+                        return 1
+                    else :
+                        if ("liste" in requette and "projet" in requette):
+                            self._listSortie = [self._fonctionArreraNetwork.sortieListeProjet(),"liste projet"]
+                            self._valeurOut = 1
+                            return 1
         else :
             if ("ouvre" in requette):
                 if (("projet" in requette) and ("nommer" in requette) and ("le" in requette)):
@@ -242,39 +252,32 @@ class neuronWork(neuronBase):
                                                         self._valeurOut = 1
                                                         return 1
                                             else :
-                                                if ("aide projet" in requette):
-                                                    self._listSortie = [self._fonctionArreraNetwork.sortieHelpArreraWork()
-                                                        ,"projet"]
-                                                    self._valeurOut = 17
+                                                if (("Quelle est le type de projet ?" in oldSortie) and ("le type est" in requette)):
+                                                    self._listSortie = [self._fonctionArreraNetwork.sortieSetTypeProjet(requette), ""]
+                                                    self._objHistorique.setAction("Mise en place d'un type au projet")
+                                                    self._valeurOut = 5
                                                     return 1
                                                 else :
-
-                                                    if (("Quelle est le type de projet ?" in oldSortie) and ("le type est" in requette)):
+                                                    if ("le type du projet est" in requette):
                                                         self._listSortie = [self._fonctionArreraNetwork.sortieSetTypeProjet(requette), ""]
                                                         self._objHistorique.setAction("Mise en place d'un type au projet")
                                                         self._valeurOut = 5
                                                         return 1
                                                     else :
-                                                        if ("le type du projet est" in requette):
-                                                            self._listSortie = [self._fonctionArreraNetwork.sortieSetTypeProjet(requette), ""]
-                                                            self._objHistorique.setAction("Mise en place d'un type au projet")
-                                                            self._valeurOut = 5
+                                                        if ("ferme" in requette and "projet" in requette):
+                                                            nameProjet = self._fonctionArreraNetwork.getNameProjetOpen()
+                                                            self._listSortie = [self._fonctionArreraNetwork.sortieCloseProject(), ""]
+                                                            self._objHistorique.setAction("Fermeture du projet " + nameProjet)
+                                                            self._valeurOut = 21
                                                             return 1
                                                         else :
-                                                            if ("ferme" in requette and "projet" in requette):
-                                                                nameProjet = self._fonctionArreraNetwork.getNameProjetOpen()
-                                                                self._listSortie = [self._fonctionArreraNetwork.sortieCloseProject(), ""]
-                                                                self._objHistorique.setAction("Fermeture du projet " + nameProjet)
-                                                                self._valeurOut = 21
+                                                            if ("type fichier" in requette):
+                                                                self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkType()
+                                                                    ,"fichier"]
+                                                                self._valeurOut = 17
                                                                 return 1
                                                             else :
-                                                                if ("type fichier" in requette):
-                                                                    self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkType()
-                                                                        ,"fichier"]
-                                                                    self._valeurOut = 17
-                                                                    return 1
-                                                                else :
-                                                                    return 0
+                                                                return 0
         return 0
 
     def __neuronWord(self,requette:str):

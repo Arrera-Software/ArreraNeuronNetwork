@@ -1092,3 +1092,13 @@ class fncArreraWork :
     
     def getListTacheTowmorowProjet(self):
         return self.__listTaskProjetTowmorow
+
+    def getListProjetCreated(self):
+        wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+        project_list = []
+        if wordEmplacement:
+            for folder in os.listdir(wordEmplacement):
+                folder_path = os.path.join(wordEmplacement, folder)
+                if os.path.isdir(folder_path) and os.path.exists(os.path.join(folder_path, ".arreraProjet")):
+                    project_list.append(folder)
+        return project_list
