@@ -62,36 +62,33 @@ class neuronWork(neuronBase):
                 self._objHistorique.setAction("Ajout d'une valeur au tableur "+self._fonctionArreraNetwork.getFileTableur())
                 self._valeurOut = 5
                 return 1
+            elif ("somme" in requette) :
+                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
+                self._objHistorique.setAction("Ajout d'une formule somme au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                self._valeurOut = 5
+                return 1
+            elif ("moyenne" in requette):
+                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
+                self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                self._valeurOut = 5
+                return 1
+            elif ("comptage" in requette):
+                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
+                self._objHistorique.setAction("Ajout d'une formule comptage au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                self._valeurOut = 5
+                return 1
+            elif ("minimun" in requette):
+                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(4), ""]
+                self._objHistorique.setAction("Ajout d'une formule minimun au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                self._valeurOut = 5
+                return 1
+            elif ("maximun" in requette):
+                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
+                self._objHistorique.setAction("Ajout d'une formule maximun au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                self._valeurOut = 5
+                return  1
             else :
-                if ("somme" in requette) :
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                    self._objHistorique.setAction("Ajout d'une formule somme au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
-                    return 1
-                else :
-                    if ("moyenne" in requette):
-                        self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
-                        self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                        self._valeurOut = 5
-                        return 1
-                    else :
-                        if ("comptage" in requette):
-                            self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
-                            self._objHistorique.setAction("Ajout d'une formule comptage au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                            self._valeurOut = 5
-                            return 1
-                        else :
-                            if ("minimun" in requette):
-                                self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(4), ""]
-                                self._objHistorique.setAction("Ajout d'une formule minimun au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                                self._valeurOut = 5
-                                return 1
-                            else :
-                                if ("maximun" in requette):
-                                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                                    self._objHistorique.setAction("Ajout d'une formule maximun au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                                    self._valeurOut = 5
-                                    return  1
+                return 0
         elif ((("supprime" in requette) or ("suppr" in requette) ) and (("tableur" in requette) or ("exel" in requette))):
                 self._listSortie = [self._fonctionArreraNetwork.sortieSupprValeurTableur(), ""]
                 self._objHistorique.setAction("Suppression d'une valeur au tableur " + self._fonctionArreraNetwork.getFileTableur())
