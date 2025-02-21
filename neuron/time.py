@@ -84,34 +84,40 @@ class neuroneTime(neuronBase):
             self._listSortie = [self._fonctionArreraNetwork.sortieViewTache(), ""]
             self._objHistorique.setAction("Consulation des taches enregistrer")
             self._valeurOut = 5
+            return 1
         elif((("ajoute une tache"in requette) or ("ajouter une tache" in requette)
               or ("ajout tache" in requette) or ("add tache" in requette))
              and ("projet" not in requette)):
             self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheAdd(), ""]
             self._objHistorique.setAction("Ajout d'une tache dans l'assistant")
             self._valeurOut = 5
+            return 1
         elif((("supprime une tache" in requette)or ("supprimer une tache" in requette)
               or ("suppr une tache" in requette) or ("suppr tache" in requette))
              and ("projet" not in requette)):
             self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheSuppr(), ""]
             self._objHistorique.setAction("Suppression d'une tache dans l'assistant")
             self._valeurOut = 5
+            return 1
         elif((("finir une tache" in requette) or ("terminer une tache" in requette)
               or ("termine une tache" in requette) or ("fini une tache" in requette))
              and ("projet" not in requette)):
             self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheCheck(), ""]
             self._objHistorique.setAction("Mise d'une tache a fini dans l'assistant")
             self._valeurOut = 5
+            return 1
         elif ((((("dit moi" in requette) and ("nombre" in requette)) or ("j'ai combien" in requette))
                and (("tache" in requette) or ("taches" in requette)))and ("projet" not in requette)) :
             self._listSortie = [self._fonctionArreraNetwork.sortieNbSpeakTache(), ""]
             self._objHistorique.setAction("Consultation du nombre de tache enregistrer")
             self._valeurOut = 1
+            return 1
         elif  (((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette))
                  and (("jour" in requette) or ("aujourd'hui" in requette))))and ("projet" not in requette))  :
             self._listSortie = [self._fonctionArreraNetwork.sortieSpeakTacheToday(), ""]
             self._objHistorique.setAction("Consultation du nombre de tache enregistrer pour aujourd'hui")
             self._valeurOut = 1
+            return 1
         elif  (((("dit moi" in requette) and (("tache" in requette) or ("taches" in requette))
                  and ("demain" in requette)))and ("projet" not in requette))  :
             self._listSortie = [self._fonctionArreraNetwork.sortieSpeakTacheTowmorow(), ""]
