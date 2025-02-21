@@ -5,20 +5,24 @@ from tkcalendar import DateEntry
 from arreraSoftware.fonctionDate import*
 
 class fncArreraTache :
-    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,taskFile:str):
+    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,taskFile:str,projet:bool=False,nameProjet:str=""):
         self.__taskFile = jsonWork(taskFile)
         self.__mainColor = fichierConfig.lectureJSON("interfaceColor")
         self.__textColor = fichierConfig.lectureJSON("interfaceTextColor")
         self.__icon = fichierConfig.lectureJSON("iconAssistant")
         self.__nameAssistant = fichierConfig.lectureJSON("name")
         self.__objDate = fncDate
+        if projet == True :
+            self.__title = self.__nameAssistant + " : taches de " + nameProjet
+        else :
+            self.__title = self.__nameAssistant + " : taches personnel"
 
     def __windows(self):
         screen = Toplevel()
         screen.minsize(500,500)
         screen.maxsize(500,500)
         screen.configure(bg=self.__mainColor)
-        screen.title(self.__nameAssistant+" : Tache")
+        screen.title(self.__title)
         screen.iconphoto(False,PhotoImage(file=self.__icon))
         # Varriable 
         self.__choixSuppr = StringVar(screen)

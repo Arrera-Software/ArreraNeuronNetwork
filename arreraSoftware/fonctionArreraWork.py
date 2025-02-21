@@ -1,3 +1,5 @@
+from selinux import selinux_getpolicytype
+
 from ObjetsNetwork.gestion import*
 from arreraSoftware.fonctionTache import*
 from tkinter import filedialog 
@@ -730,10 +732,12 @@ class fncArreraWork :
                     self.__folderProject = wordEmplacement+"/"+project
                     # Ouverture du fichier de config
                     self.__jsonFileProject = jsonWork(os.path.join(self.__folderProject+"/.arreraProjet",project+".apr"))
-                    # Ouverture fichier de tache
-                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,self.__folderProject+"/.arreraProjet/TaskProjet.json")
                     # Mise de la var a true
                     self.__projectOpen = True
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,
+                                                          self.__folderProject+"/.arreraProjet/TaskProjet.json",
+                                                          True,self.getNameProjet())
                     return True
             return False
         else :
@@ -766,10 +770,11 @@ class fncArreraWork :
                         json.dump({},file,ensure_ascii=False,indent=4)
                     # Ouverture du fichier de config
                     self.__jsonFileProject = jsonWork(configPath)
-                    # Ouverture fichier de tache
-                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,taskPath)
                     # Mise a true de la var de projet ouvert
                     self.__projectOpen = True
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = fncArreraTache(self.__fncDate,self.__configFile,taskPath,
+                                                          True,self.getNameProjet())
                     return True
                 except Exception as e :
                     return False
