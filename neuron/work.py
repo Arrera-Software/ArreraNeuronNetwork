@@ -239,7 +239,7 @@ class neuronWork(neuronBase):
                                               self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 5
                 return 1
-            elif ("dit moi" in requette) and (("nombre" in requette) or ("j'ai combien" in requette)):
+            elif ("dit moi" in requette) and (("nombre" in requette) or ("combien" in requette)):
                 if  (("jour" in requette) or ("aujourd'hui" in requette)) :
                     self._listSortie = [self._fonctionArreraNetwork.sortieListeTacheTodayProjet(), ""]
                     self._objHistorique.setAction("Enumeration des taches du " +
