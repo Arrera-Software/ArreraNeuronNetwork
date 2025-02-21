@@ -42,9 +42,7 @@ class neuronWork(neuronBase):
             else :
                 return 0
         else :
-            if ("ouvre" in requette):
-                if ((("exel" in requette) or ("tableur" in requette))
-                        and  ("ordinateur" in requette)):
+            if ("ouvre" in requette and (("exel" in requette or "tableur" in requette) and  ("ordinateur" in requette))):
                     self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftTableurFile(), ""]
                     self._objHistorique.setAction("Ouverture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
                     self._valeurOut = 1
@@ -68,22 +66,26 @@ class neuronWork(neuronBase):
             elif((("ajoute" in requette)  or ("rajoute" in requette) or ("ajout" in requette)) and ("tableur" in requette)):
                 if (("valeur" in requette)):
                     self._listSortie = [self._fonctionArreraNetwork.sortieAddValeurTableur(), ""]
-                    self._objHistorique.setAction("Ajout d'une valeur au tableur "+self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Ajout d'une valeur au tableur "+
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return 1
                 elif ("somme" in requette) :
                     self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                    self._objHistorique.setAction("Ajout d'une formule somme au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Ajout d'une formule somme au tableur " +
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return 1
                 elif ("moyenne" in requette):
                     self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
-                    self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " +
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return 1
                 elif ("comptage" in requette):
                     self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
-                    self._objHistorique.setAction("Ajout d'une formule comptage au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Ajout d'une formule comptage au tableur " +
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return 1
                 elif ("minimun" in requette):
@@ -93,14 +95,16 @@ class neuronWork(neuronBase):
                     return 1
                 elif ("maximun" in requette):
                     self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                    self._objHistorique.setAction("Ajout d'une formule maximun au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Ajout d'une formule maximun au tableur " +
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return  1
                 else :
                     return 0
             elif ((("supprime" in requette) or ("suppr" in requette) ) and (("tableur" in requette) or ("exel" in requette))):
                     self._listSortie = [self._fonctionArreraNetwork.sortieSupprValeurTableur(), ""]
-                    self._objHistorique.setAction("Suppression d'une valeur au tableur " + self._fonctionArreraNetwork.getFileTableur())
+                    self._objHistorique.setAction("Suppression d'une valeur au tableur " +
+                                                  self._fonctionArreraNetwork.getFileTableur())
                     self._valeurOut = 5
                     return 1
             elif ("aide tableur" in requette):
@@ -110,7 +114,9 @@ class neuronWork(neuronBase):
                     return 1
             elif (("montre" in requette) and(("exel" in requette) or ("tableur" in requette))):
                 self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableurGUI(), ""]
-                self._objHistorique.setAction("Ouverture du tableur " + self._fonctionArreraNetwork.getFileTableur() + " dans l'interface de l'assistant")
+                self._objHistorique.setAction("Ouverture du tableur " +
+                                              self._fonctionArreraNetwork.getFileTableur() +
+                                              " dans l'interface de l'assistant")
                 self._valeurOut = 5
                 return 1
             else :
@@ -133,7 +139,8 @@ class neuronWork(neuronBase):
             elif (("cree un projet nommer" in requette) or ("cree un nouveau projet nommer" in requette )
                   or ("cree un projet nomme" in requette) or ("cree un nouveau projet nomme" in requette)):
                 self._listSortie = [self._fonctionArreraNetwork.sortieCreateFolder(requette), ""]
-                self._objHistorique.setAction("Creation d'un projet nommer " + self._fonctionArreraNetwork.getNameProjetOpen())
+                self._objHistorique.setAction("Creation d'un projet nommer " +
+                                              self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 10
                 return 1
 
@@ -156,7 +163,9 @@ class neuronWork(neuronBase):
                 text,file = self._fonctionArreraNetwork.sortieOpenFileProject(requette)
                 self._listSortie = [text, ""]
                 if ("Il a peux être pas un projet ouvert." not in self._listSortie[0]):
-                    self._objHistorique.setAction("Ouverture du fichier " + file + " du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                    self._objHistorique.setAction("Ouverture du fichier "
+                                                  + file + " du projet " +
+                                                  self._fonctionArreraNetwork.getNameProjetOpen())
                     self._valeurOut = 7
                 else :
                     self._valeurOut = 1
@@ -192,42 +201,49 @@ class neuronWork(neuronBase):
               ("oui" in requette or "ouvre le" in requette or "vasy" in requette or "comme tu veux" in requette)):
             nameFile = self._fonctionArreraNetwork.getNameLastFile()
             self._listSortie = [self._fonctionArreraNetwork.sortieopenFileCreated(), ""]
-            self._objHistorique.setAction("Ouverture du fichier " + nameFile + " du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+            self._objHistorique.setAction("Ouverture du fichier " + nameFile + " du projet " +
+                                          self._fonctionArreraNetwork.getNameProjetOpen())
             self._valeurOut = 7
             return 1
 
         elif (("liste" in requette) and ("fichier" in requette) and
               (("projet" in requette ) or ("project" in requette ))):
             self._listSortie = [self._fonctionArreraNetwork.sortieListFileProject(), ""]
-            self._objHistorique.setAction("Liste de fichier du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+            self._objHistorique.setAction("Liste de fichier du projet " +
+                                          self._fonctionArreraNetwork.getNameProjetOpen())
             self._valeurOut = 1
             return 1
         elif (("taches" in requette or "tache" in requette) and "projet" in requette):
             if ("montre" in requette or "fais voir" in requette):
                 self._listSortie = [self._fonctionArreraNetwork.sortieShowTacheProjet(), ""]
-                self._objHistorique.setAction("Activation de l'interface des tache du projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                self._objHistorique.setAction("Activation de l'interface des tache du projet " +
+                                              self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 5
                 return 1
             elif ("ajoute" in requette or "ajouter" in requette
                   or "ajout" in requette or "add" in requette) :
                 self._listSortie = [self._fonctionArreraNetwork.sortieAddTacheProjet(), ""]
-                self._objHistorique.setAction("Ajout d'une tache au projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                self._objHistorique.setAction("Ajout d'une tache au projet " +
+                                              self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 5
                 return 1
             elif ("supprime" in requette or "supprimer" in requette or "suppr" in requette) :
                 self._listSortie = [self._fonctionArreraNetwork.sortieSupprTacheProjet(), ""]
-                self._objHistorique.setAction("Suppression d'une tache au projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                self._objHistorique.setAction("Suppression d'une tache au projet " +
+                                              self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 5
                 return 1
             elif ("finir" in requette or "terminer" in requette or "termine" in requette or "fini" in requette) :
                 self._listSortie = [self._fonctionArreraNetwork.sortieSupprTacheProjet(), ""]
-                self._objHistorique.setAction("Finnision d'une tache au projet " + self._fonctionArreraNetwork.getNameProjetOpen())
+                self._objHistorique.setAction("Finnision d'une tache au projet " +
+                                              self._fonctionArreraNetwork.getNameProjetOpen())
                 self._valeurOut = 5
                 return 1
             elif ("dit moi" in requette) and (("nombre" in requette) or ("j'ai combien" in requette)):
                 if  (("jour" in requette) or ("aujourd'hui" in requette)) :
                     self._listSortie = [self._fonctionArreraNetwork.sortieListeTacheTodayProjet(), ""]
-                    self._objHistorique.setAction("Enumeration des taches du " + self._fonctionArreraNetwork.getNameProjetOpen() + " pour aujourd'hui")
+                    self._objHistorique.setAction("Enumeration des taches du " +
+                                                  self._fonctionArreraNetwork.getNameProjetOpen() + " pour aujourd'hui")
                     self._valeurOut = 1
                     return 1
                 elif ("demain" in requette):
@@ -237,7 +253,8 @@ class neuronWork(neuronBase):
                     return 1
                 else :
                     self._listSortie = [self._fonctionArreraNetwork.sortieNbTacheProjet(), ""]
-                    self._objHistorique.setAction("Enumeration des taches du " + self._fonctionArreraNetwork.getNameProjetOpen())
+                    self._objHistorique.setAction("Enumeration des taches du " +
+                                                  self._fonctionArreraNetwork.getNameProjetOpen())
                     self._valeurOut = 1
                     return 1
             else :
@@ -276,7 +293,8 @@ class neuronWork(neuronBase):
             if (("ouvre" in requette) and (("word" in requette) or
                 ("traitement de texte" in requette) or ("document" in requette))):
                 self._listSortie = [self._fonctionArreraNetwork.sortieOpenWord(), ""]
-                self._objHistorique.setAction("Ouverture d'un fichier word " + self._fonctionArreraNetwork.getFileWord())
+                self._objHistorique.setAction("Ouverture d'un fichier word " +
+                                              self._fonctionArreraNetwork.getFileWord())
                 self._valeurOut = 7
                 return 1
             elif ("aide word" in requette):
@@ -285,13 +303,13 @@ class neuronWork(neuronBase):
                 self._valeurOut = 17
                 return 1
         else :
-            if ("ouvre" in requette):
-                if (("ouvre" in requette) and ((("word" in requette) or ("traitement de texte" in requette) or
-                    ("document" in requette)) and  ("ordinateur" in requette))):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftWorkFile(), ""]
-                    self._objHistorique.setAction("Ouverture du fichier word " + self._fonctionArreraNetwork.getFileWord() + " sur l'ordinateur")
-                    self._valeurOut = 1
-                    return 1
+            if (("ouvre" in requette) and ((("word" in requette) or ("traitement de texte" in requette)
+                or ("document" in requette)) and  ("ordinateur" in requette))):
+                self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftWorkFile(), ""]
+                self._objHistorique.setAction("Ouverture du fichier word " +
+                                              self._fonctionArreraNetwork.getFileWord() + " sur l'ordinateur")
+                self._valeurOut = 1
+                return 1
             elif (("ferme" in requette) and ("word" in requette) or ("traitement de texte" in requette)):
                 name = self._fonctionArreraNetwork.getFileWord()
                 self._listSortie = [self._fonctionArreraNetwork.sortieCloseDocx(), ""]
@@ -300,18 +318,22 @@ class neuronWork(neuronBase):
                 return 1
             elif (("lis" in requette) or ("liste" not in requette) and ("word" in requette)):
                 self._listSortie = [self._fonctionArreraNetwork.sortieReadDocx(), ""]
-                self._objHistorique.setAction("Lecture du fichier word " + self._fonctionArreraNetwork.getFileWord())
+                self._objHistorique.setAction("Lecture du fichier word " +
+                                              self._fonctionArreraNetwork.getFileWord())
                 self._valeurOut = 9
                 return 1
             elif ("ecrit dans le word" in requette) :
                 self._listSortie = [self._fonctionArreraNetwork.sortieWriteDocx(requette), ""]
-                self._objHistorique.setAction("Ecriture dans le fichier docx" + self._fonctionArreraNetwork.getFileWord())
+                self._objHistorique.setAction("Ecriture dans le fichier docx" +
+                                              self._fonctionArreraNetwork.getFileWord())
                 self._valeurOut = 1
                 return 1
             elif (("montre" in requette) and ("word" in requette)
                         or ("traitement de texte" in requette) or ("document" in requette)):
                 self._listSortie = [self._fonctionArreraNetwork.sortieOpenWordGUI(), ""]
-                self._objHistorique.setAction("Ouverture du word " + self._fonctionArreraNetwork.getFileWord() + " dans l'interface de l'assistant")
+                self._objHistorique.setAction("Ouverture du word " +
+                                              self._fonctionArreraNetwork.getFileWord() +
+                                              " dans l'interface de l'assistant")
                 self._valeurOut = 5
                 return 1
             elif ("aide word" in requette):
