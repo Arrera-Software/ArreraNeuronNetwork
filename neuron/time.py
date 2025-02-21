@@ -76,7 +76,7 @@ class neuroneTime(neuronBase):
             return 0
 
     def neuronTache(self,requette:str):
-        if ("taches" in requette or "tache" in requette):
+        if ("taches" in requette or "tache" in requette) and "projet" not in requette:
             if ("montre" in requette or "fais voir" in requette):
                 self._listSortie = [self._fonctionArreraNetwork.sortieViewTache(), ""]
                 self._objHistorique.setAction("Consulation des taches enregistrer")
