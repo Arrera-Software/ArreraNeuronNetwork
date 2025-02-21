@@ -10,6 +10,15 @@ class chaine :
         chaine = chaine.replace("à","a")
         chaine = chaine.replace("ç","c")
         chaine = chaine.replace("ê","e")
+        chaine = chaine.replace("ô","o")
+        chaine = chaine.replace("ù","u")
+        chaine = chaine.replace("û","u")
+        chaine = chaine.replace("î","i")
+        chaine = chaine.replace("â","a")
+        chaine = chaine.replace("ë","e")
+        chaine = chaine.replace("ï","i")
+        chaine = chaine.replace("ü","u")
+        chaine = chaine.replace("ö","o")
         return chaine.lower()
     
     def firstMots(chaine:str,liste:list):
