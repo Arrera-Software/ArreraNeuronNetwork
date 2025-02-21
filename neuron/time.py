@@ -46,34 +46,29 @@ class neuroneTime(neuronBase):
             return 0
 
     def __neuronAgenda(self,requette:str): # Rendez-vous
-        if (("ajouter un rendez vous" in requette) or ("ajout un rendez vous"  in requette)
-                or ("ajout evenement" in requette) or ("ajout rappel" in requette)
-                or ("ajout un evenement" in requette) or ("ajout un rappel" in requette)
-                or ("ajouter un evenement" in requette) or ("ajouter  un rappel" in requette)):
-            self._listSortie = [self._fonctionArreraNetwork.sortieAjoutEvent(), ""]
-            self._objHistorique.setAction("Ajout d'un rendez-vous dans l'agenda")
-            self._valeurOut = 5
-            return 1
-        elif (("suppr un rendez vous" in requette) or ("supprimer un rendez vous"  in requette)
-              or ("suppr evenement" in requette) or ("suppr rappel" in requette)
-              or ("suppr un evenement" in requette) or ("suppr un rappel" in requette)
-              or ("supprimer un evenement" in requette) or ("supprimer un rappel" in requette)
-              or ("supprime un rendez-vous" in requette)):
-            self._listSortie = [self._fonctionArreraNetwork.sortieSupprEvent(), ""]
-            self._objHistorique.setAction("Suppression d'un rendez-vous dans l'agenda")
-            self._valeurOut = 5
-            return 1
-        elif (("evenement d'aujourd'hui" in requette) or ("evenement du jour" in requette)
-              or ("rendez-vous d'aujourd'hui" in requette) or ("rappel aujourd'hui" in requette)):
-            self._listSortie = [self._fonctionArreraNetwork.sortieEvenementDay(), ""]
-            self._objHistorique.setAction("Consulation des rendez-vous enregistrer dans l'agenda")
-            self._valeurOut = 5
-            return 1
-        elif(("ouvre l'agenda" in requette) or ("ouvre le calendrier" in requette)):
-            self._listSortie = [self._fonctionArreraNetwork.sortieOpenAgenda(), ""]
-            self._objHistorique.setAction("Ouverture de l'interface agenda")
-            self._valeurOut = 5
-            return 1
+        if "evenement" in requette or "agenda" or "rendez vous" in requette or "rappel":
+            if "ajoute" in requette or "ajouter" in requette or "add" in requette or "ajout" in requette:
+                self._listSortie = [self._fonctionArreraNetwork.sortieAjoutEvent(), ""]
+                self._objHistorique.setAction("Ajout d'un rendez-vous dans l'agenda")
+                self._valeurOut = 5
+                return 1
+            elif "supprime" in requette or "supprimer" in requette or "suppr" in requette:
+                self._listSortie = [self._fonctionArreraNetwork.sortieSupprEvent(), ""]
+                self._objHistorique.setAction("Suppression d'un rendez-vous dans l'agenda")
+                self._valeurOut = 5
+                return 1
+            elif ("montre" in requette or "fais voir" in requette) and ("aujourd'hui" in requette or "jour" in requette):
+                self._listSortie = [self._fonctionArreraNetwork.sortieEvenementDay(), ""]
+                self._objHistorique.setAction("Consulation des rendez-vous enregistrer dans l'agenda")
+                self._valeurOut = 5
+                return 1
+            elif "montre" in requette or "ouvre" in requette or "fais voir" in requette :
+                self._listSortie = [self._fonctionArreraNetwork.sortieOpenAgenda(), ""]
+                self._objHistorique.setAction("Ouverture de l'interface agenda")
+                self._valeurOut = 5
+                return 1
+            else :
+                return 0
         else :
             return 0
 
