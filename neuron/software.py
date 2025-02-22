@@ -21,10 +21,10 @@ class neuroneSoftware :
         return self.__valeurOut
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getSoftware() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self.__listSortie = ["",""]
-            self.__valeurOut = 0
             #reponse neuron software
             if ("telecharge" in requette) :
                 if "video" in requette :

@@ -20,13 +20,13 @@ class neuroneDiscution :
         return self.__valeurOut
         
     def neurone(self,requette:str):
-        if self.__gestNeuron.getChatbot() == True : 
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
+        if self.__gestNeuron.getChatbot() == True :
             #Recuperation de l'heure
             hour = datetime.now().hour
-            #Initilisation des variable nbRand et text et valeur
             text = ""
-            self.__listSortie = ["",""]
-            self.__valeurOut = 0
             #Recuperation atribut de l'assistant
             listOldSortie = self.__gestionNeuron.getOld()
             oldrequette = listOldSortie[0]

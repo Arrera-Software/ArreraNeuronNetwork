@@ -21,10 +21,10 @@ class neuroneOpen :
         return self.__valeurOut
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getOpen() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self.__valeurOut = 0
-            self.__listSortie = ["",""]
             #Recuperation atribut de l'assistant
             listeLogiciel = self.__gestionNeuron.getListLogiciel()
             nbLogiciel = len(listeLogiciel)

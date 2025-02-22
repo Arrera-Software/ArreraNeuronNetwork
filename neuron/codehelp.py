@@ -18,11 +18,10 @@ class neuroneCodehelp :
         return self.__valeurOut
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getCodeHelp() == True:
-            #Initilisation des variable nbRand et text et valeur
-            self.__listSortie = ["",""]
-            self.__valeurOut = 0
-
             if ("ouvre" in requette):
                 if (("organisateur de variable" in requette)or("orga var" in requette)):
                     self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenOrgaVar(),""]

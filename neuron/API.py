@@ -29,10 +29,10 @@ class neuroneAPI :
         return self.__valeurOut
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getAPI() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self.__listSortie = []
-            self.__valeurOut = 0
             #reponse du neuron main
             if (("resumer actualites" in requette) or ("resumer actu" in requette)) :
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieResumerActualite()

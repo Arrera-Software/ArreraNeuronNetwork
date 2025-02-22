@@ -17,10 +17,10 @@ class neuroneSearch:
         return self.__valeurOut
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getSearch() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self.__valeurOut = 0
-            self.__listSortie = ["",""]
             #reponse neuron search
             if (("bigsearch" in requette )or ("grand recherche" in requette)) :
                 text,recherche = self.__fonctionArreraNetwork.sortieGrandRecherche(requette)

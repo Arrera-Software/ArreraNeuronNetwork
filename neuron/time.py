@@ -3,10 +3,10 @@ from neuron.CNeuronBase import *
 class neuroneTime(neuronBase):
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self._listSortie = ["",""]
+        self._valeurOut = 0
         if self._gestNeuron.getTime() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self._valeurOut = 0
-            self._listSortie = ["", ""]
             #reponse neuron time
             if ((("resumer" in requette) and ("tache" in requette)) or
                     (("resumer" in requette) and ("agenda" in requette))):

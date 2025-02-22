@@ -19,10 +19,10 @@ class neuroneService :
         return self.__valeurOut
         
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self.__listSortie = ["",""]
+        self.__valeurOut = 0
         if self.__gestNeuron.getService() == True :
-            #Initilisation des variable nbRand et text et valeur
-            self.__valeurOut = 0
-            self.__listSortie = ["",""]
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
                 self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]

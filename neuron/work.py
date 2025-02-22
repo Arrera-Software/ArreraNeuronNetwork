@@ -3,10 +3,10 @@ from neuron.CNeuronBase import *
 class neuronWork(neuronBase):
 
     def neurone(self,requette:str):
+        #Initilisation des variable nbRand et text et valeur
+        self._listSortie = ["",""]
+        self._valeurOut = 0
         if (self._gestNeuron.getWork() == True):
-            #Initilisation des variable nbRand et text et valeur
-            self._valeurOut = 0
-            self._listSortie = ["", ""]
 
             if (self.__neuronTableur(requette) == 1):
                 return
