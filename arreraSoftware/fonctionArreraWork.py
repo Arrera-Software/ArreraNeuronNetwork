@@ -1,5 +1,3 @@
-from selinux import selinux_getpolicytype
-
 from ObjetsNetwork.gestion import*
 from arreraSoftware.fonctionTache import*
 from tkinter import filedialog 

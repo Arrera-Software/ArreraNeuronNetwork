@@ -1,38 +1,12 @@
-from ObjetsNetwork.gestion import*
-from arreraSoftware.fncArreraNetwork import*
-from ObjetsNetwork.chaineCarractere import *
-from ObjetsNetwork.enabledNeuron import*
-from ObjetsNetwork.historique import*
+from neuron.CNeuronBase import neuronBase
 
-class neuroneAPI :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique) :
-        #Init objet
-        self.__gestionNeuron = gestionnaire
-        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
-        self.__fonctionArreraNetwork = fncArreraNetwork
-        self.__objHistorique = objHist
-        self.__etatVilleDomicile = self.__gestionNeuron.getEtatLieuDomicile()
-        self.__etatVilleTravail = self.__gestionNeuron.getEtatLieuTravail()
-        self.__listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
-                        "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
-                        "suedois","danois","norvegien","finnois","grec","hebreu","indonesien"]
-        
-        self.__dictLang = {"anglais":"en","francais":"fr","espagnol":"es","allemand":"de", "chinois simplifie":"zh-CN",
-                        "chinois traditionnel":"zh-TW","arabe":"ar", "russe":"ru","japonais":"ja",
-                        "coreen":"ko","italien":"it","portugais":"pt","neerlandais":"nl","suedois":"sv",
-                        "danois":"da","norvegien":"no","finnois":"fi","grec":"el","hebreu":"he","indonesien":"id"}
-
-    def getListSortie(self)->list:
-        return self.__listSortie
-    
-    def getValeurSortie(self)->int :
-        return self.__valeurOut
+class neuroneAPI(neuronBase) :
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
         self.__listSortie = ["",""]
         self.__valeurOut = 0
-        if self.__gestNeuron.getAPI() == True :
+        if self._gestNeuron.getAPI() == True :
             #reponse du neuron main
             if (("resumer actualites" in requette) or ("resumer actu" in requette)) :
                 self.__valeurOut,self.__listSortie = self.__fonctionArreraNetwork.sortieResumerActualite()
