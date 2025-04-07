@@ -17,7 +17,8 @@ class gestionNetwork:
         self.__mLanguage = CAlanguage(self.__configFile.lectureJSON("moduleLanguage"),
                                       self.__fileUser,[self.__configFile.lectureJSON("name"),
                                                        self.__configFile.lectureJSON("bute"),
-                                                       self.__configFile.lectureJSON("createur")])
+                                                       self.__configFile.lectureJSON("createur")],
+                                      self.getListFonction())
         self.__etatNeuron = CArreraEnabledNeuron(self.__configFile)
         self.__network = network()
         # Varriable

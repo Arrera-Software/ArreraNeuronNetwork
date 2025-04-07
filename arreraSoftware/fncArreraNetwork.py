@@ -742,6 +742,7 @@ class fncArreraNetwork:
             self.__objetCodehelp.rechercheDoc(1,recherche)
             text = self.__mLanguage.getPhraseCodehelp("6")
             r = "devdoc "+recherche
+            return text,r
         else :
             if (("recherche microsoft" in requette) or ("rmicrosoft" in requette) or ("smicrosoft" in requette)):
                 recherche = requette.replace("recherche microsoft","")
@@ -750,6 +751,7 @@ class fncArreraNetwork:
                 self.__objetCodehelp.rechercheDoc(2,recherche)
                 text = self.__mLanguage.getPhraseCodehelp("7")
                 r = "microsoft "+recherche
+                return text,r
             else :
                 if (("recheche python" in requette) or ("rpython" in requette) or ("spython" in requette)):
                     recherche = requette.replace("recheche python","")
@@ -758,8 +760,9 @@ class fncArreraNetwork:
                     self.__objetCodehelp.rechercheDoc(3,recherche)
                     text = self.__mLanguage.getPhraseCodehelp("8")
                     r = "python "+recherche
+                    return text,r
         
-        return text,r
+        return "",""
     
     def sortieOpenColorSelecteur(self):
         text = self.__mLanguage.getPhraseCodehelp("2")
@@ -774,7 +777,7 @@ class fncArreraNetwork:
             sgithub
             search github
         """
-        text = self.__mLanguage.getPhraseWork("9")
+        text = self.__mLanguage.getPhraseWork("69")
 
         recherche = requette.replace("recherche github","")
         recherche = recherche.replace("rgithub","")
