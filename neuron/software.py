@@ -1,60 +1,40 @@
-from ObjetsNetwork.gestion import*
-from arreraSoftware.fncArreraNetwork import*
-from ObjetsNetwork.chaineCarractere import *
-from ObjetsNetwork.enabledNeuron import*
-from ObjetsNetwork.historique import*
+from neuron.CNeuronBase import *
 
-class neuroneSoftware :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique) :
-        #Init objet
-        self.__gestionNeuron = gestionnaire
-        self.__fonctionArreraNetwork = fncArreraNetwork
-        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
-        self.__objHistorique = objHist
-        self.__listSortie = ["",""]
-        self.__valeurOut = 0
-
-    def getListSortie(self)->list:
-        return self.__listSortie
-    
-    def getValeurSortie(self)->int :
-        return self.__valeurOut
+class neuroneSoftware(neuronBase) :
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
-        self.__listSortie = ["",""]
-        self.__valeurOut = 0
-        if self.__gestNeuron.getSoftware() == True :
+        self._listSortie = ["", ""]
+        self._valeurOut = 0
+        if self._gestNeuron.getSoftware() == True :
             #reponse neuron software
             if ("telecharge" in requette) :
                 if "video" in requette :
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieDownloadVideo(),""]
-                    self.__valeurOut = 5
-                    self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode video")
+                    self._listSortie = [self._fonctionArreraNetwork.sortieDownloadVideo(), ""]
+                    self._valeurOut = 5
+                    self._objHistorique.setAction("Ouverture du logiciel de telechargement en mode video")
+                elif ("musique" in requette) :
+                        self._listSortie = [self._fonctionArreraNetwork.sortieDownloadMusic(), ""]
+                        self._valeurOut = 5
+                        self._objHistorique.setAction("Ouverture du logiciel de telechargement en mode musique")
                 else :
-                    if ("musique" in requette) :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieDownloadMusic(),""]
-                        self.__valeurOut = 5
-                        self.__objHistorique.setAction("Ouverture du logiciel de telechargement en mode musique")
-                    else :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieNoDownload(),""]
+                    self._listSortie = [self._fonctionArreraNetwork.sortieNoDownload(), ""]
 
             if (("calculatrice" in requette) or ("calculette" in requette)) :
                 if "nombre complex" in requette or "nb complex" in requette :
-                    self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("1"),""]
-                    self.__objHistorique.setAction("Ouverture de la calculatrice en mode nombre complex")
-                    self.__valeurOut = 5
+                    self._listSortie = [self._fonctionArreraNetwork.sortieCalculatrice("1"), ""]
+                    self._objHistorique.setAction("Ouverture de la calculatrice en mode nombre complex")
+                    self._valeurOut = 5
+                elif ("pythagore" in requette) :
+                        self._listSortie = [self._fonctionArreraNetwork.sortieCalculatrice("2"), ""]
+                        self._objHistorique.setAction("Ouverture de la calculatrice en mode pythagore")
+                        self._valeurOut = 5
                 else :
-                    if ("pythagore" in requette) :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("2"),""]
-                        self.__objHistorique.setAction("Ouverture de la calculatrice en mode pythagore")
-                        self.__valeurOut = 5
-                    else :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieCalculatrice("0"),""]
-                        self.__objHistorique.setAction("Ouverture de la calculatrice")
-                        self.__valeurOut = 5
+                    self._listSortie = [self._fonctionArreraNetwork.sortieCalculatrice("0"), ""]
+                    self._objHistorique.setAction("Ouverture de la calculatrice")
+                    self._valeurOut = 5
                     
                                         
             #Mise a jour de la valeur 
-            if (self.__valeurOut==0):                                                              
-                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+            if (self._valeurOut==0):
+                self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])

@@ -1,35 +1,18 @@
-from ObjetsNetwork.gestion import*
-from arreraSoftware.fncArreraNetwork import*
-from ObjetsNetwork.enabledNeuron import*
-from ObjetsNetwork.historique import*
-class neuroneService :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork, objHist:CHistorique) :
-        #Init objet
-        self.__gestionNeuron = gestionnaire
-        self.__fonctionArreraNetwork = fncArreraNetwork
-        self.__gestNeuron = self.__gestionNeuron.getEtatNeuronObjet()
-        self.__objHistorique = objHist
-        self.__listSortie = ["",""]
-        self.__valeurOut = 0
+from neuron.CNeuronBase import *
 
-    def getListSortie(self)->list:
-        return self.__listSortie
-    
-    def getValeurSortie(self)->int :
-        return self.__valeurOut
+class neuroneService(neuronBase) :
         
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
-        self.__listSortie = ["",""]
-        self.__valeurOut = 0
-        if self.__gestNeuron.getService() == True :
+        self._listSortie = ["", ""]
+        self._valeurOut = 0
+        if self._gestNeuron.getService() == True :
             #reponse du neuron main
             if "lire un truc" in requette or  "lit un truc" in requette :
-                self.__listSortie = [self.__fonctionArreraNetwork.reading(),""]
-                self.__objHistorique.setAction("Lecture")
-                self.__valeurOut = 5
-            else :
-                if "calcule" in requette :
+                self._listSortie = [self._fonctionArreraNetwork.reading(), ""]
+                self._objHistorique.setAction("Lecture")
+                self._valeurOut = 5
+            elif "calcule" in requette :
                     requette = requette.replace("calcule","")
                     requette = requette.replace(" ","")
                     if (("1" in requette) or ("2" in requette)  or ("3" in requette) 
@@ -38,17 +21,16 @@ class neuroneService :
                         or( "0" in requette) and ("+" in requette) or ("-" in requette) 
                         or ( "*" in requette) or ("/" in requette)) :
                         resultat =  eval(requette)
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieResultatCalcule(resultat),""]
-                        self.__objHistorique.setAction("Calcule par texte")
+                        self._listSortie = [self._fonctionArreraNetwork.sortieResultatCalcule(resultat), ""]
+                        self._objHistorique.setAction("Calcule par texte")
                     else :
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieErrorCalcule(),""]
-                else :
-                    if (("ouvre la documentation" in requette)or("montre la documentation" in requette)):
-                        self.__listSortie = [self.__fonctionArreraNetwork.sortieOpenDocumentation(),""]
-                        webbrowser.open(self.__gestionNeuron.getLinkDoc())
-                    else :
-                        if ("corrige" in requette):
-                            self.__listSortie = [self.__fonctionArreraNetwork.sortieCorrection(requette),""]
-            #Mise a jour de la valeur 
-            if (self.__valeurOut==0):                                                            
-                self.__valeurOut = self.__gestionNeuron.verrifSortie(self.__listSortie[0])
+                        self._listSortie = [self._fonctionArreraNetwork.sortieErrorCalcule(), ""]
+            elif (("ouvre la documentation" in requette)or("montre la documentation" in requette)):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieOpenDocumentation(), ""]
+                    webbrowser.open(self._gestionNeuron.getLinkDoc())
+            elif ("corrige" in requette):
+                    self._listSortie = [self._fonctionArreraNetwork.sortieCorrection(requette), ""]
+
+            #Mise a jour de la valeur
+            if (self._valeurOut==0):
+                self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
