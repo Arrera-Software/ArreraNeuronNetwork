@@ -419,6 +419,8 @@ class fncArreraNetwork:
         else :
             if etatWindows == False and etatLinux == True :
                 logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserLinux")
+            else :
+                return self.__mLanguage.getPhraseOpenError("2")
         sortie = self.__objetOpenSoft.setName(logiciel)
         self.__objetOpenSoft.open()
         if sortie == True :

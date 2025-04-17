@@ -96,7 +96,8 @@ class CAlanguage:
         return formule.format(genre=self.__genre,user=self.__user)
 
     def getPhraseOpenList(self,nb:str):
-        phrases = self.__open.lectureJSON("ph"+nb)
+        phrases = self.__open.lectureJSONList("ph"+nb)
+        nb = random.randint(0, len(phrases) - 1)
         return [phrase.format(genre=self.__genre, user=self.__user) for phrase in phrases]
 
     def getPhraseOpenError(self,nb:str):
