@@ -31,3 +31,7 @@ class neuroneSocket(neuronBase):
 
     def getMessageServer(self):
         return self.__sortieMessage
+
+    def stopSocket(self):
+        self.__socket.disconnect()
+        self.__serverOn = False
