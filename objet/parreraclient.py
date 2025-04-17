@@ -46,6 +46,7 @@ class PArreraClient:
     def disconnect(self) -> bool:
         if self.__connection:
             try:
+                self.__connection.send("closed")
                 self.__connection.close()
                 self.__connection = None
                 return True
