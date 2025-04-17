@@ -27,6 +27,6 @@
     "emplacementEvenenement" :"JSON/evenementUser.json",
     "emplacementTache":"JSON/tache.json",
     "tokenGithub":"",
-    "wordFolder":"",
+    "wordFolder":"/home/baptistep/Bureau/arreraneuron-test-folder/projet",
     "videoDownloadFolder":""
 }

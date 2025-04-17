@@ -11,6 +11,7 @@ class CArreraEnabledNeuron :
         self.__etatApi = configNeuron.lectureJSON("etatApi")
         self.__etatCodehelp = configNeuron.lectureJSON("etatCodehelp")
         self.__etatWork = configNeuron.lectureJSON("etatWork")
+        self.__etatSocket = configNeuron.lectureJSON("etatSocket")
         
     def getService(self):
         if self.__etatService == "1" :
@@ -62,6 +63,12 @@ class CArreraEnabledNeuron :
     
     def getWork(self):
         if (self.__etatWork == "1"):
+            return True
+        else :
+            return False
+
+    def getSocket(self):
+        if (self.__etatSocket == "1"):
             return True
         else :
             return False
