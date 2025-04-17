@@ -4,10 +4,10 @@ from objet.parreraclient import *
 class neuroneSocket(neuronBase):
     def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique):
         #Init objet
-        super().__init__(fncArreraNetwork, gestionnaire,objHist)
         self.__socket = PArreraClient(gestionnaire.getName())
         self.__serverOn = self.__socket.connectToServeur("ws://127.0.0.1:12345")
         self.__sortieMessage = ""
+        super().__init__(fncArreraNetwork, gestionnaire,objHist)
 
     def neurone(self,requette:str):
         if self._gestNeuron.getTime() == True  and self.__serverOn == True :
