@@ -7,14 +7,15 @@ class neuroneSocket(neuronBase):
         self.__socket = PArreraClient(gestionnaire.getName())
         self.__serverOn = self.__socket.connectToServeur("ws://127.0.0.1:6666")
         self.__sortieMessage = ""
+        self.__language = gestionnaire.getLanguageObjet()
         super().__init__(fncArreraNetwork, gestionnaire,objHist)
 
     def neurone(self,requette:str):
         if self._gestNeuron.getTime() == True  and self.__serverOn == True :
-            if ("send" in requette):
-                msg = requette.replace("send","").strip()
-                self.__socket.sendMessage(msg)
-                self._listSortie = ["Message envoyer",""]
+            if ("recherche" in requette):
+                recherche = requette.replace("recherche","").strip()
+                self.__socket.sendMessage("recherche " + recherche)
+                self._listSortie = [self.__language.getPhraseSearch("3"),""]
                 self._valeurOut = 1
             else :
                 self._valeurOut = 0
