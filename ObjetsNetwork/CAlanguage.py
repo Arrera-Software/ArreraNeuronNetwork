@@ -15,6 +15,7 @@ class CAlanguage:
         self.__api = jsonWork(emplacement+index.lectureJSON("api"))
         self.__time = jsonWork(emplacement+index.lectureJSON("time"))
         self.__work = jsonWork(emplacement + index.lectureJSON("work"))
+        self.__socket = jsonWork(emplacement + index.lectureJSON("socket"))
         # Variable
         self.__listFonction = listFonc
         self.__nbFonction = len(self.__listFonction)
@@ -248,3 +249,6 @@ class CAlanguage:
             else:
                 phraseOut = phraseOut + "\n\n- " + liste[i]
         return phraseOut
+
+    def getPhraseSocket(self,name:str):
+        return self.__socket.lectureJSON(name)
