@@ -13,6 +13,8 @@ class neuronBase :
         self._gestNeuron = self._gestionNeuron.getEtatNeuronObjet()
         self._objHistorique = objHist
         self._listSortie = ["",""]
+        self._socket = self._gestionNeuron.getSocketObjet()
+        self._language = self._gestionNeuron.getLanguageObjet()
         self._valeurOut = 0
 
     def getListSortie(self)->list:
