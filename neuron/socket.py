@@ -11,7 +11,7 @@ class neuroneSocket(neuronBase):
         super().__init__(fncArreraNetwork, gestionnaire,objHist)
 
     def neurone(self,requette:str):
-        if self._gestNeuron.getTime() == True  and self.__serverOn == True :
+        if self._gestNeuron.getSocket() == True  and self.__serverOn == True :
             if ("recherche" in requette):
                 recherche = requette.replace("recherche","").strip()
                 self.__socket.sendMessage("recherche " + recherche)
@@ -28,6 +28,12 @@ class neuroneSocket(neuronBase):
             self.__sortieMessage = message
             return True
         else:
+            return False
+
+    def sendData(self, data):
+        if self._gestNeuron.getSocket() == True  and self.__serverOn == True :
+            return self.__socket.sendMessage(data)
+        else :
             return False
 
     def getMessageServer(self):
