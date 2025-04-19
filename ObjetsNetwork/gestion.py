@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from librairy.travailJSON import *
+from ObjetsNetwork.gestSocket import *
 from librairy.dectectionOS import*
 from ObjetsNetwork.CAlanguage import *
 from ObjetsNetwork.network import*
@@ -21,6 +21,7 @@ class gestionNetwork:
                                       self.getListFonction())
         self.__etatNeuron = CArreraEnabledNeuron(self.__configFile)
         self.__network = network()
+        self.__serveurSocket = socketAssistant(self.__configFile.lectureJSON("name"))
         # Varriable
         self.__oldRequette = ""
         self.__oldSorti = ""
@@ -39,6 +40,9 @@ class gestionNetwork:
 
     def getNetworkObjet(self):
         return self.__network
+
+    def getSocketObjet(self):
+        return self.__serveurSocket
         
     def getName(self):
         return  str(self.__configFile.lectureJSON("name"))
