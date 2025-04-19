@@ -132,7 +132,6 @@ class ArreraNetwork :
         # Socket
         self.__socket.neurone(requette)
         self.__valeurOut = self.__socket.getValeurSortie()
-
         if self.__valeurOut == 0 :
             # Service
             self.__service.neurone(requette)
@@ -209,7 +208,7 @@ class ArreraNetwork :
             else :
                 self.__listOut = self.__service.getListSortie()
         else :
-            self.__listOut = self.__service.getListSortie()
+            self.__listOut = self.__socket.getListSortie()
 
         #Sauvegarde de la sortie et de l'entré
         if ((self.__valeurOut  == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11)) :

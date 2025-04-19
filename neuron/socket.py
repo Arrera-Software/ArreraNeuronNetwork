@@ -15,7 +15,7 @@ class neuroneSocket(neuronBase):
             if ("recherche" in requette):
                 recherche = requette.replace("recherche","").strip()
                 self.__socket.sendMessage("recherche " + recherche)
-                self._listSortie = [self.__language.getPhraseSearch("3"),""]
+                self._listSortie = [self.__language.getPhraseSearch("4"),""]
                 self._valeurOut = 1
             else :
                 self._valeurOut = 0
