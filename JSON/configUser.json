@@ -9,19 +9,9 @@
     "dictSoftWindows" :{
     },
     "dictSoftLinux" :{
-        
+
     },
-    "diapoLinux" :"",
-    "diapoWindows":"",
-    "browserLinux":"",
-    "browserWindows":"",
-    "noteLinux":"",
-    "noteWindows":"",
-    "musicLinux":"",
-    "musicWindows":"",
-    "lienCloud":"",
     "dictSite":{
-        
     },
     "moteurRecherche":"",
     "emplacementEvenenement" :"JSON/evenementUser.json",

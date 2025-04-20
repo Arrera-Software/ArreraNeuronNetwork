@@ -221,6 +221,7 @@ class fncArreraNetwork:
         # Expressions régulières pour extraire les parties de la phrase
         pattern = re.compile(r"de\s+(.*?)\s+(?:a|comme|et)\s+(.*?)\s+(?:comme|et|s'il|destination|aller|sur|,|\.|$)", re.IGNORECASE)
         match = pattern.search(phrase)
+        depart=""
         
         if match:
             depart = match.group(1).strip()
@@ -381,86 +382,40 @@ class fncArreraNetwork:
         self.__calculatrice.calculatrice(mode)
         return text
     
-    def sortieOpenSoftware(self,soft):
-        dictionnaireSoft = self.__gestionNeuron.getDictionnaireLogiciel()
-        sortie = self.__objetOpenSoft.setName(dictionnaireSoft[soft])
-        if sortie == True :
-            text = self.__mLanguage.getPhraseOpenSoftware("1",soft)
-            self.__objetOpenSoft.open()
-        else :
-            text = self.__mLanguage.getPhraseOpenSoftware("2",soft)
-        return text
-    
-    
-    def sortieOpenDiapo(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        logiciel = ""
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("diapoLinux")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            nbrand = random.randint(0, 1)
-            text = self.__mLanguage.getPhraseOpenList("1")[nbrand]
+    def sortieOpenSoftware(self,requette):
+        soft = requette.lower().replace("ouvrir",
+                                        "").replace("ouvre"
+                                                    , "").strip()
+        return self.__mLanguage.getPhraseOpenSoftware("1",soft)
 
-        else :
-            text = self.__mLanguage.getPhraseOpenError("1")
-        return text
-    
-    def sortieOpenBrowser(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("browserLinux")
-            else :
-                return self.__mLanguage.getPhraseOpenError("2")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            nbrand = random.randint(0, 5)
-            text = self.__mLanguage.getPhraseOpenList("2")[nbrand]
-        else :
-            text = self.__mLanguage.getPhraseOpenError("2")
-        return text
-    
-    def sortieOpenNote(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("noteWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("noteLinux")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            text = self.__mLanguage.getPhraseOpen("3")
-        else :
-            text = self.__mLanguage.getPhraseOpenError("3")
-        return text
-    
-    def sortieOpenMusic(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
-            logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("musicWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                logiciel = self.__gestionNeuron.getValeurfichierUtilisateur("musicLinux")
-        sortie = self.__objetOpenSoft.setName(logiciel)
-        self.__objetOpenSoft.open()
-        if sortie == True :
-            text = self.__mLanguage.getPhraseOpen("4")
-        else :
-            text = self.__mLanguage.getPhraseOpenError("4")
-        return text
+    def openSoftwareAssistant(self,requette:str):
+        """
+        Ouvre un logiciel à partir d'une requête textuelle.
+
+        Args:
+            requette: La demande d'ouverture d'un logiciel (ex: "ouvrir notepad")
+
+        Returns:
+            bool: True si le logiciel a été ouvert avec succès, False sinon
+        """
+        soft = requette.lower().replace("ouvrir",
+                                        "").replace("ouvre"
+                                                    , "").strip()
+
+        listeLogiciel = self.__gestionNeuron.getListLogiciel()
+        dictionnaireSoft = self.__gestionNeuron.getDictionnaireLogiciel()
+
+        if not listeLogiciel:
+            return False
+
+        for logiciel in listeLogiciel:
+            if soft in logiciel.lower():
+                if self.__objetOpenSoft.setName(dictionnaireSoft[soft]):
+                    self.__objetOpenSoft.open()
+                    return True
+                return False
+        return False
+
     
     def sortieOpenYoutube(self):
         sortie = webbrowser.open("https://www.youtube.com/")
@@ -471,19 +426,28 @@ class fncArreraNetwork:
         
         return text
     
-    def sortieOpenCloud(self):
-        lien= self.__gestionNeuron.getValeurfichierUtilisateur("lienCloud")
-        sortie = webbrowser.open(lien)
-        if sortie :
-            text = self.__mLanguage.getPhraseOpen("5")
-        else :
-            text = self.__mLanguage.getPhraseOpenError("5")
-        return text
-    
-    def sortieOpenSite(self,site):
-        dictionnaireSoft = self.__gestionNeuron.getDictionnaireWeb()
-        sortie = webbrowser.open(dictionnaireSoft[site])
-        return self.__mLanguage.getPhraseOpenSite(site,sortie)
+    def sortieOpenSite(self,requette:str,etat:bool):
+        site = requette.replace("ouvrir","").replace("ouvre","").strip().lower()
+        return self.__mLanguage.getPhraseOpenSite(site,etat)
+
+    def openWebSiteAssistant(self,requette:str):
+        webSite = requette.replace("ouvrir","").replace("ouvre","").strip().lower()
+
+        listeSite = self.__gestionNeuron.getListWeb()
+        dictionnaireWebSite = self.__gestionNeuron.getDictionnaireWeb()
+
+        if not listeSite:
+            return False
+
+        for site in listeSite:
+            if webSite in site.lower():
+                if webbrowser.open(dictionnaireWebSite[site]):
+                    return True
+                else :
+                    return False
+
+        return False
+
 
     def sortieNoOpen(self):
         return self.__mLanguage.getPhraseOpen("7")

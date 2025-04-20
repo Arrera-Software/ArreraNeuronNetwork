@@ -238,9 +238,6 @@ class CHistorique :
                 case "soft arrera download video" :
                     self.__objFNCArrera.sortieDownloadVideo()
                     return True
-                case "site cloud" :
-                    self.__objFNCArrera.sortieOpenCloud()
-                    return True
                 case "radio launch europe 1" :
                     self.__objFNCArrera.sortieStartRadio(1)
                     return True
@@ -292,30 +289,16 @@ class CHistorique :
                 case "lib codehelp" :
                     self.__objFNCArrera.sortieOpenLibrairy()
                     return True
-                case "soft presentation" :
-                    self.__objFNCArrera.sortieOpenDiapo()
-                    return True
-                case "soft internet" :
-                    self.__objFNCArrera.sortieOpenBrowser()
-                    return True
-                case "soft note" :
-                    self.__objFNCArrera.sortieOpenNote()
-                    return True
-                case "soft music"  :
-                    self.__objFNCArrera.sortieOpenMusic()
-                    return True
                 case "site youtube" :
                     self.__objFNCArrera.sortieOpenYoutube()
                     return True
             if ("site" in action):
                 site = action.replace("site","").replace(" ","")
-                self.__objFNCArrera.sortieOpenSite(site)
-                return True
+                return self.__objFNCArrera.openWebSiteAssistant(site)
             else : 
                 if ("soft" in action):
                     soft = action.replace("soft","").replace(" ","")
-                    self.__objFNCArrera.sortieOpenSoftware(soft)
-                    return True
+                    return self.__objFNCArrera.openSoftwareAssistant(soft)
                 else :
                     if ("open exel" in action):
                         exel = action.replace("open exel","").replace(" ","")
