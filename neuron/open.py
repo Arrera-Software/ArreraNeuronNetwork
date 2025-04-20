@@ -47,9 +47,6 @@ class neuroneOpen(neuronBase) :
                 elif ("france culture" in requette):
                         self._listSortie = [self._fonctionArreraNetwork.sortieStartRadio(6), ""]
                         self._objHistorique.setAction("Lancement de la radio france culture")
-                elif ("france bleu" in requette):
-                        self._listSortie = [self._fonctionArreraNetwork.sortieStartRadio(7), ""]
-                        self._objHistorique.setAction("Lancement de la radio france bleu")
                 elif ("fun radio" in requette):
                         self._listSortie = [self._fonctionArreraNetwork.sortieStartRadio(8), ""]
                         self._objHistorique.setAction("Lancement de la radio fun radio")
