@@ -27,8 +27,23 @@ class neuroneOpen(neuronBase) :
                                 ,""]
                         elif (self._gestNeuron.getSocket() == True and self._socket.getServeurOn() == True):
                             soft = requette.replace("ouvrir","").replace("ouvre","").strip()
-                            self._socket.sendData("ouvre " + soft)
-                            self._listSortie = [self._language.getPhraseSocket("openSoftSocket").format(softSocket=soft),""]
+                            if (soft == ""):
+                                self._listSortie = [self._fonctionArreraNetwork.sortieNoOpen(), ""]
+                            elif (soft == "arrera postite" or soft == "postite"):
+                                self._listSortie = [self._language.getPhraseSocket("openArreraPostite")
+                                    , ""]
+                                self._socket.sendData("ouvre " + "arrerra postite")
+                            elif (soft == "arrera video download" or soft == "video download"):
+                                self._listSortie = [self._language.getPhraseSocket("openArreraVideoDownload")
+                                    , ""]
+                                self._socket.sendData("ouvre " + "arrera video download")
+                            elif (soft == "arrera raccourci" or soft == "raccourci"):
+                                self._listSortie = [self._language.getPhraseSocket("openArreraRaccourci")
+                                    , ""]
+                                self._socket.sendData("ouvre " + "arrera raccourci")
+                            else :
+                                self._socket.sendData("ouvre " + soft)
+                                self._listSortie = [self._language.getPhraseSocket("openSoftSocket").format(softSocket=soft),""]
                         else :
                             self._listSortie = [self._fonctionArreraNetwork.sortieNoOpen(), ""]
 
