@@ -25,6 +25,10 @@ class neuroneOpen(neuronBase) :
                             self._socket.sendData("ouvre " + soft)
                             self._listSortie = [self._language.getPhraseSocket("openSoftSocket").format(softSocket=soft)
                                 ,""]
+                        elif (self._gestNeuron.getSocket() == True and self._socket.getServeurOn() == True):
+                            soft = requette.replace("ouvrir","").replace("ouvre","").strip()
+                            self._socket.sendData("ouvre " + soft)
+                            self._listSortie = [self._language.getPhraseSocket("openSoftSocket").format(softSocket=soft),""]
                         else :
                             self._listSortie = [self._fonctionArreraNetwork.sortieNoOpen(), ""]
 
