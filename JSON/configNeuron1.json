@@ -25,7 +25,6 @@
    "etatWork":"1",
    "etatSocket": "1",
    "lienDoc":"www.google.com",
-   "emplacementFileHist":"JSON/neuronHist.json",
    "emplacementFileRoutine":"JSON/routineFile.json",
    "fileUser": "JSON/configUser.json",
    "fileFete": "JSON/listFete.json",

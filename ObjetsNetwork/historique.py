@@ -1,9 +1,9 @@
 from arreraSoftware.fncArreraNetwork import*
 
 class CHistorique :
-    def __init__(self,configNeuron:jsonWork,fncArreraNetwork:fncArreraNetwork):
+    def __init__(self,fileHist:str,fncArreraNetwork:fncArreraNetwork):
         # Declaration des varriable est de objet
-        self.__fileHist = jsonWork(configNeuron.lectureJSON("emplacementFileHist"))
+        self.__fileHist = jsonWork(fileHist)
         self.__dateToday = ""
         self.__dateTowmorow = ""
         self.__objFNCArrera = fncArreraNetwork
