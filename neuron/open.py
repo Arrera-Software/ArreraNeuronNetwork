@@ -89,12 +89,12 @@ class neuroneOpen(neuronBase) :
                     or("quelles sont les logiciel enregister" in requette) or("quelles sont les logiciels enregiste" in requette)
                     or("quelles sont les logiciels enregiste" in requette) or ("fais une liste des logiciel"in requette)
                     or ("fais une liste des logiciels"in requette) or ("liste les logiciel" in requette)):
-                        self._listSortie = [self._fonctionArreraNetwork.sortieListLogiciel(nbLogiciel, listeLogiciel), ""]
+                        self._listSortie = [self._fonctionArreraNetwork.sortieListLogiciel(), ""]
             elif (("liste les sites" in requette)or("quelles sont les sites enregister" in requette)
                 or("quelles sont les site enregister" in requette) or("quelles sont les sites enregiste" in requette)
                 or("quelles sont les sites enregiste" in requette) or ("fais une liste des site"in requette)
                 or ("fais une liste des sites"in requette) or ("liste les site" in requette)):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieListSite(nbSite, listeSite), ""]
+                    self._listSortie = [self._fonctionArreraNetwork.sortieListSite(), ""]
             elif (("liste" in requette) and ("radio" in requette)):
                 self._listSortie = [self._fonctionArreraNetwork.sortieListRadio()
                                      ,"radio"]

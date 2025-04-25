@@ -561,43 +561,45 @@ class fncArreraNetwork:
         self.__objetCalendar.activeAgenda()
         return text
     
-    def sortieListLogiciel(self,nb:int,listSoft:list):
+    def sortieListLogiciel(self):
+        listSoft = self.__gestionNeuron.getListLogiciel()
+        nb = len(listSoft)
+        texte = ""
         if (nb==0):
             return self.__mLanguage.getPhraseOpen("8")
-        else :
-            if (nb == 1) :
+        elif (nb == 1) :
                 return self.__mLanguage.getPhraseOpen("9")+listSoft[0]
-            else :
-                baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
-                for i in range(0,nb):
-                    if (i == 0):
-                        texte = baseTexte+" "+listSoft[i]
-                    else :
-                        if (i == (nb-1)):
-                            texte = texte + " et "+ listSoft[i]
-                        else :
-                            texte = texte +", "+ listSoft[i]
-                
-                return texte 
+        else :
+            baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
+            for i in range(0,nb):
+                if (i == 0):
+                    texte = baseTexte+" "+listSoft[i]
+                elif (i == (nb-1)):
+                    texte = texte + " et "+ listSoft[i]
+                else :
+                    texte = texte +", "+ listSoft[i]
 
-    def sortieListSite(self,nb:int,listSite:list):
+        return texte
+
+    def sortieListSite(self):
+        listSite = self.__gestionNeuron.getListWeb()
+        nb = len(listSite)
+        texte = ""
         if (nb==0):
            return self.__mLanguage.getPhraseOpen("10")
+        elif (nb == 1) :
+           return self.__mLanguage.getPhraseOpen("11")+listSite[0]
         else :
-            if (nb == 1) :
-               return self.__mLanguage.getPhraseOpen("11")+listSite[0]
-            else :
-                baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
-                
-                for i in range(0,nb):
-                    if (i == 0):
-                        texte = baseTexte+" "+listSite[i]
-                    else :
-                        if (i == (nb-1)):
-                            texte = texte + " et "+ listSite[i]
-                        else :
-                            texte = texte +", "+ listSite[i]
-                return texte
+            baseTexte = self.__mLanguage.getPhraseNbOpenSoftware(str(nb))
+            for i in range(0,nb):
+                if (i == 0):
+                    texte = baseTexte+" "+listSite[i]
+                elif (i == (nb-1)):
+                    texte = texte + " et "+ listSite[i]
+                else :
+                    texte = texte +", "+ listSite[i]
+
+        return texte
 
     def sortieListRadio(self):
         return self.__mLanguage.getPhraseListeRadio()
