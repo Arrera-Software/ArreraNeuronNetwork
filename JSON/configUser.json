@@ -16,6 +16,7 @@
     "moteurRecherche":"",
     "emplacementEvenenement" :"JSON/evenementUser.json",
     "emplacementTache":"JSON/tache.json",
+    "emplacementHistorique": "JSON/neuronHist.json",
     "tokenGithub":"",
     "wordFolder":"/home/baptistep/Bureau/arreraneuron-test-folder/projet",
     "videoDownloadFolder":""

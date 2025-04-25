@@ -11,7 +11,7 @@ from neuron.codehelp import*
 from neuron.work import*
 
 class ArreraNetwork :
-    def __init__(self,fichierConfiguration:str,fileHist:str):
+    def __init__(self,fichierConfiguration:str):
         # Declaration des diferente var 
         self.__listOut =  [] 
         self.__valeurOut = 0
@@ -27,7 +27,7 @@ class ArreraNetwork :
         self.__socket = self.__gestionnaire.getSocketObjet()
         #initilisation du gestionnaire du reseau de neuron
         self.__fonctionAssistant = fncArreraNetwork(self.__gestionnaire)
-        self.__historique = CHistorique(fileHist,self.__fonctionAssistant)
+        self.__historique = CHistorique(self.__fonctionAssistant,self.__gestionnaire)
         self.__formuleNeuron = formule(self.__gestionnaire,self.__historique)
         #recuperation etat du reseau
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()
