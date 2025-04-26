@@ -1,6 +1,6 @@
 from gtts import gTTS
 import os
-from playsound3 import playsound
+from playsound import playsound
 
 class Speaking :
     def __init__(self,langue:str) :

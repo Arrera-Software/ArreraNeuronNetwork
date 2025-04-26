@@ -8,7 +8,9 @@ class neuroneService(neuronBase) :
         self._valeurOut = 0
         if self._gestNeuron.getService() == True :
             #reponse du neuron main
-            if "lire un truc" in requette or  "lit un truc" in requette :
+            if (("lire" in requette or "lit" in requette or "lis" in requette) and
+                    ("passage" in requette or "truc" in requette or "cela" in requette or
+                     "texte" in requette or "article" in requette)) :
                 self._listSortie = [self._fonctionArreraNetwork.reading(), ""]
                 self._objHistorique.setAction("Lecture")
                 self._valeurOut = 5

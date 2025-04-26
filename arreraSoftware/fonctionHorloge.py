@@ -1,7 +1,7 @@
 from tkinter import*
 from tkinter import messagebox
 import time
-from playsound3 import *
+from playsound import *
 from librairy.travailJSON import*
 
 class fncArreraHorloge :
