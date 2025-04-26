@@ -15,7 +15,6 @@ class ArreraNetwork :
         # Declaration des diferente var 
         self.__listOut =  [] 
         self.__valeurOut = 0
-        self.__socketRunning = True
         self.__networkRunning = True
         #Ouverture fichier de configuration
         self.__configNeuron = jsonWork(fichierConfiguration)
@@ -41,8 +40,6 @@ class ArreraNetwork :
         self.__time = neuroneTime(self.__fonctionAssistant,self.__gestionnaire,self.__historique)
         self.__codehelp = neuroneCodehelp(self.__fonctionAssistant,self.__gestionnaire,self.__historique)
         self.__work = neuronWork(self.__fonctionAssistant,self.__gestionnaire,self.__historique)
-        # Initilisation du theard pour detecter les message du serveur
-        self.__threadMessage = th.Thread(target=self.__traitementMSGServer, daemon=True)
 
     def getNeuronRunning(self):
         return self.__networkRunning
@@ -62,14 +59,14 @@ class ArreraNetwork :
         else :
             text= self.__formuleNeuron.bootWithHist(hour)
         self.__gestionnaire.setOld("boot","boot")
-        self.__threadMessage.start()
         return str(text)
     
     def shutdown(self):
         self.__historique.saveHistorique()
         hour = datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
-        self.__socket.stopSocket()
+        if (self.__socket.getServeurOn() == True):
+            self.__socket.stopSocket()
         return str(text)
     
     def getListSortie(self)->list :
@@ -112,16 +109,6 @@ class ArreraNetwork :
 
     def getUserData(self):
         return self.__gestionnaire.getLanguageObjet().getDataUser()
-
-    def __traitementMSGServer(self):
-        while self.__socketRunning == True :
-            sortie = self.__socket.receivedMessageServer()
-            if sortie == True :
-                sortieMSG = self.__socket.getMessageServer()
-                print(sortieMSG)
-                if (sortieMSG ==  "Serveur down"):
-                    self.__socketRunning = False
-
 
     def neuron(self,var:str) :
         # Var local
