@@ -29,8 +29,11 @@ class neuroneCodehelp(neuronBase) :
                     self._listSortie = [self._fonctionArreraNetwork.sortieOpenLibrairy(), ""]
                     self._objHistorique.setAction("Ouverture de la librairy codehelp")
                     self._valeurOut = 5
-            elif "recherche devdoc" in requette or "rdevdoc" in requette or "sdevdoc" in requette or "recherche microsoft" in requette or "rmicrosoft" in requette or "smicrosoft" in requette or "recheche python" in requette or "rpython" in requette or "spython" in requette:
-                print ("a")
+            elif ("recherche devdoc" in requette or "rdevdoc" in requette or
+                  "sdevdoc" in requette or "recherche microsoft" in requette or
+                  "rmicrosoft" in requette or "smicrosoft" in requette or
+                  "recheche python" in requette or "rpython" in requette or
+                  "spython" in requette):
                 text , recherche = self._fonctionArreraNetwork.sortieSearchDoc(requette)
                 self._listSortie = [text, ""]
                 self._objHistorique.setAction("Recherche documentation " + recherche)
