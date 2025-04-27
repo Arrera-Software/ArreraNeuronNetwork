@@ -418,7 +418,12 @@ class fncArreraNetwork:
 
     
     def sortieOpenYoutube(self):
-        sortie = webbrowser.open("https://www.youtube.com/")
+        socket = self.__gestionNeuron.getSocketObjet()
+
+        if(socket.getServeurOn() == True):
+            sortie = socket.sendData("website " + "https://www.youtube.com/")
+        else :
+            sortie = webbrowser.open("https://www.youtube.com/")
         if sortie :
             text = self.__mLanguage.getPhraseOpen("6")
         else :
@@ -431,6 +436,8 @@ class fncArreraNetwork:
         return self.__mLanguage.getPhraseOpenSite(site,etat)
 
     def openWebSiteAssistant(self,requette:str):
+        socket = self.__gestionNeuron.getSocketObjet()
+
         webSite = requette.replace("ouvrir","").replace("ouvre","").strip().lower()
 
         listeSite = self.__gestionNeuron.getListWeb()
@@ -441,11 +448,16 @@ class fncArreraNetwork:
 
         for site in listeSite:
             if webSite in site.lower():
-                if webbrowser.open(dictionnaireWebSite[site]):
-                    return True
+                if (socket.getServeurOn() == True):
+                    if (socket.sendData("website " + dictionnaireWebSite[site])):
+                        return True
+                    else :
+                        return False
                 else :
-                    return False
-
+                    if webbrowser.open(dictionnaireWebSite[site]):
+                        return True
+                    else :
+                        return False
         return False
 
 
