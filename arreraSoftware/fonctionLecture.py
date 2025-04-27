@@ -78,7 +78,10 @@ class fncLecture :
         if (self.__thSpeak.is_alive()==True):
             self.__entryLect.config(state="disabled")
             self.__screen.after(1000,self.__actualiser)
+            self.__boutonValider.pack_forget()
         else :
+            self.__entryLect.config(state="normal")
+            self.__boutonValider.pack(side="bottom")
             self.__entryLect.delete("1.0",END)
             del self.__thSpeak
             self.__thSpeak = None
