@@ -14,8 +14,6 @@ class neuronWork(neuronBase):
                 return
             elif (self.__neuronWord(requette) == 1):
                 return
-            elif (self.__neuronPostite(requette) == 1):
-                return
             elif ((("comment" in requette) and ("utiliser" in requette)
                    and ("arrera work" in requette)) or ("aide work" in requette)):
 
@@ -346,18 +344,3 @@ class neuronWork(neuronBase):
             else :
                 return 0
         return 0
-
-    def __neuronPostite(self,requette:str):
-        if ("lis" in requette or "peux tu lire" in requette) and ("arrera postite" in requette or "postite" in requette):
-
-            self._socket.sendData("lis postiste")
-            if (self._socket.receiveMessage()):
-                serveurOut = self._socket.getMessageServer()
-                self._listSortie = [serveurOut,""]
-            else :
-                self._listSortie = ["Erreur de communication avec le serveur",""]
-
-            self._valeurOut = 1
-            return 1
-        else :
-            return 0
