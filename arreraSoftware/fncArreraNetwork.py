@@ -101,7 +101,7 @@ class fncArreraNetwork:
                     text = self.__mLanguage.getPhraseMeteoError("4")
             else :
                 text = self.__mLanguage.getPhraseMeteoError("4")
-        return 4 , [text,""]
+        return [text,""]
     
     def sortieMeteoTowmorNoon(self,ville):
         if ville == "" :
@@ -138,7 +138,7 @@ class fncArreraNetwork:
             else :
                 text = self.__mLanguage.getPhraseMeteoError("2")
         
-        return 4 , [text,""]
+        return [text,""]
     
     def sortieMeteoToday(self,ville):
         if ville == "" :
@@ -174,7 +174,7 @@ class fncArreraNetwork:
             else :
                 text = self.__mLanguage.getPhraseMeteoError("6")
         
-        return 4 , [text,""]
+        return [text,""]
     
     def sortieTemperature(self):
         sortieGPS = self.__gps.recuperationCordonneePossition()
