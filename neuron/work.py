@@ -121,7 +121,6 @@ class neuronWork(neuronBase):
                 return 1
             else :
                 return 0
-        return 0
 
     def __neuronProjet(self,requette:str):
         oldRequette,oldSortie = self._gestionNeuron.getOld()
