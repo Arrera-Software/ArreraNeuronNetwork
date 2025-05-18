@@ -3,6 +3,89 @@ from neuron.CNeuronBase import neuronBase
 
 class neuroneAPI(neuronBase) :
 
+    def __meteo(self,requette:str)->int:
+        etatVilleDomicile = self._gestionNeuron.getEtatLieuDomicile()
+        etatVilleTravail = self._gestionNeuron.getEtatLieuTravail()
+        nb = self._gestionNeuron.getnbVilleMeteo()
+        villes = self._gestionNeuron.getListVilleMeteo()
+        resultat = 0
+        # Nettoyage de toutes les villes d'un coup
+        clearTown = [chaine.netoyage(ville) for ville in villes]
+
+        if "demain midi" in requette:
+            # Association ville originale & nettoyée pour traitement
+            for ville_org, ville in zip(villes, clearTown):
+                if ville in requette:
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(ville_org)
+                    self._objHistorique.setAction("Meteo demain midi")
+                    return 4
+
+            if etatVilleDomicile == True or etatVilleTravail == True :
+                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                    self._objHistorique.setAction("Meteo demain midi")
+                    return 4
+                elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                    self._objHistorique.setAction("Meteo demain midi")
+                    return 4
+                else :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon("")
+                    self._objHistorique.setAction("Meteo demain midi")
+                    return 4
+            else :
+                self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon("")
+                self._objHistorique.setAction("Meteo demain midi")
+                return 4
+
+        elif "demain matin" in requette or "demain" in requette:
+            for ville_org, ville in zip(villes, clearTown):
+                if ville in requette:
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(ville_org)
+                    self._objHistorique.setAction("Meteo demain matin")
+                    return 4
+
+            if etatVilleDomicile == True or etatVilleTravail == True :
+                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                    self._objHistorique.setAction("Meteo demain matin")
+                    return 4
+                elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                    self._objHistorique.setAction("Meteo demain matin")
+                    return 4
+                else :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
+                    self._objHistorique.setAction("Meteo demain matin")
+                    return 4
+            else :
+                self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
+                self._objHistorique.setAction("Meteo demain matin")
+                return 4
+        else :
+            for ville_org, ville in zip(villes, clearTown):
+                if ville in requette:
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(ville_org)
+                    self._objHistorique.setAction("Meteo aujourd'hui dans " + ville_org)
+                    return 4
+
+            if etatVilleDomicile == True or etatVilleTravail == True :
+                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
+                    self._objHistorique.setAction("Meteo aujourd'hui au domicile")
+                    return 4
+                elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
+                    self._objHistorique.setAction("Meteo aujourd'hui au lieu de travail")
+                    return 4
+                else :
+                    self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday("")
+                    self._objHistorique.setAction("Meteo aujourd'hui a la localisation")
+                    return 4
+            else :
+                self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday("")
+                self._objHistorique.setAction("Meteo aujourd'hui a la localisation")
+                return 4
 
     def neurone(self,requette:str):
 
@@ -18,8 +101,7 @@ class neuroneAPI(neuronBase) :
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["",""]
         self._valeurOut = 0
-        etatVilleDomicile = self._gestionNeuron.getEtatLieuDomicile()
-        etatVilleTravail = self._gestionNeuron.getEtatLieuTravail()
+
 
         if self._gestNeuron.getAPI() == True :
             #reponse du neuron main
@@ -35,74 +117,7 @@ class neuroneAPI(neuronBase) :
                     self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieActualités()
                     self._objHistorique.setAction("Actualités")
             elif "meteo" in requette :
-                    nb = self._gestionNeuron.getnbVilleMeteo()
-                    villes = self._gestionNeuron.getListVilleMeteo()
-                    resultat = 0
-                    if ("demain midi" in requette):
-                        for i in range(0,nb):
-                            ville = chaine.netoyage(villes[i])
-                            if ville in requette :
-                                self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(villes[i])
-                                resultat = 1
-                                break
-                            else :
-                                resultat = 0
-                        if resultat == 0 :
-                            if etatVilleDomicile == True or etatVilleTravail == True :
-                                if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                    self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
-                                elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                        self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
-                                else :
-                                    self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon("")
-                            else :
-                                self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmorNoon("")
-                        self._objHistorique.setAction("Meteo demain midi")
-                    elif (("demain matin" in requette) or ("demain" in requette)):
-                            for i in range(0,nb):
-                                ville = chaine.netoyage(villes[i])
-                                if ville in requette :
-                                    self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(villes[i])
-                                    resultat = 1
-                                    break
-                                else :
-                                    resultat = 0
-                                if resultat == 0 :
-                                    if etatVilleDomicile == True or etatVilleTravail == True :
-                                        if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                            self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
-                                        elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                                self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
-                                        else :
-                                            self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
-                                    else :
-                                        self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoTowmoroMorning("")
-                                        self._objHistorique.setAction("Meteo demain matin")
-                    else :
-                        for i in range(0,nb):
-                            ville = chaine.netoyage(villes[i])
-                            if ville in requette :
-                                self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(villes[i])
-                                self._objHistorique.setAction("Meteo aujourd'hui dans " + ville[i])
-                                resultat = 1
-                                break
-                            else :
-                                resultat = 0
-                            if resultat == 0 :
-                                if etatVilleDomicile == True or etatVilleTravail == True :
-                                    if "domicile" in requette or "residence" in requette or "maison" in requette or "appartement" in requette or "chez moi" in requette or "foyer" in requette or "maison" in requette or "foyer" in requette or "demeure "in requette :
-                                        self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(self._gestionNeuron.getValeurfichierUtilisateur("lieuDomicile"))
-                                        self._objHistorique.setAction("Meteo aujourd'hui au domicile")
-                                    elif "bureau" in requette or "lieu de travail" in requette or "entreprise" in requette or "societe" in requette or "boulot" in requette or "cabinet" in requette or "college" in requette or "lycee" in requette or "ecole" in requette or "campus" in requette or "universite" in requette :
-                                        self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday(self._gestionNeuron.getValeurfichierUtilisateur("lieuTravail"))
-                                        self._objHistorique.setAction("Meteo aujourd'hui au lieu de travail")
-                                    else :
-                                        self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday("")
-                                        self._objHistorique.setAction("Meteo aujourd'hui a la localisation")
-                                else :
-                                    self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieMeteoToday("")
-                                    self._objHistorique.setAction("Meteo aujourd'hui a la localisation")
-
+                   self._valeurOut = self.__meteo(requette)
             elif "temperature" in requette :
                     self._valeurOut,self._listSortie = self._fonctionArreraNetwork.sortieTemperature()
                     self._objHistorique.setAction("Temperature")

@@ -145,7 +145,6 @@ class ArreraNetwork :
                                 if self.__etatReseau == True :
                                     self.__search.neurone(requette)
                                     self.__valeurOut = self.__search.getValeurSortie()
-                                    print(self.__valeurOut)
                                 else :
                                     self.__valeurOut = 0
 
