@@ -65,8 +65,9 @@ class ArreraNetwork :
         self.__historique.saveHistorique()
         hour = datetime.now().hour
         text = self.__formuleNeuron.aurevoir(hour)
-        if (self.__socket.getServeurOn() == True):
-            self.__socket.stopSocket()
+        if self.__gestionnaire.getEtatNeuronObjet().getSocket() == True:
+            if (self.__socket.getServeurOn() == True):
+                self.__socket.stopSocket()
         return str(text)
     
     def getListSortie(self)->list :
