@@ -27,28 +27,30 @@ def main():
             neuron.neuron(requette)
             valeur = neuron.getValeurSortie()
             sortie = neuron.getListSortie()
+            neuronUsed = neuron.getNeuronUsed()
             print(valeur)
+            print(neuronUsed)
             if ((valeur==12) or (valeur==11) or (valeur==3)
                     or (valeur ==13) or (valeur == 18) or (valeur == 19)
                     or (valeur == 20)) :
-                if (valeur == 3) :
+                if valeur == 3:
                     print(nom+" $ Actu :\n"+sortie[0]+"\n"+sortie[1]+"\n"+sortie[2])
                 else :
-                    if (valeur == 12 or valeur == 11):
-                        if (valeur == 12):
+                    if valeur == 12 or valeur == 11:
+                        if valeur == 12:
                             print(nom+" $ "+sortie[6]+"\n \n")
                             print(sortie[0]+"\n"+sortie[1]+"\n"+sortie[2]+"\n"+sortie[3]+"\n"+sortie[4]+"\n"+sortie[5])
                         else :
                             print(nom+" $ "+"Erreur resumer actulitees")
                     else :
-                        if (valeur == 18):
+                        if valeur == 18:
                             print(nom + " $ "+sortie[0]+"\n"+nom + " $ "+sortie[1])
                         else :
-                            if (valeur == 19) :
+                            if valeur == 19:
                                 print(nom+" $ "+sortie[6]+"\n \n")
                                 print(sortie[0]+"\n"+sortie[1]+"\n"+sortie[2]+"\n"+sortie[3]+"\n"+sortie[4]+"\n"+sortie[5]+"\n"+sortie[7]+"\n"+sortie[8])
                             else :
-                                if (valeur == 20) :
+                                if valeur == 20:
                                     print(nom+" $ "+sortie[0])
                                 else :
                                     nb = len(sortie)
