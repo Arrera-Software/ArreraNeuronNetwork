@@ -95,21 +95,23 @@ class gestionNetwork:
     def getDictionnaireLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
         etatLinux = self.__detecteurOS.osLinux()
+        etatMac = self.__detecteurOS.osMac()
         if etatWindows == True and etatLinux == False :
             return self.__fileUser.lectureJSONDict("dictSoftWindows")
-        else :
-            if etatWindows == False and etatLinux == True :
-                return self.__fileUser.lectureJSONDict("dictSoftLinux")
+        elif etatWindows == False and etatLinux == True or etatMac == True:
+            return self.__fileUser.lectureJSONDict("dictSoftLinux")
     
     def getListLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
         etatLinux = self.__detecteurOS.osLinux()
-        if etatWindows == True and etatLinux == False :
+        etatMac = self.__detecteurOS.osMac()
+        if etatWindows == True and etatLinux == False and etatMac == False:
             return list(self.__fileUser.lectureJSONDict("dictSoftWindows").keys())
+        elif etatWindows == False and etatLinux == True or etatMac == True :
+            return list(self.__fileUser.lectureJSONDict("dictSoftLinux").keys())
         else :
-            if etatWindows == False and etatLinux == True :
-                return list(self.__fileUser.lectureJSONDict("dictSoftLinux").keys())
-            
+            return None
+
     def getListWeb(self):
         return list(self.__fileUser.lectureJSONDict("dictSite").keys())
     
