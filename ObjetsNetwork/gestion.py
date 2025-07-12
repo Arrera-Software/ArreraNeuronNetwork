@@ -21,7 +21,7 @@ class gestionNetwork:
                                       self.getListFonction())
         self.__etatNeuron = CArreraEnabledNeuron(self.__configFile)
         self.__network = network()
-        if (self.__etatNeuron.getSocket()==True):
+        if self.__etatNeuron.getSocket():
             self.__serveurSocket = socketAssistant(self.__configFile.lectureJSON("name"))
         else :
             self.__serveurSocket = None
@@ -100,7 +100,9 @@ class gestionNetwork:
             return self.__fileUser.lectureJSONDict("dictSoftWindows")
         elif etatWindows == False and etatLinux == True or etatMac == True:
             return self.__fileUser.lectureJSONDict("dictSoftLinux")
-    
+        else :
+            return None
+
     def getListLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
         etatLinux = self.__detecteurOS.osLinux()
