@@ -1,5 +1,5 @@
 import webbrowser
-from ObjetsNetwork.network import*
+from librairy.network import*
 
 class fncRadio :
     def __init__(self,network:network):

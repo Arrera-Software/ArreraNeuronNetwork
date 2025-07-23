@@ -1,4 +1,3 @@
-from objet.parreraclient import *
 from ObjetsNetwork.gestion import*
 
 class socketAssistant :

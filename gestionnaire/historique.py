@@ -1,4 +1,4 @@
-from arreraSoftware.fncArreraNetwork import*
+from fnc.fncArreraNetwork import*
 
 class CHistorique :
     def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork):

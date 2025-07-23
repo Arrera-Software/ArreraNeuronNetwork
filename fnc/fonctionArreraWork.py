@@ -1,5 +1,5 @@
 from ObjetsNetwork.gestion import *
-from arreraSoftware.fonctionTache import *
+from fnc.fonctionTache import *
 from tkinter import filedialog
 from tkinter import *
 from tkinter.scrolledtext import *

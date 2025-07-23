@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter.messagebox import *
 from ObjetsNetwork.gestion import *
 from tkcalendar import DateEntry
-from arreraSoftware.fonctionDate import*
+from fnc.fonctionDate import*
 
 class fncArreraTache :
     def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,taskFile:str,projet:bool=False,nameProjet:str=""):

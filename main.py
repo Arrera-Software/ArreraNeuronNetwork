@@ -1,4 +1,4 @@
-from ObjetsNetwork.arreraNeuron import *
+from src.brain import *
 import webbrowser
 from librairy.travailJSON import *
 
@@ -8,26 +8,26 @@ def main():
     print("Beinvenu sur le programme des assistants Arrera. ")
     mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
     if mode == 1 :
-        neuron = ArreraNetwork("JSON/configNeuron1.json")
+        assistant = ABrain("JSON/configNeuron1.json")
     else :
-        neuron = ArreraNetwork("JSON/configNeuron2.json")
+        assistant = ABrain("JSON/configNeuron2.json")
     print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
     hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
     if (hist == 1):
-        print(nom+" $ "+ neuron.boot(1))
+        print(nom+" $ "+ assistant.boot(1))
     else :
-        print(nom+" $ "+ neuron.boot(2))
+        print(nom+" $ "+ assistant.boot(2))
 
     while valeur != 15 :
         requette =  str(input("Vous $ "))
         if requette == "github" :
             webbrowser.open("https://github.com/Arrera-Software/ArreraChatBots")
         else :
-            neuron.neuron(requette)
-            valeur = neuron.getValeurSortie()
-            sortie = neuron.getListSortie()
-            neuronUsed = neuron.getNeuronUsed()
+            assistant.neuron(requette)
+            valeur = assistant.getValeurSortie()
+            sortie = assistant.getListSortie()
+            neuronUsed = assistant.getNeuronUsed()
             print(valeur)
             print(neuronUsed)
             if ((valeur==12) or (valeur==11) or (valeur==3)
