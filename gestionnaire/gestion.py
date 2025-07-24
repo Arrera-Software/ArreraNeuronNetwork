@@ -1,16 +1,21 @@
-from ObjetsNetwork.gestSocket import *
+from fnc.fncArreraNetwork import fncArreraNetwork
+from gestionnaire.gestSocket import *
 from librairy.dectectionOS import*
-from ObjetsNetwork.CAlanguage import *
 from librairy.network import*
-from ObjetsNetwork.enabledNeuron import*
+from gestionnaire.gestLangue import*
+from gestionnaire.gestNeuron import gestNeuron
+from gestionnaire.gestHistorique import gestHistorique
+from datetime import datetime
 
-
-class gestionNetwork:
+class gestionnaire:
     def __init__(self,configFile:str):
         # Fichier JSON
         self.__configFile = jsonWork(configFile)
         self.__fileUser = jsonWork(self.__configFile.lectureJSON("fileUser"))
         self.__fichierFete = jsonWork(self.__configFile.lectureJSON("fileFete"))
+        # Temporaire
+        self.__fnc = fncArreraNetwork(self)
+        self.__gestHist = gestHistorique(self.__fnc,self)
         # Objet
         self.__detecteurOS = OS()
         self.__mLanguage = CAlanguage(self.__configFile.lectureJSON("moduleLanguage"),
@@ -18,9 +23,9 @@ class gestionNetwork:
                                                        self.__configFile.lectureJSON("bute"),
                                                        self.__configFile.lectureJSON("createur")],
                                       self.getListFonction())
-        self.__etatNeuron = CArreraEnabledNeuron(self.__configFile)
+        self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
         self.__network = network()
-        if self.__etatNeuron.getSocket():
+        if self.__gestNeuron.getSocket():
             self.__serveurSocket = socketAssistant(self.__configFile.lectureJSON("name"))
         else :
             self.__serveurSocket = None
@@ -37,8 +42,8 @@ class gestionNetwork:
     def getLanguageObjet(self):
         return self.__mLanguage
 
-    def getEtatNeuronObjet(self):
-        return self.__etatNeuron
+    def getGestNeuron(self):
+        return self.__gestNeuron
 
     def getNetworkObjet(self):
         return self.__network

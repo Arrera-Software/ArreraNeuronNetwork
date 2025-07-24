@@ -1,22 +1,20 @@
-from ObjetsNetwork.gestion import*
 import subprocess
-import os
+from librairy.dectectionOS import *
 
 class OpenSoftware :
-    def __init__(self,objetGestion:gestionNetwork):
+    def __init__(self):
         detecteurOS = OS()
         self.__windowsOS = detecteurOS.osWindows()
         self.__linuxOS = detecteurOS.osLinux()
         self.__macOS = detecteurOS.osMac()
         self.__emplacement = ""
         self.__etat = bool
-        self.__objetGestion = objetGestion
     
     def setName(self,name:str) ->bool:
         if name == "":
             self.__etat = False
         elif self.__windowsOS == True and self.__linuxOS == False and self.__macOS == False:
-            self.__emplacement = self.__objetGestion.getEmplacementSoftwareWindows()+"/"+name+".lnk"
+            self.__emplacement = name
             self.__etat = True
         elif self.__windowsOS == False and self.__linuxOS == True and self.__macOS == False :
                 self.__emplacement = name
