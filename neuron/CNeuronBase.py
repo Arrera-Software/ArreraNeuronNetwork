@@ -1,16 +1,16 @@
 from abc import abstractmethod
-from ObjetsNetwork.gestion import*
+from gestionnaire.gestion import*
 from fnc.fncArreraNetwork import*
-from ObjetsNetwork.chaineCarractere import*
-from ObjetsNetwork.enabledNeuron import*
-from ObjetsNetwork.historique import*
+from gestionnaire.gestSTR import*
+from gestionnaire.gestNeuron import*
+from gestionnaire.gestHistorique import*
 
 class neuronBase :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique):
+    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionnaire, objHist:gestHistorique):
         #Init objet
         self._gestionNeuron = gestionnaire
         self._fonctionArreraNetwork = fncArreraNetwork
-        self._gestNeuron = self._gestionNeuron.getEtatNeuronObjet()
+        self._gestNeuron = self._gestionNeuron.getGestNeuron()
         self._objHistorique = objHist
         self._listSortie = ["",""]
         self._socket = self._gestionNeuron.getSocketObjet()

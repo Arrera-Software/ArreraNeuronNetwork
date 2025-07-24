@@ -1,17 +1,19 @@
 import datetime
-#fichier
-from ObjetsNetwork.formule import*
-from ObjetsNetwork.gestion import*
-from ObjetsNetwork.enabledNeuron import*
-from neuron.CNeuronBase import neuronBase
+from neuron.CNeuronBase import *
+from gestionnaire.gestion import*
+from fnc.fncArreraNetwork import*
+from gestionnaire.gestSTR import*
+from gestionnaire.gestNeuron import*
+from gestionnaire.gestHistorique import*
+from gestionnaire.gestLangue import*
 
 
-class neuroneDiscution(neuronBase) :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionNetwork,objHist:CHistorique,gestionnaireFormule:formule):
+class neuroneChatbot(neuronBase) :
+    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionnaire,objHist:gestHistorique,gestionnaireFormule:CAlanguage):
         #Init objet
         super().__init__(fncArreraNetwork, gestionnaire,objHist)
         self.__formule = gestionnaireFormule
-        self._gestNeuron = self._gestionNeuron.getEtatNeuronObjet()
+        self._gestNeuron = self._gestionNeuron.getGestNeuron()
         self.__language = self._gestionNeuron.getLanguageObjet()
 
     def neurone(self,requette:str):
