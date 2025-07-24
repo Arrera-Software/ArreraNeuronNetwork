@@ -1,4 +1,7 @@
-class chaine :
+class gestSTR :
+    def __init__(self):
+        pass
+
     def netoyage(carractere:str):
         chaine = str(carractere)
         chaine = chaine.replace("-"," ")

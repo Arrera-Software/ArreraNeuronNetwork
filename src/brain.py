@@ -2,8 +2,9 @@ import threading as th
 from gestionnaire.gestion import *
 from gestionnaire.gestLangue import*
 
+
 class ABrain :
-    def __init__(self,fichierConfiguration:str):
+    def __init__(self,config:confNeuron):
         # Declaration des diferente var 
         self.__listOut =  [] 
         self.__valeurOut = 0
@@ -13,11 +14,11 @@ class ABrain :
                              "software","open","search",
                              "time","codehelp","word"]
         #Ouverture fichier de configuration
-        self.__configNeuron = jsonWork(fichierConfiguration)
-        self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
-        self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
+        #self.__configNeuron = jsonWork(fichierConfiguration)
+        #self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
+        #self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
         # Gestionnaire
-        self.__gestionnaire = gestionnaire(fichierConfiguration)
+        self.__gestionnaire = gestionnaire(config)
         self.__gestNeuron = self.__gestionnaire.getGestNeuron()
         # Partie serveur
         self.__socket = self.__gestionnaire.getSocketObjet()
@@ -104,7 +105,7 @@ class ABrain :
 
     def neuron(self,var:str) :
         # Var local
-        requette = chaine.netoyage(str(var))
+        requette = self.__gestionnaire.netoyageChaine(str(var))
         # Var de l'objet
         self.__valeurOut = 0
         self.__listOut =  []

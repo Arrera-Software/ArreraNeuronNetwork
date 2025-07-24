@@ -6,7 +6,6 @@ class neuroneAPI(neuronBase) :
     def __meteo(self,requette:str)->int:
         etatVilleDomicile = self._gestionNeuron.getEtatLieuDomicile()
         etatVilleTravail = self._gestionNeuron.getEtatLieuTravail()
-        nb = self._gestionNeuron.getnbVilleMeteo()
         villes = self._gestionNeuron.getListVilleMeteo()
         resultat = 0
         # Nettoyage de toutes les villes d'un coup

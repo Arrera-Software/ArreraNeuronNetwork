@@ -9,7 +9,7 @@ from gestionnaire.gestLangue import*
 
 
 class neuroneChatbot(neuronBase) :
-    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionnaire,objHist:gestHistorique,gestionnaireFormule:CAlanguage):
+    def __init__(self, fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionnaire, objHist:gestHistorique, gestionnaireFormule:gestLangue):
         #Init objet
         super().__init__(fncArreraNetwork, gestionnaire,objHist)
         self.__formule = gestionnaireFormule

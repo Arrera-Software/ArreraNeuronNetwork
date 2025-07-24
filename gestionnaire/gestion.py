@@ -5,42 +5,52 @@ from librairy.network import*
 from gestionnaire.gestLangue import*
 from gestionnaire.gestNeuron import gestNeuron
 from gestionnaire.gestHistorique import gestHistorique
+from gestionnaire.gestSTR import gestSTR
+from config.confNeuron import *
 from datetime import datetime
 
 class gestionnaire:
-    def __init__(self,configFile:str):
+    def __init__(self,confAssistant:confNeuron):
         # Fichier JSON
-        self.__configFile = jsonWork(configFile)
-        self.__fileUser = jsonWork(self.__configFile.lectureJSON("fileUser"))
-        self.__fichierFete = jsonWork(self.__configFile.lectureJSON("fileFete"))
+        self.__config = confAssistant
+        self.__fileUser = jsonWork("JSON/configUser.json") # A faire
+        self.__fichierFete = jsonWork("config/listFete.json")
         # Temporaire
         self.__fnc = fncArreraNetwork(self)
-        self.__gestHist = gestHistorique(self.__fnc,self)
-        # Objet
-        self.__detecteurOS = OS()
-        self.__mLanguage = CAlanguage(self.__configFile.lectureJSON("moduleLanguage"),
-                                      self.__fileUser,[self.__configFile.lectureJSON("name"),
-                                                       self.__configFile.lectureJSON("bute"),
-                                                       self.__configFile.lectureJSON("createur")],
-                                      self.getListFonction())
+        # Initialisation des tout les gestionnaires
+        #self.__gestFNC
+        self.__gestHist = gestHistorique(self.__fnc, self)
+        self.__gestLang = gestLangue(self.__config.fichierLangue,
+                                     self.__fileUser, [self.__config.name,
+                                                       self.__config.bute,
+                                                       self.__config.createur],
+                                     self.__config.listFonction)
         self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
-        self.__network = network()
         if self.__gestNeuron.getSocket():
-            self.__serveurSocket = socketAssistant(self.__configFile.lectureJSON("name"))
+            self.__gestSocket = gestSocket(self.__config.name)
         else :
-            self.__serveurSocket = None
+            self.__gestSocket = None
+        self.__gestSTR = gestSTR()
+
+        # Objet
+
+        self.__detecteurOS = OS()
+
+
+        self.__network = network()
+
         # Varriable
         self.__oldRequette = ""
         self.__oldSorti = ""
 
     def getConfigFile(self):
-        return self.__configFile
+        return self.__config
 
     def getOSObjet(self):
         return self.__detecteurOS
 
     def getLanguageObjet(self):
-        return self.__mLanguage
+        return self.__gestLang
 
     def getGestNeuron(self):
         return self.__gestNeuron
@@ -49,33 +59,23 @@ class gestionnaire:
         return self.__network
 
     def getSocketObjet(self):
-        return self.__serveurSocket
+        return self.__gestSocket
         
     def getName(self):
-        return  str(self.__configFile.lectureJSON("name"))
-    
-    def getNbListFonction(self):
-        return len(self.__configFile.lectureJSONList("listFonction"))
-    
-    def getListFonction(self):
-        return self.__configFile.lectureJSONList("listFonction")
-    
-    def getnbVilleMeteo(self):
-        return int(self.__configFile.lectureJSON("nombreVilleMeteo"))
-    
+        return  self.__config.name
+
     def getListVilleMeteo(self):
-        
         return self.__fileUser.lectureJSONList("listVille")
 
     def getEtatLieuDomicile(self):
-        if self.__configFile.lectureJSON("lieuDomicile") == "1":
+        if not self.__fileUser.lectureJSON("lieuDomicile"):
             lieuDomicile = True
         else :
             lieuDomicile = False
         return lieuDomicile
 
     def getEtatLieuTravail(self):
-        if self.__configFile.lectureJSON("lieuTravail") == "1":
+        if not self.__fileUser.lectureJSON("lieuTravail"):
             lieuTravail = True
         else :
             lieuTravail = False
@@ -85,7 +85,7 @@ class gestionnaire:
         return self.__fileUser.lectureJSON(flag)
     
     def getMoteurRechercheDefault(self):
-        return str(self.__configFile.lectureJSON("moteurRechercheDefault"))
+        return self.__config.moteurderecherche
 
     def getEmplacementFileAgenda(self)->str :
         return self.__fileUser.lectureJSON("emplacementEvenenement")
@@ -136,9 +136,6 @@ class gestionnaire:
         mois = str(date.month)
         return self.__fichierFete.lectureJSONMultiFlag(mois,jours)
     
-    def getEmplacementSoftwareWindows(self):
-        return self.__configFile.lectureJSON("emplacementSoftWindows")
-    
     def setOld(self,output:str,input:str):
         """
         Methode qui peremt de sauvegarder oldSortie et oldRequette
@@ -156,7 +153,7 @@ class gestionnaire:
         """
         Methode pour donner le lien de la doc 
         """
-        return self.__configFile.lectureJSON("lienDoc")
+        return self.__config.lienDoc
     
     def getTokenGithub(self):
         """
@@ -181,3 +178,9 @@ class gestionnaire:
     
     def getEmplacementDownload(self):
         return self.__fileUser.lectureJSON("videoDownloadFolder")
+
+    def netoyageChaine(self,chaine:str):
+        """
+        Methode qui permet de netoyer une chaine de caractere
+        """
+        return self.__gestSTR.netoyage(carractere=chaine)

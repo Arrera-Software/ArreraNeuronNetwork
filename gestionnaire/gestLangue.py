@@ -2,7 +2,7 @@ import random
 
 from librairy.travailJSON import *
 
-class CAlanguage:
+class gestLangue:
     def __init__(self,emplacement:str,fileUser:jsonWork,listVar:list,listFonc:list):
         index = jsonWork(emplacement+"index.json")
         self.__formule = jsonWork(emplacement+index.lectureJSON("formule"))
