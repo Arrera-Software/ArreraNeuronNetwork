@@ -1,6 +1,7 @@
 from neuron.CNeuronBase import *
 
-class neuronWork(neuronBase):
+
+class neuroneWork(neuronBase):
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
