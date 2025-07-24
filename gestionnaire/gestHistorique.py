@@ -1,6 +1,6 @@
 from fnc.fncArreraNetwork import*
 
-class CHistorique :
+class gestHistorique :
     def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork):
         # Declaration des varriable est de objet
         self.__fileHist = jsonWork(gestionnaire.getEmplacementFileHist())
