@@ -1,10 +1,11 @@
 from objet.CArreraDownload import*
-from ObjetsNetwork.gestion import*
+from gestionnaire.gestion import *
+from librairy.travailJSON import jsonWork
 import threading as th
 from tkinter import*
 
 class fncArreraVideoDownload :
-    def __init__(self,configNeuron:jsonWork,gestUser:gestionNetwork) :
+    def __init__(self,configNeuron:jsonWork,gestUser) :
         self.__nameAssistant = configNeuron.lectureJSON("name")+" : Video Download"
         self.__interfaceColor = configNeuron.lectureJSON("interfaceColor")
         self.__textColor = configNeuron.lectureJSON("interfaceTextColor")

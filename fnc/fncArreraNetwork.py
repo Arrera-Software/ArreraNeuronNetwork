@@ -13,10 +13,11 @@ from fnc.fonctionCodeHelp import *
 from fnc.fonctionArreraWork import *
 from fnc.fonctionRadio import *
 from fnc.fncOrthographe import *
+from gestionnaire.gestion import *
 
 
 class fncArreraNetwork:
-    def __init__(self, gestionNeuron: gestionNetwork):
+    def __init__(self, gestionNeuron: gestionnaire):
         # Recuperation des objet
         self.__gestionNeuron = gestionNeuron
         self.__configNeuron = self.__gestionNeuron.getConfigFile()
@@ -31,7 +32,7 @@ class fncArreraNetwork:
         self.__gps = GPS("19bfbee6112be5b3d9a64d4ccec72602", etatConnextion)
         self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.__traducteur = fncArreraTrad(self.__configNeuron, )
-        self.__downloader = fncArreraVideoDownload(self.__configNeuron, self.__gestionNeuron)
+        self.__downloader = fncArreraVideoDownload(self.__configNeuron, gestionNeuron)
         self.__calculatrice = fncCalculatrice(self.__configNeuron)
         self.__objetRecherche = fncArreraSearch(etatConnextion)
         self.__objetDate = fncDate()
@@ -43,7 +44,7 @@ class fncArreraNetwork:
         self.__objetArreraWork = fncArreraWork(self.__objetDate, self.__gestionNeuron, self.__configNeuron,
                                                self.__detecteurOS)
         self.__objetHorloge.setAtributJSON(self.__configNeuron)
-        self.__objetOpenSoft = OpenSoftware(self.__gestionNeuron)
+        self.__objetOpenSoft = OpenSoftware()
         self.__objRadio = fncRadio(self.__objetNetwork)
         # Fonction qui on besoin d'internet
         if (etatConnextion == True):
@@ -435,7 +436,7 @@ class fncArreraNetwork:
     def sortieOpenYoutube(self):
         socket = self.__gestionNeuron.getSocketObjet()
 
-        if (self.__gestionNeuron.getEtatNeuronObjet().getSocket() == True):
+        if (self.__gestionNeuron.getGestNeuron().getSocket() == True):
             if (socket.getServeurOn() == True):
                 sortie = socket.sendData("website " + "https://www.youtube.com/")
             else:
