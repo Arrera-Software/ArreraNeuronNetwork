@@ -1,5 +1,3 @@
-
-
 from fnc.fncBase import fncBase, gestionnaire
 import json
 from librairy.arrera_date import*
