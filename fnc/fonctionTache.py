@@ -107,6 +107,9 @@ class fncArreraTache(fncBase) :
 
         return listToday
 
+    def getNbTaskToday(self):
+        return len(self.getListTaskToday())
+
 """
 
     def getNbTaskToday(self):

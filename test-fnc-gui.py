@@ -94,6 +94,7 @@ while True:
                         taskId = input("Name : ")
                         print(fnc.getFNCTask().checkDateTask(taskId))
                     case 7:
+                        print(fnc.getFNCTask().getNbTaskToday())
                         print(fnc.getFNCTask().getListTaskToday())
 
                     case 0:
