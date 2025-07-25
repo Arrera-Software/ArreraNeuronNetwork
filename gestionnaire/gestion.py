@@ -32,11 +32,8 @@ class gestionnaire:
             self.__gestSocket = None
         self.__gestSTR = gestSTR()
 
-        # Objet
-
+        # Librairy
         self.__detecteurOS = OS()
-
-
         self.__network = network()
 
         # Varriable
