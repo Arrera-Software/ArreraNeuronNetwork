@@ -86,8 +86,8 @@ class fncArreraTache(fncBase) :
         today = datetime.today()
         today = f"{today.year}-{today.month}-{today.day}"
         self.__readTaskFile()
-        if name in self.__content:
-            task_date = self.__content[name]["date"]
+        if name in self.__content and not self.__content[name]["fini"]:
+            task_date = str(self.__content[name]["date"])
             if task_date == "none":
                 return False
             elif task_date == today:

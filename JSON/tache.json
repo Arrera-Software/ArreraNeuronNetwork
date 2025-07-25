@@ -2,6 +2,6 @@
     "test": {
         "description": "a",
         "date": "2025-7-25",
-        "fini": true
+        "fini": false
     }
 }
