@@ -87,7 +87,7 @@ class fncArreraTache(fncBase) :
         today = f"{today.year}-{today.month}-{today.day}"
         self.__readTaskFile()
         if name in self.__content and not self.__content[name]["fini"]:
-            task_date = str(self.__content[name]["date"])
+            task_date = self.__content[name]["date"]
             if task_date == "none":
                 return False
             elif task_date == today:
@@ -138,6 +138,35 @@ class fncArreraTache(fncBase) :
     def getNbTaskTowmorow(self):
         return len(self.getListTaskTowmorow())
 
+    def checkTaskLate(self,name):
+        today = datetime.today()
+        today = f"{today.year}-{today.month}-{today.day}"
+        today = datetime.strptime(today, "%Y-%m-%d")
+        self.__readTaskFile()
+        if name in self.__content and not self.__content[name]["fini"]:
+            task_date = self.__content[name]["date"]
+            task_date = datetime.strptime(task_date, "%Y-%m-%d")
+            if task_date == "none":
+                return False
+            elif task_date < today:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def getListTaskLate(self):
+        self.__readTaskFile()
+        listFlag = list(self.__content.keys())
+        listToday = []
+        for i in listFlag:
+            if self.checkTaskLate(i):
+                listToday.append(i)
+
+        return listToday
+
+    def getNbTaskLate(self):
+        return len(self.getListTaskLate())
 """
 
     def getTaskTowmorow(self):
