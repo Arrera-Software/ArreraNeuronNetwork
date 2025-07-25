@@ -14,3 +14,5 @@ PyGithub
 language_tool_python
 pyperclip
 websocket-client
+customtkinter
+pillow
