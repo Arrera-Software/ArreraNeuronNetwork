@@ -1,5 +1,4 @@
-from gestionnaire.gestion import *
-from gestionnaire.gestSocket import *
+from gestionnaire.gestion import gestionnaire
 
 class fncBase:
     def __init__(self, gestionnaire:gestionnaire):
