@@ -51,7 +51,7 @@ while True:
             taskBoucle = True
             while taskBoucle :
                 print("Test des fonctions de tache")
-                print("1.Ajouter une tache\n2.Lister les taches\n3.Supprimer une tache\n4.Compter le nombre de taches\n5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n0.Quitter")
+                print("1.Ajouter une tache\n2.Lister les taches\n3.Supprimer une tache\n4.Compter le nombre de taches\n5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n8.Check date towmorow\n9. Tache a faire demain\n0.Quitter")
                 print("__________________________\n")
                 boucleVerif = True
                 while boucleVerif:
@@ -96,6 +96,12 @@ while True:
                     case 7:
                         print(fnc.getFNCTask().getNbTaskToday())
                         print(fnc.getFNCTask().getListTaskToday())
+                    case 8:
+                        taskId = input("Name : ")
+                        print(fnc.getFNCTask().checkDateTaskTowmorow(taskId))
+                    case 9 :
+                        print(fnc.getFNCTask().getNbTaskTowmorow())
+                        print(fnc.getFNCTask().getListTaskTowmorow())
 
                     case 0:
                         taskBoucle = False

@@ -110,25 +110,35 @@ class fncArreraTache(fncBase) :
     def getNbTaskToday(self):
         return len(self.getListTaskToday())
 
+    def checkDateTaskTowmorow(self,name:str):
+        towmorow = datetime.today() + timedelta(days=1)
+        towmorow = f"{towmorow.year}-{towmorow.month}-{towmorow.day}"
+        self.__readTaskFile()
+        if name in self.__content and not self.__content[name]["fini"]:
+            task_date = str(self.__content[name]["date"])
+            if task_date == "none":
+                return False
+            elif task_date == towmorow:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def getListTaskTowmorow(self):
+        self.__readTaskFile()
+        listFlag = list(self.__content.keys())
+        listToday = []
+        for i in listFlag:
+            if self.checkDateTaskTowmorow(i):
+               listToday.append(i)
+
+        return listToday
+
+    def getNbTaskTowmorow(self):
+        return len(self.getListTaskTowmorow())
+
 """
-
-    def getNbTaskToday(self):
-        dictTache = self.__taskFile.getContenuJSON()
-        dateToday = self.__objDate.annes() + "-" + self.__objDate.nbMoisSimple() + "-" + self.__objDate.jourSimple()
-        nbTache = 0
-        for i in range(0, len(dictTache)):
-            if dictTache[str(i)]["date"] == dateToday:
-                nbTache = nbTache + 1
-        return nbTache
-
-    def getTaskToday(self):
-        dictTache = self.__taskFile.getContenuJSON()
-        dateToday = self.__objDate.annes() + "-" + self.__objDate.nbMoisSimple() + "-" + self.__objDate.jourSimple()
-        listTache = []
-        for i in range(0, len(dictTache)):
-            if dictTache[str(i)]["date"] == dateToday:
-                listTache.append(dictTache[str(i)]["name"])
-        return listTache
 
     def getTaskTowmorow(self):
         dictTache = self.__taskFile.getContenuJSON()
