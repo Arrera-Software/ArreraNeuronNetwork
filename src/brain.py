@@ -54,8 +54,8 @@ class ABrain :
         #self.__historique.saveHistorique()
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
-        if self.__gestionnaire.getGestNeuron().getSocket() == True:
-            if (self.__socket.getServeurOn() == True):
+        if self.__gestionnaire.getGestNeuron().getSocket():
+            if self.__socket.getServeurOn():
                 self.__socket.stopSocket()
         return str(text)
     
