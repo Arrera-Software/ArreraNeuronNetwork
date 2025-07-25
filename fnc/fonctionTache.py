@@ -1,4 +1,4 @@
-from idlelib.debugobj_r import remote_object_tree_item
+
 
 from fnc.fncBase import fncBase, gestionnaire
 import json
@@ -44,7 +44,7 @@ class fncArreraTache(fncBase) :
 
         return True
 
-    def supprTask(self,name:str):
+    def delTask(self, name:str):
         if not name :
             return False
 
@@ -60,7 +60,7 @@ class fncArreraTache(fncBase) :
             return False
 
 
-    def setTaskFinish(self,name:str):
+    def finishTask(self, name:str):
         if not name:
             return False
         else :
@@ -81,6 +81,23 @@ class fncArreraTache(fncBase) :
     def getTask(self):
         self.__readTaskFile()
         return list(self.__content.keys())
+
+    def checkDateTask(self,name:str):
+        today = datetime.today()
+        today = f"{today.year}-{today.month}-{today.day}"
+        print(today)
+        self.__readTaskFile()
+        if name in self.__content:
+            task_date = self.__content[name]["date"]
+            print(task_date)
+            if task_date == "none":
+                return False
+            elif task_date == today:
+                return True
+            else:
+                return False
+        else:
+            return False
 
 """
     def checkDateTask(self, nb: str):
