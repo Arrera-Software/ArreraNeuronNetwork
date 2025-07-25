@@ -35,7 +35,7 @@ class fncArreraNetwork:
         self.__downloader = fncArreraVideoDownload(self.__configNeuron, gestionNeuron)
         self.__calculatrice = fncCalculatrice(self.__configNeuron)
         self.__objetRecherche = fncArreraSearch(etatConnextion)
-        self.__objetDate = fncDate()
+        self.__objetDate = CArreraDate()
         self.__objetHorloge = fncArreraHorloge()
         self.__objetCalendar = fncArreraAgenda(self.__configNeuron, self.__gestionNeuron)
         self.__objetTache = fncArreraTache(self.__objetDate, self.__configNeuron,

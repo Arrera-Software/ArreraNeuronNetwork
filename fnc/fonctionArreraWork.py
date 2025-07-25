@@ -15,7 +15,7 @@ from pathlib import Path
 
 
 class fncArreraWork:
-    def __init__(self, fncDate: fncDate, gestion: gestionNetwork, neuronfile: jsonWork, dectOs: OS):
+    def __init__(self, fncDate: CArreraDate, gestion: gestionNetwork, neuronfile: jsonWork, dectOs: OS):
         # Objet 
         self.__dectOs = dectOs
         self.__fncDate = fncDate

@@ -1,4 +1,4 @@
-from ObjetsNetwork.chaineCarractere import*
+from gestionnaire.gestSTR import*
 from neuron.CNeuronBase import neuronBase
 
 class neuroneAPI(neuronBase) :
@@ -9,7 +9,7 @@ class neuroneAPI(neuronBase) :
         villes = self._gestionNeuron.getListVilleMeteo()
         resultat = 0
         # Nettoyage de toutes les villes d'un coup
-        clearTown = [chaine.netoyage(ville) for ville in villes]
+        # clearTown = [chaine.netoyage(ville) for ville in villes]
 
         if "demain midi" in requette:
             # Association ville originale & nettoyée pour traitement
