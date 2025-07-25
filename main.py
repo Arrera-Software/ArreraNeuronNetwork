@@ -35,10 +35,7 @@ def main():
     valeur =  0
     print("Beinvenu sur le programme des assistants Arrera. ")
     mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
-    if mode == 1 :
-        assistant = ABrain("JSON/configNeuron1.json")
-    else :
-        assistant = ABrain("JSON/configNeuron2.json")
+    assistant = ABrain(confassistant)
     print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
     hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
