@@ -85,11 +85,9 @@ class fncArreraTache(fncBase) :
     def checkDateTask(self,name:str):
         today = datetime.today()
         today = f"{today.year}-{today.month}-{today.day}"
-        print(today)
         self.__readTaskFile()
         if name in self.__content:
             task_date = self.__content[name]["date"]
-            print(task_date)
             if task_date == "none":
                 return False
             elif task_date == today:
@@ -99,33 +97,9 @@ class fncArreraTache(fncBase) :
         else:
             return False
 
+
+
 """
-    def checkDateTask(self, nb: str):
-        self.__objDate.rafraichisement()
-        dateToday = (self.__objDate.annes() + "-"
-                     + self.__objDate.nbMoisSimple() + "-"
-                     + self.__objDate.jourSimple())
-        hier = self.__objDate.otherPastDate(1)
-        avantHier = self.__objDate.otherPastDate(2)
-        dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
-
-        if (dateTask == hier) or (dateTask == avantHier):
-            self.__taskFile.ajouterFlagDict(nb, "date", dateToday)
-            dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
-
-        if dateToday == dateTask:
-            return True
-        else:
-            return False
-
-
-
-    def getTask(self):
-        dictTache = self.__taskFile.getContenuJSON()
-        listTache = []
-        for i in range(0, len(dictTache)):
-            listTache.append(dictTache[str(i)]["name"])
-        return listTache
 
     def getNbTaskToday(self):
         dictTache = self.__taskFile.getContenuJSON()
