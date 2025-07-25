@@ -1,6 +1,5 @@
-from config.confNeuron import confassistant
+from config.confNeuron import confNeuron
 from gestionnaire.gestion import *
-from gestionnaire.gestHistorique import *
 from neuron.API import *
 from neuron.chatBots import *
 from neuron.codehelp import *
@@ -12,18 +11,18 @@ from neuron.time import *
 from neuron.work import *
 
 class gestNeuron :
-    def __init__(self,fncArreraNetwork:fncArreraNetwork, gestionnaire:gestionnaire, objHist:gestHistorique) -> None:
+    def __init__(self,gestionnaire:gestionnaire, objHist:gestHistorique) -> None:
         # Recuperation des etat de chaque neurone
-        self.__etatService = confassistant.etatService
-        self.__etatSoftware = confassistant.etatSoftware
-        self.__etatTime = confassistant.etatTime
-        self.__etatOpen = confassistant.etatOpen
-        self.__etatSearch = confassistant.etatSearch
-        self.__etatChatbot = confassistant.etatChatbot
-        self.__etatApi = confassistant.etatApi
-        self.__etatCodehelp = confassistant.etatCodehelp
-        self.__etatWork = confassistant.etatWork
-        self.__etatSocket = confassistant.etatSocket
+        self.__etatService = gestionnaire.getConfigFile().etatService
+        self.__etatSoftware = gestionnaire.getConfigFile().etatSoftware
+        self.__etatTime = gestionnaire.getConfigFile().etatTime
+        self.__etatOpen = gestionnaire.getConfigFile().etatOpen
+        self.__etatSearch = gestionnaire.getConfigFile().etatSearch
+        self.__etatChatbot = gestionnaire.getConfigFile().etatChatbot
+        self.__etatApi = gestionnaire.getConfigFile().etatApi
+        self.__etatCodehelp = gestionnaire.getConfigFile().etatCodehelp
+        self.__etatWork = gestionnaire.getConfigFile().etatWork
+        self.__etatSocket = gestionnaire.getConfigFile().etatSocket
         # Creation des varriable des neurones
         self.napi = None
         self.nchatbot = None

@@ -1,40 +1,43 @@
-from fnc.fncArreraNetwork import fncArreraNetwork
-from gestionnaire.gestSocket import *
 from librairy.dectectionOS import*
 from librairy.network import*
-from gestionnaire.gestLangue import*
-from gestionnaire.gestNeuron import gestNeuron
-from gestionnaire.gestHistorique import gestHistorique
-from gestionnaire.gestSTR import gestSTR
-from config.confNeuron import *
+from librairy.travailJSON import jsonWork
+from config.confNeuron import confNeuron
 from datetime import datetime
 
 class gestionnaire:
     def __init__(self,confAssistant:confNeuron):
+        # Importation des gestionnaires
+        from gestionnaire.gestSocket import gestSocket
+        from gestionnaire.gestLangue import gestLangue
+        # from gestionnaire.gestNeuron import gestNeuron
+        # from gestionnaire.gestHistorique import gestHistorique
+        from gestionnaire.gestSTR import gestSTR
+        from gestionnaire.gestFNC import gestFNC
+        # Librairy
+        self.__detecteurOS = OS()
+        self.__network = network()
         # Fichier JSON
         self.__config = confAssistant
         self.__fileUser = jsonWork("JSON/configUser.json") # A faire
         self.__fichierFete = jsonWork("config/listFete.json")
         # Temporaire
-        self.__fnc = fncArreraNetwork(self)
         # Initialisation des tout les gestionnaires
         #self.__gestFNC
-        self.__gestHist = gestHistorique(self.__fnc, self)
+        # self.__gestHist = gestHistorique(self.__fnc, self)
         self.__gestLang = gestLangue(self.__config.fichierLangue,
                                      self.__fileUser, [self.__config.name,
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
-        self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
-        if self.__gestNeuron.getSocket():
-            self.__gestSocket = gestSocket(self.__config.name)
-        else :
-            self.__gestSocket = None
+        # self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
+        #if self.__gestNeuron.getSocket():
+        #    self.__gestSocket = gestSocket(self.__config.name)
+        # else :
+        #    self.__gestSocket = None
+        self.__gestSocket = gestSocket(self.__config.name) # Temporaire, a faire plus tard
         self.__gestSTR = gestSTR()
 
-        # Librairy
-        self.__detecteurOS = OS()
-        self.__network = network()
+        self.__fnc = gestFNC(self)
 
         # Varriable
         self.__oldRequette = ""
@@ -60,6 +63,15 @@ class gestionnaire:
         
     def getName(self):
         return  self.__config.name
+
+    def getIcon(self):
+        return self.__config.icon
+
+    def getGestFNC(self):
+        """
+        Methode qui retourne l'objet gestFNC
+        """
+        return self.__fnc
 
     def getListVilleMeteo(self):
         return self.__fileUser.lectureJSONList("listVille")
@@ -181,3 +193,9 @@ class gestionnaire:
         Methode qui permet de netoyer une chaine de caractere
         """
         return self.__gestSTR.netoyage(carractere=chaine)
+
+    def emplacementTaskFile(self):
+        """
+        Methode qui retourne l'emplacement du fichier de tache
+        """
+        return self.__fileUser.lectureJSON("emplacementTache")

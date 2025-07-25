@@ -1,5 +1,4 @@
-from gestionnaire.gestion import*
-from librairy.parreraclient import *
+from librairy.parreraclient import PArreraClient
 
 class gestSocket :
     def __init__(self,name:str):

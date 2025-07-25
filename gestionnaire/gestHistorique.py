@@ -7,7 +7,7 @@ class gestHistorique :
         self.__dateToday = ""
         self.__dateTowmorow = ""
         self.__objFNCArrera = fncArreraNetwork
-        self.__objDate = fncDate()
+        self.__objDate = CArreraDate()
         self.__dictHist = dict
         self.__histToday = []
         self.__histTowmorow = []
