@@ -1,21 +1,141 @@
-from tkinter import*
-from tkinter.messagebox import *
-from ObjetsNetwork.gestion import *
-from tkcalendar import DateEntry
-from fnc.fonctionDate import*
+from idlelib.debugobj_r import remote_object_tree_item
 
-class fncArreraTache :
-    def __init__(self,fncDate:fncDate,fichierConfig:jsonWork,taskFile:str,projet:bool=False,nameProjet:str=""):
-        self.__taskFile = jsonWork(taskFile)
-        self.__mainColor = fichierConfig.lectureJSON("interfaceColor")
-        self.__textColor = fichierConfig.lectureJSON("interfaceTextColor")
-        self.__icon = fichierConfig.lectureJSON("iconAssistant")
-        self.__nameAssistant = fichierConfig.lectureJSON("name")
+from fnc.fncBase import fncBase, gestionnaire
+import json
+from librairy.arrera_date import*
+
+class fncArreraTache(fncBase) :
+    def __init__(self,gestionnaire:gestionnaire, fncDate:CArreraDate, taskFile:str):
+        super().__init__(gestionnaire)
+        self.__taskFile = taskFile
         self.__objDate = fncDate
-        if projet == True :
-            self.__title = self.__nameAssistant + " : taches de " + nameProjet
+        self.__content = {}
+
+    def __readTaskFile(self):
+        try:
+            with open(self.__taskFile, 'r', encoding='utf-8') as jsonFile:
+                self.__content = json.load(jsonFile)
+                return True
+        except Exception as e:
+            return False
+
+    def addTask(self, name: str, date: datetime = None, description: str = None):
+        # Vérifie le nom
+        if not name:
+            return False
+
+        self.__readTaskFile()
+
+        # Vérifie si la tâche existe déjà
+        if name in self.__content:
+            return False
+
+        baseDict = {
+            "description": description if description else "none",
+            "date": date.isoformat() if date else "none",
+            "fini": False  # Booléen, pas une chaîne !
+        }
+
+        self.__content[name] = baseDict
+
+        # On sauvegarde le fichier
+        with open(self.__taskFile, 'w', encoding='utf-8') as jsonFile:
+            json.dump(self.__content, jsonFile, ensure_ascii=False, indent=4)
+
+        return True
+
+    def supprTask(self,name:str):
+        if not name :
+            return False
+
+        self.__readTaskFile()
+
+        if name in self.__content:
+            del self.__content[name]
+            with open(self.__taskFile, 'w', encoding='utf-8') as jsonFile:
+                json.dump(self.__content, jsonFile, ensure_ascii=False, indent=4)
+
+            return True
         else :
-            self.__title = self.__nameAssistant + " : taches personnel"
+            return False
+
+
+    def setTaskFinish(self,name:str):
+        if not name:
+            return False
+        else :
+            self.__readTaskFile()
+
+            if name in self.__content:
+                self.__content[name]["fini"] = True
+                with open(self.__taskFile, 'w', encoding='utf-8') as jsonFile:
+                    json.dump(self.__content, jsonFile, ensure_ascii=False, indent=4)
+                return True
+            else :
+                return False
+
+    def getNbTask(self):
+        self.__readTaskFile()
+        return len(self.__content)
+
+    def getTask(self):
+        self.__readTaskFile()
+        return list(self.__content.keys())
+
+"""
+    def checkDateTask(self, nb: str):
+        self.__objDate.rafraichisement()
+        dateToday = (self.__objDate.annes() + "-"
+                     + self.__objDate.nbMoisSimple() + "-"
+                     + self.__objDate.jourSimple())
+        hier = self.__objDate.otherPastDate(1)
+        avantHier = self.__objDate.otherPastDate(2)
+        dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
+
+        if (dateTask == hier) or (dateTask == avantHier):
+            self.__taskFile.ajouterFlagDict(nb, "date", dateToday)
+            dateTask = self.__taskFile.getContenuJSON()[nb]["date"]
+
+        if dateToday == dateTask:
+            return True
+        else:
+            return False
+
+
+
+    def getTask(self):
+        dictTache = self.__taskFile.getContenuJSON()
+        listTache = []
+        for i in range(0, len(dictTache)):
+            listTache.append(dictTache[str(i)]["name"])
+        return listTache
+
+    def getNbTaskToday(self):
+        dictTache = self.__taskFile.getContenuJSON()
+        dateToday = self.__objDate.annes() + "-" + self.__objDate.nbMoisSimple() + "-" + self.__objDate.jourSimple()
+        nbTache = 0
+        for i in range(0, len(dictTache)):
+            if dictTache[str(i)]["date"] == dateToday:
+                nbTache = nbTache + 1
+        return nbTache
+
+    def getTaskToday(self):
+        dictTache = self.__taskFile.getContenuJSON()
+        dateToday = self.__objDate.annes() + "-" + self.__objDate.nbMoisSimple() + "-" + self.__objDate.jourSimple()
+        listTache = []
+        for i in range(0, len(dictTache)):
+            if dictTache[str(i)]["date"] == dateToday:
+                listTache.append(dictTache[str(i)]["name"])
+        return listTache
+
+    def getTaskTowmorow(self):
+        dictTache = self.__taskFile.getContenuJSON()
+        dateTowmorow = self.__objDate.otherAfterDate(1)
+        listTache = []
+        for i in range(0, len(dictTache)):
+            if dictTache[str(i)]["date"] == dateTowmorow:
+                listTache.append(dictTache[str(i)]["name"])
+        return listTache
 
     def __windows(self):
         screen = Toplevel()
@@ -193,6 +313,7 @@ class fncArreraTache :
         self.__chooseDateTask.place(relx=0.5, rely=0.5, anchor="center")
         self.__btnValiderChangeDate.place(relx=1, rely=1, anchor='se')
         btnAnulerChangeDate.place(relx=0, rely=1, anchor='sw')
+    
     
     def activeViewTask(self):
         self.__windows()
@@ -447,3 +568,4 @@ class fncArreraTache :
             if (dictTache[str(i)]["date"] == dateTowmorow) :
                 listTache.append(dictTache[str(i)]["name"])
         return listTache
+    """
