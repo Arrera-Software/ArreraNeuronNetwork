@@ -97,7 +97,15 @@ class fncArreraTache(fncBase) :
         else:
             return False
 
+    def getListTaskToday(self):
+        self.__readTaskFile()
+        listFlag = list(self.__content.keys())
+        listToday = []
+        for i in listFlag:
+            if self.checkDateTask(i):
+               listToday.append(i)
 
+        return listToday
 
 """
 
