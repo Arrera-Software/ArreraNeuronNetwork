@@ -214,7 +214,7 @@ def partCalendar():
     calendarBoucle = True
     while calendarBoucle:
         print("Test des fonctions de calendrier")
-        print("1.Ajouter un evenement\n2.Evenement enregister\n0.Quitter")
+        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -242,6 +242,9 @@ def partCalendar():
                     print("Impossible de cree l'evenement")
             case 2 :
                 print(fnc.getFNCCalendar().getAllEvents())
+            case 3 :
+                name = input("Entrer le nom de l'evenement :")
+                print(fnc.getFNCCalendar().getInformationEvent(name))
             case 0 :
                 calendarBoucle = False
             case _:

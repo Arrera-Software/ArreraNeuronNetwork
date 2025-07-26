@@ -66,6 +66,19 @@ class fncCalendar(fncBase):
 
         return listEvents
 
+    def getInformationEvent(self,name:str):
+        if not self.__loadCalendar() :
+            return {}
+
+        if not self.__contentCalendar :
+            return {}
+
+        for event in self.__contentCalendar:
+            if event["name"] == name:
+                return event
+
+        return {}
+
 
 """
 class fncArreraAgenda :
