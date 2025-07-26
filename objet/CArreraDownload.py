@@ -71,4 +71,7 @@ class CArreraDownload :
             return True
         else :
             return False
+
+    def getMode(self):
+        return {"1":"best","2":"bestaudio","3":"bestvideo"}
         
