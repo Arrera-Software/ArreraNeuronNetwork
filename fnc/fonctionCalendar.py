@@ -53,6 +53,19 @@ class fncCalendar(fncBase):
 
         return self.__saveCalendar()
 
+    def getAllEvents(self):
+        if not self.__loadCalendar() :
+            return []
+
+        if not self.__contentCalendar :
+            return []
+
+        listEvents = []
+        for event in self.__contentCalendar:
+            listEvents.append(event["name"])
+
+        return listEvents
+
 
 """
 class fncArreraAgenda :
