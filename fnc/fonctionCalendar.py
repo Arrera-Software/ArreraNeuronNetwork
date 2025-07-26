@@ -1,12 +1,60 @@
-import locale
-from tkinter import *
-from tkinter import messagebox
-from tkcalendar import DateEntry
-from ObjetsNetwork.gestion import *
-from fnc.fonctionDate import *
+import json
+import os
+from librairy.arrera_date import*
+from fnc.fncBase import fncBase,gestionnaire
+
+class fncCalendar(fncBase):
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire)
+        self.__calendarFile = self._gestionnaire.getEmplacementFileAgenda()
+        self.__contentCalendar = None
+
+    def __updateDateToday(self):
+        self.__today = datetime.today()
+
+    def __loadCalendar(self):
+        if not os.path.exists(self.__calendarFile):
+            return False
+        else :
+            with open(self.__calendarFile, "r", encoding="utf-8") as f:
+                self.__contentCalendar = json.loads(f.read())
+            return True
+
+    def __saveCalendar(self):
+        if not os.path.exists(self.__calendarFile):
+            return False
+        else :
+            with open(self.__calendarFile, "w", encoding="utf-8") as f:
+                json.dump(self.__contentCalendar, fp=f, indent=4)
+            return True
+
+    def addEventToCalendar(self,name:str,date:datetime,heure:str = "",descrption:str = "",lieu:str="",repetition:bool = False):
+        if not self.__loadCalendar() :
+            return False
+
+        if not self.__contentCalendar :
+            id = 1
+        else:
+            id = max(ev["id"] for ev in self.__contentCalendar) + 1
+
+        date_str = date.isoformat()
 
 
+        dictNewEvent = {
+            "id":id,
+            "date": date_str,
+            "heure": heure,
+            "name": name,
+            "description": descrption,
+            "lieu": lieu,
+            "repetition": repetition
+        }
+        self.__contentCalendar.append(dictNewEvent)
 
+        return self.__saveCalendar()
+
+
+"""
 class fncArreraAgenda :
     def __init__(self,fichierConfig:jsonWork,gest:gestionNetwork):
         self.__agendaFile = jsonWork(gest.getEmplacementFileAgenda())
@@ -327,3 +375,4 @@ class fncArreraAgenda :
         today = datetime.now()
         nb , listEvent = self.__checkEvent(str(today.year)+"-"+str(today.month)+"-"+str(today.day))
         return nb
+"""
