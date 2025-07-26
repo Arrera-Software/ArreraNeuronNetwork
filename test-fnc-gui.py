@@ -1,5 +1,6 @@
 import datetime
 
+from gestionnaire.gestFNC import gestFNC
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
 
@@ -144,11 +145,76 @@ def partSearch():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partDownload():
+    downloadBoucle = True
+    while downloadBoucle:
+        print("Test des fonctions de telechargement")
+        print("1.Voir les modes possible\n2.Telechargement en etapes\n3.Telechargement direct\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                print(fnc.getFNCDownload().getAllMode())
+            case 2:
+                print("Telechargement en etapes")
+                url = input("URL de la video : ")
+                if fnc.getFNCDownload().setUrl(url):
+                    print("URL enregistrée")
+                    boucleVerif = True
+                    while boucleVerif:
+                        mode = input("Mode (1-2-3) : ")
+                        try:
+                            nb = int(mode)
+                            if nb == 1 or nb == 2 or nb == 3:
+                                boucleVerif = False
+                        except ValueError:
+                            print("Veuillez entrer un nombre valide.")
+                    if fnc.getFNCDownload().refreshDirectory():
+                        print("Dossier de telechargement enregistré")
+                        if fnc.getFNCDownload().setMode(nb):
+                            if fnc.getFNCDownload().download() :
+                                print("Telechargement OK")
+                            else :
+                                print("Erreur lors du telechargement")
+                        else :
+                            print("Erreur lors de l'enregistrement du mode")
+                    else :
+                        print("Impossible d'enregistrer le dossier de telechargement")
+                else :
+                    print("Erreur lors de l'enregistrement de l'URL")
+            case 3:
+                print("Telechargement en direct")
+                url = input("URL de la video : ")
+                boucleVerif = True
+                while boucleVerif:
+                    mode = input("Mode (1-2-3) : ")
+                    try:
+                        nb = int(mode)
+                        if nb == 1 or nb == 2 or nb == 3:
+                            boucleVerif = False
+                    except ValueError:
+                        print("Veuillez entrer un nombre valide.")
+                if fnc.getFNCDownload().downloadDirectely(nb,url):
+                    print("Telechargement OK")
+
+            case 0:
+                downloadBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n0.Quitter")
         print("__________________________\n")
 
 
@@ -167,6 +233,8 @@ def main():
             case 2 :
                 partSearch()
                 break
+            case 3 :
+                partDownload()
             case 0:
                 print("Fin du programme")
                 break
