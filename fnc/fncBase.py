@@ -2,8 +2,8 @@ from gestionnaire.gestion import gestionnaire
 
 class fncBase:
     def __init__(self, gestionnaire:gestionnaire):
-        self.__gestionnaire = gestionnaire
-        self.__gestSocket = self.__gestionnaire.getSocketObjet()
-        self.__gestLang = self.__gestionnaire.getLanguageObjet()
+        self._gestionnaire = gestionnaire
+        self._gestSocket = self._gestionnaire.getSocketObjet()
+        self._gestLang = self._gestionnaire.getLanguageObjet()
         # Librairy
-        self.__dectOS = self.__gestionnaire.getOSObjet()
+        self._dectOS = self._gestionnaire.getOSObjet()
