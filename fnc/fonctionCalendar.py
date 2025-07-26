@@ -1,8 +1,5 @@
 import json
 import os
-
-from darkdetect import listener
-
 from librairy.arrera_date import*
 from fnc.fncBase import fncBase,gestionnaire
 
@@ -103,6 +100,20 @@ class fncCalendar(fncBase):
                         listEvent.append(event["name"])
 
         return listEvent
+
+    def delEvent(self,name:str):
+        if not self.__loadCalendar() :
+            return False
+
+        if not self.__contentCalendar :
+            return False
+
+        for i, event in enumerate(self.__contentCalendar):
+            if event["name"] == name:
+                del self.__contentCalendar[i]
+                return self.__saveCalendar()
+
+        return False
 
 
 """

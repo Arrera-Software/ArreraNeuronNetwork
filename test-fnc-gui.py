@@ -247,6 +247,13 @@ def partCalendar():
             case 4:
                 print("Check des evenements du jour")
                 print(fnc.getFNCCalendar().checkDateHourEvent())
+            case 5 :
+                print("Suppression d'un evenement")
+                name = input("Entrer le nom de l'evenement :")
+                if fnc.getFNCCalendar().delEvent(name):
+                    print("Evenement supprimer")
+                else :
+                    print("Impossible de suppression d'un evenement")
             case 0 :
                 calendarBoucle = False
             case _:
