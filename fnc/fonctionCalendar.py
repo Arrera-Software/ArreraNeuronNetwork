@@ -1,5 +1,8 @@
 import json
 import os
+
+from darkdetect import listener
+
 from librairy.arrera_date import*
 from fnc.fncBase import fncBase,gestionnaire
 
@@ -78,6 +81,28 @@ class fncCalendar(fncBase):
                 return event
 
         return {}
+
+    def checkDateHourEvent(self):
+        if not self.__loadCalendar() :
+            return []
+
+        if not self.__contentCalendar :
+            return []
+
+        listEvent = []
+        date_str = datetime.today().strftime("%Y-%m-%d")
+        hour_str = datetime.today().strftime("%H:%M")
+
+
+        for event in self.__contentCalendar:
+            if event["date"] == date_str:
+                if event["heure"] == "":
+                    listEvent.append(event["name"])
+                else :
+                    if event["heure"] == hour_str:
+                        listEvent.append(event["name"])
+
+        return listEvent
 
 
 """

@@ -204,7 +204,6 @@ def partDownload():
                         print("Veuillez entrer un nombre valide.")
                 if fnc.getFNCDownload().downloadDirectely(nb,url):
                     print("Telechargement OK")
-
             case 0:
                 downloadBoucle = False
             case _:
@@ -214,7 +213,7 @@ def partCalendar():
     calendarBoucle = True
     while calendarBoucle:
         print("Test des fonctions de calendrier")
-        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n0.Quitter")
+        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n4.Check event jour\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -245,6 +244,9 @@ def partCalendar():
             case 3 :
                 name = input("Entrer le nom de l'evenement :")
                 print(fnc.getFNCCalendar().getInformationEvent(name))
+            case 4:
+                print("Check des evenements du jour")
+                print(fnc.getFNCCalendar().checkDateHourEvent())
             case 0 :
                 calendarBoucle = False
             case _:
