@@ -5,6 +5,7 @@ class gestFNC:
         # Import
         # Fichier de fonction
         from fnc.fonctionTache import fncArreraTache, CArreraDate
+        from fnc.fonctionRecherche import fncArreraSearch
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -12,9 +13,12 @@ class gestFNC:
 
         # Librairy
         self.__libDate = CArreraDate()
+        # Fonction de tache
         self.__taskAssistant = fncArreraTache(self.__gestionnaire,
                                               self.__libDate,
                                               self.__gestionnaire.getEmplacemntfileTache())
+        # Fonction de recherche
+        self.__searchAssistant = fncArreraSearch(self.__gestionnaire)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -23,3 +27,6 @@ class gestFNC:
 
     def getFNCTask(self):
         return self.__taskAssistant
+
+    def getFNCSearch(self):
+        return self.__searchAssistant

@@ -28,6 +28,9 @@ conf = confNeuron(name="Opale",
             lienDoc="www.google.com",
             fichierLangue="language/vouvoiment/")
 
+gest = gestionnaire(conf)
+fnc = gest.getGestFNC()
+
 def partTask():
     taskBoucle = True
     while taskBoucle:
@@ -96,14 +99,56 @@ def partTask():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
-def main():
-    gest = gestionnaire(conf)
-    fnc = gest.getGestFNC()
+def partSearch():
+    searchBoucle = True
+    while searchBoucle:
+        print("Test des fonctions de recherche")
+        print("1.Recherche Ecosia\n2.Recherche Bing\n3.Recherche Perplexity\n4.Recherche Google\n5.Recherche Qwant\n6.Recherche DuckDuckGo\n7.Recherche Big\n8.Recherche assistant\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
 
+        match nb:
+            case 1:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().ecosiaSearch(query)
+            case 2:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().bingSearch(query)
+            case 3:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().perplexitySearch(query)
+            case 4:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().googleSearch(query)
+            case 5:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().qwantSearch(query)
+            case 6:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().duckduckgoSearch(query)
+            case 7:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().bigRecherche(query)
+            case 8:
+                query = input("Rechercher : ")
+                fnc.getFNCSearch().search(query)
+            case 0:
+                searchBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
+def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n0.Quitter")
+        print("1.Taches\n2.Recherche\n0.Quitter")
         print("__________________________\n")
 
 
@@ -118,6 +163,9 @@ def main():
         match nb:
             case 1:
                 partTask()
+                break
+            case 2 :
+                partSearch()
                 break
             case 0:
                 print("Fin du programme")

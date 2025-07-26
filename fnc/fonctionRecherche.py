@@ -1,14 +1,58 @@
+from fnc.fncBase import fncBase,gestionnaire
 import webbrowser
 import requests
 import time
 
-class fncArreraSearch :
-    def __init__(self,etatConnextion:bool):
-        self.__etatConnexion = etatConnextion
+class fncArreraSearch(fncBase) :
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire)
+        self.__objNetwork = self._gestionnaire.getNetworkObjet()
         
-    
+    def __verifConnexion(self):
+        self.__etatConnexion = self.__objNetwork.getEtatInternet()
+
+    def search(self,query:str):
+        self.__verifConnexion()
+        if self.__etatConnexion:
+            moteurUser = self._gestionnaire.getValeurfichierUtilisateur("moteurRecherche")
+            if moteurUser == "google":
+                return self.googleSearch(query)
+            elif moteurUser == "brave":
+                return self.braveSearch(query)
+            elif moteurUser == "duckduckgo":
+                return self.duckduckgoSearch(query)
+            elif moteurUser == "qwant":
+                return self.qwantSearch(query)
+            elif moteurUser == "ecosia":
+                return self.ecosiaSearch(query)
+            elif moteurUser == "bing":
+                return self.bingSearch(query)
+            elif moteurUser == "perplexity":
+                return self.perplexitySearch(query)
+            else:
+                moteurDefault = self._gestionnaire.getConfigFile().moteurderecherche
+                if moteurDefault == "google":
+                    return self.googleSearch(query)
+                elif moteurDefault == "brave":
+                    return self.braveSearch(query)
+                elif moteurDefault == "duckduckgo":
+                    return self.duckduckgoSearch(query)
+                elif moteurDefault == "qwant":
+                    return self.qwantSearch(query)
+                elif moteurDefault == "ecosia":
+                    return self.ecosiaSearch(query)
+                elif moteurDefault == "bing":
+                    return self.bingSearch(query)
+                elif moteurDefault == "perplexity":
+                    return self.perplexitySearch(query)
+                else :
+                    return self.googleSearch(query)
+        else:
+            return False
+
     def braveSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://search.brave.com/search?q='
             urllink = requests.get(url+query+"&source=web")
             lienBrave = urllink.url
@@ -18,7 +62,8 @@ class fncArreraSearch :
             return False
 
     def amazonSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://www.amazon.fr/s?k='
             urllink = requests.get(url+query)
             lienAmazon = urllink.url
@@ -28,7 +73,8 @@ class fncArreraSearch :
             return False
 
     def googleSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://www.google.com/search?q'
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -39,7 +85,8 @@ class fncArreraSearch :
             return False
 
     def duckduckgoSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://duckduckgo.com/?q='
             lienduck = url+query
             webbrowser.open(lienduck) 
@@ -48,7 +95,8 @@ class fncArreraSearch :
             return False 
 
     def qwantSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://www.qwant.com/?l=fr&q'
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -60,7 +108,8 @@ class fncArreraSearch :
 
 
     def ecosiaSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = 'https://www.ecosia.org/search'
             query = {'q': query}
             urllink = requests.get(url,query)
@@ -71,7 +120,8 @@ class fncArreraSearch :
             return False
 
     def bingSearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = "https://www.bing.com/search"
             query = {'q': query}
             urllink = requests.get(url, params=query)
@@ -82,7 +132,8 @@ class fncArreraSearch :
             return False
     
     def perplexitySearch(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             url = "https://www.perplexity.ai/search/new?q"
             webbrowser.open(url+"="+query+". Repond en francais")
             return True
@@ -90,7 +141,8 @@ class fncArreraSearch :
             return False
     
     def bigRecherche(self,query:str):
-        if self.__etatConnexion == True :
+        self.__verifConnexion()
+        if self.__etatConnexion:
             i = 0
             while(i!=6):
                 if (i==1) :
