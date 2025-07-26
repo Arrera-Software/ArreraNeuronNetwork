@@ -210,11 +210,44 @@ def partDownload():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partCalendar():
+    calendarBoucle = True
+    while calendarBoucle:
+        print("Test des fonctions de calendrier")
+        print("1.Ajouter un evenement\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                nom = input("Nom : ")
+                date = input("Date (YYYY-MM-DD) : ")
+                heure = input("Heure (00:00) : ")
+                description = input("Description : ")
+                lieu = input("Lieu : ")
+                try :
+                    date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+                except ValueError :
+                    print("La date n'est pas valide")
+                if fnc.getFNCCalendar().addEventToCalendar(nom,date,heure,description,lieu):
+                    print("Evenement cree")
+                else :
+                    print("Impossible de cree l'evenement")
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n0.Quitter")
         print("__________________________\n")
 
 
@@ -235,6 +268,8 @@ def main():
                 break
             case 3 :
                 partDownload()
+            case 4 :
+                partCalendar()
             case 0:
                 print("Fin du programme")
                 break

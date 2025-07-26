@@ -7,6 +7,7 @@ class gestFNC:
         from fnc.fonctionTache import fncArreraTache, CArreraDate
         from fnc.fonctionRecherche import fncArreraSearch
         from fnc.fonctionArreraDownload import fncArreraVideoDownload
+        from fnc.fonctionCalendar import fncCalendar
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -22,6 +23,8 @@ class gestFNC:
         self.__searchAssistant = fncArreraSearch(self.__gestionnaire)
         # Fonction de telechargement de video youtube
         self.__downloaderYoutube = fncArreraVideoDownload(self.__gestionnaire)
+        # Fonction Agenda
+        self.__calendar = fncCalendar(self.__gestionnaire)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -36,3 +39,6 @@ class gestFNC:
 
     def getFNCDownload(self):
         return self.__downloaderYoutube
+
+    def getFNCCalendar(self):
+        return self.__calendar
