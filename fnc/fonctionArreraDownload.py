@@ -1,83 +1,46 @@
 from objet.CArreraDownload import*
-from gestionnaire.gestion import *
-from librairy.travailJSON import jsonWork
-import threading as th
-from tkinter import*
+from fnc.fncBase import fncBase,gestionnaire
 
-class fncArreraVideoDownload :
-    def __init__(self,configNeuron:jsonWork,gestUser) :
-        self.__nameAssistant = configNeuron.lectureJSON("name")+" : Video Download"
-        self.__interfaceColor = configNeuron.lectureJSON("interfaceColor")
-        self.__textColor = configNeuron.lectureJSON("interfaceTextColor")
-        self.__icon = configNeuron.lectureJSON("iconAssistant")
-        self.__aDownload = CArreraDownload()
-        self.__gestUser = gestUser
+class fncArreraVideoDownload(fncBase) :
+    def __init__(self, gestionnaire: gestionnaire):
+        super().__init__(gestionnaire)
+        self.__arrDownload = CArreraDownload()
 
-    def __windows(self):
-        windows = Toplevel()
-        windows.minsize(400,500)
-        windows.maxsize(400,500)
-        windows.iconphoto(False,PhotoImage(file=self.__icon))
-        windows.title(self.__nameAssistant)
-        windows.configure(bg=self.__interfaceColor)
-        # Widget 
-        labelTitle = Label(windows,text="Arrera Download"
-                           ,font=("Arial",30),bg=self.__interfaceColor
-                           ,fg=self.__textColor)
-        self.__eDownload = Entry(windows,font=("Arial","15"),highlightthickness=2,
-                          highlightbackground="black")
-        self.__btnDownload = Button(windows,text="Télécharger"
-                                    ,font=("Arial",15),bg=self.__interfaceColor
-                                    ,fg=self.__textColor)
-        
-        # Affichage 
-        labelTitle.place(relx=0.5, rely=0.0, anchor="n") 
-        self.__eDownload.place(relx=0.5, rely=0.5, anchor="center")
-        self.__btnDownload.place(relx=0.5, rely=1.0, anchor="s") 
-    
-    def activeMusique(self):
-        self.__windows()
-        self.__btnDownload.configure(command=lambda : self.__downloadGUI(1))
-    
-    def activeVideo(self):
-        self.__windows()
-        self.__btnDownload.configure(command=lambda : self.__downloadGUI(2))
-    
-    def __downloadGUI(self,mode:int):
+    def refreshDirectory(self):
+        emplacement = self._gestionnaire.getEmplacementDownload()
+        if emplacement == "":
+            return self.__arrDownload.setDownloadFolder()
+        else :
+            return self.__arrDownload.setDownloadFolderDur(emplacement)
+
+    def setMode(self,mode:int):
         """
         Args:
-            mode (int): 1 -> Musique 2->Video
+            mode (int): 1 -> Video 2 -> Juste Audio
         """
-        self.download(mode,self.__eDownload.get())
-        self.__eDownload.delete(0,END)
-    
-    def download(self,mode:int,url:str):
+        return self.__arrDownload.setMode(mode)
+
+    def getAllMode(self):
+        return self.__arrDownload.getMode()
+
+    def setUrl(self,url:str):
+        return self.__arrDownload.setURL(url)
+
+    def download(self):
+        return self.__arrDownload.download()
+
+    def downloadDirectely(self,mode:int = 1,url:str = ""):
         """
         Args:
-            mode (int): 1 -> Musique 2->Video
+            mode (int): 1 -> Video 2 -> Juste Audio
             url (str): Url de la video
         """
-        if (url != ""):
-            if (self.__gestUser.getEmplacementDownload()==""):
-                sortie = self.__aDownload.setDownloadFolder()
-            else :
-                sortie = self.__aDownload.setDownloadFolderDur(self.__gestUser.getEmplacementDownload())
-            
-            if (sortie == True):
-                match mode :
-                    case 1 :
-                        self.__aDownload.setMode(2)
-                        self.__aDownload.setURL(url)
-                    case 2 :
-                        self.__aDownload.setMode(1)
-                        self.__aDownload.setURL(url)
-                
-                tDownload = th.Thread(target=self.__aDownload.download)
-                tDownload.start()
-                tDownload.join()
-                del tDownload
-                return True
-            else :
-                return False
+        if url == "":
+            return False
+
+        if self.refreshDirectory():
+            self.setMode(mode)
+            self.setUrl(url)
+            return self.download()
         else :
             return False
