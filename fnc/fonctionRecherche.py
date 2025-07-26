@@ -14,39 +14,43 @@ class fncArreraSearch(fncBase) :
     def search(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            moteurUser = self._gestionnaire.getValeurfichierUtilisateur("moteurRecherche")
-            if moteurUser == "google":
-                return self.googleSearch(query)
-            elif moteurUser == "brave":
-                return self.braveSearch(query)
-            elif moteurUser == "duckduckgo":
-                return self.duckduckgoSearch(query)
-            elif moteurUser == "qwant":
-                return self.qwantSearch(query)
-            elif moteurUser == "ecosia":
-                return self.ecosiaSearch(query)
-            elif moteurUser == "bing":
-                return self.bingSearch(query)
-            elif moteurUser == "perplexity":
-                return self.perplexitySearch(query)
-            else:
-                moteurDefault = self._gestionnaire.getConfigFile().moteurderecherche
-                if moteurDefault == "google":
+            # Recherche avec l'interface Arrera
+            if self._gestSocket.getServeurOn():
+                return self._gestSocket.sendData("recherche "+query)
+            else :
+                moteurUser = self._gestionnaire.getValeurfichierUtilisateur("moteurRecherche")
+                if moteurUser == "google":
                     return self.googleSearch(query)
-                elif moteurDefault == "brave":
+                elif moteurUser == "brave":
                     return self.braveSearch(query)
-                elif moteurDefault == "duckduckgo":
+                elif moteurUser == "duckduckgo":
                     return self.duckduckgoSearch(query)
-                elif moteurDefault == "qwant":
+                elif moteurUser == "qwant":
                     return self.qwantSearch(query)
-                elif moteurDefault == "ecosia":
+                elif moteurUser == "ecosia":
                     return self.ecosiaSearch(query)
-                elif moteurDefault == "bing":
+                elif moteurUser == "bing":
                     return self.bingSearch(query)
-                elif moteurDefault == "perplexity":
+                elif moteurUser == "perplexity":
                     return self.perplexitySearch(query)
-                else :
-                    return self.googleSearch(query)
+                else:
+                    moteurDefault = self._gestionnaire.getConfigFile().moteurderecherche
+                    if moteurDefault == "google":
+                        return self.googleSearch(query)
+                    elif moteurDefault == "brave":
+                        return self.braveSearch(query)
+                    elif moteurDefault == "duckduckgo":
+                        return self.duckduckgoSearch(query)
+                    elif moteurDefault == "qwant":
+                        return self.qwantSearch(query)
+                    elif moteurDefault == "ecosia":
+                        return self.ecosiaSearch(query)
+                    elif moteurDefault == "bing":
+                        return self.bingSearch(query)
+                    elif moteurDefault == "perplexity":
+                        return self.perplexitySearch(query)
+                    else :
+                        return self.googleSearch(query)
         else:
             return False
 
