@@ -1,10 +1,78 @@
-import geocoder
+from fnc.fncBase import fncBase,gestionnaire
 import requests
 import webbrowser
-import urllib.parse
 
-class GPS:
-    def __init__(self,KeyGPS:str,etatConnextion:bool):
+class fncGPS(fncBase):
+    def __init__(self,gestionnaire: gestionnaire):
+        super().__init__(gestionnaire)
+        self.__latitude = None
+        self.__longitude = None
+
+    def locate(self):
+        if self._gestionnaire.getNetworkObjet().getEtatInternet() :
+            if self._gestionnaire.getOSObjet().osMac() :
+                if not self.__localMacOS():
+                    return self.__locateIP()
+                else :
+                    return True
+            else :
+                return self.__locateIP()
+        else :
+            return False
+
+    def __locateIP(self):
+        api_url = 'https://ipinfo.io/json'
+        try:
+            response = requests.get(api_url, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            loc = tuple(map(float, data['loc'].split(',')))
+            self.__latitude = loc[0]
+            self.__longitude = loc[1]
+            return True
+        except Exception as e:
+            return False
+
+    def __localMacOS(self):
+        if self._gestionnaire.getOSObjet().osMac():
+            import objc
+            import CoreLocation
+            import time
+
+            user_location = {"obj": None}
+
+            class LocationManagerDelegate(CoreLocation.NSObject):  # correction ici !
+                def locationManager_didUpdateLocations_(self, manager, locations):
+                    user_location["obj"] = locations[-1]
+                    manager.stopUpdatingLocation()
+
+            manager = CoreLocation.CLLocationManager.alloc().init()
+            delegate = LocationManagerDelegate.alloc().init()
+            manager.setDelegate_(delegate)
+            manager.requestWhenInUseAuthorization()
+            manager.startUpdatingLocation()
+
+            for _ in range(20):  # 20 x 0.5s = 10s
+                if user_location["obj"]:
+                    break
+                time.sleep(0.5)
+
+            if user_location["obj"]:
+                self.__latitude = user_location["obj"].coordinate().latitude
+                self.__longitude = user_location["obj"].coordinate().longitude
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def getLatitude(self):
+        return self.__latitude
+
+    def getLongitude(self):
+        return self.__longitude
+
+        """
         self.__url = "http://api.openweathermap.org/geo/1.0/"
         self.__key = KeyGPS
         if etatConnextion == True :
@@ -51,13 +119,6 @@ class GPS:
         return self.nameVille
     
     def launchGoogleMapItineraire(self,depart:str, arrivee:str):
-        """
-        Lance un itinéraire Google Maps depuis l'adresse de départ jusqu'à l'adresse d'arrivée.
-        
-        Parameters:
-        depart (str): Adresse de départ en langage naturel.
-        arrivee (str): Adresse d'arrivée en langage naturel.
-        """
         if (depart!="" and arrivee!=""):
             base_url = "https://www.google.com/maps/dir/?api=1"
             params = {
@@ -73,3 +134,4 @@ class GPS:
             return webbrowser.open(full_url)
         else :
             return False
+    """

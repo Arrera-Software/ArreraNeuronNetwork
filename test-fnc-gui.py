@@ -259,11 +259,40 @@ def partCalendar():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partGPS():
+    gpsBoucle = True
+    while gpsBoucle:
+        print("Test des fonctions de GPS")
+        print("1.Get Latitude longitude\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                if fnc.getFNCGPS().locate():
+                    print("Localisation reussie")
+                    latitude = fnc.getFNCGPS().getLatitude()
+                    longitude = fnc.getFNCGPS().getLongitude()
+                    print(f"Latidude : {latitude} \n logitude : {longitude}")
+                else:
+                    print("Erreur de localisation")
+            case 0 :
+                gpsBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n0.Quitter")
         print("__________________________\n")
 
 
@@ -286,6 +315,8 @@ def main():
                 partDownload()
             case 4 :
                 partCalendar()
+            case 5 :
+                partGPS()
             case 0:
                 print("Fin du programme")
                 break
