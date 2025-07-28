@@ -263,7 +263,7 @@ def partGPS():
     gpsBoucle = True
     while gpsBoucle:
         print("Test des fonctions de GPS")
-        print("1.Get Latitude longitude\n2.Get Ville\n0.Quitter")
+        print("1.Get Latitude longitude\n2.Get Ville\n3.Lancer un itineraire sur g map\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -289,6 +289,13 @@ def partGPS():
                     print(f"Ville : {fnc.getFNCGPS().getTown()}")
                 else:
                     print("Erreur de localisation")
+            case 3:
+                depart = input("Ville : ")
+                arrivee = input("Arrivée : ")
+                if fnc.getFNCGPS().launchGoogleMapItinerary(depart, arrivee):
+                    print("Itinéraire lancé dans le navigateur")
+                else :
+                    print("Erreur lors du lancement de l'itinéraire")
             case 0 :
                 gpsBoucle = False
             case _:

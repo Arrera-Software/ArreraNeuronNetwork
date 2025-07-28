@@ -1,6 +1,7 @@
 from fnc.fncBase import fncBase,gestionnaire
 import requests
 import webbrowser
+import urllib.parse
 
 class fncGPS(fncBase):
     def __init__(self,gestionnaire: gestionnaire):
@@ -48,6 +49,23 @@ class fncGPS(fncBase):
                or data.get('address', {}).get('town') \
                or data.get('address', {}).get('village')
         return city
+
+    def launchGoogleMapItinerary(self, depart: str, arrivee: str):
+        if depart != "" and arrivee != "":
+            base_url = "https://www.google.com/maps/dir/?api=1"
+            params = {
+                "origin": depart,
+                "destination": arrivee
+            }
+
+            # Encoder les paramètres pour les inclure dans l'URL
+            url_params = urllib.parse.urlencode(params)
+            full_url = f"{base_url}&{url_params}"
+
+            # Ouvrir l'URL dans le navigateur par défaut
+            return webbrowser.open(full_url)
+        else:
+            return False
 
         """
         self.__url = "http://api.openweathermap.org/geo/1.0/"
