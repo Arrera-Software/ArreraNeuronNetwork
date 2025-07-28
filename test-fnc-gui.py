@@ -263,7 +263,7 @@ def partGPS():
     gpsBoucle = True
     while gpsBoucle:
         print("Test des fonctions de GPS")
-        print("1.Get Latitude longitude\n0.Quitter")
+        print("1.Get Latitude longitude\n2.Get Ville\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -281,6 +281,12 @@ def partGPS():
                     latitude = fnc.getFNCGPS().getLatitude()
                     longitude = fnc.getFNCGPS().getLongitude()
                     print(f"Latidude : {latitude} \n logitude : {longitude}")
+                else:
+                    print("Erreur de localisation")
+            case 2:
+                if fnc.getFNCGPS().locate():
+                    print("Localisation reussie")
+                    print(f"Ville : {fnc.getFNCGPS().getTown()}")
                 else:
                     print("Erreur de localisation")
             case 0 :

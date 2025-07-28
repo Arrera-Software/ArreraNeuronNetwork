@@ -1,8 +1,6 @@
 from fnc.fncBase import fncBase,gestionnaire
-import geocoder
 import requests
 import webbrowser
-import subprocess
 
 class fncGPS(fncBase):
     def __init__(self,gestionnaire: gestionnaire):
@@ -31,6 +29,25 @@ class fncGPS(fncBase):
 
     def getLongitude(self):
         return self.__longitude
+
+    def getTown(self):
+        url = 'https://nominatim.openstreetmap.org/reverse'
+        params = {
+            'lat': str(self.__latitude),
+            'lon': str(self.__longitude),
+            'format': 'json',
+            'zoom': 10,  # Niveau de détail (10 = ville)
+            'addressdetails': 1,
+        }
+        headers = {
+            'User-Agent': 'my-geocoder'
+        }
+        response = requests.get(url, params=params, headers=headers)
+        data = response.json()
+        city = data.get('address', {}).get('city') \
+               or data.get('address', {}).get('town') \
+               or data.get('address', {}).get('village')
+        return city
 
         """
         self.__url = "http://api.openweathermap.org/geo/1.0/"
