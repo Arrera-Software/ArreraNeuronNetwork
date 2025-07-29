@@ -9,6 +9,7 @@ class gestFNC:
         from fnc.fonctionArreraDownload import fncArreraVideoDownload
         from fnc.fonctionCalendar import fncCalendar
         from fnc.fonctionGPS import fncGPS
+        from fnc.fonctionMeteo import fncMeteo
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -28,6 +29,8 @@ class gestFNC:
         self.__calendar = fncCalendar(self.__gestionnaire)
         # Fonction GPS
         self.__gps = fncGPS(self.__gestionnaire)
+        # Fonction Meteo
+        self.__meteo = fncMeteo(self.__gestionnaire,self.__gps)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -48,3 +51,6 @@ class gestFNC:
 
     def getFNCGPS(self):
         return self.__gps
+
+    def getFNCMeteo(self):
+        return self.__meteo

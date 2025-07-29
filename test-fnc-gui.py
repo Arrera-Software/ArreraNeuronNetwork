@@ -301,11 +301,59 @@ def partGPS():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partMeteo():
+    meteoBoucle = True
+    while meteoBoucle:
+        print("Test des fonctions de Météo")
+        print("1.Météo actuelle localisation\n2.Meteo actuel ville\n3.Meteo actuel lat long\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                if fnc.getFNCMeteo().getMeteoCurrentHour():
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 2:
+                ville = input("Entrez le nom de la ville : ")
+                if fnc.getFNCMeteo().getMeteoCurrentHour(ville):
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 3:
+                lat = input("Entrez la latitude : ")
+                long = input("Entrez la longitude : ")
+                if fnc.getFNCMeteo().getMeteoCurrentHour(latitude=lat, longitude=long):
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 0:
+                meteoBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n0.Quitter")
         print("__________________________\n")
 
 
@@ -330,6 +378,8 @@ def main():
                 partCalendar()
             case 5 :
                 partGPS()
+            case 6 :
+                partMeteo()
             case 0:
                 print("Fin du programme")
                 break
