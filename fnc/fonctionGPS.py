@@ -66,3 +66,25 @@ class fncGPS(fncBase):
             return webbrowser.open(full_url)
         else:
             return False
+
+    def getTownWithLatitudeAndLongitude(self,latitude:str,longitude:str):
+        if gestionnaire.getNetworkObjet().getEtatInternet() :
+            url = 'https://nominatim.openstreetmap.org/reverse'
+            params = {
+                'lat': str(latitude),
+                'lon': str(longitude),
+                'format': 'json',
+                'zoom': 10,  # Niveau de détail (10 = ville)
+                'addressdetails': 1,
+            }
+            headers = {
+                'User-Agent': 'my-geocoder'
+            }
+            response = requests.get(url, params=params, headers=headers)
+            data = response.json()
+            city = data.get('address', {}).get('city') \
+                   or data.get('address', {}).get('town') \
+                   or data.get('address', {}).get('village')
+            return city
+        else :
+            return None
