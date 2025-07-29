@@ -27,10 +27,13 @@ class fncMeteo(fncBase) :
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
             if town:
                 try:
-                    townWeather = self.__client.search_places(town)[0]
-                    weather = self.__client.get_forecast_for_place(townWeather)
+                    townWeather = self.__client.search_places(town)
+                    place = townWeather[0]
+                    if not place:
+                        return False
+                    weather = self.__client.get_forecast_for_place(place)
                     dictMeteo = weather.current_forecast
-                    self.__nameTown = townWeather.name
+                    self.__nameTown = place.name
                     self.__temperature = dictMeteo['T']['value']
                     self.__humidity = dictMeteo["humidity"]
                     self.__description = dictMeteo['weather']['desc']
@@ -44,10 +47,13 @@ class fncMeteo(fncBase) :
                     if town is None:
                         return False
                     else:
-                        townWeather = self.__client.search_places(town)[0]
-                        weather = self.__client.get_forecast_for_place(townWeather)
+                        townWeather = self.__client.search_places(town)
+                        place = townWeather[0]
+                        if not place:
+                            return False
+                        weather = self.__client.get_forecast_for_place(place)
                         dictMeteo = weather.current_forecast
-                        self.__nameTown = townWeather.name
+                        self.__nameTown = place.name
                         self.__temperature = dictMeteo['T']['value']
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
@@ -58,10 +64,13 @@ class fncMeteo(fncBase) :
             else :
                 if self.__fncGPS.locate():
                     try :
-                        townWeather = self.__client.search_places(self.__fncGPS.getTown())[0]
-                        weather = self.__client.get_forecast_for_place(townWeather)
+                        townWeather = self.__client.search_places(self.__fncGPS.getTown())
+                        place = townWeather[0]
+                        if not place:
+                            return False
+                        weather = self.__client.get_forecast_for_place(place)
                         dictMeteo = weather.current_forecast
-                        self.__nameTown = townWeather.name
+                        self.__nameTown = place.name
                         self.__temperature = dictMeteo['T']['value']
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
@@ -74,11 +83,9 @@ class fncMeteo(fncBase) :
         else :
             return False
 
-
-    
-    # def getDataMeteoNow(self,latitude:str,longitude:str):
     # def getDateMetoTowmorowMorning(self,latitude:str,longitude:str):
     # def getDateMetoTowmorowNoon(self,latitude:str,longitude:str):
+
     def getNameTown(self):
         return self.__nameTown
 
