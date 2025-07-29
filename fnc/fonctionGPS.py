@@ -68,7 +68,7 @@ class fncGPS(fncBase):
             return False
 
     def getTownWithLatitudeAndLongitude(self,latitude:str,longitude:str):
-        if gestionnaire.getNetworkObjet().getEtatInternet() :
+        if self._gestionnaire.getNetworkObjet().getEtatInternet() :
             url = 'https://nominatim.openstreetmap.org/reverse'
             params = {
                 'lat': str(latitude),
