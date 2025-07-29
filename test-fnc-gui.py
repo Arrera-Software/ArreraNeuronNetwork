@@ -305,7 +305,7 @@ def partMeteo():
     meteoBoucle = True
     while meteoBoucle:
         print("Test des fonctions de Météo")
-        print("1.Météo actuelle localisation\n2.Meteo actuel ville\n3.Meteo actuel lat long\n0.Quitter")
+        print("1.Météo actuelle localisation\n2.Meteo actuel ville\n3.Meteo actuel lat long\n4.Meteo demain matin localisation\n5.Meteo demain ville\n6.Meteo demain lat long\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -338,6 +338,33 @@ def partMeteo():
                 lat = input("Entrez la latitude : ")
                 long = input("Entrez la longitude : ")
                 if fnc.getFNCMeteo().getMeteoCurrentHour(latitude=lat, longitude=long):
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 4:
+                if fnc.getFNCMeteo().getMeteoTowmorowMorning():
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 5:
+                ville = input("Entrez le nom de la ville : ")
+                if fnc.getFNCMeteo().getMeteoTowmorowMorning(ville):
+                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
+                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
+                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
+                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                else:
+                    print("Erreur lors de la récupération de la météo actuelle")
+            case 6:
+                lat = input("Entrez la latitude : ")
+                long = input("Entrez la longitude : ")
+                if fnc.getFNCMeteo().getMeteoTowmorowMorning(latitude=lat, longitude=long):
                     print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")

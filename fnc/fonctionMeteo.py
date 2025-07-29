@@ -73,7 +73,62 @@ class fncMeteo(fncBase) :
         else :
             return False
 
-    # def getDateMetoTowmorowMorning(self,latitude:str,longitude:str):
+    def getMeteoTowmorowMorning(self,town:str="",latitude:str="",longitude:str=""):
+        if self._gestionnaire.getNetworkObjet().getEtatInternet():
+            if town:
+                try:
+                    townWeather = self.__client.search_places(town)
+                    place = townWeather[0]
+                    if not place:
+                        return False
+                except Exception as e:
+                    print(f"Erreur lors de la récupération des données météo : {e}")
+                    return False
+            elif latitude and longitude:
+                try:
+                    town = self.__fncGPS.getTownWithLatitudeAndLongitude(latitude,longitude)
+                    if town is None:
+                        return False
+                    else:
+                        townWeather = self.__client.search_places(town)
+                        place = townWeather[0]
+                        if not place:
+                            return False
+                except Exception as e:
+                    print(f"Erreur lors de la récupération des données météo : {e}")
+                    return False
+            elif self.__fncGPS.locate():
+                    try :
+                        townWeather = self.__client.search_places(self.__fncGPS.getTown())
+                        place = townWeather[0]
+                        if not place:
+                            return False
+                    except Exception as e:
+                        print(f"Erreur lors de la récupération des données météo : {e}")
+                        return False
+            else :
+                return False
+
+            try :
+                weather = self.__client.get_forecast_for_place(place)
+                now = datetime.now()
+                tomorrow_morning = (now + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
+                for hourly_forecast in weather.forecast:
+                    forecast_time = datetime.fromtimestamp(hourly_forecast["dt"])
+                    if forecast_time == tomorrow_morning:
+                        self.__nameTown = place.name
+                        self.__temperature = hourly_forecast['T']['value']
+                        self.__humidity = hourly_forecast["humidity"]
+                        self.__description = hourly_forecast['weather']['desc']
+                        return True
+                else:
+                    return False
+            except Exception as e:
+                print(f"Erreur lors de la récupération des données météo : {e}")
+                return False
+        else :
+            return False
+
     # def getDateMetoTowmorowNoon(self,latitude:str,longitude:str):
 
     def getNameTown(self):
