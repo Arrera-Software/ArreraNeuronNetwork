@@ -31,13 +31,6 @@ class fncMeteo(fncBase) :
                     place = townWeather[0]
                     if not place:
                         return False
-                    weather = self.__client.get_forecast_for_place(place)
-                    dictMeteo = weather.current_forecast
-                    self.__nameTown = place.name
-                    self.__temperature = dictMeteo['T']['value']
-                    self.__humidity = dictMeteo["humidity"]
-                    self.__description = dictMeteo['weather']['desc']
-                    return True
                 except Exception as e:
                     # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
@@ -51,35 +44,32 @@ class fncMeteo(fncBase) :
                         place = townWeather[0]
                         if not place:
                             return False
-                        weather = self.__client.get_forecast_for_place(place)
-                        dictMeteo = weather.current_forecast
-                        self.__nameTown = place.name
-                        self.__temperature = dictMeteo['T']['value']
-                        self.__humidity = dictMeteo["humidity"]
-                        self.__description = dictMeteo['weather']['desc']
-                        return True
                 except Exception as e:
                     # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
-            else :
-                if self.__fncGPS.locate():
+            elif self.__fncGPS.locate():
                     try :
                         townWeather = self.__client.search_places(self.__fncGPS.getTown())
                         place = townWeather[0]
                         if not place:
                             return False
-                        weather = self.__client.get_forecast_for_place(place)
-                        dictMeteo = weather.current_forecast
-                        self.__nameTown = place.name
-                        self.__temperature = dictMeteo['T']['value']
-                        self.__humidity = dictMeteo["humidity"]
-                        self.__description = dictMeteo['weather']['desc']
-                        return True
                     except Exception as e:
                         # print(f"Erreur lors de la récupération des données météo : {e}")
                         return False
-                else :
-                    return False
+            else :
+                return False
+
+            try :
+                weather = self.__client.get_forecast_for_place(place)
+                dictMeteo = weather.current_forecast
+                self.__nameTown = place.name
+                self.__temperature = dictMeteo['T']['value']
+                self.__humidity = dictMeteo["humidity"]
+                self.__description = dictMeteo['weather']['desc']
+                return True
+            except Exception as e:
+                # print(f"Erreur lors de la récupération des données météo : {e}")
+                return False
         else :
             return False
 
