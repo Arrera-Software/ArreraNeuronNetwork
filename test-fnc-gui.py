@@ -323,6 +323,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 2:
@@ -332,6 +333,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 3:
@@ -342,6 +344,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 4:
@@ -350,6 +353,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 5:
@@ -359,6 +363,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 6:
@@ -369,6 +374,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
 
@@ -378,6 +384,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 8:
@@ -387,6 +394,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 9:
@@ -397,6 +405,7 @@ def partMeteo():
                     print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
+                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 0:

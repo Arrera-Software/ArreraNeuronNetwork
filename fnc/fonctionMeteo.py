@@ -13,6 +13,7 @@ class fncMeteo(fncBase) :
         self.__humidity = None
         self.__description = None
         self.__date = None
+        self.__icon = None
         self.__warming = None
 
 
@@ -66,6 +67,7 @@ class fncMeteo(fncBase) :
                 self.__temperature = dictMeteo['T']['value']
                 self.__humidity = dictMeteo["humidity"]
                 self.__description = dictMeteo['weather']['desc']
+                self.__icon = dictMeteo['weather']['icon']
                 return True
             except Exception as e:
                 # print(f"Erreur lors de la récupération des données météo : {e}")
@@ -113,13 +115,14 @@ class fncMeteo(fncBase) :
                 weather = self.__client.get_forecast_for_place(place)
                 now = datetime.now()
                 tomorrow_morning = (now + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
-                for hourly_forecast in weather.forecast:
-                    forecast_time = datetime.fromtimestamp(hourly_forecast["dt"])
+                for dictMeteo in weather.forecast:
+                    forecast_time = datetime.fromtimestamp(dictMeteo["dt"])
                     if forecast_time == tomorrow_morning:
                         self.__nameTown = place.name
-                        self.__temperature = hourly_forecast['T']['value']
-                        self.__humidity = hourly_forecast["humidity"]
-                        self.__description = hourly_forecast['weather']['desc']
+                        self.__temperature = dictMeteo['T']['value']
+                        self.__humidity = dictMeteo["humidity"]
+                        self.__description = dictMeteo['weather']['desc']
+                        self.__icon = dictMeteo['weather']['icon']
                         return True
                 else:
                     return False
@@ -169,13 +172,14 @@ class fncMeteo(fncBase) :
                 weather = self.__client.get_forecast_for_place(place)
                 now = datetime.now()
                 tomorrow_morning = (now + timedelta(days=1)).replace(hour=13, minute=0, second=0, microsecond=0)
-                for hourly_forecast in weather.forecast:
-                    forecast_time = datetime.fromtimestamp(hourly_forecast["dt"])
+                for dictMeteo in weather.forecast:
+                    forecast_time = datetime.fromtimestamp(dictMeteo["dt"])
                     if forecast_time == tomorrow_morning:
                         self.__nameTown = place.name
-                        self.__temperature = hourly_forecast['T']['value']
-                        self.__humidity = hourly_forecast["humidity"]
-                        self.__description = hourly_forecast['weather']['desc']
+                        self.__temperature = dictMeteo['T']['value']
+                        self.__humidity = dictMeteo["humidity"]
+                        self.__description = dictMeteo['weather']['desc']
+                        self.__icon = dictMeteo['weather']['icon']
                         return True
                 else:
                     return False
@@ -197,7 +201,9 @@ class fncMeteo(fncBase) :
     def getDescription(self):
         return self.__description
 
-    # def geticon(self):
+    def getIcon(self):
+        return self.__icon
+
     """
     Ville : {'dt': 1753732800, 
     'T': {'value': 20.7, 'windchill': 22.9}, 
