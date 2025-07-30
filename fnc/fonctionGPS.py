@@ -8,6 +8,7 @@ class fncGPS(fncBase):
         super().__init__(gestionnaire)
         self.__latitude = None
         self.__longitude = None
+        self.__region = None
 
     def locate(self):
         api_url = 'https://ipinfo.io/json'
@@ -17,10 +18,12 @@ class fncGPS(fncBase):
                 response.raise_for_status()
                 data = response.json()
                 loc = tuple(map(float, data['loc'].split(',')))
+                self.__region = self.__getDepartementWithPostalCode(data['postal'])
                 self.__latitude = loc[0]
                 self.__longitude = loc[1]
                 return True
             except Exception as e:
+                # print(e)
                 return False
         else :
             return False
@@ -30,6 +33,9 @@ class fncGPS(fncBase):
 
     def getLongitude(self):
         return self.__longitude
+
+    def getRegion(self):
+        return self.__region
 
     def getTown(self):
         url = 'https://nominatim.openstreetmap.org/reverse'
@@ -88,3 +94,18 @@ class fncGPS(fncBase):
             return city
         else :
             return None
+
+    def __getDepartementWithPostalCode(self, postal_code):
+        # Code postal en string pour éviter les erreurs avec les zéros
+        str_code = str(postal_code)
+        # Les 2 premiers chiffres du code postal correspondent au département (sauf exceptions)
+        if str_code[:2] == "20":
+            # La Corse a deux départements : 2A et 2B.
+            if int(str_code) < 20200:
+                return "2A"
+            else:
+                return "2B"
+        if str_code[:2] in ["97", "98"]:
+            # Outre-mer: retournez les 3 premiers chiffres
+            return str_code[:3]
+        return str_code[:2]

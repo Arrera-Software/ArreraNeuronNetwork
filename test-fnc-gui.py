@@ -287,6 +287,7 @@ def partGPS():
                 if fnc.getFNCGPS().locate():
                     print("Localisation reussie")
                     print(f"Ville : {fnc.getFNCGPS().getTown()}")
+                    print(f"Departement : {fnc.getFNCGPS().getRegion()}")
                 else:
                     print("Erreur de localisation")
             case 3:
