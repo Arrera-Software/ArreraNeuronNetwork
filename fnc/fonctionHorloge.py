@@ -90,6 +90,10 @@ class fncHorloge(fncBase):
             return self.formatTemps(self.__currentTimeMinuteur - self.__startTimeMinuteur)
         return None
 
+    def getHorloge(self) -> str:
+        current_time = time.strftime("%H:%M:%S")
+        return current_time
+
     def formatTemps(self, t: float) -> str:
         minutes, seconds = divmod(t, 60)
         return f"{int(minutes):02d}:{int(seconds):02d}"

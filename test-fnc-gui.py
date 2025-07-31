@@ -448,7 +448,7 @@ def partHorloge():
     horlogeBoucle = True
     while horlogeBoucle:
         print("Test des fonctions d'horloge")
-        print("1.Chronometre\n2.Minuteur\n0.Quitter")
+        print("1.Chronometre\n2.Minuteur\n3.Horloge\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -480,6 +480,8 @@ def partHorloge():
                     print("Minuteur lancer")
                 else :
                     print("Erreur lors du lancement du minuteur")
+            case 3:
+                print(fnc.getFNCHorloge().getHorloge())
             case 0:
                 horlogeBoucle = False
             case _:
