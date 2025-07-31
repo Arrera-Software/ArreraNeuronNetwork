@@ -12,6 +12,7 @@ class gestFNC:
         from fnc.fonctionMeteo import fncMeteo
         from fnc.fonctionActu import fncActualiter
         from fnc.fonctionHorloge import fncHorloge
+        from fnc.fonctionLecture import fncLecture
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -37,6 +38,8 @@ class gestFNC:
         self.__actu = fncActualiter(self.__gestionnaire,"3b43e18afcf945888748071d177b8513")
         # Fonction horloge
         self.__horloge = fncHorloge(self.__gestionnaire)
+        # Fonction de lecture
+        self.__read = fncLecture(self.__gestionnaire)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -66,3 +69,6 @@ class gestFNC:
 
     def getFNCHorloge(self):
         return self.__horloge
+
+    def getFNCRead(self):
+        return self.__read

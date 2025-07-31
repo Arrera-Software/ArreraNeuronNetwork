@@ -487,11 +487,15 @@ def partHorloge():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partRead():
+    texte = input("Entrez le texte : ")
+    fnc.getFNCRead().read(texte)
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n0.Quitter")
         print("__________________________\n")
 
 
@@ -522,6 +526,8 @@ def main():
                 partActu()
             case 8 :
                 partHorloge()
+            case 9 :
+                partRead()
             case 0:
                 print("Fin du programme")
                 break
