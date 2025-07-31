@@ -246,18 +246,3 @@ class fncMeteo(fncBase) :
 
     def getGreenAlert(self):
         return self.__greenAlert
-
-    """
-    Ville : {'dt': 1753732800, 
-    'T': {'value': 20.7, 'windchill': 22.9}, 
-    'humidity': 55, 
-    'sea_level': 1021, 
-    'wind': {'speed': 3, 'gust': 0, 'direction': 340, 'icon': 'NNO'}, 
-    'rain': {'1h': 0}, 
-    'snow': {'1h': 0}, 
-    'iso0': 2900, 
-    'rain snow limit': 'Non pertinent', 
-    'clouds': 10, 
-    'weather': {'icon': 'p1j', 
-    'desc': 'Ensoleillé'}}
-    """
