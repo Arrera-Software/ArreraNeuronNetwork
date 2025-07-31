@@ -36,7 +36,7 @@ for alerte in alertes:
 print(alertes)
 print(type(alertes))
 # Donne toutes les clés utiles !
-"""
+
 
 import requests
 
@@ -44,3 +44,25 @@ url = f"https://geo.api.gouv.fr/communes?nom=ajaccio&fields=departement&format=j
 result = requests.get(url).json()
 if result:
     print(result[0]['departement']['code'])
+"""
+
+from pyradios import RadioBrowser
+import vlc
+import time
+
+rb = RadioBrowser()
+
+# Recherche France Inter
+stations = rb.search(name="Radio 6", country="France")
+if stations:
+    print("Nom:", stations[0]['name'])
+    print("URL du flux:", stations[0]['url'])
+
+    player = vlc.MediaPlayer(stations[0]['url'])
+    player.play()
+    # Laisse le script ouvert assez longtemps pour écouter
+    time.sleep(60)  # Écoute pendant 60 secondes
+    player.stop()
+else:
+    print("Aucune station trouvée.")
+
