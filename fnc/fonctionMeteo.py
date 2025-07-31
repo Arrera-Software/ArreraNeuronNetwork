@@ -21,7 +21,7 @@ class fncMeteo(fncBase) :
         self.__greenAlert = []
 
 
-    def getMeteoCurrentHour(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
+    def getMeteoCurrentHour(self,town:str="",latitude:str="",longitude:str=""):
         """
         Récupère la météo actuelle pour une ville ou des coordonnées géographiques.
         :param town: Nom de la ville (optionnel)
@@ -33,6 +33,7 @@ class fncMeteo(fncBase) :
             if town:
                 try:
                     townWeather = self.__client.search_places(town)
+                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                     place = townWeather[0]
                     if not place:
                         return False
@@ -47,6 +48,7 @@ class fncMeteo(fncBase) :
                     else:
                         townWeather = self.__client.search_places(town)
                         place = townWeather[0]
+                        departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                         if not place:
                             return False
                 except Exception as e:
@@ -54,7 +56,9 @@ class fncMeteo(fncBase) :
                     return False
             elif self.__fncGPS.locate():
                     try :
-                        townWeather = self.__client.search_places(self.__fncGPS.getTown())
+                        town = self.__fncGPS.getTown()
+                        townWeather = self.__client.search_places(town)
+                        departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                         place = townWeather[0]
                         if not place:
                             return False
@@ -135,7 +139,7 @@ class fncMeteo(fncBase) :
                 else:
                     return False
             except Exception as e:
-                print(f"Erreur lors de la récupération des données météo : {e}")
+                # print(f"Erreur lors de la récupération des données météo : {e}")
                 return False
         else :
             return False
@@ -149,7 +153,7 @@ class fncMeteo(fncBase) :
                     if not place:
                         return False
                 except Exception as e:
-                    print(f"Erreur lors de la récupération des données météo : {e}")
+                    # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
             elif latitude and longitude:
                 try:
@@ -162,7 +166,7 @@ class fncMeteo(fncBase) :
                         if not place:
                             return False
                 except Exception as e:
-                    print(f"Erreur lors de la récupération des données météo : {e}")
+                    # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
             elif self.__fncGPS.locate():
                     try :
@@ -171,7 +175,7 @@ class fncMeteo(fncBase) :
                         if not place:
                             return False
                     except Exception as e:
-                        print(f"Erreur lors de la récupération des données météo : {e}")
+                        # print(f"Erreur lors de la récupération des données météo : {e}")
                         return False
             else :
                 return False
@@ -188,13 +192,13 @@ class fncMeteo(fncBase) :
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
                         self.__icon = dictMeteo['weather']['icon']
-                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
+                        alertes = self.__client.get_warning_current_phenomenons().phenomenons_max_colors
                         self.__rankingAlert(alertes)
                         return True
                 else:
                     return False
             except Exception as e:
-                print(f"Erreur lors de la récupération des données météo : {e}")
+                # print(f"Erreur lors de la récupération des données météo : {e}")
                 return False
         else :
             return False
