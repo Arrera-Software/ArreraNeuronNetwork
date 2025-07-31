@@ -1,7 +1,6 @@
 from librairy.dectectionOS import*
 from librairy.network import*
 from librairy.travailJSON import jsonWork
-from librairy.arrera_voice import CArreraVoice
 from config.confNeuron import confNeuron
 from datetime import datetime
 
@@ -15,6 +14,9 @@ class gestionnaire:
         from gestionnaire.gestSTR import gestSTR
         from gestionnaire.gestFNC import gestFNC
         # Librairy
+        # Importation des librairies
+        from librairy.arrera_voice import CArreraVoice
+        # Declaration des librairies
         self.__detecteurOS = OS()
         self.__network = network()
         self.__arrVoice = CArreraVoice(self)
