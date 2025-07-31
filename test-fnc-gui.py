@@ -9,6 +9,7 @@ conf = confNeuron(name="Opale",
             icon="assets/icon.png",
             assetHorloge="asset/horloge/",
             assetCalculatrice="asset/calculatrice/",
+            assetMicro = "",
             guiColor="white",
             textColor="black",
             bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
@@ -443,11 +444,52 @@ def partActu():
         print("Actualité récupéré")
         print(fnc.getFNCActu().getActu())
 
+def partHorloge():
+    horlogeBoucle = True
+    while horlogeBoucle:
+        print("Test des fonctions d'horloge")
+        print("1.Chronometre\n2.Minuteur\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                if fnc.getFNCHorloge().startChrono():
+                    print("Chronometre demarrer")
+                    while True:
+                        print(f"Temps écoulé : {fnc.getFNCHorloge().getTimeChrono()} secondes")
+                        var = input("1.Continuer\n2.Arreter\nChoix : ")
+                        if var == "1":
+                            continue
+                        elif var == "2":
+                            fnc.getFNCHorloge().stopChrono()
+                            print("Chronometre arreter")
+                            break
+                        else:
+                            print("Choix invalide, veuillez réessayer.")
+                    fnc.getFNCHorloge().resetChrono()
+            case 2 :
+                if fnc.getFNCHorloge().startMinuteur(10):
+                    print("Minuteur lancer")
+                else :
+                    print("Erreur lors du lancement du minuteur")
+            case 0:
+                horlogeBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n0.Quitter")
         print("__________________________\n")
 
 
@@ -476,6 +518,8 @@ def main():
                 partMeteo()
             case 7 :
                 partActu()
+            case 8 :
+                partHorloge()
             case 0:
                 print("Fin du programme")
                 break

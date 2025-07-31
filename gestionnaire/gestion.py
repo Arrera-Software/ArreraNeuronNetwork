@@ -53,6 +53,12 @@ class gestionnaire:
     def getOSObjet(self):
         return self.__detecteurOS
 
+    def getArrVoice(self):
+        """
+        Methode qui retourne l'objet de la librairie de voice
+        """
+        return self.__arrVoice
+
     def getLanguageObjet(self):
         return self.__gestLang
 
