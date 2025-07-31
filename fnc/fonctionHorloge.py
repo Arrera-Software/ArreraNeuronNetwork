@@ -1,9 +1,47 @@
-from tkinter import*
-from tkinter import messagebox
 import time
-from playsound import *
-from librairy.travailJSON import*
+from fnc.fncBase import fncBase,gestionnaire
 
+
+class fncHorloge(fncBase):
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire)
+        # Chronometre
+        self.__isRunningChrono = False
+        self.__currentTimeChrono = float
+        self.__startTimeChrono = float
+        self.__elapsedTimeChrono = float
+
+    def startChrono(self):
+        if not self.__isRunningChrono:
+            self.__startTimeChrono = time.time()
+            self.__isRunningChrono = True
+            self.getTimeChrono()
+            return True
+        else :
+            return False
+
+    def stopChrono(self):
+        if self.__isRunningChrono:
+            self.__isRunningChrono = False
+            return True
+        else:
+            return False
+
+    def resetChrono(self):
+        self.__currentTimeChrono = 0
+        self.__startTimeChrono = 0
+        self.__elapsedTimeChrono = 0
+        return True
+
+    def getTimeChrono(self):
+        if self.__isRunningChrono:
+            self.__currentTimeChrono = time.time()
+            self.__elapsedTimeChrono = round(self.__currentTimeChrono - self.__startTimeChrono,2)
+            return self.__elapsedTimeChrono
+        else:
+            return 0.0
+
+"""
 class fncArreraHorloge :
     def __init__(self):
         self.__mainColor = str
@@ -287,3 +325,4 @@ class Clock() :
         current_time = time.strftime("%H:%M:%S")
         self.__clock.config(text=current_time)
         self.__master.after(10,self.time)
+"""
