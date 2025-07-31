@@ -438,11 +438,16 @@ def partMeteo():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partActu():
+    if fnc.getFNCActu().setActu(10,"fr"):
+        print("Actualité récupéré")
+        print(fnc.getFNCActu().getActu())
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n0.Quitter")
         print("__________________________\n")
 
 
@@ -469,6 +474,8 @@ def main():
                 partGPS()
             case 6 :
                 partMeteo()
+            case 7 :
+                partActu()
             case 0:
                 print("Fin du programme")
                 break

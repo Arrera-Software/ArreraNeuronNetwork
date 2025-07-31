@@ -10,6 +10,7 @@ class gestFNC:
         from fnc.fonctionCalendar import fncCalendar
         from fnc.fonctionGPS import fncGPS
         from fnc.fonctionMeteo import fncMeteo
+        from fnc.fonctionActu import fncActualiter
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -31,6 +32,8 @@ class gestFNC:
         self.__gps = fncGPS(self.__gestionnaire)
         # Fonction Meteo
         self.__meteo = fncMeteo(self.__gestionnaire,self.__gps)
+        # Fonction Actualité
+        self.__actu = fncActualiter(self.__gestionnaire,"3b43e18afcf945888748071d177b8513")
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -54,3 +57,6 @@ class gestFNC:
 
     def getFNCMeteo(self):
         return self.__meteo
+
+    def getFNCActu(self):
+        return self.__actu

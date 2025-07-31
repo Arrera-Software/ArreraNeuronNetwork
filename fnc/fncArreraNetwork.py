@@ -28,7 +28,7 @@ class fncArreraNetwork:
         etatConnextion = self.__objetNetwork.getEtatInternet()
         # initialisation objet
         self.__fncReading = fncLecture(self.__configNeuron, self.__detecteurOS)
-        self.__actu = Actu("3b43e18afcf945888748071d177b8513")
+        self.__actu = Actu()
         self.__gps = fncGPS("19bfbee6112be5b3d9a64d4ccec72602", etatConnextion)
         self.__meteo = Meteo("19bfbee6112be5b3d9a64d4ccec72602")
         self.__traducteur = fncArreraTrad(self.__configNeuron, )
