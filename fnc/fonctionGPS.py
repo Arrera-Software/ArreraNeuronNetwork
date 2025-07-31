@@ -109,3 +109,11 @@ class fncGPS(fncBase):
             # Outre-mer: retournez les 3 premiers chiffres
             return str_code[:3]
         return str_code[:2]
+
+    def getFrenchDepartementWithTown(self,town:str):
+        url = f"https://geo.api.gouv.fr/communes?nom={town.lower()}&fields=departement&format=json"
+        result = requests.get(url).json()
+        if result:
+            return result[0]['departement']['code']
+        else:
+            return None

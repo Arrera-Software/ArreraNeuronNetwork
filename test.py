@@ -13,7 +13,7 @@ weather = client.get_forecast_for_place(paris)
 
 # Afficher quelques informations
 print("Ville :",weather.current_forecast)
-"""
+
 
 from meteofrance_api import MeteoFranceClient
 
@@ -36,3 +36,11 @@ for alerte in alertes:
 print(alertes)
 print(type(alertes))
 # Donne toutes les clés utiles !
+"""
+
+import requests
+
+url = f"https://geo.api.gouv.fr/communes?nom=ajaccio&fields=departement&format=json"
+result = requests.get(url).json()
+if result:
+    print(result[0]['departement']['code'])
