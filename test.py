@@ -34,3 +34,5 @@ for alerte in alertes:
 
 # Afficher les alertes
 print(alertes)
+print(type(alertes))
+# Donne toutes les clés utiles !
