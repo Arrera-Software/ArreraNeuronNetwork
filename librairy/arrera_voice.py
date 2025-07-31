@@ -7,12 +7,11 @@ import speech_recognition as sr
 class CArreraVoice:
     def __init__(self,gestionnaire:gestionnaire):
         self.__gestionnaire = gestionnaire
-        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().assetMicro
+        self.__emplacementSoundMicro = ""
         self.__soundMicro = True
         self.__listWord = []
         self.__nbWord = 0
         self.__outPutText = ""
-        self.loadConfig()
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             self.__tts = TextToSpeech(engine="google")
@@ -27,6 +26,7 @@ class CArreraVoice:
 
 
     def loadConfig(self):
+        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().assetMicro
         if self.__gestionnaire.getValeurfichierUtilisateur("soundMicro") == "1":
             self.__soundMicro = True
         else:
@@ -41,6 +41,7 @@ class CArreraVoice:
         pl(file)
 
     def listen(self):
+        self.loadConfig()
         if self.__soundMicro:
             pl(self.__emplacementSoundMicro)
 
@@ -64,6 +65,7 @@ class CArreraVoice:
         return self.__nbWord
 
     def trigerWord(self):
+        self.loadConfig()
         if self.__nbWord == 0:
             return -3
         r = sr.Recognizer()
