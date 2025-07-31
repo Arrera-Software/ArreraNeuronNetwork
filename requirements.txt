@@ -16,3 +16,6 @@ pyperclip
 websocket-client
 customtkinter
 pillow
+playsound3
+pyttslib
+speechRecognition
