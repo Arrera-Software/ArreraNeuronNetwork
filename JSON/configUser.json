@@ -18,5 +18,7 @@
     "emplacementHistorique": "JSON/neuronHist.json",
     "tokenGithub":"",
     "wordFolder":"/home/baptistep/Bureau/arreraneuron-test-folder/projet",
-    "videoDownloadFolder":""
+    "videoDownloadFolder":"",
+    "soundMicro": "1",
+    "listWord" :[]
 }

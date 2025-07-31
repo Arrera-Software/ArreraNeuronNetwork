@@ -1,6 +1,7 @@
 from librairy.dectectionOS import*
 from librairy.network import*
 from librairy.travailJSON import jsonWork
+from librairy.arrera_voice import CArreraVoice
 from config.confNeuron import confNeuron
 from datetime import datetime
 
@@ -16,6 +17,7 @@ class gestionnaire:
         # Librairy
         self.__detecteurOS = OS()
         self.__network = network()
+        self.__arrVoice = CArreraVoice(self)
         # Fichier JSON
         self.__config = confAssistant
         self.__fileUser = jsonWork("JSON/configUser.json") # A faire

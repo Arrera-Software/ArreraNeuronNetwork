@@ -8,6 +8,7 @@ class confNeuron:
     icon: str
     assetHorloge: str
     assetCalculatrice: str
+    assetMicro: str
     guiColor: str
     textColor: str
     bute: str

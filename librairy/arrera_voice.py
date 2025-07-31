@@ -1,21 +1,20 @@
 from playsound3 import playsound as pl
 from pyttslib import TextToSpeech
-from librairy.network import *
-from librairy.travailJSON import jsonWork
+from gestionnaire.gestion import gestionnaire
 import speech_recognition as sr
 
 
 class CArreraVoice:
-    def __init__(self,configFile:jsonWork):
-        self.__configFile = configFile
-        self.__emplacementSoundMicro = self.__configFile.lectureJSON("fileMicro")
+    def __init__(self,gestionnaire:gestionnaire):
+        self.__gestionnaire = gestionnaire
+        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().assetMicro
         self.__soundMicro = True
         self.__listWord = []
         self.__nbWord = 0
         self.__outPutText = ""
         self.loadConfig()
 
-        if network().getEtatInternet() == True:
+        if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             self.__tts = TextToSpeech(engine="google")
             self.__tts.set_voice("fr")
         else:
@@ -28,11 +27,11 @@ class CArreraVoice:
 
 
     def loadConfig(self):
-        if (self.__configFile.lectureJSON("soundMicro") == "1" ):
+        if self.__gestionnaire.getValeurfichierUtilisateur("soundMicro") == "1":
             self.__soundMicro = True
         else:
             self.__soundMicro = False
-        self.__listWord = self.__configFile.lectureJSONList("listWord")
+        self.__listWord = self.__gestionnaire.getValeurfichierUtilisateur("listWord")
         self.__nbWord = len(self.__listWord)
 
     def say(self,text:str):
