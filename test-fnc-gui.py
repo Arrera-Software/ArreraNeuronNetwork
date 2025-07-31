@@ -325,6 +325,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 2:
@@ -335,6 +339,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 3:
@@ -346,6 +354,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 4:
@@ -355,6 +367,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 5:
@@ -365,6 +381,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
             case 6:
@@ -376,6 +396,10 @@ def partMeteo():
                     print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
                     print(f"Description : {fnc.getFNCMeteo().getDescription()}")
                     print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
+                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
+                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
+                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
+                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
                 else:
                     print("Erreur lors de la récupération de la météo actuelle")
 

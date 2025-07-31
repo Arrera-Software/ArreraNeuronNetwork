@@ -7,6 +7,7 @@ class fncMeteo(fncBase) :
     def __init__(self,gestionnaire:gestionnaire,gpsFnc:fncGPS):
         super().__init__(gestionnaire)
         self.__client = MeteoFranceClient()
+        self.__dictWarning = self.__client.get_warning_dictionary("fr")
         self.__fncGPS = gpsFnc
         self.__nameTown = None
         self.__temperature = None
@@ -14,10 +15,13 @@ class fncMeteo(fncBase) :
         self.__description = None
         self.__date = None
         self.__icon = None
-        self.__warming = None
+        self.__redAlert = []
+        self.__orangeAlert = []
+        self.__yellowAlert = []
+        self.__greenAlert = []
 
 
-    def getMeteoCurrentHour(self,town:str="",latitude:str="",longitude:str=""):
+    def getMeteoCurrentHour(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
         """
         Récupère la météo actuelle pour une ville ou des coordonnées géographiques.
         :param town: Nom de la ville (optionnel)
@@ -68,6 +72,8 @@ class fncMeteo(fncBase) :
                 self.__humidity = dictMeteo["humidity"]
                 self.__description = dictMeteo['weather']['desc']
                 self.__icon = dictMeteo['weather']['icon']
+                alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
+                self.__rankingAlert(alertes)
                 return True
             except Exception as e:
                 # print(f"Erreur lors de la récupération des données météo : {e}")
@@ -75,7 +81,7 @@ class fncMeteo(fncBase) :
         else :
             return False
 
-    def getMeteoTowmorowMorning(self,town:str="",latitude:str="",longitude:str=""):
+    def getMeteoTowmorowMorning(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
             if town:
                 try:
@@ -123,6 +129,8 @@ class fncMeteo(fncBase) :
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
                         self.__icon = dictMeteo['weather']['icon']
+                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
+                        self.__rankingAlert(alertes)
                         return True
                 else:
                     return False
@@ -132,7 +140,7 @@ class fncMeteo(fncBase) :
         else :
             return False
 
-    def getMeteoTowmorowNoon(self,town:str="",latitude:str="",longitude:str=""):
+    def getMeteoTowmorowNoon(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
             if town:
                 try:
@@ -180,6 +188,8 @@ class fncMeteo(fncBase) :
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
                         self.__icon = dictMeteo['weather']['icon']
+                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
+                        self.__rankingAlert(alertes)
                         return True
                 else:
                     return False
@@ -188,6 +198,23 @@ class fncMeteo(fncBase) :
                 return False
         else :
             return False
+
+    def __rankingAlert(self,alertes:list):
+        self.__redAlert = []
+        self.__orangeAlert = []
+        self.__yellowAlert = []
+        self.__greenAlert = []
+        for alerte in alertes:
+            idColor = int(alerte.get('phenomenon_max_color_id'))
+            nameWarning = self.__dictWarning.get_phenomenon_by_id(int(alerte.get('phenomenon_id')))['name']
+            if idColor == 1:
+                self.__greenAlert.append(nameWarning)
+            elif idColor == 2:
+                self.__yellowAlert.append(nameWarning)
+            elif idColor == 3:
+                self.__orangeAlert.append(nameWarning)
+            elif idColor == 4:
+                self.__redAlert.append(nameWarning)
 
     def getNameTown(self):
         return self.__nameTown
@@ -203,6 +230,18 @@ class fncMeteo(fncBase) :
 
     def getIcon(self):
         return self.__icon
+
+    def getRedAlert(self):
+        return self.__redAlert
+
+    def getOrangeAlert(self):
+        return self.__orangeAlert
+
+    def getYellowAlert(self):
+        return self.__yellowAlert
+
+    def getGreenAlert(self):
+        return self.__greenAlert
 
     """
     Ville : {'dt': 1753732800, 
