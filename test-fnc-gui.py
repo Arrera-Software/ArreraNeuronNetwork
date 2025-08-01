@@ -587,11 +587,55 @@ def partRadio():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partTranslate():
+    tranlateBoucle = True
+    while tranlateBoucle:
+        print("Test des fonctions de traduction")
+        print("1.View langue\n2.View code langue\n3.View langue et langue code\n4.Set Traducteur\n5.Traduire\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                print(fnc.getFNCTraduction().getLang())
+            case 2:
+                print(fnc.getFNCTraduction().getLangCode())
+            case 3:
+                print(fnc.getFNCTraduction().getLangAndLangCode())
+            case 4:
+                lang1 = input("Langue 1 : ")
+                lang2 = input("Langue 2 : ")
+                if lang1 != lang2:
+                    if fnc.getFNCTraduction().setTranlator(lang1, lang2):
+                        print("Traducteur enregistré")
+                    else:
+                        print("Erreur lors de l'enregistrement du traducteur")
+                else:
+                    print("Les langues doivent être différentes")
+            case 5:
+                text = input("Text : ")
+                traduction = fnc.getFNCTraduction().tranlate(text)
+                if traduction is None:
+                    print("Erreur lors de la traduction")
+                else :
+                    print(traduction)
+            case 0:
+                tranlateBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n10.Radio\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n10.Radio\n11.Traducteur\n0.Quitter")
         print("__________________________\n")
 
 
@@ -626,6 +670,8 @@ def main():
                 partRead()
             case 10 :
                 partRadio()
+            case 11 :
+                partTranslate()
             case 0:
                 print("Fin du programme")
                 break

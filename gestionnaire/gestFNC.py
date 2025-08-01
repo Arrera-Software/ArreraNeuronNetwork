@@ -14,6 +14,7 @@ class gestFNC:
         from fnc.fonctionHorloge import fncHorloge
         from fnc.fonctionLecture import fncLecture
         from fnc.fonctionRadio import fncRadio
+        from fnc.fonctionTraduction import fncTraduction
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -43,6 +44,8 @@ class gestFNC:
         self.__read = fncLecture(self.__gestionnaire)
         # Fonction de radio
         self.__radio = fncRadio(self.__gestionnaire)
+        # Fonction de traduction
+        self.__traduction = fncTraduction(self.__gestionnaire)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -78,3 +81,6 @@ class gestFNC:
 
     def getFNCRadio(self):
         return self.__radio
+
+    def getFNCTraduction(self):
+        return self.__traduction
