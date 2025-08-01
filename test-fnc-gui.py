@@ -491,11 +491,107 @@ def partRead():
     texte = input("Entrez le texte : ")
     fnc.getFNCRead().read(texte)
 
+def partRadio():
+    radioBoucle = True
+    while radioBoucle:
+        print("Test des fonctions Radio")
+        print("1.Europe 1\n2.Europe 2"
+              "\n3.France info\n4.France inter"
+              "\n5.France Musique\n6.France culture"
+              "\n7.France bleu\n8.Fun Radio"
+              "\n9.NRJ\n10.RFM"
+              "\n11.Nostalgie\n12.Skyrock"
+              "\n13.RTL\n14.Stop\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+        match nb:
+            case 1 :
+                if fnc.getFNCRadio().startEurope1() :
+                    print("Radio Lancer")
+                else :
+                    print("Erreur lors du lancement de la radio")
+            case 2:
+                if fnc.getFNCRadio().startEurope2():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 3:
+                if fnc.getFNCRadio().startFranceInfo():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 4:
+                if fnc.getFNCRadio().startFranceInter():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 5:
+                if fnc.getFNCRadio().startFranceMusique():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 6:
+                if fnc.getFNCRadio().startFranceCulture():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 7:
+                if fnc.getFNCRadio().startFranceBleu():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 8:
+                if fnc.getFNCRadio().startFunRadio():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 9:
+                if fnc.getFNCRadio().startNRJ():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 10:
+                if fnc.getFNCRadio().startRFM():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 11:
+                if fnc.getFNCRadio().startNostalgi():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 12:
+                if fnc.getFNCRadio().startSkyrock():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 13:
+                if fnc.getFNCRadio().startRTL():
+                    print("Radio Lancer")
+                else:
+                    print("Erreur lors du lancement de la radio")
+            case 14:
+                if fnc.getFNCRadio().stop():
+                    print("Radio arreter")
+                else:
+                    print("Erreur lors de arret de la radio")
+            case 0:
+                radioBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n0.Quitter")
+        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n10.Radio\n0.Quitter")
         print("__________________________\n")
 
 
@@ -528,6 +624,8 @@ def main():
                 partHorloge()
             case 9 :
                 partRead()
+            case 10 :
+                partRadio()
             case 0:
                 print("Fin du programme")
                 break
