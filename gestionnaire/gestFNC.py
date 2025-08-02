@@ -16,6 +16,7 @@ class gestFNC:
         from fnc.fonctionRadio import fncRadio
         from fnc.fonctionTraduction import fncTraduction
         from fnc.fonctionOrthographe import fncOrthographe
+        from fnc.fonctionCalculatrice import fncCalculatrice
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -49,6 +50,8 @@ class gestFNC:
         self.__traduction = fncTraduction(self.__gestionnaire)
         # Fonction d'orthographe
         self.__orthographe = fncOrthographe(self.__gestionnaire,"fr")
+        # Fonction de calculatrice
+        self.__calculatrice = fncCalculatrice(self.__gestionnaire)
 
     def __initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
@@ -90,3 +93,6 @@ class gestFNC:
 
     def getFNCOrthographe(self):
         return self.__orthographe
+
+    def getFNCCalculatrice(self):
+        return self.__calculatrice

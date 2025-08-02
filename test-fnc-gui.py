@@ -665,6 +665,64 @@ def partOrthographe():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partCalculatrice():
+    calculBoucle = True
+    while calculBoucle:
+        print("Test des fonctions de calculatrice")
+        print("1.Adition\n2.Soustraction\n3.Multiplication\n4.Division\n5.Puissance\n6.Modulo\n7.Racine\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                print(f"Resultat : {fnc.getFNCCalculatrice().adition(a, b)}")
+            case 2:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                print(f"Resultat : {fnc.getFNCCalculatrice().soustraction(a, b)}")
+            case 3:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                print(f"Resultat : {fnc.getFNCCalculatrice().multiplication(a, b)}")
+            case 4:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                if b == 0:
+                    print("Division par zéro impossible")
+                else:
+                    print(f"Resultat : {fnc.getFNCCalculatrice().divsion(a, b)}")
+            case 5:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                print(f"Resultat : {fnc.getFNCCalculatrice().puissance(a, b)}")
+            case 6:
+                a = int(input("Nombre 1 : "))
+                b = int(input("Nombre 2 : "))
+                if b == 0:
+                    print("Modulo par zéro impossible")
+                else:
+                    print(f"Resultat : {fnc.getFNCCalculatrice().modulo(a, b)}")
+            case 7:
+                a = int(input("Nombre (a) : "))
+                b = int(input("Racine (b) : "))
+                if a < 0 or b <= 0:
+                    print("Impossible de calculer la racine")
+                else:
+                    print(f"Resultat : {fnc.getFNCCalculatrice().racine(a, b)}")
+            case 0:
+                calculBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
@@ -674,7 +732,8 @@ def main():
               "5.GPS\n6.Meteo\n7.Actualites\n"
               "8.Horloge\n9.Read\n"
               "10.Radio\n11.Traducteur\n"
-              "12.Orthographe\n0.Quitter")
+              "12.Orthographe\n13.Calculatrice\n"
+              "0.Quitter")
         print("__________________________\n")
 
 
@@ -713,6 +772,8 @@ def main():
                 partTranslate()
             case 12 :
                 partOrthographe()
+            case 13 :
+                partCalculatrice()
             case 0:
                 print("Fin du programme")
                 break
