@@ -9,8 +9,8 @@ class confNeuron:
     assetHorloge: str
     assetCalculatrice: str
     assetMicro: str
-    guiColor: str
-    textColor: str
+    assistant_color: str
+    assistant_texte_color: str
     bute: str
     createur: str
     listFonction: List[str] = field(default_factory=list)
