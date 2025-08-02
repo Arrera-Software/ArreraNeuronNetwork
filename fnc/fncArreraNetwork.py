@@ -3,12 +3,9 @@ from librairy.openSoftware import *
 from fnc.fonctionLecture import *
 from fnc.fonctionMeteoActu import *
 from fnc.fonctionGPS import *
-from fnc.fonctionTraduction import *
 from fnc.fonctionArreraDownload import *
-from fnc.fonctionCalculatrice import *
+from gui.fonctionCalculatrice import *
 from fnc.fonctionRecherche import *
-from fnc.fonctionHorloge import *
-from fnc.fonctionCalendar import *
 from fnc.fonctionCodeHelp import *
 from fnc.fonctionArreraWork import *
 from fnc.fonctionRadio import *
