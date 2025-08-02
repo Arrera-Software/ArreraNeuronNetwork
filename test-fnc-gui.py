@@ -1,6 +1,4 @@
 import datetime
-
-from gestionnaire.gestFNC import gestFNC
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
 
@@ -631,11 +629,52 @@ def partTranslate():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partOrthographe():
+    orthBoucle = True
+    while orthBoucle:
+        print("Test des fonctions d'orthographe")
+        print("1.Correction orthographique\n2.Copy Correction\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                text = input("Text : ")
+                if fnc.getFNCOrthographe().check(text):
+                    print(f"Mots incorrects : {fnc.getFNCOrthographe().getMotsIncorrects()}")
+                    if fnc.getFNCOrthographe().correctionText():
+                        print(f"Correction : {fnc.getFNCOrthographe().getCorrections()}")
+                    else :
+                        print("Erreur lors de la correction")
+                else :
+                    print("Erreur lors du check de l'orthographe")
+            case 2:
+                if fnc.getFNCOrthographe().copyCorrections():
+                    print("Correction copiée dans le presse-papier")
+                else:
+                    print("Erreur lors de la copie de la correction")
+            case 0:
+                orthBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
-        print("1.Taches\n2.Recherche\n3.Download\n4.Calendrier\n5.GPS\n6.Meteo\n7.Actualites\n8.Horloge\n9.Read\n10.Radio\n11.Traducteur\n0.Quitter")
+        print("1.Taches\n2.Recherche\n"
+              "3.Download\n4.Calendrier\n"
+              "5.GPS\n6.Meteo\n7.Actualites\n"
+              "8.Horloge\n9.Read\n"
+              "10.Radio\n11.Traducteur\n"
+              "12.Orthographe\n0.Quitter")
         print("__________________________\n")
 
 
@@ -672,6 +711,8 @@ def main():
                 partRadio()
             case 11 :
                 partTranslate()
+            case 12 :
+                partOrthographe()
             case 0:
                 print("Fin du programme")
                 break
