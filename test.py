@@ -44,7 +44,6 @@ url = f"https://geo.api.gouv.fr/communes?nom=ajaccio&fields=departement&format=j
 result = requests.get(url).json()
 if result:
     print(result[0]['departement']['code'])
-"""
 
 from pyradios import RadioBrowser
 import vlc
@@ -65,4 +64,27 @@ if stations:
     player.stop()
 else:
     print("Aucune station trouvée.")
+
+"""
+from spellchecker import SpellChecker
+
+# Crée un correcteur pour le français
+spell = SpellChecker(language='fr')
+
+# Ton texte à corriger
+texte = "Le chient cour tres vitte dan la rue. Il a ateind le parc en avans les enfants."
+
+# Découpe le texte en mots (simplement, voir ci-dessous pour améliorations)
+mots = texte.split()
+
+# Trouve les mots mal orthographiés
+mots_incorrects = spell.unknown(mots)
+
+print("Mots incorrects trouvés :", mots_incorrects)
+
+# Corrige chaque mot incorrect dans le texte
+mots_corriges = [spell.correction(mot) if mot in mots_incorrects else mot for mot in mots]
+texte_corrige = ' '.join(mots_corriges)
+
+print("Texte corrigé :", texte_corrige)
 
