@@ -5,25 +5,26 @@ from librairy.arrera_tk import *
 from fnc.fncBase import fncBase
 
 class GuiBase:
-    def __init__(self,gestionnaire:gestionnaire,fnc:fncBase,name:str):
+    def __init__(self,gestionnaire:gestionnaire,name:str):
         # Init objet
-        self.__gestionnaire = gestionnaire
-        self.__titleGUI = self.__gestionnaire.getName()+" "+ name
-        self.__icon = self.__gestionnaire.getIcon()
+        self._gestionnaire = gestionnaire
+        self._titleGUI = self._gestionnaire.getName() + " : " + name
+        self.__icon = self._gestionnaire.getIcon()
+        self.__btnColor = self._gestionnaire.getConfigFile().assistant_color
+        self.__btnTexteColor = self._gestionnaire.getConfigFile().assistant_text_color
         # Arrera TK
         self.__arrtk = CArreraTK()
         # Init de la var de la fenetre
         self.__gui = None
-        # Recuperation de la fonction
-        self.__fnc = fnc
+        self._screen = None
 
     @abstractmethod
     def __mainframe(self):
         pass
 
     def active(self):
-        self.screen = self.__arrtk.aTopLevel(
-            title=self.__titleGUI,
+        self._screen = self.__arrtk.aTopLevel(
+            title=self._titleGUI,
             width=800,
             height=600,
             resizable=True,
