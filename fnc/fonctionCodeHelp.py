@@ -1,7 +1,9 @@
-from gui.codehelp.CHGithub import*
-from objet.CHsearchDoc import CHsearchDoc
-
 from fnc.fncBase import fncBase,gestionnaire
+import webbrowser as wb
+# Codehelp
+from objet.CHsearchDoc import CHsearchDoc
+from gui.codehelp.CHGithub import CHGithub
+from gui.codehelp.CHLibrairy import CHLibrairy
 
 class fncCodehelp(fncBase) :
     def __init__(self,gestionnaire:gestionnaire) -> None:
@@ -10,7 +12,7 @@ class fncCodehelp(fncBase) :
         self.__searchDoc = CHsearchDoc()
         # self.__colorSelector = CCHcolorSelector(configNeuron)
         self.__githubObjet = CHGithub(gestionnaire)
-        # self.__librairyCodehelp = CHLibrairy(configNeuron,gestNeuron)
+        self.__librairyCodehelp = CHLibrairy()
 
     def searchDocInDevDoc(self, recherche:str)->bool:
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
@@ -41,12 +43,10 @@ class fncCodehelp(fncBase) :
         self.__githubObjet.search(requette)
     
     def openSiteGithub(self):
-        w.open("https://github.com/")
+        wb.open("https://github.com/")
 
     def openGestionGithub(self):
         self.__githubObjet.active()
 
-    """
     def openOutilLibrairy(self):
         self.__librairyCodehelp.active()
-    """

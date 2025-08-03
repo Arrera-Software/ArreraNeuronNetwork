@@ -1,33 +1,32 @@
 from tkinter import*
 import webbrowser as w
-from librairy.travailJSON import*
-from ObjetsNetwork.gestion import*
+import requests
 
 
 class CHLibrairy:
-    def __init__(self,ConfigNeuron:jsonWork,gest:gestionNetwork):
+    def __init__(self):
         self.__lienLibrairy = "https://github.com/Arrera-Software/Arrera-librairy"
         self.__lienReadme =  "https://github.com/Arrera-Software/Arrera-librairy/blob/main/README.md"
         self.__lienObjetPython = "https://github.com/Arrera-Software/Arrera-librairy/tree/main/python"
         self.__lienObjetCPP = "https://github.com/Arrera-Software/Arrera-librairy/tree/main/C%2B%2B"
-        self.__mainColor = ConfigNeuron.lectureJSON("interfaceColor")
-        self.__textColor = ConfigNeuron.lectureJSON("interfaceTextColor")
-        self.__iconAssistant = ConfigNeuron.lectureJSON("iconAssistant") 
-        self.__name = ConfigNeuron.lectureJSON("name")
-        self.objNET = gest.getNetworkObjet()
+        self.__mainColor = "#ffffff"
+        self.__textColor = "#000000"
+        # self.__iconAssistant = ConfigNeuron.lectureJSON("iconAssistant")
+        self.__name = "test"
+        self.objNET = True
     
     def active(self):
         # Test de la connexion internet
         self.__screenLibrairy = Toplevel()
         self.__varName = StringVar(self.__screenLibrairy)
         self.__screenLibrairy.title(self.__name + ": codeHelp librairy")
-        self.__screenLibrairy.iconphoto(False, PhotoImage(file=self.__iconAssistant))
+        # self.__screenLibrairy.iconphoto(False, PhotoImage(file=self.__iconAssistant))
         self.__screenLibrairy.minsize(700, 500)
         self.__screenLibrairy.configure(bg=self.__mainColor)
         Label(self.__screenLibrairy, text="Arrera Librairy", bg=self.__mainColor,
               fg=self.__textColor,
               font=("arial", 25)).place(relx=0.5, rely=0.0, anchor="n")
-        if (self.objNET.getEtatInternet() == True):
+        if (self.objNET == True):
             # Recuperation de l'index de la librairy
             try:
                 response = requests.get(

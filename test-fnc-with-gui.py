@@ -34,6 +34,7 @@ arrtk = CArreraTK()
 
 def partCodeHelp(w:ctk.CTk):
     arrtk.createButton(w,text="Github",command=lambda : fnc.getFNCCodeHelp().openGestionGithub()).pack()
+    arrtk.createButton(w, text="Lib", command=lambda: fnc.getFNCCodeHelp().openOutilLibrairy()).pack()
 
 def main():
     screen = arrtk.aTK()
