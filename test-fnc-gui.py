@@ -1,10 +1,13 @@
 import datetime
+import threading
+
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
+from librairy.arrera_tk import *
 
 conf = confNeuron(name="Opale",
                   lang="fr",
-                  icon="assets/icon.png",
+                  icon="asset/icon.png",
                   assetHorloge="asset/horloge/",
                   assetCalculatrice="asset/calculatrice/",
                   assetMicro = "",
@@ -723,7 +726,31 @@ def partCalculatrice():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partCodeHelp():
+    codeHelpBoucle = True
+    while codeHelpBoucle:
+        print("Test des fonctions d'aide au codage")
+        print("1.GUI Gestion Github\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                fnc.getFNCCodeHelp().openGestionGithub()
+            case 0:
+                codeHelpBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
+
     while True:
         boucleVerif = True
         print("Teste des fonction d'Arrera Neuron NetworkW\n")
@@ -733,7 +760,7 @@ def main():
               "8.Horloge\n9.Read\n"
               "10.Radio\n11.Traducteur\n"
               "12.Orthographe\n13.Calculatrice\n"
-              "0.Quitter")
+              "14.Codehelp\n0.Quitter")
         print("__________________________\n")
 
 
@@ -774,6 +801,8 @@ def main():
                 partOrthographe()
             case 13 :
                 partCalculatrice()
+            case 14 :
+                partCodeHelp()
             case 0:
                 print("Fin du programme")
                 break
