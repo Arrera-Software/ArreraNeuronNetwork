@@ -727,7 +727,9 @@ def partCodeHelp():
     codeHelpBoucle = True
     while codeHelpBoucle:
         print("Test des fonctions d'aide au codage")
-        print("1.Recherche github\n0.Quitter")
+        print("1.Recherche github\n2.Recherche dev doc"
+              "\n3.Recherche Microsoft learn\n4.Recherche Python doc"
+              "\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -742,6 +744,15 @@ def partCodeHelp():
             case 1:
                 text = input("Recherche : ")
                 fnc.getFNCCodeHelp().searchGithub(text)
+            case 2:
+                text = input("Recherche : ")
+                fnc.getFNCCodeHelp().searchDocInDevDoc(text)
+            case 3:
+                text = input("Recherche : ")
+                fnc.getFNCCodeHelp().searchDocInMicrosoft(text)
+            case 4:
+                text = input("Recherche : ")
+                fnc.getFNCCodeHelp().searchDocInPython(text)
             case 0:
                 codeHelpBoucle = False
             case _:
