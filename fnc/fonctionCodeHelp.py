@@ -12,7 +12,7 @@ class fncCodehelp(fncBase) :
         self.__searchDoc = CHsearchDoc()
         # self.__colorSelector = CCHcolorSelector(configNeuron)
         self.__githubObjet = CHGithub(gestionnaire)
-        self.__librairyCodehelp = CHLibrairy()
+        self.__librairyCodehelp = CHLibrairy(gestionnaire)
 
     def searchDocInDevDoc(self, recherche:str)->bool:
         if self._gestionnaire.getNetworkObjet().getEtatInternet():

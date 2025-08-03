@@ -1,63 +1,75 @@
-from tkinter import*
+from tkinter import StringVar
+
+from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
 import webbrowser as w
 import requests
 
 
-class CHLibrairy:
-    def __init__(self):
+class CHLibrairy(CCHguiBase):
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire,"Librairie")
         self.__lienLibrairy = "https://github.com/Arrera-Software/Arrera-librairy"
         self.__lienReadme =  "https://github.com/Arrera-Software/Arrera-librairy/blob/main/README.md"
         self.__lienObjetPython = "https://github.com/Arrera-Software/Arrera-librairy/tree/main/python"
         self.__lienObjetCPP = "https://github.com/Arrera-Software/Arrera-librairy/tree/main/C%2B%2B"
-        self.__mainColor = "#ffffff"
-        self.__textColor = "#000000"
-        # self.__iconAssistant = ConfigNeuron.lectureJSON("iconAssistant")
-        self.__name = "test"
-        self.objNET = True
-    
-    def active(self):
-        # Test de la connexion internet
-        self.__screenLibrairy = Toplevel()
-        self.__varName = StringVar(self.__screenLibrairy)
-        self.__screenLibrairy.title(self.__name + ": codeHelp librairy")
-        # self.__screenLibrairy.iconphoto(False, PhotoImage(file=self.__iconAssistant))
-        self.__screenLibrairy.minsize(700, 500)
-        self.__screenLibrairy.configure(bg=self.__mainColor)
-        Label(self.__screenLibrairy, text="Arrera Librairy", bg=self.__mainColor,
-              fg=self.__textColor,
-              font=("arial", 25)).place(relx=0.5, rely=0.0, anchor="n")
-        if (self.objNET == True):
-            # Recuperation de l'index de la librairy
+        self.__varName = None
+        self.__listLib = []
+        self.__dictURLName = {}
+
+    def __testConnection(self):
+        if self._gestionnaire.getNetworkObjet().getEtatInternet():
             try:
                 response = requests.get(
                     "https://raw.githubusercontent.com/Arrera-Librairy/index-codehelp/refs/heads/main/index.json")
                 response.raise_for_status()
                 contenuJson = response.json()
-                nb = len(contenuJson)+1
-                listLib = []
-                dictURLName = {}
+                nb = len(contenuJson) + 1
+
                 for i in range(1,nb):
-                    listLib.append(contenuJson[str(i)]['name'])
-                    dictURLName[contenuJson[str(i)]['name']] = contenuJson[str(i)]['url']
+                    self.__listLib.append(contenuJson[str(i)]['name'])
+                    self.__dictURLName[contenuJson[str(i)]['name']] = contenuJson[str(i)]['url']
+
+                return True
 
             except requests.exceptions.RequestException as e:
-                # Message d'erreur
-                Label(self.__screenLibrairy, text="Impossible de récuper l'index", bg=self.__mainColor,
-                      fg=self.__textColor,
-                      font=("arial", 15)).place(relx=0.5, rely=0.5, anchor="center")
+                print(f"Erreur lors de la récupération de l'index : {e}")
                 return False
-            # Creation de l'interface
-            self.__varName.set(listLib[0])
-            # Widget
-            self.__optionName = OptionMenu(self.__screenLibrairy, self.__varName, *listLib)
-            btnView = Button(self.__screenLibrairy, text="consulter",bg=self.__mainColor,fg=self.__textColor,
-                             command= lambda : w.open(dictURLName[self.__varName.get()]),font=("arial",15))
-            # affichage
-            self.__optionName.place(relx=0.5, rely=0.5, anchor="center")
-            btnView.place(relx=0.5, rely=1.0, anchor="s")
-            return True
         else:
-            # Message d'erreur
-            Label(self.__screenLibrairy, text="Erreur de connexion internet",bg=self.__mainColor,fg=self.__textColor,
-                  font=("arial",15)).place(relx=0.5, rely=0.5, anchor="center")
+            print("Pas de connexion internet")
             return False
+
+    def _mainframe(self):
+        # Var
+        self.__varName = StringVar(self._screen)
+        # Frame
+        self.__welcomeFrame = self._arrtk.createFrame(self._screen,width=700, height=500)
+        self.__errorFrame = self._arrtk.createFrame(self._screen,width=700, height=500)
+
+        # Widget
+        # welcome Frame
+        labelAcceuilTop = self._arrtk.createLabel(self.__welcomeFrame,text="Arrera librairie"
+                                                  ,ppolice="arial",ptaille=25)
+        self.__optionName = None
+        btnView = self._arrtk.createButton(self.__welcomeFrame, text="Consulter", bg=self._btnColor,
+                                           fg=self._btnTexteColor,ppolice="Arial",ptaille=25)
+        # Error Frame
+        labelError = self._arrtk.createLabel(self.__errorFrame,text="Impossible de récuper l'index",
+                                             ppolice="arial",ptaille=25)
+
+        # Affichage
+        self._arrtk.placeTopCenter(labelAcceuilTop)
+        self._arrtk.placeBottomCenter(btnView)
+
+        self._arrtk.placeCenter(labelError)
+
+        # Teste de la connection
+        if self.__testConnection():
+            # Option
+            self.__optionName = self._arrtk.createOptionMenu(self.__welcomeFrame, var=self.__varName,value=self.__listLib)
+            self._arrtk.placeCenter(self.__optionName)
+            # Bouton
+            btnView.configure(command= lambda : w.open(self.__dictURLName[self.__varName.get()]))
+            # Affichage Frame
+            self._arrtk.placeCenter(self.__welcomeFrame)
+        else :
+            self._arrtk.placeCenter(self.__errorFrame)
