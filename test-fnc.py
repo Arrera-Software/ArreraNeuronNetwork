@@ -1,9 +1,6 @@
 import datetime
-import threading
-
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
-from librairy.arrera_tk import *
 
 conf = confNeuron(name="Opale",
                   lang="fr",
