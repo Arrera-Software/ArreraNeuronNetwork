@@ -45,9 +45,8 @@ class fncCodehelp(fncBase) :
 
     def openGestionGithub(self):
         self.__githubObjet.active()
+
     """
-    
-    
     def openOutilLibrairy(self):
         self.__librairyCodehelp.active()
     """

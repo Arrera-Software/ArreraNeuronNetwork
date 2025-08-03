@@ -727,7 +727,7 @@ def partCodeHelp():
     codeHelpBoucle = True
     while codeHelpBoucle:
         print("Test des fonctions d'aide au codage")
-        print("1.GUI Gestion Github\n0.Quitter")
+        print("1.Recherche github\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -740,7 +740,8 @@ def partCodeHelp():
 
         match nb:
             case 1:
-                fnc.getFNCCodeHelp().openGestionGithub()
+                text = input("Recherche : ")
+                fnc.getFNCCodeHelp().searchGithub(text)
             case 0:
                 codeHelpBoucle = False
             case _:
