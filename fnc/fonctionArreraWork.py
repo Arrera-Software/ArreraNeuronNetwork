@@ -1,4 +1,6 @@
-from ObjetsNetwork.gestion import *
+from fnc.fncBase import fncBase,gestionnaire
+from librairy.arrera_date import *
+
 from fnc.fonctionTache import *
 from tkinter import filedialog
 from tkinter import *
@@ -14,12 +16,12 @@ import os
 from pathlib import Path
 
 
-class fncArreraWork:
-    def __init__(self, fncDate: CArreraDate, gestion: gestionNetwork, neuronfile: jsonWork, dectOs: OS):
-        # Objet 
-        self.__dectOs = dectOs
-        self.__fncDate = fncDate
-        self.__configFile = neuronfile
+class fncArreraWork(fncBase):
+    def __init__(self,gestionnaire: gestionnaire):
+        super().__init__(gestionnaire)
+        # Objet
+        self.__dectOs = self._gestionnaire.getOSObjet()
+        self.__fncDate = CArreraDate()
         # Variable etat ouverture fichier
         self.__tableurOpen = False
         self.__wordOpen = False
@@ -33,10 +35,10 @@ class fncArreraWork:
         self.__fileTableur = ""
         self.__fileWord = ""
         # Chargement des variable
-        self.__nameAssistant = self.__configFile.lectureJSON("name")
-        self.__iconAssistant = self.__configFile.lectureJSON("iconAssistant")
-        self.__guiColor = self.__configFile.lectureJSON("interfaceColor")
-        self.__textColor = self.__configFile.lectureJSON("interfaceTextColor")
+        self.__nameAssistant = gestionnaire.getConfigFile().name
+        self.__iconAssistant = self._gestionnaire.getConfigFile().icon
+        self.__guiColor = "White"
+        self.__textColor = "Black"
         # Varriable Projet
         self.__folderProject = ""
         self.__lastCreateFile = ""
@@ -44,11 +46,11 @@ class fncArreraWork:
         self.__fncTaskProjet = None  # Correspont au tache du projet
         self.__listTaskProjetToday = []
         self.__listTaskProjetTowmorow = []
-        # Recupertion de l'emplacement de travail de assistant
-        self.__gestionnaireNeuron = gestion
+
+    # Partie Tableur
 
     def openTableur(self):
-        if (self.__tableurOpen == False):
+        if not self.__tableurOpen:
             # Demande de l'emplacement du fichier
             showinfo("Work", "Choisissez votre fichier exel")
             emplacementFile = filedialog.askopenfilename(
@@ -63,45 +65,6 @@ class fncArreraWork:
                 showinfo("Work", "Exel ouvert")
                 self.__tableurOpen = True
                 return True
-        else:
-            return False
-
-    def openTableurDirectly(self, file: str):
-        if (self.__tableurOpen == False and file != ""):
-            self.__fileTableur = file
-            self.__objTableur = CArreraTableur(file)
-            self.__tableurOpen = True
-            return True
-        else:
-            return False
-
-    def openWord(self):
-        if (self.__wordOpen == False):
-            # Demande de l'emplacement du fichier
-            showinfo("Work", "Choisissez votre fichier word")
-            emplacementFile = filedialog.askopenfilename(
-                defaultextension='.xlsx',
-                filetypes=[('Tout les fichier', '*.*'),
-                           ('Fichiers Word', '*.docx'),
-                           ("Texte OpenDocument", "*.odt")])
-            self.__fileWord = emplacementFile
-            if (emplacementFile == ""):
-                showwarning("Work", "Aucun fichier selectionner")
-                return False
-            else:
-                self.__objWord = CArreraDocx(emplacementFile)
-                showinfo("Work", "Word ouvert")
-                self.__wordOpen = True
-                return True
-        else:
-            return False
-
-    def openWordDirectly(self, file: str):
-        if (self.__wordOpen == False and file != ""):
-            self.__fileWord = file
-            self.__objWord = CArreraDocx(file)
-            self.__wordOpen = True
-            return True
         else:
             return False
 
@@ -170,6 +133,82 @@ class fncArreraWork:
         else:
             return False
 
+    def __addValeur(self, case: str, valeur):
+        if (self.__tableurOpen == True):
+            if (self.__verifTableurCase(case) == True):
+                if (str(valeur).isdigit() == True):
+                    self.__objTableur.write(case, int(valeur))
+                else:
+                    self.__objTableur.write(valeur)
+                self.__objTableur.saveFile()
+                showinfo("Work", "Valeur ecrite")
+            else:
+                showerror("Work", "La case n'est pas valide")
+        else:
+            showerror("Work", "Il n'a pas de tableur ouvert")
+
+    def __supprValeur(self, case: str):
+        if (self.__tableurOpen == True):
+            if (self.__verifTableurCase(case) == True):
+                self.__objTableur.deleteValeur(case)
+                self.__objTableur.saveFile()
+                showinfo("Work", "Valeur supprimer")
+            else:
+                showerror("Work", "La case n'est pas valide")
+        else:
+            showerror("Work", "Il n'a pas de tableur ouvert")
+
+    def __verifTableurCase(self, chaine):
+        # Expression régulière pour vérifier la chaîne
+        regex = r"^[A-Z]\d$"
+
+        # Vérification de la chaîne avec l'expression régulière
+        if re.match(regex, chaine):
+            return True
+        else:
+            return False
+
+    def openTableurDirectly(self, file: str):
+        if (self.__tableurOpen == False and file != ""):
+            self.__fileTableur = file
+            self.__objTableur = CArreraTableur(file)
+            self.__tableurOpen = True
+            return True
+        else:
+            return False
+
+    def openWord(self):
+        if (self.__wordOpen == False):
+            # Demande de l'emplacement du fichier
+            showinfo("Work", "Choisissez votre fichier word")
+            emplacementFile = filedialog.askopenfilename(
+                defaultextension='.xlsx',
+                filetypes=[('Tout les fichier', '*.*'),
+                           ('Fichiers Word', '*.docx'),
+                           ("Texte OpenDocument", "*.odt")])
+            self.__fileWord = emplacementFile
+            if (emplacementFile == ""):
+                showwarning("Work", "Aucun fichier selectionner")
+                return False
+            else:
+                self.__objWord = CArreraDocx(emplacementFile)
+                showinfo("Work", "Word ouvert")
+                self.__wordOpen = True
+                return True
+        else:
+            return False
+
+    def openWordDirectly(self, file: str):
+        if (self.__wordOpen == False and file != ""):
+            self.__fileWord = file
+            self.__objWord = CArreraDocx(file)
+            self.__wordOpen = True
+            return True
+        else:
+            return False
+
+
+
     def writeDocxFile(self):
         if self.__wordOpen:
             screen = Toplevel()
@@ -211,21 +250,6 @@ class fncArreraWork:
             return True
         else:
             return False
-
-    def getEtatTableur(self):
-        return self.__tableurOpen
-
-    def getEtatWord(self):
-        return self.__wordOpen
-
-    def getEtatProject(self):
-        return self.__projectOpen
-
-    def getNameFileTableur(self):
-        return self.__fileTableur
-
-    def getNameFileWord(self):
-        return self.__fileWord
 
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
@@ -312,41 +336,6 @@ class fncArreraWork:
 
         ecase.delete(0, END)
         w.destroy()
-
-    def __addValeur(self, case: str, valeur):
-        if (self.__tableurOpen == True):
-            if (self.__verifTableurCase(case) == True):
-                if (str(valeur).isdigit() == True):
-                    self.__objTableur.write(case, int(valeur))
-                else:
-                    self.__objTableur.write(valeur)
-                self.__objTableur.saveFile()
-                showinfo("Work", "Valeur ecrite")
-            else:
-                showerror("Work", "La case n'est pas valide")
-        else:
-            showerror("Work", "Il n'a pas de tableur ouvert")
-
-    def __supprValeur(self, case: str):
-        if (self.__tableurOpen == True):
-            if (self.__verifTableurCase(case) == True):
-                self.__objTableur.deleteValeur(case)
-                self.__objTableur.saveFile()
-                showinfo("Work", "Valeur supprimer")
-            else:
-                showerror("Work", "La case n'est pas valide")
-        else:
-            showerror("Work", "Il n'a pas de tableur ouvert")
-
-    def __verifTableurCase(self, chaine):
-        # Expression régulière pour vérifier la chaîne
-        regex = r"^[A-Z]\d$"
-
-        # Vérification de la chaîne avec l'expression régulière
-        if re.match(regex, chaine):
-            return True
-        else:
-            return False
 
     def tkAddFormuleParole(self, mode: int):
         """
@@ -748,7 +737,7 @@ class fncArreraWork:
 
     def openProjet(self, project: str):
         if (self.__projectOpen == False):
-            wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+            wordEmplacement = self._gestionnaire.getWorkEmplacement()
             repertoir = Path(wordEmplacement)
             dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
             for i in range(0, len(dossier)):
@@ -770,7 +759,7 @@ class fncArreraWork:
             return False
 
     def createProject(self, name: str):
-        wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+        wordEmplacement = self._gestionnaire.getWorkEmplacement()
         if ((self.__projectOpen == False) and (wordEmplacement != "")):
             dataJson = {"name": "", "type": ""}
             folder = (wordEmplacement + "/" + name)
@@ -1123,7 +1112,7 @@ class fncArreraWork:
         return self.__listTaskProjetTowmorow
 
     def getListProjetCreated(self):
-        wordEmplacement = self.__gestionnaireNeuron.getWorkEmplacement()
+        wordEmplacement = self._gestionnaire.getWorkEmplacement()
         project_list = []
         if wordEmplacement:
             for folder in os.listdir(wordEmplacement):
@@ -1131,3 +1120,20 @@ class fncArreraWork:
                 if os.path.isdir(folder_path) and os.path.exists(os.path.join(folder_path, ".arreraProjet")):
                     project_list.append(folder)
         return project_list
+
+    # Getteur
+
+    def getEtatTableur(self):
+        return self.__tableurOpen
+
+    def getEtatWord(self):
+        return self.__wordOpen
+
+    def getEtatProject(self):
+        return self.__projectOpen
+
+    def getNameFileTableur(self):
+        return self.__fileTableur
+
+    def getNameFileWord(self):
+        return self.__fileWord
