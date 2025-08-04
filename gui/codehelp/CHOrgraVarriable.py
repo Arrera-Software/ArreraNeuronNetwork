@@ -25,25 +25,19 @@ class CHOrgraVarriable(CCHguiBase):
     def _mainframe(self):
         self.__docOpen = False
         self.__file = ""
-        """
-        self.__screenOrganisateurVar.minsize(1000,700)
-        self.__screenOrganisateurVar.maxsize(1000,700)
-        self.__screenOrganisateurVar.title(self.__name+" : Codehelp varriable organisateur")
-        self.__screenOrganisateurVar.iconphoto(False,PhotoImage(file=self.__iconAssistant))
-        self.__screenOrganisateurVar.config(bg="red")
-        """
         #var
         self.__varType = StringVar(self._screen)
         self.__varSuppr = StringVar(self._screen)
+
+        # Modif sur le screen
         self._screen.minsize(1000, 700)
         self._screen.maxsize(1000, 700)
-
+        self._screen.resizable(FALSE, FALSE)
         #Frame
-
-        self.__frameNoOpenDoc = self._arrtk.createFrame(self._screen, width=500, height=700)
-        frameAdd = self._arrtk.createFrame(self._screen, width=500, height=350)
+        self.__frameNoOpenDoc = self._arrtk.createFrame(self._screen, width=900, height=700)
+        self.__frameAdd = self._arrtk.createFrame(self._screen, width=500, height=350)
         self.__frameSuppr = self._arrtk.createFrame(self._screen, width=500, height=350)
-        frameEntry = self._arrtk.createFrame(frameAdd, width=485, height=70)
+        frameEntry = self._arrtk.createFrame(self.__frameAdd, width=485, height=70)
         #Widget
         self.__zoneEcriture = Text(self._screen)
         #Menu
@@ -57,21 +51,28 @@ class CHOrgraVarriable(CCHguiBase):
         #frameNoOpenDoc
         labelNoDoc = self._arrtk.createLabel(self.__frameNoOpenDoc,ppolice="arial",ptaille=35,text="Pas de document\nouvert")
         #Widget frameAdd
-        labelAdd = self._arrtk.createLabel(frameAdd,text="Ajouter une varriable",ppolice="arial",ptaille=25)
-        btnAdd = self._arrtk.createButton(frameAdd,text="Valider",ppolice="arial",ptaille=15,command=self.__addValeur)
-
+        btnOpenNoDoc = self._arrtk.createButton(self.__frameNoOpenDoc,text="Ouvrir un document",
+                                                bg=self._btnColor,fg=self._btnTexteColor,
+                                                ppolice="arial",ptaille=25,command=self.__openDoc)
+        labelAdd = self._arrtk.createLabel(self.__frameAdd,text="Ajouter une varriable",
+                                           ppolice="arial",ptaille=25)
+        btnAdd = self._arrtk.createButton(self.__frameAdd,text="Valider",ppolice="arial",ptaille=25,
+                                          bg=self._btnColor,fg=self._btnTexteColor,
+                                         command=self.__addValeur)
+        # Entry
         self.__entryName = self._arrtk.createEntry(frameEntry,ptaille=20)
         self.__entryValeur = self._arrtk.createEntry(frameEntry,ptaille=20)
-        menuType = self._arrtk.createOptionMenu(frameEntry,var=self.__varType,value=self.__listType)
+        # OptionMenu
+        menuType = self._arrtk.createOptionMenu(frameEntry,var=self.__varType,value=self.__listType,
+                                                bg=self._btnColor,fg=self._btnTexteColor)
         #Widget frameSuppr
         labelSuppr = self._arrtk.createLabel(self.__frameSuppr,text="Supprimer une varriable",ppolice="arial",ptaille=25)
-        btnSuppr = self._arrtk.createButton(self.__frameSuppr,text="Valider",ppolice="arial",ptaille=25,bg=self._btnColor,fg=self._btnTexteColor,command=self.__supprValeur)
-        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value = self.__listSuppr)
+        btnSuppr = self._arrtk.createButton(self.__frameSuppr,text="Valider",ppolice="arial",ptaille=25,
+                                            bg=self._btnColor,fg=self._btnTexteColor,command=self.__supprValeur)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value = self.__listSuppr,
+                                                        bg=self._btnColor,fg=self._btnTexteColor)
         #Affichage
-        self._arrtk.placeLeftCenter(self.__frameNoOpenDoc)
-        self._arrtk.placeTopRight(frameAdd)
-        self._arrtk.placeBottomRight(self.__frameSuppr)
-
+        self._arrtk.placeCenter(self.__frameNoOpenDoc)
         #frameAdd
         self._arrtk.placeTopCenter(labelAdd)
         self._arrtk.placeBottomCenter(btnAdd)
@@ -84,13 +85,14 @@ class CHOrgraVarriable(CCHguiBase):
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
         self._arrtk.placeBottomCenter(btnSuppr)
         #frameNoOpenDoc
-        labelNoDoc.place(relx=0.5,rely=0.5,anchor="center")
+        self._arrtk.placeCenter(labelNoDoc)
+        self._arrtk.placeBottomCenter(btnOpenNoDoc)
         #Ajout de menu a la fenetre
         self.__varType.set(self.__listType[0])
 
 
     def __openDoc(self):
-        if self.__docOpen == True :
+        if self.__docOpen:
             showwarning("Document ouvert","Un document est encore ouvert fermer le avant d'ouvrir un autre")
         else :
             self.__file = askopenfilename(defaultextension=".chov", filetypes=[("Fichier Codehelp Orga Var", ".chov")])
@@ -107,6 +109,8 @@ class CHOrgraVarriable(CCHguiBase):
                         self.__zoneEcriture.config(state="normal")
                         self.__zoneEcriture.insert(END, f"{key}:{value}\n")
                         self.__zoneEcriture.config(state="disable")
+                    self._arrtk.placeTopRight(self.__frameAdd)
+                    self._arrtk.placeBottomRight(self.__frameSuppr)
                     self.__refreshSuppr()
             else :
                 showwarning("Aucun document selectionner","Veuillez selectionner un document")
@@ -123,6 +127,8 @@ class CHOrgraVarriable(CCHguiBase):
             self.__fichiermenu.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
             self.__frameNoOpenDoc.place_forget()
             self.__zoneEcriture.place(relx=0, rely=0, relwidth=0.5, relheight=1)
+            self._arrtk.placeTopRight(self.__frameAdd)
+            self._arrtk.placeBottomRight(self.__frameSuppr)
             self.__refreshSuppr()
             self.__saveOnFile()
         else :
@@ -136,6 +142,8 @@ class CHOrgraVarriable(CCHguiBase):
             self.__zoneEcriture.place_forget()
             self.__frameNoOpenDoc.place(relx=0, rely=0, relwidth=0.5, relheight=1)
             self.__clearMenuSuppr()
+            self.__frameAdd.place_forget()
+            self.__frameSuppr.place_forget()
         else :
             showwarning("Aucun document ouvert","Aucun document n'est ouvert")
 
@@ -184,7 +192,8 @@ class CHOrgraVarriable(CCHguiBase):
             self.__listSuppr = ["","",""]
         else :
             self.__listSuppr = list(data.keys())
-        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr
+                                                        ,bg=self._btnColor,fg=self._btnTexteColor)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
     
     def __supprValeur(self):
@@ -209,5 +218,6 @@ class CHOrgraVarriable(CCHguiBase):
         self.__menuSuppr.place_forget()
         self.__menuSuppr.destroy()
         self.__listSuppr = ["","",""]
-        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr,
+                                                        bg=self._btnColor,fg=self._btnTexteColor)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
