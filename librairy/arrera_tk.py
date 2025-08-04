@@ -353,7 +353,7 @@ class CArreraTK :
                 frame.configure(borderwidth=wightBoder,relief="solid")
         return frame
 
-    def createOptionMenu(self,screen,value: list, var:StringVar,taille : int = 0, police :str = "" ):
+    def createOptionMenu(self,screen,value: list, var:StringVar,taille : int = 0, police :str = "",bg : str = "", fg : str = ""):
         if (self.__mode == 0):
             option = ctk.CTkOptionMenu(screen,variable=var,values=value)
         else:
@@ -361,6 +361,12 @@ class CArreraTK :
         if (police != "" and taille != 0):
             option.configure(font=(police,taille,"normal"))
         var.set(value[0])
+        if bg != "":
+            if self.__mode == 0:
+                option.configure(fg_color=bg)
+        if fg != "":
+            if self.__mode == 0:
+                option.configure(text_color=fg)
         return option
 
     def createEntryLegend(self,screen, bg : str = "", fg : str = "",text :str = "", ppolice : str = "Arial", ptaille : int = 12, width : int = 20):
