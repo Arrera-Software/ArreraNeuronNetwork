@@ -94,6 +94,14 @@ class fncArreraWork(fncBase):
     def getReadTableur(self):
         return self.__listReadTableur
 
+    def addValeurOnTableur(self, case: str, valeur):
+        if (self.__tableurOpen == True) and (case != ""):
+            self.__objTableur.write(case, valeur)
+            self.__objTableur.saveFile()
+            return True
+        else:
+            return False
+
     def __setFormuleTableur(self, mode: int, case1: str, case2: str, caseDest: str):
         """
         1: Somme
@@ -131,13 +139,7 @@ class fncArreraWork(fncBase):
 
 
 
-    def setValeurTableur(self, case: str, valeur):
-        if ((self.__tableurOpen == True) and (case != "")):
-            self.__objTableur.write(case, valeur)
-            self.__objTableur.saveFile()
-            return True
-        else:
-            return False
+
 
 
 

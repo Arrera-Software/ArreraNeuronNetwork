@@ -765,7 +765,7 @@ def partWork():
         print("Test des fonctions de travail")
         print("1.Get Etat Open\n2.Open Tableur"
               "\n3.Close Tableur\n4.Lecture tableur"
-              "\n0.Quitter")
+              "\n5.Ajout d'une valeur\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -795,6 +795,13 @@ def partWork():
                     print(f"Contenu : {fnc.getFNCWork().getReadTableur()}")
                 else :
                     print("Erreur lors de la contenu du tableur")
+            case 5 :
+                case = input("Case : ")
+                valeur = input("Valeur : ")
+                if fnc.getFNCWork().addValeurOnTableur(case, valeur):
+                    print("Valeur ajouter")
+                else :
+                    print("Impossible d'ajouter la valeur")
             case 0:
                 workBoucle = False
             case _:
