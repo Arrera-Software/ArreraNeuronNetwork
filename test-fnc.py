@@ -768,7 +768,7 @@ def partWork():
               "\n5.Ajout d'une valeur\n6.Ajout Somme tableur"
               "\n7.Ajout moyenne tableur\n8.Ajout Comptage tableur"
               "\n9.Ajout Minimum tableur\n10.Ajout Maximum tableur"
-              "\n0.Quitter")
+              "\n11.Supprimer une valeur\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -844,6 +844,12 @@ def partWork():
                 if fnc.getFNCWork().addMaximumOnTableur(caseStart, caseEnd, caseDest):
                     print("Somme ajouter")
                 else:
+                    print("Impossible d'ajouter la case")
+            case 11 :
+                case = input("Case : ")
+                if fnc.getFNCWork().delValeur(case):
+                    print("Case supprimer")
+                else :
                     print("Impossible d'ajouter la case")
             case 0:
                 workBoucle = False

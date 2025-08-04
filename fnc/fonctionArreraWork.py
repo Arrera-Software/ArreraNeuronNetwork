@@ -169,71 +169,20 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-    def __setFormuleTableur(self, mode: int, case1: str, case2: str, caseDest: str):
-        """
-        1: Somme
-        2: Moyenne
-        3: Comptage
-        4: Minimun
-        5: Maximun
-        """
-        if (self.__tableurOpen == True):
-            match mode:
-                case 1:
-                    self.__objTableur.somme(caseDest, case1, case1)
-                    self.__objTableur.saveFile()
-                    return True
-                case 2:
-                    self.__objTableur.moyenne(caseDest, case1, case2)
-                    self.__objTableur.saveFile()
-                    return True
-                case 3:
-                    self.__objTableur.comptage(caseDest, case1, case2)
-                    self.__objTableur.saveFile()
-                    return True
-                case 4:
-                    self.__objTableur.minimun(caseDest, case1, case2)
-                    self.__objTableur.saveFile()
-                    return True
-                case 5:
-                    self.__objTableur.maximun(caseDest, case1, case2)
-                    self.__objTableur.saveFile()
-                    return True
-                case other:
+    def delValeur(self, case: str):
+        if self.__tableurOpen:
+            if self.__verifTableurCase(case):
+                if self.__objTableur.deleteValeur(case):
+                    if self.__objTableur.saveFile():
+                        return True
+                    else:
+                        return False
+                else :
                     return False
+            else:
+                return False
         else:
             return False
-
-
-
-
-
-
-
-    def __addValeur(self, case: str, valeur):
-        if (self.__tableurOpen == True):
-            if (self.__verifTableurCase(case) == True):
-                if (str(valeur).isdigit() == True):
-                    self.__objTableur.write(case, int(valeur))
-                else:
-                    self.__objTableur.write(valeur)
-                self.__objTableur.saveFile()
-                showinfo("Work", "Valeur ecrite")
-            else:
-                showerror("Work", "La case n'est pas valide")
-        else:
-            showerror("Work", "Il n'a pas de tableur ouvert")
-
-    def __supprValeur(self, case: str):
-        if (self.__tableurOpen == True):
-            if (self.__verifTableurCase(case) == True):
-                self.__objTableur.deleteValeur(case)
-                self.__objTableur.saveFile()
-                showinfo("Work", "Valeur supprimer")
-            else:
-                showerror("Work", "La case n'est pas valide")
-        else:
-            showerror("Work", "Il n'a pas de tableur ouvert")
 
     def __verifTableurCase(self, chaine):
         # Expression régulière pour vérifier la chaîne
