@@ -855,7 +855,7 @@ class fncArreraNetwork:
             return self.__mLanguage.getPhraseWork("19")
 
     def sortieReadDocx(self):
-        sortie = self.__objetArreraWork.readDocxFile()
+        sortie = self.__objetArreraWork.readWord()
         if (sortie == "error"):
             text = self.__mLanguage.getPhraseWork("16")
         else:

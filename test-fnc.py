@@ -768,7 +768,10 @@ def partWork():
               "\n5.Ajout d'une valeur\n6.Ajout Somme tableur"
               "\n7.Ajout moyenne tableur\n8.Ajout Comptage tableur"
               "\n9.Ajout Minimum tableur\n10.Ajout Maximum tableur"
-              "\n11.Supprimer une valeur\n0.Quitter")
+              "\n11.Supprimer une valeur"
+              "\n12.Open Word\n13.Close Word\n14.Lecture Word"
+              "\n15.Ecriture dans Word\n16.Ecrire en effasant le word"
+              "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -851,6 +854,33 @@ def partWork():
                     print("Case supprimer")
                 else :
                     print("Impossible d'ajouter la case")
+            case 12 :
+                if fnc.getFNCWork().openWord():
+                    print("Word ouvert")
+                else:
+                    print("Erreur lors de l'ouverture du Word")
+            case 13 :
+                if fnc.getFNCWork().closeWord():
+                    print("Word fermé")
+                else:
+                    print("Erreur lors de la fermeture du Word")
+            case 14 :
+                if fnc.getFNCWork().readWord():
+                    print(f"Contenu : {fnc.getFNCWork().getReadWord()}")
+                else:
+                    print("Erreur lors de la lecture du Word")
+            case 15 :
+                texte = input("Texte : ")
+                if fnc.getFNCWork().writeWord(texte):
+                    print("Texte écrit dans le Word")
+                else :
+                    print("Erreur lors de la lecture du Word")
+            case 16:
+                texte = input("Texte : ")
+                if fnc.getFNCWork().writeWordEcrase(texte):
+                    print("Texte écrit dans le Word")
+                else:
+                    print("Erreur lors de la lecture du Word")
             case 0:
                 workBoucle = False
             case _:

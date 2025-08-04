@@ -47,6 +47,7 @@ class fncArreraWork(fncBase):
         self.__listTaskProjetToday = []
         self.__listTaskProjetTowmorow = []
         self.__listReadTableur = []
+        self.__contentWork = ""
 
     # Partie Tableur
 
@@ -203,17 +204,19 @@ class fncArreraWork(fncBase):
         else:
             return False
 
+    # Partie Word
+
     def openWord(self):
-        if (self.__wordOpen == False):
+        if not self.__wordOpen:
             # Demande de l'emplacement du fichier
             showinfo("Work", "Choisissez votre fichier word")
             emplacementFile = filedialog.askopenfilename(
-                defaultextension='.xlsx',
+                defaultextension='.docx',
                 filetypes=[('Tout les fichier', '*.*'),
                            ('Fichiers Word', '*.docx'),
                            ("Texte OpenDocument", "*.odt")])
             self.__fileWord = emplacementFile
-            if (emplacementFile == ""):
+            if emplacementFile == "":
                 showwarning("Work", "Aucun fichier selectionner")
                 return False
             else:
@@ -225,7 +228,7 @@ class fncArreraWork(fncBase):
             return False
 
     def openWordDirectly(self, file: str):
-        if (self.__wordOpen == False and file != ""):
+        if self.__wordOpen == False and file != "":
             self.__fileWord = file
             self.__objWord = CArreraDocx(file)
             self.__wordOpen = True
@@ -233,42 +236,8 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-
-
-    def writeDocxFile(self):
-        if self.__wordOpen:
-            screen = Toplevel()
-            screen.title("Ecriture dans un word")
-            screen.geometry("500x200")
-            screen.resizable(False, False)
-            self.__entryTextWord = Entry(screen)
-            self.__entryTextWord.place(relx=0.5, rely=0.5, anchor="center")
-            Button(screen, text="Valider", command=lambda: self.__writeWord(screen)).place(relx=0.5, rely=1, anchor='s')
-            return True
-        else:
-            return False
-
-    def __writeWord(self, screen: Toplevel):
-        text = self.__entryTextWord.get()
-        screen.destroy()
-        self.__entryTextWord.delete(0, END)
-        if (self.__wordOpen == True):
-            sortie = self.__objWord.writeEcrase(text)
-            if (sortie == True):
-                showinfo("Word", "Ecriture reussie")
-                return True
-            else:
-                showerror("Word", "Ecriture non reussie")
-                return False
-
-    def readDocxFile(self):
-        if (self.__wordOpen == True):
-            return self.__objWord.read()
-        else:
-            return "error"
-
     def closeDocx(self):
-        if (self.__wordOpen == True):
+        if self.__wordOpen:
             del self.__objWord
             self.__objWord = None
             self.__fileWord = ""
@@ -276,6 +245,35 @@ class fncArreraWork(fncBase):
             return True
         else:
             return False
+
+    def writeWordEcrase(self,texte:str):
+        if self.__wordOpen:
+            if self.__objWord.writeEcrase(texte) :
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def writeWord(self, texte:str):
+        if self.__wordOpen:
+            if self.__objWord.writeNoEcrase(texte):
+                return True
+            else:
+                return False
+        else :
+            return False
+
+    def readWord(self):
+        if self.__wordOpen:
+            self.__contentWork = ""
+            self.__contentWork = self.__objWord.read()
+            return True
+        else:
+            return False
+
+    def getReadWord(self):
+        return self.__contentWork
 
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
@@ -736,7 +734,7 @@ class fncArreraWork(fncBase):
                                 font=("arial", "15"), command=lambda: self.__fncQuitGUIWord(viewWord, gWord),
                                 bg=self.__guiColor, fg=self.__textColor)
             # Recuperation du contenu du word
-            sortie = self.readDocxFile()
+            sortie = self.readWord()
             viewWord.delete(1.0, END)
             viewWord.insert(INSERT, sortie)
             # Affichage
