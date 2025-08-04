@@ -57,7 +57,7 @@ class fncArreraWork(fncBase):
                 defaultextension='.xlsx',
                 filetypes=[("Fichiers Excel", "*.xlsx")])
             self.__fileTableur = emplacementFile
-            if (emplacementFile == ""):
+            if emplacementFile == "":
                 showwarning("Work", "Aucun fichier selectionner")
                 return False
             else:
@@ -65,6 +65,18 @@ class fncArreraWork(fncBase):
                 showinfo("Work", "Exel ouvert")
                 self.__tableurOpen = True
                 return True
+        else:
+            return False
+
+    def closeTableur(self):
+        if self.__tableurOpen:
+            self.__objTableur.saveFile()
+            self.__objTableur.closeFile()
+            del self.__objTableur
+            self.__objTableur = None
+            self.__fileTableur = ""
+            self.__tableurOpen = False
+            return True
         else:
             return False
 
@@ -121,17 +133,7 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-    def closeTableur(self):
-        if (self.__tableurOpen == True):
-            self.__objTableur.saveFile()
-            self.__objTableur.closeFile()
-            del self.__objTableur
-            self.__objTableur = None
-            self.__fileTableur = ""
-            self.__tableurOpen = False
-            return True
-        else:
-            return False
+
 
     def __addValeur(self, case: str, valeur):
         if (self.__tableurOpen == True):
