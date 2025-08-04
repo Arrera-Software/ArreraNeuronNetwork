@@ -34,20 +34,20 @@ class fncCodehelp(fncBase) :
         else :
             return False
 
-    def activeColorSelecteur(self):
-        self.__colorSelector.active()
-
-    def searchGithub(self,requette:str):
+    def searchGithub(self, requette: str):
         self.__githubObjet.search(requette)
-    
+
     def openSiteGithub(self):
         wb.open("https://github.com/")
 
-    def openGestionGithub(self):
+    def openGUIColorSelector(self):
+        self.__colorSelector.active()
+
+    def openGUIGithubGestion(self):
         self.__githubObjet.active()
 
-    def openOutilLibrairy(self):
+    def openGUILibrairy(self):
         self.__librairyCodehelp.active()
 
-    def activeOrgaVar(self):
+    def openGUIOrgaVar(self):
         self.__orgaVar.active()

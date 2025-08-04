@@ -721,7 +721,7 @@ class fncArreraNetwork:
 
     def sortieOpenOrgaVar(self):
         text = self.__mLanguage.getPhraseCodehelp("1")
-        self.__objetCodehelp.activeOrgaVar()
+        self.__objetCodehelp.openGUIOrgaVar()
         return text
 
     def sortieSearchDoc(self, requette: str):
@@ -762,7 +762,7 @@ class fncArreraNetwork:
 
     def sortieOpenColorSelecteur(self):
         text = self.__mLanguage.getPhraseCodehelp("2")
-        self.__objetCodehelp.activeColorSelecteur()
+        self.__objetCodehelp.openGUIColorSelector()
         return text
 
     def sortieSearchGithub(self, requette: str):
@@ -791,12 +791,12 @@ class fncArreraNetwork:
 
     def sortieOpenGuiGithub(self):
         text = self.__mLanguage.getPhraseCodehelp("4")
-        self.__objetCodehelp.openGestionGithub()
+        self.__objetCodehelp.openGUIGithubGestion()
         return text
 
     def sortieOpenLibrairy(self):
         text = self.__mLanguage.getPhraseCodehelp("5")
-        self.__objetCodehelp.openOutilLibrairy()
+        self.__objetCodehelp.openGUILibrairy()
         return text
 
     # Partie Arrera Work
