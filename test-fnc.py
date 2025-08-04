@@ -758,6 +758,43 @@ def partCodeHelp():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partWork():
+    workBoucle = True
+    while workBoucle:
+        print("___________________________")
+        print("Test des fonctions de travail")
+        print("1.Get Etat Open\n2.Open Tableur"
+              "\n3.Close Tableur\n0.Quitter")
+        print("___________________________")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+        match nb:
+            case 1:
+                print(f"Word : {fnc.getFNCWork().getEtatWord()}")
+                print(f"Tableur : {fnc.getFNCWork().getEtatTableur()}")
+                print(f"Projet : {fnc.getFNCWork().getEtatProject()}")
+            case 2:
+                if fnc.getFNCWork().openTableur():
+                    print("Tableur ouvert")
+                else:
+                    print("Erreur lors de l'ouverture du tableur")
+            case 3:
+                if fnc.getFNCWork().closeTableur():
+                    print("Tableur fermé")
+                else:
+                    print("Erreur lors de la fermeture du tableur")
+            case 0:
+                workBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
+
 def main():
 
     while True:
@@ -769,7 +806,8 @@ def main():
               "8.Horloge\n9.Read\n"
               "10.Radio\n11.Traducteur\n"
               "12.Orthographe\n13.Calculatrice\n"
-              "14.Codehelp\n0.Quitter")
+              "14.Codehelp\n15.Work"
+              "\n0.Quitter")
         print("__________________________\n")
 
 
@@ -812,6 +850,8 @@ def main():
                 partCalculatrice()
             case 14 :
                 partCodeHelp()
+            case 15 :
+                partWork()
             case 0:
                 print("Fin du programme")
                 break
