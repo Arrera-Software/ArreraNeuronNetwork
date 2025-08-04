@@ -204,6 +204,22 @@ class fncArreraWork(fncBase):
         else:
             return False
 
+    def openTableurOs(self):
+        if self.__tableurOpen:
+            if self.__dectOs.osLinux() and not self.__dectOs.osWindows() :
+                subprocess.call(["xdg-open", self.__fileTableur])
+                return True
+            elif not self.__dectOs.osLinux() and self.__dectOs.osWindows() == True:
+                    os.startfile(self.__fileTableur)
+                    return True
+            elif self.__dectOs.osMac():  # <-- Ajout du support MacOS
+                subprocess.call(["open", self.__fileTableur])
+                return True
+            else:
+                return False
+        else:
+            return False
+
     # Partie Word
 
     def openWord(self):
@@ -274,6 +290,22 @@ class fncArreraWork(fncBase):
 
     def getReadWord(self):
         return self.__contentWork
+
+    def openWordOs(self):
+        if self.__wordOpen:
+            if self.__dectOs.osLinux() and not self.__dectOs.osWindows():
+                subprocess.call(["xdg-open", self.__fileWord])
+                return True
+            elif not self.__dectOs.osLinux() and self.__dectOs.osWindows() == True:
+                os.startfile(self.__fileWord)
+                return True
+            elif self.__dectOs.osMac():  # <-- Ajout du support MacOS
+                subprocess.call(["open", self.__fileWord])
+                return True
+            else:
+                return False
+        else:
+            return False
 
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
@@ -457,37 +489,6 @@ class fncArreraWork(fncBase):
         eFin.delete(0, END)
         w.destroy()
 
-    def openTableurOs(self):
-        if (self.__tableurOpen == True):
-            if ((self.__dectOs.osLinux() == True)
-                    and (self.__dectOs.osWindows() == False)):
-                subprocess.call(["xdg-open", self.__fileTableur])
-                return True
-            else:
-                if ((self.__dectOs.osLinux() == False)
-                        and (self.__dectOs.osWindows() == True)):
-                    os.startfile(self.__fileTableur)
-                    return True
-                else:
-                    return False
-        else:
-            return False
-
-    def openWordOs(self):
-        if (self.__wordOpen == True):
-            if ((self.__dectOs.osLinux() == True)
-                    and (self.__dectOs.osWindows() == False)):
-                subprocess.call(["xdg-open", self.__fileWord])
-                return True
-            else:
-                if ((self.__dectOs.osLinux() == False)
-                        and (self.__dectOs.osWindows() == True)):
-                    os.startfile(self.__fileWord)
-                    return True
-                else:
-                    return False
-        else:
-            return False
 
     def guiTableurWork(self):
         if (self.__tableurOpen == True):

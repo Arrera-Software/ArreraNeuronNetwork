@@ -771,7 +771,7 @@ def partWork():
               "\n11.Supprimer une valeur"
               "\n12.Open Word\n13.Close Word\n14.Lecture Word"
               "\n15.Ecriture dans Word\n16.Ecrire en effasant le word"
-              "\n0.Quitter")
+              "\n17.Open Word with OS\n18.Open Tableur with OS\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -881,6 +881,16 @@ def partWork():
                     print("Texte écrit dans le Word")
                 else:
                     print("Erreur lors de la lecture du Word")
+            case 17 :
+                if fnc.getFNCWork().openWordOs():
+                    print("Word ouvert")
+                else :
+                    print("Erreur lors de l'ouverture du Word")
+            case 18:
+                if fnc.getFNCWork().openTableurOs():
+                    print("Tableur ouvert")
+                else:
+                    print("Erreur lors de l'ouverture du Tableur")
             case 0:
                 workBoucle = False
             case _:
