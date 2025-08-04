@@ -95,10 +95,14 @@ class fncArreraWork(fncBase):
         return self.__listReadTableur
 
     def addValeurOnTableur(self, case: str, valeur):
-        if (self.__tableurOpen == True) and (case != ""):
-            self.__objTableur.write(case, valeur)
-            self.__objTableur.saveFile()
-            return True
+        if self.__tableurOpen  and (case != ""):
+            if self.__objTableur.write(case, valeur):
+                if self.__objTableur.saveFile():
+                    return True
+                else :
+                    return False
+            else :
+                return False
         else:
             return False
 
