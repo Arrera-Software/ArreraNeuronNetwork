@@ -1,88 +1,93 @@
-from tkinter import*
-from tkinter.filedialog import*
-from tkinter.messagebox import*
-from ObjetsNetwork.gestion import*
+from tkinter import StringVar,Text,Menu
+from tkinter.messagebox import *
+from tkinter.filedialog import *
+from librairy.arrera_tk import *
+import json
 
-class CHOrgraVarriable:
-    def __init__(self,ConfigNeuron:jsonWork,dectOS:OS):
-        self.__mainColor = ConfigNeuron.lectureJSON("interfaceColor")
-        self.__mainTextColor = ConfigNeuron.lectureJSON("interfaceTextColor")
-        self.__iconAssistant = ConfigNeuron.lectureJSON("iconAssistant") 
-        self.__name = ConfigNeuron.lectureJSON("name")
+from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
+
+class CHOrgraVarriable(CCHguiBase):
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire,"Organisateur de varriable")
         self.__docOpen = False
         self.__file = ""
-        self.__objetOS = dectOS
+        self.__objetOS = self._gestionnaire.getOSObjet()
+        # Var
+        self.__listSuppr = ["", "", ""]
+        self.__listType = ["int", "bool", "char", "string",
+                           "float", "list", "tuple", "dict",
+                           "set", "bytes", "date", "time",
+                           "enum", "object"]
+        self.__varType = None
+        self.__varSuppr = None
+
     
-    def bootOrganisateur(self):
+    def _mainframe(self):
         self.__docOpen = False
         self.__file = ""
-        self.__screenOrganisateurVar = Toplevel()
+        """
         self.__screenOrganisateurVar.minsize(1000,700)
         self.__screenOrganisateurVar.maxsize(1000,700)
         self.__screenOrganisateurVar.title(self.__name+" : Codehelp varriable organisateur")
         self.__screenOrganisateurVar.iconphoto(False,PhotoImage(file=self.__iconAssistant))
         self.__screenOrganisateurVar.config(bg="red")
+        """
         #var
-        self.__varType = StringVar(self.__screenOrganisateurVar)
-        self.__varSuppr = StringVar(self.__screenOrganisateurVar)
-        self.__listSuppr = ["","",""]
-        self.__listType = ["int", "bool", "char", "string", 
-                            "float", "list", "tuple", "dict", 
-                            "set", "bytes", "date", "time", 
-                            "enum", "object"]
+        self.__varType = StringVar(self._screen)
+        self.__varSuppr = StringVar(self._screen)
+        self._screen.minsize(1000, 700)
+        self._screen.maxsize(1000, 700)
+
         #Frame
-        self.__frameNoOpenDoc = Frame(self.__screenOrganisateurVar,width=500,height=700,bg=self.__mainColor)
-        frameAdd = Frame(self.__screenOrganisateurVar,width=500,height=350,bg=self.__mainColor,relief=GROOVE,bd=5)
-        self.__frameSuppr = Frame(self.__screenOrganisateurVar,width=500,height=350,bg=self.__mainColor,relief=GROOVE,bd=5)
+
+        self.__frameNoOpenDoc = self._arrtk.createFrame(self._screen, width=500, height=700)
+        frameAdd = self._arrtk.createFrame(self._screen, width=500, height=350)
+        self.__frameSuppr = self._arrtk.createFrame(self._screen, width=500, height=350)
+        frameEntry = self._arrtk.createFrame(frameAdd, width=485, height=70)
         #Widget
-        self.__zoneEcriture = Text(self.__screenOrganisateurVar)
+        self.__zoneEcriture = Text(self._screen)
         #Menu
-        self.__menuediteur = Menu(self.__screenOrganisateurVar,bg=self.__mainColor,fg=self.__mainTextColor)
-        self.__menuediteur.add_command(label="Enregistrer",command=self.__saveOnFile)
-        self.__menuediteur.add_command(label="Nouveau",command=self.__newDoc)
-        self.__menuediteur.add_command(label="Ouvrir",command=self.__openDoc)
+        self.__menuediteur = Menu(self._screen)
+        self.__fichiermenu = Menu(self.__menuediteur, tearoff=0)
+        self.__fichiermenu.add_command(label="Enregistrer", command=self.__saveOnFile)
+        self.__fichiermenu.add_command(label="Nouveau", command=self.__newDoc)
+        self.__fichiermenu.add_command(label="Ouvrir", command=self.__openDoc)
+        self.__menuediteur.add_cascade(label="Fichier", menu=self.__fichiermenu)
+        self._screen.config(menu=self.__menuediteur)
         #frameNoOpenDoc
-        labelNoDoc = Label(self.__frameNoOpenDoc,font=("arial","35"),bg=self.__mainColor,fg=self.__mainTextColor,text="Pas de document\nouvert")
+        labelNoDoc = self._arrtk.createLabel(self.__frameNoOpenDoc,ppolice="arial",ptaille=35,text="Pas de document\nouvert")
         #Widget frameAdd
-        labelAdd = Label(frameAdd,text="Ajouter une varriable",font=("arial","25"),bg=self.__mainColor,fg=self.__mainTextColor)
-        btnAdd = Button(frameAdd,text="Valider",font=("arial","15"),bg=self.__mainColor,fg=self.__mainTextColor,command=self.__addValeur)
-        frameEntry = Frame(frameAdd,bg=self.__mainColor,width=485,height=70)
-        self.__entryName = Entry(frameEntry,font=("arial","13"),relief=SOLID)
-        self.__entryValeur = Entry(frameEntry,font=("arial","13"),relief=SOLID)
-        menuType = OptionMenu(frameEntry,self.__varType,*self.__listType)
+        labelAdd = self._arrtk.createLabel(frameAdd,text="Ajouter une varriable",ppolice="arial",ptaille=25)
+        btnAdd = self._arrtk.createButton(frameAdd,text="Valider",ppolice="arial",ptaille=15,command=self.__addValeur)
+
+        self.__entryName = self._arrtk.createEntry(frameEntry,ptaille=20)
+        self.__entryValeur = self._arrtk.createEntry(frameEntry,ptaille=20)
+        menuType = self._arrtk.createOptionMenu(frameEntry,var=self.__varType,value=self.__listType)
         #Widget frameSuppr
-        labelSuppr = Label(self.__frameSuppr,text="Supprimer une varriable",font=("arial","25"),bg=self.__mainColor,fg=self.__mainTextColor)
-        btnSuppr = Button(self.__frameSuppr,text="Valider",font=("arial","15"),bg=self.__mainColor,fg=self.__mainTextColor,command=self.__supprValeur)
-        self.__menuSuppr = OptionMenu(self.__frameSuppr,self.__varSuppr,*self.__listSuppr)
+        labelSuppr = self._arrtk.createLabel(self.__frameSuppr,text="Supprimer une varriable",ppolice="arial",ptaille=25)
+        btnSuppr = self._arrtk.createButton(self.__frameSuppr,text="Valider",ppolice="arial",ptaille=25,bg=self._btnColor,fg=self._btnTexteColor,command=self.__supprValeur)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value = self.__listSuppr)
         #Affichage
-        self.__frameNoOpenDoc.place(relx=0, rely=0, relwidth=0.5, relheight=1)
-        if (self.__objetOS.osWindows()==True):
-            frameAdd.place(x=(self.__screenOrganisateurVar.winfo_width()/2), y=0)
-            self.__frameSuppr.place(x=self.__screenOrganisateurVar.winfo_width()/2, y=self.__screenOrganisateurVar.winfo_height()/2)
-        else :
-            if (self.__objetOS.osLinux()==True):
-                frameAdd.place(x=500, y=0)
-                self.__frameSuppr.place(x=500, y=350)
+        self._arrtk.placeLeftCenter(self.__frameNoOpenDoc)
+        self._arrtk.placeTopRight(frameAdd)
+        self._arrtk.placeBottomRight(self.__frameSuppr)
+
         #frameAdd
-        labelAdd.place(x=((frameAdd.winfo_reqwidth()-labelAdd.winfo_reqwidth())//2),y=2)
-        btnAdd.place(x=((frameAdd.winfo_reqwidth()-btnAdd.winfo_reqwidth())//2),y=(frameAdd.winfo_reqheight()-btnAdd.winfo_reqheight()-2))
-        frameEntry.place(relx=0.5,rely=0.5,anchor="center")
-        self.__entryName.place(x=2,y=((frameEntry.winfo_reqheight()-self.__entryName.winfo_reqheight())//2))
-        menuType.place(relx=0.5,rely=0.5,anchor="center")
-        self.__entryValeur.place(x=((frameEntry.winfo_reqwidth()-self.__entryValeur.winfo_reqwidth())-2),y=((frameEntry.winfo_reqheight()-self.__entryValeur.winfo_reqheight())//2))
+        self._arrtk.placeTopCenter(labelAdd)
+        self._arrtk.placeBottomCenter(btnAdd)
+        self._arrtk.placeCenter(frameEntry)
+        self._arrtk.placeLeftCenter(self.__entryName)
+        self._arrtk.placeCenter(menuType)
+        self._arrtk.placeRightCenter(self.__entryValeur)
         #frameSuppr
         labelSuppr.place(x=((self.__frameSuppr.winfo_reqwidth()-labelSuppr.winfo_reqwidth())//2),y=0)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
-        if (self.__objetOS.osWindows()==True):
-            btnSuppr.place(x=((self.__frameSuppr.winfo_reqwidth()-btnSuppr.winfo_reqwidth())//2),y=(self.__frameSuppr.winfo_reqheight()-btnSuppr.winfo_reqheight()-10))
-        else :
-            if (self.__objetOS.osLinux()==True):
-                btnSuppr.place(x=((self.__frameSuppr.winfo_reqwidth()-btnSuppr.winfo_reqwidth())//2),y=(self.__frameSuppr.winfo_reqheight()-btnSuppr.winfo_reqheight()-40))
+        self._arrtk.placeBottomCenter(btnSuppr)
         #frameNoOpenDoc
         labelNoDoc.place(relx=0.5,rely=0.5,anchor="center")
         #Ajout de menu a la fenetre
         self.__varType.set(self.__listType[0])
-        self.__screenOrganisateurVar.config(menu=self.__menuediteur)
+
 
     def __openDoc(self):
         if self.__docOpen == True :
@@ -91,7 +96,7 @@ class CHOrgraVarriable:
             self.__file = askopenfilename(defaultextension=".chov", filetypes=[("Fichier Codehelp Orga Var", ".chov")])
             if self.__file :
                 self.__docOpen = True 
-                self.__menuediteur.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
+                self.__fichiermenu.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
                 self.__frameNoOpenDoc.place_forget()
                 self.__zoneEcriture.place(relx=0, rely=0, relwidth=0.5, relheight=1)
                 with open(self.__file, "r") as f:
@@ -115,7 +120,7 @@ class CHOrgraVarriable:
             self.__zoneEcriture.insert("1.0","Type name : valeur")
             self.__zoneEcriture.config(state="disable")
             self.__docOpen = True 
-            self.__menuediteur.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
+            self.__fichiermenu.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
             self.__frameNoOpenDoc.place_forget()
             self.__zoneEcriture.place(relx=0, rely=0, relwidth=0.5, relheight=1)
             self.__refreshSuppr()
@@ -142,7 +147,7 @@ class CHOrgraVarriable:
             typeVar = self.__varType.get()
             if name and value and typeVar :
                 key = typeVar+" "+name
-                self.__entryName.delete(0, END)
+                self.__entryName.delete("1", END)
                 self.__entryValeur.delete(0, END)
                 d = self.__zoneEcriture.get("1.0", "end")
                 d = dict(map(str, item.split(':')) for item in d.strip().split('\n'))
@@ -179,7 +184,7 @@ class CHOrgraVarriable:
             self.__listSuppr = ["","",""]
         else :
             self.__listSuppr = list(data.keys())
-        self.__menuSuppr = OptionMenu(self.__frameSuppr,self.__varSuppr,*self.__listSuppr)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
     
     def __supprValeur(self):
@@ -204,5 +209,5 @@ class CHOrgraVarriable:
         self.__menuSuppr.place_forget()
         self.__menuSuppr.destroy()
         self.__listSuppr = ["","",""]
-        self.__menuSuppr = OptionMenu(self.__frameSuppr,self.__varSuppr,*self.__listSuppr)
+        self.__menuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,var = self.__varSuppr,value=self.__listSuppr)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")

@@ -4,11 +4,12 @@ import webbrowser as wb
 from objet.CHsearchDoc import CHsearchDoc
 from gui.codehelp.CHGithub import CHGithub
 from gui.codehelp.CHLibrairy import CHLibrairy
+from gui.codehelp.CHOrgraVarriable import CHOrgraVarriable
 
 class fncCodehelp(fncBase) :
     def __init__(self,gestionnaire:gestionnaire) -> None:
         super().__init__(gestionnaire)
-        # self.__orgaVar = CHOrgraVarriable(configNeuron,dectOs)
+        self.__orgaVar = CHOrgraVarriable(gestionnaire)
         self.__searchDoc = CHsearchDoc()
         # self.__colorSelector = CCHcolorSelector(configNeuron)
         self.__githubObjet = CHGithub(gestionnaire)
@@ -32,8 +33,7 @@ class fncCodehelp(fncBase) :
         else :
             return False
     """
-    def activeOrgaVar(self):
-        self.__orgaVar.bootOrganisateur()
+    
 
     
     def activeColorSelecteur(self):
@@ -50,3 +50,6 @@ class fncCodehelp(fncBase) :
 
     def openOutilLibrairy(self):
         self.__librairyCodehelp.active()
+
+    def activeOrgaVar(self):
+        self.__orgaVar.active()
