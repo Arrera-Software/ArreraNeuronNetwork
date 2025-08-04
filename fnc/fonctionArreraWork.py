@@ -106,6 +106,69 @@ class fncArreraWork(fncBase):
         else:
             return False
 
+    def getListFormuleTableur(self):
+        return ["Somme","Moyenne","Comptage","Minimum","Maximum"]
+
+    def addSommeOnTableur(self, case_start: str, case_stop: str, case_dest: str):
+        if (self.__tableurOpen and case_start != "") and (case_stop != "") and (case_dest != ""):
+            if self.__objTableur.somme(case1=case_start, case2=case_stop, caseDestination=case_dest):
+                if self.__objTableur.saveFile() :
+                    return True
+                else :
+                    return False
+            else :
+                return False
+        else :
+            return False
+
+    def addMoyenneOnTableur(self, case_start: str, case_stop: str, case_dest: str):
+        if (self.__tableurOpen and case_start != "") and (case_stop != "") and (case_dest != ""):
+            if self.__objTableur.moyenne(case1=case_start, case2=case_stop, caseDestination=case_dest):
+                if self.__objTableur.saveFile() :
+                    return True
+                else :
+                    return False
+            else :
+                return False
+        else :
+            return False
+
+    def addComptageOnTableur(self, case_start: str, case_stop: str, case_dest: str):
+        if (self.__tableurOpen and case_start != "") and (case_stop != "") and (case_dest != ""):
+            if self.__objTableur.comptage(case1=case_start, case2=case_stop, caseDestination=case_dest):
+                if self.__objTableur.saveFile() :
+                    return True
+                else :
+                    return False
+            else :
+                return False
+        else :
+            return False
+
+    def addMinimumOnTableur(self, case_start: str, case_stop: str, case_dest: str):
+        if (self.__tableurOpen and case_start != "") and (case_stop != "") and (case_dest != ""):
+            if self.__objTableur.minimun(case1=case_start, case2=case_stop, caseDestination=case_dest):
+                if self.__objTableur.saveFile():
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+
+    def addMaximumOnTableur(self, case_start: str, case_stop: str, case_dest: str):
+        if (self.__tableurOpen and case_start != "") and (case_stop != "") and (case_dest != ""):
+            if self.__objTableur.maximun(case1=case_start, case2=case_stop, caseDestination=case_dest):
+                if self.__objTableur.saveFile():
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:
+            return False
+
     def __setFormuleTableur(self, mode: int, case1: str, case2: str, caseDest: str):
         """
         1: Somme

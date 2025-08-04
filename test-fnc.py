@@ -765,7 +765,10 @@ def partWork():
         print("Test des fonctions de travail")
         print("1.Get Etat Open\n2.Open Tableur"
               "\n3.Close Tableur\n4.Lecture tableur"
-              "\n5.Ajout d'une valeur\n0.Quitter")
+              "\n5.Ajout d'une valeur\n6.Ajout Somme tableur"
+              "\n7.Ajout moyenne tableur\n8.Ajout Comptage tableur"
+              "\n9.Ajout Minimum tableur\n10.Ajout Maximum tableur"
+              "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -802,6 +805,46 @@ def partWork():
                     print("Valeur ajouter")
                 else :
                     print("Impossible d'ajouter la valeur")
+            case 6:
+                caseStart = input("Case Start: ")
+                caseEnd = input("Case End: ")
+                caseDest = input("Case dest: ")
+                if fnc.getFNCWork().addSommeOnTableur(caseStart, caseEnd, caseDest):
+                    print("Somme ajouter")
+                else :
+                    print("Impossible d'ajouter la case")
+            case 7:
+                caseStart = input("Case Start: ")
+                caseEnd = input("Case End: ")
+                caseDest = input("Case dest: ")
+                if fnc.getFNCWork().addMoyenneOnTableur(caseStart, caseEnd, caseDest):
+                    print("Somme ajouter")
+                else:
+                    print("Impossible d'ajouter la case")
+            case 8:
+                caseStart = input("Case Start: ")
+                caseEnd = input("Case End: ")
+                caseDest = input("Case dest: ")
+                if fnc.getFNCWork().addComptageOnTableur(caseStart, caseEnd, caseDest):
+                    print("Somme ajouter")
+                else:
+                    print("Impossible d'ajouter la case")
+            case 9:
+                caseStart = input("Case Start: ")
+                caseEnd = input("Case End: ")
+                caseDest = input("Case dest: ")
+                if fnc.getFNCWork().addMinimumOnTableur(caseStart, caseEnd, caseDest):
+                    print("Somme ajouter")
+                else:
+                    print("Impossible d'ajouter la case")
+            case 10:
+                caseStart = input("Case Start: ")
+                caseEnd = input("Case End: ")
+                caseDest = input("Case dest: ")
+                if fnc.getFNCWork().addMaximumOnTableur(caseStart, caseEnd, caseDest):
+                    print("Somme ajouter")
+                else:
+                    print("Impossible d'ajouter la case")
             case 0:
                 workBoucle = False
             case _:
