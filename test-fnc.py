@@ -764,7 +764,8 @@ def partWork():
         print("___________________________")
         print("Test des fonctions de travail")
         print("1.Get Etat Open\n2.Open Tableur"
-              "\n3.Close Tableur\n0.Quitter")
+              "\n3.Close Tableur\n4.Lecture tableur"
+              "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -789,6 +790,11 @@ def partWork():
                     print("Tableur fermé")
                 else:
                     print("Erreur lors de la fermeture du tableur")
+            case 4:
+                if fnc.getFNCWork().readTableur():
+                    print(f"Contenu : {fnc.getFNCWork().getReadTableur()}")
+                else :
+                    print("Erreur lors de la contenu du tableur")
             case 0:
                 workBoucle = False
             case _:

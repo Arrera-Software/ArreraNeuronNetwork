@@ -46,6 +46,7 @@ class fncArreraWork(fncBase):
         self.__fncTaskProjet = None  # Correspont au tache du projet
         self.__listTaskProjetToday = []
         self.__listTaskProjetTowmorow = []
+        self.__listReadTableur = []
 
     # Partie Tableur
 
@@ -79,6 +80,19 @@ class fncArreraWork(fncBase):
             return True
         else:
             return False
+
+    def readTableur(self):
+        if self.__tableurOpen:
+            self.__listReadTableur = []
+            contenu = self.__objTableur.read()
+            for cell_position, cell_value in contenu.items():
+                self.__listReadTableur.append("Cellule " + str(cell_position) + " : " + str(cell_value))
+            return True
+        else:
+            return False
+
+    def getReadTableur(self):
+        return self.__listReadTableur
 
     def __setFormuleTableur(self, mode: int, case1: str, case2: str, caseDest: str):
         """
@@ -115,15 +129,7 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-    def readTableur(self):
-        if (self.__tableurOpen == True):
-            listSorti = []
-            contenu = self.__objTableur.read()
-            for cell_position, cell_value in contenu.items():
-                listSorti.append("Cellule " + str(cell_position) + " : " + str(cell_value))
-            return listSorti
-        else:
-            return ["error", ""]
+
 
     def setValeurTableur(self, case: str, valeur):
         if ((self.__tableurOpen == True) and (case != "")):
