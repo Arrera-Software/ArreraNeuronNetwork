@@ -306,7 +306,7 @@ class fncArreraWork(fncBase):
                 return False
         else:
             return False
-
+    """
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
             tab = Toplevel()
@@ -394,13 +394,6 @@ class fncArreraWork(fncBase):
         w.destroy()
 
     def tkAddFormuleParole(self, mode: int):
-        """
-        1: Somme
-        2: Moyenne
-        3: Comptage
-        4: Minimun
-        5: Maximun
-        """
         if ((self.__tableurOpen == True) and (mode < 5)):
             tab = Toplevel()
             tab.iconphoto(False, PhotoImage(file=self.__iconAssistant))
@@ -759,6 +752,7 @@ class fncArreraWork(fncBase):
         content = wText.get(1.0, END)
         self.__objWord.writeEcrase(content)
         w.destroy()
+    """
 
     def openProjet(self, project: str):
         if (self.__projectOpen == False):
