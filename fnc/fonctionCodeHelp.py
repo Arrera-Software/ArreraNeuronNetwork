@@ -5,13 +5,14 @@ from objet.CHsearchDoc import CHsearchDoc
 from gui.codehelp.CHGithub import CHGithub
 from gui.codehelp.CHLibrairy import CHLibrairy
 from gui.codehelp.CHOrgraVarriable import CHOrgraVarriable
+from gui.codehelp.CCHcolorSelector import CCHcolorSelector
 
 class fncCodehelp(fncBase) :
     def __init__(self,gestionnaire:gestionnaire) -> None:
         super().__init__(gestionnaire)
         self.__orgaVar = CHOrgraVarriable(gestionnaire)
         self.__searchDoc = CHsearchDoc()
-        # self.__colorSelector = CCHcolorSelector(configNeuron)
+        self.__colorSelector = CCHcolorSelector(gestionnaire)
         self.__githubObjet = CHGithub(gestionnaire)
         self.__librairyCodehelp = CHLibrairy(gestionnaire)
 
@@ -32,13 +33,10 @@ class fncCodehelp(fncBase) :
             return self.__searchDoc.searchPython(recherche)
         else :
             return False
-    """
-    
 
-    
     def activeColorSelecteur(self):
-        self.__colorSelector.bootSelecteur()
-    """
+        self.__colorSelector.active()
+
     def searchGithub(self,requette:str):
         self.__githubObjet.search(requette)
     

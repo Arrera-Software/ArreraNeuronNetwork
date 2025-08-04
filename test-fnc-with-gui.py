@@ -36,6 +36,7 @@ def partCodeHelp(w:ctk.CTk):
     arrtk.createButton(w,text="Github",command=lambda : fnc.getFNCCodeHelp().openGestionGithub()).pack()
     arrtk.createButton(w, text="Lib", command=lambda: fnc.getFNCCodeHelp().openOutilLibrairy()).pack()
     arrtk.createButton(w, text="Orga Var", command=lambda: fnc.getFNCCodeHelp().activeOrgaVar()).pack()
+    arrtk.createButton(w, text="Color", command=lambda: fnc.getFNCCodeHelp().activeColorSelecteur()).pack()
 
 def main():
     screen = arrtk.aTK()
