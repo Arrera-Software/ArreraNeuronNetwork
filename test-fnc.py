@@ -775,7 +775,7 @@ def partWork():
               "\n19.Voir le projet\n20.Creer un projet"
               "\n21.Ouvrir un projet\n22.Fermer un projet"
               "\n23.Voir le type de projet possible\n24.Ajouter un type au projet"
-              "\n25.Voir le type du projet"
+              "\n25.Voir le type du projet\n26.Voir le nom du projet"
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -926,6 +926,8 @@ def partWork():
                     print("Erreur lors de l'ajout du type de projet")
             case 25:
                 print(f"Le type est {fnc.getFNCWork().getTypeProjet()}")
+            case 26:
+                print(f"Le nom du projet est {fnc.getFNCWork().getNameProjet()}")
             case 0:
                 workBoucle = False
             case _:

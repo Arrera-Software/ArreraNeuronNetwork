@@ -416,6 +416,12 @@ class fncArreraWork(fncBase):
         else:
             return None
 
+    def getNameProjet(self):
+        if self.__projectOpen:
+            return self.__jsonFileProject.lectureJSON("name")
+        else:
+            return ""
+
     def createFileProject(self, mode: int, nameFile: str):
         """
         in :
@@ -548,12 +554,6 @@ class fncArreraWork(fncBase):
                     return False
         else:
             return False
-
-    def getNameProjet(self):
-        if (self.__projectOpen == True):
-            return self.__jsonFileProject.lectureJSON("name")
-        else:
-            return ""
 
     def getNameLastFileCreate(self):
         return self.__lastCreateFile
