@@ -252,7 +252,7 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-    def closeDocx(self):
+    def closeWord(self):
         if self.__wordOpen:
             del self.__objWord
             self.__objWord = None
@@ -435,137 +435,71 @@ class fncArreraWork(fncBase):
     def getListTypeFileExtension(self):
         return list(self.getNameTypeFileWithExtension().values())
 
-    def createFileProject(self, mode: int, nameFile: str):
-        """
-        in :
-            1 : exel
-            2 : word
-            3 : odt
-            4 : txt
-            5 : python
-            6 : h
-            7 : json
-            8 : html
-            9 : css
-            10 : md
-            11 : cpp
-            12 : c
-            13 : php
-            14 : js
-            15 : java
-            16 : kt (kotlin)
-        """
-        if ((self.__projectOpen == True) and (nameFile != "")):
-            emplacementFile = self.__folderProject + "/"
-            match mode:
-                case 1:  # Exel
-                    self.__lastCreateFile = nameFile + ".xlsx"
-                    wb = Workbook()
-                    ws = wb.active
-                    ws.title = nameFile
-                    ws['A1'] = ""
-                    wb.save(emplacementFile + self.__lastCreateFile)
-                    del ws
-                    wb.close()
-                    del wb
-                    return True
-                case 2:  # word
-                    self.__lastCreateFile = nameFile + '.docx'
-                    doc = Document()
-                    doc.add_paragraph("")
-                    doc.save(emplacementFile + self.__lastCreateFile)
-                    return True
-                case 3:  # Odt
-                    self.__lastCreateFile = nameFile + ".odt"
-                    doc = OpenDocumentText()
-                    p1 = P(text="")
-                    doc.text.addElement(p1)
-                    doc.save(emplacementFile + self.__lastCreateFile)
-                    return True
-                case 4:  # txt
-                    self.__lastCreateFile = nameFile + ".txt"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("Texte file named " + nameFile)
-                    return True
-                case 5:  # python
-                    self.__lastCreateFile = nameFile + ".py"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("# Python file named " + nameFile)
-                    return True
-                case 6:  # h
-                    self.__lastCreateFile = nameFile + ".h"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// hearder file create named " + nameFile)
-                    return True
-                case 7:  # json
-                    self.__lastCreateFile = nameFile + ".json"
-                    dataJson = {}
-                    jsonPath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(jsonPath, "w", encoding="utf-8") as file:
-                        json.dump(dataJson, file, ensure_ascii=False, indent=4)
-                    return True
-                case 8:  # html
-                    self.__lastCreateFile = nameFile + ".html"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">'
-                                   + '\n<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-                                   '\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
-                    return True
-                case 9:  # css
-                    self.__lastCreateFile = nameFile + ".css"
-                    filePath = os.path.join(emplacementFile, )
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("/* CSS file named " + nameFile + " */")
-                    return True
-                case 10:  # md
-                    self.__lastCreateFile = nameFile + ".md"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("File readme named " + nameFile)
-                    return True
-                case 11:  # cpp
-                    self.__lastCreateFile = nameFile + ".cpp"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// C++ file named " + nameFile)
-                    return True
-                case 12:  # c
-                    self.__lastCreateFile = nameFile + ".c"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// C file named " + nameFile)
-                    return True
-                case 13:  # php
-                    self.__lastCreateFile = nameFile + ".php"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// PHP file named " + nameFile)
-                    return True
-                case 14:  # javascript
-                    self.__lastCreateFile = nameFile + ".js"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// JavaScript file named " + nameFile)
-                    return True
-                case 15:  # java
-                    self.__lastCreateFile = nameFile + ".java"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// Java file named " + nameFile)
-                    return True
-                case 16:  # kt
-                    self.__lastCreateFile = nameFile + ".kt"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// Kotlin file named " + nameFile)
-                    return True
-                case other:
+    def createFileProject(self,name: str,type:str):
+        if self.__projectOpen and name != "" and type != "":
+            if type in self.getListTypeFileName() or type in self.getListTypeFileExtension():
+                emplacement = self.__folderProject + "/"
+                if type == "excel" or type == "xlsx":
+                    try :
+                        self.__lastCreateFile = name + ".xlsx"
+                        wb = Workbook()
+                        ws = wb.active
+                        ws.title = name
+                        ws['A1'] = ""
+                        wb.save(emplacement + self.__lastCreateFile)
+                        del ws
+                        wb.close()
+                        del wb
+                        return True
+                    except Exception as e:
+                        # print(e)
+                        return False
+                elif type == "word" or type == "docx":
+                    try :
+                        self.__lastCreateFile = name + '.docx'
+                        doc = Document()
+                        doc.add_paragraph("")
+                        doc.save(emplacement + self.__lastCreateFile)
+                        return True
+                    except Exception as e:
+                        # print(e)
+                        return False
+                elif type == "Open Document Texte" or type == "odt":
+                    try :
+                        self.__lastCreateFile = name + ".odt"
+                        doc = OpenDocumentText()
+                        p1 = P(text="")
+                        doc.text.addElement(p1)
+                        doc.save(emplacement + self.__lastCreateFile)
+                        return True
+                    except Exception as e:
+                        # print(e)
+                        return False
+                elif type == "markdown" or type == "md":
+                    try :
+                        self.__lastCreateFile = name + ".md"
+                        filePath = os.path.join(emplacement, self.__lastCreateFile)
+                        with open(filePath, "w", encoding="utf-8") as file:
+                            file.write("File readme named " + name)
+                        return True
+                    except Exception as e:
+                        # print(e)
+                        return False
+                elif type == "Arrera Postite" or type == ".ab":
+                    try :
+                        self.__lastCreateFile = name + ".ab"
+                        filePath = os.path.join(emplacement, self.__lastCreateFile)
+                        with open(filePath, "w", encoding="utf-8") as file:
+                            file.write("# File Arrera Postiste named " + name)
+                        return True
+                    except Exception as e:
+                        # print(e)
+                        return False
+                else :
                     return False
-        else:
+            else :
+                return False
+        else :
             return False
 
     def getNameLastFileCreate(self):

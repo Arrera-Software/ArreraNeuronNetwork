@@ -777,7 +777,7 @@ def partWork():
               "\n23.Voir le type de projet possible\n24.Ajouter un type au projet"
               "\n25.Voir le type du projet\n26.Voir le nom du projet"
               "\n27.Fichier Nom et extension\n28.Fichier Nom"
-              "\n29.Fichier extension"
+              "\n29.Fichier extension\n30.Creation d'un fichier"
                                                     
               "\n0.Quitter")
         print("___________________________")
@@ -937,6 +937,13 @@ def partWork():
                 print(f"{fnc.getFNCWork().getListTypeFileName()}")
             case 29:
                 print(f"{fnc.getFNCWork().getListTypeFileExtension()}")
+            case 30:
+                name = input("Nom du fichier : ")
+                type = input("Type du fichier : ")
+                if fnc.getFNCWork().createFileProject(name, type):
+                    print("Fichier créé")
+                else:
+                    print("Erreur lors de la création du fichier")
             case 0:
                 workBoucle = False
             case _:

@@ -840,7 +840,7 @@ class fncArreraNetwork:
         return text
 
     def sortieCloseDocx(self):
-        sortie = self.__objetArreraWork.closeDocx()
+        sortie = self.__objetArreraWork.closeWord()
         if (sortie == True):
             text = self.__mLanguage.getPhraseWork("12")
         else:
