@@ -502,57 +502,8 @@ class fncArreraWork(fncBase):
         else :
             return False
 
-    def getNameLastFileCreate(self):
-        return self.__lastCreateFile
-
-    def openFileProjet(self, file: str):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__projectOpen == True) and (file != "")):
-            if (("docx" in file) or ("odt" in file)):
-                self.__objWord = CArreraDocx(self.__folderProject + "/" + file)
-                self.__fileWord = self.__folderProject + "/" + self.__lastCreateFile
-                self.__wordOpen = True
-                return 2
-            else:
-                if ("xlsx" in file):
-                    self.__objTableur = CArreraTableur(self.__folderProject + "/" + file)
-                    self.__fileTableur = self.__folderProject + "/" + file
-                    self.__tableurOpen = True
-                    return 3
-                else:
-                    if ((self.__dectOs.osLinux() == True)
-                            and (self.__dectOs.osWindows() == False)):
-                        subprocess.call(["xdg-open", self.__folderProject + "/" + file])
-                        return 1
-                    else:
-                        if ((self.__dectOs.osLinux() == False)
-                                and (self.__dectOs.osWindows() == True)):
-                            os.startfile(self.__folderProject + "/" + file)
-                            return 1
-                        else:
-                            return 0
-
-    def openLastFileCreate(self):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__lastCreateFile != "")):
-            sortie = self.openFileProjet(self.__lastCreateFile)
-            self.__lastCreateFile = ""
-            return sortie
-        else:
-            return 0
-
     def setlistFileProject(self):
-        if (self.__projectOpen == True):
+        if self.__projectOpen:
             try:
                 # Liste les fichiers et dossiers dans le répertoire
                 self.__listFileProjet = os.listdir(self.__folderProject)
@@ -570,26 +521,7 @@ class fncArreraWork(fncBase):
     def getListFileProjet(self):
         return self.__listFileProjet
 
-    def openFileOtherProjet(self, file: str):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__projectOpen == True) and (self.setlistFileProject() == True)
-                and ("." in file) and (file != "")):
-            listFile = self.getListFileProjet()
-            nbFile = len(listFile)
 
-            for i in range(0, nbFile):
-                if (listFile[i] == file):
-                    return self.openFileProjet(listFile[i])
-
-            return 0
-
-        else:
-            return 0
 
     def showTacheProjet(self):
         if (self.__projectOpen == True):

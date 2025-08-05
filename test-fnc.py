@@ -778,7 +778,7 @@ def partWork():
               "\n25.Voir le type du projet\n26.Voir le nom du projet"
               "\n27.Fichier Nom et extension\n28.Fichier Nom"
               "\n29.Fichier extension\n30.Creation d'un fichier"
-                                                    
+              "\n31.Voir le fichier du projet"                                
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -944,6 +944,9 @@ def partWork():
                     print("Fichier créé")
                 else:
                     print("Erreur lors de la création du fichier")
+            case 31:
+                if fnc.getFNCWork().setlistFileProject():
+                    print(f"Liste fichier : {fnc.getFNCWork().getListFileProjet()}")
             case 0:
                 workBoucle = False
             case _:
