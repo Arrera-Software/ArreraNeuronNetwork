@@ -1,15 +1,9 @@
-from fnc.fncBase import fncBase,gestionnaire
-from librairy.arrera_date import *
-
 from fnc.fonctionTache import *
 from tkinter import filedialog
-from tkinter import *
-from tkinter.scrolledtext import *
 from tkinter.messagebox import *
 from objet.arreradocument import *
 from objet.arreratableur import *
 from librairy.travailJSON import *
-from librairy.dectectionOS import *
 import subprocess
 import re
 import os
