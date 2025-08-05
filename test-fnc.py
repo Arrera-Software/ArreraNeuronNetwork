@@ -953,6 +953,27 @@ def partWork():
                 print("Choix invalide, veuillez réessayer.")
 
 
+def partBreef():
+    breefBoucle = True
+    while breefBoucle:
+        print("Test des fonctions de Breef")
+        print("")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 0:
+                breefBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
 
     while True:
@@ -965,7 +986,7 @@ def main():
               "10.Radio\n11.Traducteur\n"
               "12.Orthographe\n13.Calculatrice\n"
               "14.Codehelp\n15.Work"
-              "\n0.Quitter")
+              "\n16.Beef\n0.Quitter")
         print("__________________________\n")
 
 
@@ -1010,6 +1031,8 @@ def main():
                 partCodeHelp()
             case 15 :
                 partWork()
+            case 16 :
+                partBreef()
             case 0:
                 print("Fin du programme")
                 break

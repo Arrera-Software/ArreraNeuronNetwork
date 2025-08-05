@@ -19,6 +19,7 @@ class gestFNC:
         from fnc.fonctionCalculatrice import fncCalculatrice
         from fnc.fonctionCodeHelp import fncCodehelp
         from fnc.fonctionArreraWork import fncArreraWork
+        from fnc.fonctionBreef import fncBreef
         # Fichier de GUI
 
         # ______________ Initialisation des fonctions ______________
@@ -58,6 +59,8 @@ class gestFNC:
         self.__codehelp = fncCodehelp(self.__gestionnaire)
         # Fonction work
         self.__work = fncArreraWork(self.__gestionnaire)
+        # Fonction breef
+        self.__breef = fncBreef(self.__gestionnaire)
 
     def initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
