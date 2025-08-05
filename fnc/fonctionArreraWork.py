@@ -378,25 +378,6 @@ class fncArreraWork(fncBase):
         else:
             return False
 
-
-    def getTypeFileProjet(self):
-        return ["Développement d'application web",
-                 "Développement d'application desktop",
-                 "Développement d'application mobile",
-                 "Électronique",
-                 "Électrique",
-                 "Système embarqué",
-                 "Développement de jeux vidéo",
-                 "Écriture de livre"]
-
-
-    def setTypeProjet(self, type: str):
-        if (type != "") and self.__projectOpen == True and (type in self.getTypeFileProjet()):
-            self.__jsonFileProject.EcritureJSON("type", type)
-            return True
-        else:
-            return False
-
     def closeProjet(self):
         if self.__projectOpen:
             self.__projectOpen = False
@@ -410,6 +391,30 @@ class fncArreraWork(fncBase):
             return True
         else:
             return False
+
+    def getViewTypeProjetAvailable(self):
+        return ["Développement d'application web",
+                 "Développement d'application desktop",
+                 "Développement d'application mobile",
+                 "Électronique",
+                 "Électrique",
+                 "Système embarqué",
+                 "Développement de jeux vidéo",
+                 "Écriture de livre"]
+
+
+    def addTypeProjet(self, type: str):
+        if (type != "") and self.__projectOpen == True and (type in self.getViewTypeProjetAvailable()):
+            self.__jsonFileProject.EcritureJSON("type", type)
+            return True
+        else:
+            return False
+
+    def getTypeProjet(self):
+        if self.__projectOpen:
+            return self.__jsonFileProject.lectureJSON("type")
+        else:
+            return None
 
     def createFileProject(self, mode: int, nameFile: str):
         """

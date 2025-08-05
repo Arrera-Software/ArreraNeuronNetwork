@@ -994,7 +994,7 @@ class fncArreraNetwork:
     def sortieSetTypeProjet(self, requette: str):
         type = requette.replace("le type est", "")
         type = type.replace("le type du projet est", "")
-        sortie = self.__objetArreraWork.setTypeProjet(type)
+        sortie = self.__objetArreraWork.addTypeProjet(type)
         if (sortie == True):
             text = self.__mLanguage.getPhraseWork("43")
         else:

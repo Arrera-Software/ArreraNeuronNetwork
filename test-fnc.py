@@ -774,6 +774,8 @@ def partWork():
               "\n17.Open Word with OS\n18.Open Tableur with OS"
               "\n19.Voir le projet\n20.Creer un projet"
               "\n21.Ouvrir un projet\n22.Fermer un projet"
+              "\n23.Voir le type de projet possible\n24.Ajouter un type au projet"
+              "\n25.Voir le type du projet"
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -913,6 +915,17 @@ def partWork():
                     print("Projet fermé")
                 else :
                     print("Imposible de fermer le projet")
+            case 23:
+                print("Types de projet possible :")
+                print(fnc.getFNCWork().getViewTypeProjetAvailable())
+            case 24:
+                typeProjet = input("Type de projet : ")
+                if fnc.getFNCWork().addTypeProjet(typeProjet):
+                    print("Type de projet ajouté")
+                else:
+                    print("Erreur lors de l'ajout du type de projet")
+            case 25:
+                print(f"Le type est {fnc.getFNCWork().getTypeProjet()}")
             case 0:
                 workBoucle = False
             case _:
