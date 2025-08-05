@@ -420,7 +420,20 @@ class fncArreraWork(fncBase):
         if self.__projectOpen:
             return self.__jsonFileProject.lectureJSON("name")
         else:
-            return ""
+            return None
+
+    def getNameTypeFileWithExtension(self):
+        return {"excel": "xlsx",
+                "word": "docx",
+                "Open Document Texte": "odt",
+                "markdown": "md",
+                "Arrera Postite":".ab"}
+
+    def getListTypeFileName(self):
+        return list(self.getNameTypeFileWithExtension().keys())
+
+    def getListTypeFileExtension(self):
+        return list(self.getNameTypeFileWithExtension().values())
 
     def createFileProject(self, mode: int, nameFile: str):
         """

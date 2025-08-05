@@ -776,6 +776,9 @@ def partWork():
               "\n21.Ouvrir un projet\n22.Fermer un projet"
               "\n23.Voir le type de projet possible\n24.Ajouter un type au projet"
               "\n25.Voir le type du projet\n26.Voir le nom du projet"
+              "\n27.Fichier Nom et extension\n28.Fichier Nom"
+              "\n29.Fichier extension"
+                                                    
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -928,6 +931,12 @@ def partWork():
                 print(f"Le type est {fnc.getFNCWork().getTypeProjet()}")
             case 26:
                 print(f"Le nom du projet est {fnc.getFNCWork().getNameProjet()}")
+            case 27:
+                print(f"{fnc.getFNCWork().getNameTypeFileWithExtension()}")
+            case 28:
+                print(f"{fnc.getFNCWork().getListTypeFileName()}")
+            case 29:
+                print(f"{fnc.getFNCWork().getListTypeFileExtension()}")
             case 0:
                 workBoucle = False
             case _:
