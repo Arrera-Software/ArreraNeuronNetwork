@@ -36,7 +36,7 @@ def partTask():
     while taskBoucle:
         print("Test des fonctions de tache")
         print(
-            "1.Ajouter une tache\n2.Lister les taches\n3.Supprimer une tache\n4.Compter le nombre de taches\n5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n8.Check date towmorow\n9.Tache a faire demain\n10.Check task late\n11.Tache en retard\n0.Quitter")
+"1.Ajouter une tache\n2.Lister les taches\n3.Supprimer une tache\n4.Compter le nombre de taches\n5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n8.Check date towmorow\n9.Tache a faire demain\n10.Check task late\n11.Tache en retard\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -957,7 +957,8 @@ def partBreef():
     breefBoucle = True
     while breefBoucle:
         print("Test des fonctions de Breef")
-        print("")
+        print("1.Resumer Actualiter\n2.Resumer Tache du jour"
+              "3.Resumer ALL\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -969,6 +970,12 @@ def partBreef():
                 print("Veuillez entrer un nombre valide.")
 
         match nb:
+            case 1:
+                print(fnc.getFNCBreef().summarizeActu())
+            case 2:
+                print(fnc.getFNCBreef().summarizeTaskToday())
+            case 3 :
+                print(fnc.getFNCBreef().summarizeAll())
             case 0:
                 breefBoucle = False
             case _:

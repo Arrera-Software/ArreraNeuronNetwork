@@ -111,3 +111,6 @@ class gestFNC:
 
     def getFNCWork(self):
         return self.__work
+
+    def getFNCBreef(self):
+        return self.__breef
