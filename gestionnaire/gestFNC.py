@@ -59,7 +59,7 @@ class gestFNC:
         # Fonction work
         self.__work = fncArreraWork(self.__gestionnaire)
 
-    def __initTaskProject(self, fileTask: str):
+    def initTaskProject(self, fileTask: str):
         # Initialisation des fonctions
         from fnc.fonctionTache import fncArreraTache
         return fncArreraTache(self.__gestionnaire,self.__libDate,fileTask)

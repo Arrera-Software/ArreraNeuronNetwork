@@ -306,6 +306,415 @@ class fncArreraWork(fncBase):
                 return False
         else:
             return False
+
+    # Partie Projet
+
+    def getListProjet(self):
+        wordEmplacement = self._gestionnaire.getWorkEmplacement()
+        if wordEmplacement != "":
+            try :
+                repertoir = Path(wordEmplacement)
+                return [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+            except:
+                return None
+        else :
+            return None
+
+    def openProjet(self, project: str):
+        if not self.__projectOpen:
+            wordEmplacement = self._gestionnaire.getWorkEmplacement()
+            repertoir = Path(wordEmplacement)
+            dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+            for i in range(0, len(dossier)):
+                if project == dossier[i]:
+                    # Ecriture de l'emplacement du projet
+                    self.__folderProject = wordEmplacement + "/" + project
+                    # Ouverture du fichier de config
+                    self.__jsonFileProject = jsonWork(
+                        os.path.join(self.__folderProject + "/.arreraProjet", project + ".apr"))
+                    # Mise de la var a true
+                    self.__projectOpen = True
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = self._gestionnaire.getGestFNC().initTaskProject(self.__folderProject + "/.arreraProjet/TaskProjet.json")
+                    return True
+            return False
+        else:
+            return False
+
+    def createProjet(self, name: str):
+        wordEmplacement = self._gestionnaire.getWorkEmplacement()
+        if (self.__projectOpen == False) and (wordEmplacement != ""):
+            dataJson = {"name": "", "type": ""}
+            folder = (wordEmplacement + "/" + name)
+            dataJson["name"] = name
+            try:
+                # Creation du projet
+                os.makedirs(folder, exist_ok=True)
+                # Creation du sous dossier de config du projet
+                os.makedirs(folder + "/.arreraProjet")
+                # Enregistrement de l'emplacement du projet
+                self.__folderProject = folder
+                # Creation du fichier de config
+                configPath = os.path.join(folder + "/.arreraProjet", name + ".apr")
+                # Creation du fichier de tache
+                taskPath = os.path.join(folder + "/.arreraProjet", "TaskProjet.json")
+                try:
+                    # Ecriture dans les deux fichier
+                    with open(configPath, "w", encoding="utf-8") as file:
+                        json.dump(dataJson, file, ensure_ascii=False, indent=4)
+                    with open(taskPath, "w", encoding="utf-8") as file:
+                        json.dump({}, file, ensure_ascii=False, indent=4)
+                    # Ouverture du fichier de config
+                    self.__jsonFileProject = jsonWork(configPath)
+                    # Mise a true de la var de projet ouvert
+                    self.__projectOpen = True
+                    # Ouverture fichier de tache
+                    self.__fncTaskProjet = self._gestionnaire.getGestFNC().initTaskProject(taskPath)
+                    return True
+                except Exception as e:
+                    return False
+            except Exception as e:
+                return False
+        else:
+            return False
+
+
+    def getTypeFileProjet(self):
+        return ["Développement d'application web",
+                 "Développement d'application desktop",
+                 "Développement d'application mobile",
+                 "Électronique",
+                 "Électrique",
+                 "Système embarqué",
+                 "Développement de jeux vidéo",
+                 "Écriture de livre"]
+
+
+    def setTypeProjet(self, type: str):
+        if (type != "") and self.__projectOpen == True and (type in self.getTypeFileProjet()):
+            self.__jsonFileProject.EcritureJSON("type", type)
+            return True
+        else:
+            return False
+
+    def closeProjet(self):
+        if self.__projectOpen:
+            self.__projectOpen = False
+            self.__folderProject = ""
+            self.__lastCreateFile = ""
+            self.__jsonFileProject = None
+            self.__fncTaskProjet = None
+            self.__listFileProjet = []
+            self.__listTaskProjetToday = []
+            self.__listTaskProjetTowmorow = []
+            return True
+        else:
+            return False
+
+    def createFileProject(self, mode: int, nameFile: str):
+        """
+        in :
+            1 : exel
+            2 : word
+            3 : odt
+            4 : txt
+            5 : python
+            6 : h
+            7 : json
+            8 : html
+            9 : css
+            10 : md
+            11 : cpp
+            12 : c
+            13 : php
+            14 : js
+            15 : java
+            16 : kt (kotlin)
+        """
+        if ((self.__projectOpen == True) and (nameFile != "")):
+            emplacementFile = self.__folderProject + "/"
+            match mode:
+                case 1:  # Exel
+                    self.__lastCreateFile = nameFile + ".xlsx"
+                    wb = Workbook()
+                    ws = wb.active
+                    ws.title = nameFile
+                    ws['A1'] = ""
+                    wb.save(emplacementFile + self.__lastCreateFile)
+                    del ws
+                    wb.close()
+                    del wb
+                    return True
+                case 2:  # word
+                    self.__lastCreateFile = nameFile + '.docx'
+                    doc = Document()
+                    doc.add_paragraph("")
+                    doc.save(emplacementFile + self.__lastCreateFile)
+                    return True
+                case 3:  # Odt
+                    self.__lastCreateFile = nameFile + ".odt"
+                    doc = OpenDocumentText()
+                    p1 = P(text="")
+                    doc.text.addElement(p1)
+                    doc.save(emplacementFile + self.__lastCreateFile)
+                    return True
+                case 4:  # txt
+                    self.__lastCreateFile = nameFile + ".txt"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("Texte file named " + nameFile)
+                    return True
+                case 5:  # python
+                    self.__lastCreateFile = nameFile + ".py"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("# Python file named " + nameFile)
+                    return True
+                case 6:  # h
+                    self.__lastCreateFile = nameFile + ".h"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// hearder file create named " + nameFile)
+                    return True
+                case 7:  # json
+                    self.__lastCreateFile = nameFile + ".json"
+                    dataJson = {}
+                    jsonPath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(jsonPath, "w", encoding="utf-8") as file:
+                        json.dump(dataJson, file, ensure_ascii=False, indent=4)
+                    return True
+                case 8:  # html
+                    self.__lastCreateFile = nameFile + ".html"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">'
+                                   + '\n<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+                                   '\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
+                    return True
+                case 9:  # css
+                    self.__lastCreateFile = nameFile + ".css"
+                    filePath = os.path.join(emplacementFile, )
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("/* CSS file named " + nameFile + " */")
+                    return True
+                case 10:  # md
+                    self.__lastCreateFile = nameFile + ".md"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("File readme named " + nameFile)
+                    return True
+                case 11:  # cpp
+                    self.__lastCreateFile = nameFile + ".cpp"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// C++ file named " + nameFile)
+                    return True
+                case 12:  # c
+                    self.__lastCreateFile = nameFile + ".c"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// C file named " + nameFile)
+                    return True
+                case 13:  # php
+                    self.__lastCreateFile = nameFile + ".php"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// PHP file named " + nameFile)
+                    return True
+                case 14:  # javascript
+                    self.__lastCreateFile = nameFile + ".js"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// JavaScript file named " + nameFile)
+                    return True
+                case 15:  # java
+                    self.__lastCreateFile = nameFile + ".java"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// Java file named " + nameFile)
+                    return True
+                case 16:  # kt
+                    self.__lastCreateFile = nameFile + ".kt"
+                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
+                    with open(filePath, "w", encoding="utf-8") as file:
+                        file.write("// Kotlin file named " + nameFile)
+                    return True
+                case other:
+                    return False
+        else:
+            return False
+
+    def getNameProjet(self):
+        if (self.__projectOpen == True):
+            return self.__jsonFileProject.lectureJSON("name")
+        else:
+            return ""
+
+    def getNameLastFileCreate(self):
+        return self.__lastCreateFile
+
+    def openFileProjet(self, file: str):
+        """
+        0 : Error
+        1 : Open by os
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__projectOpen == True) and (file != "")):
+            if (("docx" in file) or ("odt" in file)):
+                self.__objWord = CArreraDocx(self.__folderProject + "/" + file)
+                self.__fileWord = self.__folderProject + "/" + self.__lastCreateFile
+                self.__wordOpen = True
+                return 2
+            else:
+                if ("xlsx" in file):
+                    self.__objTableur = CArreraTableur(self.__folderProject + "/" + file)
+                    self.__fileTableur = self.__folderProject + "/" + file
+                    self.__tableurOpen = True
+                    return 3
+                else:
+                    if ((self.__dectOs.osLinux() == True)
+                            and (self.__dectOs.osWindows() == False)):
+                        subprocess.call(["xdg-open", self.__folderProject + "/" + file])
+                        return 1
+                    else:
+                        if ((self.__dectOs.osLinux() == False)
+                                and (self.__dectOs.osWindows() == True)):
+                            os.startfile(self.__folderProject + "/" + file)
+                            return 1
+                        else:
+                            return 0
+
+    def openLastFileCreate(self):
+        """
+        0 : Error
+        1 : Open by os
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__lastCreateFile != "")):
+            sortie = self.openFileProjet(self.__lastCreateFile)
+            self.__lastCreateFile = ""
+            return sortie
+        else:
+            return 0
+
+    def setlistFileProject(self):
+        if (self.__projectOpen == True):
+            try:
+                # Liste les fichiers et dossiers dans le répertoire
+                self.__listFileProjet = os.listdir(self.__folderProject)
+                self.__listFileProjet.remove(".arreraProjet")
+                return True
+            except FileNotFoundError:
+                return False
+            except PermissionError:
+                return False
+            except Exception as e:
+                return False
+        else:
+            return False
+
+    def getListFileProjet(self):
+        return self.__listFileProjet
+
+    def openFileOtherProjet(self, file: str):
+        """
+        0 : Error
+        1 : Open by os
+        2 : Open by ArreraDocx
+        3 : Open bu ArreraTableur
+        """
+        if ((self.__projectOpen == True) and (self.setlistFileProject() == True)
+                and ("." in file) and (file != "")):
+            listFile = self.getListFileProjet()
+            nbFile = len(listFile)
+
+            for i in range(0, nbFile):
+                if (listFile[i] == file):
+                    return self.openFileProjet(listFile[i])
+
+            return 0
+
+        else:
+            return 0
+
+    def showTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewTask()
+            return True
+        else:
+            return False
+
+    def addTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewAdd()
+            return True
+        else:
+            return False
+
+    def supprTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewSuppr()
+            return True
+        else:
+            return False
+
+    def checkTacheProjet(self):
+        if (self.__projectOpen == True):
+            self.__fncTaskProjet.activeViewCheck()
+            return True
+        else:
+            return False
+
+    def getNbTacheProjet(self):
+        """
+        -1 : Error
+        """
+        if (self.__projectOpen == True):
+            return self.__fncTaskProjet.getNbTache()
+        else:
+            return -1
+
+    def getNBTacheToday(self):
+        """
+        -1 : error
+        """
+        if (self.__projectOpen == True):
+            return self.__fncTaskProjet.getNbTacheToday()
+        else:
+            return -1
+
+    def setListTacheTodayProjet(self):
+        if (self.__projectOpen == True):
+            self.__listTaskProjetToday = self.__fncTaskProjet.getTacheToday()
+            return True
+        else:
+            return False
+
+    def getListTacheTodayProjet(self):
+        return self.__listTaskProjetToday
+
+    def setListTacheTowmorowProjet(self):
+        if (self.__projectOpen == True):
+            self.__listTaskProjetTowmorow = self.__fncTaskProjet.getTacheTowmorow()
+            return True
+        else:
+            return False
+
+    def getListTacheTowmorowProjet(self):
+        return self.__listTaskProjetTowmorow
+
+    def getListProjetCreated(self):
+        wordEmplacement = self._gestionnaire.getWorkEmplacement()
+        project_list = []
+        if wordEmplacement:
+            for folder in os.listdir(wordEmplacement):
+                folder_path = os.path.join(wordEmplacement, folder)
+                if os.path.isdir(folder_path) and os.path.exists(os.path.join(folder_path, ".arreraProjet")):
+                    project_list.append(folder)
+        return project_list
+
     """
     def tkAddValeurParole(self):
         if (self.__tableurOpen == True):
@@ -753,392 +1162,6 @@ class fncArreraWork(fncBase):
         self.__objWord.writeEcrase(content)
         w.destroy()
     """
-
-    def openProjet(self, project: str):
-        if (self.__projectOpen == False):
-            wordEmplacement = self._gestionnaire.getWorkEmplacement()
-            repertoir = Path(wordEmplacement)
-            dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
-            for i in range(0, len(dossier)):
-                if (project == dossier[i]):
-                    # Ecriture de l'emplacement du projet
-                    self.__folderProject = wordEmplacement + "/" + project
-                    # Ouverture du fichier de config
-                    self.__jsonFileProject = jsonWork(
-                        os.path.join(self.__folderProject + "/.arreraProjet", project + ".apr"))
-                    # Mise de la var a true
-                    self.__projectOpen = True
-                    # Ouverture fichier de tache
-                    self.__fncTaskProjet = fncArreraTache(self.__fncDate, self.__configFile,
-                                                          self.__folderProject + "/.arreraProjet/TaskProjet.json",
-                                                          True, self.getNameProjet())
-                    return True
-            return False
-        else:
-            return False
-
-    def createProject(self, name: str):
-        wordEmplacement = self._gestionnaire.getWorkEmplacement()
-        if ((self.__projectOpen == False) and (wordEmplacement != "")):
-            dataJson = {"name": "", "type": ""}
-            folder = (wordEmplacement + "/" + name)
-            dataJson["name"] = name
-            try:
-                # Creation du projet
-                os.makedirs(folder, exist_ok=True)
-                # Creation du sous dossier de config du projet
-                os.makedirs(folder + "/.arreraProjet")
-                # Enregistrement de l'emplacement du projet
-                self.__folderProject = folder
-                # Creation du fichier de config
-                configPath = os.path.join(folder + "/.arreraProjet", name + ".apr")
-                # Creation du fichier de tache
-                taskPath = os.path.join(folder + "/.arreraProjet", "TaskProjet.json")
-                try:
-                    # Ecriture dans les deux fichier
-                    with open(configPath, "w", encoding="utf-8") as file:
-                        json.dump(dataJson, file, ensure_ascii=False, indent=4)
-                    with open(taskPath, "w", encoding="utf-8") as file:
-                        json.dump({}, file, ensure_ascii=False, indent=4)
-                    # Ouverture du fichier de config
-                    self.__jsonFileProject = jsonWork(configPath)
-                    # Mise a true de la var de projet ouvert
-                    self.__projectOpen = True
-                    # Ouverture fichier de tache
-                    self.__fncTaskProjet = fncArreraTache(self.__fncDate, self.__configFile, taskPath,
-                                                          True, self.getNameProjet())
-                    return True
-                except Exception as e:
-                    return False
-            except Exception as e:
-                return False
-        else:
-            return False
-
-    def setTypeProject(self, type: str):
-        if ((type != "") and (self.__projectOpen == True)):
-            self.__jsonFileProject.EcritureJSON("type", type)
-            return True
-        else:
-            return False
-
-    def closeProject(self):
-        if (self.__projectOpen == True):
-            self.__projectOpen = False
-            self.__folderProject = ""
-            self.__lastCreateFile = ""
-            self.__jsonFileProject = None
-            self.__fncTaskProjet = None
-            self.__listFileProjet = []
-            self.__listTaskProjetToday = []
-            self.__listTaskProjetTowmorow = []
-            return True
-        else:
-            return False
-
-    def createFileProject(self, mode: int, nameFile: str):
-        """
-        in :
-            1 : exel
-            2 : word
-            3 : odt
-            4 : txt
-            5 : python
-            6 : h
-            7 : json
-            8 : html
-            9 : css
-            10 : md
-            11 : cpp
-            12 : c
-            13 : php
-            14 : js
-            15 : java
-            16 : kt (kotlin)
-        """
-        if ((self.__projectOpen == True) and (nameFile != "")):
-            emplacementFile = self.__folderProject + "/"
-            match mode:
-                case 1:  # Exel
-                    self.__lastCreateFile = nameFile + ".xlsx"
-                    wb = Workbook()
-                    ws = wb.active
-                    ws.title = nameFile
-                    ws['A1'] = ""
-                    wb.save(emplacementFile + self.__lastCreateFile)
-                    del ws
-                    wb.close()
-                    del wb
-                    return True
-                case 2:  # word
-                    self.__lastCreateFile = nameFile + '.docx'
-                    doc = Document()
-                    doc.add_paragraph("")
-                    doc.save(emplacementFile + self.__lastCreateFile)
-                    return True
-                case 3:  # Odt
-                    self.__lastCreateFile = nameFile + ".odt"
-                    doc = OpenDocumentText()
-                    p1 = P(text="")
-                    doc.text.addElement(p1)
-                    doc.save(emplacementFile + self.__lastCreateFile)
-                    return True
-                case 4:  # txt
-                    self.__lastCreateFile = nameFile + ".txt"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("Texte file named " + nameFile)
-                    return True
-                case 5:  # python
-                    self.__lastCreateFile = nameFile + ".py"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("# Python file named " + nameFile)
-                    return True
-                case 6:  # h
-                    self.__lastCreateFile = nameFile + ".h"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// hearder file create named " + nameFile)
-                    return True
-                case 7:  # json
-                    self.__lastCreateFile = nameFile + ".json"
-                    dataJson = {}
-                    jsonPath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(jsonPath, "w", encoding="utf-8") as file:
-                        json.dump(dataJson, file, ensure_ascii=False, indent=4)
-                    return True
-                case 8:  # html
-                    self.__lastCreateFile = nameFile + ".html"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write('<!DOCTYPE html>\n<html lang="fr">\n<head>\n<meta charset="UTF-8">'
-                                   + '\n<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-                                   '\n<title>html Page</title>\n</head>\n<body></body>\n</html>')
-                    return True
-                case 9:  # css
-                    self.__lastCreateFile = nameFile + ".css"
-                    filePath = os.path.join(emplacementFile, )
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("/* CSS file named " + nameFile + " */")
-                    return True
-                case 10:  # md
-                    self.__lastCreateFile = nameFile + ".md"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("File readme named " + nameFile)
-                    return True
-                case 11:  # cpp
-                    self.__lastCreateFile = nameFile + ".cpp"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// C++ file named " + nameFile)
-                    return True
-                case 12:  # c
-                    self.__lastCreateFile = nameFile + ".c"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// C file named " + nameFile)
-                    return True
-                case 13:  # php
-                    self.__lastCreateFile = nameFile + ".php"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// PHP file named " + nameFile)
-                    return True
-                case 14:  # javascript
-                    self.__lastCreateFile = nameFile + ".js"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// JavaScript file named " + nameFile)
-                    return True
-                case 15:  # java
-                    self.__lastCreateFile = nameFile + ".java"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// Java file named " + nameFile)
-                    return True
-                case 16:  # kt
-                    self.__lastCreateFile = nameFile + ".kt"
-                    filePath = os.path.join(emplacementFile, self.__lastCreateFile)
-                    with open(filePath, "w", encoding="utf-8") as file:
-                        file.write("// Kotlin file named " + nameFile)
-                    return True
-                case other:
-                    return False
-        else:
-            return False
-
-    def getNameProjet(self):
-        if (self.__projectOpen == True):
-            return self.__jsonFileProject.lectureJSON("name")
-        else:
-            return ""
-
-    def getNameLastFileCreate(self):
-        return self.__lastCreateFile
-
-    def openFileProjet(self, file: str):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__projectOpen == True) and (file != "")):
-            if (("docx" in file) or ("odt" in file)):
-                self.__objWord = CArreraDocx(self.__folderProject + "/" + file)
-                self.__fileWord = self.__folderProject + "/" + self.__lastCreateFile
-                self.__wordOpen = True
-                return 2
-            else:
-                if ("xlsx" in file):
-                    self.__objTableur = CArreraTableur(self.__folderProject + "/" + file)
-                    self.__fileTableur = self.__folderProject + "/" + file
-                    self.__tableurOpen = True
-                    return 3
-                else:
-                    if ((self.__dectOs.osLinux() == True)
-                            and (self.__dectOs.osWindows() == False)):
-                        subprocess.call(["xdg-open", self.__folderProject + "/" + file])
-                        return 1
-                    else:
-                        if ((self.__dectOs.osLinux() == False)
-                                and (self.__dectOs.osWindows() == True)):
-                            os.startfile(self.__folderProject + "/" + file)
-                            return 1
-                        else:
-                            return 0
-
-    def openLastFileCreate(self):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__lastCreateFile != "")):
-            sortie = self.openFileProjet(self.__lastCreateFile)
-            self.__lastCreateFile = ""
-            return sortie
-        else:
-            return 0
-
-    def setlistFileProject(self):
-        if (self.__projectOpen == True):
-            try:
-                # Liste les fichiers et dossiers dans le répertoire
-                self.__listFileProjet = os.listdir(self.__folderProject)
-                self.__listFileProjet.remove(".arreraProjet")
-                return True
-            except FileNotFoundError:
-                return False
-            except PermissionError:
-                return False
-            except Exception as e:
-                return False
-        else:
-            return False
-
-    def getListFileProjet(self):
-        return self.__listFileProjet
-
-    def openFileOtherProjet(self, file: str):
-        """
-        0 : Error
-        1 : Open by os
-        2 : Open by ArreraDocx
-        3 : Open bu ArreraTableur
-        """
-        if ((self.__projectOpen == True) and (self.setlistFileProject() == True)
-                and ("." in file) and (file != "")):
-            listFile = self.getListFileProjet()
-            nbFile = len(listFile)
-
-            for i in range(0, nbFile):
-                if (listFile[i] == file):
-                    return self.openFileProjet(listFile[i])
-
-            return 0
-
-        else:
-            return 0
-
-    def showTacheProjet(self):
-        if (self.__projectOpen == True):
-            self.__fncTaskProjet.activeViewTask()
-            return True
-        else:
-            return False
-
-    def addTacheProjet(self):
-        if (self.__projectOpen == True):
-            self.__fncTaskProjet.activeViewAdd()
-            return True
-        else:
-            return False
-
-    def supprTacheProjet(self):
-        if (self.__projectOpen == True):
-            self.__fncTaskProjet.activeViewSuppr()
-            return True
-        else:
-            return False
-
-    def checkTacheProjet(self):
-        if (self.__projectOpen == True):
-            self.__fncTaskProjet.activeViewCheck()
-            return True
-        else:
-            return False
-
-    def getNbTacheProjet(self):
-        """
-        -1 : Error
-        """
-        if (self.__projectOpen == True):
-            return self.__fncTaskProjet.getNbTache()
-        else:
-            return -1
-
-    def getNBTacheToday(self):
-        """
-        -1 : error
-        """
-        if (self.__projectOpen == True):
-            return self.__fncTaskProjet.getNbTacheToday()
-        else:
-            return -1
-
-    def setListTacheTodayProjet(self):
-        if (self.__projectOpen == True):
-            self.__listTaskProjetToday = self.__fncTaskProjet.getTacheToday()
-            return True
-        else:
-            return False
-
-    def getListTacheTodayProjet(self):
-        return self.__listTaskProjetToday
-
-    def setListTacheTowmorowProjet(self):
-        if (self.__projectOpen == True):
-            self.__listTaskProjetTowmorow = self.__fncTaskProjet.getTacheTowmorow()
-            return True
-        else:
-            return False
-
-    def getListTacheTowmorowProjet(self):
-        return self.__listTaskProjetTowmorow
-
-    def getListProjetCreated(self):
-        wordEmplacement = self._gestionnaire.getWorkEmplacement()
-        project_list = []
-        if wordEmplacement:
-            for folder in os.listdir(wordEmplacement):
-                folder_path = os.path.join(wordEmplacement, folder)
-                if os.path.isdir(folder_path) and os.path.exists(os.path.join(folder_path, ".arreraProjet")):
-                    project_list.append(folder)
-        return project_list
 
     # Getteur
 

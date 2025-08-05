@@ -984,7 +984,7 @@ class fncArreraNetwork:
         tampon = tampon.replace("cree un projet nomme", "")
         name = tampon.replace("cree un nouveau projet nomme", "")
         name = name.replace(" ", "")
-        sortie = self.__objetArreraWork.createProject(name)
+        sortie = self.__objetArreraWork.createProjet(name)
         if (sortie == True):
             text = self.__mLanguage.getPhraseProjetFileOpen("4", name)
         else:
@@ -994,7 +994,7 @@ class fncArreraNetwork:
     def sortieSetTypeProjet(self, requette: str):
         type = requette.replace("le type est", "")
         type = type.replace("le type du projet est", "")
-        sortie = self.__objetArreraWork.setTypeProject(type)
+        sortie = self.__objetArreraWork.setTypeProjet(type)
         if (sortie == True):
             text = self.__mLanguage.getPhraseWork("43")
         else:
@@ -1014,7 +1014,7 @@ class fncArreraNetwork:
         return projet, text
 
     def sortieCloseProject(self):
-        sortie = self.__objetArreraWork.closeProject()
+        sortie = self.__objetArreraWork.closeProjet()
         if (sortie == True):
             text = self.__mLanguage.getPhraseWork("14")
         else:

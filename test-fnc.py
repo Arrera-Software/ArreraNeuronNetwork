@@ -771,7 +771,10 @@ def partWork():
               "\n11.Supprimer une valeur"
               "\n12.Open Word\n13.Close Word\n14.Lecture Word"
               "\n15.Ecriture dans Word\n16.Ecrire en effasant le word"
-              "\n17.Open Word with OS\n18.Open Tableur with OS\n0.Quitter")
+              "\n17.Open Word with OS\n18.Open Tableur with OS"
+              "\n19.Voir le projet\n20.Creer un projet"
+              "\n21.Ouvrir un projet\n22.Fermer un projet"
+              "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
         while boucleVerif:
@@ -891,6 +894,25 @@ def partWork():
                     print("Tableur ouvert")
                 else:
                     print("Erreur lors de l'ouverture du Tableur")
+            case 19 :
+                print(f"Liste projet {fnc.getFNCWork().getListProjet()}")
+            case 20 :
+                name = input("Nom du projet : ")
+                if fnc.getFNCWork().createProjet(name):
+                    print("Projet créé")
+                else:
+                    print("Erreur lors de la création du projet")
+            case 21:
+                name = input("Nom du projet : ")
+                if fnc.getFNCWork().openProjet(name):
+                    print("Projet ouvert")
+                else:
+                    print("Erreur lors de l'ouverture du projet")
+            case 22:
+                if fnc.getFNCWork().closeProjet():
+                    print("Projet fermé")
+                else :
+                    print("Imposible de fermer le projet")
             case 0:
                 workBoucle = False
             case _:
