@@ -1,4 +1,4 @@
-from src.brain import *
+from brain.brain import *
 import webbrowser
 from librairy.travailJSON import *
 from config.confNeuron import confNeuron
