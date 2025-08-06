@@ -6,8 +6,9 @@ from fnc.fonctionGPS import fncGPS
 class fncMeteo(fncBase) :
     def __init__(self,gestionnaire:gestionnaire,gpsFnc:fncGPS):
         super().__init__(gestionnaire)
-        self.__client = MeteoFranceClient()
-        self.__dictWarning = self.__client.get_warning_dictionary("fr")
+        if self._gestionnaire.getNetworkObjet().getEtatInternet():
+            self.__client = MeteoFranceClient()
+            self.__dictWarning = self.__client.get_warning_dictionary("fr")
         self.__fncGPS = gpsFnc
         self.__nameTown = None
         self.__temperature = None

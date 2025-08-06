@@ -23,8 +23,6 @@ class ABrain :
         # Partie serveur
         self.__socket = self.__gestionnaire.getSocketObjet()
         #initilisation du gestionnaire du reseau de neuron
-        self.__fonctionAssistant = fncArreraNetwork(self.__gestionnaire)
-        #self.__historique = CHistorique(self.__fonctionAssistant,self.__gestionnaire)
         self.__gestLangue = self.__gestionnaire.getLanguageObjet()
         #recuperation etat du reseau
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()

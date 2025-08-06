@@ -6,8 +6,9 @@ import vlc
 class fncRadio(fncBase) :
     def __init__(self, gestionnaire:gestionnaire):
         super().__init__(gestionnaire)
-        self.__rdBrowser = RadioBrowser()
         self.__etatNetwork = self._gestionnaire.getNetworkObjet().getEtatInternet()
+        if self.__etatNetwork:
+            self.__rdBrowser = RadioBrowser()
         self.__stations = []
         self.__player = None
         self.__isRunning = False

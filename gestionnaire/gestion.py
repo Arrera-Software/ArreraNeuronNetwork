@@ -9,8 +9,8 @@ class gestionnaire:
         # Importation des gestionnaires
         from gestionnaire.gestSocket import gestSocket
         from gestionnaire.gestLangue import gestLangue
-        # from gestionnaire.gestNeuron import gestNeuron
-        # from gestionnaire.gestHistorique import gestHistorique
+        from gestionnaire.gestNeuron import gestNeuron
+        from gestionnaire.gestHistorique import gestHistorique
         from gestionnaire.gestSTR import gestSTR
         from gestionnaire.gestFNC import gestFNC
         # Librairy
@@ -27,13 +27,12 @@ class gestionnaire:
         # Temporaire
         # Initialisation des tout les gestionnaires
         #self.__gestFNC
-        # self.__gestHist = gestHistorique(self.__fnc, self)
+
         self.__gestLang = gestLangue(self.__config.fichierLangue,
                                      self.__fileUser, [self.__config.name,
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
-        # self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
         #if self.__gestNeuron.getSocket():
         #    self.__gestSocket = gestSocket(self.__config.name)
         # else :
@@ -42,6 +41,9 @@ class gestionnaire:
         self.__gestSTR = gestSTR()
 
         self.__fnc = gestFNC(self)
+
+        self.__gestHist = gestHistorique(self.__fnc, self)
+        self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
 
         # Varriable
         self.__oldRequette = ""

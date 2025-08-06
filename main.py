@@ -3,39 +3,38 @@ import webbrowser
 from librairy.travailJSON import *
 from config.confNeuron import confNeuron
 
-
-confassistant = confNeuron(
-            name="Opale",
-            lang="fr",
-            icon="assets/icon.png",
-            assetHorloge="asset/horloge/",
-            assetCalculatrice="asset/calculatrice/",
-            assistant_color="white",
-            assistant_texte_color="black",
-            bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
-            createur="Pauchet Baptiste",
-            listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
+conf = confNeuron(name="Opale",
+                  lang="fr",
+                  icon="asset/icon.png",
+                  assetHorloge="asset/horloge/",
+                  assetCalculatrice="asset/calculatrice/",
+                  assetMicro = "",
+                  assistant_color="white",
+                  assistant_texte_color="black",
+                  bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
+                  createur="Pauchet Baptiste",
+                  listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
                           "faire un résumer des actualités"],
-            moteurderecherche="google",
-            etatService=1,
-            etatSoftware=1,
-            etatTime=1,
-            etatOpen=1,
-            etatSearch=1,
-            etatChatbot=1,
-            etatApi=1,
-            etatCodehelp=1,
-            etatWork=1,
-            etatSocket=1,
-            lienDoc="www.google.com",
-            fichierLangue="language/vouvoiment",)
+                  moteurderecherche="google",
+                  etatService=1,
+                  etatSoftware=1,
+                  etatTime=1,
+                  etatOpen=1,
+                  etatSearch=1,
+                  etatChatbot=1,
+                  etatApi=1,
+                  etatCodehelp=1,
+                  etatWork=1,
+                  etatSocket=1,
+                  lienDoc="www.google.com",
+                  fichierLangue="language/vouvoiment/")
 
 def main():
     nom =  jsonWork("JSON/configNeuron1.json").getContentJsonFlag("name")
     valeur =  0
     print("Beinvenu sur le programme des assistants Arrera. ")
     mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))
-    assistant = ABrain(confassistant)
+    assistant = ABrain(conf)
     print("Programme de teste de base des assistant d'arrera.\nPour arreter de parler avec l'assistant marquer 'stop' ou 'quitter' \nquand c'est a votre tours de parler. \nSi vous voulez accedez a la page github du projet taper 'github'. \nDepuis cette page github vous pourrais consulter le code et proposer de \namélioration et correctif sur le serv discord ")
 
     hist = int(input("Comment voulez-vous demarer l'assistant avec l'historique\n1.NON\n2.OUI\n(1,2) $"))
