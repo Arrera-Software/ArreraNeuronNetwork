@@ -64,4 +64,33 @@ class fncBreef(fncBase):
         except Exception as e:
             return None
 
-    # def morningBreef(self):
+    def morningBreef(self,ville:str = ""):
+        try:
+            tacheProjet = {}
+            meteo = {}
+            task = self._gestionnaire.getGestFNC().getFNCTask()
+            taskToday = task.getListTaskToday()
+            meteoFNC = self._gestionnaire.getGestFNC().getFNCMeteo()
+            if meteoFNC.getMeteoCurrentHour(town=ville):
+                meteo = {"ville": meteoFNC.getNameTown(),
+                         "temperature": meteoFNC.getTemperature(),
+                         "weather": meteoFNC.getDescription(),
+                         "icon": meteoFNC.getIcon(),
+                         "redAlert": meteoFNC.getRedAlert(),
+                         "yellowAlert": meteoFNC.getYellowAlert(),
+                         "orangeAlert": meteoFNC.getOrangeAlert(),
+                         "greenAlert": meteoFNC.getGreenAlert()}
+
+            workfnc = self._gestionnaire.getGestFNC().getFNCWork()
+            listProjet =  workfnc.getListProjet()
+            print(listProjet)
+            tacheProjet = {}
+            for projet in listProjet:
+                if workfnc.openProjet(projet):
+                    if workfnc.setListTacheTodayProjet():
+                        tacheProjet[projet] = workfnc.getListTacheTodayProjet()
+                    workfnc.closeProjet()
+
+            return {"task": taskToday, "meteo": meteo, "tacheProjet": tacheProjet}
+        except Exception as e:
+            return None
