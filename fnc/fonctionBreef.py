@@ -12,11 +12,22 @@ class fncBreef(fncBase):
         # Librairie
         self.__date = CArreraDate()
 
-    def summarizeActu(self):
+    def summarizeActuAndMeteo(self,ville:str = ""):
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
             actuFNC = self._gestionnaire.getGestFNC().getFNCActu()
-            if actuFNC.setActu(5,"fr"):
-                return actuFNC.getActu()
+            meteoFNC = self._gestionnaire.getGestFNC().getFNCMeteo()
+            if actuFNC.setActu(5,"fr") and meteoFNC.getMeteoCurrentHour(town=ville):
+                return {"actu":actuFNC.getActu(),
+                        "meteo":{
+                            "ville":meteoFNC.getNameTown(),
+                            "temperature":meteoFNC.getTemperature(),
+                            "weather":meteoFNC.getDescription(),
+                            "icon":meteoFNC.getIcon(),
+                            "redAlert":meteoFNC.getRedAlert(),
+                            "yellowAlert":meteoFNC.getYellowAlert(),
+                            "orangeAlert":meteoFNC.getOrangeAlert(),
+                            "greenAlert":meteoFNC.getGreenAlert(),
+                        }}
             else :
                 return None
         else :
@@ -26,19 +37,29 @@ class fncBreef(fncBase):
         task = self._gestionnaire.getGestFNC().getFNCTask()
         return task.getListTaskToday()
 
-    def summarizeAll(self):
+    def summarizeAll(self, ville:str = ""):
         try :
             actu = []
             taskToday = []
+            meteo = {}
             if self._gestionnaire.getNetworkObjet().getEtatInternet():
                 actuFNC = self._gestionnaire.getGestFNC().getFNCActu()
-                if actuFNC.setActu(3, "fr"):
+                meteoFNC = self._gestionnaire.getGestFNC().getFNCMeteo()
+                if actuFNC.setActu(3, "fr") and meteoFNC.getMeteoCurrentHour(town=ville):
                     actu = actuFNC.getActu()
+                    meteo = {"ville": meteoFNC.getNameTown(),
+                             "temperature": meteoFNC.getTemperature(),
+                             "weather": meteoFNC.getDescription(),
+                             "icon": meteoFNC.getIcon(),
+                             "redAlert": meteoFNC.getRedAlert(),
+                             "yellowAlert": meteoFNC.getYellowAlert(),
+                             "orangeAlert": meteoFNC.getOrangeAlert(),
+                             "greenAlert": meteoFNC.getGreenAlert()}
 
             task = self._gestionnaire.getGestFNC().getFNCTask()
             taskToday = task.getListTaskToday()
 
-            return {"actu" : actu,"task":taskToday}
+            return {"actu" : actu,"meteo": meteo,"task":taskToday}
 
         except Exception as e:
             return None

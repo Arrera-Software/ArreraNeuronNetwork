@@ -958,7 +958,7 @@ def partBreef():
     while breefBoucle:
         print("Test des fonctions de Breef")
         print("1.Resumer Actualiter\n2.Resumer Tache du jour"
-              "3.Resumer ALL\n0.Quitter")
+              "\n3.Resumer ALL\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -971,7 +971,7 @@ def partBreef():
 
         match nb:
             case 1:
-                print(fnc.getFNCBreef().summarizeActu())
+                print(fnc.getFNCBreef().summarizeActuAndMeteo())
             case 2:
                 print(fnc.getFNCBreef().summarizeTaskToday())
             case 3 :
