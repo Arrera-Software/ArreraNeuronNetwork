@@ -31,7 +31,7 @@ confassistant = confNeuron(
             fichierLangue="language/vouvoiment",)
 
 def main():
-    nom =  jsonWork("JSON/configNeuron1.json").lectureJSON("name")
+    nom =  jsonWork("JSON/configNeuron1.json").getContentJsonFlag("name")
     valeur =  0
     print("Beinvenu sur le programme des assistants Arrera. ")
     mode = int(input("Facon de s'exprimer d'Opale\n1.Vousvoiment\n2.Tutoiment\n(1,2) $ "))

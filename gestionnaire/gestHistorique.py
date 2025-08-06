@@ -23,7 +23,7 @@ class gestHistorique :
         self.__dateTowmorow = self.__objDate.dateTowmoro()
     
     def __loadFile(self):
-        self.__dictHist = self.__fileHist.getContenuJSON()
+        self.__dictHist = self.__fileHist.getJSONDict()
         if (self.__dictHist != {}):
             if (self.__dateToday in self.__dictHist):
                 self.__histToday = self.__dictHist[self.__dateToday]
@@ -31,7 +31,7 @@ class gestHistorique :
                 self.__histTowmorow = self.__dictHist[self.__dateTowmorow]
             
             self.__dictHist = {}
-            self.__fileHist.writeDictOnJson(self.__dictHist)
+            self.__fileHist.setDictOnJson(self.__dictHist)
     
     def setAction(self,action:str):
         if (action != ""):
@@ -43,7 +43,7 @@ class gestHistorique :
     def saveHistorique(self):
         if (self.__histToday != []):
             self.__dictHist[self.__dateToday] = self.__histToday
-            self.__fileHist.writeDictOnJson(self.__dictHist)
+            self.__fileHist.setDictOnJson(self.__dictHist)
             return True
         else :
             return False

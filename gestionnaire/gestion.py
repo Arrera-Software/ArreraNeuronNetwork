@@ -84,45 +84,45 @@ class gestionnaire:
         return self.__fnc
 
     def getListVilleMeteo(self):
-        return self.__fileUser.lectureJSONList("listVille")
+        return self.__fileUser.getFlagListJson("listVille")
 
     def getEtatLieuDomicile(self):
-        if not self.__fileUser.lectureJSON("lieuDomicile"):
+        if not self.__fileUser.getContentJsonFlag("lieuDomicile"):
             lieuDomicile = True
         else :
             lieuDomicile = False
         return lieuDomicile
 
     def getEtatLieuTravail(self):
-        if not self.__fileUser.lectureJSON("lieuTravail"):
+        if not self.__fileUser.getContentJsonFlag("lieuTravail"):
             lieuTravail = True
         else :
             lieuTravail = False
         return lieuTravail
     
     def getValeurfichierUtilisateur(self,flag:str):
-        return self.__fileUser.lectureJSON(flag)
+        return self.__fileUser.getContentJsonFlag(flag)
     
     def getMoteurRechercheDefault(self):
         return self.__config.moteurderecherche
 
     def getEmplacementFileAgenda(self)->str :
-        return self.__fileUser.lectureJSON("emplacementEvenenement")
+        return self.__fileUser.getContentJsonFlag("emplacementEvenenement")
 
     def getEmplacemntfileTache(self)->str:
-        return self.__fileUser.lectureJSON("emplacementTache")
+        return self.__fileUser.getContentJsonFlag("emplacementTache")
 
     def getEmplacementFileHist(self)->str:
-        return self.__fileUser.lectureJSON("emplacementHistorique")
+        return self.__fileUser.getContentJsonFlag("emplacementHistorique")
     
     def getDictionnaireLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
         etatLinux = self.__detecteurOS.osLinux()
         etatMac = self.__detecteurOS.osMac()
         if etatWindows == True and etatLinux == False :
-            return self.__fileUser.lectureJSONDict("dictSoftWindows")
+            return self.__fileUser.getFlagDictJson("dictSoftWindows")
         elif etatWindows == False and etatLinux == True or etatMac == True:
-            return self.__fileUser.lectureJSONDict("dictSoftLinux")
+            return self.__fileUser.getFlagDictJson("dictSoftLinux")
         else :
             return None
 
@@ -131,17 +131,17 @@ class gestionnaire:
         etatLinux = self.__detecteurOS.osLinux()
         etatMac = self.__detecteurOS.osMac()
         if etatWindows == True and etatLinux == False and etatMac == False:
-            return list(self.__fileUser.lectureJSONDict("dictSoftWindows").keys())
+            return list(self.__fileUser.getFlagDictJson("dictSoftWindows").keys())
         elif etatWindows == False and etatLinux == True or etatMac == True :
-            return list(self.__fileUser.lectureJSONDict("dictSoftLinux").keys())
+            return list(self.__fileUser.getFlagDictJson("dictSoftLinux").keys())
         else :
             return None
 
     def getListWeb(self):
-        return list(self.__fileUser.lectureJSONDict("dictSite").keys())
+        return list(self.__fileUser.getFlagDictJson("dictSite").keys())
     
     def getDictionnaireWeb(self):
-        return self.__fileUser.lectureJSONDict("dictSite")
+        return self.__fileUser.getFlagDictJson("dictSite")
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":
@@ -153,7 +153,7 @@ class gestionnaire:
         date= datetime.now()
         jours = str(date.day)
         mois = str(date.month)
-        return self.__fichierFete.lectureJSONMultiFlag(mois,jours)
+        return self.__fichierFete.getContentJsonMultiFlag(mois, jours)
     
     def setOld(self,output:str,input:str):
         """
@@ -178,25 +178,25 @@ class gestionnaire:
         """
         Methode qui permet de recuperer les token github
         """
-        return self.__fileUser.lectureJSON("tokenGithub")
+        return self.__fileUser.getContentJsonFlag("tokenGithub")
 
     def getAdresseDomicile(self):
         """
         Methode pour retourner l'adresse du domicile
         """
-        return  self.__fileUser.lectureJSON("adresseDomicile")
+        return  self.__fileUser.getContentJsonFlag("adresseDomicile")
     
     def getAdresseTravil(self) :
         """
         Methode pour retourner l'adresse du lieu de travail
         """
-        return  self.__fileUser.lectureJSON("adresseTravail")
+        return  self.__fileUser.getContentJsonFlag("adresseTravail")
 
     def getWorkEmplacement(self):
-        return self.__fileUser.lectureJSON("wordFolder")
+        return self.__fileUser.getContentJsonFlag("wordFolder")
     
     def getEmplacementDownload(self):
-        return self.__fileUser.lectureJSON("videoDownloadFolder")
+        return self.__fileUser.getContentJsonFlag("videoDownloadFolder")
 
     def netoyageChaine(self,chaine:str):
         """
@@ -208,4 +208,4 @@ class gestionnaire:
         """
         Methode qui retourne l'emplacement du fichier de tache
         """
-        return self.__fileUser.lectureJSON("emplacementTache")
+        return self.__fileUser.getContentJsonFlag("emplacementTache")

@@ -6,11 +6,11 @@ import math
 class fncCalculatrice :
     def __init__(self,ConfigNeuron:jsonWork):
         self.__configNeuron = ConfigNeuron
-        self.__name = self.__configNeuron.lectureJSON("name")
-        self.__icon = self.__configNeuron.lectureJSON("iconAssistant")
-        self.__color = self.__configNeuron.lectureJSON("interfaceColor")
-        self.__textColor = self.__configNeuron.lectureJSON("interfaceTextColor")
-        self.__emplacementTouche = self.__configNeuron.lectureJSON("toucheCalculatrice")+"/"
+        self.__name = self.__configNeuron.getContentJsonFlag("name")
+        self.__icon = self.__configNeuron.getContentJsonFlag("iconAssistant")
+        self.__color = self.__configNeuron.getContentJsonFlag("interfaceColor")
+        self.__textColor = self.__configNeuron.getContentJsonFlag("interfaceTextColor")
+        self.__emplacementTouche = self.__configNeuron.getContentJsonFlag("toucheCalculatrice") + "/"
         self.__operateurChooseComplex = ""
         
         

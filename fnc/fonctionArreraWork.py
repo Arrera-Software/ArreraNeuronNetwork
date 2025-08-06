@@ -399,20 +399,20 @@ class fncArreraWork(fncBase):
 
     def addTypeProjet(self, type: str):
         if (type != "") and self.__projectOpen == True and (type in self.getViewTypeProjetAvailable()):
-            self.__jsonFileProject.EcritureJSON("type", type)
+            self.__jsonFileProject.setValeurJson("type", type)
             return True
         else:
             return False
 
     def getTypeProjet(self):
         if self.__projectOpen:
-            return self.__jsonFileProject.lectureJSON("type")
+            return self.__jsonFileProject.getContentJsonFlag("type")
         else:
             return None
 
     def getNameProjet(self):
         if self.__projectOpen:
-            return self.__jsonFileProject.lectureJSON("name")
+            return self.__jsonFileProject.getContentJsonFlag("name")
         else:
             return None
 
