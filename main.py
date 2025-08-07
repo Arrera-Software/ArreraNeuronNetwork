@@ -1,3 +1,5 @@
+from src.GUIOpale import GUIOpale
+"""
 from brain.brain import *
 import webbrowser
 from librairy.travailJSON import *
@@ -82,6 +84,9 @@ def main():
                                         print("\n"+str(sortie[i]))
             else :
                 print(nom + " $ "+sortie[0])
+"""
+def main():
+    GUIOpale().active()
 
 if __name__ == "__main__":
     main()
