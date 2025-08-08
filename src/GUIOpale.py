@@ -1,7 +1,7 @@
 import tkinter
-
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
+from brain.brain import ABrain
 """
 Todo : 
 1 . GUI qui permet de decider la conf qu'on veux 
@@ -121,9 +121,10 @@ class GUIOpale:
         """
         if self.__setConfig():
             screen.destroy()
-            self.__GUIAssistant()
-            self.__arrTK.view()
-            print("OK")
+            if self.__startAssistantBrain():
+                self.__GUIAssistant()
+                self.__arrTK.view()
+                self.__bootAssistant()
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
 
@@ -140,7 +141,7 @@ class GUIOpale:
         # Widget
         labelTitle = self.__arrTK.createLabel(screen, text="Assistant Opale", ptaille=25)
 
-        labelAssistantText = self.__arrTK.createLabel(frameAssistant, text="TEXTE", ptaille=20)
+        self.__labelAssistantText = self.__arrTK.createLabel(frameAssistant, text="TEXTE", ptaille=20)
         labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
 
         entryUser = self.__arrTK.createEntry(frameUser, width=200)
@@ -152,9 +153,26 @@ class GUIOpale:
         self.__arrTK.placeCenter(frameAssistant)
         self.__arrTK.placeBottomCenterNoStick(frameUser)
 
-        self.__arrTK.placeTopCenter(labelAssistantText)
+        self.__arrTK.placeTopCenter(self.__labelAssistantText)
         self.__arrTK.placeBottomCenter(labelAssistantNumber)
 
         self.__arrTK.placeLeftCenter(entryUser)
         self.__arrTK.placeRightCenter(btnSend)
+
+    def __startAssistantBrain(self):
+        try :
+            self.__assistantBrain = ABrain(config=self.__config)
+            return True
+        except Exception as e:
+            print(f"Erreur lors du démarrage de l'assistant Brain : {e}")
+            return False
+
+    def __bootAssistant(self):
+        """
+        Fonction qui permet de lancer l'assistant
+        """
+        try :
+            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(0))
+        except Exception as e:
+            self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}")
 
