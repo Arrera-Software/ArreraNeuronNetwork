@@ -135,17 +135,18 @@ class GUIOpale:
                                   icon="asset/icon.png")
 
         # Frame
-        frameAssistant = self.__arrTK.createFrame(screen, width=500, height=150)
+        frameAssistant = self.__arrTK.createFrame(screen, width=500, height=225)
         frameUser = self.__arrTK.createFrame(screen, width=350, height=50)
 
         # Widget
         labelTitle = self.__arrTK.createLabel(screen, text="Assistant Opale", ptaille=25)
 
         self.__labelAssistantText = self.__arrTK.createLabel(frameAssistant, text="TEXTE", ptaille=20)
-        labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
+        self.__labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
 
         entryUser = self.__arrTK.createEntry(frameUser, width=200)
-        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=15)
+        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=15,
+                                            command= lambda : self.__sendAssistantMessage(entryUser))
 
         # Affichage
 
@@ -154,7 +155,7 @@ class GUIOpale:
         self.__arrTK.placeBottomCenterNoStick(frameUser)
 
         self.__arrTK.placeTopCenter(self.__labelAssistantText)
-        self.__arrTK.placeBottomCenter(labelAssistantNumber)
+        self.__arrTK.placeBottomCenter(self.__labelAssistantNumber)
 
         self.__arrTK.placeLeftCenter(entryUser)
         self.__arrTK.placeRightCenter(btnSend)
@@ -175,4 +176,22 @@ class GUIOpale:
             self.__labelAssistantText.configure(text=self.__assistantBrain.boot(0))
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}")
+
+    def __sendAssistantMessage(self,entry:ctk.CTkEntry):
+        """
+        Fonction qui permet d'envoyer un message à l'assistant
+        """
+        try:
+            message = entry.get()
+            if message:
+                self.__assistantBrain.neuron(message)
+                nb = self.__assistantBrain.getValeurSortie()
+                texte = self.__assistantBrain.getListSortie()
+                self.__labelAssistantText.configure(text=texte[0],wraplength=200)
+                self.__labelAssistantNumber.configure(text=str(nb))
+                entry.delete(0, 'end')  # Clear the entry after sending
+            else:
+                self.__labelAssistantText.configure(text="Veuillez entrer un message.",wraplength=200)
+        except Exception as e:
+            self.__labelAssistantText.configure(text=f"Erreur lors de l'envoi du message : {e}",wraplength=200)
 
