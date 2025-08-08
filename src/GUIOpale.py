@@ -43,7 +43,8 @@ class GUIOpale:
         self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
         self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
-        btnValidate = self.__arrTK.createButton(frameValidate,text="Valider",ptaille=25,command=self.__activateGUI)
+        btnValidate = self.__arrTK.createButton(frameValidate, text="Valider", ptaille=25,
+                                                command=lambda : self.__activateAssistantGUI(screen))
         # Affichage
         # FrameNeuron
         self.__arrTK.placeTopCenter(labelTitleNeuron)
@@ -114,11 +115,46 @@ class GUIOpale:
             return False
 
 
-    def __activateGUI(self):
+    def __activateAssistantGUI(self,screen:ctk.CTk):
         """
         Fonction qui permet de lancer l'assistant GUI
         """
         if self.__setConfig():
+            screen.destroy()
+            self.__GUIAssistant()
+            self.__arrTK.view()
             print("OK")
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
+
+
+    def __GUIAssistant(self):
+        screen = self.__arrTK.aTK(width=500, height=500,
+                                  title="Opale Assistant", resizable=False,
+                                  icon="asset/icon.png")
+
+        # Frame
+        frameAssistant = self.__arrTK.createFrame(screen, width=500, height=150)
+        frameUser = self.__arrTK.createFrame(screen, width=350, height=50)
+
+        # Widget
+        labelTitle = self.__arrTK.createLabel(screen, text="Assistant Opale", ptaille=25)
+
+        labelAssistantText = self.__arrTK.createLabel(frameAssistant, text="TEXTE", ptaille=20)
+        labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
+
+        entryUser = self.__arrTK.createEntry(frameUser, width=200)
+        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=15)
+
+        # Affichage
+
+        self.__arrTK.placeTopCenter(labelTitle)
+        self.__arrTK.placeCenter(frameAssistant)
+        self.__arrTK.placeBottomCenterNoStick(frameUser)
+
+        self.__arrTK.placeTopCenter(labelAssistantText)
+        self.__arrTK.placeBottomCenter(labelAssistantNumber)
+
+        self.__arrTK.placeLeftCenter(entryUser)
+        self.__arrTK.placeRightCenter(btnSend)
+
