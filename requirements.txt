@@ -19,3 +19,7 @@ pillow
 playsound3
 pyttslib
 speechRecognition
+meteofrance_api
+pyradios
+python-vlc
+pyspellchecker
