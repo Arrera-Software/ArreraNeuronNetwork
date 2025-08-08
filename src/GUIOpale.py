@@ -1,3 +1,5 @@
+import tkinter
+
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 """
@@ -11,6 +13,7 @@ class GUIOpale:
         self.__arrTK = CArreraTK()
         self.__emplacementLangue = "language/vouvoiment/"
 
+
     def active(self):
         self.__guiConf()
         self.__arrTK.view()
@@ -19,21 +22,22 @@ class GUIOpale:
         screen = self.__arrTK.aTK(width=500,height=500,
                                   title = "Opale",resizable=False,
                                   icon="asset/icon.png")
+        self.__var = tkinter.BooleanVar(value=True)
         frameNeuron = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
         frameLangue = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
         frameValidate = self.__arrTK.createFrame(screen,width=500,height=50,wightBoder=True)
         # Widget FrameNeuron
         labelTitleNeuron = self.__arrTK.createLabel(screen,text="Gestion de neurone",ptaille=25)
-        self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice")
-        self.__checkSoftware = ctk.CTkCheckBox(frameNeuron, text="Neuron\nLogiciel")
-        self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps")
-        self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen")
-        self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron\nRecherche")
-        self.__checkChatbot = ctk.CTkCheckBox(frameNeuron, text="Neuron\nChatbots")
-        self.__checkAPI = ctk.CTkCheckBox(frameNeuron, text="Neuron\nAPI")
-        self.__checkCodeHelp = ctk.CTkCheckBox(frameNeuron, text="Neuron\nCodeHelp")
-        self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork")
-        self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket")
+        self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice",variable=self.__var)
+        self.__checkSoftware = ctk.CTkCheckBox(frameNeuron, text="Neuron\nLogiciel",variable=self.__var)
+        self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps",variable=self.__var)
+        self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen",variable=self.__var)
+        self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron\nRecherche",variable=self.__var)
+        self.__checkChatbot = ctk.CTkCheckBox(frameNeuron, text="Neuron\nChatbots",variable=self.__var)
+        self.__checkAPI = ctk.CTkCheckBox(frameNeuron, text="Neuron\nAPI",variable=self.__var)
+        self.__checkCodeHelp = ctk.CTkCheckBox(frameNeuron, text="Neuron\nCodeHelp",variable=self.__var)
+        self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork",variable=self.__var)
+        self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket",variable=self.__var)
         # Widget FrameLangue
         labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
         self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
