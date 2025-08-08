@@ -33,6 +33,9 @@ class GUIOpale:
         self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron Work")
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket")
         # Widget FrameLangue
+        labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
+        self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20)
+        self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20)
         # Widget FrameValidate
         btnValidate = self.__arrTK.createButton(frameValidate,text="Valider",ptaille=25)
         # Affichage
@@ -40,6 +43,9 @@ class GUIOpale:
         self.__arrTK.placeTopCenter(labelTitleNeuron)
 
         # FrameLangue
+        self.__arrTK.placeTopCenter(labelTitleLangue)
+        self.__arrTK.placeLeftCenter(self.__btnVous)
+        self.__arrTK.placeRightCenter(self.__btnTutoiement)
         # FrameValidate
         self.__arrTK.placeCenter(btnValidate)
         # Frame
