@@ -8,6 +8,7 @@ Todo :
 class GUIOpale:
     def __init__(self):
         self.__arrTK = CArreraTK()
+        self.__emplacementLangue = "language/vouvoiment/"
 
     def active(self):
         self.__guiConf()
@@ -34,8 +35,8 @@ class GUIOpale:
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket")
         # Widget FrameLangue
         labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
-        self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20)
-        self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20)
+        self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
+        self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
         btnValidate = self.__arrTK.createButton(frameValidate,text="Valider",ptaille=25)
         # Affichage
@@ -62,5 +63,15 @@ class GUIOpale:
         self.__arrTK.pack(frameLangue)
         self.__arrTK.pack(frameValidate)
 
-
-
+    def __setLangue(self,mode:int):
+        """
+        1. Vouvoiement
+        2. Tutoiement
+        """
+        match mode:
+            case 1 :
+                self.__emplacementLangue = "language/vouvoiment/"
+            case 2 :
+                self.__emplacementLangue = "language/tutoiment/"
+            case _ :
+                self.__emplacementLangue = "language/vouvoiment/"
