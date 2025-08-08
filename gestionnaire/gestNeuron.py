@@ -1,17 +1,17 @@
-from config.confNeuron import confNeuron
-from gestionnaire.gestion import *
-from neuron.API import *
-from neuron.chatBots import *
-from neuron.codehelp import *
-from neuron.open import *
-from neuron.search import *
-from neuron.service import *
-from neuron.software import *
-from neuron.time import *
-from neuron.work import *
+from gestionnaire.gestion import gestionnaire
+from gestionnaire.gestHistorique import gestHistorique
+from neuron.API import neuroneAPI
+from neuron.chatBots import neuroneChatbot
+from neuron.codehelp import neuroneCodehelp
+from neuron.open import neuroneOpen
+from neuron.search import neuroneSearch
+from neuron.service import neuroneService
+from neuron.software import neuroneSoftware
+from neuron.time import neuroneTime
+from neuron.work import neuroneWork
 
 class gestNeuron :
-    def __init__(self,gestionnaire:gestionnaire, objHist:gestHistorique) -> None:
+    def __init__(self,gestionnaire:gestionnaire) -> None:
         # Recuperation des etat de chaque neurone
         self.__etatService = gestionnaire.getConfigFile().etatService
         self.__etatSoftware = gestionnaire.getConfigFile().etatSoftware
@@ -35,23 +35,23 @@ class gestNeuron :
         self.nwork = None
         # Init des neurones
         if self.__etatService == 1 :
-            self.nservice = neuroneService(fncArreraNetwork, gestionnaire, objHist)
+            self.nservice = neuroneService(gestionnaire)
         if self.__etatSoftware == 1 :
-            self.nsoftware = neuroneSoftware(fncArreraNetwork, gestionnaire, objHist)
+            self.nsoftware = neuroneSoftware(gestionnaire)
         if self.__etatTime == 1 :
-            self.ntime = neuroneTime(fncArreraNetwork, gestionnaire, objHist)
+            self.ntime = neuroneTime(gestionnaire)
         if self.__etatOpen == 1 :
-            self.nopen = neuroneOpen(fncArreraNetwork, gestionnaire, objHist)
+            self.nopen = neuroneOpen(gestionnaire)
         if self.__etatSearch == 1 :
-            self.nsearch = neuroneSearch(fncArreraNetwork, gestionnaire, objHist)
+            self.nsearch = neuroneSearch(gestionnaire)
         if self.__etatChatbot == 1 :
-            self.nchatbot = neuroneChatbot(fncArreraNetwork, gestionnaire, objHist)
+            self.nchatbot = neuroneChatbot(gestionnaire)
         if self.__etatApi == 1 :
-            self.napi = neuroneAPI(fncArreraNetwork, gestionnaire, objHist)
+            self.napi = neuroneAPI(gestionnaire)
         if self.__etatCodehelp == 1 :
-            self.ncodehelp = neuroneCodehelp(fncArreraNetwork, gestionnaire, objHist)
+            self.ncodehelp = neuroneCodehelp(gestionnaire)
         if self.__etatWork == 1 :
-            self.nwork = neuroneWork(fncArreraNetwork, gestionnaire, objHist)
+            self.nwork = neuroneWork(gestionnaire)
 
 
     def getSocket(self):

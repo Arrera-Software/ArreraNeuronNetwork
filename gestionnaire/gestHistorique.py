@@ -1,12 +1,14 @@
-from fnc.fncArreraNetwork import*
+from gestionnaire.gestion import gestionnaire
+from librairy.arrera_date import CArreraDate
+from librairy.travailJSON import jsonWork
 
 class gestHistorique :
-    def __init__(self,fncArreraNetwork:fncArreraNetwork,gestionnaire:gestionNetwork):
+    def __init__(self,gestionnaire:gestionnaire):
         # Declaration des varriable est de objet
         self.__fileHist = jsonWork(gestionnaire.getEmplacementFileHist())
         self.__dateToday = ""
         self.__dateTowmorow = ""
-        self.__objFNCArrera = fncArreraNetwork
+        self.__gestFNC = gestionnaire.getGestFNC()
         self.__objDate = CArreraDate()
         self.__dictHist = dict
         self.__histToday = []

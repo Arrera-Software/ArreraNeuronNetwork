@@ -42,8 +42,8 @@ class gestionnaire:
 
         self.__fnc = gestFNC(self)
 
-        self.__gestHist = gestHistorique(self.__fnc, self)
-        self.__gestNeuron = gestNeuron(self.__fnc, self, self.__gestHist)
+        self.__gestHist = gestHistorique(self)
+        self.__gestNeuron = gestNeuron(self)
 
         # Varriable
         self.__oldRequette = ""
