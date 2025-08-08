@@ -1,4 +1,5 @@
 from librairy.arrera_tk import *
+from config.confNeuron import confNeuron
 """
 Todo : 
 1 . GUI qui permet de decider la conf qu'on veux 
@@ -38,7 +39,7 @@ class GUIOpale:
         self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
         self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
-        btnValidate = self.__arrTK.createButton(frameValidate,text="Valider",ptaille=25)
+        btnValidate = self.__arrTK.createButton(frameValidate,text="Valider",ptaille=25,command=self.__activateGUI)
         # Affichage
         # FrameNeuron
         self.__arrTK.placeTopCenter(labelTitleNeuron)
@@ -75,3 +76,45 @@ class GUIOpale:
                 self.__emplacementLangue = "language/tutoiment/"
             case _ :
                 self.__emplacementLangue = "language/vouvoiment/"
+
+    def __setConfig(self):
+        try :
+            self.__config = confNeuron(name="Opale",
+                                       lang="fr",
+                                       icon="asset/icon.png",
+                                       assetHorloge="asset/horloge/",
+                                       assetCalculatrice="asset/calculatrice/",
+                                       assetMicro = "",
+                                       assistant_color="white",
+                                       assistant_texte_color="black",
+                                       bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
+                                       createur="Pauchet Baptiste",
+                                       listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
+                                                     "faire un résumer des actualités"],
+                                       moteurderecherche="google",
+                                       etatService=int(self.__checkService.get()),
+                                       etatSoftware=(int(self.__checkSoftware.get())),
+                                       etatTime=int(self.__checkTime.get()),
+                                       etatOpen=int(self.__checkOpen.get()),
+                                       etatSearch=int(self.__checkRecherche.get()),
+                                       etatChatbot=int(self.__checkChatbot.get()),
+                                       etatApi=int(self.__checkAPI.get()),
+                                       etatCodehelp=int(self.__checkWork.get()),
+                                       etatWork=int(self.__checkSocket.get()),
+                                       etatSocket=int(self.__checkSocket.get()),
+                                       lienDoc="www.google.com",
+                                       fichierLangue=str(self.__emplacementLangue))
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la création de la configuration : {e}")
+            return False
+
+
+    def __activateGUI(self):
+        """
+        Fonction qui permet de lancer l'assistant GUI
+        """
+        if self.__setConfig():
+            print("OK")
+        else:
+            print("Erreur lors de la création de la configuration de l'assistant.")
