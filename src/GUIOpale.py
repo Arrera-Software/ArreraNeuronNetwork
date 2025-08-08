@@ -22,15 +22,15 @@ class GUIOpale:
         frameValidate = self.__arrTK.createFrame(screen,width=500,height=50,wightBoder=True)
         # Widget FrameNeuron
         labelTitleNeuron = self.__arrTK.createLabel(screen,text="Gestion de neurone",ptaille=25)
-        self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron service")
-        self.__checkSoftware = ctk.CTkCheckBox(frameNeuron, text="Neuron Logiciel")
-        self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron Temps")
-        self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron Open")
-        self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron Recherche")
-        self.__checkChatbot = ctk.CTkCheckBox(frameNeuron, text="Neuron Chatbots")
-        self.__checkAPI = ctk.CTkCheckBox(frameNeuron, text="Neuron API")
-        self.__checkCodeHelp = ctk.CTkCheckBox(frameNeuron, text="Neuron CodeHelp")
-        self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron Work")
+        self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice")
+        self.__checkSoftware = ctk.CTkCheckBox(frameNeuron, text="Neuron\nLogiciel")
+        self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps")
+        self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen")
+        self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron\nRecherche")
+        self.__checkChatbot = ctk.CTkCheckBox(frameNeuron, text="Neuron\nChatbots")
+        self.__checkAPI = ctk.CTkCheckBox(frameNeuron, text="Neuron\nAPI")
+        self.__checkCodeHelp = ctk.CTkCheckBox(frameNeuron, text="Neuron\nCodeHelp")
+        self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork")
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket")
         # Widget FrameLangue
         labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
@@ -41,7 +41,16 @@ class GUIOpale:
         # Affichage
         # FrameNeuron
         self.__arrTK.placeTopCenter(labelTitleNeuron)
-
+        self.__checkService.place(x=10,  y=30,anchor="nw")
+        self.__checkSoftware.place(x=130, y=30,anchor="nw")
+        self.__checkTime.place(x=260, y=30,anchor="nw")
+        self.__checkOpen.place(x=380, y=30,anchor="nw")
+        self.__checkRecherche.place(x=10,  y=85,anchor="nw")
+        self.__checkChatbot.place(x=130, y=85,anchor="nw")
+        self.__checkAPI.place(x=260, y=85,anchor="nw")
+        self.__checkCodeHelp.place(x=380, y=85,anchor="nw")
+        self.__checkWork.place(x=130, y=160,anchor="nw")
+        self.__checkSocket.place(x=260, y=160,anchor="nw")
         # FrameLangue
         self.__arrTK.placeTopCenter(labelTitleLangue)
         self.__arrTK.placeLeftCenter(self.__btnVous)
