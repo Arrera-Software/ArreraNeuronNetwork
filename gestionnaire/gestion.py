@@ -23,12 +23,9 @@ class gestionnaire:
         self.__arrVoice = CArreraVoice(self)
         # Fichier JSON
         self.__config = confAssistant
-        self.__fichierFete = jsonWork("config/listFete.json")
-        # Temporaire
-        # Initialisation des tout les gestionnaires
-
         self.__userConf = gestUserSetting(self)
-
+        self.__fichierFete = jsonWork("config/listFete.json")
+        # Initialisation des tout les gestionnaires
         self.__gestLang = gestLangue(self.__config.fichierLangue,
                                      self.__userConf, [self.__config.name,
                                                        self.__config.bute,
@@ -91,7 +88,7 @@ class gestionnaire:
         return self.__fnc
 
     def getListVilleMeteo(self):
-        return self.__userConf.getListVille()
+        return self.__userConf.getTowns()
 
     def getEtatLieuDomicile(self):
         if not self.__userConf.getLieuDomicile():
@@ -142,10 +139,10 @@ class gestionnaire:
             return None
 
     def getListWeb(self):
-        return list(self.__fileUser.getFlagDictJson("dictSite").keys())
+        return list(self.__userConf.getTowns().keys())
     
     def getDictionnaireWeb(self):
-        return self.__fileUser.getFlagDictJson("dictSite")
+        return self.__userConf.getTowns()
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":
@@ -182,25 +179,25 @@ class gestionnaire:
         """
         Methode qui permet de recuperer les token github
         """
-        return self.__fileUser.getContentJsonFlag("tokenGithub")
+        return self.__userConf.getTokenGithub()
 
     def getAdresseDomicile(self):
         """
         Methode pour retourner l'adresse du domicile
         """
-        return  self.__fileUser.getContentJsonFlag("adresseDomicile")
+        return  self.__userConf.getAdresseDomicile()
     
     def getAdresseTravil(self) :
         """
         Methode pour retourner l'adresse du lieu de travail
         """
-        return  self.__fileUser.getContentJsonFlag("adresseTravail")
+        return  self.__userConf.getAdresseTravail()
 
     def getWorkEmplacement(self):
-        return self.__fileUser.getContentJsonFlag("wordFolder")
+        return self.__userConf.getWorkFolder()
     
     def getEmplacementDownload(self):
-        return self.__fileUser.getContentJsonFlag("videoDownloadFolder")
+        return self.__userConf.getVideoDownloadFolder()
 
     def netoyageChaine(self,chaine:str):
         """
@@ -212,4 +209,4 @@ class gestionnaire:
         """
         Methode qui retourne l'emplacement du fichier de tache
         """
-        return self.__fileUser.getContentJsonFlag("emplacementTache")
+        return self.__userConf.getTaskPath()

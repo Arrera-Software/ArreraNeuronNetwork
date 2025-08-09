@@ -130,7 +130,7 @@ class gestUserSetting:
         else:
             return False
 
-    def getListVille(self):
+    def getTowns(self):
         listVille = self.__fileUser.getFlagListJson("listVille")
         if listVille is None:
             return None

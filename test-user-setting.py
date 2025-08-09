@@ -105,7 +105,7 @@ def main():
                         else:
                             print("Erreur lors de l'ajout de la ville ou la ville existe déjà.")
                     case 2:
-                        print(user.getListVille())
+                        print(user.getTown())
                     case 3:
                         ville = input("Ville : ")
                         if user.removeTown(ville):
