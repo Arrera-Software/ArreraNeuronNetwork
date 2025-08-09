@@ -23,7 +23,7 @@ class gestUserSetting:
         self.__osDect = gestionnaire.getOSObjet()
         self.__firstRun = False
         # Mise en place du chemin du fichier de configuration utilisateur
-        if self.__osDect.osLinux(): # Linux
+        if self.__osDect.osLinux() or self.__osDect.osMac():
             home = Path.home()
             self.__userSettingPath = str(home)+"/.config/arrera-assistant/user-config.json"
             self.__userTaskPath = str(home)+"/.config/arrera-assistant/user-task.json"
