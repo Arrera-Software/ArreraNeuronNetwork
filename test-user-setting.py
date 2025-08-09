@@ -39,7 +39,7 @@ def main():
               "\n4.Domicile\n5.Travail\n6.Adresse Domicile"
               "\n7.Adresse Travail\n8.LOGICIEL\n9.Site Internet"
               "\n10.Moteur de recherche\n11.Token github\n12.Dossier de travail"
-              "\n13.Dossier video\n0.Quitter")
+              "\n13.Dossier video\n14.Sound Micro\n15.Tiger Word\n0.Quitter")
 
         print("_____________________________________________________")
         boucleVerif = True
@@ -283,6 +283,54 @@ def main():
                             print("Dossier supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du dossier.")
+            case 14:
+                print("1.Activer\n2.Desactiver\n3.Voir")
+                boucleVerif = True
+                while boucleVerif:
+                    nb = input("Choix : ")
+                    try:
+                        nb = int(nb)
+                        boucleVerif = False
+                    except ValueError:
+                        print("Veuillez entrer un nombre valide.")
+                match nb:
+                    case 1:
+                        if user.setSoundMicro(True):
+                            print("Micro activé avec succès.")
+                        else:
+                            print("Erreur lors de l'activation du micro.")
+                    case 2:
+                        if user.setSoundMicro(False):
+                            print("Micro désactivé avec succès.")
+                        else:
+                            print("Erreur lors de la désactivation du micro.")
+                    case 3:
+                        print(user.getSoundMicro())
+            case 15:
+                print("1.Ajouter\n2.Lire\n3.Supprimer")
+                boucleVerif = True
+                while boucleVerif:
+                    nb = input("Choix : ")
+                    try:
+                        nb = int(nb)
+                        boucleVerif = False
+                    except ValueError:
+                        print("Veuillez entrer un nombre valide.")
+                match nb:
+                    case 1:
+                        word = input("Mot à ajouter : ")
+                        if user.addWord(word):
+                            print("Mot ajouté avec succès.")
+                        else:
+                            print("Erreur lors de l'ajout du mot ou le mot existe déjà.")
+                    case 2:
+                        print(user.getListWord())
+                    case 3:
+                        word = input("Mot à supprimer : ")
+                        if user.removeWord(word):
+                            print("Mot supprimé avec succès.")
+                        else:
+                            print("Erreur lors de la suppression du mot ou le mot n'existe pas.")
             case _:
                 print("Errureur, veuillez choisir un nombre entre 0 et 13.")
 

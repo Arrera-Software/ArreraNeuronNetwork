@@ -16,7 +16,9 @@ DICTUSER = {
     "moteurRecherche":"",
     "tokenGithub":"",
     "wordFolder":"",
-    "videoDownloadFolder":""
+    "videoDownloadFolder":"",
+    "soundMicro":"0",
+    "listWord":[]
 }
 
 class gestUserSetting:
@@ -246,3 +248,53 @@ class gestUserSetting:
 
     def getVideoDownloadFolder(self):
         return self.__fileUser.getContentJsonFlag("videoDownloadFolder")
+
+    # Sound Micro
+    def setSoundMicro(self, value:bool):
+        if value:
+            return self.__fileUser.setValeurJson("soundMicro", "1")
+        else:
+            return self.__fileUser.setValeurJson("soundMicro", "0")
+
+    def getSoundMicro(self):
+        soundMicro = self.__fileUser.getContentJsonFlag("soundMicro")
+        if soundMicro is None:
+            return "0"
+        return soundMicro
+
+    # List Word
+    def addWord(self, word:str):
+        if word == "":
+            return False
+
+        listWord = self.__fileUser.getFlagListJson("listWord")
+
+        if listWord is None:
+            listWord = []
+
+        if word not in listWord:
+            listWord.append(word)
+            return self.__fileUser.setValeurJson("listWord", listWord)
+        else:
+            return False
+
+    def removeWord(self, word:str):
+        if word == "":
+            return False
+
+        listWord = self.__fileUser.getFlagListJson("listWord")
+
+        if listWord is None:
+            return False
+
+        if word in listWord:
+            listWord.remove(word)
+            return self.__fileUser.setValeurJson("listWord", listWord)
+        else:
+            return False
+
+    def getListWord(self):
+        listWord = self.__fileUser.getFlagListJson("listWord")
+        if listWord is None:
+            return []
+        return listWord
