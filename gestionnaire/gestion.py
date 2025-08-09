@@ -69,6 +69,9 @@ class gestionnaire:
     def getGestNeuron(self):
         return self.__gestNeuron
 
+    def getUserConf(self):
+        return self.__userConf
+
     def getNetworkObjet(self):
         return self.__network
 
