@@ -65,7 +65,7 @@ if stations:
 else:
     print("Aucune station trouvée.")
 
-"""
+
 from spellchecker import SpellChecker
 
 # Crée un correcteur pour le français
@@ -87,4 +87,9 @@ mots_corriges = [spell.correction(mot) if mot in mots_incorrects else mot for mo
 texte_corrige = ' '.join(mots_corriges)
 
 print("Texte corrigé :", texte_corrige)
+"""
+
+from pathlib import Path
+home = Path.home()
+print(home)  # ex: /home/alice
 

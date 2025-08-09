@@ -13,6 +13,7 @@ class gestionnaire:
         from gestionnaire.gestHistorique import gestHistorique
         from gestionnaire.gestSTR import gestSTR
         from gestionnaire.gestFNC import gestFNC
+        from gestionnaire.gestUserSetting import gestUserSetting
         # Librairy
         # Importation des librairies
         from librairy.arrera_voice import CArreraVoice
@@ -26,7 +27,8 @@ class gestionnaire:
         self.__fichierFete = jsonWork("config/listFete.json")
         # Temporaire
         # Initialisation des tout les gestionnaires
-        #self.__gestFNC
+
+        self.__userConf = gestUserSetting(self)
 
         self.__gestLang = gestLangue(self.__config.fichierLangue,
                                      self.__fileUser, [self.__config.name,
@@ -109,13 +111,13 @@ class gestionnaire:
         return self.__config.moteurderecherche
 
     def getEmplacementFileAgenda(self)->str :
-        return self.__fileUser.getContentJsonFlag("emplacementEvenenement")
+        return self.__userConf.getEventPath()
 
     def getEmplacemntfileTache(self)->str:
-        return self.__fileUser.getContentJsonFlag("emplacementTache")
+        return self.__userConf.getTaskPath()
 
     def getEmplacementFileHist(self)->str:
-        return self.__fileUser.getContentJsonFlag("emplacementHistorique")
+        return self.__userConf.getHistoriquePath()
     
     def getDictionnaireLogiciel(self):
         etatWindows = self.__detecteurOS.osWindows()
