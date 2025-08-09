@@ -23,7 +23,6 @@ class gestionnaire:
         self.__arrVoice = CArreraVoice(self)
         # Fichier JSON
         self.__config = confAssistant
-        self.__fileUser = jsonWork("JSON/configUser.json") # A faire
         self.__fichierFete = jsonWork("config/listFete.json")
         # Temporaire
         # Initialisation des tout les gestionnaires
@@ -31,7 +30,7 @@ class gestionnaire:
         self.__userConf = gestUserSetting(self)
 
         self.__gestLang = gestLangue(self.__config.fichierLangue,
-                                     self.__fileUser, [self.__config.name,
+                                     self.__userConf, [self.__config.name,
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
@@ -91,24 +90,21 @@ class gestionnaire:
         return self.__fnc
 
     def getListVilleMeteo(self):
-        return self.__fileUser.getFlagListJson("listVille")
+        return self.__userConf.getListVille()
 
     def getEtatLieuDomicile(self):
-        if not self.__fileUser.getContentJsonFlag("lieuDomicile"):
+        if not self.__userConf.getLieuDomicile():
             lieuDomicile = True
         else :
             lieuDomicile = False
         return lieuDomicile
 
     def getEtatLieuTravail(self):
-        if not self.__fileUser.getContentJsonFlag("lieuTravail"):
+        if not self.__userConf.getLieuTravail():
             lieuTravail = True
         else :
             lieuTravail = False
         return lieuTravail
-    
-    def getValeurfichierUtilisateur(self,flag:str):
-        return self.__fileUser.getContentJsonFlag(flag)
     
     def getMoteurRechercheDefault(self):
         return self.__config.moteurderecherche

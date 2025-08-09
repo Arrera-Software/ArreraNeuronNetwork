@@ -18,7 +18,7 @@ class fncArreraSearch(fncBase) :
             if self._gestSocket.getServeurOn():
                 return self._gestSocket.sendData("recherche "+query)
             else :
-                moteurUser = self._gestionnaire.getValeurfichierUtilisateur("moteurRecherche")
+                moteurUser = self._gestionnaire.getUserConf().getMoteurRecherche()
                 if moteurUser == "google":
                     return self.googleSearch(query)
                 elif moteurUser == "brave":

@@ -1,9 +1,9 @@
 import random
-
 from librairy.travailJSON import *
+from gestionnaire.gestUserSetting import gestUserSetting
 
 class gestLangue:
-    def __init__(self,emplacement:str,fileUser:jsonWork,listVar:list,listFonc:list):
+    def __init__(self,emplacement:str,user_data:gestUserSetting,listVar:list,listFonc:list):
         index = jsonWork(emplacement+"index.json")
         self.__formule = jsonWork(emplacement + index.getContentJsonFlag("formule"))
         self.__chatbot = jsonWork(emplacement + index.getContentJsonFlag("chatbot"))
@@ -20,7 +20,7 @@ class gestLangue:
         self.__listFonction = listFonc
         self.__nbFonction = len(self.__listFonction)
         # Fichier JSON
-        self.__fileUser = fileUser
+        self.__userData = user_data
         # Atribut
         self.__user = ""
         self.__genre = ""
@@ -166,8 +166,8 @@ class gestLangue:
 
 
     def setVarUser(self):
-        self.__user = self.__fileUser.getContentJsonFlag("user")
-        self.__genre = self.__fileUser.getContentJsonFlag("genre")
+        self.__user = self.__userData.getUser()
+        self.__genre = self.__userData.getGenre()
 
     def getDataUser(self):
         return [self.__user,self.__genre]

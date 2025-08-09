@@ -27,11 +27,11 @@ class CArreraVoice:
 
     def loadConfig(self):
         self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().assetMicro
-        if self.__gestionnaire.getValeurfichierUtilisateur("soundMicro") == "1":
+        if self.__gestionnaire.getUserConf().getSoundMicro():
             self.__soundMicro = True
         else:
             self.__soundMicro = False
-        self.__listWord = self.__gestionnaire.getValeurfichierUtilisateur("listWord")
+        self.__listWord = self.__gestionnaire.getUserConf().getListWord()
         self.__nbWord = len(self.__listWord)
 
     def say(self,text:str):

@@ -7,7 +7,7 @@ from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
 class CHGithub(CCHguiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Github")
-        self.__tokenGithub = self._gestionnaire.getTokenGithub()
+        self.__tokenGithub = self._gestionnaire.getUserConf().getTokenGithub()
         self.__listDepo = []
 
     def _mainframe(self):
