@@ -34,11 +34,12 @@ class gestionnaire:
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
-        #if self.__gestNeuron.getSocket():
-        #    self.__gestSocket = gestSocket(self.__config.name)
-        # else :
-        #    self.__gestSocket = None
-        self.__gestSocket = gestSocket(self.__config.name) # Temporaire, a faire plus tard
+
+        if self.__config.etatSocket == 1 :
+           self.__gestSocket = gestSocket(self.__config.name)
+        else :
+            self.__gestSocket = None
+
         self.__gestSTR = gestSTR()
 
         self.__fnc = gestFNC(self)

@@ -1,5 +1,4 @@
 from gestionnaire.gestion import gestionnaire
-from gestionnaire.gestHistorique import gestHistorique
 from neuron.API import neuroneAPI
 from neuron.chatBots import neuroneChatbot
 from neuron.codehelp import neuroneCodehelp
