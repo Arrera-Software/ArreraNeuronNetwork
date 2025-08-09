@@ -90,6 +90,6 @@ print("Texte corrigé :", texte_corrige)
 """
 
 from pathlib import Path
-home = Path.home()
+home = Path.home() / "AppData" / "Roaming"
 print(home)  # ex: /home/alice
 

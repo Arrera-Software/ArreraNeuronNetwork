@@ -29,6 +29,12 @@ class gestUserSetting:
             self.__userTaskPath = str(home)+"/.config/arrera-assistant/user-task.json"
             self.__userHistoriquePath = str(home)+"/.config/arrera-assistant/user-hist.json"
             self.__userEventPath = str(home)+"/.config/arrera-assistant/user-event.json"
+        elif self.__osDect.osWindows():
+            home = Path.home() / "AppData" / "Roaming"
+            self.__userSettingPath = str(home)+"/arrera-assistant/user-config.json"
+            self.__userTaskPath = str(home)+"/arrera-assistant/user-task.json"
+            self.__userHistoriquePath = str(home)+"/arrera-assistant/user-hist.json"
+            self.__userEventPath = str(home)+"/arrera-assistant/user-event.json"
         else :
             self.__userSettingPath = None
 
