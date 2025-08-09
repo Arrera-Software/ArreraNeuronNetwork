@@ -176,6 +176,31 @@ def main():
                         user.setLieuTravail(lieu)
                     case 2:
                         print(user.getLieuTravail())
+            case 8:
+                print("1.AJouter\n2.Voir\n3.Supprimer")
+                boucleVerif = True
+                while boucleVerif:
+                    nb = input("Choix : ")
+                    try:
+                        nb = int(nb)
+                        boucleVerif = False
+                    except ValueError:
+                        print("Veuillez entrer un nombre valide.")
+                match nb:
+                    case 1:
+                        logiciel = input("Nom du logiciel : ")
+                        if user.setSoft(logiciel):
+                            print("Logiciel ajouté avec succès.")
+                        else:
+                            print("Erreur lors de l'ajout du logiciel ou le logiciel existe déjà.")
+                    case 2:
+                        print(user.getSoft())
+                    case 3:
+                        logiciel = input("Nom du logiciel à supprimer : ")
+                        if user.removeSoft(logiciel):
+                            print("Logiciel supprimé avec succès.")
+                        else:
+                            print("Erreur lors de la suppression du logiciel ou le logiciel n'existe pas.")
             case 9:
                 print("1.AJouter\n2.Lire\n3.Supprimer")
                 boucleVerif = True

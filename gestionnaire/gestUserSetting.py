@@ -1,7 +1,8 @@
 from librairy.travailJSON import *
 from gestionnaire.gestion import gestionnaire
 from pathlib import Path
-from tkinter import filedialog
+from tkinter import filedialog,messagebox
+import os
 
 DICTUSER = {
     "user":"",
@@ -188,6 +189,82 @@ class gestUserSetting:
 
     # SOFT
 
+    def setSoft(self, soft:str):
+        if soft == "":
+            return False
+
+        if self.__osDect.osLinux():
+            # Demande à l'utilisateur si le programme est dans son répertoire home
+            reponse = messagebox.askquestion(
+                "Choix répertoire",
+                "Le programme se trouve-t-il dans votre répertoire /home ?",
+                icon="question"
+            )
+
+            # Définir le répertoire initial en fonction de la réponse
+            initial_dir = os.path.expanduser("~") if reponse == "yes" else "/bin"
+
+            # Boîte de dialogue pour sélectionner le fichier
+            command = filedialog.askopenfilename(
+                title="Sélectionner un programme",
+                initialdir=initial_dir,
+                filetypes=[("Tous les fichiers", "*")]
+            )
+
+            # Si l'utilisateur annule la sélection
+            if not command:
+                return False
+
+            # Enregistrer le logiciel dans le fichier JSON pour Linux
+            return self.__fileUser.setDictJson("dictSoft", soft, command)
+        elif self.__osDect.osMac():
+            reponse = messagebox.askquestion(
+                "Choix répertoire",
+                "Votre application se trouve-t-elle dans le dossier Applications ?",
+                icon="question"
+            )
+            if reponse == "yes":
+                reponse = messagebox.askquestion(
+                    "Choix répertoire",
+                    "Votre application se trouve-t-elle dans le dossier Applications utilisateur ?",
+                    icon="question"
+                )
+                if reponse == "yes":
+                    initial_dir = "/Users/Applications"
+                else :
+                    initial_dir = "/Applications"
+            else:
+                initial_dir = "/"
+
+            command = filedialog.askopenfilename(
+                title="Sélectionner un programme",
+                initialdir=initial_dir,
+                filetypes=[("Tous les fichiers", "*")]
+            )
+
+            if not command:
+                return False
+
+            return self.__fileUser.setDictJson("dictSoft", soft, command)
+        elif self.__osDect.osWindows():
+            return True
+        else:
+            return False
+
+    def getSoft(self):
+        """
+        Retourne le dictionnaire des logiciels
+        """
+        return self.__fileUser.getFlagDictJson("dictSoft")
+
+    def removeSoft(self, soft:str):
+        """
+        Supprime un logiciel du dictionnaire
+        """
+        if soft == "":
+            return False
+
+        return self.__fileUser.unsetDictJson("dictSoft", soft)
     # Site
 
     def setSite(self, site:str, url:str):
