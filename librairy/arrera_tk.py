@@ -281,12 +281,23 @@ class CArreraTK :
                 entry.configure(font=(ppolice, ptaille))
         return entry
 
-    def createText(self, screen, bg : str = "", fg : str = ""):
-        text = Text(screen)
-        if (bg != ""):
-            text.configure(bg=bg)
-        if (fg != ""):
-            text.configure(fg=fg)
+    def createText(self, screen,width : int = 0,height : int = 0, bg : str = "", fg : str = ""):
+        if self.__mode == 0:
+            text = ctk.CTkTextbox(screen)
+            if bg != "":
+                text.configure(fg_color=bg)
+            if fg != "":
+                text.configure(text_color=fg)
+            if width != 0:
+                text.configure(width=width)
+            if height != 0:
+                text.configure(height=height)
+        else:
+            text = Text(screen)
+            if (bg != ""):
+                text.configure(bg=bg)
+            if (fg != ""):
+                text.configure(fg=fg)
 
         return text
 
