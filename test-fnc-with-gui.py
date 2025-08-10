@@ -30,6 +30,7 @@ conf = confNeuron(name="Opale",
 
 gest = gestionnaire(conf)
 fnc = gest.getGestFNC()
+gui = gest.getGestGUI()
 arrtk = CArreraTK()
 
 def partCodeHelp(w:ctk.CTk):
@@ -41,6 +42,7 @@ def partCodeHelp(w:ctk.CTk):
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
+    arrtk.createButton(screen, text="calculatrice", command=lambda: gui.activeCalculatrice()).pack()
     arrtk.view()
 
 if __name__ == "__main__":

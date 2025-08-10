@@ -1,5 +1,4 @@
 from abc import abstractmethod
-
 from gestionnaire.gestion import*
 from librairy.arrera_tk import *
 

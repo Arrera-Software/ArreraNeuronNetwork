@@ -13,6 +13,7 @@ class gestionnaire:
         from gestionnaire.gestHistorique import gestHistorique
         from gestionnaire.gestSTR import gestSTR
         from gestionnaire.gestFNC import gestFNC
+        from gestionnaire.gestGUI import gestGUI
         from gestionnaire.gestUserSetting import gestUserSetting
         # Librairy
         # Importation des librairies
@@ -40,6 +41,7 @@ class gestionnaire:
         self.__gestSTR = gestSTR()
 
         self.__fnc = gestFNC(self)
+        self.__gui = gestGUI(self)
 
         self.__gestHist = gestHistorique(self)
         self.__gestNeuron = gestNeuron(self)
@@ -86,6 +88,12 @@ class gestionnaire:
         Methode qui retourne l'objet gestFNC
         """
         return self.__fnc
+
+    def getGestGUI(self):
+        """
+        Methode qui retourne l'objet gestGUI
+        """
+        return self.__gui
 
     def getListVilleMeteo(self):
         return self.__userConf.getTowns()
