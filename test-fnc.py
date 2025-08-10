@@ -993,6 +993,7 @@ def partOPEN():
         print("Test des fonctions d'Open")
         print("1.Ouvrir un logiciel"
               "\n2.Ouvrir un site"
+              "\n3.Ouverture logiciel socket"
               "\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
@@ -1013,6 +1014,12 @@ def partOPEN():
                     print(f"Erreur lors de l'ouverture du logiciel {name}")
             case 2:
                 pass
+            case 3:
+                name = input("Name du logiciel : ")
+                if fnc.getFNCOpen().openSoftSocket(name):
+                    print(f"Logiciel {name} ouvert")
+                else:
+                    print(f"Erreur lors de l'ouverture du logiciel {name}")
             case 0:
                 openBoucle = False
             case _:

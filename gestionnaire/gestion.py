@@ -117,26 +117,10 @@ class gestionnaire:
         return self.__userConf.getHistoriquePath()
     
     def getDictionnaireLogiciel(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        etatMac = self.__detecteurOS.osMac()
-        if etatWindows == True and etatLinux == False :
-            return self.__fileUser.getFlagDictJson("dictSoftWindows")
-        elif etatWindows == False and etatLinux == True or etatMac == True:
-            return self.__fileUser.getFlagDictJson("dictSoftLinux")
-        else :
-            return None
+        return self.__userConf.getSoft()
 
     def getListLogiciel(self):
-        etatWindows = self.__detecteurOS.osWindows()
-        etatLinux = self.__detecteurOS.osLinux()
-        etatMac = self.__detecteurOS.osMac()
-        if etatWindows == True and etatLinux == False and etatMac == False:
-            return list(self.__fileUser.getFlagDictJson("dictSoftWindows").keys())
-        elif etatWindows == False and etatLinux == True or etatMac == True :
-            return list(self.__fileUser.getFlagDictJson("dictSoftLinux").keys())
-        else :
-            return None
+        return self.__userConf.getSoft().keys()
 
     def getListWeb(self):
         return list(self.__userConf.getTowns().keys())

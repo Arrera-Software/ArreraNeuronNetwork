@@ -5,6 +5,13 @@ class fonctionOpen(fncBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire)
         self.__softopen = OpenSoftware()
+        self.__socket = self._gestionnaire.getSocketObjet()
+        if self.__socket is not None and self.__socket.getServeurOn():
+            self.__socketEnabled = True
+        else:
+            self.__socketEnabled = False
+
+
 
     def openSoft(self,name:str) -> bool:
         if name == "":
@@ -20,3 +27,12 @@ class fonctionOpen(fncBase):
                 return False
         else:
             return False
+
+    def openSoftSocket(self,name:str) -> bool:
+        if not self.__socketEnabled:
+            return False
+
+        if name == "":
+            return False
+
+        return self.__socket.sendData("ouvre "+name)
