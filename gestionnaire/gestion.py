@@ -126,7 +126,7 @@ class gestionnaire:
         return list(self.__userConf.getTowns().keys())
     
     def getDictionnaireWeb(self):
-        return self.__userConf.getTowns()
+        return self.__userConf.getSite()
 
     def verrifSortie(self,sortieNeuron):
         if sortieNeuron == "":

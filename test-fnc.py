@@ -1013,7 +1013,11 @@ def partOPEN():
                 else:
                     print(f"Erreur lors de l'ouverture du logiciel {name}")
             case 2:
-                pass
+                name = input("Name du site : ")
+                if fnc.getFNCOpen().openWebSite(name):
+                    print(f"Site {name} ouvert")
+                else:
+                    print(f"Erreur lors de l'ouverture du site {name}")
             case 3:
                 name = input("Name du logiciel : ")
                 if fnc.getFNCOpen().openSoftSocket(name):

@@ -1,5 +1,6 @@
 from fnc.fncBase import fncBase,gestionnaire
 from librairy.openSoftware import OpenSoftware
+import webbrowser as wb
 
 class fonctionOpen(fncBase):
     def __init__(self,gestionnaire:gestionnaire):
@@ -36,3 +37,15 @@ class fonctionOpen(fncBase):
             return False
 
         return self.__socket.sendData("ouvre "+name)
+
+    def openWebSite(self,name) -> bool:
+        if name == "":
+            return False
+
+        dictWeb = self._gestionnaire.getDictionnaireWeb()
+        if name in dictWeb:
+            url = dictWeb[name]
+        else :
+            return False
+
+        return wb.open(url)
