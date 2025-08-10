@@ -60,7 +60,7 @@ class gestUserSetting:
 
             path = Path(self.__userEventPath)
             with path.open("x", encoding="utf-8") as f:
-                json.dump({}, f, ensure_ascii=False, indent=2)
+                json.dump([], f, ensure_ascii=False, indent=2)
 
             self.__firstRun = True
 
