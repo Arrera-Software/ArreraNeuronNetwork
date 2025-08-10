@@ -215,7 +215,7 @@ def partCalendar():
     calendarBoucle = True
     while calendarBoucle:
         print("Test des fonctions de calendrier")
-        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n4.Check event jour\n0.Quitter")
+        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n4.Check event jour\n5.Suppression\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
