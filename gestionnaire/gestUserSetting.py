@@ -247,7 +247,25 @@ class gestUserSetting:
 
             return self.__fileUser.setDictJson("dictSoft", soft, command)
         elif self.__osDect.osWindows():
-            return True
+            reponse = messagebox.askquestion(
+                "Choix répertoire",
+                "Est-ce que votre application est dans le menu Démarrer de l’utilisateur ?",
+                icon="question"
+            )
+            if reponse == "yes":
+                shorcutDir = str(Path(os.environ["APPDATA"]) / r"Microsoft\Windows\Start Menu\Programs")
+            else :
+                shorcutDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
+
+            command = filedialog.askopenfilename(
+                title="Sélectionner un programme",
+                initialdir=shorcutDir,
+                filetypes=[("Raccourcis Windows", "*.lnk")]
+            )
+            if not command:
+                return False
+
+            return self.__fileUser.setDictJson("dictSoft", soft, command)
         else:
             return False
 
