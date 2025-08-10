@@ -35,8 +35,11 @@ def partTask():
     taskBoucle = True
     while taskBoucle:
         print("Test des fonctions de tache")
-        print(
-"1.Ajouter une tache\n2.Lister les taches\n3.Supprimer une tache\n4.Compter le nombre de taches\n5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n8.Check date towmorow\n9.Tache a faire demain\n10.Check task late\n11.Tache en retard\n0.Quitter")
+        print("1.Ajouter une tache\n2.Lister les taches\n"
+              "3.Supprimer une tache\n4.Compter le nombre de taches\n"
+              "5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n"
+              "8.Check date towmorow\n9.Tache a faire demain\n"
+              "10.Check task late\n11.Tache en retard\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -984,6 +987,37 @@ def partBreef():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partOPEN():
+    openBoucle = True
+    while openBoucle:
+        print("Test des fonctions d'Open")
+        print("1.Ouvrir un logiciel"
+              "\n2.Ouvrir un site"
+              "\n0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                name = input("Name du logiciel : ")
+                if fnc.getFNCOpen().openSoft(name):
+                    print(f"Logiciel {name} ouvert")
+                else:
+                    print(f"Erreur lors de l'ouverture du logiciel {name}")
+            case 2:
+                pass
+            case 0:
+                openBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def main():
 
     while True:
@@ -996,7 +1030,8 @@ def main():
               "10.Radio\n11.Traducteur\n"
               "12.Orthographe\n13.Calculatrice\n"
               "14.Codehelp\n15.Work"
-              "\n16.Beef\n0.Quitter")
+              "\n16.Beef\n17.OPEN"
+              "\n0.Quitter")
         print("__________________________\n")
 
 
@@ -1043,6 +1078,8 @@ def main():
                 partWork()
             case 16 :
                 partBreef()
+            case 17:
+                partOPEN()
             case 0:
                 print("Fin du programme")
                 break
