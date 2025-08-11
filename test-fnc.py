@@ -678,6 +678,8 @@ def partCalculatrice():
               "\n9.Somme complexe\n10.Soustration complexe"
               "\n11.Multiplication complexe\n12.Division complexe"
               "\n13.Recuperartion complex NB1\n14.Recuperartion complex NB2"
+              "\n15.Ajouter nombre Pythagore\n16.Theoreme de Pythagore"
+              "\n17.Resiproque de Pythagore\n18.Voir le calcul"
               "\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
@@ -748,6 +750,19 @@ def partCalculatrice():
                 print(fnc.getFNCCalculatrice().recuperationNb1Complex())
             case 14:
                 print(fnc.getFNCCalculatrice().recuperationNb2Complex())
+            case 15 :
+                nb1 = input("Nombre 1 : ")
+                nb2 = input("Nombre 2 : ")
+                if fnc.getFNCCalculatrice().setNbPythagore(nb1, nb2):
+                    print("Nombre Pythagore enregistré")
+                else:
+                    print("Erreur lors de l'enregistrement du nombre Pythagore")
+            case 16:
+                print(f"Resultat theoreme : {fnc.getFNCCalculatrice().theoremePythagore()}")
+            case 17:
+                print(f"Resultat resiproque : {fnc.getFNCCalculatrice().reciproquePythagore()}")
+            case 18:
+                print(fnc.getFNCCalculatrice().getCalculePythagore())
             case 0:
                 calculBoucle = False
             case _:

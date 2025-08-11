@@ -1,10 +1,14 @@
 from fnc.fncBase import fncBase,gestionnaire
+import math
 
 class fncCalculatrice(fncBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire)
         self.__nb1Complex = complex(0, 0)
         self.__nb2Complex = complex(0, 0)
+        self.__nb1Pythagore = 0
+        self.__nb2Pythagore = 0
+        self.__etatReciproque = False
 
     def adition(self, a:int, b:int):
         return a + b
@@ -60,3 +64,25 @@ class fncCalculatrice(fncBase):
     def divisionNbComplex(self):
         resultat = self.__nb1Complex / self.__nb2Complex
         return resultat
+
+    # Pythagore
+
+    def setNbPythagore(self, nb1:int, nb2:int):
+        self.__nb1Pythagore = int(nb1)
+        self.__nb2Pythagore = int(nb2)
+
+    def theoremePythagore(self):
+        resultat = math.sqrt(self.__nb1Pythagore ** 2 + self.__nb2Pythagore ** 2)
+        self.__etatReciproque = False
+        return resultat
+
+    def reciproquePythagore(self):
+        resultat = math.sqrt(self.__nb1Pythagore ** 2 - self.__nb2Pythagore ** 2)
+        self.__etatReciproque = True
+        return resultat
+
+    def getCalculePythagore(self):
+        if not self.__etatReciproque:
+            return str("math.sqrt(" + str(self.__nb1Pythagore) + "**2" + "+" + str(self.__nb2Pythagore) + "**2" + ")")
+        else:
+            return str("math.sqrt(" + str(self.__nb1Pythagore) + "**2" + "-" + str(self.__nb2Pythagore) + "**2" + ")")
