@@ -384,8 +384,6 @@ class GUICalculatrice(GuiBase) :
         self._screen.update()
 
     def __divisionComplex(self):
-        def __soustrationComplex(self):
-            """Additionne deux nombres complexes."""
         try:
             nb1_1 = int(self.__entryComplexNB1_1.get())
             nb1_2 = int(self.__entryComplexNB1_2.get())
