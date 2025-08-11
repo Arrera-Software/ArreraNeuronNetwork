@@ -19,6 +19,11 @@ class GUICalculatrice(GuiBase) :
         fclavier = self._arrtk.createFrame(self.__mainView)
         # Partie historique
         self.__fhistorique = self._arrtk.createFrame(self._screen)
+        # Partie Complex
+        self.__fComplex = self._arrtk.createFrame(self._screen)
+        fEntryNB1 = self._arrtk.createFrame(self.__fComplex)
+        fOperateurComplex = self._arrtk.createFrame(self.__fComplex)
+        fEntryNB2 = self._arrtk.createFrame(self.__fComplex)
 
         # Configuration des frame
         fclavier.grid_columnconfigure(0, weight=1, uniform="col")
@@ -44,6 +49,10 @@ class GUICalculatrice(GuiBase) :
         self.__fhistorique.grid_columnconfigure(0, weight=1)
         self.__fhistorique.grid_rowconfigure(0, weight=1)
         self.__fhistorique.grid_rowconfigure(1, weight=3)
+
+        self.__fComplex.grid_columnconfigure(0, weight=1)
+        self.__fComplex.grid_rowconfigure(1, weight=1)
+        self.__fComplex.grid_rowconfigure(6, weight=1)
 
         # widget
         self.__zoneCalcule = self._arrtk.createText(self.__mainView, ptaille=30,
@@ -125,7 +134,7 @@ class GUICalculatrice(GuiBase) :
         btnPythagore = self._arrtk.createButton(fclavier, text="Theoreme de pythagore", ppolice="Arial",pstyle="bold",ptaille=16
                                                        , bg=self._btnColor, fg=self._btnTexteColor)
         btnNbComplex = self._arrtk.createButton(fclavier, text="Nombre Complex", ppolice="Arial",pstyle="bold",ptaille=15
-                                                     , bg=self._btnColor, fg=self._btnTexteColor)
+                                                     , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewComplex)
         btnHist = self._arrtk.createButton(fclavier, text="Historique", ppolice="Arial",pstyle="bold",ptaille=20
                                           , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewHistorique)
 
@@ -138,6 +147,34 @@ class GUICalculatrice(GuiBase) :
         btnBackHist = self._arrtk.createButton(self.__fhistorique, text="Retour", ppolice="Arial", ptaille=25,
                                                bg=self._btnColor, fg=self._btnTexteColor,
                                                command=self.__viewCalcule)
+
+        # Frame Complex
+        lTitleNombreComplex = self._arrtk.createLabel(self.__fComplex, text="Nombre Complex",
+                                                      ppolice="Arial", ptaille=25, pstyle="bold")
+
+        lComplexNB1 = self._arrtk.createLabel(fEntryNB1, text=" j ", ppolice="Arial", ptaille=20)
+        self.__entryComplexNB1_1 = self._arrtk.createEntry(fEntryNB1, ppolice="Arial", ptaille=20)
+        self.__entryComplexNB1_2 = self._arrtk.createEntry(fEntryNB1, ppolice="Arial", ptaille=20)
+
+        lComplexNB2 = self._arrtk.createLabel(fEntryNB2, text=" j ", ppolice="Arial", ptaille=20)
+        self.__entryComplexNB2_1 = self._arrtk.createEntry(fEntryNB2, ppolice="Arial", ptaille=20)
+        self.__entryComplexNB2_2 = self._arrtk.createEntry(fEntryNB2, ppolice="Arial", ptaille=20)
+
+        # Bouton operateur Complex
+        btnComplexPlus = self._arrtk.createButton(fOperateurComplex, text="+", ppolice="Arial", ptaille=20,
+                                                  bg=self._btnColor, fg=self._btnTexteColor)
+        btnComplexMoin = self._arrtk.createButton(fOperateurComplex, text="-", ppolice="Arial", ptaille=20,
+                                                  bg=self._btnColor, fg=self._btnTexteColor)
+        btnComplexFois = self._arrtk.createButton(fOperateurComplex, text="*", ppolice="Arial", ptaille=20,
+                                                  bg=self._btnColor, fg=self._btnTexteColor)
+        btnComplexDiv = self._arrtk.createButton(fOperateurComplex, text="/", ppolice="Arial", ptaille=20,
+                                                  bg=self._btnColor, fg=self._btnTexteColor)
+
+        # Resultat Complex
+        self.__lResultatComplex = self._arrtk.createLabel(self.__fComplex,ppolice="Arial", ptaille=25)
+
+        btnBackComplex = self._arrtk.createButton(self.__fComplex, text="Retour", ppolice="Arial", ptaille=25,
+                                                    bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
 
         # Affichage des widgets
         # Clavier
@@ -186,6 +223,28 @@ class GUICalculatrice(GuiBase) :
         # Affichage MainView
         self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
+        # Frame Complex
+        self.__entryComplexNB1_1.pack(side="left")
+        self.__entryComplexNB1_2.pack(side="left")
+        lComplexNB1.pack(side="left")
+
+        self.__entryComplexNB2_1.pack(side="left")
+        self.__entryComplexNB2_2.pack(side="left")
+        lComplexNB2.pack(side="left")
+
+        btnComplexPlus.pack(side="left")
+        btnComplexMoin.pack(side="left")
+        btnComplexFois.pack(side="right")
+        btnComplexDiv.pack(side="right")
+
+        lTitleNombreComplex.grid(row=0, column=0, sticky="n", padx=10, pady=(10, 0))
+        fEntryNB1.grid(row=2, column=0, sticky="n", padx=10, pady=(0, 8))
+        fOperateurComplex.grid(row=3, column=0, sticky="n", padx=10, pady=(0, 8))
+        fEntryNB2.grid(row=4, column=0, sticky="n", padx=10, pady=(0, 8))
+        self.__lResultatComplex.grid(row=5, column=0, sticky="n", padx=10, pady=(0, 8))
+
+        btnBackComplex.grid(row=6, column=0, sticky="ew", padx=10, pady=(0, 10))
+
         self.__viewCalcule()
         # Configuration de la zone de calcul
         self.__zoneCalcule.bind("<KeyPress-Return>",self.__enterPressed)
@@ -194,12 +253,20 @@ class GUICalculatrice(GuiBase) :
     
     def __viewCalcule(self):
         self.__fhistorique.grid_forget()
+        self.__fComplex.grid_forget()
         self.__mainView.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self._screen.update()
 
     def __viewHistorique(self):
         self.__mainView.grid_forget()
+        self.__fComplex.grid_forget()
         self.__fhistorique.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+        self._screen.update()
+
+    def __viewComplex(self):
+        self.__mainView.grid_forget()
+        self.__fhistorique.grid_forget()
+        self.__fComplex.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self._screen.update()
 
     def __addHistorique(self,texte:str):
@@ -273,134 +340,3 @@ class GUICalculatrice(GuiBase) :
             self.__zoneCalcule.delete("1.0", END)
             self.__ecritureCarractere(str(math.degrees(int(contenu))))
         self._screen.update()
-    """
-    def __modeComplex(self):
-        self.__zoneCalcule.pack_forget()
-        self.__labelTitreNbComplex.place(relx=0.5, rely=0.0, anchor="n") 
-        self.__fnbComplex.pack(side="left")  
-        fcomplex1.place(relx=0.5, rely=0.0, anchor="n")
-        foperateurComplex.place(relx=0.5, rely=0.5, anchor="center")
-        fcomplex2.place(relx=0.5, rely=1.0, anchor="s")
-        fCalculeComplex.place(x=0,y=80)
-        fResultatComplex.place(x=0,y=220)
-        self.__btnEgalComplex.place(relx=0.5, rely=0.0, anchor="n")
-        self.__affichageComplexOut.place(relx=0.5, rely=1.0, anchor="s")
-        self.__btnCancelComplex.place(x=(500-self.__btnCancelComplex.winfo_reqwidth()),y=(500-self.__btnCancelComplex.winfo_reqheight()))
-        self.__btnRetourComplex.place(x=0,y=(500-self.__btnCancelComplex.winfo_reqheight()))
-        self.__affichageComplexOut.configure(text="")
-        self.__zoneComplex1A.bind("<KeyPress>", self.__carractereInterdit)
-        self.__zoneComplex1B.bind("<KeyPress>", self.__carractereInterdit)
-        self.__zoneComplex2A.bind("<KeyPress>", self.__carractereInterdit)
-        self.__zoneComplex2B.bind("<KeyPress>", self.__carractereInterdit)             
-    
-    
-    def __setOperateurComplex(self,operateur:str):
-        self.__operateurChooseComplex = operateur
-        self.__btnplusComplex.pack_forget()
-        self.__btnMoinComplex.pack_forget()
-        self.__btnFoisComplex.pack_forget()
-        self.__btnDiviserComplex.pack_forget()
-        foperateurComplex.place_forget()
-        if self.__operateurChooseComplex == "+":
-            self.__labelPlus.pack()
-        else :
-            if self.__operateurChooseComplex == "-":
-                self.__labelMois.pack()
-            else :
-                if self.__operateurChooseComplex == "*":
-                    self.__labelFois.pack()
-                else :
-                    if self.__operateurChooseComplex== "/":
-                        self.__labelDiviser.pack()
-        foperateurComplex.update()
-        foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-foperateurComplex.winfo_reqwidth())//2),y=75)
-        
-    def __resetOperateurComplex(self):
-        if self.__operateurChooseComplex == "":
-            self.__operateurChooseComplex = ""
-        else :
-            self.__operateurChooseComplex = ""
-            self.__labelPlus.pack_forget()
-            self.__labelMois.pack_forget()
-            self.__labelFois.pack_forget()
-            self.__labelDiviser.pack_forget()
-            foperateurComplex.place_forget()
-            self.__btnplusComplex.pack(side="left")
-            self.__btnMoinComplex.pack(side="left")
-            self.__btnFoisComplex.pack(side="left")
-            self.__btnDiviserComplex.pack(side="left")
-            foperateurComplex.update()
-            foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-foperateurComplex.winfo_reqwidth())//2),y=75)
-        
-        
-    def __calculeComplex(self):
-        nb1A = self.__zoneComplex1A.get()
-        nb1B = self.__zoneComplex1B.get()
-        nb2A = self.__zoneComplex2A.get()
-        nb2B = self.__zoneComplex2B.get()
-        self.__zoneComplex1A.delete(0,END)
-        self.__zoneComplex1B.delete(0,END)
-        self.__zoneComplex2A.delete(0,END)
-        self.__zoneComplex2B.delete(0,END)
-        if self.__operateurChooseComplex == "" or nb1A.strip() == "" or nb1B.strip() == "" or nb2A.strip() == "" or nb2B.strip() == "" :
-            showerror("Assistant","Il a une erreur qui empéche de faire le calcule")
-            self.__affichageComplexOut.configure(text="Erreur")
-        else :
-            calcule = CalculeNbComplexe(int(nb1A),int(nb1B),int(nb2A),int(nb2B))
-            if self.__operateurChooseComplex == "+":
-                nb1 = calcule.recuperationNb1()
-                nb2 = calcule.recuperationNb2()
-                resultat = calcule.aditionNbComplex()
-                self.__affichageHistorique.configure(text="Historique :\n" + nb1+"+"+nb2 + " = " + str(resultat))
-            else :
-                if self.__operateurChooseComplex == "-":
-                    nb1 = calcule.recuperationNb1()
-                    nb2 = calcule.recuperationNb2()
-                    resultat = calcule.soustrationNbComplex()
-                    self.__affichageHistorique.configure(text="Historique :\n" + nb1+"-"+nb2 + " = " + str(resultat))
-                else :
-                    if self.__operateurChooseComplex == "*":
-                        nb1 = calcule.recuperationNb1()
-                        nb2 = calcule.recuperationNb2()
-                        resultat = calcule.multiplicationNbComplex()
-                        self.__affichageHistorique.configure(text="Historique :\n" + nb1+"*"+nb2 + " = " + str(resultat))
-                    else :
-                        if self.__operateurChooseComplex == "/":
-                            nb1 = calcule.recuperationNb1()
-                            nb2 = calcule.recuperationNb2()
-                            resultat = calcule.divisionNbComplex()
-                            self.__affichageHistorique.configure(text="Historique :\n" + nb1+"/"+nb2 + " = " + str(resultat))
-            self.__resetOperateurComplex()
-            self.__affichageComplexOut.configure(text=str(resultat))
-    
-
-    def __modePythagore(self):
-        self.__zoneCalcule.pack_forget()
-        self.__fpythagore.pack(side="right")  
-        self.__fnbPythagore.place(relx=0.5, rely=0.0, anchor="n") 
-        self.__fchooseCal.place(x=(self.__fpythagore.winfo_reqwidth() - self.__fchooseCal.winfo_reqwidth()) // 2,y=125)
-        self.__affichagePythagoreOut.place(x=15,y=225) 
-        self.__btnRetourPythagore.place(x=0,y=(500-self.__btnRetourPythagore.winfo_reqheight()))
-        self.__affichagePythagoreOut.configure(text="")
-        
-    def __calculePythagore(self,mode):
-        nb1 = self.__zonePythagore1.get()
-        nb2 = self.__zonePythagore2.get()
-        if nb1.strip() == "" or nb2.strip() == "":
-            self.__affichagePythagoreOut.configure(text="Erreur")
-        else :
-            calcule = Pythagore(int(nb1),int(nb2))
-            if mode == 1:
-                resultat = str(calcule.theoreme())
-                sortieCalcule = calcule.recuperationCalcule()
-                self.__affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
-            else :
-                if mode == 2:
-                    if int(nb1) <= int(nb2) :
-                        self.__affichagePythagoreOut.configure(text="Erreur")
-                    else :
-                        resultat = str(calcule.reciproque())
-                        sortieCalcule = calcule.recuperationCalcule()
-                        self.__affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
-    
-    """
