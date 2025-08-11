@@ -10,7 +10,7 @@ class GUICalculatrice(GuiBase) :
         
         
     def _mainframe(self):
-        self._screen.minsize(1000,500)
+        self._screen.minsize(500,500)
         #cadre
         self.__fclavier = self._arrtk.createFrame(self._screen,bg="red")
         self.__fhistorique = self._arrtk.createFrame(self._screen, width=500, height=500)
@@ -238,7 +238,7 @@ class GUICalculatrice(GuiBase) :
         btnPythagore.grid(row=6, column=2, columnspan=3, sticky="nsew", padx=2, pady=4)
         btnNbComplex.grid(row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
         
-        self.__fhistorique.pack(side="left",fill="both", expand=True)
+        #self.__fhistorique.pack(side="left",fill="both", expand=True)
         self.__modeCalcule()
         # Affichage 
         self.__labelTitrePythagore.place(relx=0.5, rely=0.0, anchor="n") 
