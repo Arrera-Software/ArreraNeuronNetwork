@@ -161,17 +161,17 @@ class GUICalculatrice(GuiBase) :
         self.__entryComplexNB2_2 = self._arrtk.createEntry(fEntryNB2, ppolice="Arial", ptaille=20)
 
         # Bouton operateur Complex
-        btnComplexPlus = self._arrtk.createButton(fOperateurComplex, text="+", ppolice="Arial", ptaille=20,
-                                                  bg=self._btnColor, fg=self._btnTexteColor)
-        btnComplexMoin = self._arrtk.createButton(fOperateurComplex, text="-", ppolice="Arial", ptaille=20,
-                                                  bg=self._btnColor, fg=self._btnTexteColor)
-        btnComplexFois = self._arrtk.createButton(fOperateurComplex, text="*", ppolice="Arial", ptaille=20,
-                                                  bg=self._btnColor, fg=self._btnTexteColor)
-        btnComplexDiv = self._arrtk.createButton(fOperateurComplex, text="/", ppolice="Arial", ptaille=20,
-                                                  bg=self._btnColor, fg=self._btnTexteColor)
+        btnComplexPlus = self._arrtk.createButton(fOperateurComplex, text="+", ppolice="Arial", ptaille=30,
+                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__additionComplex)
+        btnComplexMoin = self._arrtk.createButton(fOperateurComplex, text="-", ppolice="Arial", ptaille=30,
+                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__soustrationComplex)
+        btnComplexFois = self._arrtk.createButton(fOperateurComplex, text="*", ppolice="Arial", ptaille=30,
+                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__multiplicationComplex)
+        btnComplexDiv = self._arrtk.createButton(fOperateurComplex, text="/", ppolice="Arial", ptaille=30,
+                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__divisionComplex)
 
         # Resultat Complex
-        self.__lResultatComplex = self._arrtk.createLabel(self.__fComplex,ppolice="Arial", ptaille=25)
+        self.__lResultatComplex = self._arrtk.createLabel(self.__fComplex,text="",ppolice="Arial", ptaille=25)
 
         btnBackComplex = self._arrtk.createButton(self.__fComplex, text="Retour", ppolice="Arial", ptaille=25,
                                                     bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
@@ -339,4 +339,61 @@ class GUICalculatrice(GuiBase) :
         else:
             self.__zoneCalcule.delete("1.0", END)
             self.__ecritureCarractere(str(math.degrees(int(contenu))))
+        self._screen.update()
+
+    def __additionComplex(self):
+        """Additionne deux nombres complexes."""
+        try:
+            nb1_1 = int(self.__entryComplexNB1_1.get())
+            nb1_2 = int(self.__entryComplexNB1_2.get())
+            nb2_1 = int(self.__entryComplexNB2_1.get())
+            nb2_2 = int(self.__entryComplexNB2_2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().aditionNbComplex()
+            self.__lResultatComplex.configure(text=str(resultat))
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+        self._screen.update()
+
+    def __soustrationComplex(self):
+        """Additionne deux nombres complexes."""
+        try:
+            nb1_1 = int(self.__entryComplexNB1_1.get())
+            nb1_2 = int(self.__entryComplexNB1_2.get())
+            nb2_1 = int(self.__entryComplexNB2_1.get())
+            nb2_2 = int(self.__entryComplexNB2_2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().soustrationNbComplex()
+            self.__lResultatComplex.configure(text=str(resultat))
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+        self._screen.update()
+
+    def __multiplicationComplex(self):
+        """Additionne deux nombres complexes."""
+        try:
+            nb1_1 = int(self.__entryComplexNB1_1.get())
+            nb1_2 = int(self.__entryComplexNB1_2.get())
+            nb2_1 = int(self.__entryComplexNB2_1.get())
+            nb2_2 = int(self.__entryComplexNB2_2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().multiplicationNbComplex()
+            self.__lResultatComplex.configure(text=str(resultat))
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+        self._screen.update()
+
+    def __divisionComplex(self):
+        def __soustrationComplex(self):
+            """Additionne deux nombres complexes."""
+        try:
+            nb1_1 = int(self.__entryComplexNB1_1.get())
+            nb1_2 = int(self.__entryComplexNB1_2.get())
+            nb2_1 = int(self.__entryComplexNB2_1.get())
+            nb2_2 = int(self.__entryComplexNB2_2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().divisionNbComplex()
+            self.__lResultatComplex.configure(text=str(resultat))
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
         self._screen.update()
