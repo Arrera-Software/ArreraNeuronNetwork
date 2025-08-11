@@ -1,4 +1,5 @@
 from tkinter import PhotoImage, END
+import customtkinter as ctk
 from tkinter.messagebox import showerror
 from gui.guibase import GuiBase,gestionnaire
 import math
@@ -16,7 +17,7 @@ class GUICalculatrice(GuiBase) :
         #cadre
         self.__mainView = self._arrtk.createFrame(self._screen)
         fclavier = self._arrtk.createFrame(self.__mainView)
-        self.__fhistorique = self._arrtk.createFrame(self._screen, width=500, height=500)
+        self.__fhistorique = self._arrtk.createFrame(self._screen)
         self.__fnbComplex = self._arrtk.createFrame(self._screen, width=500, height=500)
         self.__fCalculeComplex = self._arrtk.createFrame(self.__fnbComplex, width=500, height=120)
         self.__fResultatComplex = self._arrtk.createFrame(self.__fnbComplex, width=500, height=80)
@@ -63,6 +64,11 @@ class GUICalculatrice(GuiBase) :
         self.__mainView.grid_rowconfigure(0, weight=1)  # la zone texte prend de la place en vertical
         self.__mainView.grid_rowconfigure(1, weight=2)  # la zone clavier peut prendre plus
         self.__mainView.grid_columnconfigure(0, weight=1)
+
+        self.__fhistorique.grid_columnconfigure(0, weight=1)
+        self.__fhistorique.grid_rowconfigure(0, weight=1)
+        self.__fhistorique.grid_rowconfigure(1, weight=3)
+        self.__fnbComplex.grid_rowconfigure(2, weight=1)
 
         #touche clavier
         #chiffre
@@ -143,7 +149,7 @@ class GUICalculatrice(GuiBase) :
         btnNbComplex = self._arrtk.createButton(fclavier, text="Nombre Complex", ppolice="Arial",pstyle="bold",ptaille=15
                                                      , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeComplex)
         btnHist = self._arrtk.createButton(fclavier, text="Historique", ppolice="Arial",pstyle="bold",ptaille=20
-                                          , bg=self._btnColor, fg=self._btnTexteColor)
+                                          , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewHistorique)
         #btn nb complex
         self.__btnEgalComplex = self._arrtk.createButton(self.__fResultatComplex,text="="
                                        ,command= lambda : self.__calculeComplex())
@@ -158,21 +164,31 @@ class GUICalculatrice(GuiBase) :
         self.__btnCancelComplex = self._arrtk.createButton(self.__fnbComplex, text="Annuler", ppolice="Arial", ptaille=15
                                                            , bg=self._btnColor, fg=self._btnTexteColor, command=self.__resetOperateurComplex)
         self.__btnRetourComplex = self._arrtk.createButton(self.__fnbComplex, text="Retour", ppolice="Arial", ptaille=15
-                                                           , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeCalcule)
+                                                           , bg=self._btnColor, fg=self._btnTexteColor, command=self.__viewCalcule)
         #bouton pythagore
         self.__btnReciproque = self._arrtk.createButton(self.__fchooseCal, text="Reciproque", bg=self._btnColor
                                                         , fg=self._btnTexteColor, command=lambda : self.__calculePythagore(2), ppolice="Arial", ptaille=15)
         self.__btnTheoreme = self._arrtk.createButton(self.__fchooseCal, text="Theoreme"
                                                       , bg=self._btnColor, fg=self._btnTexteColor, command=lambda : self.__calculePythagore(1), ppolice="Arial", ptaille=15)
         self.__btnRetourPythagore = self._arrtk.createButton(self.__fpythagore, text="Retour", ppolice="Arial", ptaille=15
-                                                             , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeCalcule)
+                                                             , bg=self._btnColor, fg=self._btnTexteColor, command=self.__viewCalcule)
         #label
         self.__labelPlus = self._arrtk.createLabel(self.__foperateurComplex,text="+")
         self.__labelMois = self._arrtk.createLabel(self.__foperateurComplex,text="-")
         self.__labelDiviser = self._arrtk.createLabel(self.__foperateurComplex,text="/")
         self.__labelFois = self._arrtk.createLabel(self.__foperateurComplex,text="*")
-        self.__affichageHistorique = self._arrtk.createLabel(self.__fhistorique, text="Historique :"
-                                                             ,width=30, ppolice="Arial", ptaille=20)
+
+        # Frame Historique
+        labelHist = self._arrtk.createLabel(self.__fhistorique, text="Historique",
+                                            ppolice="Arial", ptaille=20)
+        self.__affichageHistorique = self._arrtk.createText(self.__fhistorique)
+        scroll_y = ctk.CTkScrollbar(self.__fhistorique, orientation="vertical", command=self.__affichageHistorique.yview)
+        self.__affichageHistorique.configure(state='disabled')
+        btnBackHist = self._arrtk.createButton(self.__fhistorique, text="Retour", ppolice="Arial", ptaille=25,
+                                               bg=self._btnColor, fg=self._btnTexteColor,
+                                               command=self.__viewCalcule)
+
+
         self.__affichageComplexOut = self._arrtk.createLabel(self.__fResultatComplex,width=42,ppolice="Arial", ptaille=15,bg="grey",fg="white")
         self.__complex1L = self._arrtk.createLabel(self.__fcomplex1, text="j", ppolice="Arial", ptaille=15, bg=self._btnColor)
         self.__complex2L = self._arrtk.createLabel(self.__fcomplex2, text="j", ppolice="Arial", ptaille=15, bg=self._btnColor)
@@ -248,11 +264,15 @@ class GUICalculatrice(GuiBase) :
         btnNbComplex.grid(row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
         
         #self.__fhistorique.pack(side="left",fill="both", expand=True)
-        self.__modeCalcule()
+        self.__viewCalcule()
         # Affichage 
         self.__labelTitrePythagore.place(relx=0.5, rely=0.0, anchor="n") 
         #affichage historique
-        self.__affichageHistorique.place(x=0,y=0)
+        labelHist.grid(row=0, column=0)
+
+        self.__affichageHistorique.grid(row=1, column=0, sticky="nsew", padx=(10, 0), pady=10)
+        scroll_y.grid(row=1, column=1, sticky="ns", padx=(0, 10), pady=10)
+        btnBackHist.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         #verrifaction de carratere taper
         self.__zoneCalcule.bind("<KeyPress-Return>",self.__enterPressed)
         self.__zoneCalcule.bind("<KeyPress>",self.__carractereInterdit)
@@ -260,15 +280,23 @@ class GUICalculatrice(GuiBase) :
         self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
     
-    def __modeCalcule(self):
-        self.__fnbComplex.pack_forget()
-        self.__fpythagore.pack_forget()
-        self.__updateCalculatrice()
+    def __viewCalcule(self):
+        self.__fhistorique.grid_forget()
         self.__mainView.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
 
+    def __viewHistorique(self):
+        self.__mainView.grid_forget()
+        self.__fhistorique.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
 
+    def __addHistorique(self,texte:str):
+        """Ajoute un texte à l'historique de la calculatrice."""
+        if not texte:
+            return
+        self.__affichageHistorique.configure(state='normal')
+        self.__affichageHistorique.insert(END, texte + "\n")
+        self.__affichageHistorique.see(END)
+        self.__affichageHistorique.configure(state='disabled')
 
-        
     def __updateCalculatrice(self):
         self._screen.update()
     
@@ -312,10 +340,10 @@ class GUICalculatrice(GuiBase) :
         contenu = contenu.replace(" ", "")
         try:
             resultat = eval(contenu)
-            self.__affichageHistorique.configure(text="Historique :\n" + str(contenu) + " = " + str(resultat))
             self.__affichageHistorique.update()
             self.__zoneCalcule.delete("1.0", END)
             self.__ecritureCarractere(str(resultat))
+            self.__addHistorique(contenu + " = " + str(resultat))
         except Exception as e:
             self.__zoneCalcule.delete("1.0", END)
             self.__ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
