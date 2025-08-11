@@ -12,7 +12,7 @@ class GUICalculatrice(GuiBase) :
     def _mainframe(self):
         self._screen.minsize(1000,500)
         #cadre
-        self.__fclavier = self._arrtk.createFrame(self._screen, width=500, height=250)
+        self.__fclavier = self._arrtk.createFrame(self._screen,bg="red")
         self.__fhistorique = self._arrtk.createFrame(self._screen, width=500, height=500)
         self.__fnbComplex = self._arrtk.createFrame(self._screen, width=500, height=500)
         self.__fCalculeComplex = self._arrtk.createFrame(self.__fnbComplex, width=500, height=120)
@@ -38,6 +38,23 @@ class GUICalculatrice(GuiBase) :
                                                              ,ppolice="Arial",ptaille=25)
         self.__labelTitreNbComplex = self._arrtk.createLabel(self.__fnbComplex, text="Calcule de nombre complex"
                                                              ,ppolice="Arial",ptaille=25)
+
+        # Configuration des frame
+        self.__fclavier.grid_columnconfigure(0, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(1, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(2, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(3, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(4, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(5, weight=1, uniform="col")
+        self.__fclavier.grid_columnconfigure(6, weight=1, uniform="col")
+
+        self.__fclavier.grid_rowconfigure(0, weight=1)
+        self.__fclavier.grid_rowconfigure(1, weight=1)
+        self.__fclavier.grid_rowconfigure(2, weight=1)
+        self.__fclavier.grid_rowconfigure(3, weight=1)
+        self.__fclavier.grid_rowconfigure(4, weight=1)
+        self.__fclavier.grid_rowconfigure(5, weight=1)
+        self.__fclavier.grid_rowconfigure(6, weight=1)
         #touche clavier
         #chiffre
         btnNb0 = self._arrtk.createButton(self.__fclavier,text="0", bg=self._btnColor, fg=self._btnTexteColor,
@@ -61,14 +78,14 @@ class GUICalculatrice(GuiBase) :
         btnNb9 = self._arrtk.createButton(self.__fclavier,text="9", bg=self._btnColor, fg=self._btnTexteColor,
                                command= lambda : self.__ecritureCarractere("9"),width=36,height=36,conerRadus=18)
         btnPI = self._arrtk.createButton(self.__fclavier,text="PI", bg=self._btnColor, fg=self._btnTexteColor,
-                              command= lambda : self.__ecritureCarractere("3.1415926535897932"))
+                              command= lambda : self.__ecritureCarractere("3.1415926535897932"),width=36,height=36,conerRadus=18)
         # operateur
         btnVirgule = self._arrtk.createButton(self.__fclavier,text=".", bg=self._btnColor, fg=self._btnTexteColor,
                                    command= lambda : self.__ecritureCarractere("."),width=36,height=36,conerRadus=18)
         btnPuissanceDix = self._arrtk.createButton(self.__fclavier,text="10^", bg=self._btnColor, fg=self._btnTexteColor,
                                         command= lambda : self.__ecritureCarractere("*10**"),width=36,height=36,conerRadus=18)
         btnEgal = self._arrtk.createButton(self.__fclavier,text="=", bg=self._btnColor, fg=self._btnTexteColor,
-                                command=self.__calcule)
+                                command=self.__calcule,width=36,height=36,conerRadus=18)
         btnplus = self._arrtk.createButton(self.__fclavier,text="+", bg=self._btnColor, fg=self._btnTexteColor,
                                 command= lambda : self.__ecritureCarractere("+"),width=36,height=36,conerRadus=18)
         btnMoin = self._arrtk.createButton(self.__fclavier,text="-", bg=self._btnColor, fg=self._btnTexteColor,
@@ -87,9 +104,9 @@ class GUICalculatrice(GuiBase) :
                                     command= lambda : self.__ecritureCarractere("**"),width=36,height=36,conerRadus=18)
         btnExpodentiel = self._arrtk.createButton(self.__fclavier,text="e^", bg=self._btnColor, fg=self._btnTexteColor,
                                        command= lambda : self.__ecritureCarractere("math.exp("),width=36,height=36,conerRadus=18)
-        btnLN = self._arrtk.createButton(self.__fclavier,text="ln()", bg=self._btnColor, fg=self._btnTexteColor,
+        btnLN = self._arrtk.createButton(self.__fclavier,text="ln", bg=self._btnColor, fg=self._btnTexteColor,
                               command= lambda : self.__ecritureCarractere("math.log(x,math.e)"),width=36,height=36,conerRadus=18)
-        btnLOG = self._arrtk.createButton(self.__fclavier,text="log()", bg=self._btnColor, fg=self._btnTexteColor,
+        btnLOG = self._arrtk.createButton(self.__fclavier,text="log", bg=self._btnColor, fg=self._btnTexteColor,
                                command= lambda : self.__ecritureCarractere("math.log(x,10)"),width=36,height=36,conerRadus=18)
         #cercle trigo
         btnSIN = self._arrtk.createButton(self.__fclavier,text="SIN", bg=self._btnColor, fg=self._btnTexteColor,
@@ -98,17 +115,17 @@ class GUICalculatrice(GuiBase) :
                                command=lambda : self.__ecritureCarractere("math.cos("),width=50,height=36,conerRadus=18)
         btnTAN = self._arrtk.createButton(self.__fclavier,text="TAN", bg=self._btnColor, fg=self._btnTexteColor,
                                command=lambda :self.__ecritureCarractere("math.tan("),width=50,height=36,conerRadus=18)
-        btnARCSIN = self._arrtk.createButton(self.__fclavier,text="ARCSIN", bg=self._btnColor, fg=self._btnTexteColor,
+        btnARCSIN = self._arrtk.createButton(self.__fclavier,text="SIN-1", bg=self._btnColor, fg=self._btnTexteColor,
                                   command=lambda : self.__ecritureCarractere("math.asin("),width=50,height=36,conerRadus=18)
-        btnARCCOS = self._arrtk.createButton(self.__fclavier,text="ARCCOS", bg=self._btnColor, fg=self._btnTexteColor,
+        btnARCCOS = self._arrtk.createButton(self.__fclavier,text="COS-1", bg=self._btnColor, fg=self._btnTexteColor,
                                   command=lambda : self.__ecritureCarractere("math.acos("),width=50,height=36,conerRadus=18)
-        btnARCTAN = self._arrtk.createButton(self.__fclavier,text="ARCTAN", bg=self._btnColor, fg=self._btnTexteColor,
+        btnARCTAN = self._arrtk.createButton(self.__fclavier,text="TAN-1", bg=self._btnColor, fg=self._btnTexteColor,
                                   command=lambda : self.__ecritureCarractere("math.cos("),width=50,height=36,conerRadus=18)
         #autre
         btnClear = self._arrtk.createButton(self.__fclavier,text="C",command=self.__clearAll,
                                                    bg=self._btnColor, fg=self._btnTexteColor,
                                                    width=50,height=36,conerRadus=18)
-        btnSuppr = self._arrtk.createButton(self.__fclavier,text="SUPPR",bg=self._btnColor,
+        btnSuppr = self._arrtk.createButton(self.__fclavier,text="CE",bg=self._btnColor,
                                                    fg=self._btnTexteColor,command=self.__suppr,width=50,
                                                    height=36,conerRadus=18)
         #btn fonction special
@@ -169,8 +186,56 @@ class GUICalculatrice(GuiBase) :
         self.__zonePythagore1.place(relx=0, rely=1, anchor='sw')  
         self.__zonePythagore2.place(relx=1, rely=1, anchor='se') 
         # Clavier
-        btnNb0
+        # --- Ligne 0 : édition / parenthèses / opérateurs rapides ---
+        btnClear.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
+        btnSuppr.grid(row=0, column=1, sticky="nsew", padx=2, pady=2)
+        btnParenthese1.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)   # (
+        btnParenthese2.grid(row=0, column=3, sticky="nsew", padx=2, pady=2)   # )
+        btnDiviser.grid(row=0, column=4, sticky="nsew", padx=2, pady=2)   # /
+        btnFois.grid(row=0, column=5, sticky="nsew", padx=2, pady=2)   # *
+        btnExposant.grid(row=0, column=6, sticky="nsew", padx=2, pady=2)   # ^ -> **
 
+        # --- Ligne 1 : racine / puissances / PI ---
+        btnRacine.grid(row=1, column=0, sticky="nsew", padx=2, pady=2)  # sqrt(
+        btnPuissanceDix.grid(row=1, column=1, sticky="nsew", padx=2, pady=2)  # 10^
+        btnPI.grid(row=1, column=2, sticky="nsew", padx=2, pady=2)  # PI
+        btnVirgule.grid(row=1, column=3, sticky="nsew", padx=2, pady=2)  # .
+        btnSIN.grid(row=1, column=4, sticky="nsew", padx=2, pady=2)
+        btnCOS.grid(row=1, column=5, sticky="nsew", padx=2, pady=2)
+        btnTAN.grid(row=1, column=6, sticky="nsew", padx=2, pady=2)
+
+        # --- Ligne 2 : 7 8 9 / trig inverse 1 ---
+        btnNb7.grid(row=2, column=0, sticky="nsew", padx=2, pady=2)
+        btnNb8.grid(row=2, column=1, sticky="nsew", padx=2, pady=2)
+        btnNb9.grid(row=2, column=2, sticky="nsew", padx=2, pady=2)
+        btnMoin.grid(row=2, column=3, sticky="nsew", padx=2, pady=2)  # -
+        btnARCSIN.grid(row=2, column=4, sticky="nsew", padx=2, pady=2)
+        btnARCCOS.grid(row=2, column=5, sticky="nsew", padx=2, pady=2)
+        btnARCTAN.grid(row=2, column=6, sticky="nsew", padx=2, pady=2)
+
+        # --- Ligne 3 : 4 5 6 / logs ---
+        btnNb4.grid(row=3, column=0, sticky="nsew", padx=2, pady=2)
+        btnNb5.grid(row=3, column=1, sticky="nsew", padx=2, pady=2)
+        btnNb6.grid(row=3, column=2, sticky="nsew", padx=2, pady=2)
+        btnplus.grid(row=3, column=3, sticky="nsew", padx=2, pady=2)  # +
+        btnExpodentiel.grid(row=3, column=4, sticky="nsew", padx=2, pady=2)  # e^ -> math.exp(
+        btnLN.grid(row=3, column=5, sticky="nsew", padx=2, pady=2)  # ln()
+        btnLOG.grid(row=3, column=6, sticky="nsew", padx=2, pady=2)  # log()
+
+        # --- Ligne 4 : 1 2 3 / opérateur = placé plus bas pour le style calculatrice ---
+        btnNb1.grid(row=4, column=0, sticky="nsew", padx=2, pady=2)
+        btnNb2.grid(row=4, column=1, sticky="nsew", padx=2, pady=2)
+        btnNb3.grid(row=4, column=2, sticky="nsew", padx=2, pady=2)
+        btnEgal.grid(row=4, column=3, rowspan=2, sticky="nsew", padx=2, pady=2)  # = sur 2 lignes
+
+        # Colonne fonctions (ligne 4 libre ici) -> rien à placer si tu veux laisser aéré
+        btnNb0.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=2, pady=2)  # 0 plus large
+
+
+        # --- Ligne 6 : boutons spéciaux (pieds de page) ---
+        btnAngle.grid(     row=6, column=0, columnspan=2, sticky="nsew", padx=2, pady=4)
+        btnPythagore.grid( row=6, column=2, columnspan=3, sticky="nsew", padx=2, pady=4)
+        btnNbComplex.grid( row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
         
         self.__fhistorique.pack(side="left",fill="both", expand=True)
         self.__modeCalcule()
