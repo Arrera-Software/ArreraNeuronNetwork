@@ -271,6 +271,7 @@ class CArreraTK :
                 entry.configure(font=(ppolice, ptaille, "normal"))
             if (width != 20):
                 entry.configure(width=width)
+
         else :
             entry = Entry(screen)
             if (bg != ""):
@@ -281,7 +282,7 @@ class CArreraTK :
                 entry.configure(font=(ppolice, ptaille))
         return entry
 
-    def createText(self, screen,width : int = 0,height : int = 0, bg : str = "", fg : str = ""):
+    def createText(self, screen,width : int = 0,height : int = 0, bg : str = "", fg : str = "",ppolice : str = "Arial", ptaille : int = 12,pstyle : str = "normal",center : bool = False):
         if self.__mode == 0:
             text = ctk.CTkTextbox(screen)
             if bg != "":
@@ -292,6 +293,11 @@ class CArreraTK :
                 text.configure(width=width)
             if height != 0:
                 text.configure(height=height)
+            if (ppolice != "Arial" or ptaille != 12):
+                text.configure(font=(ppolice, ptaille, pstyle))
+            if center:
+                text._textbox.tag_configure("center", justify="center")
+                text._textbox.tag_add("center", "0.0", "end")
         else:
             text = Text(screen)
             if (bg != ""):
@@ -300,6 +306,9 @@ class CArreraTK :
                 text.configure(fg=fg)
 
         return text
+
+    def centerTextOnTextWidget(self,text : ctk.CTkTextbox):
+        text._textbox.tag_add("center", "1.0", "end")
 
     def createCheckbox(self, screen, text: str = "", bg : str = "", fg : str = ""):
         checkbox = Checkbutton(screen,text=text)
