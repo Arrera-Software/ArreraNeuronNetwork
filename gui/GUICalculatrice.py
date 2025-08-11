@@ -27,7 +27,8 @@ class GUICalculatrice(GuiBase) :
         self.__fchooseCal = self._arrtk.createFrame(self.__fpythagore, width=400, height=50)
         self.__fnbPythagore = self._arrtk.createFrame(self.__fpythagore, width=500, height=100)
         #widget
-        self.__zoneCalcule = self._arrtk.createText(self.__mainView)
+        self.__zoneCalcule = self._arrtk.createText(self.__mainView,ptaille=30,
+                                                    ppolice="Arial",pstyle ="bold",center=True)
         
         self.__zoneComplex1A = self._arrtk.createEntry(self.__fcomplex1,ppolice="Arial",ptaille=15)
         self.__zoneComplex1B = self._arrtk.createEntry(self.__fcomplex1,ppolice="Arial",ptaille=15)
@@ -280,6 +281,7 @@ class GUICalculatrice(GuiBase) :
             return "break"
         elif event.char in carractereSpeciaux2:
             return "break"
+        self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
         
     def __enterPressed(self,event):
         self.__calcule()
@@ -287,6 +289,7 @@ class GUICalculatrice(GuiBase) :
         
     def __ecritureCarractere(self,crc:str):
         self.__zoneCalcule.insert("end",crc)
+        self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
         
     def __clearAll(self):
         self.__zoneCalcule.delete("1.0",END)
@@ -302,6 +305,7 @@ class GUICalculatrice(GuiBase) :
             # Mettre à jour le widget Text avec le nouveau contenu
             self.__zoneCalcule.delete("1.0", "end")
             self.__zoneCalcule.insert("1.0", contenu)
+            self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
             
     def __calcule(self):
         contenu = self.__zoneCalcule.get("1.0", END)
