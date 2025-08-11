@@ -8,41 +8,17 @@ class GUICalculatrice(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Calculatrice")
         self.__operateurChooseComplex = ""
-        
-        
+
     def _mainframe(self):
         self._screen.minsize(500,500)
         self._screen.grid_rowconfigure(0, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
         #cadre
+        # Partie calculatrice
         self.__mainView = self._arrtk.createFrame(self._screen)
         fclavier = self._arrtk.createFrame(self.__mainView)
+        # Partie historique
         self.__fhistorique = self._arrtk.createFrame(self._screen)
-        self.__fnbComplex = self._arrtk.createFrame(self._screen, width=500, height=500)
-        self.__fCalculeComplex = self._arrtk.createFrame(self.__fnbComplex, width=500, height=120)
-        self.__fResultatComplex = self._arrtk.createFrame(self.__fnbComplex, width=500, height=80)
-        self.__foperateurComplex = self._arrtk.createFrame(self.__fCalculeComplex)
-        self.__fcomplex1 = self._arrtk.createFrame(self.__fCalculeComplex)
-        self.__fcomplex2 = self._arrtk.createFrame(self.__fCalculeComplex)
-        self.__fpythagore = self._arrtk.createFrame(self._screen, width=500, height=500)
-        self.__fchooseCal = self._arrtk.createFrame(self.__fpythagore, width=400, height=50)
-        self.__fnbPythagore = self._arrtk.createFrame(self.__fpythagore, width=500, height=100)
-        #widget
-        self.__zoneCalcule = self._arrtk.createText(self.__mainView,ptaille=30,
-                                                    ppolice="Arial",pstyle ="bold",center=True)
-        
-        self.__zoneComplex1A = self._arrtk.createEntry(self.__fcomplex1,ppolice="Arial",ptaille=15)
-        self.__zoneComplex1B = self._arrtk.createEntry(self.__fcomplex1,ppolice="Arial",ptaille=15)
-        self.__zoneComplex2A = self._arrtk.createEntry(self.__fcomplex2,ppolice="Arial",ptaille=15)
-        self.__zoneComplex2B = self._arrtk.createEntry(self.__fcomplex2,ppolice="Arial",ptaille=15)
-        
-        self.__zonePythagore1 = self._arrtk.createEntry(self.__fnbPythagore,ppolice="Arial",ptaille=15)
-        self.__zonePythagore2 = self._arrtk.createEntry(self.__fnbPythagore,ppolice="Arial",ptaille=15)
-        # Label
-        self.__labelTitrePythagore = self._arrtk.createLabel(self.__fnbPythagore, text="Calcule du théoréme de pythagore"
-                                                             ,ppolice="Arial",ptaille=25)
-        self.__labelTitreNbComplex = self._arrtk.createLabel(self.__fnbComplex, text="Calcule de nombre complex"
-                                                             ,ppolice="Arial",ptaille=25)
 
         # Configuration des frame
         fclavier.grid_columnconfigure(0, weight=1, uniform="col")
@@ -68,8 +44,10 @@ class GUICalculatrice(GuiBase) :
         self.__fhistorique.grid_columnconfigure(0, weight=1)
         self.__fhistorique.grid_rowconfigure(0, weight=1)
         self.__fhistorique.grid_rowconfigure(1, weight=3)
-        self.__fnbComplex.grid_rowconfigure(2, weight=1)
 
+        # widget
+        self.__zoneCalcule = self._arrtk.createText(self.__mainView, ptaille=30,
+                                                    ppolice="Arial", pstyle="bold", center=True)
         #touche clavier
         #chiffre
         btnNb0 = self._arrtk.createButton(fclavier,text="0", bg=self._btnColor, fg=self._btnTexteColor,
@@ -145,38 +123,11 @@ class GUICalculatrice(GuiBase) :
         btnAngle = self._arrtk.createButton(fclavier, text="Randian en degres", ppolice="Arial",pstyle="bold",ptaille=14
                                                    , bg=self._btnColor, fg=self._btnTexteColor, command=self.__convertiseurDegRad)
         btnPythagore = self._arrtk.createButton(fclavier, text="Theoreme de pythagore", ppolice="Arial",pstyle="bold",ptaille=16
-                                                       , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modePythagore)
+                                                       , bg=self._btnColor, fg=self._btnTexteColor)
         btnNbComplex = self._arrtk.createButton(fclavier, text="Nombre Complex", ppolice="Arial",pstyle="bold",ptaille=15
-                                                     , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeComplex)
+                                                     , bg=self._btnColor, fg=self._btnTexteColor)
         btnHist = self._arrtk.createButton(fclavier, text="Historique", ppolice="Arial",pstyle="bold",ptaille=20
                                           , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewHistorique)
-        #btn nb complex
-        self.__btnEgalComplex = self._arrtk.createButton(self.__fResultatComplex,text="="
-                                       ,command= lambda : self.__calculeComplex())
-        self.__btnplusComplex = self._arrtk.createButton(self.__foperateurComplex,text="+"
-                                       ,command= lambda : self.__setOperateurComplex("+"))
-        self.__btnMoinComplex = self._arrtk.createButton(self.__foperateurComplex,text="-"
-                                       ,command= lambda : self.__setOperateurComplex("-"))
-        self.__btnFoisComplex = self._arrtk.createButton(self.__foperateurComplex,text="*"
-                                       ,command= lambda : self.__setOperateurComplex("*"))
-        self.__btnDiviserComplex = self._arrtk.createButton(self.__foperateurComplex,text="/"
-                                          ,command= lambda : self.__setOperateurComplex("/"))
-        self.__btnCancelComplex = self._arrtk.createButton(self.__fnbComplex, text="Annuler", ppolice="Arial", ptaille=15
-                                                           , bg=self._btnColor, fg=self._btnTexteColor, command=self.__resetOperateurComplex)
-        self.__btnRetourComplex = self._arrtk.createButton(self.__fnbComplex, text="Retour", ppolice="Arial", ptaille=15
-                                                           , bg=self._btnColor, fg=self._btnTexteColor, command=self.__viewCalcule)
-        #bouton pythagore
-        self.__btnReciproque = self._arrtk.createButton(self.__fchooseCal, text="Reciproque", bg=self._btnColor
-                                                        , fg=self._btnTexteColor, command=lambda : self.__calculePythagore(2), ppolice="Arial", ptaille=15)
-        self.__btnTheoreme = self._arrtk.createButton(self.__fchooseCal, text="Theoreme"
-                                                      , bg=self._btnColor, fg=self._btnTexteColor, command=lambda : self.__calculePythagore(1), ppolice="Arial", ptaille=15)
-        self.__btnRetourPythagore = self._arrtk.createButton(self.__fpythagore, text="Retour", ppolice="Arial", ptaille=15
-                                                             , bg=self._btnColor, fg=self._btnTexteColor, command=self.__viewCalcule)
-        #label
-        self.__labelPlus = self._arrtk.createLabel(self.__foperateurComplex,text="+")
-        self.__labelMois = self._arrtk.createLabel(self.__foperateurComplex,text="-")
-        self.__labelDiviser = self._arrtk.createLabel(self.__foperateurComplex,text="/")
-        self.__labelFois = self._arrtk.createLabel(self.__foperateurComplex,text="*")
 
         # Frame Historique
         labelHist = self._arrtk.createLabel(self.__fhistorique, text="Historique",
@@ -188,105 +139,68 @@ class GUICalculatrice(GuiBase) :
                                                bg=self._btnColor, fg=self._btnTexteColor,
                                                command=self.__viewCalcule)
 
-
-        self.__affichageComplexOut = self._arrtk.createLabel(self.__fResultatComplex,width=42,ppolice="Arial", ptaille=15,bg="grey",fg="white")
-        self.__complex1L = self._arrtk.createLabel(self.__fcomplex1, text="j", ppolice="Arial", ptaille=15, bg=self._btnColor)
-        self.__complex2L = self._arrtk.createLabel(self.__fcomplex2, text="j", ppolice="Arial", ptaille=15, bg=self._btnColor)
-        self.__affichagePythagoreOut =  self._arrtk.createLabel(self.__fpythagore,width=42,ppolice="Arial", ptaille=15,bg="grey",fg="white")
-        #affichage 
-        # Nombre complex
-        self.__zoneComplex1A.pack(side="left")
-        self.__complex1L.pack(side="right")
-        self.__zoneComplex1B.pack(side="right")
-        self.__zoneComplex2A.pack(side="left")
-        self.__complex2L.pack(side="right")
-        self.__zoneComplex2B.pack(side="right") 
-        self.__btnplusComplex.pack(side="left")
-        self.__btnMoinComplex.pack(side="left")
-        self.__btnFoisComplex.pack(side="left")
-        self.__btnDiviserComplex.pack(side="left")
-        # Nombre Pythagore
-        self.__btnReciproque.place(relx=1, rely=1, anchor='se')
-        self.__btnTheoreme.place(relx=0, rely=1, anchor='sw')
-        self.__zonePythagore1.place(relx=0, rely=1, anchor='sw')  
-        self.__zonePythagore2.place(relx=1, rely=1, anchor='se') 
+        # Affichage des widgets
         # Clavier
-        # --- Ligne 0 : édition / parenthèses / opérateurs rapides ---
         btnClear.grid(row=0, column=0, sticky="nsew", padx=2, pady=2)
         btnSuppr.grid(row=0, column=1, sticky="nsew", padx=2, pady=2)
-        btnParenthese1.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)   # (
-        btnParenthese2.grid(row=0, column=3, sticky="nsew", padx=2, pady=2)   # )
-        btnDiviser.grid(row=0, column=4, sticky="nsew", padx=2, pady=2)   # /
-        btnFois.grid(row=0, column=5, sticky="nsew", padx=2, pady=2)   # *
-        btnExposant.grid(row=0, column=6, sticky="nsew", padx=2, pady=2)   # ^ -> **
-
-        # --- Ligne 1 : racine / puissances / PI ---
-        btnRacine.grid(row=1, column=0, sticky="nsew", padx=2, pady=2)  # sqrt(
-        btnPuissanceDix.grid(row=1, column=1, sticky="nsew", padx=2, pady=2)  # 10^
-        btnPI.grid(row=1, column=2, sticky="nsew", padx=2, pady=2)  # PI
-        btnVirgule.grid(row=1, column=3, sticky="nsew", padx=2, pady=2)  # .
+        btnParenthese1.grid(row=0, column=2, sticky="nsew", padx=2, pady=2)
+        btnParenthese2.grid(row=0, column=3, sticky="nsew", padx=2, pady=2)
+        btnDiviser.grid(row=0, column=4, sticky="nsew", padx=2, pady=2)
+        btnFois.grid(row=0, column=5, sticky="nsew", padx=2, pady=2)
+        btnExposant.grid(row=0, column=6, sticky="nsew", padx=2, pady=2)
+        btnRacine.grid(row=1, column=0, sticky="nsew", padx=2, pady=2)
+        btnPuissanceDix.grid(row=1, column=1, sticky="nsew", padx=2, pady=2)
+        btnPI.grid(row=1, column=2, sticky="nsew", padx=2, pady=2)
+        btnVirgule.grid(row=1, column=3, sticky="nsew", padx=2, pady=2)
         btnSIN.grid(row=1, column=4, sticky="nsew", padx=2, pady=2)
         btnCOS.grid(row=1, column=5, sticky="nsew", padx=2, pady=2)
         btnTAN.grid(row=1, column=6, sticky="nsew", padx=2, pady=2)
-
-        # --- Ligne 2 : 7 8 9 / trig inverse 1 ---
         btnNb7.grid(row=2, column=0, sticky="nsew", padx=2, pady=2)
         btnNb8.grid(row=2, column=1, sticky="nsew", padx=2, pady=2)
         btnNb9.grid(row=2, column=2, sticky="nsew", padx=2, pady=2)
-        btnMoin.grid(row=2, column=3, sticky="nsew", padx=2, pady=2)  # -
+        btnMoin.grid(row=2, column=3, sticky="nsew", padx=2, pady=2)
         btnARCSIN.grid(row=2, column=4, sticky="nsew", padx=2, pady=2)
         btnARCCOS.grid(row=2, column=5, sticky="nsew", padx=2, pady=2)
         btnARCTAN.grid(row=2, column=6, sticky="nsew", padx=2, pady=2)
-
-        # --- Ligne 3 : 4 5 6 / logs ---
         btnNb4.grid(row=3, column=0, sticky="nsew", padx=2, pady=2)
         btnNb5.grid(row=3, column=1, sticky="nsew", padx=2, pady=2)
         btnNb6.grid(row=3, column=2, sticky="nsew", padx=2, pady=2)
-        btnplus.grid(row=3, column=3, sticky="nsew", padx=2, pady=2)  # +
-        btnExpodentiel.grid(row=3, column=4, sticky="nsew", padx=2, pady=2)  # e^ -> math.exp(
-        btnLN.grid(row=3, column=5, sticky="nsew", padx=2, pady=2)  # ln()
-        btnLOG.grid(row=3, column=6, sticky="nsew", padx=2, pady=2)  # log()
-
-        # --- Ligne 4 : 1 2 3 / opérateur = placé plus bas pour le style calculatrice ---
+        btnplus.grid(row=3, column=3, sticky="nsew", padx=2, pady=2)
+        btnExpodentiel.grid(row=3, column=4, sticky="nsew", padx=2, pady=2)
+        btnLN.grid(row=3, column=5, sticky="nsew", padx=2, pady=2)
+        btnLOG.grid(row=3, column=6, sticky="nsew", padx=2, pady=2)
         btnNb1.grid(row=4, column=0, sticky="nsew", padx=2, pady=2)
         btnNb2.grid(row=4, column=1, sticky="nsew", padx=2, pady=2)
         btnNb3.grid(row=4, column=2, sticky="nsew", padx=2, pady=2)
         btnEgal.grid(row=4, column=3, rowspan=2, sticky="nsew", padx=2, pady=2)
         btnHist.grid(row=4, column=4, rowspan=2, columnspan=3, sticky="nsew", padx=2, pady=2)
-
-        # Colonne fonctions (ligne 4 libre ici) -> rien à placer si tu veux laisser aéré
-        btnNb0.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=2, pady=2)  # 0 plus large
-
-
-        # --- Ligne 6 : boutons spéciaux (pieds de page) ---
+        btnNb0.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=2, pady=2)
         btnAngle.grid(row=6, column=0, columnspan=2, sticky="nsew", padx=2, pady=4)
         btnPythagore.grid(row=6, column=2, columnspan=3, sticky="nsew", padx=2, pady=4)
         btnNbComplex.grid(row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
-        
-        #self.__fhistorique.pack(side="left",fill="both", expand=True)
-        self.__viewCalcule()
-        # Affichage 
-        self.__labelTitrePythagore.place(relx=0.5, rely=0.0, anchor="n") 
-        #affichage historique
+        # affichage historique
         labelHist.grid(row=0, column=0)
-
         self.__affichageHistorique.grid(row=1, column=0, sticky="nsew", padx=(10, 0), pady=10)
         scroll_y.grid(row=1, column=1, sticky="ns", padx=(0, 10), pady=10)
         btnBackHist.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
-        #verrifaction de carratere taper
+        # Affichage MainView
+        self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+        fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
+        self.__viewCalcule()
+        # Configuration de la zone de calcul
         self.__zoneCalcule.bind("<KeyPress-Return>",self.__enterPressed)
         self.__zoneCalcule.bind("<KeyPress>",self.__carractereInterdit)
 
-        self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
-        fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
     
     def __viewCalcule(self):
         self.__fhistorique.grid_forget()
         self.__mainView.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+        self._screen.update()
 
     def __viewHistorique(self):
         self.__mainView.grid_forget()
         self.__fhistorique.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+        self._screen.update()
 
     def __addHistorique(self,texte:str):
         """Ajoute un texte à l'historique de la calculatrice."""
@@ -297,8 +211,6 @@ class GUICalculatrice(GuiBase) :
         self.__affichageHistorique.see(END)
         self.__affichageHistorique.configure(state='disabled')
 
-    def __updateCalculatrice(self):
-        self._screen.update()
     
     def __carractereInterdit(self,event):
         carractereSpeciaux = "'_,?;§!ùµ*£$¤¨@ç|~&²¹#`\°"
@@ -318,9 +230,11 @@ class GUICalculatrice(GuiBase) :
     def __ecritureCarractere(self,crc:str):
         self.__zoneCalcule.insert("end",crc)
         self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
+        self._screen.update()
         
     def __clearAll(self):
         self.__zoneCalcule.delete("1.0",END)
+        self._screen.update()
         
     def __suppr(self):
         # Récupérer le contenu actuel du widget Text
@@ -334,6 +248,7 @@ class GUICalculatrice(GuiBase) :
             self.__zoneCalcule.delete("1.0", "end")
             self.__zoneCalcule.insert("1.0", contenu)
             self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
+        self._screen.update()
             
     def __calcule(self):
         contenu = self.__zoneCalcule.get("1.0", END)
@@ -347,16 +262,27 @@ class GUICalculatrice(GuiBase) :
         except Exception as e:
             self.__zoneCalcule.delete("1.0", END)
             self.__ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
-            
+        self._screen.update()
+
+    def __convertiseurDegRad(self):
+        contenu = self.__zoneCalcule.get("1.0", END)
+        if contenu == "":
+            self.__zoneCalcule.delete("1.0", END)
+            self.__ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
+        else:
+            self.__zoneCalcule.delete("1.0", END)
+            self.__ecritureCarractere(str(math.degrees(int(contenu))))
+        self._screen.update()
+    """
     def __modeComplex(self):
         self.__zoneCalcule.pack_forget()
         self.__labelTitreNbComplex.place(relx=0.5, rely=0.0, anchor="n") 
         self.__fnbComplex.pack(side="left")  
-        self.__fcomplex1.place(relx=0.5, rely=0.0, anchor="n")
-        self.__foperateurComplex.place(relx=0.5, rely=0.5, anchor="center")
-        self.__fcomplex2.place(relx=0.5, rely=1.0, anchor="s")
-        self.__fCalculeComplex.place(x=0,y=80)
-        self.__fResultatComplex.place(x=0,y=220)
+        fcomplex1.place(relx=0.5, rely=0.0, anchor="n")
+        foperateurComplex.place(relx=0.5, rely=0.5, anchor="center")
+        fcomplex2.place(relx=0.5, rely=1.0, anchor="s")
+        fCalculeComplex.place(x=0,y=80)
+        fResultatComplex.place(x=0,y=220)
         self.__btnEgalComplex.place(relx=0.5, rely=0.0, anchor="n")
         self.__affichageComplexOut.place(relx=0.5, rely=1.0, anchor="s")
         self.__btnCancelComplex.place(x=(500-self.__btnCancelComplex.winfo_reqwidth()),y=(500-self.__btnCancelComplex.winfo_reqheight()))
@@ -374,7 +300,7 @@ class GUICalculatrice(GuiBase) :
         self.__btnMoinComplex.pack_forget()
         self.__btnFoisComplex.pack_forget()
         self.__btnDiviserComplex.pack_forget()
-        self.__foperateurComplex.place_forget()
+        foperateurComplex.place_forget()
         if self.__operateurChooseComplex == "+":
             self.__labelPlus.pack()
         else :
@@ -386,8 +312,8 @@ class GUICalculatrice(GuiBase) :
                 else :
                     if self.__operateurChooseComplex== "/":
                         self.__labelDiviser.pack()
-        self.__foperateurComplex.update()
-        self.__foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-self.__foperateurComplex.winfo_reqwidth())//2),y=75)
+        foperateurComplex.update()
+        foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-foperateurComplex.winfo_reqwidth())//2),y=75)
         
     def __resetOperateurComplex(self):
         if self.__operateurChooseComplex == "":
@@ -398,13 +324,13 @@ class GUICalculatrice(GuiBase) :
             self.__labelMois.pack_forget()
             self.__labelFois.pack_forget()
             self.__labelDiviser.pack_forget()
-            self.__foperateurComplex.place_forget()
+            foperateurComplex.place_forget()
             self.__btnplusComplex.pack(side="left")
             self.__btnMoinComplex.pack(side="left")
             self.__btnFoisComplex.pack(side="left")
             self.__btnDiviserComplex.pack(side="left")
-            self.__foperateurComplex.update()
-            self.__foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-self.__foperateurComplex.winfo_reqwidth())//2),y=75)
+            foperateurComplex.update()
+            foperateurComplex.place(x=((self.__fnbComplex.winfo_reqwidth()-foperateurComplex.winfo_reqwidth())//2),y=75)
         
         
     def __calculeComplex(self):
@@ -477,14 +403,7 @@ class GUICalculatrice(GuiBase) :
                         sortieCalcule = calcule.recuperationCalcule()
                         self.__affichagePythagoreOut.configure(text=sortieCalcule+"="+resultat)
     
-    def __convertiseurDegRad(self):
-        contenu = self.__zoneCalcule.get("1.0", END)
-        if contenu ==  "":
-            self.__zoneCalcule.delete("1.0", END)
-            self.__ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
-        else :
-            self.__zoneCalcule.delete("1.0", END)
-            self.__ecritureCarractere(str(math.degrees(int(contenu))))
+    """
                 
 
 class CalculeNbComplexe :
