@@ -672,7 +672,13 @@ def partCalculatrice():
     calculBoucle = True
     while calculBoucle:
         print("Test des fonctions de calculatrice")
-        print("1.Adition\n2.Soustraction\n3.Multiplication\n4.Division\n5.Puissance\n6.Modulo\n7.Racine\n0.Quitter")
+        print("1.Adition\n2.Soustraction\n3.Multiplication"
+              "\n4.Division\n5.Puissance\n6.Modulo"
+              "\n7.Racine\n8.Ajouter nombre complexe"
+              "\n9.Somme complexe\n10.Soustration complexe"
+              "\n11.Multiplication complexe\n12.Division complexe"
+              "\n13.Recuperartion complex NB1\n14.Recuperartion complex NB2"
+              "\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -721,6 +727,27 @@ def partCalculatrice():
                     print("Impossible de calculer la racine")
                 else:
                     print(f"Resultat : {fnc.getFNCCalculatrice().racine(a, b)}")
+            case 8:
+                a1 = complex(input("Nombre complexe 1 (a) : "))
+                b1 = complex(input("Nombre complexe 1 (b) : "))
+                a2 = complex(input("Nombre complexe 2 (a) : "))
+                b2 = complex(input("Nombre complexe 2 (b) : "))
+                if fnc.getFNCCalculatrice().setComplexNb(a1, b1, a2, b2):
+                    print("Complexe enregistré")
+                else:
+                    print("Erreur lors de l'enregistrement du complexe")
+            case 9:
+                print(fnc.getFNCCalculatrice().aditionNbComplex())
+            case 10:
+                print(fnc.getFNCCalculatrice().soustrationNbComplex())
+            case 11:
+                print(fnc.getFNCCalculatrice().multiplicationNbComplex())
+            case 12:
+                print(fnc.getFNCCalculatrice().divisionNbComplex())
+            case 13:
+                print(fnc.getFNCCalculatrice().recuperationNb1Complex())
+            case 14:
+                print(fnc.getFNCCalculatrice().recuperationNb2Complex())
             case 0:
                 calculBoucle = False
             case _:
