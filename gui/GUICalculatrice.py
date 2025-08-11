@@ -134,7 +134,9 @@ class GUICalculatrice(GuiBase) :
         btnPythagore = self._arrtk.createButton(self.__fclavier, text="Theoreme de pythagore", ppolice="Arial", ptaille=15
                                                        , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modePythagore)
         btnNbComplex = self._arrtk.createButton(self.__fclavier, text="Nombre Complex", ppolice="Arial", ptaille=15
-                                                       , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeComplex)
+                                                     , bg=self._btnColor, fg=self._btnTexteColor, command=self.__modeComplex)
+        btnHist = self._arrtk.createButton(self.__fclavier, text="Historique", ppolice="Arial", ptaille=15
+                                          , bg=self._btnColor, fg=self._btnTexteColor)
         #btn nb complex
         self.__btnEgalComplex = self._arrtk.createButton(self.__fResultatComplex,text="="
                                        ,command= lambda : self.__calculeComplex())
@@ -226,16 +228,17 @@ class GUICalculatrice(GuiBase) :
         btnNb1.grid(row=4, column=0, sticky="nsew", padx=2, pady=2)
         btnNb2.grid(row=4, column=1, sticky="nsew", padx=2, pady=2)
         btnNb3.grid(row=4, column=2, sticky="nsew", padx=2, pady=2)
-        btnEgal.grid(row=4, column=3, rowspan=2, sticky="nsew", padx=2, pady=2)  # = sur 2 lignes
+        btnEgal.grid(row=4, column=3, rowspan=2, sticky="nsew", padx=2, pady=2)
+        btnHist.grid(row=4, column=4, rowspan=2, columnspan=3, sticky="nsew", padx=2, pady=2)
 
         # Colonne fonctions (ligne 4 libre ici) -> rien à placer si tu veux laisser aéré
         btnNb0.grid(row=5, column=0, columnspan=2, sticky="nsew", padx=2, pady=2)  # 0 plus large
 
 
         # --- Ligne 6 : boutons spéciaux (pieds de page) ---
-        btnAngle.grid(     row=6, column=0, columnspan=2, sticky="nsew", padx=2, pady=4)
-        btnPythagore.grid( row=6, column=2, columnspan=3, sticky="nsew", padx=2, pady=4)
-        btnNbComplex.grid( row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
+        btnAngle.grid(row=6, column=0, columnspan=2, sticky="nsew", padx=2, pady=4)
+        btnPythagore.grid(row=6, column=2, columnspan=3, sticky="nsew", padx=2, pady=4)
+        btnNbComplex.grid(row=6, column=5, columnspan=2, sticky="nsew", padx=2, pady=4)
         
         self.__fhistorique.pack(side="left",fill="both", expand=True)
         self.__modeCalcule()
