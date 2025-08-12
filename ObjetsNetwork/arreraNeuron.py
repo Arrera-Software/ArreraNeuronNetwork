@@ -50,6 +50,9 @@ class ArreraNetwork :
     def getNeuronRunning(self):
         return self.__networkRunning
 
+    def getUserConf(self):
+        return self.__userConf
+
     def boot(self,mode:int):
         """_summary_
 
