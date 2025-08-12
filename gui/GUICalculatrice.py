@@ -24,6 +24,8 @@ class GUICalculatrice(GuiBase) :
         fEntryNB1 = self._arrtk.createFrame(self.__fComplex)
         fOperateurComplex = self._arrtk.createFrame(self.__fComplex)
         fEntryNB2 = self._arrtk.createFrame(self.__fComplex)
+        # Partie pythagore
+        self.__fPythagore = self._arrtk.createFrame(self._screen)
 
         # Configuration des frame
         fclavier.grid_columnconfigure(0, weight=1, uniform="col")
@@ -53,6 +55,13 @@ class GUICalculatrice(GuiBase) :
         self.__fComplex.grid_columnconfigure(0, weight=1)
         self.__fComplex.grid_rowconfigure(1, weight=1)
         self.__fComplex.grid_rowconfigure(6, weight=1)
+
+        self.__fPythagore.grid_columnconfigure(0, weight=1)
+        self.__fPythagore.grid_columnconfigure(1, weight=0)
+        self.__fPythagore.grid_columnconfigure(2, weight=0, minsize=60)
+        self.__fPythagore.grid_columnconfigure(3, weight=0)
+        self.__fPythagore.grid_columnconfigure(4, weight=1)
+        self.__fPythagore.grid_rowconfigure(3, weight=1)
 
         # widget
         self.__zoneCalcule = self._arrtk.createText(self.__mainView, ptaille=30,
@@ -132,7 +141,7 @@ class GUICalculatrice(GuiBase) :
         btnAngle = self._arrtk.createButton(fclavier, text="Randian en degres", ppolice="Arial",pstyle="bold",ptaille=14
                                                    , bg=self._btnColor, fg=self._btnTexteColor, command=self.__convertiseurDegRad)
         btnPythagore = self._arrtk.createButton(fclavier, text="Theoreme de pythagore", ppolice="Arial",pstyle="bold",ptaille=16
-                                                       , bg=self._btnColor, fg=self._btnTexteColor)
+                                                       , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewPythagore)
         btnNbComplex = self._arrtk.createButton(fclavier, text="Nombre Complex", ppolice="Arial",pstyle="bold",ptaille=15
                                                      , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewComplex)
         btnHist = self._arrtk.createButton(fclavier, text="Historique", ppolice="Arial",pstyle="bold",ptaille=20
@@ -174,6 +183,18 @@ class GUICalculatrice(GuiBase) :
         self.__lResultatComplex = self._arrtk.createLabel(self.__fComplex,text="",ppolice="Arial", ptaille=25)
 
         btnBackComplex = self._arrtk.createButton(self.__fComplex, text="Retour", ppolice="Arial", ptaille=25,
+                                                    bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
+
+        # Partie Pythagore
+        lTitlePythagore = self._arrtk.createLabel(self.__fPythagore, text="Theoreme de Pythagore",
+                                                    ppolice="Arial", ptaille=25, pstyle="bold")
+        self.__entryPythagoreNB1 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
+        self.__entryPythagoreNB2 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
+        btnPythagoreTheoreme = self._arrtk.createButton(self.__fPythagore, text="Theoreme", ppolice="Arial", ptaille=20,
+                                                        bg=self._btnColor, fg=self._btnTexteColor)
+        btnPythagoreRecibroque = self._arrtk.createButton(self.__fPythagore, text="Réciproque", ppolice="Arial", ptaille=20,
+                                                        bg=self._btnColor, fg=self._btnTexteColor)
+        btnBackPythagore = self._arrtk.createButton(self.__fPythagore, text="Retour", ppolice="Arial", ptaille=20,
                                                     bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
 
         # Affichage des widgets
@@ -245,6 +266,14 @@ class GUICalculatrice(GuiBase) :
 
         btnBackComplex.grid(row=6, column=0, sticky="ew", padx=10, pady=(0, 10))
 
+        lTitlePythagore.grid(row=0, column=0, columnspan=5, sticky="n", pady=(10, 20))
+        self.__entryPythagoreNB1.grid(row=1, column=1, sticky="", padx=(10, 0), pady=(0, 12))
+        self.__entryPythagoreNB2.grid(row=1, column=3, sticky="", padx=(0, 10), pady=(0, 12))
+        btnPythagoreTheoreme.grid(row=2, column=1, sticky="", padx=(10, 0), pady=(6, 0))
+        btnPythagoreRecibroque.grid(row=2, column=3, sticky="", padx=(0, 10), pady=(6, 0))
+
+        btnBackPythagore.grid(row=4, column=0, columnspan=5, sticky="ew", padx=0, pady=(15, 10))
+
         self.__viewCalcule()
         # Configuration de la zone de calcul
         self.__zoneCalcule.bind("<KeyPress-Return>",self.__enterPressed)
@@ -254,19 +283,29 @@ class GUICalculatrice(GuiBase) :
     def __viewCalcule(self):
         self.__fhistorique.grid_forget()
         self.__fComplex.grid_forget()
+        self.__fPythagore.grid_forget()
         self.__mainView.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self._screen.update()
 
     def __viewHistorique(self):
         self.__mainView.grid_forget()
         self.__fComplex.grid_forget()
+        self.__fPythagore.grid_forget()
         self.__fhistorique.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self._screen.update()
 
     def __viewComplex(self):
         self.__mainView.grid_forget()
         self.__fhistorique.grid_forget()
+        self.__fPythagore.grid_forget()
         self.__fComplex.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
+        self._screen.update()
+
+    def __viewPythagore(self):
+        self.__mainView.grid_forget()
+        self.__fhistorique.grid_forget()
+        self.__fComplex.grid_forget()
+        self.__fPythagore.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         self._screen.update()
 
     def __addHistorique(self,texte:str):
