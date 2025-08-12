@@ -10,6 +10,12 @@ class gestGUI:
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
 
-    def activeCalculatrice(self):
-        self.__guiCalculatrice.active()
+    def activeCalculatriceNormal(self):
+        self.__guiCalculatrice.activeCalcule()
+
+    def activeCalculatriceComplex(self):
+        self.__guiCalculatrice.activeComplex()
+
+    def activeCalculatricePythagore(self):
+        self.__guiCalculatrice.activePythagore()
 

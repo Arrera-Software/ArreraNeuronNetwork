@@ -468,3 +468,15 @@ class GUICalculatrice(GuiBase) :
         except ValueError:
             showerror("Erreur", "Veuillez entrer des nombres valides.")
         self._screen.update()
+
+    def activeCalcule(self):
+        self.active()
+        self.__viewCalcule()
+
+    def activePythagore(self):
+        self.active()
+        self.__viewPythagore()
+
+    def activeComplex(self):
+        self.active()
+        self.__viewComplex()

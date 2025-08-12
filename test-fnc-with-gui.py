@@ -39,10 +39,15 @@ def partCodeHelp(w:ctk.CTk):
     arrtk.createButton(w, text="Orga Var", command=lambda: fnc.getFNCCodeHelp().openGUIOrgaVar()).pack()
     arrtk.createButton(w, text="Color", command=lambda: fnc.getFNCCodeHelp().openGUIColorSelector()).pack()
 
+def partCalculatrice(w:ctk.CTk):
+    arrtk.createButton(w, text="calculatrice", command=lambda: gui.activeCalculatriceNormal()).pack()
+    arrtk.createButton(w, text="calculatrice Pythagore", command=lambda: gui.activeCalculatricePythagore()).pack()
+    arrtk.createButton(w, text="calculatrice Complex", command=lambda: gui.activeCalculatriceComplex()).pack()
+
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
-    arrtk.createButton(screen, text="calculatrice", command=lambda: gui.activeCalculatrice()).pack()
+    partCalculatrice(screen)
     arrtk.view()
 
 if __name__ == "__main__":
