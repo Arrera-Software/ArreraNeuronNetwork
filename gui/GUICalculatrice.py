@@ -191,9 +191,9 @@ class GUICalculatrice(GuiBase) :
         self.__entryPythagoreNB1 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
         self.__entryPythagoreNB2 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
         btnPythagoreTheoreme = self._arrtk.createButton(self.__fPythagore, text="Theoreme", ppolice="Arial", ptaille=20,
-                                                        bg=self._btnColor, fg=self._btnTexteColor)
+                                                        bg=self._btnColor, fg=self._btnTexteColor,command=self.__theoremePythagore)
         btnPythagoreRecibroque = self._arrtk.createButton(self.__fPythagore, text="Réciproque", ppolice="Arial", ptaille=20,
-                                                        bg=self._btnColor, fg=self._btnTexteColor)
+                                                        bg=self._btnColor, fg=self._btnTexteColor,command=self.__reciproquePythagore)
         btnBackPythagore = self._arrtk.createButton(self.__fPythagore, text="Retour", ppolice="Arial", ptaille=20,
                                                     bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
 
@@ -431,6 +431,40 @@ class GUICalculatrice(GuiBase) :
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().divisionNbComplex()
             self.__lResultatComplex.configure(text=str(resultat))
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+        self._screen.update()
+
+    def __theoremePythagore(self):
+        """Calcule le théorème de Pythagore."""
+        try:
+            a = int(self.__entryPythagoreNB1.get())
+            b = int(self.__entryPythagoreNB2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setNbPythagore(a, b)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().theoremePythagore()
+            calcule = self._gestionnaire.getGestFNC().getFNCCalculatrice().getCalculePythagore()
+            self.__viewCalcule()
+            self.__zoneCalcule.delete("1.0", END)
+            self.__ecritureCarractere(f"{calcule} = {resultat}")
+            self.__entryPythagoreNB1.delete(0, END)
+            self.__entryPythagoreNB2.delete(0, END)
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+        self._screen.update()
+
+    def __reciproquePythagore(self):
+        """Calcule le théorème de Pythagore."""
+        try:
+            a = int(self.__entryPythagoreNB1.get())
+            b = int(self.__entryPythagoreNB2.get())
+            self._gestionnaire.getGestFNC().getFNCCalculatrice().setNbPythagore(a, b)
+            resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().reciproquePythagore()
+            calcule = self._gestionnaire.getGestFNC().getFNCCalculatrice().getCalculePythagore()
+            self.__viewCalcule()
+            self.__zoneCalcule.delete("1.0", END)
+            self.__ecritureCarractere(f"{calcule} = {resultat}")
+            self.__entryPythagoreNB1.delete(0, END)
+            self.__entryPythagoreNB2.delete(0, END)
         except ValueError:
             showerror("Erreur", "Veuillez entrer des nombres valides.")
         self._screen.update()
