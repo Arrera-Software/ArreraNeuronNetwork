@@ -313,7 +313,7 @@ class fncCalculatrice :
         self.__imgParenthese2 = PhotoImage(file=resource_path(self.__emplacementTouche + "tchParenthese2.png"))
         self.__imgRacine = PhotoImage(file=resource_path(self.__emplacementTouche + "tchRacine.png"))
         self.__imgExposant = PhotoImage(file=resource_path(self.__emplacementTouche + "tchExposant.png"))
-        self.__imgExpodentiel = PhotoImage(file=self.__emplacementTouche + "tchExpodentiel.png")
+        self.__imgExpodentiel = PhotoImage(file=resource_path(self.__emplacementTouche + "tchExpodentiel.png"))
         self.__imgLN = PhotoImage(file=resource_path(self.__emplacementTouche + "tchLN.png"))
         self.__imgLOG = PhotoImage(file=resource_path(self.__emplacementTouche + "tchLOG.png"))
         
