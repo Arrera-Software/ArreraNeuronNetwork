@@ -45,7 +45,7 @@ def partCalculatrice(w:ctk.CTk):
     arrtk.createButton(w, text="calculatrice Complex", command=lambda: gui.activeCalculatriceComplex()).pack()
 
 def partOrthographe(w:ctk.CTk):
-    arrtk.createButton(w, text="Correcteur d'orthographe", command=lambda: gui.activeOrthographe()).pack()
+    arrtk.createButton(w, text="Correcteur d'orthographe", command=lambda: gui.activeOrthographe("Je n sais pas lure est ecrore")).pack()
 
 def main():
     screen = arrtk.aTK()

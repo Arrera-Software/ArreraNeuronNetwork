@@ -22,5 +22,9 @@ class gestGUI:
     def activeCalculatricePythagore(self):
         self.__guiCalculatrice.activePythagore()
 
-    def activeOrthographe(self):
-        self.__guiOrthographe.active()
+    def activeOrthographe(self,texte:str):
+        if texte != "":
+            self.__guiOrthographe.active()
+            self.__guiOrthographe.setTexte(texte)
+        else :
+            return

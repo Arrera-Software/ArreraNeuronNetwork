@@ -2,11 +2,13 @@ from tkinter import END
 import customtkinter as ctk
 from tkinter.scrolledtext import*
 from gui.guibase import GuiBase,gestionnaire
-from tkinter import WORD
+from tkinter import WORD,StringVar,OptionMenu
 
 class GUIOrthographe(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Correcteur de texte")
+        self.__corrector = self._gestionnaire.getGestFNC().getFNCOrthographe()
+        self.__originalText = ""
 
     def _mainframe(self):
         # Parametrage de la fenetre
@@ -49,3 +51,20 @@ class GUIOrthographe(GuiBase) :
         labelTitle.grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 10))
         self.__zoneSortie.grid(row=1, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
         self.__btnCorrect.grid(row=2, column=1, pady=(10, 0))
+
+    def setTexte(self,texte:str):
+        self.__zoneSortie.delete(1.0,END)
+        self.__zoneSortie.insert(END,texte)
+        self.__btnCorrect.configure(text="Corriger",command=self.__checkTexte)
+
+    def __checkTexte(self):
+        text = self.__zoneSortie.get(1.0, END)
+        self.__originalText = text
+        if self.__corrector.check(text):
+            self.__incorectWord = self.__corrector.getMotsIncorrects()
+            print(self.__incorectWord)
+            self.__corrector.correctionText()
+            print(self.__corrector.getCorrections())
+        else :
+            self.__frameCorrect.grid_forget()
+            self.__frameErreur.grid(row=0, column=0, sticky="nsew")
