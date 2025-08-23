@@ -34,9 +34,13 @@ class GUIOrthographe(GuiBase) :
 
         # Parametrage des grid
         # Frame Correct
-        self.__frameCorrect.columnconfigure(0, weight=0)
-        self.__frameCorrect.columnconfigure(1, weight=2)
-        self.__frameCorrect.columnconfigure(2, weight=0)
+        self.__frameCorrect.rowconfigure(0, weight=0)
+        self.__frameCorrect.rowconfigure(1, weight=1)
+        self.__frameCorrect.rowconfigure(2, weight=0)
+
+        self.__frameCorrect.columnconfigure(0, weight=1)
+        self.__frameCorrect.columnconfigure(1, weight=1)
+        self.__frameCorrect.columnconfigure(2, weight=1)
 
         # Placement
         # Frame
