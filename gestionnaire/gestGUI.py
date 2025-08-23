@@ -6,9 +6,12 @@ class gestGUI:
         self.__gest = gest
         # Importation des GUI
         from gui.GUICalculatrice import GUICalculatrice
+        from gui.GUIorthographe import GUIOrthographe
 
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
+        # Correcteur d'orthographe
+        self.__guiOrthographe = GUIOrthographe(self.__gest)
 
     def activeCalculatriceNormal(self):
         self.__guiCalculatrice.activeCalcule()
@@ -19,3 +22,5 @@ class gestGUI:
     def activeCalculatricePythagore(self):
         self.__guiCalculatrice.activePythagore()
 
+    def activeOrthographe(self):
+        self.__guiOrthographe.active()

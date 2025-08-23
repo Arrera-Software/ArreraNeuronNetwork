@@ -44,10 +44,14 @@ def partCalculatrice(w:ctk.CTk):
     arrtk.createButton(w, text="calculatrice Pythagore", command=lambda: gui.activeCalculatricePythagore()).pack()
     arrtk.createButton(w, text="calculatrice Complex", command=lambda: gui.activeCalculatriceComplex()).pack()
 
+def partOrthographe(w:ctk.CTk):
+    arrtk.createButton(w, text="Correcteur d'orthographe", command=lambda: gui.activeOrthographe()).pack()
+
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
     partCalculatrice(screen)
+    partOrthographe(screen)
     arrtk.view()
 
 if __name__ == "__main__":
