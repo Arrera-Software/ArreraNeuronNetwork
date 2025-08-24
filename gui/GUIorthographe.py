@@ -1,8 +1,9 @@
 from tkinter import END
-import customtkinter as ctk
+import pyperclip
 from tkinter.scrolledtext import*
 from gui.guibase import GuiBase,gestionnaire
-from tkinter import WORD,StringVar,OptionMenu
+from tkinter import WORD
+from tkinter.messagebox import showinfo
 
 class GUIOrthographe(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
@@ -36,7 +37,8 @@ class GUIOrthographe(GuiBase) :
                                                      ,bg=self._btnColor,fg=self._btnTexteColor)
         btnCopyOut = self._arrtk.createButton(self.__frameOut,text="Copier le texte",
                                               ptaille=20,ppolice="Arial",pstyle="bold"
-                                              ,bg=self._btnColor,fg=self._btnTexteColor)
+                                              ,bg=self._btnColor,fg=self._btnTexteColor,
+                                              command=self.__copyText)
 
         # Parametrage des grid
         # Frame Correct
@@ -84,3 +86,8 @@ class GUIOrthographe(GuiBase) :
         else :
             self.__frameCorrect.grid_forget()
             self.__frameErreur.grid(row=0, column=0, sticky="nsew")
+
+    def __copyText(self):
+        pyperclip.copy(self.__textCorrected)
+        self._screen.destroy()
+        showinfo("Info","Texte corriger copier")
