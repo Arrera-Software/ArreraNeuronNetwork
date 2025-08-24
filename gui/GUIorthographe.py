@@ -22,8 +22,12 @@ class GUIOrthographe(GuiBase) :
         # Label
         labelTitle = self._arrtk.createLabel(self.__frameCorrect,text="Correcteur d'orthographe",
                                              ptaille=20,ppolice="Arial",pstyle="bold")
-        self.__labelOutCorrect = self._arrtk.createLabel(self.__frameOut,text="",
+        labelTitleOut = self._arrtk.createLabel(self.__frameOut,text="Texte corrigé",
+                                                ptaille=20,ppolice="Arial",pstyle="bold")
+        self.__labelOutCorrect = self._arrtk.createLabel(self.__frameOut,justify="left",
                                                        ptaille=20,ppolice="Arial",pstyle="bold")
+        self.__labelOutViewCorrect = self._arrtk.createLabel(self.__frameOut,justify="left",
+                                                             ptaille=20,ppolice="Arial",pstyle="bold")
         # ScrolledText
         self.__zoneSortie = ScrolledText(self.__frameCorrect, wrap=WORD, width=80, height=15)
         # Bouton
@@ -39,10 +43,16 @@ class GUIOrthographe(GuiBase) :
         self.__frameCorrect.rowconfigure(0, weight=0)
         self.__frameCorrect.rowconfigure(1, weight=1)
         self.__frameCorrect.rowconfigure(2, weight=0)
-
         self.__frameCorrect.columnconfigure(0, weight=1)
         self.__frameCorrect.columnconfigure(1, weight=1)
         self.__frameCorrect.columnconfigure(2, weight=1)
+
+        self.__frameOut.grid_columnconfigure(0, weight=1)
+        self.__frameOut.grid_columnconfigure(1, weight=1)
+        self.__frameOut.grid_columnconfigure(2, weight=1)
+        self.__frameOut.grid_rowconfigure(0, weight=1)
+        self.__frameOut.grid_rowconfigure(1, weight=1)
+        self.__frameOut.grid_rowconfigure(2, weight=1)
 
         # Placement
         # Frame
@@ -51,6 +61,11 @@ class GUIOrthographe(GuiBase) :
         labelTitle.grid(row=0, column=0, columnspan=3, sticky="w", pady=(0, 10))
         self.__zoneSortie.grid(row=1, column=0, columnspan=3, sticky="nsew", padx=10, pady=10)
         self.__btnCorrect.grid(row=2, column=1, pady=(10, 0))
+
+        labelTitleOut.grid(row=0, column=1)
+        self.__labelOutCorrect.grid(row=1, column=0,sticky="nsew")
+        self.__labelOutViewCorrect.grid(row=1, column=2,sticky="nsew")
+        btnCopyOut.grid(row=2, column=1)
 
     def setTexte(self,texte:str):
         self.__zoneSortie.delete(1.0,END)
@@ -62,9 +77,11 @@ class GUIOrthographe(GuiBase) :
         self.__originalText = text
         if self.__corrector.check(text):
             self.__incorectWord = self.__corrector.getMotsIncorrects()
-            print(self.__incorectWord)
+            self.__labelOutCorrect.configure(text="Mots incorrects:\n" + "\n".join(map(str, self.__incorectWord)))
             self.__corrector.correctionText()
-            print(self.__corrector.getCorrections())
+            self.__labelOutViewCorrect.configure(text=self.__corrector.getCorrections(),wraplength=100)
+            self.__frameCorrect.grid_forget()
+            self.__frameOut.grid(row=0, column=0, sticky="nsew")
         else :
             self.__frameCorrect.grid_forget()
             self.__frameErreur.grid(row=0, column=0, sticky="nsew")
