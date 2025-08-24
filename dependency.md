@@ -1,3 +1,10 @@
-# MAC OS 
-brew install gpsd
-sudo gpsd -n /dev/tty.usbmodemXXX
+# Linux  
+
+## fedora linux 
+```bash
+dnf install xclip -y
+```
+## Debian / Ubuntu 
+```bash
+sudo apt-get install xclip  xselect
+```
