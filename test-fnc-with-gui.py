@@ -5,6 +5,7 @@ from config.confNeuron import confNeuron
 conf = confNeuron(name="Opale",
                   lang="fr",
                   icon="asset/icon.png",
+                  asset="asset/",
                   assetHorloge="asset/horloge/",
                   assetCalculatrice="asset/calculatrice/",
                   assetMicro = "",

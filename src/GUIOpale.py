@@ -86,6 +86,7 @@ class GUIOpale:
         try :
             self.__config = confNeuron(name="Opale",
                                        lang="fr",
+                                       asset="asset/",
                                        icon="asset/icon.png",
                                        assetHorloge="asset/horloge/",
                                        assetCalculatrice="asset/calculatrice/",

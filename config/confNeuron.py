@@ -6,6 +6,7 @@ class confNeuron:
     name: str
     lang: str
     icon: str
+    asset:str
     assetHorloge: str
     assetCalculatrice: str
     assetMicro: str
