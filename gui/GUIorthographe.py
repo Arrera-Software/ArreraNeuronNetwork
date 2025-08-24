@@ -75,11 +75,10 @@ class GUIOrthographe(GuiBase) :
     def __checkTexte(self):
         text = self.__zoneSortie.get(1.0, END)
         self.__originalText = text
-        if self.__corrector.check(text):
-            self.__incorectWord = self.__corrector.getMotsIncorrects()
-            self.__labelOutCorrect.configure(text="Mots incorrects:\n" + "\n".join(map(str, self.__incorectWord)))
-            self.__corrector.correctionText()
-            self.__labelOutViewCorrect.configure(text=self.__corrector.getCorrections(),wraplength=100)
+        if self.__corrector.check(text) and self.__corrector.correctionText():
+            self.__labelOutCorrect.configure(text="Mots incorrects:\n" + "\n".join(map(str, self.__corrector.getMotsIncorrects())))
+            self.__textCorrected = self.__corrector.getCorrections()
+            self.__labelOutViewCorrect.configure(text=self.__textCorrected,wraplength=100)
             self.__frameCorrect.grid_forget()
             self.__frameOut.grid(row=0, column=0, sticky="nsew")
         else :
