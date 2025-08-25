@@ -1,5 +1,5 @@
 from gui.guibase import GuiBase,gestionnaire
-from tkinter.filedialog import askdirectory
+from tkinter.filedialog import askdirectory,askopenfilename
 import customtkinter as ctk
 from tkinter.messagebox import showerror
 from tkinter import StringVar
@@ -610,13 +610,12 @@ class CAnWorkGUI(GuiBase):
         """
         Ouvre un fichier de projet.
         """
-        emplacementProjects = self.__fileUser.lectureJSON("wordFolder")+"/"+self.__nameProjet
-        file_path = filedialog.askopenfilename(initialdir=emplacementProjects,
+        emplacementProjects = self._gestionnaire.getUserConf().getWorkFolder()+self.__nameProjet+"/"
+        file_path = askopenfilename(initialdir=emplacementProjects,
                                                title="Selection du fichier du projet",
                                                filetypes=[("All files", "*.*")])
         if file_path:
             file_name = file_path.split("/")[-1]
-            self.__arrNeuron.neuron("ouvre le fichier "+file_name)
             self.updateEtat()
             self.__activeProjet()
 
@@ -624,14 +623,14 @@ class CAnWorkGUI(GuiBase):
         """
         Ouvre une tâche dans le projet.
         """
-        self.__arrNeuron.neuron("ouvre une tache du projet")
+        pass
+        # A faire quand le GUI task sera fais et fonctionnel
 
     def __closeProjet(self):
         """
         Ferme le projet.
         """
-        self.__arrNeuron.neuron("Ferme le projet")
+        self._gestionnaire.getGestFNC().getFNCWork().closeProjet()
         self.updateEtat()
         self.__activeAcceuil()
         self.__nameProjet = None
-        self.__parent._setButtonOpen()
