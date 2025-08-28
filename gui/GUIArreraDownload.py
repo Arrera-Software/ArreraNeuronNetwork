@@ -12,6 +12,8 @@ class GUIArreraDownload(GuiBase):
         self.__objetArrera = CArreraDownload()
 
     def _mainframe(self):
+        self._screen.geometry("450x450")
+        self._screen.resizable(False,False)
         # Initilisation du theard
         self.__tDownload = th.Thread()
         # Var
@@ -41,7 +43,7 @@ class GUIArreraDownload(GuiBase):
         # fmain
         self._arrtk.placeTopCenter(labelTitle)
         modeSelection.place(x=10, y=60)
-        self._arrtk.placeRightBottom(btnDownload)
+        self._arrtk.placeBottomCenterNoStick(btnDownload)
         self._arrtk.placeCenter(self.__entryURL)
         # fDonwload
         self._arrtk.placeCenter(self.__labelDownload)
