@@ -57,6 +57,8 @@ def main():
     partCalculatrice(screen)
     partOrthographe(screen)
     partDownloader(screen)
+    arrtk.createButton(screen, text="Agenda", command=lambda: gui.activeAgenda()).pack()
+    screen.mainloop()
     arrtk.view()
 
 if __name__ == "__main__":
