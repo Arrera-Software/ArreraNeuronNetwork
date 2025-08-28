@@ -25,7 +25,7 @@ conf = confNeuron(name="Opale",
                   etatApi=1,
                   etatCodehelp=1,
                   etatWork=1,
-                  etatSocket=1,
+                  etatSocket=0,
                   lienDoc="www.google.com",
                   fichierLangue="language/vouvoiment/")
 
