@@ -48,11 +48,15 @@ def partCalculatrice(w:ctk.CTk):
 def partOrthographe(w:ctk.CTk):
     arrtk.createButton(w, text="Correcteur d'orthographe", command=lambda: gui.activeOrthographe("Je n sais pas lure est ecrore")).pack()
 
+def partDownloader(w:ctk.CTk):
+    arrtk.createButton(w, text="Download", command=lambda: gui.activeArreraDownload()).pack()
+
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
     partCalculatrice(screen)
     partOrthographe(screen)
+    partDownloader(screen)
     arrtk.view()
 
 if __name__ == "__main__":

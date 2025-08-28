@@ -7,11 +7,14 @@ class gestGUI:
         # Importation des GUI
         from gui.GUICalculatrice import GUICalculatrice
         from gui.GUIorthographe import GUIOrthographe
+        from gui.GUIArreraDownload import GUIArreraDownload
 
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
         # Correcteur d'orthographe
         self.__guiOrthographe = GUIOrthographe(self.__gest)
+        # Arrera Download
+        self.__guiArreraDownload = GUIArreraDownload(self.__gest)
 
     def activeCalculatriceNormal(self):
         self.__guiCalculatrice.activeCalcule()
@@ -28,3 +31,6 @@ class gestGUI:
             self.__guiOrthographe.setTexte(texte)
         else :
             return
+
+    def activeArreraDownload(self):
+        self.__guiArreraDownload.active()
