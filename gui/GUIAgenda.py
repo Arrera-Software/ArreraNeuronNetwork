@@ -79,7 +79,7 @@ class GUIAgenda(GuiBase):
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
-        frameBTN.grid(row=1, column=0, sticky="w", padx=0, pady=0)
+        frameBTN.grid(row=1, column=0, sticky="w", padx=(40, 0), pady=0)
         frameCalendar.grid(row=2, column=0, sticky="sw", padx=0, pady=0)
 
         # Placement des widgets
