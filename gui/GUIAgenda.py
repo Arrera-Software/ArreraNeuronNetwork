@@ -4,6 +4,7 @@ class GUIAgenda(GuiBase):
     def __init__(self, gest: gestionnaire):
         super().__init__(gest, "Agenda")
         self.__fncAgenda = gest.getGestFNC().getFNCTask()
+        self.__assetPath = self._gestionnaire.getConfigFile().asset+"calendar/"
 
     def _mainframe(self):
         # Config de la fenetre
@@ -41,9 +42,14 @@ class GUIAgenda(GuiBase):
         frameBTN.grid_rowconfigure(1, weight=1, minsize=24)
         frameBTN.grid_rowconfigure(2, weight=0)
 
+        # Asset
+        assetLogo = self._arrtk.createImage(pathLight=self.__assetPath+"calendar.png",
+                                       pathDark=self.__assetPath+"calendar.png",
+                                       tailleX=64, tailleY=64)
+
         # Widget
         lLogoApp = self._arrtk.createLabel(frameLogoTitle,
-                                           text="Logo",bg="red") # A remplacer par le logo de l'application
+                                           image=assetLogo,bg="red")
         lTitleApp = self._arrtk.createLabel(frameLogoTitle,
                                             text=self._gestionnaire.getName()+" : Agenda",
                                             ppolice="Arial", ptaille=20, pstyle="bold")
