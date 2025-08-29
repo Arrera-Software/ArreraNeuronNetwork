@@ -1,4 +1,6 @@
 from gui.guibase import GuiBase,gestionnaire
+from tkcalendar import Calendar
+from datetime import date
 
 class GUIAgenda(GuiBase):
     def __init__(self, gest: gestionnaire):
@@ -15,10 +17,10 @@ class GUIAgenda(GuiBase):
         self.__frameAddEvent = self._arrtk.createFrame(self.__frameMain)
         self.__frameConfirm = self._arrtk.createFrame(self.__frameMain)
         # Frame fille
-        frameLogoTitle = self._arrtk.createFrame(self.__frameMain,bg="red")
+        frameLogoTitle = self._arrtk.createFrame(self.__frameMain)
         frameBTN = self._arrtk.createFrame(self.__frameMain,bg="blue")
         frameEventDay = self._arrtk.createFrame(self.__frameMain,bg="yellow")
-        frameCalendar = self._arrtk.createFrame(self.__frameMain,bg="green")
+        frameCalendar = self._arrtk.createFrame(self.__frameMain)
 
         # Configuration des frames
         self.__frameMain.columnconfigure(0, weight=0)
@@ -48,8 +50,7 @@ class GUIAgenda(GuiBase):
                                        tailleX=64, tailleY=64)
 
         # Widget
-        lLogoApp = self._arrtk.createLabel(frameLogoTitle,
-                                           image=assetLogo,bg="red")
+        lLogoApp = self._arrtk.createLabel(frameLogoTitle,image=assetLogo)
         lTitleApp = self._arrtk.createLabel(frameLogoTitle,
                                             text=self._gestionnaire.getName()+" : Agenda",
                                             ppolice="Arial", ptaille=20, pstyle="bold")
@@ -60,6 +61,18 @@ class GUIAgenda(GuiBase):
         btnSupprimerEvent = self._arrtk.createButton(frameBTN, text="Supprimer\nun événement",
                                                   ppolice="Arial", ptaille=15, pstyle="bold",
                                                   bg=self._btnColor, fg=self._btnTexteColor)
+
+        miniCalendar = Calendar(
+            frameCalendar,
+            selectmode="day",
+            year=date.today().year,
+            month=date.today().month,
+            locale="fr_FR",
+            firstweekday="monday",
+            showweeknumbers=False,
+            borderwidth=0,
+            background=frameCalendar["bg"],
+            disabledbackground=frameCalendar["bg"])
 
 
 
@@ -76,6 +89,8 @@ class GUIAgenda(GuiBase):
         # Boutons
         btnCreateEvent.grid(row=0, column=1, sticky="n")
         btnSupprimerEvent.grid(row=2, column=1, sticky="s")
+        # Mini calendrier
+        miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
 
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
