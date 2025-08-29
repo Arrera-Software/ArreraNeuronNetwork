@@ -26,20 +26,19 @@ class GUIAgenda(GuiBase):
         self.__frameMain.rowconfigure(1, weight=1)
         self.__frameMain.rowconfigure(2, weight=1)
 
-        frameLogoTitle.grid_columnconfigure(0, weight=0)  # colonne gauche (label)
-        frameLogoTitle.grid_columnconfigure(1, weight=1)  # espace flexible
-        frameLogoTitle.grid_columnconfigure(2, weight=0)  # colonne droite (label)
+        frameLogoTitle.grid_columnconfigure(0, weight=0)
+        frameLogoTitle.grid_columnconfigure(1, weight=1)
+        frameLogoTitle.grid_columnconfigure(2, weight=0)
 
-        frameLogoTitle.grid_rowconfigure(0, weight=1)  # espace haut
-        frameLogoTitle.grid_rowconfigure(1, weight=0)  # rangée centrale (labels)
-        frameLogoTitle.grid_rowconfigure(2, weight=1)  # espace bas
-
+        frameLogoTitle.grid_rowconfigure(0, weight=1)
+        frameLogoTitle.grid_rowconfigure(1, weight=0)
+        frameLogoTitle.grid_rowconfigure(2, weight=1)
         frameBTN.grid_columnconfigure(0, weight=1)
         frameBTN.grid_columnconfigure(1, weight=0)
         frameBTN.grid_columnconfigure(2, weight=1)
 
         frameBTN.grid_rowconfigure(0, weight=0)
-        frameBTN.grid_rowconfigure(1, weight=1, minsize=24)  # écart vertical entre les deux boutons
+        frameBTN.grid_rowconfigure(1, weight=1, minsize=24)
         frameBTN.grid_rowconfigure(2, weight=0)
 
         # Widget
