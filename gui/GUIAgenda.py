@@ -62,19 +62,9 @@ class GUIAgenda(GuiBase):
                                                   ppolice="Arial", ptaille=15, pstyle="bold",
                                                   bg=self._btnColor, fg=self._btnTexteColor)
 
-        miniCalendar = Calendar(
-            frameCalendar,
-            selectmode="day",
-            year=date.today().year,
-            month=date.today().month,
-            locale="fr_FR",
-            firstweekday="monday",
-            showweeknumbers=False,
-            borderwidth=0,
-            background=frameCalendar["bg"],
-            disabledbackground=frameCalendar["bg"])
-
-
+        miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
+            month=date.today().month,locale="fr_FR",firstweekday="monday",showweeknumbers=False,
+            borderwidth=0)
 
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
