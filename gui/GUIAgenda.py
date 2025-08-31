@@ -96,8 +96,8 @@ class GUIAgenda(GuiBase):
         # Mini calendrier
         miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
         # Jour
-        self.__labelDate.grid(row=0, column=0, sticky="nw")
-        self.__labelEvent.grid(row=1, column=0, sticky="w")
+        self.__labelDate.grid(row=0, column=0, sticky="nw", padx=10, pady=(10, 5))
+        self.__labelEvent.grid(row=1, column=0, sticky="w",  padx=10, pady=(0, 10))
         self.__btnAddEventDay.grid(row=2, column=0, sticky="s", padx=10, pady=10)
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
