@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import *
+from tkinter import BooleanVar, StringVar
 from PIL import Image, ImageTk
 import webbrowser as wb
 import os
@@ -358,12 +359,19 @@ class CArreraTK :
 
         return text
 
-    def createCheckbox(self, screen, text: str = "", bg : str = "", fg : str = ""):
-        checkbox = Checkbutton(screen,text=text)
-        if (bg != ""):
-            checkbox.configure(bg=bg)
-        if (fg != ""):
-            checkbox.configure(fg=fg)
+    def createCheckbox(self, screen,var_chk : BooleanVar, text: str = "", bg : str = "", fg : str = ""):
+        if (self.__mode == 0):
+            checkbox = ctk.CTkCheckBox(screen, text=text, variable=var_chk)
+            if (bg != ""):
+                checkbox.configure(bg=bg)
+            if (fg != ""):
+                checkbox.configure(fg=fg)
+        else :
+            checkbox = Checkbutton(screen,text=text,variable=var_chk)
+            if (bg != ""):
+                checkbox.configure(bg=bg)
+            if (fg != ""):
+                checkbox.configure(fg=fg)
         return checkbox
 
     def createRadioButton(self, screen, text: str = "", bg : str = "", fg : str = ""):
