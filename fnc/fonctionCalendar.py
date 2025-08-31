@@ -101,6 +101,41 @@ class fncCalendar(fncBase):
 
         return listEvent
 
+    def checkDateDayEvent(self):
+        if not self.__loadCalendar() :
+            return []
+
+        if not self.__contentCalendar :
+            return []
+
+        listEvent = []
+        date_str = datetime.today().strftime("%Y-%m-%d")
+
+
+        for event in self.__contentCalendar:
+            if event["date"] == date_str:
+                listEvent.append(event["name"])
+
+        return listEvent
+
+    def checkEventWithDate(self,date:str):
+        """ date au format YYYY-MM-DD """
+        if not self.__loadCalendar() :
+            return []
+
+        if not self.__contentCalendar :
+            return []
+
+        listEvent = []
+        date_str = date
+
+
+        for event in self.__contentCalendar:
+            if event["date"] == date_str:
+                listEvent.append(event["name"])
+
+        return listEvent
+
     def delEvent(self,name:str):
         if not self.__loadCalendar() :
             return False

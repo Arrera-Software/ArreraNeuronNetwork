@@ -216,7 +216,11 @@ def partCalendar():
     calendarBoucle = True
     while calendarBoucle:
         print("Test des fonctions de calendrier")
-        print("1.Ajouter un evenement\n2.Evenement enregister\n3.Voir les information d'un evenement\n4.Check event jour\n5.Suppression\n0.Quitter")
+        print("1.Ajouter un evenement\n2.Evenement enregister"
+              "\n3.Voir les information d'un evenement"
+              "\n4.Check event jour\n5.Suppression"
+              "\n6.Voir les event du jour\n7.Voir event with date"
+              "\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -257,6 +261,15 @@ def partCalendar():
                     print("Evenement supprimer")
                 else :
                     print("Impossible de suppression d'un evenement")
+            case 6:
+                print("Evenement du jour")
+                print(fnc.getFNCCalendar().checkDateDayEvent())
+            case 7 :
+                date = input("Date (YYYY-MM-DD) : ")
+                try :
+                    print(fnc.getFNCCalendar().checkEventWithDate(date))
+                except ValueError :
+                    print("La date n'est pas valide")
             case 0 :
                 calendarBoucle = False
             case _:
