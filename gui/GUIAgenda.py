@@ -70,7 +70,7 @@ class GUIAgenda(GuiBase):
                                                   bg=self._btnColor, fg=self._btnTexteColor)
 
         # Calendrier
-        miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
+        self.__miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
             month=date.today().month,locale="fr_FR",firstweekday="monday",showweeknumbers=False,
             borderwidth=0)
 
@@ -94,7 +94,7 @@ class GUIAgenda(GuiBase):
         btnCreateEvent.grid(row=0, column=1, sticky="n")
         btnSupprimerEvent.grid(row=2, column=1, sticky="s")
         # Mini calendrier
-        miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
+        self.__miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
         # Jour
         self.__labelDate.grid(row=0, column=0, sticky="nw", padx=10, pady=(10, 5))
         self.__labelEvent.grid(row=1, column=0, sticky="w",  padx=10, pady=(0, 10))
@@ -104,6 +104,9 @@ class GUIAgenda(GuiBase):
 
         # Ajout de l'affichage des event du jour
         self.__viewEventDay(datetime.today().strftime("%Y-%m-%d"))
+        
+        # Check du mini calendar 
+        self.__miniCalendar.bind("<<CalendarSelected>>", self.__dateSelectedOnCalendar)
 
     def __viewEventDay(self, date):
         """date (YYYY-MM-DD)"""
@@ -117,3 +120,8 @@ class GUIAgenda(GuiBase):
             for event in listEvent:
                 texte += "- " + event + "\n"
             self.__labelEvent.configure(text=texte)
+    
+    def __dateSelectedOnCalendar(self,event):
+        date = self.__miniCalendar.get_date()
+        self.__viewEventDay(datetime.strptime(date, "%d/%m/%Y").strftime("%Y-%m-%d"))
+        
