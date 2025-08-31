@@ -1,11 +1,11 @@
 from gui.guibase import GuiBase,gestionnaire
 from tkcalendar import Calendar
-from datetime import date
+from datetime import date,datetime
 
 class GUIAgenda(GuiBase):
     def __init__(self, gest: gestionnaire):
         super().__init__(gest, "Agenda")
-        self.__fncAgenda = gest.getGestFNC().getFNCTask()
+        self.__fncAgenda = gest.getGestFNC().getFNCCalendar()
         self.__assetPath = self._gestionnaire.getConfigFile().asset+"calendar/"
 
     def _mainframe(self):
@@ -78,8 +78,8 @@ class GUIAgenda(GuiBase):
         self.__labelDate = self._arrtk.createLabel(frameEventDay,text="DATE",ppolice="Arial", ptaille=30, pstyle="bold")
         self.__labelEvent = self._arrtk.createLabel(frameEventDay,text="EVENT",ppolice="Arial", ptaille=20, pstyle="bold")
         self.__btnAddEventDay = self._arrtk.createButton(frameEventDay,text="Ajouter un événement",
-                                                    ppolice="Arial", ptaille=25, pstyle="bold",
-                                                    bg=self._btnColor, fg=self._btnTexteColor)
+                                                    ppolice="Arial", ptaille=25,bg=self._btnColor,
+                                                         fg=self._btnTexteColor)
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
@@ -101,3 +101,19 @@ class GUIAgenda(GuiBase):
         self.__btnAddEventDay.grid(row=2, column=0, sticky="s", padx=10, pady=10)
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
+
+        # Ajout de l'affichage des event du jour
+        self.__viewEventDay(datetime.today().strftime("%Y-%m-%d"))
+
+    def __viewEventDay(self, date):
+        """date (YYYY-MM-DD)"""
+        self.__labelDate.configure(text=date)
+        listEvent = self.__fncAgenda.checkEventWithDate(date)
+        if not listEvent:
+            self.__labelEvent.configure(text="Aucun événement")
+            return
+        else :
+            texte = ""
+            for event in listEvent:
+                texte += "- " + event + "\n"
+            self.__labelEvent.configure(text=texte)
