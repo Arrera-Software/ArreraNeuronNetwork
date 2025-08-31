@@ -44,17 +44,24 @@ class GUIAgenda(GuiBase):
         frameBTN.grid_rowconfigure(1, weight=1, minsize=24)
         frameBTN.grid_rowconfigure(2, weight=0)
 
+        frameEventDay.grid_columnconfigure(0, weight=1)
+        frameEventDay.grid_rowconfigure(0, weight=0)
+        frameEventDay.grid_rowconfigure(1, weight=0)
+        frameEventDay.grid_rowconfigure(2, weight=1)
+
         # Asset
         assetLogo = self._arrtk.createImage(pathLight=self.__assetPath+"calendar.png",
                                        pathDark=self.__assetPath+"calendar.png",
                                        tailleX=64, tailleY=64)
 
         # Widget
+        # Logo et titre
         lLogoApp = self._arrtk.createLabel(frameLogoTitle,image=assetLogo)
         lTitleApp = self._arrtk.createLabel(frameLogoTitle,
                                             text=self._gestionnaire.getName()+" : Agenda",
                                             ppolice="Arial", ptaille=20, pstyle="bold")
 
+        # Boutons
         btnCreateEvent = self._arrtk.createButton(frameBTN,text="Créer\nun événement",
                                                   ppolice="Arial",ptaille=15,pstyle="bold",
                                                   bg=self._btnColor,fg=self._btnTexteColor)
@@ -62,10 +69,17 @@ class GUIAgenda(GuiBase):
                                                   ppolice="Arial", ptaille=15, pstyle="bold",
                                                   bg=self._btnColor, fg=self._btnTexteColor)
 
+        # Calendrier
         miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
             month=date.today().month,locale="fr_FR",firstweekday="monday",showweeknumbers=False,
             borderwidth=0)
 
+        # Jour
+        self.__labelDate = self._arrtk.createLabel(frameEventDay,text="DATE",ppolice="Arial", ptaille=30, pstyle="bold")
+        self.__labelEvent = self._arrtk.createLabel(frameEventDay,text="EVENT",ppolice="Arial", ptaille=20, pstyle="bold")
+        self.__btnAddEventDay = self._arrtk.createButton(frameEventDay,text="Ajouter un événement",
+                                                    ppolice="Arial", ptaille=25, pstyle="bold",
+                                                    bg=self._btnColor, fg=self._btnTexteColor)
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
@@ -81,6 +95,9 @@ class GUIAgenda(GuiBase):
         btnSupprimerEvent.grid(row=2, column=1, sticky="s")
         # Mini calendrier
         miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
-
+        # Jour
+        self.__labelDate.grid(row=0, column=0, sticky="nw")
+        self.__labelEvent.grid(row=1, column=0, sticky="w")
+        self.__btnAddEventDay.grid(row=2, column=0, sticky="s", padx=10, pady=10)
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
