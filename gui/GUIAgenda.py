@@ -1,3 +1,5 @@
+from tkinter import StringVar
+
 from gui.guibase import GuiBase,gestionnaire
 from tkcalendar import Calendar
 from datetime import date,datetime
@@ -7,8 +9,17 @@ class GUIAgenda(GuiBase):
         super().__init__(gest, "Agenda")
         self.__fncAgenda = gest.getGestFNC().getFNCCalendar()
         self.__assetPath = self._gestionnaire.getConfigFile().asset+"calendar/"
+        self.__dateSelected = None
 
     def _mainframe(self):
+        self.__varHour = StringVar(self._screen)
+        self.__varMinute = StringVar(self._screen)
+        self.__listHour = ["00","01","02","03",
+                           "04","05","06","07",
+                           "08","09","10","11",
+                           "12","13","14","15",
+                           "16","17","18","19",
+                           "20","21","22","23"]
         # Config de la fenetre
         self._screen.rowconfigure(0, weight=1)
         self._screen.columnconfigure(0, weight=1)
@@ -22,7 +33,10 @@ class GUIAgenda(GuiBase):
         frameEventDay = self._arrtk.createFrame(self.__frameMain,wightBoder=2)
         frameCalendar = self._arrtk.createFrame(self.__frameMain)
 
+        frameHeure = self._arrtk.createFrame(self.__frameAddEvent)
+
         # Configuration des frames
+        # Frame Main
         self.__frameMain.columnconfigure(0, weight=0)
         self.__frameMain.columnconfigure(1, weight=1)
         self.__frameMain.rowconfigure(0, weight=1)
@@ -49,12 +63,16 @@ class GUIAgenda(GuiBase):
         frameEventDay.grid_rowconfigure(1, weight=0)
         frameEventDay.grid_rowconfigure(2, weight=1)
 
+        # Frame Add Event
+
+
         # Asset
         assetLogo = self._arrtk.createImage(pathLight=self.__assetPath+"calendar.png",
                                        pathDark=self.__assetPath+"calendar.png",
                                        tailleX=64, tailleY=64)
 
         # Widget
+        # Frame Main
         # Logo et titre
         lLogoApp = self._arrtk.createLabel(frameLogoTitle,image=assetLogo)
         lTitleApp = self._arrtk.createLabel(frameLogoTitle,
@@ -80,6 +98,18 @@ class GUIAgenda(GuiBase):
         self.__btnAddEventDay = self._arrtk.createButton(frameEventDay,text="Ajouter un événement",
                                                     ppolice="Arial", ptaille=25,bg=self._btnColor,
                                                          fg=self._btnTexteColor)
+
+
+        # Frame Add Event
+
+        self.__labelTitleAddEvent = self._arrtk.createLabel(self.__frameAddEvent,
+                                                            text="Ajouter un événement",
+                                                            ppolice="Arial", ptaille=30, pstyle="bold")
+        self.__entryNameEvent = self._arrtk.createEntry(self.__frameAddEvent,pppolice="Arial", pptaille=20)
+        self.__entryDescriptionEvent = self._arrtk.createEntry(self.__frameAddEvent,pppolice="Arial", pptaille=20)
+        self.__entryLieuEvent = self._arrtk.createEntry(self.__frameAddEvent,pppolice="Arial", pptaille=20)
+
+
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
@@ -111,15 +141,20 @@ class GUIAgenda(GuiBase):
     def __viewEventDay(self, date):
         """date (YYYY-MM-DD)"""
         self.__labelDate.configure(text=date)
-        listEvent = self.__fncAgenda.checkEventWithDate(date)
-        if not listEvent:
-            self.__labelEvent.configure(text="Aucun événement")
-            return
-        else :
-            texte = ""
-            for event in listEvent:
-                texte += "- " + event + "\n"
-            self.__labelEvent.configure(text=texte)
+        try :
+            listEvent = self.__fncAgenda.checkEventWithDate(date)
+            if not listEvent:
+                self.__labelEvent.configure(text="Aucun événement")
+                return True
+            else :
+                texte = ""
+                for event in listEvent:
+                    texte += "- " + event + "\n"
+                self.__labelEvent.configure(text=texte)
+            self.__dateSelected = date
+            return True
+        except Exception as e:
+            return False
     
     def __dateSelectedOnCalendar(self,event):
         date = self.__miniCalendar.get_date()
