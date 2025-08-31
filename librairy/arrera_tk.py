@@ -437,12 +437,19 @@ class CArreraTK :
                 option.configure(text_color=fg)
         return option
 
-    def createEntryLegend(self,screen, bg : str = "", fg : str = "",text :str = "", ppolice : str = "Arial", ptaille : int = 12, width : int = 20):
+    def createEntryLegend(self,screen, bg : str = "", fg : str = "",text :str = "", ppolice : str = "Arial", ptaille : int = 12, width : int = 20,gridUsed: bool = False):
         widget = self.createFrame(screen)
         label = self.createLabel(widget, text=text, bg=bg, fg=fg, ppolice=ppolice, ptaille=ptaille, width=width)
         entry = self.createEntry(widget, bg=bg, fg=fg, ppolice=ppolice, ptaille=ptaille, width=width)
-        label.pack(side="left")
-        entry.pack(side="right")
+        if gridUsed:
+            widget.grid_columnconfigure(0, weight=0)
+            widget.grid_columnconfigure(1, weight=1)
+            widget.grid_rowconfigure(0, weight=0)
+            label.grid(row=0, column=0, sticky="w",  padx=(8, 6), pady=6)
+            entry.grid(row=0, column=1, sticky="ew", padx=(6, 8), pady=6)
+        else :
+            label.pack(side="left")
+            entry.pack(side="right")
         return widget,entry
 
     def createTextBox(self,screen:Union[Tk,ctk.CTk,Toplevel,ctk.CTkToplevel],width:int = 0,height:int = 0,bg:str = "",fg:str = "",ppolice:str="Arial",ptaille:int=12,pstyle:str="normal",wrap:str="word"):
