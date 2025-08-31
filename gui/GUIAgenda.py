@@ -1,4 +1,5 @@
-from tkinter import StringVar
+from tkinter import StringVar, BooleanVar
+from tkinter.messagebox import showerror
 
 from gui.guibase import GuiBase,gestionnaire
 from tkcalendar import Calendar
@@ -14,6 +15,7 @@ class GUIAgenda(GuiBase):
     def _mainframe(self):
         self.__varHour = StringVar(self._screen)
         self.__varMinute = StringVar(self._screen)
+        self.__varCheckHour = BooleanVar(value=False)
         self.__listHour = ["00","01","02","03",
                            "04","05","06","07",
                            "08","09","10","11",
@@ -128,15 +130,15 @@ class GUIAgenda(GuiBase):
                                                             ppolice="Arial", ptaille=30, pstyle="bold")
         self.__calendarAddEvent = Calendar(self.__frameAdd,selectmode="day",year=date.today().year,
                                            month=date.today().month,locale="fr_FR",firstweekday="monday",
-                                           showweeknumbers=False,borderwidth=0)
+                                           showweeknumbers=False,borderwidth=0,date_pattern="yyyy-mm-dd")
         self.__labelDateSelected = self._arrtk.createLabel(self.__frameAdd,ppolice="Arial", ptaille=15)
         wEntryName,self.__entryNameEvent = self._arrtk.createEntryLegend(self.__frameAdd,text="Titre : ",ppolice="Arial", ptaille=20,gridUsed=True)
         wEntryDescription,self.__entryDescriptionEvent = self._arrtk.createEntryLegend(self.__frameAdd,ppolice="Arial", ptaille=20,text="Description : ",gridUsed=True)
         wEntryLieu,self.__entryLieuEvent = self._arrtk.createEntryLegend(self.__frameAdd,ppolice="Arial", ptaille=20,text="Lieu :",gridUsed=True)
-        self.__checkHour = self._arrtk.createCheckbox(self.__frameAdd,text="Définir une heure",bg=self._btnColor)
+        self.__checkHour = self._arrtk.createCheckbox(self.__frameAdd,text="Définir une heure",var_chk=self.__varCheckHour)
 
         btnAddEvent = self._arrtk.createButton(frameBTNFAdd,text="Ajouter",
-                                              ppolice="Arial", ptaille=20,
+                                              ppolice="Arial", ptaille=20,command=self.__addNewEvent,
                                               bg=self._btnColor, fg=self._btnTexteColor)
 
         btnCancelEvent = self._arrtk.createButton(frameBTNFAdd,text="Annuler",
@@ -227,4 +229,29 @@ class GUIAgenda(GuiBase):
         self.__frameAddEvent.grid(row=0, column=0, sticky="nsew")
         self.__frameAdd.grid(row=0, column=0, sticky="nsew")
         self._screen.update()
+
+    def __addNewEvent(self):
+        name = self.__entryNameEvent.get()
+        if name == "" :
+            showerror("Erreur",
+                      "Le nom de l'événement ne peut pas être vide")
+            return False
+        description = self.__entryDescriptionEvent.get()
+        lieu = self.__entryLieuEvent.get()
+        if self.__varCheckHour.get():
+            print("hour")
+
+        if self.__dateSelected is not None:
+            date = datetime.strptime(self.__dateSelected, "%Y-%m-%d").date()
+        else :
+            date = datetime.strptime(self.__calendarAddEvent.get_date(), "%Y-%m-%d").date()
+
+        if self.__fncAgenda.addEventToCalendar(name=name, date=date, descrption=description, lieu=lieu):
+            self.__backToMain()
+            self.__viewEventDay(date)
+            return True
+        else :
+            showerror("Erreur",
+                      "Une erreur est survenue lors de l'ajout de l'événement")
+            return False
         
