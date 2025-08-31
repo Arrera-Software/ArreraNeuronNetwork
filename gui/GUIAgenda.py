@@ -18,8 +18,8 @@ class GUIAgenda(GuiBase):
         self.__frameConfirm = self._arrtk.createFrame(self.__frameMain)
         # Frame fille
         frameLogoTitle = self._arrtk.createFrame(self.__frameMain)
-        frameBTN = self._arrtk.createFrame(self.__frameMain,bg="blue")
-        frameEventDay = self._arrtk.createFrame(self.__frameMain,bg="yellow")
+        frameBTN = self._arrtk.createFrame(self.__frameMain)
+        frameEventDay = self._arrtk.createFrame(self.__frameMain)
         frameCalendar = self._arrtk.createFrame(self.__frameMain)
 
         # Configuration des frames
