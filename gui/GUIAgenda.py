@@ -16,12 +16,6 @@ class GUIAgenda(GuiBase):
         self.__varHour = StringVar(self._screen)
         self.__varMinute = StringVar(self._screen)
         self.__varCheckHour = BooleanVar(value=False)
-        self.__listHour = ["00","01","02","03",
-                           "04","05","06","07",
-                           "08","09","10","11",
-                           "12","13","14","15",
-                           "16","17","18","19",
-                           "20","21","22","23"]
         # Config de la fenetre
         self._screen.rowconfigure(0, weight=1)
         self._screen.columnconfigure(0, weight=1)
@@ -85,7 +79,15 @@ class GUIAgenda(GuiBase):
         frameBTNFAdd.grid_columnconfigure(2, weight=0)
         frameBTNFAdd.grid_rowconfigure(0, weight=0)
 
-        # Frame Add Event
+        self.__frameHeure.grid_columnconfigure(0, weight=1, uniform="col")
+        self.__frameHeure.grid_columnconfigure(1, weight=1, uniform="col")
+        self.__frameHeure.grid_columnconfigure(2, weight=1, uniform="col")
+        self.__frameHeure.grid_rowconfigure(0, weight=0)
+        self.__frameHeure.grid_rowconfigure(1, weight=1)
+        self.__frameHeure.grid_rowconfigure(2, weight=0)
+
+
+# Frame Add Event
 
 
         # Asset
@@ -122,7 +124,6 @@ class GUIAgenda(GuiBase):
                                                     ppolice="Arial", ptaille=25,bg=self._btnColor,
                                                          fg=self._btnTexteColor,command=lambda : self.__viewAddEvent(1))
 
-
         # Frame Add Event
 
         self.__labelTitleAddEvent = self._arrtk.createLabel(self.__frameAdd,
@@ -145,6 +146,13 @@ class GUIAgenda(GuiBase):
                                                ppolice="Arial", ptaille=20,command=self.__backToMain,
                                                bg=self._btnColor, fg=self._btnTexteColor)
 
+        # Partie hour
+        labelHour = self._arrtk.createLabel(self.__frameHeure,text="Selectionner l'heure",ppolice="Arial", ptaille=30,pstyle="bold")
+        hourPicker = self._arrtk.createHourPickert(self.__frameHeure,self.__varHour,self.__varMinute)
+        self.__btnValiderHour = self._arrtk.createButton(self.__frameHeure,text="Valider",ppolice="Arial", ptaille=15,
+                                                 bg=self._btnColor, fg=self._btnTexteColor)
+        btnCancelHour = self._arrtk.createButton(self.__frameHeure,text="Annuler",ppolice="Arial", ptaille=15,
+                                                 bg=self._btnColor, fg=self._btnTexteColor,command=self.__backToMain)
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
@@ -174,6 +182,11 @@ class GUIAgenda(GuiBase):
         btnCancelEvent.grid(row=0, column=0, sticky="w", padx=(10, 6), pady=8)
         btnAddEvent.grid(   row=0, column=2, sticky="e", padx=(6, 10), pady=8)
         frameBTNFAdd.grid(row=7, column=0, sticky="sew", padx=12, pady=12)
+
+        labelHour.grid(row=0, column=0, columnspan=3, sticky="n", pady=(10, 5))               # haut-centre
+        hourPicker.grid(row=1, column=1, sticky="")                               # centre-centre
+        btnCancelHour.grid(row=2, column=0, sticky="w", padx=10, pady=(5, 10))    # bas-gauche
+        self.__btnValiderHour.grid(row=2, column=2, sticky="e", padx=10, pady=(5, 10))  # bas-droite
 
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
@@ -226,6 +239,7 @@ class GUIAgenda(GuiBase):
                 self.__labelDateSelected.grid(row=1, column=0, sticky="n",  padx=12, pady=6)
 
         self.__frameMain.grid_forget()
+        self.__frameHeure.grid_forget()
         self.__frameAddEvent.grid(row=0, column=0, sticky="nsew")
         self.__frameAdd.grid(row=0, column=0, sticky="nsew")
         self._screen.update()
@@ -238,20 +252,33 @@ class GUIAgenda(GuiBase):
             return False
         description = self.__entryDescriptionEvent.get()
         lieu = self.__entryLieuEvent.get()
-        if self.__varCheckHour.get():
-            print("hour")
+
+        # Clear des champs
+        self.__entryNameEvent.delete(0, 'end')
+        self.__entryDescriptionEvent.delete(0, 'end')
+        self.__entryLieuEvent.delete(0, 'end')
 
         if self.__dateSelected is not None:
             date = datetime.strptime(self.__dateSelected, "%Y-%m-%d").date()
         else :
             date = datetime.strptime(self.__calendarAddEvent.get_date(), "%Y-%m-%d").date()
 
+        if self.__varCheckHour.get():
+            self.__frameAdd.grid_forget()
+            self.__frameHeure.grid(row=0, column=0, sticky="nsew")
+            self.__btnValiderHour.configure(command = lambda :
+            self.__fncAgenda.addEventToCalendar(name=name, date=date,
+                                                descrption=description, lieu=lieu,
+                                                heure=str(self.__varHour.get()+":"+self.__varMinute.get()))
+            and self.__backToMain())
+            return True
+
         if self.__fncAgenda.addEventToCalendar(name=name, date=date, descrption=description, lieu=lieu):
             self.__backToMain()
             self.__viewEventDay(date)
             return True
+
         else :
             showerror("Erreur",
                       "Une erreur est survenue lors de l'ajout de l'événement")
             return False
-        
