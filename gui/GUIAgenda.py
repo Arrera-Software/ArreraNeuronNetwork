@@ -15,6 +15,7 @@ class GUIAgenda(GuiBase):
     def _mainframe(self):
         self.__varHour = StringVar(self._screen)
         self.__varMinute = StringVar(self._screen)
+        self.__varSuppr = StringVar(self._screen)
         self.__varCheckHour = BooleanVar(value=False)
         # Config de la fenetre
         self._screen.rowconfigure(0, weight=1)
@@ -22,16 +23,18 @@ class GUIAgenda(GuiBase):
         # Creation des frames Maitre
         self.__frameMain = self._arrtk.createFrame(self._screen)
         self.__frameAddEvent = self._arrtk.createFrame(self._screen)
-        self.__frameConfirm = self._arrtk.createFrame(self.__frameMain)
+        self.__frameSuppr = self._arrtk.createFrame(self._screen)
         # Frame fille
         frameLogoTitle = self._arrtk.createFrame(self.__frameMain)
-        frameBTN = self._arrtk.createFrame(self.__frameMain)
+        frameBTNEvent = self._arrtk.createFrame(self.__frameMain)
         frameEventDay = self._arrtk.createFrame(self.__frameMain,wightBoder=2)
         frameCalendar = self._arrtk.createFrame(self.__frameMain)
 
         self.__frameAdd = self._arrtk.createFrame(self.__frameAddEvent)
         frameBTNFAdd = self._arrtk.createFrame(self.__frameAdd)
         self.__frameHeure = self._arrtk.createFrame(self.__frameAddEvent)
+
+        frameBTNSuppr = self._arrtk.createFrame(self.__frameSuppr)
 
         # Configuration des frames
         # Frame Main
@@ -44,17 +47,16 @@ class GUIAgenda(GuiBase):
         frameLogoTitle.grid_columnconfigure(0, weight=0)
         frameLogoTitle.grid_columnconfigure(1, weight=1)
         frameLogoTitle.grid_columnconfigure(2, weight=0)
-
         frameLogoTitle.grid_rowconfigure(0, weight=1)
         frameLogoTitle.grid_rowconfigure(1, weight=0)
         frameLogoTitle.grid_rowconfigure(2, weight=1)
-        frameBTN.grid_columnconfigure(0, weight=1)
-        frameBTN.grid_columnconfigure(1, weight=0)
-        frameBTN.grid_columnconfigure(2, weight=1)
 
-        frameBTN.grid_rowconfigure(0, weight=0)
-        frameBTN.grid_rowconfigure(1, weight=1, minsize=24)
-        frameBTN.grid_rowconfigure(2, weight=0)
+        frameBTNEvent.grid_columnconfigure(0, weight=1)
+        frameBTNEvent.grid_columnconfigure(1, weight=0)
+        frameBTNEvent.grid_columnconfigure(2, weight=1)
+        frameBTNEvent.grid_rowconfigure(0, weight=0)
+        frameBTNEvent.grid_rowconfigure(1, weight=1, minsize=24)
+        frameBTNEvent.grid_rowconfigure(2, weight=0)
 
         frameEventDay.grid_columnconfigure(0, weight=1)
         frameEventDay.grid_rowconfigure(0, weight=0)
@@ -86,10 +88,19 @@ class GUIAgenda(GuiBase):
         self.__frameHeure.grid_rowconfigure(1, weight=1)
         self.__frameHeure.grid_rowconfigure(2, weight=0)
 
+        self.__frameSuppr.grid_columnconfigure(0, weight=1, uniform="col")
+        self.__frameSuppr.grid_columnconfigure(1, weight=1, uniform="col")
+        self.__frameSuppr.grid_columnconfigure(2, weight=1, uniform="col")
+        self.__frameSuppr.grid_rowconfigure(0, weight=0)
+        self.__frameSuppr.grid_rowconfigure(1, weight=1)
+        self.__frameSuppr.grid_rowconfigure(2, weight=0)
 
-# Frame Add Event
+        frameBTNSuppr.grid_columnconfigure(0, weight=1, uniform="btns")
+        frameBTNSuppr.grid_columnconfigure(1, weight=1, uniform="btns")
+        frameBTNSuppr.grid_columnconfigure(2, weight=1, uniform="btns")
+        frameBTNSuppr.grid_rowconfigure(0, weight=0)
 
-
+        # Frame Add Event
         # Asset
         assetLogo = self._arrtk.createImage(pathLight=self.__assetPath+"calendar.png",
                                        pathDark=self.__assetPath+"calendar.png",
@@ -104,13 +115,14 @@ class GUIAgenda(GuiBase):
                                             ppolice="Arial", ptaille=20, pstyle="bold")
 
         # Boutons
-        btnCreateEvent = self._arrtk.createButton(frameBTN,text="Créer\nun événement",
+        btnCreateEvent = self._arrtk.createButton(frameBTNEvent,text="Créer\nun événement",
                                                   ppolice="Arial",ptaille=15,pstyle="bold",
                                                   bg=self._btnColor,fg=self._btnTexteColor,
                                                   command=lambda : self.__viewAddEvent(0))
-        btnSupprimerEvent = self._arrtk.createButton(frameBTN, text="Supprimer\nun événement",
+        btnSupprimerEvent = self._arrtk.createButton(frameBTNEvent, text="Supprimer\nun événement",
                                                   ppolice="Arial", ptaille=15, pstyle="bold",
-                                                  bg=self._btnColor, fg=self._btnTexteColor)
+                                                  bg=self._btnColor, fg=self._btnTexteColor,
+                                                     command=self.__viewSuppr)
 
         # Calendrier
         self.__miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
@@ -125,7 +137,6 @@ class GUIAgenda(GuiBase):
                                                          fg=self._btnTexteColor,command=lambda : self.__viewAddEvent(1))
 
         # Frame Add Event
-
         self.__labelTitleAddEvent = self._arrtk.createLabel(self.__frameAdd,
                                                             text="Ajouter un événement",
                                                             ppolice="Arial", ptaille=30, pstyle="bold")
@@ -153,10 +164,20 @@ class GUIAgenda(GuiBase):
                                                  bg=self._btnColor, fg=self._btnTexteColor)
         btnCancelHour = self._arrtk.createButton(self.__frameHeure,text="Annuler",ppolice="Arial", ptaille=15,
                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__backToMain)
+        # Partie suppr
+        labelSuppr = self._arrtk.createLabel(self.__frameSuppr,text="Supprimer un événement",ppolice="Arial", ptaille=30,pstyle="bold")
+        self.__selectMenuSuppr = None
+        btnSupprEvent = self._arrtk.createButton(frameBTNSuppr,text="Supprimer",
+                                                 ppolice="Arial", ptaille=20,command=self.__supprEvent,
+                                                 bg=self._btnColor, fg=self._btnTexteColor)
+        btnCancelSuppr = self._arrtk.createButton(frameBTNSuppr,text="Annuler",
+                                                  ppolice="Arial", ptaille=20,command=self.__backToMain,
+                                                    bg=self._btnColor, fg=self._btnTexteColor)
+
         # Placement des frames
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
-        frameBTN.grid(row=1, column=0, sticky="w", padx=(40, 0), pady=0)
+        frameBTNEvent.grid(row=1, column=0, sticky="w", padx=(40, 0), pady=0)
         frameCalendar.grid(row=2, column=0, sticky="sw", padx=0, pady=0)
 
         # Placement des widgets
@@ -188,6 +209,11 @@ class GUIAgenda(GuiBase):
         btnCancelHour.grid(row=2, column=0, sticky="w", padx=10, pady=(5, 10))    # bas-gauche
         self.__btnValiderHour.grid(row=2, column=2, sticky="e", padx=10, pady=(5, 10))  # bas-droite
 
+        labelSuppr.grid(row=0, column=0, columnspan=3, sticky="n", pady=(10, 5))
+        frameBTNSuppr.grid(row=2, column=0, columnspan=3, sticky="ew", pady=(5, 10))
+        btnCancelSuppr.grid(row=0, column=0, sticky="w", padx=10)
+        btnSupprEvent.grid(row=0, column=2, sticky="e", padx=10)
+
         # Affichage principal
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
 
@@ -200,6 +226,7 @@ class GUIAgenda(GuiBase):
 
     def __backToMain(self):
         self.__frameAddEvent.grid_forget()
+        self.__frameSuppr.grid_forget()
         self.__frameMain.grid(row=0, column=0, sticky="nsew")
         self._screen.update()
 
@@ -281,4 +308,38 @@ class GUIAgenda(GuiBase):
         else :
             showerror("Erreur",
                       "Une erreur est survenue lors de l'ajout de l'événement")
+            return False
+
+    def __viewSuppr(self):
+        del  self.__selectMenuSuppr
+        listEvent = self.__fncAgenda.getAllEvents()
+        if not listEvent :
+            showerror("Erreur","Aucun événement à supprimer")
+            return False
+
+        self.__selectMenuSuppr = self._arrtk.createOptionMenu(self.__frameSuppr,
+                                                              value=listEvent,
+                                                              var=self.__varSuppr)
+
+        self.__selectMenuSuppr.grid(row=1, column=1, sticky="", pady=10)
+
+        self.__frameAddEvent.grid_forget()
+        self.__frameSuppr.grid(row=0, column=0, sticky="nsew")
+        self.__frameMain.grid_forget()
+        self._screen.update()
+        return True
+
+    def __supprEvent(self):
+        name = self.__varSuppr.get()
+        if name == "" :
+            showerror("Erreur",
+                      "Aucun événement sélectionné")
+            return False
+
+        if self.__fncAgenda.delEvent(name):
+            self.__backToMain()
+            return True
+        else :
+            showerror("Erreur",
+                      "Une erreur est survenue lors de la suppression de l'événement")
             return False
