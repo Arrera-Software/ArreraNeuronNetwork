@@ -526,6 +526,19 @@ class CArreraTK :
             label.place(relx=0.5, rely=0.5, anchor='center')
             return frame
 
+    def createHourPickert(self,screen,varHour:StringVar,varMinute:StringVar):
+        hours   = [f"{h:02d}" for h in range(24)]
+        minutes = [f"{m:02d}" for m in range(60)]
+        widget = self.createFrame(screen)
+        hourPicker = self.createOptionMenu(widget,hours,varHour)
+        minutePicker = self.createOptionMenu(widget,minutes,varMinute)
+        hourPicker.pack(side="left")
+        self.createLabel(widget,text=" : ",ppolice="Arial",ptaille=20,pstyle="blod").pack(side="left")
+        minutePicker.pack(side="right")
+        varHour.set(hours[0])
+        varMinute.set(minutes[0])
+        return widget
+
     def labelChangeColor(self,label : Union[Label,ctk.CTkLabel],bg:str = "" ,fg :str = "" ):
         if isinstance (label,Label):
             if (bg != ""):
