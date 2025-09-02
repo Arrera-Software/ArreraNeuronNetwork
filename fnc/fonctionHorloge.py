@@ -52,6 +52,9 @@ class fncHorloge(fncBase):
         else:
             return 0.00
 
+    def getStatChrono(self):
+        return self.__isRunningChrono
+
     def startMinuteur(self, duration: int):
         if not self.__runningMinuteur:
             self.__durationMinuterie = duration
