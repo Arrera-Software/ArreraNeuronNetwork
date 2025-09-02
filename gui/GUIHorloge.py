@@ -265,5 +265,7 @@ class GUIHorloge(GuiBase):
 
     def __resetChrono(self):
         self.__fncHorloge.resetChrono()
+        self.__fncHorloge.stopChrono()
+        self.__btnStartStopChrono.configure(text="Start")
         self.__labelViewChrono.configure(text="00:00:00")
 
