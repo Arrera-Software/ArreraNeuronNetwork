@@ -51,6 +51,11 @@ def partOrthographe(w:ctk.CTk):
 def partDownloader(w:ctk.CTk):
     arrtk.createButton(w, text="Download", command=lambda: gui.activeArreraDownload()).pack()
 
+def partHorloge(w:ctk.CTk):
+    arrtk.createButton(w, text="Horloge", command=lambda: gui.activeHorloge()).pack()
+    arrtk.createButton(w, text="Minuteur", command=lambda: gui.activeMinuteur()).pack()
+    arrtk.createButton(w, text="Chrono", command=lambda: gui.activeChrono()).pack()
+
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
@@ -58,6 +63,7 @@ def main():
     partOrthographe(screen)
     partDownloader(screen)
     arrtk.createButton(screen, text="Agenda", command=lambda: gui.activeAgenda()).pack()
+    partHorloge(screen)
     screen.mainloop()
     arrtk.view()
 
