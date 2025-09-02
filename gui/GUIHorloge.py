@@ -55,6 +55,14 @@ class GUIHorloge(GuiBase):
         self.__frameViewMinuteur.grid_rowconfigure(2, weight=0)
         self.__frameViewMinuteur.grid_rowconfigure(3, weight=1)
 
+        self.__frameChrono.grid_columnconfigure(0, weight=1, uniform="cols")
+        self.__frameChrono.grid_columnconfigure(1, weight=1, uniform="cols")
+        self.__frameChrono.grid_columnconfigure(2, weight=1, uniform="cols")
+        self.__frameChrono.grid_rowconfigure(0, weight=1)
+        self.__frameChrono.grid_rowconfigure(1, weight=0)
+        self.__frameChrono.grid_rowconfigure(2, weight=0)
+        self.__frameChrono.grid_rowconfigure(3, weight=1)
+
         # Widget
         # Nav
         btnHorloge = self._arrtk.createButton(self.__frameNav,text="Horloge",command=self.__viewHorloge)
@@ -65,6 +73,7 @@ class GUIHorloge(GuiBase):
                                                         ppolice="Arial",ptaille=60,pstyle="bold")
 
         # Minuteur
+        # Set Minuteur
         picketMinuteur = self._arrtk.createHourPickert(self.__frameSetMinuteur,
                                                        varHour=self.__varMinute,
                                                        varMinute=self.__varSec)
@@ -84,6 +93,15 @@ class GUIHorloge(GuiBase):
         btnStopMinuteur = self._arrtk.createButton(self.__frameViewMinuteur,text="Stop",
                                                   command=self.__fncHorloge.stopMinuteur)
 
+        # Chrono
+        self.__labelViewChrono = self._arrtk.createLabel(self.__frameChrono,text="00:00:00",
+                                                        ppolice="Arial",ptaille=60,pstyle="bold")
+
+        btnResetChrono = self._arrtk.createButton(self.__frameChrono,text="Reset",command=self.__resetChrono)
+
+        self.__btnStartStopChrono = self._arrtk.createButton(self.__frameChrono,text="Start",
+                                                             command=self.__enableOrDisableChrono)
+
         # Placement des widget
         btnHorloge.grid( row=0, column=1, padx=(8, 8), pady=10)
         btnMinuteur.grid(row=0, column=2, padx=(8, 8), pady=10)
@@ -97,11 +115,15 @@ class GUIHorloge(GuiBase):
         btnReset.grid(row=2, column=1, padx=8, pady=(6, 2))
         btnStartMinuteur1.grid(row=3, column=1, padx=8, pady=(2, 12))
 
-        self.__frameNav.grid(row=0, column=0, sticky="ew")
-        self.__frameHorloge.grid(row=1, column=0, sticky="nsew")
+        self.__labelViewChrono.grid(row=1, column=1, padx=12, pady=12)
+        btnResetChrono.grid(row=2, column=0, padx=10, pady=(6, 12))
+        self.__btnStartStopChrono.grid(row=2, column=2, padx=10, pady=(6, 12))
 
         self.__labelViewTimeMinuteur.grid(row=1, column=0, padx=12, pady=12)
         btnStopMinuteur.grid(row=2, column=0, padx=12, pady=(8, 16))
+
+        self.__frameNav.grid(row=0, column=0, sticky="ew")
+        self.__frameHorloge.grid(row=1, column=0, sticky="nsew")
 
         self.__clockEnable = True
         self.__activeClock()
@@ -203,3 +225,32 @@ class GUIHorloge(GuiBase):
             self.__frameViewMinuteur.grid_forget()
             self.__frameSetMinuteur.grid(row=0, column=0, sticky="nsew")
             return False
+
+    # Chrono
+
+    def __enableOrDisableChrono(self):
+        if not self.__fncHorloge.getStatChrono():
+            self.__btnStartStopChrono.configure(text="Stop")
+            self.__fncHorloge.startChrono()
+            self._screen.after(100, self.__updateChrono)
+        else :
+            self.__btnStartStopChrono.configure(text="Start")
+            self.__fncHorloge.stopChrono()
+
+    def __updateChrono(self):
+        if self.__fncHorloge.getStatChrono():
+            time = self.__fncHorloge.getTimeChrono()
+
+            total_cs = int(round(time * 100))           # 1 s = 100 centièmes
+            minutes, rem_cs = divmod(total_cs, 60 * 100)  # 6000 = 60s * 100cs
+            seconds, centiseconds = divmod(rem_cs, 100)
+
+            time = f"{minutes:02d}:{seconds:02d}:{centiseconds:02d}"
+
+            self.__labelViewChrono.configure(text=str(time))
+            self._screen.after(100, self.__updateChrono)
+
+    def __resetChrono(self):
+        self.__fncHorloge.resetChrono()
+        self.__labelViewChrono.configure(text="00:00:00")
+
