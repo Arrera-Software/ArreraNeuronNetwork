@@ -24,16 +24,24 @@ class GUIHorloge(GuiBase):
         self.__frameNav.grid_columnconfigure(4, weight=1)
         self.__frameNav.grid_rowconfigure(0, weight=0)
 
+        self.__frameHorloge.grid_rowconfigure(0, weight=1)
+        self.__frameHorloge.grid_columnconfigure(0, weight=1)
+
         # Widget
         # Nav
         btnHorloge = self._arrtk.createButton(self.__frameNav,text="Horloge",command=self.__viewHorloge)
         btnMinuteur = self._arrtk.createButton(self.__frameNav,text="Minuteur",command=self.__viewMinuteur)
         btnChrono = self._arrtk.createButton(self.__frameNav,text="Chronometre",command=self.__viewChrono)
+        # Horloge
+        self.__labelViewClock = self._arrtk.createLabel(self.__frameHorloge,text="00:00:00",
+                                                        ppolice="Arial",ptaille=60,pstyle="bold")
 
         # Placement des widget
         btnHorloge.grid( row=0, column=1, padx=(8, 8), pady=10)
         btnMinuteur.grid(row=0, column=2, padx=(8, 8), pady=10)
         btnChrono.grid( row=0, column=3, padx=(8, 8), pady=10)
+
+        self.__labelViewClock.grid(row=0, column=0, padx=10, pady=10)
 
         self.__frameNav.grid(row=0, column=0, sticky="ew")
         self.__frameHorloge.grid(row=1, column=0, sticky="nsew")
