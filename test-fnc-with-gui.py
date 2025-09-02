@@ -64,6 +64,7 @@ def main():
     partDownloader(screen)
     arrtk.createButton(screen, text="Agenda", command=lambda: gui.activeAgenda()).pack()
     partHorloge(screen)
+    arrtk.createButton(screen, text="Lecture", command=lambda: gui.activeLecture()).pack()
     screen.mainloop()
     arrtk.view()
 
