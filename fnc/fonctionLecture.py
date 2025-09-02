@@ -8,7 +8,14 @@ class fncLecture(fncBase) :
         self.__thRead = None
         
     def __readText(self, texte:str):
-        self.__thRead = th.Thread(target=self.__readText, args=(texte,))
+        self.__thRead = th.Thread(target=self.__arrVoice.say, args=(texte,))
+        self.__thRead.start()
 
     def read(self,texte:str):
         self.__readText(texte)
+
+    def getStatTheard(self):
+        if self.__thRead is not None :
+            return self.__thRead.is_alive()
+        else :
+            return False
