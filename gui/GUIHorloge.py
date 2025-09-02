@@ -99,7 +99,9 @@ class GUIHorloge(GuiBase):
         self.__labelViewTimeMinuteur = self._arrtk.createLabel(self.__frameViewMinuteur,text="00:00:00",
                                                         ppolice="Arial",ptaille=60,pstyle="bold")
         btnStopMinuteur = self._arrtk.createButton(self.__frameViewMinuteur,text="Stop",
-                                                  command=self.__fncHorloge.stopMinuteur)
+                                                  command=self.__fncHorloge.stopMinuteur,
+                                                   bg=self._btnColor,fg=self._btnTexteColor,
+                                                   ppolice="Arial",ptaille=25)
 
         # Chrono
         self.__labelViewChrono = self._arrtk.createLabel(self.__frameChrono,text="00:00:00",
