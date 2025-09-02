@@ -78,13 +78,21 @@ class GUIHorloge(GuiBase):
                                                        varHour=self.__varMinute,
                                                        varMinute=self.__varSec)
         btnReset = self._arrtk.createButton(self.__frameSetMinuteur,text="Reset"
-                                            ,command=self.__resetMinuteur)
+                                            ,command=self.__resetMinuteur,
+                                            bg=self._btnColor,fg=self._btnTexteColor,
+                                            ppolice="Arial",ptaille=25)
         btnStartMinuteur1 = self._arrtk.createButton(self.__frameSetMinuteur,text="Start",
-                                                     command=self.__startMinuteur)
+                                                     command=self.__startMinuteur,
+                                                     bg=self._btnColor,fg=self._btnTexteColor,
+                                                     ppolice="Arial",ptaille=25)
         btnStartMinuteur2 = self._arrtk.createButton(self.__frameSetMinuteur,text="1 Min",
-                                                     command=self.__setOneMin)
+                                                     command=self.__setOneMin,
+                                                     bg=self._btnColor,fg=self._btnTexteColor,
+                                                     ppolice="Arial",ptaille=25)
         btnStartMinuteur3 = self._arrtk.createButton(self.__frameSetMinuteur, text="3 Min",
-                                                     command=self.__setThreeMin)
+                                                     command=self.__setThreeMin,
+                                                     bg=self._btnColor,fg=self._btnTexteColor,
+                                                     ppolice="Arial",ptaille=25)
 
 
         # View Minuteur
@@ -97,10 +105,15 @@ class GUIHorloge(GuiBase):
         self.__labelViewChrono = self._arrtk.createLabel(self.__frameChrono,text="00:00:00",
                                                         ppolice="Arial",ptaille=60,pstyle="bold")
 
-        btnResetChrono = self._arrtk.createButton(self.__frameChrono,text="Reset",command=self.__resetChrono)
+        btnResetChrono = self._arrtk.createButton(self.__frameChrono,text="Reset",
+                                                  command=self.__resetChrono,
+                                                  bg=self._btnColor,fg=self._btnTexteColor,
+                                                  ppolice="Arial",ptaille=25)
 
         self.__btnStartStopChrono = self._arrtk.createButton(self.__frameChrono,text="Start",
-                                                             command=self.__enableOrDisableChrono)
+                                                             command=self.__enableOrDisableChrono,
+                                                             bg=self._btnColor,fg=self._btnTexteColor,
+                                                             ppolice="Arial",ptaille=25)
 
         # Placement des widget
         btnHorloge.grid( row=0, column=1, padx=(8, 8), pady=10)
