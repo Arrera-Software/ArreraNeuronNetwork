@@ -27,7 +27,8 @@ class GUILecture(GuiBase):
         self.__textToRead = self._arrtk.createText(self.__frameSetText)
         buttonRead = self._arrtk.createButton(self.__frameSetText, text="Lire le texte",
                                               ppolice="Arial", ptaille=25, pstyle="bold",
-                                              bg=self._btnColor,fg=self._btnTexteColor)
+                                              bg=self._btnColor,fg=self._btnTexteColor,
+                                              command=self.__readText)
 
         labelViewRead = self._arrtk.createLabel(self.__frameReadText, text="Lecture en cours...",
                                                ppolice="Arial", ptaille=35, pstyle="bold")
@@ -40,3 +41,21 @@ class GUILecture(GuiBase):
         labelViewRead.grid(row=0, column=0, padx=12, pady=12)
 
         self.__frameSetText.grid(row=0, column=0, sticky="nsew")
+
+    def __readText(self):
+        texte = self.__textToRead.get("1.0", "end-1c")
+        self.__textToRead.delete("1.0", "end")
+        if texte != "":
+            self.__fncLecture.read(texte)
+            self.__frameSetText.grid_forget()
+            self.__frameReadText.grid(row=0, column=0, sticky="nsew")
+            self._screen.after(1000, self.__checkTheard)
+        else:
+            return
+
+    def __checkTheard(self):
+        if self.__fncLecture.getStatTheard():
+            self._screen.after(1000, self.__checkTheard)
+        else:
+            self.__frameReadText.grid_forget()
+            self.__frameSetText.grid(row=0, column=0, sticky="nsew")
