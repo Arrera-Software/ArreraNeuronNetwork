@@ -13,7 +13,7 @@ class GUIHorloge(GuiBase):
         self._screen.grid_columnconfigure(0, weight=1)
         # Frame principal
         self.__frameNav = self._arrtk.createFrame(self._screen,bg="green")
-        self.__frameHorloge = self._arrtk.createFrame(self._screen,bg="blue")
+        self.__frameHorloge = self._arrtk.createFrame(self._screen)
         self.__frameChrono = self._arrtk.createFrame(self._screen,bg="red")
         self.__frameMinuteur = self._arrtk.createFrame(self._screen,bg="yellow")
 
