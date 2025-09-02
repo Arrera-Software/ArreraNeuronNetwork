@@ -4,6 +4,7 @@ class GUIHorloge(GuiBase):
     def __init__(self, gest: gestionnaire):
         super().__init__(gest, "Horloge")
         self.__fncHorloge = self._gestionnaire.getGestFNC().getFNCHorloge()
+        self.__clockEnable = False
 
     def _mainframe(self):
         # Conf de la fenetre
@@ -46,6 +47,9 @@ class GUIHorloge(GuiBase):
         self.__frameNav.grid(row=0, column=0, sticky="ew")
         self.__frameHorloge.grid(row=1, column=0, sticky="nsew")
 
+        self.__clockEnable = True
+        self.__activeClock()
+
     def __disableAllFrame(self):
         self.__frameHorloge.grid_forget()
         self.__frameChrono.grid_forget()
@@ -53,10 +57,13 @@ class GUIHorloge(GuiBase):
 
     def __viewHorloge(self):
         self.__disableAllFrame()
+        self.__clockEnable = True
+        self.__activeClock()
         self.__frameHorloge.grid(row=1, column=0, sticky="nsew")
 
     def __viewMinuteur(self):
         self.__disableAllFrame()
+        self.__clockEnable = False
         self.__frameMinuteur.grid(row=1, column=0, sticky="nsew")
 
     def activeMinuteur(self):
@@ -65,9 +72,16 @@ class GUIHorloge(GuiBase):
 
     def __viewChrono(self):
         self.__disableAllFrame()
+        self.__clockEnable = False
         self.__frameChrono.grid(row=1, column=0, sticky="nsew")
 
     def activeChrono(self):
         self.active()
         self.__viewChrono()
+
+    def __activeClock(self):
+        if self.__clockEnable:
+            current_time = self.__fncHorloge.getHorloge()
+            self.__labelViewClock.configure(text=current_time)
+            self._screen.after(1000, self.__activeClock)
 
