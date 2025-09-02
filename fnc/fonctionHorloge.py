@@ -81,8 +81,12 @@ class fncHorloge(fncBase):
             self.__elapsedTimeMinuteur = self.__currentTimeMinuteur - self.__startTimeMinuteur
             remaining_time = self.__durationMinuterie - self.__elapsedTimeMinuteur
             if remaining_time <= 0:
+                self.__runningMinuteur = False
                 self.__arrVoice.playFile(self._gestionnaire.getConfigFile().assetHorloge+"/bip.mp3")
                 self.stopMinuteur()
+
+    def getStatMinuteur(self):
+        return self.__runningMinuteur
 
     def getTimeMinuteur(self):
         if self.__runningMinuteur:
