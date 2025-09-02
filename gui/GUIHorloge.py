@@ -6,6 +6,7 @@ class GUIHorloge(GuiBase):
     def __init__(self, gest: gestionnaire):
         super().__init__(gest, "Horloge")
         self.__fncHorloge = self._gestionnaire.getGestFNC().getFNCHorloge()
+        self.__assetDirectory = self._gestionnaire.getConfigFile().asset+"horloge/"
         self.__clockEnable = False
         self.__minuteurEnable = False
 
@@ -63,11 +64,29 @@ class GUIHorloge(GuiBase):
         self.__frameChrono.grid_rowconfigure(2, weight=0)
         self.__frameChrono.grid_rowconfigure(3, weight=1)
 
+        # img
+        tailleIMG = 30
+        imgHorloge = self._arrtk.createImage(pathDark=self.__assetDirectory+"horloge.png",
+                                             pathLight=self.__assetDirectory+"horloge.png",
+                                             tailleX=tailleIMG,tailleY=tailleIMG)
+        imgChrono = self._arrtk.createImage(pathDark=self.__assetDirectory+"chronometre.png",
+                                             pathLight=self.__assetDirectory+"chronometre.png",
+                                             tailleX=tailleIMG,tailleY=tailleIMG)
+        imgMinuteur = self._arrtk.createImage(pathDark=self.__assetDirectory+"minuteur.png",
+                                             pathLight=self.__assetDirectory+"minuteur.png",
+                                             tailleX=tailleIMG,tailleY=tailleIMG)
+
         # Widget
         # Nav
-        btnHorloge = self._arrtk.createButton(self.__frameNav,text="Horloge",command=self.__viewHorloge)
-        btnMinuteur = self._arrtk.createButton(self.__frameNav,text="Minuteur",command=self.__viewMinuteur)
-        btnChrono = self._arrtk.createButton(self.__frameNav,text="Chronometre",command=self.__viewChrono)
+        btnHorloge = self._arrtk.createButton(self.__frameNav,text="",image=imgHorloge,
+                                              command=self.__viewHorloge,
+                                              bg=self._btnColor,fg=self._btnTexteColor,)
+        btnMinuteur = self._arrtk.createButton(self.__frameNav,text="",image=imgMinuteur,
+                                               command=self.__viewMinuteur,
+                                               bg=self._btnColor,fg=self._btnTexteColor,)
+        btnChrono = self._arrtk.createButton(self.__frameNav,text="",image=imgChrono,
+                                             command=self.__viewChrono,
+                                             bg=self._btnColor,fg=self._btnTexteColor,)
         # Horloge
         self.__labelViewClock = self._arrtk.createLabel(self.__frameHorloge,text="00:00:00",
                                                         ppolice="Arial",ptaille=60,pstyle="bold")
