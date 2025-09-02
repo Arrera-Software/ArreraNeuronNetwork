@@ -18,10 +18,10 @@ class GUIHorloge(GuiBase):
         self._screen.grid_rowconfigure(1, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
         # Frame principal
-        self.__frameNav = self._arrtk.createFrame(self._screen,bg="green")
+        self.__frameNav = self._arrtk.createFrame(self._screen)
         self.__frameHorloge = self._arrtk.createFrame(self._screen)
-        self.__frameChrono = self._arrtk.createFrame(self._screen,bg="red")
-        self.__frameMinuteur = self._arrtk.createFrame(self._screen,bg="yellow")
+        self.__frameChrono = self._arrtk.createFrame(self._screen)
+        self.__frameMinuteur = self._arrtk.createFrame(self._screen)
 
         # Frame secondaire
         self.__frameSetMinuteur = self._arrtk.createFrame(self.__frameMinuteur)
