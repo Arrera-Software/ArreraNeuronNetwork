@@ -24,7 +24,8 @@ class GUILecture(GuiBase):
         # Widgets
         labelTitle = self._arrtk.createLabel(self.__frameSetText, text="Lecture de texte",
                                              ppolice="Arial", ptaille=35, pstyle="bold")
-        self.__textToRead = self._arrtk.createText(self.__frameSetText, ppolice="Arial", ptaille=25, pstyle="normal",)
+        self.__textToRead = self._arrtk.createText(self.__frameSetText, ppolice="Arial",
+                                                   ptaille=25, pstyle="normal",)
         buttonRead = self._arrtk.createButton(self.__frameSetText, text="Lire le texte",
                                               ppolice="Arial", ptaille=25, pstyle="bold",
                                               bg=self._btnColor,fg=self._btnTexteColor,
