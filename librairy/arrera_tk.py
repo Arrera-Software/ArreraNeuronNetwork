@@ -359,13 +359,15 @@ class CArreraTK :
 
         return text
 
-    def createCheckbox(self, screen,var_chk : BooleanVar, text: str = "", bg : str = "", fg : str = ""):
+    def createCheckbox(self, screen,var_chk : BooleanVar, text: str = "", bg : str = "", fg : str = "",command = None):
         if (self.__mode == 0):
             checkbox = ctk.CTkCheckBox(screen, text=text, variable=var_chk)
             if (bg != ""):
                 checkbox.configure(bg=bg)
             if (fg != ""):
                 checkbox.configure(fg=fg)
+            if command is not None:
+                checkbox.configure(command=command)
         else :
             checkbox = Checkbutton(screen,text=text,variable=var_chk)
             if (bg != ""):
@@ -404,6 +406,34 @@ class CArreraTK :
     def createFrame(self, screen,width : int = 0 ,height : int = 0,  bg : str = "",wightBoder : int = 0,corner_radius : int = 1024):
         if (self.__mode == 0):
             frame = ctk.CTkFrame(screen)
+            if (width != 0):
+                frame.configure(width=width)
+            if (height != 0):
+                frame.configure(height=height)
+            if (bg != ""):
+                frame.configure(fg_color=bg)
+            else:
+                frame.configure(fg_color=self.__windowsColor)
+            if (wightBoder != 0):
+                frame.configure(border_width=wightBoder)
+            if (corner_radius != 1024):
+                frame.configure(corner_radius=corner_radius)
+            frame.update()
+        else :
+            frame = Frame(screen)
+            if (width != 0):
+                frame.configure(width=width)
+            if (height != 0):
+                frame.configure(height=height)
+            if (bg != ""):
+                frame.configure(bg=bg)
+            if (wightBoder != 0):
+                frame.configure(borderwidth=wightBoder,relief="solid")
+        return frame
+
+    def createScrollFrame(self, screen,width : int = 0 ,height : int = 0,  bg : str = "",wightBoder : int = 0,corner_radius : int = 1024):
+        if (self.__mode == 0):
+            frame = ctk.CTkScrollableFrame(screen)
             if (width != 0):
                 frame.configure(width=width)
             if (height != 0):
