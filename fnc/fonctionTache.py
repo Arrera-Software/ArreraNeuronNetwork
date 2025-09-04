@@ -72,13 +72,65 @@ class fncArreraTache(fncBase) :
             else :
                 return False
 
-    def getNbTask(self):
-        self.__readTaskFile()
-        return len(self.__content)
+    def unfinishTask(self, name:str):
+        if not name:
+            return False
+        else :
+            self.__readTaskFile()
 
-    def getTask(self):
-        self.__readTaskFile()
-        return list(self.__content.keys())
+            if name in self.__content:
+                self.__content[name]["fini"] = False
+                with open(self.__taskFile, 'w', encoding='utf-8') as jsonFile:
+                    json.dump(self.__content, jsonFile, ensure_ascii=False, indent=4)
+                return True
+            else :
+                return False
+
+    def getNbTaskNoFinish(self):
+        if self.getNoFinishTask() is not None:
+            return len(self.getNoFinishTask())
+        else :
+            return 0
+
+    def getNoFinishTask(self):
+        if self.__readTaskFile() :
+            listTask = list(self.__content.keys())
+            outList = []
+            for i in listTask:
+                if not self.__content[i]["fini"]:
+                    outList.append(i)
+            return outList
+        else :
+            return None
+
+    def getNbTaskFinish(self):
+        if self.getFinishTask() is not None:
+            return len(self.getFinishTask())
+        else :
+            return 0
+
+    def getFinishTask(self):
+        if self.__readTaskFile() :
+            listTask = list(self.__content.keys())
+            outList = []
+            for i in listTask:
+                if self.__content[i]["fini"]:
+                    outList.append(i)
+            return list(outList)
+        else :
+            return None
+
+    def getAllTask(self):
+        if self.__readTaskFile() :
+            return list(self.__content.keys())
+        else :
+            return None
+
+    def getNbAllTask(self):
+        if self.getAllTask() is not None:
+            return len(self.getAllTask())
+        else :
+            return 0
 
     def checkDateTask(self,name:str):
         today = datetime.today()

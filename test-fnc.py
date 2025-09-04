@@ -36,11 +36,14 @@ def partTask():
     taskBoucle = True
     while taskBoucle:
         print("Test des fonctions de tache")
-        print("1.Ajouter une tache\n2.Lister les taches\n"
-              "3.Supprimer une tache\n4.Compter le nombre de taches\n"
+        print("1.Ajouter une tache\n2.Lister les taches non fini\n"
+              "3.Supprimer une tache\n4.Compter le nombre de taches non fini\n"
               "5.finir une tache\n6.Check date today\n7.Tache a faire aujourd'hui\n"
               "8.Check date towmorow\n9.Tache a faire demain\n"
-              "10.Check task late\n11.Tache en retard\n0.Quitter")
+              "10.Check task late\n11.Tache en retard"
+              "\n12.Voir les taches fini\n13.Compter le nombre de taches fini"
+              "\n14.Voir toutes les taches\n15.Compter le nombre total de taches"
+              "\n16.Remettre une tache a faire\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -62,7 +65,7 @@ def partTask():
                 except ValueError:
                     print("Format de date invalide. Utilisez YYYY-MM-DD.")
             case 2:
-                print(fnc.getFNCTask().getTask())
+                print(f"Tache non fini : {fnc.getFNCTask().getNoFinishTask()}")
             case 3:
                 taskId = input("Name : ")
                 sortie = fnc.getFNCTask().delTask(taskId)
@@ -71,7 +74,7 @@ def partTask():
                 else:
                     print("Erreur")
             case 4:
-                print(f"Nombre de taches : {fnc.getFNCTask().getNbTask()}")
+                print(f"Nombre de taches non fini : {fnc.getFNCTask().getNbTaskNoFinish()}")
             case 5:
                 taskId = input("Name : ")
                 sortie = fnc.getFNCTask().finishTask(taskId)
@@ -97,6 +100,21 @@ def partTask():
             case 11:
                 print(fnc.getFNCTask().getNbTaskLate())
                 print(fnc.getFNCTask().getListTaskLate())
+            case 12:
+                print(f"Tache fini : {fnc.getFNCTask().getFinishTask()}")
+            case 13:
+                print(f"Nombre de taches fini : {fnc.getFNCTask().getNbTaskFinish()}")
+            case 14:
+                print(f"Toutes les taches : {fnc.getFNCTask().getAllTask()}")
+            case 15:
+                print(f"Nombre total de taches : {fnc.getFNCTask().getNbAllTask()}")
+            case 16:
+                taskId = input("Name : ")
+                sortie = fnc.getFNCTask().unfinishTask(taskId)
+                if sortie:
+                    print("Tache non terminer")
+                else:
+                    print("Erreur")
 
             case 0:
                 taskBoucle = False
