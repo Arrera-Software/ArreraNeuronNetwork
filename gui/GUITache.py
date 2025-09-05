@@ -48,6 +48,14 @@ class GUITache(GuiBase):
         imgPlus = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-plus.png",
                                            pathDark=self.__directoryAsset+"task-plus.png",
                                            tailleX=32, tailleY=32)
+
+        self.__imgNoFinish = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-nofinish.png",
+                                                     pathDark=self.__directoryAsset+"task-nofinish.png",
+                                                     tailleX=32, tailleY=32)
+
+        self.__imgFinish = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-finish.png",
+                                                     pathDark=self.__directoryAsset+"task-finish.png",
+                                                     tailleX=32, tailleY=32)
         # Widgets
         labelLogo = self._arrtk.createLabel(frameTitle,text="",image=imgLogo)
         labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
@@ -56,7 +64,7 @@ class GUITache(GuiBase):
                                               ,bg=self._btnColor,fg=self._btnTexteColor)
         btnDelTask = self._arrtk.createButton(frameTitle,text="",image=imgSuppr,command=self.__viewSuppr
                                               ,bg=self._btnColor,fg=self._btnTexteColor)
-        self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="Voir les tâches finies"
+        self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="",image=self.__imgFinish
                                                         ,bg=self._btnColor,fg=self._btnTexteColor)
 
         # Add task frame
@@ -124,7 +132,7 @@ class GUITache(GuiBase):
         # ta liste de tâches
         tasks = self._fnctask.getNoFinishTask()
 
-        self.__btnFinishTask.configure(text="Voir les tâches finies",
+        self.__btnFinishTask.configure(text="",image=self.__imgFinish,
                                        command=self.__viewTaskFinish)
 
         # 1) nettoyer le frame si déjà utilisé
@@ -168,7 +176,7 @@ class GUITache(GuiBase):
         # ta liste de tâches
         tasks = self._fnctask.getFinishTask()
 
-        self.__btnFinishTask.configure(text="Voir les tâches non finies",
+        self.__btnFinishTask.configure(text="",image=self.__imgNoFinish,
                                        command=self.__viewTaskNoFinish)
 
         # 1) nettoyer le frame si déjà utilisé
