@@ -8,6 +8,7 @@ class GUITache(GuiBase):
     def __init__(self, gestionnaire: gestionnaire):
         super().__init__(gestionnaire,"Tache")
         self._fnctask = self._gestionnaire.getGestFNC().getFNCTask()
+        self.__directoryAsset = self._gestionnaire.getConfigFile().asset+"tache/"
 
     def _mainframe(self):
         # Var 
@@ -37,8 +38,13 @@ class GUITache(GuiBase):
         self.__frameSuppression.grid_columnconfigure(0, weight=1)
         self.__frameSuppression.grid_rowconfigure(1, weight=1)
 
+        # img
+        imgLogo = self._arrtk.createImage(pathLight=self.__directoryAsset+"task.png",
+                                          pathDark=self.__directoryAsset+"task.png",
+                                          tailleX=64, tailleY=64)
+
         # Widgets
-        labelLogo = self._arrtk.createLabel(frameTitle,text="LOGO")
+        labelLogo = self._arrtk.createLabel(frameTitle,text="",image=imgLogo)
         labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
                                              ppolice="Arial",ptaille=20,pstyle="bold")
         btnAddTask = self._arrtk.createButton(frameTitle,text="Ajouter une tâche",command=self.__viewAddTask
