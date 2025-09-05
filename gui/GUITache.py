@@ -1,4 +1,4 @@
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, askyesno, showinfo
 from tkcalendar import Calendar
 from gui.guibase import GuiBase,gestionnaire
 import tkinter as tk
@@ -241,3 +241,45 @@ class GUITache(GuiBase):
     def __viewSuppr(self):
         self.__disableAllFrame()
         self.__frameSuppression.pack(side="top", fill="both", expand=True, pady=(2, 2))
+
+        # ta liste de tâches
+        tasks = self._fnctask.getAllTask()
+
+        # 1) nettoyer le frame si déjà utilisé
+        for w in self.__frameSuppr.winfo_children():
+            w.destroy()
+
+        # 2) faire en sorte que le frame parent grandisse correctement
+        self.__frameSuppr.grid_rowconfigure(0, weight=1)
+        self.__frameSuppr.grid_columnconfigure(0, weight=1)
+
+        # 3) un unique conteneur scrollable, toujours
+        if len(tasks) != 0:
+            container = self._arrtk.createScrollFrame(self.__frameSuppr,bg="transparent")
+            container.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+            # 4) les colonnes du conteneur prennent la largeur
+            container.grid_columnconfigure(0, weight=1)
+
+            # 5) créer les checkboxes
+            self._task_vars = []  # pour relire l'état plus tard
+            for i, label in enumerate(tasks):
+                var = tk.BooleanVar(value=False)
+                cb = self._arrtk.createCheckbox(container, text=label,
+                                                var_chk=var,
+                                                command=lambda :self.__delTask(var, label))
+                cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
+                self._task_vars.append(var)
+        else:
+            labelNoTask = self._arrtk.createLabel(self.__frameSuppr,text="Aucune tâche enregistré",
+                                                  ppolice="Arial",ptaille=40,pstyle="bold")
+            labelNoTask.pack(pady=20)
+
+    def __delTask(self,var, name:str):
+        if var.get():
+            if (askyesno("Confirmation",
+                         "Voulez vous vraiment supprimer cette tâche ?")):
+                self._fnctask.delTask(name)
+                showinfo("Tache","Suppression de la tâche effectué")
+            self.__backToMain()
+            self.__viewTaskNoFinish()
