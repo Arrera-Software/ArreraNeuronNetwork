@@ -16,10 +16,11 @@ class GUITache(GuiBase):
         # Frame
         frameTitle = self._arrtk.createFrame(self._screen,bg="red")
         self.__frameTask = self._arrtk.createFrame(self._screen,bg="green")
-
         self.__frameAdd = self._arrtk.createFrame(self._screen, bg="blue")
         self.__frameAddTask = self._arrtk.createFrame(self.__frameAdd, bg="orange")
         frameBTNAdd = self._arrtk.createFrame(self.__frameAddTask, bg="yellow")
+        self.__frameSuppression = self._arrtk.createFrame(self._screen, bg="purple")
+        self.__frameSuppr = self._arrtk.createFrame(self.__frameSuppression, bg="pink")
 
 
         # Config
@@ -33,12 +34,15 @@ class GUITache(GuiBase):
         frameBTNAdd.columnconfigure(0, weight=1)
         frameBTNAdd.columnconfigure(1, weight=1)
 
+        self.__frameSuppression.grid_columnconfigure(0, weight=1)
+        self.__frameSuppression.grid_rowconfigure(1, weight=1)
+
         # Widgets
         labelLogo = self._arrtk.createLabel(frameTitle,text="LOGO")
         labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
                                              ppolice="Arial",ptaille=20,pstyle="bold")
         btnAddTask = self._arrtk.createButton(frameTitle,text="Ajouter une tâche",command=self.__viewAddTask)
-        btnDelTask = self._arrtk.createButton(frameTitle,text="Supprimer une tâche")
+        btnDelTask = self._arrtk.createButton(frameTitle,text="Supprimer une tâche",command=self.__viewSuppr)
         self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="Voir les tâches finies")
 
         # Add task frame
@@ -56,6 +60,12 @@ class GUITache(GuiBase):
 
         btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__backToMain)
         btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask)
+
+        # Supp
+        labelTitleSuppr = self._arrtk.createLabel(self.__frameSuppression, text="Supprimer une tâche",
+                                                  ppolice="Arial", ptaille=35, pstyle="bold")
+        btnBackSuppr = self._arrtk.createButton(self.__frameSuppression, text="Retourner a l'acceuil",
+                                                command=self.__backToMain)
 
         # Placement
         # Widget
@@ -75,6 +85,10 @@ class GUITache(GuiBase):
         btnCancelAddTask.grid(row=0, column=0, sticky="w", padx=(0, 5))
         btnConfirmAddTask.grid(row=0, column=1, sticky="e", padx=(5, 0))
 
+        labelTitleSuppr.grid(row=0, column=0, sticky="ew")
+        self.__frameSuppr.grid(row=1, column=0, sticky="nsew")
+        btnBackSuppr.grid(row=2, column=0, sticky="ew")
+
         # Frame
         frameTitle.pack(side="top", fill="x", pady=(0, 2))
         self.__frameTask.pack(side="top", fill="both", expand=True, pady=(2, 2))
@@ -83,6 +97,7 @@ class GUITache(GuiBase):
     def __disableAllFrame(self):
         self.__frameTask.pack_forget()
         self.__frameAdd.pack_forget()
+        self.__frameSuppression.pack_forget()
 
     def __viewTaskNoFinish(self):
         self.__disableAllFrame()
@@ -215,10 +230,14 @@ class GUITache(GuiBase):
             if not self._fnctask.addTask(name):
                 showerror("Erreur","La tache n'a pas pu être ajouter")
 
-
         self.__viewTaskNoFinish()
 
     def __backToMain(self):
         self.__frameAdd.grid_forget()
+        self.__frameSuppression.pack_forget()
         self.__frameTask.pack(side="top", fill="both", expand=True, pady=(2, 2))
         self.__viewTaskNoFinish()
+
+    def __viewSuppr(self):
+        self.__disableAllFrame()
+        self.__frameSuppression.pack(side="top", fill="both", expand=True, pady=(2, 2))
