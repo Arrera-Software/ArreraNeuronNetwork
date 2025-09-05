@@ -14,13 +14,13 @@ class GUITache(GuiBase):
         self.__varAddDescription = tk.BooleanVar(value=False)
         self.__varAddDate = tk.BooleanVar(value=False)
         # Frame
-        frameTitle = self._arrtk.createFrame(self._screen,bg="red")
-        self.__frameTask = self._arrtk.createFrame(self._screen,bg="green")
-        self.__frameAdd = self._arrtk.createFrame(self._screen, bg="blue")
-        self.__frameAddTask = self._arrtk.createFrame(self.__frameAdd, bg="orange")
-        frameBTNAdd = self._arrtk.createFrame(self.__frameAddTask, bg="yellow")
-        self.__frameSuppression = self._arrtk.createFrame(self._screen, bg="purple")
-        self.__frameSuppr = self._arrtk.createFrame(self.__frameSuppression, bg="pink")
+        frameTitle = self._arrtk.createFrame(self._screen)
+        self.__frameTask = self._arrtk.createFrame(self._screen)
+        self.__frameAdd = self._arrtk.createFrame(self._screen)
+        self.__frameAddTask = self._arrtk.createFrame(self.__frameAdd)
+        frameBTNAdd = self._arrtk.createFrame(self.__frameAddTask)
+        self.__frameSuppression = self._arrtk.createFrame(self._screen)
+        self.__frameSuppr = self._arrtk.createFrame(self.__frameSuppression)
 
 
         # Config
@@ -41,9 +41,12 @@ class GUITache(GuiBase):
         labelLogo = self._arrtk.createLabel(frameTitle,text="LOGO")
         labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
                                              ppolice="Arial",ptaille=20,pstyle="bold")
-        btnAddTask = self._arrtk.createButton(frameTitle,text="Ajouter une tâche",command=self.__viewAddTask)
-        btnDelTask = self._arrtk.createButton(frameTitle,text="Supprimer une tâche",command=self.__viewSuppr)
-        self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="Voir les tâches finies")
+        btnAddTask = self._arrtk.createButton(frameTitle,text="Ajouter une tâche",command=self.__viewAddTask
+                                              ,bg=self._btnColor,fg=self._btnTexteColor)
+        btnDelTask = self._arrtk.createButton(frameTitle,text="Supprimer une tâche",command=self.__viewSuppr
+                                              ,bg=self._btnColor,fg=self._btnTexteColor)
+        self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="Voir les tâches finies"
+                                                        ,bg=self._btnColor,fg=self._btnTexteColor)
 
         # Add task frame
         # Add
@@ -58,14 +61,19 @@ class GUITache(GuiBase):
         wDescription,self.__entryDescriptionTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Description : ", ppolice="Arial",
                                                      ptaille=20, gridUsed=True)
 
-        btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__backToMain)
-        btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask)
+        btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__backToMain
+                                                    ,bg=self._btnColor,fg=self._btnTexteColor,
+                                                    ppolice="Arial", ptaille=25,pstyle="bold")
+        btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask
+                                                     ,bg=self._btnColor,fg=self._btnTexteColor,
+                                                     ppolice="Arial", ptaille=25,pstyle="bold")
 
         # Supp
         labelTitleSuppr = self._arrtk.createLabel(self.__frameSuppression, text="Supprimer une tâche",
                                                   ppolice="Arial", ptaille=35, pstyle="bold")
         btnBackSuppr = self._arrtk.createButton(self.__frameSuppression, text="Retourner a l'acceuil",
-                                                command=self.__backToMain)
+                                                command=self.__backToMain,bg=self._btnColor,fg=self._btnTexteColor,
+                                                ppolice="Arial", ptaille=25,pstyle="bold")
 
         # Placement
         # Widget
