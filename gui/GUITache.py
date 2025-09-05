@@ -45,12 +45,14 @@ class GUITache(GuiBase):
         imgSuppr = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-suppr.png",
                                           pathDark=self.__directoryAsset+"task-suppr.png",
                                             tailleX=32, tailleY=32)
-
+        imgPlus = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-plus.png",
+                                           pathDark=self.__directoryAsset+"task-plus.png",
+                                           tailleX=32, tailleY=32)
         # Widgets
         labelLogo = self._arrtk.createLabel(frameTitle,text="",image=imgLogo)
         labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
                                              ppolice="Arial",ptaille=20,pstyle="bold")
-        btnAddTask = self._arrtk.createButton(frameTitle,text="Ajouter une tâche",command=self.__viewAddTask
+        btnAddTask = self._arrtk.createButton(frameTitle,text="",image=imgPlus,command=self.__viewAddTask
                                               ,bg=self._btnColor,fg=self._btnTexteColor)
         btnDelTask = self._arrtk.createButton(frameTitle,text="",image=imgSuppr,command=self.__viewSuppr
                                               ,bg=self._btnColor,fg=self._btnTexteColor)
