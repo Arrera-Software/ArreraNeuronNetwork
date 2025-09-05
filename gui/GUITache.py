@@ -1,9 +1,8 @@
-from gui.guibase import GuiBase,gestionnaire
-import customtkinter as ctk
-import tkinter as tk
-
+from tkinter.messagebox import showerror
 from tkcalendar import Calendar
-from datetime import date
+from gui.guibase import GuiBase,gestionnaire
+import tkinter as tk
+from datetime import datetime,date
 
 class GUITache(GuiBase):
     def __init__(self, gestionnaire: gestionnaire):
@@ -20,11 +19,8 @@ class GUITache(GuiBase):
 
         self.__frameAdd = self._arrtk.createFrame(self._screen, bg="blue")
         self.__frameAddTask = self._arrtk.createFrame(self.__frameAdd, bg="orange")
-        self.__frameAddTaskDescription = self._arrtk.createFrame(self.__frameAdd, bg="orange")
-        self.__frameAddTaskDate = self._arrtk.createFrame(self.__frameAdd, bg="purple")
         frameBTNAdd = self._arrtk.createFrame(self.__frameAddTask, bg="yellow")
-        frameBTNAddDescription = self._arrtk.createFrame(self.__frameAddTaskDescription,bg="yellow")
-        frameBTNAddDate = self._arrtk.createFrame(self.__frameAddTaskDate,bg="yellow")
+
 
         # Config
 
@@ -36,20 +32,6 @@ class GUITache(GuiBase):
 
         frameBTNAdd.columnconfigure(0, weight=1)
         frameBTNAdd.columnconfigure(1, weight=1)
-
-        self.__frameAddTaskDescription.columnconfigure(0, weight=1)
-        self.__frameAddTaskDescription.rowconfigure(1, weight=1)
-        self.__frameAddTaskDescription.rowconfigure(3, weight=1)
-
-        frameBTNAddDescription.columnconfigure(0, weight=1)
-        frameBTNAddDescription.columnconfigure(1, weight=1)
-
-        self.__frameAddTaskDate.columnconfigure(0, weight=1)
-        self.__frameAddTaskDate.rowconfigure(1, weight=1)
-        self.__frameAddTaskDate.rowconfigure(3, weight=1)
-
-        frameBTNAddDate.columnconfigure(0, weight=1)
-        frameBTNAddDate.columnconfigure(1, weight=1)
 
         # Widgets
         labelLogo = self._arrtk.createLabel(frameTitle,text="LOGO")
@@ -65,29 +47,15 @@ class GUITache(GuiBase):
                                                     ppolice="Arial", ptaille=35, pstyle="bold")
         widgetName,self.__entryNameTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Nom de la tache : ", ppolice="Arial",
                                                                         ptaille=20, gridUsed=True)
-        btnAddDate = self._arrtk.createCheckbox(self.__frameAddTask, text="Ajouter une date",
-                                                var_chk=self.__varAddDate)
-        btnAddDescription = self._arrtk.createCheckbox(self.__frameAddTask, text="Ajouter une description",
-                                                       var_chk=self.__varAddDescription)
-        btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__addNewTask)
-        btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd,text="Confirmer",command=self.__backMAinAddTask)
 
-        # Description
-        labelAddTaskDescription = self._arrtk.createLabel(self.__frameAddTaskDescription,text="Ajouter un description a la tache",
-                                                          ppolice="Arial",ptaille=35,pstyle="bold")
-        wDescription,self.__entryDescription = self._arrtk.createEntryLegend(self.__frameAddTaskDescription,text="Description de la tache :",
-                                                                ppolice="Arial",ptaille=25)
-        self.__btnConfirmAddDescription = self._arrtk.createButton(frameBTNAddDescription,text="Confirmer")
-        btnCancelAddDescription = self._arrtk.createButton(frameBTNAddDescription,text="Annuler")
+        self.__calendarDate = Calendar(self.__frameAddTask,selectmode="day",year=date.today().year,
+                                       month=date.today().month,locale="fr_FR",firstweekday="monday",
+                                       showweeknumbers=False,borderwidth=0)
+        wDescription,self.__entryDescriptionTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Description : ", ppolice="Arial",
+                                                     ptaille=20, gridUsed=True)
 
-        # Date
-        labelAddTaskDate = self._arrtk.createLabel(self.__frameAddTaskDate,text="Ajouter une date a la tache",
-                                                          ppolice="Arial",ptaille=35,pstyle="bold")
-        wDate = Calendar(self.__frameAddTaskDate,selectmode="day",year=date.today().year,
-                         month=date.today().month,locale="fr_FR",firstweekday="monday",showweeknumbers=False,
-                         borderwidth=0)
-        self.__btnConfirmAddDate = self._arrtk.createButton(frameBTNAddDate,text="Confirmer")
-        btnCancelAddDate = self._arrtk.createButton(frameBTNAddDate,text="Annuler")
+        btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__backToMain)
+        btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask)
 
         # Placement
         # Widget
@@ -99,29 +67,14 @@ class GUITache(GuiBase):
 
         labelTitleAddTask.grid(row=0, column=0, sticky="n", pady=(10, 8))
         widgetName.grid(row=1, column=0, sticky="ew", padx=10, pady=(2, 8))
-        btnAddDate.grid(row=2, column=0, sticky="w", padx=10, pady=(0, 8))
-        btnAddDescription.grid(row=3, column=0, sticky="w", padx=10, pady=(0, 8))
+        self.__calendarDate.grid(row=2, column=0, sticky="", padx=10, pady=(0, 8))
+        wDescription.grid(row=3, column=0, sticky="ew", padx=10, pady=(0, 8))
 
         frameBTNAdd.grid(row=5, column=0, sticky="ew", padx=10, pady=(8, 10))
 
         btnCancelAddTask.grid(row=0, column=0, sticky="w", padx=(0, 5))
         btnConfirmAddTask.grid(row=0, column=1, sticky="e", padx=(5, 0))
 
-        labelAddTaskDescription.grid(row=0, column=0, sticky="n", pady=(10, 8))
-        wDescription.grid(row=2, column=0, sticky="w", padx=10)
-
-        frameBTNAddDescription.grid(row=4, column=0, sticky="ew", padx=10, pady=(8, 10))
-
-        btnCancelAddDescription.grid(row=0, column=0, sticky="w", padx=(0, 5))
-        self.__btnConfirmAddDescription.grid(row=0, column=1, sticky="e", padx=(5, 0))
-
-        labelAddTaskDate.grid(row=0, column=0, sticky="n", pady=(10, 8))
-        wDate.grid_configure(row=2, column=0, sticky="", padx=10)
-
-        frameBTNAddDate.grid(row=4, column=0, sticky="ew", padx=10, pady=(8, 10))
-
-        self.__btnConfirmAddDate.grid(row=0, column=0, sticky="w", padx=(0, 5))
-        btnCancelAddDate.grid(row=0, column=1, sticky="e", padx=(5, 0))
         # Frame
         frameTitle.pack(side="top", fill="x", pady=(0, 2))
         self.__frameTask.pack(side="top", fill="both", expand=True, pady=(2, 2))
@@ -224,13 +177,48 @@ class GUITache(GuiBase):
         self.__varAddDate.set(False)
         self.__varAddDescription.set(False)
         self.__entryNameTask.delete(0, tk.END)
-        self.__frameAddTaskDate.grid_forget()
-        self.__frameAddTaskDescription.grid_forget()
         self.__frameAdd.pack(side="top", fill="both", expand=True, pady=(2, 2))
         self.__frameAddTask.grid(row=0, column=0, sticky="nsew")
 
     def __addNewTask(self):
-        pass
+        # Var
+        dateAdd = False
+        descriptionAdd = False
 
-    def __backMAinAddTask(self):
-        pass
+        name = self.__entryNameTask.get()
+        if name == "":
+            showerror("Erreur",
+                      "Le nom de la tâche ne peut pas être vide")
+            return
+
+        dateCalendar = self.__calendarDate.selection_get()
+
+        if dateCalendar:
+            self.__calendarDate.selection_clear()
+            dateAdd = True
+
+        description = self.__entryDescriptionTask.get()
+        if description != "":
+            descriptionAdd = True
+            self.__entryDescriptionTask.delete(0, tk.END)
+
+        if dateAdd and not descriptionAdd:
+            if not self._fnctask.addTask(name,date=dateCalendar):
+                showerror("Erreur","La tache n'a pas pu être ajouter")
+        elif dateAdd and descriptionAdd:
+            if not self._fnctask.addTask(name,date=dateCalendar,description=description):
+                showerror("Erreur","La tache n'a pas pu être ajouter")
+        elif not dateAdd and descriptionAdd:
+            if not self._fnctask.addTask(name,description=description):
+                showerror("Erreur","La tache n'a pas pu être ajouter")
+        else :
+            if not self._fnctask.addTask(name):
+                showerror("Erreur","La tache n'a pas pu être ajouter")
+
+
+        self.__viewTaskNoFinish()
+
+    def __backToMain(self):
+        self.__frameAdd.grid_forget()
+        self.__frameTask.pack(side="top", fill="both", expand=True, pady=(2, 2))
+        self.__viewTaskNoFinish()
