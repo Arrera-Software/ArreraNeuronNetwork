@@ -125,6 +125,7 @@ class GUITache(GuiBase):
         self.__frameTask.pack_forget()
         self.__frameAdd.pack_forget()
         self.__frameSuppression.pack_forget()
+        self._screen.update()
 
     def __viewTaskNoFinish(self):
         self.__disableAllFrame()
@@ -164,6 +165,8 @@ class GUITache(GuiBase):
             labelNoTask = self._arrtk.createLabel(self.__frameTask,text="Aucune tâche pour le moment",
                                                   ppolice="Arial",ptaille=40,pstyle="bold")
             labelNoTask.pack(pady=20)
+
+        self._screen.update()
 
     def __finishTask(self, var:tk.BooleanVar, name:str):
         if var.get():
@@ -209,6 +212,8 @@ class GUITache(GuiBase):
                                                   ppolice="Arial",ptaille=40,pstyle="bold")
             labelNoTask.pack(pady=20)
 
+    self._screen.update()
+
     def __unfinishTask(self, var:tk.BooleanVar, name:str):
         if not var.get():
             self._fnctask.unfinishTask(name)
@@ -221,6 +226,7 @@ class GUITache(GuiBase):
         self.__entryNameTask.delete(0, tk.END)
         self.__frameAdd.pack(side="top", fill="both", expand=True, pady=(2, 2))
         self.__frameAddTask.grid(row=0, column=0, sticky="nsew")
+        self._screen.update()
 
     def __addNewTask(self):
         # Var
@@ -263,6 +269,7 @@ class GUITache(GuiBase):
         self.__frameAdd.grid_forget()
         self.__frameSuppression.pack_forget()
         self.__frameTask.pack(side="top", fill="both", expand=True, pady=(2, 2))
+        self._screen.update()
         self.__viewTaskNoFinish()
 
     def __viewSuppr(self):
@@ -301,6 +308,8 @@ class GUITache(GuiBase):
             labelNoTask = self._arrtk.createLabel(self.__frameSuppr,text="Aucune tâche enregistré",
                                                   ppolice="Arial",ptaille=40,pstyle="bold")
             labelNoTask.pack(pady=20)
+
+        self._screen.update()
 
     def __delTask(self,var, name:str):
         if var.get():
