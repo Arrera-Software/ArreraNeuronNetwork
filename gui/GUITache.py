@@ -9,9 +9,11 @@ class GUITache(GuiBase):
         super().__init__(gestionnaire,"Tache")
         self._fnctask = self._gestionnaire.getGestFNC().getFNCTask()
         self.__directoryAsset = self._gestionnaire.getConfigFile().asset+"tache/"
+        self._title = f"{self._gestionnaire.getName()} : Tâches"
 
     def _mainframe(self):
-        # Var 
+        self._screen.title(self._title)
+        # Var
         self.__varAddDescription = tk.BooleanVar(value=False)
         self.__varAddDate = tk.BooleanVar(value=False)
         # Frame
@@ -58,7 +60,7 @@ class GUITache(GuiBase):
                                                      tailleX=32, tailleY=32)
         # Widgets
         labelLogo = self._arrtk.createLabel(frameTitle,text="",image=imgLogo)
-        labelTitle = self._arrtk.createLabel(frameTitle,text=self._gestionnaire.getName()+" : Tâches",
+        labelTitle = self._arrtk.createLabel(frameTitle,text=self._title,
                                              ppolice="Arial",ptaille=20,pstyle="bold")
         btnAddTask = self._arrtk.createButton(frameTitle,text="",image=imgPlus,command=self.__viewAddTask
                                               ,bg=self._btnColor,fg=self._btnTexteColor)
@@ -212,7 +214,7 @@ class GUITache(GuiBase):
                                                   ppolice="Arial",ptaille=40,pstyle="bold")
             labelNoTask.pack(pady=20)
 
-    self._screen.update()
+        self._screen.update()
 
     def __unfinishTask(self, var:tk.BooleanVar, name:str):
         if not var.get():
