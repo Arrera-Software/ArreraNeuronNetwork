@@ -56,6 +56,13 @@ def partHorloge(w:ctk.CTk):
     arrtk.createButton(w, text="Minuteur", command=lambda: gui.activeMinuteur()).pack()
     arrtk.createButton(w, text="Chrono", command=lambda: gui.activeChrono()).pack()
 
+def partWork(w:ctk.CTk):
+    arrtk.createButton(w,text="Work",command=lambda:gui.activeWork()).pack()
+    arrtk.createButton(w,text="Work Project",command=lambda:gui.activeWorkProject()).pack()
+    arrtk.createButton(w,text="Work Tableur",command=lambda:gui.activeWorkTableur()).pack()
+    arrtk.createButton(w,text="Work Word",command=lambda:gui.activeWorkWord()).pack()
+
+
 def main():
     screen = arrtk.aTK()
     partCodeHelp(screen)
@@ -66,6 +73,7 @@ def main():
     partHorloge(screen)
     arrtk.createButton(screen, text="Lecture", command=lambda: gui.activeLecture()).pack()
     arrtk.createButton(screen,text="Tache",command=lambda: gui.activeTache()).pack()
+    partWork(screen)
     screen.mainloop()
     arrtk.view()
 

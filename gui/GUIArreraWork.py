@@ -3,8 +3,9 @@ from tkinter.filedialog import askdirectory,askopenfilename
 import customtkinter as ctk
 from tkinter.messagebox import showerror
 from tkinter import StringVar
+from gui.GUITaskProject import GUITaskProject
 
-class CAnWorkGUI(GuiBase):
+class GUIWork(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Arrera Work")
         # Attributs
@@ -16,9 +17,11 @@ class CAnWorkGUI(GuiBase):
         self.__nameProjet = None
         # asset
         self.__emplacementAsset = self._gestionnaire.getConfigFile().asset+"work/"
+        # GUI
+        self.__guiTaskProject = None
 
 
-    def __createWindows(self):
+    def _mainframe(self):
         self._screen.rowconfigure(0, weight=1)
         self._screen.rowconfigure(1, weight=0)
         self._screen.columnconfigure(0, weight=1)
@@ -330,22 +333,21 @@ class CAnWorkGUI(GuiBase):
         btnViewTaskProjet.grid(row=3, column=0, padx=5, pady=5)
         btnSayAllTaskProjet.grid(row=3, column=1, padx=5, pady=5)
         btnCloseProjet.grid(row=3, column=2, padx=5, pady=5)
-
-
-    def activeAcceuil(self):
-        self.__createWindows()
         self.__activeAcceuil()
 
     def activeProjet(self):
-        self.__createWindows()
+        self.active()
+        self._mainframe()
         self.__activeProjet()
 
     def activeTableur(self):
-        self.__createWindows()
+        self.active()
+        self._mainframe()
         self.__activeTableur()
 
     def activeWord(self):
-        self.__createWindows()
+        self.active()
+        self._mainframe()
         self.__activeWord()
 
     def __disabelFrame(self):
@@ -550,6 +552,9 @@ class CAnWorkGUI(GuiBase):
         self.updateEtat()
         self.__activeProjet()
         self.__nameProjet = name
+        self.__guiTaskProject = GUITaskProject(self._gestionnaire,
+                                               self.__nameProjet,
+                                               self._gestionnaire.getGestFNC().getFNCWork().getFNCTaskProjet())
 
     def __windowsTypeFileProjet(self):
         """
@@ -618,13 +623,16 @@ class CAnWorkGUI(GuiBase):
             file_name = file_path.split("/")[-1]
             self.updateEtat()
             self.__activeProjet()
+            self.__guiTaskProject = GUITaskProject(self._gestionnaire,
+                                                   self.__nameProjet,
+                                                   self._gestionnaire.getGestFNC().getFNCWork().getFNCTaskProjet())
 
     def __openTaskProjet(self):
         """
         Ouvre une tâche dans le projet.
         """
-        pass
-        # A faire quand le GUI task sera fais et fonctionnel
+        self.__guiTaskProject.active()
+
 
     def __closeProjet(self):
         """
@@ -634,3 +642,5 @@ class CAnWorkGUI(GuiBase):
         self.updateEtat()
         self.__activeAcceuil()
         self.__nameProjet = None
+        del self.__guiTaskProject
+        self.__guiTaskProject = None

@@ -12,6 +12,7 @@ class gestGUI:
         from gui.GUIHorloge import GUIHorloge
         from gui.GUILecture import GUILecture
         from gui.GUITache import GUITache
+        from gui.GUIArreraWork import GUIWork
 
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
@@ -27,6 +28,8 @@ class gestGUI:
         self.__guiLecture = GUILecture(self.__gest)
         # Tâche
         self.__guiTache = GUITache(self.__gest)
+        # Work
+        self.__guiWork = GUIWork(self.__gest)
 
     def activeCalculatriceNormal(self):
         self.__guiCalculatrice.activeCalcule()
@@ -64,3 +67,15 @@ class gestGUI:
 
     def activeTache(self):
         self.__guiTache.active()
+
+    def activeWork(self):
+        self.__guiWork.active()
+
+    def activeWorkProject(self):
+        self.__guiWork.activeProjet()
+
+    def activeWorkTableur(self):
+        self.__guiWork.activeTableur()
+
+    def activeWorkWord(self):
+        self.__guiWork.activeWord()
