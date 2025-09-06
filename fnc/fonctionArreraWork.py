@@ -515,6 +515,9 @@ class fncArreraWork(fncBase):
     def getListFileProjet(self):
         return self.__listFileProjet
 
+    def getFNCTaskProjet(self):
+        return self.__fncTaskProjet
+
     def addTacheProjet(self,name: str, date: datetime = None, description: str = None):
         if self.__projectOpen:
             return self.__fncTaskProjet.addTask(name,date,description)
