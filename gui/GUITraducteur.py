@@ -14,8 +14,8 @@ class GuiTraducteur(GuiBase):
         self.__varLangIn = StringVar(self._screen)
         self.__varLangOut = StringVar(self._screen)
         # Frame
-        frameTop = self._arrtk.createFrame(self._screen,bg="red")
-        frameTrad = self._arrtk.createFrame(self._screen,bg="blue")
+        frameTop = self._arrtk.createFrame(self._screen)
+        frameTrad = self._arrtk.createFrame(self._screen)
         # Config Fenetre
         self._screen.grid_columnconfigure(0, weight=1)
         self._screen.grid_rowconfigure(0, weight=0, minsize=60)  # hauteur fixe/mini pour le bandeau haut
@@ -33,13 +33,17 @@ class GuiTraducteur(GuiBase):
                                              ppolice="Arial",ptaille=30,pstyle="bold")
         self.__textBoxIn = self._arrtk.createTextBox(frameTrad)
         self.__textBoxOut = self._arrtk.createTextBox(frameTrad)
-        btnTrad = self._arrtk.createButton(frameTrad,text="Traduire")
+        btnTrad = self._arrtk.createButton(frameTrad,text="Traduire",ppolice="Arial",
+                                           ptaille=25,pstyle="bold",bg=self._btnColor,
+                                           fg=self._btnTexteColor)
         labelIndicationIn = self._arrtk.createLabel(frameTrad,text="Langue d'entrée :",
                                                     ppolice="Arial",ptaille=20,pstyle="bold")
         labelIndicationOut = self._arrtk.createLabel(frameTrad,text="Langue de sortie :",
                                                      ppolice="Arial",ptaille=20,pstyle="bold")
-        menuLangIn = self._arrtk.createOptionMenu(frameTrad,var=self.__varLangIn,value=self.__listLang)
-        menuLangOut = self._arrtk.createOptionMenu(frameTrad,var=self.__varLangOut,value=self.__listLang)
+        menuLangIn = self._arrtk.createOptionMenu(frameTrad,var=self.__varLangIn,value=self.__listLang
+                                                  ,taille=20,police="Arial")
+        menuLangOut = self._arrtk.createOptionMenu(frameTrad,var=self.__varLangOut,value=self.__listLang
+                                                        ,taille=20,police="Arial")
 
         # Placement
         frameTop.grid(row=0, column=0, sticky="ew")
@@ -57,6 +61,8 @@ class GuiTraducteur(GuiBase):
         self.__textBoxOut.grid(row=1, column=2, columnspan=2, sticky="nsew", padx=(5,10), pady=(0,10))
 
         btnTrad.grid(row=2, column=0, columnspan=4, sticky="ew", padx=10, pady=(0,10))
+
+        self.__clear()
 
     def __clear(self):
         self.__textBoxIn.delete("1.0","end")
