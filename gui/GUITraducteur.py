@@ -31,11 +31,13 @@ class GuiTraducteur(GuiBase):
         # Widgets
         labelTitle = self._arrtk.createLabel(frameTop,text=self._gestionnaire.getName()+" : Traducteur",
                                              ppolice="Arial",ptaille=30,pstyle="bold")
-        self.__textBoxIn = self._arrtk.createTextBox(frameTrad)
-        self.__textBoxOut = self._arrtk.createTextBox(frameTrad)
+        self.__textBoxIn = self._arrtk.createTextBox(frameTrad,enableKeyboard=True,
+                                                     ppolice="Arial",ptaille=25)
+        self.__textBoxOut = self._arrtk.createTextBox(frameTrad,enableKeyboard=True,
+                                                      ppolice="Arial",ptaille=25)
         btnTrad = self._arrtk.createButton(frameTrad,text="Traduire",ppolice="Arial",
                                            ptaille=25,pstyle="bold",bg=self._btnColor,
-                                           fg=self._btnTexteColor)
+                                           fg=self._btnTexteColor,command=self.__translate)
         labelIndicationIn = self._arrtk.createLabel(frameTrad,text="Langue d'entrée :",
                                                     ppolice="Arial",ptaille=20,pstyle="bold")
         labelIndicationOut = self._arrtk.createLabel(frameTrad,text="Langue de sortie :",
@@ -69,3 +71,30 @@ class GuiTraducteur(GuiBase):
         self.__textBoxOut.delete("1.0","end")
         self.__varLangIn.set("Langue d'entrée")
         self.__varLangOut.set("Langue de sortie")
+
+    def __translate(self):
+        langIn = self.__varLangIn.get()
+        langOut = self.__varLangOut.get()
+        texte = self.__textBoxIn.get("1.0","end").strip()
+        self.__textBoxIn.delete("1.0","end")
+
+        if langIn == "Langue d'entrée":
+            return
+
+        if langOut == "Langue de sortie":
+            return
+
+        if langIn == langOut:
+            return
+
+        if not texte:
+            return
+
+        codeIn = self.__dictLang.get(langIn)
+        codeOut = self.__dictLang.get(langOut)
+
+        if self._fncTrad.setTranlator(codeOut,codeIn):
+            traduction = self._fncTrad.tranlate(texte)
+            if traduction:
+                self.__textBoxOut.delete("1.0","end")
+                self.__textBoxOut.insert("1.0",traduction)
