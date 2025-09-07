@@ -74,6 +74,7 @@ def main():
     arrtk.createButton(screen, text="Lecture", command=lambda: gui.activeLecture()).pack()
     arrtk.createButton(screen,text="Tache",command=lambda: gui.activeTache()).pack()
     partWork(screen)
+    arrtk.createButton(screen, text="Traducteur", command=lambda: gui.activeTraducteur()).pack()
     screen.mainloop()
     arrtk.view()
 
