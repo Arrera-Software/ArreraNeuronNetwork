@@ -490,7 +490,7 @@ class CArreraTK :
             entry.pack(side="right")
         return widget,entry
 
-    def createTextBox(self,screen:Union[Tk,ctk.CTk,Toplevel,ctk.CTkToplevel],width:int = 0,height:int = 0,bg:str = "",fg:str = "",ppolice:str="Arial",ptaille:int=12,pstyle:str="normal",wrap:str="word"):
+    def createTextBox(self,screen:Union[Tk,ctk.CTk,Toplevel,ctk.CTkToplevel],width:int = 0,height:int = 0,bg:str = "",fg:str = "",ppolice:str="Arial",ptaille:int=12,pstyle:str="normal",wrap:str="word",enableKeyboard:bool=False):
         if (self.__mode == 0):
             text = ctk.CTkTextbox(screen)
             if (fg != ""):
@@ -539,7 +539,10 @@ class CArreraTK :
 
             text.configure(font=(police, taille, style))
 
-        text.configure(state="disabled")
+        if not enableKeyboard:
+            text.configure(state="disabled")
+        else :
+            text.configure(state="normal")
         return text
 
     def createArreraBackgroudImage(self,screen:Union[Tk,ctk.CTk,Toplevel,ctk.CTkToplevel],imageLight:str,imageDark :str = "",height:int = 600,width:int = 800):
