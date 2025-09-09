@@ -1,1 +1,14 @@
-{}
+{
+  "meteoMidi": ["demain midi","demain apres midi"],
+  "meteoMatin": ["demain matin","demain"] ,
+  "lieuDomicile" : ["domicile","residence",
+  "maison","appartement",
+  "chez moi","foyer",
+  "demeure"],
+  "lieuTravail" : ["bureau",
+    "lieu de travail","entreprise",
+    "societe", "boulot",
+    "cabinet", "college",
+    "lycee", "ecole",
+    "campus", "universite"]
+}
