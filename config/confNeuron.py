@@ -25,3 +25,4 @@ class confNeuron:
     etatSocket: int = 0
     lienDoc: str = ""
     fichierLangue:str = ""
+    fichierKeyword:str = ""
