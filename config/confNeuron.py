@@ -7,9 +7,6 @@ class confNeuron:
     lang: str
     icon: str
     asset:str
-    assetHorloge: str
-    assetCalculatrice: str
-    assetMicro: str
     assistant_color: str
     assistant_texte_color: str
     bute: str

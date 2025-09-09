@@ -26,7 +26,7 @@ class CArreraVoice:
 
 
     def loadConfig(self):
-        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().assetMicro
+        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().asset+"sound/micro.mp3"
         if self.__gestionnaire.getUserConf().getSoundMicro():
             self.__soundMicro = True
         else:
