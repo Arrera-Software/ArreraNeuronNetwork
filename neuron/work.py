@@ -124,7 +124,7 @@ class neuroneWork(neuronBase):
                 return 0
 
     def __neuronProjet(self,requette:str):
-        oldRequette,oldSortie = self._gestionNeuron.getOld()
+        oldRequette,oldSortie = self._gestionnaire.getOld()
 
         if self._fonctionArreraNetwork.getProjectOpen() == False:
             if (("ouvre le projet nommer" in requette) or

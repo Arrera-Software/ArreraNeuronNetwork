@@ -15,6 +15,7 @@ class gestionnaire:
         from gestionnaire.gestFNC import gestFNC
         from gestionnaire.gestGUI import gestGUI
         from gestionnaire.gestUserSetting import gestUserSetting
+        from gestionnaire.gestKeyword import gestKeyword
         # Librairy
         # Importation des librairies
         from librairy.arrera_voice import CArreraVoice
@@ -32,6 +33,7 @@ class gestionnaire:
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
+        self.__gestKeyword = gestKeyword(self.__config.fichierKeyword)
 
         if self.__config.etatSocket == 1 :
            self.__gestSocket = gestSocket(self.__config.name)
@@ -64,6 +66,9 @@ class gestionnaire:
 
     def getLanguageObjet(self):
         return self.__gestLang
+
+    def getKeywordObjet(self):
+        return self.__gestKeyword
 
     def getGestNeuron(self):
         return self.__gestNeuron
@@ -195,7 +200,7 @@ class gestionnaire:
         """
         Methode qui permet de netoyer une chaine de caractere
         """
-        return self.__gestSTR.netoyage(carractere=chaine)
+        return self.__gestSTR.netoyage(chaine)
 
     def emplacementTaskFile(self):
         """

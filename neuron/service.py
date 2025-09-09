@@ -29,10 +29,10 @@ class neuroneService(neuronBase) :
                         self._listSortie = [self._fonctionArreraNetwork.sortieErrorCalcule(), ""]
             elif ("ouvre la documentation" in requette)or("montre la documentation" in requette):
                     self._listSortie = [self._fonctionArreraNetwork.sortieOpenDocumentation(), ""]
-                    webbrowser.open(self._gestionNeuron.getLinkDoc())
+                    webbrowser.open(self._gestionnaire.getLinkDoc())
             elif "corrige" in requette:
                     self._listSortie = [self._fonctionArreraNetwork.sortieCorrection(requette), ""]
 
             #Mise a jour de la valeur
             if self._valeurOut==0:
-                self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
+                self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])

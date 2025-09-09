@@ -7,7 +7,7 @@ class neuroneChatbot(neuronBase) :
         #Init objet
         super().__init__(gestionnaire)
         # self.__formule = self._gestNeuro
-        self.__language = self._gestionNeuron.getLanguageObjet()
+        self.__language = self._gestionnaire.getLanguageObjet()
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -18,10 +18,10 @@ class neuroneChatbot(neuronBase) :
             hour = datetime.now().hour
             text = ""
             #Recuperation atribut de l'assistant
-            listOldSortie = self._gestionNeuron.getOld()
+            listOldSortie = self._gestionnaire.getOld()
             oldrequette = listOldSortie[0]
             oldsortie = listOldSortie[1]
-            name = self._gestionNeuron.getName()
+            name = self._gestionnaire.getName()
             #Reponse chat bot
             if ("salut" in requette)   or ("bonjour" in requette)  or("bonsoir" in requette):
                 text = self.__formule.bootNoHist(hour)
@@ -142,6 +142,6 @@ class neuroneChatbot(neuronBase) :
                     text = self.__language.getPhraseChatBotNormal("phTG")
 
             #Mise a jour de la valeur
-            self._valeurOut = self._gestionNeuron.verrifSortie(text)
+            self._valeurOut = self._gestionnaire.verrifSortie(text)
             #Retour des valeur
             self._listSortie = [text, ""]

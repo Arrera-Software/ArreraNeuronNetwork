@@ -16,13 +16,13 @@ class neuroneTime(neuronBase):
                     self._objHistorique.setAction("Resumer des tache et des evenement du jour")
             elif self.__neuronTime(requette) == 1:
                 if self._valeurOut==0:
-                    self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
+                    self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])
             elif self.__neuronAgenda(requette) == 1:
                 if self._valeurOut==0:
-                    self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
+                    self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])
             elif self.neuronTache(requette) == 1:
                 if self._valeurOut==0:
-                    self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
+                    self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])
 
     def __neuronTime(self,requette:str):
         if "heure" in requette:

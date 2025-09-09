@@ -37,4 +37,4 @@ class neuroneSoftware(neuronBase) :
                                         
             #Mise a jour de la valeur 
             if (self._valeurOut==0):
-                self._valeurOut = self._gestionNeuron.verrifSortie(self._listSortie[0])
+                self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])
