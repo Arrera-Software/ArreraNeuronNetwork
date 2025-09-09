@@ -9,7 +9,7 @@ class neuroneSearch(neuronBase):
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["", ""]
         self._valeurOut = 0
-        if ("bigsearch" in requette)or ("grand recherche" in requette):
+        if self._keyword.checkSearch(requette,"bigsearch"):
             search = requette.replace("bigsearch","").replace("grand recherche","").strip()
             state = self.__fncSearch.bigRecherche(search)
             if state:
@@ -17,7 +17,7 @@ class neuroneSearch(neuronBase):
             else :
                 self._listSortie = [self._language.getPhraseSearch("3"), ""]
             self._valeurOut = 1
-        elif ("search" in requette) or ("recherche" in requette):
+        elif self._keyword.checkSearch(requette,"search"):
             search = requette.replace("recherche","").replace("search","").strip()
             state = self.__fncSearch.search(search)
             if state:
