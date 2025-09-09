@@ -1,4 +1,6 @@
 import tkinter
+from tkinter.messagebox import showerror
+
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
@@ -50,6 +52,7 @@ class GUIOpale:
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket",variable=self.__varSocket)
         # Widget FrameLangue
         labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
+        self.__langSet = self.__arrTK.createLabel(frameLangue,text="",ptaille=25)
         self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
         self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
@@ -87,13 +90,31 @@ class GUIOpale:
         match mode:
             case 1 :
                 self.__emplacementLangue = "language/vouvoiment/"
+                self.__langSet.configure(text="Vouvoiement")
             case 2 :
                 self.__emplacementLangue = "language/tutoiment/"
+                self.__langSet.configure(text="Tutoiement")
             case _ :
                 self.__emplacementLangue = "language/vouvoiment/"
+                self.__langSet.configure(text="Vouvoiement")
+        self.__btnVous.place_forget()
+        self.__btnTutoiement.place_forget()
+        self.__arrTK.placeCenter(self.__langSet)
 
     def __setConfig(self):
         try :
+            if (not self.__varService.get() and
+                    not self.__varSoftware.get() and
+                    not self.__varTime.get() and
+                    not self.__varOpen.get() and
+                    not self.__varRecherche.get() and
+                    not self.__varChatbot.get() and
+                    not self.__varAPI.get() and
+                    not self.__varCodeHelp.get() and
+                    not self.__varWork.get()):
+                showerror("Assistant"," Vous devez activer au moins un neurone.")
+                return False
+
             self.__config = confNeuron(name="Opale",
                                        lang="fr",
                                        asset="asset/",
