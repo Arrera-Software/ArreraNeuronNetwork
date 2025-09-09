@@ -12,8 +12,6 @@ class fonctionOpen(fncBase):
         else:
             self.__socketEnabled = False
 
-
-
     def openSoft(self,name:str) -> bool:
         if name == "":
             return False
