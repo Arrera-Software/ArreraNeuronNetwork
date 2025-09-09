@@ -2,8 +2,8 @@ class gestSTR :
     def __init__(self):
         pass
 
-    def netoyage(carractere:str):
-        chaine = str(carractere)
+    def netoyage(self,c:str):
+        chaine = str(c)
         chaine = chaine.replace("-"," ")
         chaine = chaine.replace('"'," ")
         chaine = chaine.replace("_"," ")
