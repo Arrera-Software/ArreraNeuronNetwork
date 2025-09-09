@@ -24,7 +24,8 @@ conf = confNeuron(name="Opale",
                   etatWork=1,
                   etatSocket=1,
                   lienDoc="www.google.com",
-                  fichierLangue="language/vouvoiment/")
+                  fichierLangue="language/vouvoiment/",
+                  fichierKeyword="keyword/")
 
 gest = gestionnaire(conf)
 fnc = gest.getGestFNC()
