@@ -112,8 +112,8 @@ class GUIOpale:
                                        etatSearch=int(self.__checkRecherche.get()),
                                        etatChatbot=int(self.__checkChatbot.get()),
                                        etatApi=int(self.__checkAPI.get()),
-                                       etatCodehelp=int(self.__checkWork.get()),
-                                       etatWork=int(self.__checkSocket.get()),
+                                       etatCodehelp=int(self.__checkCodeHelp.get()),
+                                       etatWork=int(self.__checkWork.get()),
                                        etatSocket=int(self.__checkSocket.get()),
                                        lienDoc="www.google.com",
                                        fichierLangue=str(self.__emplacementLangue),
@@ -203,4 +203,3 @@ class GUIOpale:
                 self.__labelAssistantText.configure(text="Veuillez entrer un message.",wraplength=200)
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors de l'envoi du message : {e}",wraplength=200)
-
