@@ -14,6 +14,7 @@ class gestGUI:
         from gui.GUITache import GUITache
         from gui.GUIArreraWork import GUIWork
         from gui.GUITraducteur import GuiTraducteur
+        from gui.GUIViewResumer import GUIViewResumer
 
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
@@ -33,6 +34,8 @@ class gestGUI:
         self.__guiWork = GUIWork(self.__gest)
         # Traducteur
         self.__guiTraducteur = GuiTraducteur(self.__gest)
+        # Resumer
+        self.__guiResumer = GUIViewResumer(self.__gest)
 
     def activeCalculatriceNormal(self):
         self.__guiCalculatrice.activeCalcule()
@@ -85,3 +88,6 @@ class gestGUI:
 
     def activeTraducteur(self):
         self.__guiTraducteur.active()
+
+    def activeResumer(self):
+        self.__guiResumer.active()
