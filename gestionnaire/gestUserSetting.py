@@ -148,7 +148,6 @@ class gestUserSetting:
         lieuDomicile = self.__fileUser.getContentJsonFlag("lieuDomicile")
         if lieuDomicile is None:
             return ""
-        print(lieuDomicile)
         return lieuDomicile
 
     # Lieu Travail

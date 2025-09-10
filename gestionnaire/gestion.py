@@ -26,6 +26,7 @@ class gestionnaire:
         # Fichier JSON
         self.__config = confAssistant
         self.__userConf = gestUserSetting(self)
+        print(self.__userConf.getUser())
         self.__fichierFete = jsonWork("config/listFete.json")
         # Initialisation des tout les gestionnaires
         self.__gestLang = gestLangue(self.__config.fichierLangue,

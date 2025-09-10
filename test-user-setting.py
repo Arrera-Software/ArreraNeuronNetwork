@@ -124,9 +124,9 @@ def main():
                 match nb:
                     case 1:
                         adresse = input("Adresse Domicile : ")
-                        user.setAdresseDomicile(adresse)
+                        user.setLieuDomicile(adresse)
                     case 2:
-                        print(user.getAdresseDomicile())
+                        print(user.getLieuDomicile())
             case 5:
                 print("1.AJouter\n2.Lire")
                 boucleVerif = True
@@ -140,9 +140,9 @@ def main():
                 match nb:
                     case 1:
                         adresse = input("Adresse Travail : ")
-                        user.setAdresseTravail(adresse)
+                        user.setLieuTravail(adresse)
                     case 2:
-                        print(user.getAdresseTravail())
+                        print(user.getLieuTravail())
             case 6:
                 print("1.AJouter\n2.Lire")
                 boucleVerif = True
@@ -156,9 +156,9 @@ def main():
                 match nb:
                     case 1:
                         lieu = input("Lieu Domicile : ")
-                        user.setLieuDomicile(lieu)
+                        user.setAdresseDomicile(lieu)
                     case 2:
-                        print(user.getLieuDomicile())
+                        print(user.getAdresseDomicile())
             case 7:
                 print("1.AJouter\n2.Lire")
                 boucleVerif = True
@@ -172,9 +172,9 @@ def main():
                 match nb:
                     case 1:
                         lieu = input("Lieu Travail : ")
-                        user.setLieuTravail(lieu)
+                        user.setAdresseTravail(lieu)
                     case 2:
-                        print(user.getLieuTravail())
+                        print(user.getAdresseTravail())
             case 8:
                 print("1.AJouter\n2.Voir\n3.Supprimer")
                 boucleVerif = True
