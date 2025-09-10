@@ -193,7 +193,7 @@ class fncMeteo(fncBase) :
                         self.__humidity = dictMeteo["humidity"]
                         self.__description = dictMeteo['weather']['desc']
                         self.__icon = dictMeteo['weather']['icon']
-                        alertes = self.__client.get_warning_current_phenomenons().phenomenons_max_colors
+                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
                         self.__rankingAlert(alertes)
                         return True
                 else:
