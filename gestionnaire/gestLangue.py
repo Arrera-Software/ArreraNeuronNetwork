@@ -295,6 +295,10 @@ class gestLangue:
         formule = self.__api.getContentJsonFlag("phResumerActu")
         return formule.format(genre=self.__genre, user=self.__user)
 
+    def getPhraseResumerTask(self):
+        formule = self.__api.getContentJsonFlag("phResumerTask")
+        return formule.format(genre=self.__genre, user=self.__user)
+
     def getPhraseResumerAll(self,nb:str):
         formule = self.__api.getContentJsonFlag("phResumerAll" + nb)
         return formule.format(genre=self.__genre, user=self.__user)
