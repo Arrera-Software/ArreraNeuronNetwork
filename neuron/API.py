@@ -1,93 +1,75 @@
+import random
+
 from gestionnaire.gestSTR import*
-from neuron.CNeuronBase import neuronBase
+from neuron.CNeuronBase import neuronBase,gestionnaire
 
 class neuroneAPI(neuronBase) :
+    def __init__(self,gestionnaire:gestionnaire ):
+        super().__init__(gestionnaire)
+        self.__fncMeteo = self._gestFNC.getFNCMeteo()
+
+    def __texteMeteo(self,state:bool,a:int,b:int):
+        if state:
+            return self._language.getPhraseMeteo(str(random.randint(a, b)),
+                                                  self.__fncMeteo.getNameTown(),
+                                                  self.__fncMeteo.getDescription(),
+                                                  self.__fncMeteo.getTemperature()
+                                                 )[random.randint(0, 1)]
+        else :
+            return self._language.getPhraseMeteoError(str(random.randint(a, b)))
+
 
     def __meteo(self,requette:str)->int:
-        etatVilleDomicile = self._gestionnaire.getEtatLieuDomicile()
-        etatVilleTravail = self._gestionnaire.getEtatLieuTravail()
-        villes = self._gestionnaire.getListVilleMeteo()
-        resultat = 0
-        # Nettoyage de toutes les villes d'un coup
-        # clearTown = [chaine.netoyage(ville) for ville in villes]
+        townHouse = self._userConf.getLieuDomicile()
+        townWork = self._userConf.getLieuTravail()
+        print("Maison : "+townHouse)
+        print("Travail : "+townWork)
 
-        if self._keyword.checkAPI(requette,"meteoMidi"):
-            if self._keyword.checkAPI(requette,"lieuDomicile"):
-                pass
-            elif self._keyword.checkAPI(requette,"lieuTravail"):
-                pass
+        if self._keyword.checkAPI(requette,"meteo"):
+            if self._keyword.checkAPI(requette, "meteoDemainMatin"):
+                if self._keyword.checkAPI(townHouse,"lieuDomicile"):
+                    state = self.__fncMeteo.getMeteoTowmorowMorning(town=townHouse)
+                elif self._keyword.checkAPI(townWork,"lieuTravail"):
+                    state = self.__fncMeteo.getMeteoTowmorowMorning(town=townWork)
+                else :
+                    state = self.__fncMeteo.getMeteoTowmorowMorning()
 
-        """
-        "demain midi"
-            VILLE USER 
-            "domicile"
-            "residence"
-            "maison"
-            "appartement"
-            "chez moi"
-            "foyer"
-            "demeure"
-            
-            "bureau"
-            "lieu de travail"
-            "entreprise"
-            "societe"
-            "boulot"
-            "cabinet"
-            "college"
-            "lycee"
-            "ecole"
-            "campus"
-            "universite"
-        
-        "demain matin" et "demain"
-            VILLE USER 
-            "domicile"
-            "residence"
-            "maison"
-            "appartement"
-            "chez moi"
-            "foyer"
-            "demeure"
-            
-            "bureau"
-            "lieu de travail"
-            "entreprise"
-            "societe"
-            "boulot"
-            "cabinet"
-            "college"
-            "lycee"
-            "ecole"
-            "campus"
-            "universite"
-        
-        VILLE USER 
-        "domicile"
-        "residence"
-        "maison"
-        "appartement"
-        "chez moi"
-        "foyer"
-        "demeure"
-        
-        "bureau"
-        "lieu de travail"
-        "entreprise"
-        "societe"
-        "boulot"
-        "cabinet"
-        "college"
-        "lycee"
-        "ecole"
-        "campus"
-        "universite"
-        """
+                self._listSortie = [self.__texteMeteo(state,3,4),""]
+                return 1
+
+            elif self._keyword.checkAPI(requette, "meteoDemainApresMidi"):
+                # Recuperation de la meteo de demain apres midi
+                if self._keyword.checkAPI(requette,"lieuDomicile"):
+                    state = self.__fncMeteo.getMeteoTowmorowNoon(town=townHouse)
+                elif self._keyword.checkAPI(requette,"lieuTravail"):
+                    state = self.__fncMeteo.getMeteoTowmorowNoon(town=townWork)
+                else :
+                    state = self.__fncMeteo.getMeteoTowmorowNoon()
+
+                # Mise en place du texte de sortie
+                self._listSortie = [self.__texteMeteo(state, 1, 2), ""]
+                return 1
+
+            else :
+                if self._keyword.checkAPI(requette, "lieuDomicile"):
+                    state = self.__fncMeteo.getMeteoCurrentHour(town=townHouse)
+                elif self._keyword.checkAPI(requette, "lieuTravail"):
+                    state = self.__fncMeteo.getMeteoCurrentHour(town=townWork)
+                else:
+                    state = self.__fncMeteo.getMeteoCurrentHour()
+
+                self._listSortie = [self.__texteMeteo(state, 5, 6), ""]
+                return 1
+
+        return 0
 
 
 
     def neurone(self,requette:str):
-
+        self._listSortie = ["", ""]
+        self._valeurOut = 0
+        self._valeurOut = self.__meteo(requette)
+        """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
                             "suedois","danois","norvegien","finnois","grec","hebreu","indonesien"]
@@ -159,3 +141,4 @@ class neuroneAPI(neuronBase) :
                     else :
                         self._listSortie = [self._fonctionArreraNetwork.sortieErrorLangue(), ""]
                         self._valeurOut = 1
+            """

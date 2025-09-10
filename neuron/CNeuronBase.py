@@ -6,6 +6,8 @@ class neuronBase :
         #Init objet
         self._gestionnaire = gestionnaire
         self._gestFNC = self._gestionnaire.getGestFNC()
+        self._userConf = self._gestionnaire.getUserConf()
+        print(self._userConf.getUser())
         self._objHistorique = None
         self._listSortie = ["",""]
         self._socket = self._gestionnaire.getSocketObjet()

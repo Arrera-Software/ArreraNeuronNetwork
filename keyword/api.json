@@ -1,6 +1,7 @@
 {
-  "meteoMidi": ["demain midi","demain apres midi"],
-  "meteoMatin": ["demain matin","demain"] ,
+  "meteo": ["meteo","temps qu'il fait"],
+  "meteoDemainMatin": ["demain matin","demain"] ,
+  "meteoDemainApresMidi": ["demain apres midi"] ,
   "lieuDomicile" : ["domicile","residence",
   "maison","appartement",
   "chez moi","foyer",

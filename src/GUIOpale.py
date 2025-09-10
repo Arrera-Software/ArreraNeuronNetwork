@@ -210,7 +210,7 @@ class GUIOpale:
     def __sendAssistantMessage(self,entry:ctk.CTkEntry):
         """
         Fonction qui permet d'envoyer un message à l'assistant
-        """
+
         try:
             message = entry.get()
             if message:
@@ -224,3 +224,14 @@ class GUIOpale:
                 self.__labelAssistantText.configure(text="Veuillez entrer un message.",wraplength=200)
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors de l'envoi du message : {e}",wraplength=200)
+        """
+        message = entry.get()
+        if message:
+            self.__assistantBrain.neuron(message)
+            nb = self.__assistantBrain.getValeurSortie()
+            texte = self.__assistantBrain.getListSortie()
+            self.__labelAssistantText.configure(text=texte[0], wraplength=200)
+            self.__labelAssistantNumber.configure(text=str(nb))
+            entry.delete(0, 'end')  # Clear the entry after sending
+        else:
+            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200)

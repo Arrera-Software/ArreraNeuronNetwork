@@ -156,7 +156,7 @@ class ABrain :
 
                             if self.__valeurOut == 0 :
                                 #search
-                                if not self.__etatReseau and self.__gestNeuron.nsearch is None :
+                                if not self.__etatReseau or self.__gestNeuron.nsearch is None :
                                     self.__valeurOut = 0
                                 else :
                                     self.__gestNeuron.nsearch.neurone(requette)

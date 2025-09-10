@@ -26,7 +26,8 @@ class jsonWork:
             with open(self.fichier, 'r', encoding='utf-8') as openfile:
                 dict = json.load(openfile)[flag]
             return str(dict)
-        except:
+        except Exception as e:
+            print(f"Erreur lors de la lecture du fichier JSON : {e}")
             return None
 
     def getContentJsonMultiFlag(self, flag1, flag2):
