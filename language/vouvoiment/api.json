@@ -1,5 +1,6 @@
 {
   "phResumerActu" : "Voici un tour d'horizon des nouvelles du jour et des prévisions météorologiques.",
+  "phResumerTask": "Voici le résumé de toutes vos tâches.",
   "phResumerAll1": "Impossible de vous faire le résumé {genre}.",
   "phResumerAll2": "Voici votre résumé des actualités du jour avec la météo, ainsi que des tâches que vous avez à faire et des événements du jour.",
   "ph1": "Désolé, une erreur s'est produite pour la récupération des actualités.",

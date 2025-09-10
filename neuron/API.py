@@ -7,6 +7,7 @@ class neuroneAPI(neuronBase) :
     def __init__(self,gestionnaire:gestionnaire ):
         super().__init__(gestionnaire)
         self.__fncMeteo = self._gestFNC.getFNCMeteo()
+        self.__fncBreef = self._gestFNC.getFNCBreef()
 
     def __texteMeteo(self,state:bool,a:int,b:int):
         if state:
@@ -17,6 +18,10 @@ class neuroneAPI(neuronBase) :
                                                  )[random.randint(0, 1)]
         else :
             return self._language.getPhraseMeteoError(str(random.randint(a, b)))
+
+    def __texteBreef(self,outList:list,texte:str):
+        self._listSortie = outList
+        self._listSortie.append(texte)
 
 
     def __meteo(self,requette:str)->int:
@@ -33,7 +38,7 @@ class neuroneAPI(neuronBase) :
                     state = self.__fncMeteo.getMeteoTowmorowMorning()
 
                 self._listSortie = [self.__texteMeteo(state,3,4),""]
-                return 1
+                return 4
 
             elif self._keyword.checkAPI(requette, "meteoDemainApresMidi"):
                 # Recuperation de la meteo de demain apres midi
@@ -46,7 +51,7 @@ class neuroneAPI(neuronBase) :
 
                 # Mise en place du texte de sortie
                 self._listSortie = [self.__texteMeteo(state, 1, 2), ""]
-                return 1
+                return 4
 
             else :
                 if self._keyword.checkAPI(requette, "lieuDomicile"):
@@ -57,16 +62,54 @@ class neuroneAPI(neuronBase) :
                     state = self.__fncMeteo.getMeteoCurrentHour()
 
                 self._listSortie = [self.__texteMeteo(state, 5, 6), ""]
-                return 1
+                return 4
 
         return 0
 
+    def __breef(self,requette:str):
+        """
+        11 : Erreur du resumer actulités
+        12 : Reussite du resumer actulités
+        18 : Resumer tache / agenda
+        19 : Resumer all ok
+        20 : Resumer all fail
+        """
+        if self._keyword.checkAPI(requette,"resumer"):
+            if self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
+                out = self.__fncBreef.summarizeActuAndMeteo(requette)
+                texte = self._language.getPhraseResumerActu()
+                if out is not None:
+                    outInt = 12
+                else :
+                    outInt = 11
+            elif self._keyword.checkAPI(requette,"taches"):
+                out = self.__fncBreef.summarizeTaskToday()
+                texte = self._language.getPhraseResumerTask()
+                if out is not None:
+                    outInt = 18
+                else :
+                    outInt = 11
+            else:
+                out = self.__fncBreef.summarizeAll()
+                texte = self._language.getPhraseResumerAll("1")
+                if out is not None:
+                    outInt = 19
+                else :
+                    outInt = 20
 
+            if outInt == 12 or outInt == 18 or outInt == 19:
+                self.__texteBreef(out,texte)
+            else :
+                self._listSortie = [self._language.getPhraseResumerAll("2"),""]
+            return outInt
+        return 0
 
     def neurone(self,requette:str):
         self._listSortie = ["", ""]
         self._valeurOut = 0
         self._valeurOut = self.__meteo(requette)
+        if self._valeurOut == 0:
+            self._valeurOut = self.__breef(requette)
         """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
