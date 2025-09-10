@@ -1,6 +1,6 @@
 {
   "meteo": ["meteo","temps qu'il fait"],
-  "meteoDemainMatin": ["demain matin","demain"] ,
+  "meteoDemainMatin": ["demain matin"] ,
   "meteoDemainApresMidi": ["demain apres midi"] ,
   "lieuDomicile" : ["domicile","residence",
   "maison","appartement",
