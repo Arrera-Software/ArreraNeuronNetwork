@@ -34,9 +34,19 @@ class GUIViewResumer(GuiBase):
         self.__titleLabel = self._arrtk.createLabel(topFrame,text="Resumer",ppolice="Arial",
                                                     ptaille=35,pstyle="bold")
 
+        btnRead = self._arrtk.createButton(btnFrame,text="Lire",
+                                           bg=self._btnColor,fg=self._btnTexteColor,
+                                           ppolice="Arial",ptaille=20,pstyle="bold")
+        btnQuit = self._arrtk.createButton(btnFrame,text="Quitter",
+                                           bg=self._btnColor,fg=self._btnTexteColor,
+                                           ppolice="Arial",ptaille=20,pstyle="bold",
+                                           command=self._screen.destroy)
         # Affichage
         logoLabel.pack(side="left", anchor="center", padx=(6, 10), pady=6)
         self.__titleLabel.pack(side="left", anchor="center", pady=6)
+
+        btnRead.pack(side="left", anchor="center", padx=(6, 10), pady=6)
+        btnQuit.pack(side="right", anchor="center", pady=6)
 
         topFrame.grid(row=0, column=0, sticky="nsew")
         labelFrame.grid(row=1, column=0, sticky="nsew")
