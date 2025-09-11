@@ -138,7 +138,8 @@ class GUIOpale:
                                        etatSocket=int(self.__checkSocket.get()),
                                        lienDoc="www.google.com",
                                        fichierLangue=str(self.__emplacementLangue),
-                                       fichierKeyword="keyword/")
+                                       fichierKeyword="keyword/",
+                                        voiceAssistant=True)
             return True
         except Exception as e:
             print(f"Erreur lors de la création de la configuration : {e}")

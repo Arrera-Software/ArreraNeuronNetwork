@@ -23,7 +23,8 @@ conf = confNeuron(name="Opale",
                   etatSocket=1,
                   lienDoc="www.google.com",
                   fichierLangue="language/vouvoiment/",
-                  fichierKeyword="keyword/")
+                  fichierKeyword="keyword/",
+                  voiceAssistant=True)
 
 gest = gestionnaire(conf)
 user = gest.getUserConf()

@@ -26,3 +26,4 @@ class confNeuron:
     lienDoc: str = ""
     fichierLangue:str = ""
     fichierKeyword:str = ""
+    voiceAssistant:bool = False
