@@ -572,6 +572,29 @@ class CArreraTK :
         varMinute.set(minutes[0])
         return widget
 
+    def createTextBoxScrolled(self,screen:Union[Tk,ctk.CTk,Toplevel,ctk.CTkToplevel],ppolice:str="Arial",ptaille:int=12,pstyle:str="normal"):
+        if self.__mode == 0:
+            widget = self.createFrame(screen)
+            textbox = ctk.CTkTextbox(widget, wrap="word", state="disabled")
+            scrollbar = ctk.CTkScrollbar(widget, command=textbox.yview)
+            textbox.configure(yscrollcommand=scrollbar.set)
+
+        else :
+            widget = Frame(screen)
+            textbox = Text(widget, wrap="word", state="disabled")
+            scrollbar = Scrollbar(widget, orient="vertical", command=textbox.yview)
+            textbox.configure(yscrollcommand=scrollbar.set)
+            textbox.configure(font=(ppolice, ptaille, pstyle))
+
+        # Layout
+        widget.grid_rowconfigure(0, weight=1)
+        widget.grid_columnconfigure(0, weight=1)
+
+        textbox.grid(row=0, column=0, sticky="nsew", padx=(10, 0), pady=10)
+        scrollbar.grid(row=0, column=1, sticky="ns", padx=(0, 10), pady=10)
+
+        return widget, textbox
+
     def labelChangeColor(self,label : Union[Label,ctk.CTkLabel],bg:str = "" ,fg :str = "" ):
         if isinstance (label,Label):
             if (bg != ""):
