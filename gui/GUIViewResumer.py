@@ -45,7 +45,8 @@ class GUIViewResumer(GuiBase):
                                            bg=self._btnColor,fg=self._btnTexteColor,
                                            ppolice="Arial",ptaille=20,pstyle="bold",
                                            command=self._screen.destroy)
-        wTextBox,self.__textBox = self._arrtk.createTextBoxScrolled(labelFrame)
+        wTextBox,self.__textBox = self._arrtk.createTextBoxScrolled(labelFrame,ppolice="Arial",
+                                                                    ptaille=25,pstyle="bold")
         # Affichage
         logoLabel.pack(side="left", anchor="center", padx=(6, 10), pady=6)
         self.__titleLabel.pack(side="left", anchor="center", pady=6)
