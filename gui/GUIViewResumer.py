@@ -25,6 +25,10 @@ class GUIViewResumer(GuiBase):
         labelFrame = self._arrtk.createFrame(self._screen,bg="blue")
         btnFrame = self._arrtk.createFrame(self._screen,bg="green")
 
+        # Conf frame
+        labelFrame.grid_rowconfigure(0, weight=1)
+        labelFrame.grid_columnconfigure(0, weight=1)
+
         # IMG
         imgLogo = self._arrtk.createImage(pathDark=self._gestionnaire.getConfigFile().icon,
                                           pathLight=self._gestionnaire.getConfigFile().icon,
@@ -41,12 +45,15 @@ class GUIViewResumer(GuiBase):
                                            bg=self._btnColor,fg=self._btnTexteColor,
                                            ppolice="Arial",ptaille=20,pstyle="bold",
                                            command=self._screen.destroy)
+        wTextBox,self.__textBox = self._arrtk.createTextBoxScrolled(labelFrame)
         # Affichage
         logoLabel.pack(side="left", anchor="center", padx=(6, 10), pady=6)
         self.__titleLabel.pack(side="left", anchor="center", pady=6)
 
         btnRead.pack(side="left", anchor="center", padx=(6, 10), pady=6)
         btnQuit.pack(side="right", anchor="center", pady=6)
+
+        wTextBox.grid(row=0, column=0, sticky="nsew")
 
         topFrame.grid(row=0, column=0, sticky="nsew")
         labelFrame.grid(row=1, column=0, sticky="nsew")
