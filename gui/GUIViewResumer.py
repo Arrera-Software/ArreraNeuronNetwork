@@ -21,9 +21,9 @@ class GUIViewResumer(GuiBase):
         self._screen.grid_rowconfigure(2, weight=0, minsize=25)
 
         # Frame
-        topFrame = self._arrtk.createFrame(self._screen,bg="red")
-        labelFrame = self._arrtk.createFrame(self._screen,bg="blue")
-        btnFrame = self._arrtk.createFrame(self._screen,bg="green")
+        topFrame = self._arrtk.createFrame(self._screen)
+        labelFrame = self._arrtk.createFrame(self._screen)
+        btnFrame = self._arrtk.createFrame(self._screen)
 
         # Conf frame
         labelFrame.grid_rowconfigure(0, weight=1)
