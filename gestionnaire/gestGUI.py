@@ -91,3 +91,6 @@ class gestGUI:
 
     def activeResumer(self):
         self.__guiResumer.active()
+
+    def activeViewResumer(self,dict:dict=None,list:list=None, intIn:int=0):
+        self.__guiResumer.activeView(dict=dict,list=list,intIn=intIn)
