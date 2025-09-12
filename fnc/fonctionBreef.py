@@ -33,9 +33,9 @@ class fncBreef(fncBase):
         else :
             return None
 
-    def summarizeTaskToday(self):
+    def summarizeTask(self):
         task = self._gestionnaire.getGestFNC().getFNCTask()
-        return task.getListTaskToday()
+        return task.getNoFinishTask()
 
     def summarizeAll(self, ville:str = ""):
         try :
@@ -57,7 +57,7 @@ class fncBreef(fncBase):
                              "greenAlert": meteoFNC.getGreenAlert()}
 
             task = self._gestionnaire.getGestFNC().getFNCTask()
-            taskToday = task.getListTaskToday()
+            taskToday = task.getNoFinishTask()
 
             return {"actu" : actu,"meteo": meteo,"task":taskToday}
 

@@ -1050,7 +1050,7 @@ def partBreef():
             case 1:
                 print(fnc.getFNCBreef().summarizeActuAndMeteo())
             case 2:
-                print(fnc.getFNCBreef().summarizeTaskToday())
+                print(fnc.getFNCBreef().summarizeTask())
             case 3 :
                 print(fnc.getFNCBreef().summarizeAll())
             case 4:
