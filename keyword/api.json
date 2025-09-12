@@ -1,5 +1,6 @@
 {
   "meteo": ["meteo","temps qu'il fait"],
+  "temperature": ["temperature","degre","degres"],
   "meteoDemainMatin": ["demain matin"] ,
   "meteoDemainApresMidi": ["demain apres midi"] ,
   "lieuDomicile" : ["domicile","residence",

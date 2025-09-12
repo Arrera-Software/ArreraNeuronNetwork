@@ -63,7 +63,21 @@ class neuroneAPI(neuronBase) :
 
                 self._listSortie = [self.__texteMeteo(state, 5, 6), ""]
                 return 4
+        elif self._keyword.checkAPI(requette,"temperature"):
+            if self._keyword.checkAPI(requette, "lieuDomicile"):
+                state = self.__fncMeteo.getMeteoCurrentHour(town=townHouse)
+            elif self._keyword.checkAPI(requette, "lieuTravail"):
+                state = self.__fncMeteo.getMeteoCurrentHour(town=townWork)
+            else:
+                state = self.__fncMeteo.getMeteoCurrentHour()
 
+            if state:
+                texte = self._language.getPhraseTemperature(self.__fncMeteo.getTemperature())
+            else :
+                texte = self._language.getPhraseMeteoError(str(random.randint(0, 1)))
+
+            self._listSortie = [texte,""]
+            return 4
         return 0
 
     def __breef(self,requette:str):
