@@ -16,8 +16,8 @@
     "recapitulatif","synthèse","breef"],
   "actualite": ["actualites","nouvelles",
   "informations","infos",
-  "news","titres"],
-  "taches": ["taches","choses a faire",
+  "news","titres","actu"],
+  "taches": ["taches","tache","choses a faire",
   "a faire","devoirs",
   "corvées","travaux",
   "missions","obligations"]
