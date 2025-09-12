@@ -76,40 +76,43 @@ class neuroneAPI(neuronBase) :
         """
         if self._keyword.checkAPI(requette,"resumer"):
             if self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
-                out = self.__fncBreef.summarizeActuAndMeteo(requette)
+                out = self.__fncBreef.summarizeActuAndMeteo(self._userConf.getLieuDomicile())
                 texte = self._language.getPhraseResumerActu()
                 if out is not None:
                     outInt = 12
+                    self._gestGUI.activeViewResumer(dict=out,list=None,intIn=outInt)
                 else :
                     outInt = 11
             elif self._keyword.checkAPI(requette,"taches"):
-                out = self.__fncBreef.summarizeTaskToday()
+                out = self.__fncBreef.summarizeTask()
                 texte = self._language.getPhraseResumerTask()
                 if out is not None:
                     outInt = 18
+                    self._gestGUI.activeViewResumer(dict=None,list=out,intIn=outInt)
                 else :
                     outInt = 11
             else:
                 out = self.__fncBreef.summarizeAll()
-                texte = self._language.getPhraseResumerAll("1")
+                texte = self._language.getPhraseResumerAll("2")
                 if out is not None:
                     outInt = 19
+                    self._gestGUI.activeViewResumer(dict=out,list=None,intIn=outInt)
                 else :
                     outInt = 20
 
             if outInt == 12 or outInt == 18 or outInt == 19:
-                self.__texteBreef(out,texte)
+                self._listSortie = [texte,""]
             else :
-                self._listSortie = [self._language.getPhraseResumerAll("2"),""]
+                self._listSortie = [self._language.getPhraseResumerAll("1"),""]
             return outInt
         return 0
 
     def neurone(self,requette:str):
         self._listSortie = ["", ""]
         self._valeurOut = 0
-        self._valeurOut = self.__meteo(requette)
+        self._valeurOut = self.__breef(requette)
         if self._valeurOut == 0:
-            self._valeurOut = self.__breef(requette)
+            self._valeurOut = self.__meteo(requette)
         """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
