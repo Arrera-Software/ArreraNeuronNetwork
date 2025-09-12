@@ -6,6 +6,7 @@ class neuronBase :
         #Init objet
         self._gestionnaire = gestionnaire
         self._gestFNC = self._gestionnaire.getGestFNC()
+        self._gestGUI = self._gestionnaire.getGestGUI()
         self._userConf = self._gestionnaire.getUserConf()
         self._objHistorique = None
         self._listSortie = ["",""]
