@@ -41,6 +41,7 @@
   "phIteneraireError3" : "Désolé {genre}, mais je n'arrive pas à savoir où vous allez et d'où vous partez.",
   "phIteneraire": "Voici votre itinéraire sur Google Maps. J'espère que cela vous sera utile {genre} {user}.",
   "phhelpIteneraire" : "Pour que l'assistant vous lance un navigateur avec Google Maps, il faut lui demander avec l'une de ces deux phrases : 'Indique-moi l'itinéraire de [départ] à [arrivée] sur le GPS' ou 'Lance le GPS pour un trajet de [départ] à [arrivée]'.",
+  "phOpenHelpIteneraire": "Je vous ouvre l'aide pour l'itinéraire.",
   "phTraducteur" : "J'espère que cet outil de traduction vous sera utile {genre}.",
   "phErrorLangue" : "Désolé {genre}. Mais les langues que vous demandez ne sont pas disponibles.",
   "phMeteo7" : [

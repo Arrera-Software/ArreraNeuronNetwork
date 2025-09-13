@@ -25,6 +25,7 @@
   "gps": ["gps","geographique"],
   "coordonnees": ["coordonnees","coordonnées",
   "position","localisation",
-  "emplacement","coordonne","coordonné"]
+  "emplacement","coordonne","coordonné"],
+  "aide": ["aide","aides","help"]
 
 }

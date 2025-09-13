@@ -132,6 +132,11 @@ class neuroneAPI(neuronBase) :
                 else :
                     self._listSortie = [self._language.getPhraseGPSError(str(random.randint(0,1))),""]
                 return 4
+            elif self._keyword.checkAPI(requette,"aide"):
+                self._listSortie = [self._language.getOpenHelpIteneraire(), ""]
+                self._gestGUI.activeHelp(self._language.getTexteHelpIteneraire())
+                return 1
+
 
         return 0
 
