@@ -8,6 +8,7 @@ class neuroneAPI(neuronBase) :
         super().__init__(gestionnaire)
         self.__fncMeteo = self._gestFNC.getFNCMeteo()
         self.__fncBreef = self._gestFNC.getFNCBreef()
+        self.__fncGPS = self._gestFNC.getFNCGPS()
 
     def __texteMeteo(self,state:bool,a:int,b:int):
         if state:
@@ -121,12 +122,30 @@ class neuroneAPI(neuronBase) :
             return outInt
         return 0
 
+    def __gps(self,requette:str):
+        if self._keyword.checkAPI(requette,"gps"):
+            if self._keyword.checkAPI(requette,"coordonnees") :
+                if self.__fncGPS.locate():
+                    self._listSortie = [self._language.getPhraseCoordonnees(latitude=str(self.__fncGPS.getLatitude()),
+                                                                            longitude=str(self.__fncGPS.getLongitude()),
+                                                                            ville=self.__fncGPS.getTown()),""]
+                else :
+                    self._listSortie = [self._language.getPhraseGPSError(str(random.randint(0,1))),""]
+                return 4
+
+        return 0
+
+
+
+
     def neurone(self,requette:str):
         self._listSortie = ["", ""]
         self._valeurOut = 0
         self._valeurOut = self.__breef(requette)
         if self._valeurOut == 0:
             self._valeurOut = self.__meteo(requette)
+            if self._valeurOut == 0:
+                self._valeurOut = self.__gps(requette)
         """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",

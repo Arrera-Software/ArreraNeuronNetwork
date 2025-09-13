@@ -317,7 +317,7 @@ class gestLangue:
 
     def getPhraseCoordonnees(self,ville:str,latitude:str,longitude:str):
         phrases = self.__api.getContentJsonFlag("phCoordonnees")
-        return [phrase.format(genre=self.__genre,user=self.__user,ville=ville,latitude=latitude,longitude=longitude) for phrase in phrases]
+        return phrases.format(genre=self.__genre,user=self.__user,ville=ville,latitude=latitude,longitude=longitude)
 
     def getPhraseTemperature(self,temperature:str):
         formule = self.__api.getContentJsonFlag("phTemperature")
