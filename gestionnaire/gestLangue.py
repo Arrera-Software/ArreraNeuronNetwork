@@ -335,8 +335,12 @@ class gestLangue:
         formule = self.__api.getContentJsonFlag("phIteneraire")
         return formule.format(genre=self.__genre,user=self.__user)
 
-    def getHelpIteneraire(self):
+    def getTexteHelpIteneraire(self):
         formule = self.__api.getContentJsonFlag("phhelpIteneraire")
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getOpenHelpIteneraire(self):
+        formule = self.__api.getContentJsonFlag("phOpenHelpIteneraire")
         return formule.format(genre=self.__genre,user=self.__user)
 
     def getPhraseOpenTraducteur(self):
