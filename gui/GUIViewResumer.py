@@ -27,7 +27,7 @@ class GUIViewResumer(GUIView):
                     self._textBox.insert("end", f"{texteActu}\n")
                     self._textBox.insert("end", texteMeteo)
                     self._textBox.configure(state="disabled", font=("Arial", 20, "normal"))
-                    self.__textRead = f"{texteActu} {texteMeteo}"
+                    self._textRead = f"{texteActu} {texteMeteo}"
                     return True
                 else:
                     return False
@@ -44,7 +44,7 @@ class GUIViewResumer(GUIView):
                     self._textBox.delete(1.0, "end")
                     self._textBox.insert("end", texteTask)
                     self._textBox.configure(state="disabled", font=("Arial", 20, "normal"))
-                    self.__textRead = texteTask
+                    self._textRead = texteTask
                     return True
                 else:
                     return False
@@ -68,7 +68,7 @@ class GUIViewResumer(GUIView):
                     self._textBox.delete(1.0, "end")
                     self._textBox.insert("end", texteActu + "\n" + texteMeteo + "\n" + texteTask)
                     self._textBox.configure(state="disabled", font=("Arial", 20, "normal"))
-                    self.__textRead = f"{texteActu} {texteMeteo} {texteTask}"
+                    self._textRead = f"{texteActu} {texteMeteo} {texteTask}"
                     return True
                 else :
                     self._textBox.configure(state="disabled", font=("Arial", 20, "normal"))

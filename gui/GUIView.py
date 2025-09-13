@@ -3,7 +3,7 @@ from gui.guibase import GuiBase,gestionnaire
 class GUIView(GuiBase):
     def __init__(self,gestionnaire:gestionnaire,title):
         super().__init__(gestionnaire,title)
-        self.__textRead = ""
+        self._textRead = ""
 
     def _mainframe(self):
         self._screen.minsize(500, 620)
