@@ -331,9 +331,12 @@ class gestLangue:
         formule = self.__api.getContentJsonFlag("phIteneraireError" + nb)
         return formule.format(genre=self.__genre,user=self.__user)
 
-    def getPhraseIteneraire(self):
-        formule = self.__api.getContentJsonFlag("phIteneraire")
-        return formule.format(genre=self.__genre,user=self.__user)
+    def getPhraseIteneraire(self,nb:str,texte:str=""):
+        formule = self.__api.getContentJsonFlag("phIteneraire"+nb)
+        if texte != "":
+            return formule.format(genre=self.__genre,user=self.__user,texte=texte)
+        else :
+            return formule.format(genre=self.__genre,user=self.__user)
 
     def getTexteHelpIteneraire(self):
         formule = self.__api.getContentJsonFlag("phhelpIteneraire")

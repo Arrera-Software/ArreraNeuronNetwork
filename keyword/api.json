@@ -26,6 +26,17 @@
   "coordonnees": ["coordonnees","coordonnées",
   "position","localisation",
   "emplacement","coordonne","coordonné"],
-  "aide": ["aide","aides","help"]
-
+  "aide": ["aide","aides","help"],
+  "launch-itinerary": ["lance l'itineraire","lance l'itinéraire",
+    "demarre l'itineraire","demarre l'itinéraire"],
+  "add-start-itinerary": ["je part de","je pars de",
+    "je compte partir de","je souhaite partir de",
+    "je voudrais partir de","je désire partir de"],
+  "add-end-itinerary": [
+    "je veux arriver a",
+    "je souhaite arriver a",
+    "je voudrais arriver a",
+    "je desire arriver a",
+    "ma destination est",
+    "destination est"]
 }

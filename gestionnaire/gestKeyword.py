@@ -121,3 +121,10 @@ class gestKeyword:
     def checkWork(self,texte:str,fonction:str)->bool:
         listWord = self.__getKeyWork("work",fonction)
         return self.__checkContainWord(texte,listWord)
+
+    def getListKeyword(self,neuron:str,fonction:str)->list:
+        if neuron not in ["api","chatbot","codehelp","open","search","service","software","time","work"]:
+            return []
+        if neuron == "" or fonction == "":
+            return []
+        return self.__getKeyWork(neuron,fonction)

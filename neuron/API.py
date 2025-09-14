@@ -9,6 +9,9 @@ class neuroneAPI(neuronBase) :
         self.__fncMeteo = self._gestFNC.getFNCMeteo()
         self.__fncBreef = self._gestFNC.getFNCBreef()
         self.__fncGPS = self._gestFNC.getFNCGPS()
+        self.__itineraire = False
+        self.__arriver = ""
+        self.__depart = ""
 
     def __texteMeteo(self,state:bool,a:int,b:int):
         if state:
@@ -136,7 +139,68 @@ class neuroneAPI(neuronBase) :
                 self._listSortie = [self._language.getOpenHelpIteneraire(), ""]
                 self._gestGUI.activeHelp(self._language.getTexteHelpIteneraire())
                 return 1
+        elif self._keyword.checkAPI(requette,"launch-itinerary"):
+            if not self.__itineraire:
+                self.__itineraire = True
+                self.__arriver = ""
+                self.__depart = ""
+                self._listSortie=[self._language.getPhraseIteneraire("1"),""]
+                return 1
+            else :
+                if self.__arriver == "" and self.__depart == "":
+                    self._listSortie = [self._language.getPhraseIteneraireError("4")
+                        ,""]
+                else :
+                    out = self.__fncGPS.launchGoogleMapItinerary(self.__depart,self.__arriver)
+                    if not out :
+                        self._listSortie = [self._language.getPhraseIteneraireError("5")
+                            ,""]
+                    else :
+                        self._listSortie = [self._language.getPhraseIteneraire("4"),""]
+                return 1
+        elif self.__itineraire:
+            if self._keyword.checkAPI(requette,"add-start-itinerary"):
+                listDepart = self._keyword.getListKeyword("api","add-start-itinerary")
 
+                self.__depart = requette
+
+                if len(listDepart) == 0:
+                    self._listSortie = [self._language.getPhraseIteneraireError("1"),
+                                        ""]
+                    return 1
+
+                for texte in listDepart:
+                    self.__depart = self.__depart.replace(texte,"").strip()
+
+                if self.__depart != "":
+                    self._listSortie = [self._language.getPhraseIteneraire("2",self.__depart),
+                                        ""]
+                    return 1
+                else :
+                    self._listSortie = [self._language.getPhraseIteneraireError("2"),
+                                        ""]
+                    return 1
+            elif self._keyword.checkAPI(requette,"add-end-itinerary"):
+                    listArriver = self._keyword.getListKeyword("api","add-end-itinerary")
+
+                    self.__arriver = requette
+
+                    if len(listArriver) == 0:
+                        self._listSortie = [self._language.getPhraseIteneraireError("4"),
+                                            ""]
+                        return 1
+
+                    for texte in listArriver:
+                        self.__arriver = self.__arriver.replace(texte,"").strip()
+
+                    if self.__arriver != "":
+                        self._listSortie = [self._language.getPhraseIteneraire("3",self.__arriver),
+                                            ""]
+                        return 1
+                    else :
+                        self._listSortie = [self._language.getPhraseIteneraireError("4"),
+                                            ""]
+                        return 1
 
         return 0
 
