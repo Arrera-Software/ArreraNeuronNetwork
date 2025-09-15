@@ -220,9 +220,12 @@ class neuroneAPI(neuronBase) :
                 return 1
         return 0
 
-
-
-
+    def __translate(self,requette:str):
+        if self._keyword.checkAPI(requette,"traducteur"):
+            self._listSortie = [self._language.getPhraseOpenTraducteur(), ""]
+            self._gestGUI.activeTraducteur()
+            return 1
+        return 0
 
     def neurone(self,requette:str):
         self._listSortie = ["", ""]
@@ -234,6 +237,8 @@ class neuroneAPI(neuronBase) :
                 self._valeurOut = self.__gps(requette)
                 if self._valeurOut == 0:
                     self._valeurOut = self.__news(requette)
+                    if self._valeurOut == 0:
+                        self._valeurOut = self.__translate(requette)
         """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",

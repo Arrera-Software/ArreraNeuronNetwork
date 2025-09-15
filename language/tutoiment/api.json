@@ -47,7 +47,7 @@
   "phIteneraire4": "Je lance l'itinéraire sur le GPS.",
   "phhelpIteneraire" : "Pour que l'assistant vous lance un navigateur avec Google Maps.\nIl faut commencer pour lui dire que veux lancer un itinéraire avec 'lance l'itineraire','lance un itineraire' ou 'demarre l'itineraire'\nEnsuite il faut lui indique de vous vous voulez partir avec 'je part de', 'je pars de', 'je compte partir de', 'je souhaite partir de', 'je voudrais partir de', 'je désire partir de' ou 'je veux aller a'\nEnfin il faut lui indiquer où vous voulez arriver avec 'je veux arriver a', 'je souhaite arriver a', 'je voudrais arriver a', 'je desire arriver a', 'ma destination est' ou 'destination est'.",
   "phOpenHelpIteneraire": "Je t'ouvre l'aide pour l'itinéraire.",
-  "phTraducteur": "J'espère que ça te sera utile {user}.",
+  "phTraducteur": "Je t'ouvre l'outil de traduction j'espère qu'il te sera utile {user}.",
   "phErrorLangue": "Désolé, les langues que tu demandes ne sont pas disponibles.",
   "phMeteo7": [
     "La météo chez toi est {description} avec une température de {temperature} °C.",
