@@ -81,9 +81,8 @@
   ],
   "launch-itinerary": [
     "lance l'itineraire",
-    "lance l'itinéraire",
-    "demarre l'itineraire",
-    "demarre l'itinéraire"
+    "lance un itineraire",
+    "demarre l'itineraire"
   ],
   "add-start-itinerary": [
     "je part de",
@@ -91,7 +90,8 @@
     "je compte partir de",
     "je souhaite partir de",
     "je voudrais partir de",
-    "je désire partir de"
+    "je désire partir de",
+    "je veux aller a"
   ],
   "add-end-itinerary": [
     "je veux arriver a",
