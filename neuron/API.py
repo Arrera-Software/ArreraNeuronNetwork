@@ -9,6 +9,7 @@ class neuroneAPI(neuronBase) :
         self.__fncMeteo = self._gestFNC.getFNCMeteo()
         self.__fncBreef = self._gestFNC.getFNCBreef()
         self.__fncGPS = self._gestFNC.getFNCGPS()
+        self.__fncActu = self._gestFNC.getFNCActu()
         self.__itineraire = False
         self.__arriver = ""
         self.__depart = ""
@@ -204,6 +205,22 @@ class neuroneAPI(neuronBase) :
 
         return 0
 
+    def __news(self,requette:str):
+        if self._keyword.checkAPI(requette,"actualite"):
+            if self.__fncActu.setActu(3,"fr"):
+                listActu = self.__fncActu.getActu()
+                if listActu != ["error","error"]:
+                    self._listSortie = listActu
+                    return 3
+                else :
+                    self._listSortie = [self._language.getPhraseApi("1"),""]
+                    return 1
+            else :
+                self._listSortie = [self._language.getPhraseApi("1"), ""]
+                return 1
+        return 0
+
+
 
 
 
@@ -215,6 +232,8 @@ class neuroneAPI(neuronBase) :
             self._valeurOut = self.__meteo(requette)
             if self._valeurOut == 0:
                 self._valeurOut = self.__gps(requette)
+                if self._valeurOut == 0:
+                    self._valeurOut = self.__news(requette)
         """
         listeLang = ["anglais","francais","espagnol","allemand", "chinois simplifie","chinois traditionnel",
                             "arabe", "russe","japonais","coreen","italien","portugais","neerlandais",
