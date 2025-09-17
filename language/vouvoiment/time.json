@@ -11,7 +11,7 @@
   "phEvent": "Vous avez {nombre} événement(s) pour aujourd'hui, qui sont ",
   "ph8": "Je vous ai ouvert l'agenda. J'espère que ça vous sera utile.",
   "ph9": "Très bien, je vous ouvre l'application tâches {genre}.",
-  "ph10": "Je vous ouvre le programme d'ajout de tâche. Suivez bien l'interface {genre}.",
+  "ph10": "Très bien, comment s'appelle la tâche que tu veux ajouter {genre} ?",
   "ph11": "Je vous ouvre le programme de suppression de tâche. Suivez bien l'interface {genre}.",
   "ph12": "Désolé {genre} {user}. Il est impossible de supprimer une tâche s'il n'y en a aucune de créée.",
   "ph13": "Je vous ouvre le programme qui vous permet de définir une tâche finie.",
@@ -33,5 +33,8 @@
   "phNBTache7": "Vous avez {nombre1} tâche(s), qui sont ",
   "ph23": "Vous n'avez aucun événement aujourd'hui.",
   "phNBTache8": "Vous avez {nombre1} événement aujourd'hui, qui est ",
-  "phNBTache9": "Vous avez {nombre1} événement aujourd'hui, qui sont "
+  "phNBTache9": "Vous avez {nombre1} événement aujourd'hui, qui sont ",
+  "ph24": "Très bien, je vous crée une tâche nommée {task} {genre} {user}.",
+  "ph25": "Impossible de créer une tâche sans nom {genre} {user}.",
+  "ph26": "Une erreur c'est produite lors de la création de la tâche {genre} {user}."
 }

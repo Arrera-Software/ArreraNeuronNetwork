@@ -362,9 +362,9 @@ class gestLangue:
         formule = self.__time.getContentJsonFlag("phDate")
         return formule.format(genre=self.__genre,user=self.__user,jour=jour,mois=mois,annee=annee)
 
-    def getPhraseTime(self,nb:str):
+    def getPhraseTime(self,nb:str,task:str=""):
         formule = self.__time.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre,user=self.__user)
+        return formule.format(genre=self.__genre,user=self.__user,task=task)
     def getPhraseEvent(self,nb:str):
         formule = self.__time.getContentJsonFlag("phEvent")
         return formule.format(genre=self.__genre,user=self.__user,nombre=nb)
