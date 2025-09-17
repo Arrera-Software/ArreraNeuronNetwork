@@ -77,6 +77,12 @@ class gestGUI:
     def activeTache(self):
         self.__guiTache.active()
 
+    def activeTaskFinish(self):
+        self.__guiTache.activeFinish()
+
+    def activeDel(self):
+        self.__guiTache.activeDel()
+
     def activeWork(self):
         self.__guiWork.active()
 

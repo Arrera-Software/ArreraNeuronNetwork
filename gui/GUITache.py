@@ -321,3 +321,11 @@ class GUITache(GuiBase):
                 showinfo("Tache","Suppression de la tâche effectué")
             self.__backToMain()
             self.__viewTaskNoFinish()
+
+    def activeDel(self):
+        self.active()
+        self.__viewSuppr()
+
+    def activeFinish(self):
+        self.active()
+        self.__viewTaskFinish()
