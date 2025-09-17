@@ -4,6 +4,8 @@ class neuroneTime(neuronBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire)
         self.__libTime = self._gestionnaire.getArrDate()
+        self.__fncTask = self._gestFNC.getFNCTask()
+        self.__taskAdd = False
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -49,6 +51,14 @@ class neuroneTime(neuronBase):
             return 0
 
     def __neuronAgenda(self,requette:str):
+        if self._keyword.checkTime(requette,"calendar"):
+            if (self._keyword.checkTime(requette,"open") or
+                    self._keyword.checkTime(requette,"montre")):
+                self._listSortie = [self._language.getPhraseTime("8"), ""]
+                self._gestGUI.activeAgenda()
+                return 1
+        else :
+            return 0
         """
         if "evenement" in requette or "agenda" in requette or "rendez vous" in requette or "rappel" in requette:
             if "ajoute" in requette or "ajouter" in requette or "add" in requette or "ajout" in requette:
@@ -79,6 +89,36 @@ class neuroneTime(neuronBase):
         return 0
 
     def __neuronTache(self, requette:str):
+        if self._keyword.checkTime(requette,"tache"):
+            if (self._keyword.checkTime(requette, "open") or
+                    self._keyword.checkTime(requette, "montre")):
+                self._listSortie = [self._language.getPhraseTime("9"), ""]
+                self._gestGUI.activeTache()
+                return 1
+            elif self._keyword.checkTime(requette,"add"):
+                self._listSortie = [self._language.getPhraseTime("10"), ""]
+                self.__taskAdd = True
+                return 1
+        if self.__taskAdd:
+            if self._keyword.checkTime(requette,"name-task"):
+                self.__taskAdd = False
+                listPhrase = self._keyword.getListKeyword("time","name-task")
+                name = requette
+                for phrase in listPhrase:
+                    name = name.replace(phrase,"")
+                name = name.strip()
+                if name == "":
+                    self._listSortie = [self._language.getPhraseTime("25"), ""]
+                else :
+                    if self.__fncTask.addTask(name):
+                        self._listSortie = [self._language.getPhraseTime("24",task=name), ""]
+                    else :
+                        self._listSortie = [self._language.getPhraseTime("26"), ""]
+                return 1
+
+        else:
+            return 0
+
         """
         if ("taches" in requette or "tache" in requette) and "projet" not in requette:
             if ("montre" in requette or "fais voir" in requette):

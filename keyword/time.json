@@ -15,5 +15,11 @@
   "quelle est la date du jour ?"],
   "chrono": ["chrono","chronometre"],
   "clock": ["horloge","clock"],
-  "timer": ["minuteur","timer"]
+  "timer": ["minuteur","timer"],
+  "tache": ["tache","todo","to do","task","tasks","taches"],
+  "calendar": ["agenda","calendrier","calendar","planning","evenement","event","events"],
+  "add" : ["ajoute","ajouter","cree","creer","met","mettre","ajout"],
+  "montre": ["montre","regarde","voir"],
+  "open": ["ouvre","ouvrir","lance"],
+  "name-task": ["le nom est","le nom de la tâche est"]
 }
