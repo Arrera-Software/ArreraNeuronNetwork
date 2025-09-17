@@ -80,7 +80,7 @@ class gestGUI:
     def activeTaskFinish(self):
         self.__guiTache.activeFinish()
 
-    def activeDel(self):
+    def activeDelTask(self):
         self.__guiTache.activeDel()
 
     def activeWork(self):
