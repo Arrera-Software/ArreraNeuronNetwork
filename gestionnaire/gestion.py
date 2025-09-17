@@ -19,10 +19,12 @@ class gestionnaire:
         # Librairy
         # Importation des librairies
         from librairy.arrera_voice import CArreraVoice
+        from librairy.arrera_date import CArreraDate
         # Declaration des librairies
         self.__detecteurOS = OS()
         self.__network = network()
         self.__arrVoice = CArreraVoice(self)
+        self.__arrDate = CArreraDate()
         # Fichier JSON
         self.__config = confAssistant
         self.__userConf = gestUserSetting(self)
@@ -63,6 +65,9 @@ class gestionnaire:
         Methode qui retourne l'objet de la librairie de voice
         """
         return self.__arrVoice
+
+    def getArrDate(self):
+        return self.__arrDate
 
     def getLanguageObjet(self):
         return self.__gestLang
