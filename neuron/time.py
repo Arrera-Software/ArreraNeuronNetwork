@@ -99,6 +99,10 @@ class neuroneTime(neuronBase):
                 self._listSortie = [self._language.getPhraseTime("10"), ""]
                 self.__taskAdd = True
                 return 1
+            elif self._keyword.checkTime(requette,"delete") :
+                self._listSortie = [self._language.getPhraseTime("11"), ""]
+                self._gestGUI.activeDelTask()
+                return 1
         if self.__taskAdd:
             if self._keyword.checkTime(requette,"name-task"):
                 self.__taskAdd = False

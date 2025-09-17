@@ -19,6 +19,7 @@
   "tache": ["tache","todo","to do","task","tasks","taches"],
   "calendar": ["agenda","calendrier","calendar","planning","evenement","event","events"],
   "add" : ["ajoute","ajouter","cree","creer","met","mettre","ajout"],
+  "delete": ["supprime","supprimer","enleve","enlever","retire","retirer","delete","del"],
   "montre": ["montre","regarde","voir"],
   "open": ["ouvre","ouvrir","lance"],
   "name-task": ["le nom est","le nom de la tâche est"]
