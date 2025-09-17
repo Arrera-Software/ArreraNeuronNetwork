@@ -172,7 +172,7 @@ class ABrain :
 
                                     if self.__valeurOut == 0 :
                                         #api
-                                        if not self.__etatReseau  and self.__gestNeuron.napi is None :
+                                        if not self.__etatReseau  or self.__gestNeuron.napi is None :
                                             self.__valeurOut = 0
                                         else :
                                             self.__gestNeuron.napi.neurone(requette)
