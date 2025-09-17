@@ -6,6 +6,7 @@ class neuroneTime(neuronBase):
         self.__libTime = self._gestionnaire.getArrDate()
         self.__fncTask = self._gestFNC.getFNCTask()
         self.__taskAdd = False
+        self.__taskEnd = False
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -98,12 +99,18 @@ class neuroneTime(neuronBase):
             elif self._keyword.checkTime(requette,"add"):
                 self._listSortie = [self._language.getPhraseTime("10"), ""]
                 self.__taskAdd = True
+                self.__taskEnd = False
                 return 1
             elif self._keyword.checkTime(requette,"delete") :
                 self._listSortie = [self._language.getPhraseTime("11"), ""]
                 self._gestGUI.activeDelTask()
                 return 1
-        if self.__taskAdd:
+            elif self._keyword.checkTime(requette,"finish") :
+                self._listSortie = [self._language.getPhraseTime("12"), ""]
+                self.__taskEnd = True
+                self.__taskAdd = False
+                return 1
+        elif self.__taskAdd:
             if self._keyword.checkTime(requette,"name-task"):
                 self.__taskAdd = False
                 listPhrase = self._keyword.getListKeyword("time","name-task")
@@ -119,7 +126,22 @@ class neuroneTime(neuronBase):
                     else :
                         self._listSortie = [self._language.getPhraseTime("26"), ""]
                 return 1
-
+        elif self.__taskEnd:
+            if self._keyword.checkTime(requette,"name-task"):
+                self.__taskEnd = False
+                listPhrase = self._keyword.getListKeyword("time","name-task")
+                name = requette
+                for phrase in listPhrase:
+                    name = name.replace(phrase,"")
+                name = name.strip()
+                if name == "":
+                    self._listSortie = [self._language.getPhraseTime("14"), ""]
+                else :
+                    if self.__fncTask.finishTask(name):
+                        self._listSortie = [self._language.getPhraseTime("13",task=name), ""]
+                    else :
+                        self._listSortie = [self._language.getPhraseTime("27",task=name), ""]
+                return 1
         else:
             return 0
 

@@ -13,9 +13,9 @@
   "ph9": "Très bien, je vous ouvre l'application tâches {genre}.",
   "ph10": "Très bien, comment s'appelle la tâche que tu veux ajouter {genre} ?",
   "ph11": "Je vous ouvre le programme de suppression de tâche. Suivez bien l'interface {genre}.",
-  "ph12": "Désolé {genre} {user}. Il est impossible de supprimer une tâche s'il n'y en a aucune de créée.",
-  "ph13": "Je vous ouvre le programme qui vous permet de définir une tâche finie.",
-  "ph14": "Désolé {genre}. Il est impossible de finir une tâche s'il n'y en a aucune de créée.",
+  "ph12": "Tres bien dites-moi le nom de la tâche que vous voulez définir comme finie, {genre} ?",
+  "ph13": "Je vous ai défini la tâche {task} comme finie, {genre}.",
+  "ph14": "Impossible de définir une tâche comme finie sans nom {user}.",
   "ph15": "Vous n'avez aucune tâche enregistrée.",
   "ph16": "Vous avez une tâche enregistrée et elle est à finir aujourd'hui.",
   "ph17": "Vous avez une tâche enregistrée.",
@@ -36,5 +36,6 @@
   "phNBTache9": "Vous avez {nombre1} événement aujourd'hui, qui sont ",
   "ph24": "Très bien, je vous crée une tâche nommée {task} {genre} {user}.",
   "ph25": "Impossible de créer une tâche sans nom {genre} {user}.",
-  "ph26": "Une erreur c'est produite lors de la création de la tâche {genre} {user}."
+  "ph26": "Une erreur c'est produite lors de la création de la tâche {genre} {user}.",
+  "ph27": "Désolé, {genre} {user}, la tâche {task} n’existe pas ou une erreur est survenue."
 }

@@ -22,5 +22,6 @@
   "delete": ["supprime","supprimer","enleve","enlever","retire","retirer","delete","del"],
   "montre": ["montre","regarde","voir"],
   "open": ["ouvre","ouvrir","lance"],
-  "name-task": ["le nom est","le nom de la tâche est"]
+  "name-task": ["le nom est","le nom de la tâche est"],
+  "finish": ["finie","fini","terminee","termine","achevee","acheve","complete","completed"]
 }
