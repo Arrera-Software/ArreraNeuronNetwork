@@ -58,36 +58,19 @@ class neuroneTime(neuronBase):
                 self._listSortie = [self._language.getPhraseTime("8"), ""]
                 self._gestGUI.activeAgenda()
                 return 1
-        else :
-            return 0
-        """
-        if "evenement" in requette or "agenda" in requette or "rendez vous" in requette or "rappel" in requette:
-            if "ajoute" in requette or "ajouter" in requette or "add" in requette or "ajout" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieAjoutEvent(), ""]
-                self._objHistorique.setAction("Ajout d'un rendez-vous dans l'agenda")
-                self._valeurOut = 5
+            elif self._keyword.checkTime(requette,"add"):
+                self._listSortie = [self._language.getPhraseTime("4"), ""]
+                self._gestGUI.activeAgendaAdd()
                 return 1
-            elif "supprime" in requette or "supprimer" in requette or "suppr" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieSupprEvent(), ""]
-                self._objHistorique.setAction("Suppression d'un rendez-vous dans l'agenda")
-                self._valeurOut = 5
-                return 1
-            elif ("montre" in requette or "fais voir" in requette) and ("aujourd'hui" in requette or "jour" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieEvenementDay(), ""]
-                self._objHistorique.setAction("Consulation des rendez-vous enregistrer dans l'agenda")
-                self._valeurOut = 5
-                return 1
-            elif "montre" in requette or "ouvre" in requette or "fais voir" in requette :
-                self._listSortie = [self._fonctionArreraNetwork.sortieOpenAgenda(), ""]
-                self._objHistorique.setAction("Ouverture de l'interface agenda")
-                self._valeurOut = 5
+            elif self._keyword.checkTime(requette,"delete"):
+                self._listSortie = [self._language.getPhraseTime("5"), ""]
+                self._gestGUI.activeAgendaDel()
                 return 1
             else :
                 return 0
+
         else :
             return 0
-        """
-        return 0
 
     def __neuronTache(self, requette:str):
         if self._keyword.checkTime(requette,"tache"):

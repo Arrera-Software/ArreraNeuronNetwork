@@ -343,3 +343,11 @@ class GUIAgenda(GuiBase):
             showerror("Erreur",
                       "Une erreur est survenue lors de la suppression de l'événement")
             return False
+
+    def activeAdd(self):
+        self.active()
+        self.__viewAddEvent(0)
+
+    def activeDel(self):
+        self.active()
+        self.__viewSuppr()

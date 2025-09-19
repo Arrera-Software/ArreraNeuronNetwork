@@ -62,6 +62,12 @@ class gestGUI:
     def activeAgenda(self):
         self.__guiAgenda.active()
 
+    def activeAgendaAdd(self):
+        self.__guiAgenda.activeAdd()
+
+    def activeAgendaDel(self):
+        self.__guiAgenda.activeDel()
+
     def activeHorloge(self):
         self.__guiHorloge.active()
 
