@@ -1,9 +1,10 @@
 import tkinter
 from tkinter.messagebox import showerror
-
+from librairy.dectectionOS import OS
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
+import signal
 """
 Todo : 
 1 . GUI qui permet de decider la conf qu'on veux 
@@ -14,6 +15,7 @@ class GUIOpale:
     def __init__(self):
         self.__arrTK = CArreraTK()
         self.__emplacementLangue = "language/vouvoiment/"
+        self.__objOS = OS()
 
 
     def active(self):
@@ -165,6 +167,8 @@ class GUIOpale:
                                   title="Opale Assistant", resizable=False,
                                   icon="asset/icon.png")
 
+        screen.protocol("WM_DELETE_WINDOW", self.__close)
+
         # Frame
         frameAssistant = self.__arrTK.createFrame(screen, width=500, height=225)
         frameUser = self.__arrTK.createFrame(screen, width=350, height=50)
@@ -176,7 +180,7 @@ class GUIOpale:
         self.__labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
 
         entryUser = self.__arrTK.createEntry(frameUser, width=200)
-        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=15,
+        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=25,
                                             command= lambda : self.__sendAssistantMessage(entryUser))
 
         # Affichage
@@ -190,6 +194,8 @@ class GUIOpale:
 
         self.__arrTK.placeLeftCenter(entryUser)
         self.__arrTK.placeRightCenter(btnSend)
+
+        self.__keyboard(screen,entryUser)
 
     def __startAssistantBrain(self):
         try :
@@ -209,23 +215,6 @@ class GUIOpale:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}")
 
     def __sendAssistantMessage(self,entry:ctk.CTkEntry):
-        """
-        Fonction qui permet d'envoyer un message à l'assistant
-
-        try:
-            message = entry.get()
-            if message:
-                self.__assistantBrain.neuron(message)
-                nb = self.__assistantBrain.getValeurSortie()
-                texte = self.__assistantBrain.getListSortie()
-                self.__labelAssistantText.configure(text=texte[0],wraplength=200)
-                self.__labelAssistantNumber.configure(text=str(nb))
-                entry.delete(0, 'end')  # Clear the entry after sending
-            else:
-                self.__labelAssistantText.configure(text="Veuillez entrer un message.",wraplength=200)
-        except Exception as e:
-            self.__labelAssistantText.configure(text=f"Erreur lors de l'envoi du message : {e}",wraplength=200)
-        """
         message = entry.get()
         if message:
             self.__assistantBrain.neuron(message)
@@ -234,5 +223,26 @@ class GUIOpale:
             self.__labelAssistantText.configure(text=texte[0], wraplength=200)
             self.__labelAssistantNumber.configure(text=str(nb))
             entry.delete(0, 'end')  # Clear the entry after sending
+            if nb == 15:
+                self.__close()
         else:
             self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200)
+
+    def __keyboard(self,win:ctk.CTk,entry:ctk.CTkEntry):
+        def anychar(event):
+            if self.__objOS.osWindows():
+                if event.keycode == 13:
+                    self.__sendAssistantMessage(entry)
+            elif self.__objOS.osLinux():
+                if event.keycode == 36:
+                    self.__sendAssistantMessage(entry)
+            elif self.__objOS.osMac():
+                if event.keycode == 603979789:
+                    self.__sendAssistantMessage(entry)
+        win.bind("<Key>", anychar)
+
+    def __close(self):
+        if self.__objOS.osWindows():
+            os.kill(os.getpid(), signal.SIGINT)
+        elif self.__objOS.osLinux() or self.__objOS.osMac() :
+            os.kill(os.getpid(), signal.SIGKILL)
