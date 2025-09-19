@@ -23,5 +23,8 @@
   "montre": ["montre","regarde","voir"],
   "open": ["ouvre","ouvrir","lance"],
   "name-task": ["le nom est","le nom de la tâche est"],
-  "finish": ["finie","fini","terminee","termine","achevee","acheve","complete","completed"]
+  "finish": ["finie","fini","terminee","termine","achevee","acheve","complete","completed"],
+  "today": ["aujourd'hui","aujoud'hui","aujoud hui","aujoud hui","ce jour","ce jour-ci","ce jour ci"],
+  "tomorrow": ["demain","pour demain","le lendemain"],
+  "how-much": ["combien","le nombre"]
 }

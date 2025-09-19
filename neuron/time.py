@@ -110,6 +110,37 @@ class neuroneTime(neuronBase):
                 self.__taskEnd = True
                 self.__taskAdd = False
                 return 1
+            if self._keyword.checkTime(requette,"how-much"):
+                if self._keyword.checkTime(requette,"today"):
+                    nbTaskToday = self.__fncTask.getNbTaskToday()
+                    if nbTaskToday == 0 :
+                        self._listSortie = [self._language.getPhraseNBTache("6","",""), ""]
+                    else :
+                        if nbTaskToday == 1 :
+                            self._listSortie = [self._language.getPhraseNBTache("5","",""), ""]
+                        else :
+                            self._listSortie = [self._language.getPhraseNBTache("4",str(nbTaskToday),""), ""]
+                    return 1
+                if self._keyword.checkTime(requette,"tomorrow"):
+                    nbTaskTowmorow = self.__fncTask.getNbTaskTowmorow()
+                    if nbTaskTowmorow == 0:
+                        self._listSortie = [self._language.getPhraseNBTache("9", "", ""), ""]
+                    else:
+                        if nbTaskTowmorow == 1:
+                            self._listSortie = [self._language.getPhraseNBTache("8", "", ""), ""]
+                        else:
+                            self._listSortie = [self._language.getPhraseNBTache("7", str(nbTaskTowmorow), ""), ""]
+                    return 1
+                else :
+                    nbTask = len(self.__fncTask.getAllTask())
+                    nbTaskToday = self.__fncTask.getNbTaskToday()
+                    if nbTaskToday == 0 :
+                        self._listSortie = [self._language.getPhraseNBTache("3",str(nbTask),str(nbTaskToday)), ""]
+                    elif nbTaskToday == 1 :
+                        self._listSortie = [self._language.getPhraseNBTache("1",str(nbTask),str(nbTaskToday)), ""]
+                    else :
+                        self._listSortie = [self._language.getPhraseNBTache("2",str(nbTask),str(nbTaskToday)), ""]
+                    return 1
         elif self.__taskAdd:
             if self._keyword.checkTime(requette,"name-task"):
                 self.__taskAdd = False
@@ -147,27 +178,6 @@ class neuroneTime(neuronBase):
 
         """
         if ("taches" in requette or "tache" in requette) and "projet" not in requette:
-            if ("montre" in requette or "fais voir" in requette):
-                self._listSortie = [self._fonctionArreraNetwork.sortieViewTache(), ""]
-                self._objHistorique.setAction("Consulation des taches enregistrer")
-                self._valeurOut = 5
-                return 1
-            elif ("ajoute" in requette or "ajouter" in requette
-                  or "ajout" in requette or "add" in requette) :
-                self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheAdd(), ""]
-                self._objHistorique.setAction("Ajout d'une tache dans l'assistant")
-                self._valeurOut = 5
-                return 1
-            elif ("supprime" in requette or "supprimer" in requette or "suppr" in requette) :
-                self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheSuppr(), ""]
-                self._objHistorique.setAction("Suppression d'une tache dans l'assistant")
-                self._valeurOut = 5
-                return 1
-            elif ("finir" in requette or "terminer" in requette or "termine" in requette or "fini" in requette) :
-                self._listSortie = [self._fonctionArreraNetwork.sortieViewTacheCheck(), ""]
-                self._objHistorique.setAction("Mise d'une tache a fini dans l'assistant")
-                self._valeurOut = 5
-                return 1
             elif ("dit moi" in requette) and (("nombre" in requette) or ("combien" in requette)):
                 if  (("jour" in requette) or ("aujourd'hui" in requette)) :
                     self._listSortie = [self._fonctionArreraNetwork.sortieSpeakTacheToday(), ""]
