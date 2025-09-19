@@ -141,6 +141,8 @@ class neuroneTime(neuronBase):
                     else :
                         self._listSortie = [self._language.getPhraseNBTache("2",str(nbTask),str(nbTaskToday)), ""]
                     return 1
+            else :
+                return 0
         elif self.__taskAdd:
             if self._keyword.checkTime(requette,"name-task"):
                 self.__taskAdd = False
@@ -157,6 +159,8 @@ class neuroneTime(neuronBase):
                     else :
                         self._listSortie = [self._language.getPhraseTime("26"), ""]
                 return 1
+            else :
+                return 0
         elif self.__taskEnd:
             if self._keyword.checkTime(requette,"name-task"):
                 self.__taskEnd = False
@@ -173,30 +177,7 @@ class neuroneTime(neuronBase):
                     else :
                         self._listSortie = [self._language.getPhraseTime("27",task=name), ""]
                 return 1
-        else:
-            return 0
-
-        """
-        if ("taches" in requette or "tache" in requette) and "projet" not in requette:
-            elif ("dit moi" in requette) and (("nombre" in requette) or ("combien" in requette)):
-                if  (("jour" in requette) or ("aujourd'hui" in requette)) :
-                    self._listSortie = [self._fonctionArreraNetwork.sortieSpeakTacheToday(), ""]
-                    self._objHistorique.setAction("Consultation du nombre de tache enregistrer pour aujourd'hui")
-                    self._valeurOut = 1
-                    return 1
-                elif ("demain" in requette):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieSpeakTacheTowmorow(), ""]
-                    self._objHistorique.setAction("Consultation du nombre de tache enregistrer pour demain")
-                    self._valeurOut = 1
-                    return 1
-                else :
-                    self._listSortie = [self._fonctionArreraNetwork.sortieNbSpeakTache(), ""]
-                    self._objHistorique.setAction("Consultation du nombre de tache enregistrer")
-                    self._valeurOut = 1
-                    return 1
             else :
                 return 0
         else:
             return 0
-        """
-        return 0
