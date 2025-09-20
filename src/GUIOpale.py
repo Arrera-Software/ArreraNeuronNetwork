@@ -1,10 +1,11 @@
 import tkinter
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, askyesno
 from librairy.dectectionOS import OS
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
+from datetime import datetime
 """
 Todo : 
 1 . GUI qui permet de decider la conf qu'on veux 
@@ -16,6 +17,7 @@ class GUIOpale:
         self.__arrTK = CArreraTK()
         self.__emplacementLangue = "language/vouvoiment/"
         self.__objOS = OS()
+        self.__logContent = ""
 
 
     def active(self):
@@ -223,6 +225,7 @@ class GUIOpale:
             self.__labelAssistantText.configure(text=texte[0], wraplength=200)
             self.__labelAssistantNumber.configure(text=str(nb))
             entry.delete(0, 'end')  # Clear the entry after sending
+            self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
         else:
@@ -242,7 +245,28 @@ class GUIOpale:
         win.bind("<Key>", anychar)
 
     def __close(self):
+        out = askyesno("Fermeture","Enregistrer le log avant de quitter ?")
+        if out:
+            if self.__saveLog():
+                print("Log sauvegardé avec succès.")
+            else:
+                print("Erreur lors de la sauvegarde du log.")
+
         if self.__objOS.osWindows():
             os.kill(os.getpid(), signal.SIGINT)
         elif self.__objOS.osLinux() or self.__objOS.osMac() :
             os.kill(os.getpid(), signal.SIGKILL)
+
+    def __addLog(self,nbOut:int,outTexte:str,inTexte:str):
+        self.__logContent += inTexte + " -> " + str(nbOut) + " : " + outTexte + "\n"
+
+    def __saveLog(self):
+        date = datetime.now().strftime("%d-%m-%Y-%H-%M")
+        file = "log/log_" + date + ".txt"
+        try :
+            with open(file,"w",encoding="utf-8") as f:
+                f.write(self.__logContent)
+            return True
+        except Exception as e:
+            print(f"Erreur lors de la sauvegarde du log : {e}")
+            return False
