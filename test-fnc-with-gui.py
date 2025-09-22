@@ -75,6 +75,7 @@ def main():
     partWork(screen)
     arrtk.createButton(screen, text="Traducteur", command=lambda: gui.activeTraducteur()).pack()
     arrtk.createButton(screen, text="Resumer", command=lambda: gui.activeResumer()).pack()
+    arrtk.createButton(screen,text="Breef",command=lambda: gui.activeBreef()).pack()
     screen.mainloop()
     arrtk.view()
 

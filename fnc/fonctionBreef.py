@@ -83,7 +83,6 @@ class fncBreef(fncBase):
 
             workfnc = self._gestionnaire.getGestFNC().getFNCWork()
             listProjet =  workfnc.getListProjet()
-            print(listProjet)
             tacheProjet = {}
             for projet in listProjet:
                 if workfnc.openProjet(projet):

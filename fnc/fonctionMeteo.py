@@ -94,6 +94,7 @@ class fncMeteo(fncBase) :
                     place = townWeather[0]
                     if not place:
                         return False
+                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                 except Exception as e:
                     print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
@@ -107,6 +108,7 @@ class fncMeteo(fncBase) :
                         place = townWeather[0]
                         if not place:
                             return False
+                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                 except Exception as e:
                     print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
@@ -153,6 +155,7 @@ class fncMeteo(fncBase) :
                     place = townWeather[0]
                     if not place:
                         return False
+                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                 except Exception as e:
                     # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
@@ -166,6 +169,7 @@ class fncMeteo(fncBase) :
                         place = townWeather[0]
                         if not place:
                             return False
+                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
                 except Exception as e:
                     # print(f"Erreur lors de la récupération des données météo : {e}")
                     return False
@@ -234,7 +238,7 @@ class fncMeteo(fncBase) :
         return self.__description
 
     def getIcon(self):
-        return self.__icon
+        return self._gestionnaire.getConfigFile().asset+"meteo/"+self.__icon+".png"
 
     def getRedAlert(self):
         return self.__redAlert
