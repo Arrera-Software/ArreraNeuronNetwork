@@ -117,7 +117,6 @@ class GUIViewBreef(GuiBase):
             self.__selectMeteo(outBreef)
             self.__setTask(self.__fViewTask,outBreef["task"])
             self.__setTaskProjet(outBreef["tacheProjet"])
-            print("parfais")
 
     def __setTask(self,frame:ctk.CTkFrame,listTask:list):
 
@@ -137,7 +136,6 @@ class GUIViewBreef(GuiBase):
     def __setTaskProjet(self,taskProject:dict):
         listTask = []
         listKey = list(taskProject.keys())
-        print(listKey)
         for key in listKey:
             for tache in taskProject[key]:
                 listTask.append(f"{tache} (Projet : {key})")
@@ -150,7 +148,6 @@ class GUIViewBreef(GuiBase):
         self.__lweather.configure(text=meteoDict["weather"])
 
         try :
-            print(meteoDict["icon"])
             imgMeteo = self._arrtk.createImage(meteoDict["icon"],tailleX=100,tailleY=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
         except:
