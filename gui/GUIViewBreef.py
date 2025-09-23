@@ -1,5 +1,5 @@
 from tkinter.messagebox import showerror
-
+import threading as th
 from gui.guibase import GuiBase,gestionnaire
 import customtkinter as ctk
 
@@ -7,6 +7,7 @@ class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Breef")
         self.__readVar = ""
+        self.__thRead = th.Thread()
 
     def _mainframe(self):
         # Configuration de la fenetre
@@ -223,6 +224,16 @@ class GUIViewBreef(GuiBase):
             self.__readVar += "Tu n'as aucune tâche à faire aujourd'hui. "
 
     def __readBreef(self):
-        print(self.__readVar)
+        self.__thRead = th.Thread(target=self._gestionnaire.getArrVoice().say(self.__readVar))
+        self._screen.after(10,self.__updateScreen)
 
+
+    def __updateScreen(self):
+        if self.__thRead.is_alive():
+            self._screen.update()
+            self._screen.after(100,self.__updateScreen)
+        else:
+            self._screen.update()
+            self._screen.focus()
+            self.__thRead = th.Thread()
 
