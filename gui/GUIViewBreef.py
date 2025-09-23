@@ -158,14 +158,32 @@ class GUIViewBreef(GuiBase):
         self.__lNoAlert.grid(row=1, column=0, sticky="ew", padx=8, pady=4)
 
         if meteoDict["redAlert"]:
+            listAlterte = meteoDict["redAlert"]
+            for i in range(len(listAlterte)):
+                if i == 0:
+                    self.__lAlertRed.configure(text=listAlterte[i])
+                else:
+                    self.__lAlertRed.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertRed.grid(row=0, column=0, sticky="new", padx=8, pady=(8, 4))
 
         if meteoDict["orangeAlert"]:
+            listAlterte = meteoDict["orangeAlert"]
+            for i in range(len(listAlterte)):
+                if i == 0:
+                    self.__lAlertOrange.configure(text=listAlterte[i])
+                else:
+                    self.__lAlertOrange.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertOrange.grid(row=1, column=0, sticky="ew", padx=8, pady=4)
 
         if meteoDict["yellowAlert"]:
+            listAlterte = meteoDict["yellowAlert"]
+            for i in range(len(listAlterte)):
+                if i == 0:
+                    self.__lAlertYellow.configure(text=listAlterte[i])
+                else:
+                    self.__lAlertYellow.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertYellow.grid(row=2, column=0, sticky="sew", padx=8, pady=(4, 8))
 
