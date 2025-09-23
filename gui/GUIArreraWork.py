@@ -518,6 +518,9 @@ class GUIWork(GuiBase):
         self.updateEtat()
         self.__activeProjet()
         self.__nameProjet = dossier
+        self.__guiTaskProject = GUITaskProject(self._gestionnaire,
+                                                  self.__nameProjet,
+                                                  self._gestionnaire.getGestFNC().getFNCWork().getFNCTaskProjet())
 
     def __windowsTexteProjet(self,title:str, texte:str,fnc:callable):
         screen = self._arrtk.aTopLevel(width=225, height=100,resizable=False,title=title)

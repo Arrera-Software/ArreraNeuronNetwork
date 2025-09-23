@@ -854,7 +854,8 @@ def partWork():
               "\n25.Voir le type du projet\n26.Voir le nom du projet"
               "\n27.Fichier Nom et extension\n28.Fichier Nom"
               "\n29.Fichier extension\n30.Creation d'un fichier"
-              "\n31.Voir le fichier du projet"                                
+              "\n31.Voir le fichier du projet" 
+              "\n32. Voir les taches du projet"
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -1023,6 +1024,10 @@ def partWork():
             case 31:
                 if fnc.getFNCWork().setlistFileProject():
                     print(f"Liste fichier : {fnc.getFNCWork().getListFileProjet()}")
+            case 32 :
+                print(f"Liste taches : {fnc.getFNCWork().getFNCTaskProjet().getAllTask()}")
+            case 31:
+                print(f"Liste taches non fini : {fnc.getFNCWork().getFNCTaskProjet().getNoFinishTask()}")
             case 0:
                 workBoucle = False
             case _:
