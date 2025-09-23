@@ -115,21 +115,21 @@ class GUIViewBreef(GuiBase):
             self._screen.destroy()
         else:
             self.__selectMeteo(outBreef)
-            self.__setTask(self.__fViewTask,outBreef["task"])
+            self.__setTaskNormal(outBreef["task"])
             print("parfais")
 
-    def __setTask(self,frame:ctk.CTkFrame,listTask:list):
+    def __setTaskNormal(self,listTask:list):
 
-        for w in frame.winfo_children():
+        for w in self.__fViewTask.winfo_children():
             w.destroy()
 
         if len(listTask) != 0:
             for i,task in enumerate(listTask):
-                ltask = self._arrtk.createLabel(frame,text=f"- {task}",
+                ltask = self._arrtk.createLabel(self.__fViewTask,text=f"- {task}",
                                                 ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
                 ltask.grid(row=i, column=0, sticky="w", padx=8, pady=4)
         else:
-            ltask = self._arrtk.createLabel(frame,text="Aucune tâche à faire !",
+            ltask = self._arrtk.createLabel(self.__fViewTask,text="Aucune tâche à faire !",
                                             ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
             ltask.grid(row=0, column=0, sticky="w", padx=8, pady=4)
 
