@@ -16,8 +16,8 @@ class GUIViewBreef(GuiBase):
         weatherFrame = self._arrtk.createFrame(mainFrame)
         alertFrame = self._arrtk.createFrame(weatherFrame,bg="purple")
 
-        taskFrame = self._arrtk.createScrollFrame(mainFrame,bg="green")
-        taskProjectFrame = self._arrtk.createScrollFrame(mainFrame,bg="yellow")
+        taskFrame = self._arrtk.createFrame(mainFrame)
+        taskProjectFrame = self._arrtk.createFrame(mainFrame,bg="yellow")
 
         # Configuration
         mainFrame.grid_columnconfigure(0, weight=1)
@@ -34,10 +34,16 @@ class GUIViewBreef(GuiBase):
         weatherFrame.columnconfigure(1, weight=1)
         weatherFrame.columnconfigure(2, weight=1)
 
-        alertFrame.columnconfigure(0, weight=1)   # Pour s'étendre en largeur
+        alertFrame.columnconfigure(0, weight=1)
         alertFrame.rowconfigure(0, weight=1)
         alertFrame.rowconfigure(1, weight=1)
         alertFrame.rowconfigure(2, weight=1)
+
+        taskFrame.columnconfigure(0, weight=1)
+        taskFrame.rowconfigure(1, weight=1)
+
+        taskProjectFrame.columnconfigure(0, weight=1)
+        taskProjectFrame.rowconfigure(1, weight=1)
 
         # Widgets
         labelTitle = self._arrtk.createLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",
@@ -64,6 +70,14 @@ class GUIViewBreef(GuiBase):
         self.__lNoAlert = self._arrtk.createLabel(alertFrame,text="Aucune d'alerte",
                                                   ppolice="Arial",ptaille=20,pstyle="bold",justify="left")
 
+        # Task
+        lTitleTask = self._arrtk.createLabel(taskFrame,text="Tâches du jour",
+                                             ppolice="Arial",ptaille=35,pstyle="bold")
+        self.__fViewTask = self._arrtk.createScrollFrame(taskFrame,bg="green")
+
+        lTitleTaskProject = self._arrtk.createLabel(taskProjectFrame,text="Tâches sur le projet",
+                                             ppolice="Arial",ptaille=35,pstyle="bold")
+        self.__fViewTaskProject = self._arrtk.createScrollFrame(taskProjectFrame,bg="green")
         # Placement
         labelTitle.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
         weatherFrame.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
@@ -76,6 +90,12 @@ class GUIViewBreef(GuiBase):
         self.__lnameTown.grid(row=1, column=0, sticky="w", padx=(8, 4), pady=(2, 8))
         self.__ltemp.grid(row=1, column=1, sticky="", padx=4, pady=4)
         self.__lweather.grid(row=2, column=2, sticky="se", padx=(4, 8), pady=(2, 8))
+
+        lTitleTask.grid(row=0, column=0, sticky="n", pady=(10, 6))
+        self.__fViewTask.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
+
+        lTitleTaskProject.grid(row=0, column=0, sticky="n", pady=(10, 6))
+        self.__fViewTaskProject.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
 
         mainFrame.grid(row=0, column=0, sticky="nsew")
 
@@ -107,10 +127,6 @@ class GUIViewBreef(GuiBase):
             imgMeteo = self._arrtk.createImage(self._gestionnaire.getConfigFile().asset+"meteo/meteo-error.png",
                                                tailleX=100,tailleY=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
-
-
-
-
 
         self.__lNoAlert.grid(row=1, column=0, sticky="ew", padx=8, pady=4)
 
