@@ -133,8 +133,8 @@ class fncArreraTache(fncBase) :
             return 0
 
     def checkDateTask(self,name:str):
-        today = datetime.today()
-        today = f"{today.year}-{today.month}-{today.day}"
+        self.__objDate.rafraichisement()
+        today = f"{self.__objDate.annes()}-{self.__objDate.nbMois()}-{self.__objDate.jour()}"
         self.__readTaskFile()
         if name in self.__content and not self.__content[name]["fini"]:
             task_date = self.__content[name]["date"]
