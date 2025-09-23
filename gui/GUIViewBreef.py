@@ -1,6 +1,7 @@
 from tkinter.messagebox import showerror
 
 from gui.guibase import GuiBase,gestionnaire
+import customtkinter as ctk
 
 class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
@@ -11,10 +12,10 @@ class GUIViewBreef(GuiBase):
         self._screen.grid_rowconfigure(0, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
         # Frame
-        mainFrame = self._arrtk.createFrame(self._screen,bg="red")
+        mainFrame = self._arrtk.createFrame(self._screen)
 
         weatherFrame = self._arrtk.createFrame(mainFrame)
-        alertFrame = self._arrtk.createFrame(weatherFrame,bg="purple")
+        alertFrame = self._arrtk.createFrame(weatherFrame)
 
         taskFrame = self._arrtk.createFrame(mainFrame)
         taskProjectFrame = self._arrtk.createFrame(mainFrame,bg="yellow")
@@ -73,7 +74,7 @@ class GUIViewBreef(GuiBase):
         # Task
         lTitleTask = self._arrtk.createLabel(taskFrame,text="Tâches du jour",
                                              ppolice="Arial",ptaille=35,pstyle="bold")
-        self.__fViewTask = self._arrtk.createScrollFrame(taskFrame,bg="green")
+        self.__fViewTask = self._arrtk.createScrollFrame(taskFrame)
 
         lTitleTaskProject = self._arrtk.createLabel(taskProjectFrame,text="Tâches sur le projet",
                                              ppolice="Arial",ptaille=35,pstyle="bold")
@@ -107,7 +108,24 @@ class GUIViewBreef(GuiBase):
             self._screen.destroy()
         else:
             self.__selectMeteo(outBreef)
+            self.__setTask(self.__fViewTask,outBreef["task"])
             print("parfais")
+
+    def __setTask(self,frame:ctk.CTkFrame,listTask:list):
+
+        for w in frame.winfo_children():
+            w.destroy()
+
+        if len(listTask) != 0:
+            for i,task in enumerate(listTask):
+                ltask = self._arrtk.createLabel(frame,text=f"- {task}",
+                                                ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
+                ltask.grid(row=i, column=0, sticky="w", padx=8, pady=4)
+        else:
+            ltask = self._arrtk.createLabel(frame,text="Aucune tâche à faire !",
+                                            ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
+            ltask.grid(row=0, column=0, sticky="w", padx=8, pady=4)
+
 
     def __selectMeteo(self,out:dict):
         meteoDict = out["meteo"]
