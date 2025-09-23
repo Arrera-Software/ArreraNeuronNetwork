@@ -6,6 +6,7 @@ import customtkinter as ctk
 class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Breef")
+        self.__readVar = ""
 
     def _mainframe(self):
         # Configuration de la fenetre
@@ -54,7 +55,7 @@ class GUIViewBreef(GuiBase):
         # Widgets
         labelTitle = self._arrtk.createLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",
                                              ppolice="Arial",ptaille=30,pstyle="bold")
-        btnRead = self._arrtk.createButton(mainFrame,text="Lire",ppolice="Arial",ptaille=20,
+        btnRead = self._arrtk.createButton(mainFrame,text="Lire",ppolice="Arial",ptaille=20,command=self.__readBreef,
                                            pstyle="normal",bg=self._btnColor,fg=self._btnTexteColor)
 
         # Meteo
@@ -116,6 +117,7 @@ class GUIViewBreef(GuiBase):
         else:
             self.__selectMeteo(outBreef)
             self.__setTask(self.__fViewTask,outBreef["task"])
+            self.__setReadForTask(outBreef["task"])
             self.__setTaskProjet(outBreef["tacheProjet"])
 
     def __setTask(self,frame:ctk.CTkFrame,listTask:list):
@@ -140,12 +142,26 @@ class GUIViewBreef(GuiBase):
             for tache in taskProject[key]:
                 listTask.append(f"{tache} (Projet : {key})")
         self.__setTask(self.__fViewTaskProject,listTask)
+        if len(listTask) != 0:
+            if len(listTask) == 1:
+                self.__readVar += f"Tu as une tâche à faire sur tes projets qui est {listTask[0]}."
+            else :
+                self.__readVar += f"Tu as {len(listTask)} tâches à faire sur tes projets. qui sont "
+                for i,task in enumerate(listTask):
+                    if i == 0:
+                        self.__readVar += task
+                    elif i == len(listTask)-1:
+                        self.__readVar += f" et {task}."
+                    else:
+                        self.__readVar += f", {task}"
 
     def __selectMeteo(self,out:dict):
         meteoDict = out["meteo"]
         self.__lnameTown.configure(text=meteoDict["ville"])
         self.__ltemp.configure(text=str(meteoDict["temperature"])+"°C")
         self.__lweather.configure(text=meteoDict["weather"])
+
+        self.__readVar = f"La meteo à {meteoDict["ville"]} est {meteoDict["weather"]} avec une temperature de {meteoDict["temperature"]}°C. "
 
         try :
             imgMeteo = self._arrtk.createImage(meteoDict["icon"],tailleX=100,tailleY=100)
@@ -166,6 +182,7 @@ class GUIViewBreef(GuiBase):
                     self.__lAlertRed.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertRed.grid(row=0, column=0, sticky="new", padx=8, pady=(8, 4))
+            self.__readVar += "Fais attention, il y a une alerte rouge aujourd'hui. "
 
         if meteoDict["orangeAlert"]:
             listAlterte = meteoDict["orangeAlert"]
@@ -176,6 +193,7 @@ class GUIViewBreef(GuiBase):
                     self.__lAlertOrange.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertOrange.grid(row=1, column=0, sticky="ew", padx=8, pady=4)
+            self.__readVar += "Fais attention, il y a une alerte orange aujourd'hui. "
 
         if meteoDict["yellowAlert"]:
             listAlterte = meteoDict["yellowAlert"]
@@ -186,5 +204,25 @@ class GUIViewBreef(GuiBase):
                     self.__lAlertYellow.configure(text=self.__lAlertRed.cget("text")+"\n"+listAlterte[i])
             self.__lNoAlert.grid_forget()
             self.__lAlertYellow.grid(row=2, column=0, sticky="sew", padx=8, pady=(4, 8))
+            self.__readVar += "Fais attention, il y a une alerte jaune aujourd'hui. "
+
+    def __setReadForTask(self,listTask:list):
+        if len(listTask) != 0:
+            if len(listTask) == 1:
+                self.__readVar += f"Tu as une tâche à faire aujourd'hui qui est {listTask[0]}."
+            else :
+                self.__readVar += f"Tu as {len(listTask)} tâches à faire aujourd'hui qui sont "
+                for i,task in enumerate(listTask):
+                    if i == 0:
+                        self.__readVar += task
+                    elif i == len(listTask)-1:
+                        self.__readVar += f" et {task}."
+                    else:
+                        self.__readVar += f", {task}"
+        else:
+            self.__readVar += "Tu n'as aucune tâche à faire aujourd'hui. "
+
+    def __readBreef(self):
+        print(self.__readVar)
 
 
