@@ -83,7 +83,7 @@ class GUIViewBreef(GuiBase):
 
         lTitleTaskProject = self._arrtk.createLabel(taskProjectFrame,text="Tâches sur le projet",
                                              ppolice="Arial",ptaille=35,pstyle="bold")
-        self.__fViewTaskProject = self._arrtk.createScrollFrame(taskProjectFrame,bg="green")
+        self.__fViewTaskProject = self._arrtk.createScrollFrame(taskProjectFrame)
         # Placement
         labelTitle.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
         weatherFrame.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
