@@ -2,6 +2,7 @@ import random
 
 from gestionnaire.gestSTR import*
 from neuron.CNeuronBase import neuronBase,gestionnaire
+from datetime import time,datetime
 
 class neuroneAPI(neuronBase) :
     def __init__(self,gestionnaire:gestionnaire ):
@@ -94,7 +95,11 @@ class neuroneAPI(neuronBase) :
         20 : Resumer all fail
         """
         if self._keyword.checkAPI(requette,"resumer"):
-            if self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
+            if time(6,0) <= datetime.now().time() < time(11,0):
+                texte = self._language.getPhraseMorning("1")
+                outInt = 5
+                self._gestGUI.activeBreef()
+            elif self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
                 out = self.__fncBreef.summarizeActuAndMeteo(self._userConf.getLieuDomicile())
                 texte = self._language.getPhraseResumerActu()
                 if out is not None:
