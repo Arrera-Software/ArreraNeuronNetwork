@@ -199,6 +199,8 @@ class GUIOpale:
 
         self.__keyboard(screen,entryUser)
 
+        screen.after(200, lambda : self.__updateAssistant(screen))
+
     def __startAssistantBrain(self):
         try :
             self.__assistantBrain = ABrain(config=self.__config)
@@ -270,3 +272,10 @@ class GUIOpale:
         except Exception as e:
             print(f"Erreur lors de la sauvegarde du log : {e}")
             return False
+
+    def __updateAssistant(self,screen:ctk.CTk=None):
+        if self.__assistantBrain.getStatThead():
+            if self.__assistantBrain.getUpdate():
+                self.__labelAssistantText.configure(text=self.__assistantBrain.getListSortie()[0], wraplength=200)
+                self.__labelAssistantNumber.configure(text=str(self.__assistantBrain.getValeurSortie()))
+                screen.after(200, lambda : self.__updateAssistant(screen))

@@ -1,22 +1,21 @@
 import threading as th
 from gestionnaire.gestion import *
 from gestionnaire.gestLangue import*
+from datetime import datetime, time
+from zoneinfo import ZoneInfo
 
 
 class ABrain :
     def __init__(self,config:confNeuron):
-        # Declaration des diferente var 
+        # Declaration des diferente var
         self.__listOut =  [] 
         self.__valeurOut = 0
         self.__networkRunning = True
+        self.__update = False
         self.__neuronUsed = str
         self.__listNeuron = ["chatBot","service","api",
                              "software","open","search",
                              "time","codehelp","word"]
-        #Ouverture fichier de configuration
-        #self.__configNeuron = jsonWork(fichierConfiguration)
-        #self.__fichierUtilisateur = jsonWork(self.__configNeuron.lectureJSON("fileUser"))
-        #self.__fichierVille = jsonWork(self.__configNeuron.lectureJSON("fileFete"))
         # Gestionnaire
         self.__gestionnaire = gestionnaire(config)
         self.__gestNeuron = self.__gestionnaire.getGestNeuron()
@@ -26,7 +25,10 @@ class ABrain :
         self.__gestLangue = self.__gestionnaire.getLanguageObjet()
         #recuperation etat du reseau
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()
-        #initilisation des neuron
+        #initilisation du theard de mise a jour
+        self.__threadUpdate = th.Thread(target=self.__updateAssistant,daemon=True)
+        # Lancement du theard
+        self.__threadUpdate.start()
 
     def getNeuronRunning(self):
         return self.__networkRunning
@@ -90,13 +92,13 @@ class ABrain :
         return self.__valeurOut
     
     def getTableur(self):
-        return self.__fonctionAssistant.getTableurOpen()
+        return self.__gestionnaire.getGestFNC().getFNCWork().getEtatTableur()
     
     def getWord(self):
-        return self.__fonctionAssistant.getWordOpen()
+        return self.__gestionnaire.getGestFNC().getFNCWork().getEtatWord()
 
     def getProject(self):
-        return self.__fonctionAssistant.getProjectOpen()
+        return self.__gestionnaire.getGestFNC().getFNCWork().getEtatProject()
 
     def getUserData(self):
         return self.__gestionnaire.getLanguageObjet().getDataUser()
@@ -221,3 +223,23 @@ class ABrain :
             self.__gestionnaire.setOld("requette api",requette)
         else :
             self.__gestionnaire.setOld(self.__listOut[0],requette)
+
+    def __updateAssistant(self):
+        # Ajouter la partie mise a jour du socket
+        self.__gestionnaire.updateDate()
+        if time(6,0) <= datetime.now().time() < time(11,0) and not self.__gestionnaire.getBreefIsLaunch():
+            self.__gestionnaire.setBreefIsLaunch()
+            self.__gestionnaire.getGestGUI().activeBreef()
+            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
+            self.__valeurOut = 5
+            self.__update = True
+
+    def getStatThead(self):
+        return self.__threadUpdate.is_alive()
+
+    def getUpdate(self):
+        if self.__update:
+            self.__update = False
+            return True
+        else :
+            return False

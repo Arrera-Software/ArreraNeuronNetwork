@@ -60,5 +60,6 @@
   "phMeteo9" : [
     "La météo à votre localisation est {description} avec une température de {temperature} °C.",
     "La météo à votre localisation est {description} avec une température de {temperature} °C."
-  ]
+  ],
+  "phMorningBreef1": "Voici votre morning brief avec la météo, les actualités et vos tâches à faire aujourd'hui."
 }

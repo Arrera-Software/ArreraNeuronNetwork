@@ -6,6 +6,9 @@ from datetime import datetime
 
 class gestionnaire:
     def __init__(self,confAssistant:confNeuron):
+        # Var
+        self.__dateStart = datetime.now()
+        self.__breefIsLaunch = False
         # Importation des gestionnaires
         from gestionnaire.gestSocket import gestSocket
         from gestionnaire.gestLangue import gestLangue
@@ -212,3 +215,20 @@ class gestionnaire:
         Methode qui retourne l'emplacement du fichier de tache
         """
         return self.__userConf.getTaskPath()
+
+    def getDateStart(self):
+        return self.__dateStart
+
+    def setBreefIsLaunch(self):
+        self.__breefIsLaunch = True
+
+    def getBreefIsLaunch(self):
+        return self.__breefIsLaunch
+
+    def updateDate(self):
+        if self.__dateStart == datetime.now():
+            return False
+        else :
+            self.__dateStart = datetime.now()
+            self.__breefIsLaunch = False
+            return True
