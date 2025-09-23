@@ -134,8 +134,14 @@ class GUIViewBreef(GuiBase):
                                             ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
             ltask.grid(row=0, column=0, sticky="w", padx=8, pady=4)
 
-
-
+    def __setTaskProjet(self,taskProject:dict):
+        listTask = []
+        listKey = list(taskProject.keys())
+        print(listKey)
+        for key in listKey:
+            for tache in taskProject[key]:
+                listTask.append(f"{tache} (Projet : {key})")
+        self.__setTask(self.__fViewTaskProject,listTask)
 
     def __selectMeteo(self,out:dict):
         meteoDict = out["meteo"]
