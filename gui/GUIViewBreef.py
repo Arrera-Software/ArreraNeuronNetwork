@@ -17,15 +17,16 @@ class GUIViewBreef(GuiBase):
         weatherFrame = self._arrtk.createFrame(mainFrame)
         alertFrame = self._arrtk.createFrame(weatherFrame)
 
-        taskFrame = self._arrtk.createFrame(mainFrame)
-        taskProjectFrame = self._arrtk.createFrame(mainFrame,bg="yellow")
+        tasksContainer = self._arrtk.createFrame(mainFrame)
+        taskFrame = self._arrtk.createFrame(tasksContainer)
+        taskProjectFrame = self._arrtk.createFrame(tasksContainer)
 
         # Configuration
         mainFrame.grid_columnconfigure(0, weight=1)
         mainFrame.grid_rowconfigure(0, weight=0)
         mainFrame.grid_rowconfigure(1, weight=0)
         mainFrame.grid_rowconfigure(2, weight=1)
-        mainFrame.grid_rowconfigure(3, weight=1)
+        mainFrame.grid_rowconfigure(3, weight=0)
         mainFrame.grid_rowconfigure(4, weight=0)
 
         weatherFrame.rowconfigure(0, weight=1)
@@ -45,6 +46,10 @@ class GUIViewBreef(GuiBase):
 
         taskProjectFrame.columnconfigure(0, weight=1)
         taskProjectFrame.rowconfigure(1, weight=1)
+
+        tasksContainer.grid_columnconfigure(0, weight=1, uniform="tasks")
+        tasksContainer.grid_columnconfigure(1, weight=1, uniform="tasks")
+        tasksContainer.grid_rowconfigure(0, weight=1)
 
         # Widgets
         labelTitle = self._arrtk.createLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",
@@ -82,9 +87,11 @@ class GUIViewBreef(GuiBase):
         # Placement
         labelTitle.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
         weatherFrame.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
-        taskFrame.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
-        taskProjectFrame.grid(row=3, column=0, sticky="nsew", padx=10, pady=5)
+        tasksContainer.grid(row=2, column=0, sticky="nsew", padx=10, pady=5)
         btnRead.grid(row=4, column=0, sticky="ew", padx=10, pady=(5, 10))
+
+        taskFrame.grid(row=0, column=0, sticky="nsew", padx=(0, 5), pady=0)
+        taskProjectFrame.grid(row=0, column=1, sticky="nsew", padx=(5, 0), pady=0)
 
         alertFrame.grid(row=0, column=2, sticky="ne", padx=(4, 8), pady=(8, 2))
         self.__labelLogoMeteo.grid(row=0, column=0, sticky="nw", padx=(8, 4), pady=(8, 2))
