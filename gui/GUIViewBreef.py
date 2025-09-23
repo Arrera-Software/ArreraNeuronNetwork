@@ -114,10 +114,6 @@ class GUIViewBreef(GuiBase):
         self.__lnameTown.configure(text=meteoDict["ville"])
         self.__ltemp.configure(text=str(meteoDict["temperature"])+"°C")
         self.__lweather.configure(text=meteoDict["weather"])
-        print(meteoDict["redAlert"])
-        print(meteoDict["yellowAlert"])
-        print(meteoDict["orangeAlert"])
-        print(meteoDict["greenAlert"])
 
         try :
             print(meteoDict["icon"])
