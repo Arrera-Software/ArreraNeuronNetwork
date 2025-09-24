@@ -226,13 +226,14 @@ class ABrain :
 
     def __updateAssistant(self):
         # Ajouter la partie mise a jour du socket
-        self.__gestionnaire.updateDate()
-        if time(6,0) <= datetime.now().time() < time(11,0) and not self.__gestionnaire.getBreefIsLaunch():
-            self.__gestionnaire.setBreefIsLaunch()
-            self.__gestionnaire.getGestGUI().activeBreef()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
-            self.__valeurOut = 5
-            self.__update = True
+        while True:
+            self.__gestionnaire.updateDate()
+            if time(6,0) <= datetime.now().time() < time(11,0) and not self.__gestionnaire.getBreefIsLaunch():
+                self.__gestionnaire.setBreefIsLaunch()
+                self.__gestionnaire.getGestGUI().activeBreef()
+                self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
+                self.__valeurOut = 5
+                self.__update = True
 
     def getStatThead(self):
         return self.__threadUpdate.is_alive()
