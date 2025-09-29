@@ -35,7 +35,10 @@ class fncCodehelp(fncBase) :
             return False
 
     def searchGithub(self, requette: str):
-        self.__githubObjet.search(requette)
+        if self._gestionnaire.getNetworkObjet().getEtatInternet():
+            return self.__githubObjet.search(requette)
+        else :
+            return False
 
     def openSiteGithub(self):
         wb.open("https://github.com/")
