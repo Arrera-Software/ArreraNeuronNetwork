@@ -96,7 +96,7 @@ class neuroneAPI(neuronBase) :
         """
         if self._keyword.checkAPI(requette,"resumer"):
             if time(6,0) <= datetime.now().time() < time(11,0):
-                texte = self._language.getPhraseMorning("1")
+                texte = self._language.getPhraseMorningBreef("1")
                 outInt = 5
                 self._gestGUI.activeBreef()
             elif self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
@@ -124,7 +124,7 @@ class neuroneAPI(neuronBase) :
                 else :
                     outInt = 20
 
-            if outInt == 12 or outInt == 18 or outInt == 19:
+            if outInt == 12 or outInt == 18 or outInt == 19 or outInt == 5:
                 self._listSortie = [texte,""]
             else :
                 self._listSortie = [self._language.getPhraseResumerAll("1"),""]
