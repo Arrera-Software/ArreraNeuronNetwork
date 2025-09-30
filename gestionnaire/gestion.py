@@ -7,7 +7,7 @@ from datetime import datetime
 class gestionnaire:
     def __init__(self,confAssistant:confNeuron):
         # Var
-        self.__dateStart = datetime.now()
+        self.__dateStart = datetime.now().date()
         self.__breefIsLaunch = False
         # Importation des gestionnaires
         from gestionnaire.gestSocket import gestSocket
@@ -226,9 +226,9 @@ class gestionnaire:
         return self.__breefIsLaunch
 
     def updateDate(self):
-        if self.__dateStart == datetime.now():
+        if self.__dateStart == datetime.now().date():
             return False
         else :
-            self.__dateStart = datetime.now()
+            self.__dateStart = datetime.now().date()
             self.__breefIsLaunch = False
             return True

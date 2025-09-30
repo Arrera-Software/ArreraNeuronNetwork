@@ -1,8 +1,8 @@
 import threading as th
+import tkinter
+
 from gestionnaire.gestion import *
-from gestionnaire.gestLangue import*
 from datetime import datetime, time
-from zoneinfo import ZoneInfo
 
 
 class ABrain :
@@ -25,10 +25,6 @@ class ABrain :
         self.__gestLangue = self.__gestionnaire.getLanguageObjet()
         #recuperation etat du reseau
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()
-        #initilisation du theard de mise a jour
-        self.__threadUpdate = th.Thread(target=self.__updateAssistant,daemon=True)
-        # Lancement du theard
-        self.__threadUpdate.start()
 
     def getNeuronRunning(self):
         return self.__networkRunning
@@ -224,23 +220,15 @@ class ABrain :
         else :
             self.__gestionnaire.setOld(self.__listOut[0],requette)
 
-    def __updateAssistant(self):
+    def updateAssistant(self):
         # Ajouter la partie mise a jour du socket
-        while True:
-            self.__gestionnaire.updateDate()
-            if time(6,0) <= datetime.now().time() < time(11,0) and not self.__gestionnaire.getBreefIsLaunch():
-                self.__gestionnaire.setBreefIsLaunch()
-                self.__gestionnaire.getGestGUI().activeBreef()
-                self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
-                self.__valeurOut = 5
-                self.__update = True
-
-    def getStatThead(self):
-        return self.__threadUpdate.is_alive()
-
-    def getUpdate(self):
-        if self.__update:
-            self.__update = False
+        self.__gestionnaire.updateDate()
+        if (time(6,0) <= datetime.now().time() < time(11,0) and not
+        self.__gestionnaire.getBreefIsLaunch()):
+            self.__gestionnaire.setBreefIsLaunch()
+            self.__gestionnaire.getGestGUI().activeBreef()
+            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
+            self.__valeurOut = 5
             return True
         else :
             return False

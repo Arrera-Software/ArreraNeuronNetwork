@@ -158,7 +158,6 @@ class GUIOpale:
             screen.destroy()
             if self.__startAssistantBrain():
                 self.__GUIAssistant()
-                self.__arrTK.view()
                 self.__bootAssistant()
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
@@ -199,7 +198,7 @@ class GUIOpale:
 
         self.__keyboard(screen,entryUser)
 
-        screen.after(200, lambda : self.__updateAssistant(screen))
+        screen.after(200, self.__updateAssistant,screen)
 
     def __startAssistantBrain(self):
         try :
@@ -214,9 +213,11 @@ class GUIOpale:
         Fonction qui permet de lancer l'assistant
         """
         try :
-            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(0))
+            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(1), wraplength=200
+                                                ,justify=LEFT)
         except Exception as e:
-            self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}")
+            self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}",wraplength=200
+                                                ,justify=LEFT)
 
     def __sendAssistantMessage(self,entry:ctk.CTkEntry):
         message = entry.get()
@@ -224,14 +225,16 @@ class GUIOpale:
             self.__assistantBrain.neuron(message)
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
-            self.__labelAssistantText.configure(text=texte[0], wraplength=200)
+            self.__labelAssistantText.configure(text=texte[0], wraplength=200
+                                                ,justify=LEFT)
             self.__labelAssistantNumber.configure(text=str(nb))
             entry.delete(0, 'end')  # Clear the entry after sending
             self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
         else:
-            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200)
+            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
+                                                ,justify=LEFT)
 
     def __keyboard(self,win:ctk.CTk,entry:ctk.CTkEntry):
         def anychar(event):
@@ -273,9 +276,10 @@ class GUIOpale:
             print(f"Erreur lors de la sauvegarde du log : {e}")
             return False
 
+
     def __updateAssistant(self,screen:ctk.CTk=None):
-        if self.__assistantBrain.getStatThead():
-            if self.__assistantBrain.getUpdate():
-                self.__labelAssistantText.configure(text=self.__assistantBrain.getListSortie()[0], wraplength=200)
-                self.__labelAssistantNumber.configure(text=str(self.__assistantBrain.getValeurSortie()))
-                screen.after(200, lambda : self.__updateAssistant(screen))
+        if self.__assistantBrain.updateAssistant():
+            self.__labelAssistantText.configure(text=self.__assistantBrain.getListSortie()[0], wraplength=200)
+            self.__labelAssistantNumber.configure(text=str(self.__assistantBrain.getValeurSortie()))
+
+        screen.after(1000,self.__updateAssistant,screen)
