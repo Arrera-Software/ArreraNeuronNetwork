@@ -120,6 +120,7 @@ class GUIWork(GuiBase):
         self.__frameManageTableur = self._arrtk.createFrame(self._screen)
         self.__frameAddValeur = self._arrtk.createFrame(self.__frameManageTableur)
         self.__frameAddFormule = self._arrtk.createFrame(self.__frameManageTableur)
+        self.__frameReadTableur = self._arrtk.createFrame(self.__frameManageTableur)
 
         # Widgets dans la frame d'accueil
         labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
@@ -175,7 +176,7 @@ class GUIWork(GuiBase):
         btnAddMaximumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                         image=imgAddMaxmum, command=self.__viewMaximumTableur)
         btnAffichageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                       image=imgViewTableur, command=self.__viewTableur)
+                                                       image=imgViewTableur, command=self.__readTableur)
         btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                        image=imgSupprValeur,
                                                        command=self.__supprValeurTableur)
@@ -239,8 +240,8 @@ class GUIWork(GuiBase):
                                                   text="Ajouter la valeur",bg=self._btnColor,fg=self._btnTexteColor,
                                                 command=self.__addValeurTableur)
         btnCancelAddValeur = self._arrtk.createButton(self.__frameAddValeur, ppolice="Arial", ptaille=25, pstyle="bold",
-                                                    text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
-                                                      command=self.__disableAddTableur)
+                                                      text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
+                                                      command=self.__disableManageTableur)
         # frameAddFormule
         lTitleAddFormule = self._arrtk.createLabel(self.__frameAddFormule, text="Ajout d'une formule",
                                                             ppolice="Arial", ptaille=25, pstyle="bold")
@@ -257,8 +258,15 @@ class GUIWork(GuiBase):
                                                     text="Ajouter la formule",bg=self._btnColor,fg=self._btnTexteColor,
                                                  command=self.__addFormuleTableur)
         btnCancelAddFormule = self._arrtk.createButton(self.__frameAddFormule, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                    text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
-                                                      command=self.__disableAddTableur)
+                                                       text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
+                                                       command=self.__disableManageTableur)
+        # frameReadTableur
+        labelTitleReadTableur = self._arrtk.createLabel(self.__frameReadTableur, text="Lecture du tableur",
+                                                         ppolice="Arial", ptaille=25, pstyle="bold")
+        self.__fScrolledRead = self._arrtk.createScrollFrame(self.__frameReadTableur)
+        btnQuitReadTableur = self._arrtk.createButton(self.__frameReadTableur, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                      text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
+                                                      command=self.__disableManageTableur)
 
         # Grille des frame
         self.__fAcceuil.rowconfigure(0, weight=1)
@@ -328,6 +336,9 @@ class GUIWork(GuiBase):
         self.__frameAddFormule.columnconfigure(0, weight=1)
         self.__frameAddFormule.columnconfigure(1, weight=1)
         self.__frameAddFormule.rowconfigure(5, weight=1)
+
+        self.__frameReadTableur.columnconfigure(0, weight=1)
+        self.__frameReadTableur.rowconfigure(1, weight=1)
 
 
         # Affichage des frames
@@ -400,6 +411,10 @@ class GUIWork(GuiBase):
         wECaseDest.grid(row=4, column=0, columnspan=2, sticky="ew", padx=12)
         btnCancelAddFormule.grid(row=6, column=0, sticky="sw", padx=10, pady=10)
         btnAddFormule.grid(row=6, column=1, sticky="se", padx=10, pady=10)
+
+        labelTitleReadTableur.grid(row=0, column=0, sticky="new", padx=10, pady=(10, 8))
+        self.__fScrolledRead.grid(row=1, column=0, sticky="nsew", padx=10, pady=0)
+        btnQuitReadTableur.grid(row=2, column=0, sticky="sew", padx=10, pady=10)
 
         self.__activeAcceuil()
 
@@ -512,7 +527,7 @@ class GUIWork(GuiBase):
 
     def __viewAddValeurTableur(self):
         self.__disabelFrame()
-        self.__disableAddTableur()
+        self.__disableManageTableur()
         self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
         self.__frameAddValeur.grid(row=0, column=0, sticky="nsew")
         self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
@@ -529,14 +544,14 @@ class GUIWork(GuiBase):
             return
         if self._gestionnaire.getGestFNC().getFNCWork().addValeurOnTableur(case,valeur):
             showinfo("Succès", f"La valeur {valeur} a été ajoutée à la case {case}.")
-            self.__disableAddTableur()
+            self.__disableManageTableur()
         else:
             showerror("Erreur", "Une erreur est survenue lors de l'ajout de la valeur.")
-            self.__disableAddTableur()
+            self.__disableManageTableur()
 
     def __viewAddFormuleTableur(self):
         self.__disabelFrame()
-        self.__disableAddTableur()
+        self.__disableManageTableur()
         self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
         self.__frameAddFormule.grid(row=0, column=0, sticky="nsew")
         self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
@@ -607,19 +622,47 @@ class GUIWork(GuiBase):
         else :
             showerror("Erreur", "La formule sélectionnée n'est pas valide.")
 
-        self.__disableAddTableur()
+        self.__disableManageTableur()
 
 
-    def __viewTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().getReadTableur()
+    def __readTableur(self):
+        if self._gestionnaire.getGestFNC().getFNCWork().readTableur():
+            self.__disabelFrame()
+            self.__disableManageTableur()
+            self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
+            self.__frameReadTableur.grid(row=0, column=0, sticky="nsew")
+            self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+
+            for w in self.__fScrolledRead.winfo_children():
+                w.destroy()
+
+            data = self._gestionnaire.getGestFNC().getFNCWork().getReadTableur()
+            if not data:
+                lbl = self._arrtk.createLabel(self.__fScrolledRead, text="Le tableur est vide.",
+                                              ppolice="Arial", ptaille=15)
+                lbl.pack(pady=10)
+            else:
+                for row in data:
+                    lbl = self._arrtk.createLabel(self.__fScrolledRead, text=row+"\n",
+                                                  ppolice="Arial", ptaille=15,justify="left")
+                    lbl.configure(anchor="w")
+                    lbl.pack(side="top", anchor="w", fill="x", padx=5, pady=2)
+
+        else :
+            self.__disabelFrame()
+            self.__disableManageTableur()
+
+
+
 
     def __supprValeurTableur(self):
         self._gestionnaire.getGestFNC().getFNCWork().delValeur("A1")
 
-    def __disableAddTableur(self):
+    def __disableManageTableur(self):
         self.__frameManageTableur.grid_forget()
         self.__frameAddValeur.grid_forget()
         self.__frameAddFormule.grid_forget()
+        self.__frameReadTableur.grid_forget()
         self.__fDock.grid_forget()
         self.__disabelFrame()
         self.__activeTableur()
