@@ -1,7 +1,7 @@
 from gui.guibase import GuiBase,gestionnaire
 from tkinter.filedialog import askdirectory,askopenfilename
 import customtkinter as ctk
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, showinfo
 from tkinter import StringVar
 from gui.GUITaskProject import GUITaskProject
 
@@ -22,6 +22,10 @@ class GUIWork(GuiBase):
 
 
     def _mainframe(self):
+        # var
+        self.__listFormule = self._gestionnaire.getGestFNC().getFNCWork().getListFormuleTableur()
+        self.__varFormule = StringVar(self._screen)
+        # Conf de la fenetre
         self._screen.rowconfigure(0, weight=1)
         self._screen.rowconfigure(1, weight=0)
         self._screen.columnconfigure(0, weight=1)
@@ -113,6 +117,10 @@ class GUIWork(GuiBase):
         self.__fProjet = self._arrtk.createFrame(self._screen)
         self.__fProjetNoOpen = self._arrtk.createFrame(self._screen)
 
+        self.__frameManageTableur = self._arrtk.createFrame(self._screen)
+        self.__frameAddValeur = self._arrtk.createFrame(self.__frameManageTableur)
+        self.__frameAddFormule = self._arrtk.createFrame(self.__frameManageTableur)
+
         # Widgets dans la frame d'accueil
         labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
                                                     ppolice="Arial", ptaille=25)
@@ -152,20 +160,20 @@ class GUIWork(GuiBase):
                                                               command=self.__openTableurCoputerSoft)
         btnCloseTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                    image=imgCloseTableur, command=self.__closeTableur)
-        # btnReadTableur = self.__arrTk.createButton(self.__fTableur,width=90,height=90,image=imgReadTableur,command=self.__addValeurTableur())
+        # btnReadTableur = self.__arrTk.createButton(self.__fTableur,width=90,height=90,image=imgReadTableur,command=self.__viewAddValeurTableur())
 
         btnAddValeurTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                       image=imgAddValeur, command=self.__addValeurTableur)
+                                                       image=imgAddValeur, command=self.__viewAddValeurTableur)
         btnAddMoyenneTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                        image=imgAddMoyenne, command=self.__addMoyenneTableur)
+                                                        image=imgAddMoyenne, command=self.__viewMoyenneTableur)
         btnAddSommeTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                      image=imgAddSomme, command=self.__addSommeTableur)
+                                                      image=imgAddSomme, command=self.__viewSommeTableur)
         btnAddComptageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                         image=imgAddComptage, command=self.__addComptageTableur)
+                                                         image=imgAddComptage, command=self.__viewComptageTableur)
         btnAddMinimumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                        image=imgAddMinimum, command=self.__addMinimumTableur)
+                                                        image=imgAddMinimum, command=self.__viewMinimumTableur)
         btnAddMaximumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
-                                                        image=imgAddMaxmum, command=self.__addMaximumTableur)
+                                                        image=imgAddMaxmum, command=self.__viewMaximumTableur)
         btnAffichageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                        image=imgViewTableur, command=self.__viewTableur)
         btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
@@ -218,6 +226,39 @@ class GUIWork(GuiBase):
 
         btnCloseProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgCloseProjet,
                                                   command=self.__closeProjet)
+
+        # frameTableurAdd
+        # frameAddValeur
+        labelTitleAddValeur = self._arrtk.createLabel(self.__frameAddValeur, text="Ajout d'une valeur",
+                                                        ppolice="Arial", ptaille=25,pstyle="bold")
+        wECaseValeur,self.__eCaseAddValeur = self._arrtk.createEntryLegend(self.__frameAddValeur,text="Case de la valeur : ",
+                                                     ptaille=20,ppolice="Arial",gridUsed=True)
+        wEValueValeur,self.__eValueAddValeur = self._arrtk.createEntryLegend(self.__frameAddValeur,text="Valeur : ",
+                                                        ptaille=20,ppolice="Arial",gridUsed=True)
+        btnAddValeur = self._arrtk.createButton(self.__frameAddValeur,ppolice="Arial",ptaille=25,pstyle="bold",
+                                                  text="Ajouter la valeur",bg=self._btnColor,fg=self._btnTexteColor,
+                                                command=self.__addValeurTableur)
+        btnCancelAddValeur = self._arrtk.createButton(self.__frameAddValeur, ppolice="Arial", ptaille=25, pstyle="bold",
+                                                    text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
+                                                      command=self.__disableAddTableur)
+        # frameAddFormule
+        lTitleAddFormule = self._arrtk.createLabel(self.__frameAddFormule, text="Ajout d'une formule",
+                                                            ppolice="Arial", ptaille=25, pstyle="bold")
+        menuChoixFormule = self._arrtk.createOptionMenu(self.__frameAddFormule,value=self.__listFormule,
+                                                        var=self.__varFormule,bg=self._btnColor,fg=self._btnTexteColor,
+                                                        police="Arial",taille=20)
+        wECaseStart,self.__eCaseStartFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de debut : ",
+                                                        ptaille=20,ppolice="Arial",gridUsed=True)
+        wECaseEnd,self.__eCaseEndFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de fin : ",
+                                                        ptaille=20,ppolice="Arial",gridUsed=True)
+        wECaseDest,self.__eCaseDestFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de destination : ",
+                                                        ptaille=20,ppolice="Arial",gridUsed=True)
+        btnAddFormule = self._arrtk.createButton(self.__frameAddFormule,ppolice="Arial",ptaille=20,pstyle="bold",
+                                                    text="Ajouter la formule",bg=self._btnColor,fg=self._btnTexteColor,
+                                                 command=self.__addFormuleTableur)
+        btnCancelAddFormule = self._arrtk.createButton(self.__frameAddFormule, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                    text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
+                                                      command=self.__disableAddTableur)
 
         # Grille des frame
         self.__fAcceuil.rowconfigure(0, weight=1)
@@ -276,6 +317,18 @@ class GUIWork(GuiBase):
         self.__fProjet.grid_columnconfigure(1, weight=0)
         self.__fProjet.grid_columnconfigure(2, weight=1)
 
+        self.__frameManageTableur.grid_rowconfigure(0, weight=1)
+        self.__frameManageTableur.grid_columnconfigure(0, weight=1)
+
+        self.__frameAddValeur.columnconfigure(0, weight=1)
+        self.__frameAddValeur.columnconfigure(1, weight=1)
+        self.__frameAddValeur.rowconfigure(1, minsize=5)
+        self.__frameAddValeur.rowconfigure(4, weight=1)
+
+        self.__frameAddFormule.columnconfigure(0, weight=1)
+        self.__frameAddFormule.columnconfigure(1, weight=1)
+        self.__frameAddFormule.rowconfigure(5, weight=1)
+
 
         # Affichage des frames
         labelTitleAcceuil.grid(row=0, column=0, columnspan=3, sticky='new', pady=20)  # En haut, centré, espacé en haut
@@ -333,6 +386,21 @@ class GUIWork(GuiBase):
         btnViewTaskProjet.grid(row=3, column=0, padx=5, pady=5)
         btnSayAllTaskProjet.grid(row=3, column=1, padx=5, pady=5)
         btnCloseProjet.grid(row=3, column=2, padx=5, pady=5)
+
+        labelTitleAddValeur.grid(row=0, column=0, columnspan=2, sticky="n", pady=(10, 20))
+        wECaseValeur.grid(row=2, column=0, columnspan=2, sticky="ew", padx=20, pady=(0, 10))
+        wEValueValeur.grid(row=3, column=0, columnspan=2, sticky="ew", padx=20)
+        btnCancelAddValeur.grid(row=5, column=0, sticky="sw", padx=10, pady=10)
+        btnAddValeur.grid(row=5, column=1, sticky="se", padx=10, pady=10)
+
+        lTitleAddFormule.grid(row=0, column=0, columnspan=2, sticky="n", padx=10, pady=(10, 6))
+        menuChoixFormule.grid(row=1, column=0, columnspan=2, sticky="w", padx=10, pady=(0, 10))
+        wECaseStart.grid(row=2, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
+        wECaseEnd.grid(row=3, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
+        wECaseDest.grid(row=4, column=0, columnspan=2, sticky="ew", padx=12)
+        btnCancelAddFormule.grid(row=6, column=0, sticky="sw", padx=10, pady=10)
+        btnAddFormule.grid(row=6, column=1, sticky="se", padx=10, pady=10)
+
         self.__activeAcceuil()
 
     def activeProjet(self):
@@ -442,29 +510,119 @@ class GUIWork(GuiBase):
         self.updateEtat()
         self.__activeTableur()
 
+    def __viewAddValeurTableur(self):
+        self.__disabelFrame()
+        self.__disableAddTableur()
+        self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
+        self.__frameAddValeur.grid(row=0, column=0, sticky="nsew")
+        self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+
+        self.__eCaseAddValeur.delete(0,ctk.END)
+        self.__eValueAddValeur.delete(0,ctk.END)
+        self._screen.update()
+
     def __addValeurTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addValeurOnTableur("A1","5")
+        case = self.__eCaseAddValeur.get()
+        valeur = self.__eValueAddValeur.get()
+        if not case or not valeur:
+            showerror("Erreur", "La case et la valeur ne peuvent pas être vide.")
+            return
+        if self._gestionnaire.getGestFNC().getFNCWork().addValeurOnTableur(case,valeur):
+            showinfo("Succès", f"La valeur {valeur} a été ajoutée à la case {case}.")
+            self.__disableAddTableur()
+        else:
+            showerror("Erreur", "Une erreur est survenue lors de l'ajout de la valeur.")
+            self.__disableAddTableur()
 
-    def __addMoyenneTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addMoyenneOnTableur("A1","A10","A11")
+    def __viewAddFormuleTableur(self):
+        self.__disabelFrame()
+        self.__disableAddTableur()
+        self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
+        self.__frameAddFormule.grid(row=0, column=0, sticky="nsew")
+        self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+        self.__eCaseDestFormule.delete(0,ctk.END)
+        self.__eCaseEndFormule.delete(0,ctk.END)
+        self.__eCaseStartFormule.delete(0,ctk.END)
 
-    def __addSommeTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addSommeOnTableur("A1","A10","A11")
+    def __viewMoyenneTableur(self):
+        self.__viewAddFormuleTableur()
+        self.__varFormule.set(self.__listFormule[1])
+        self._screen.update()
 
-    def __addComptageTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addComptageOnTableur("A1","A10","A11")
+    def __viewSommeTableur(self):
+        self.__viewAddFormuleTableur()
+        self.__varFormule.set(self.__listFormule[0])
+        self._screen.update()
 
-    def __addMinimumTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addMinimumOnTableur("A1","A10","A11")
+    def __viewComptageTableur(self):
+        self.__viewAddFormuleTableur()
+        self.__varFormule.set(self.__listFormule[2])
+        self._screen.update()
 
-    def __addMaximumTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().addMaximumOnTableur("A1","A10","A11")
+    def __viewMinimumTableur(self):
+        self.__viewAddFormuleTableur()
+        self.__varFormule.set(self.__listFormule[3])
+        self._screen.update()
+
+    def __viewMaximumTableur(self):
+        self.__viewAddFormuleTableur()
+        self.__varFormule.set(self.__listFormule[4])
+        self._screen.update()
+
+    def __addFormuleTableur(self):
+        caseDest = self.__eCaseDestFormule.get()
+        caseEnd = self.__eCaseEndFormule.get()
+        caseStart = self.__eCaseStartFormule.get()
+        formule = self.__varFormule.get()
+
+        if not caseDest or not caseEnd or not caseStart or not formule:
+            showerror("Erreur", "Les cases et la formule ne peuvent pas être vide.")
+            return
+
+        if formule == self.__listFormule[0]:
+            if self._gestionnaire.getGestFNC().getFNCWork().addSommeOnTableur(caseStart,caseEnd,caseDest):
+                showinfo("Succès", f"La formule SOMME a été ajoutée à la case {caseDest}.")
+            else:
+                showerror("Erreur", "Une erreur est survenue lors de l'ajout de la somme.")
+        elif formule == self.__listFormule[1]:
+            if self._gestionnaire.getGestFNC().getFNCWork().addMoyenneOnTableur(caseStart,caseEnd,caseDest):
+                showinfo("Succès", f"La formule MOYENNE a été ajoutée à la case {caseDest}.")
+            else:
+                showerror("Erreur", "Une erreur est survenue lors de l'ajout de la moyenne.")
+        elif formule == self.__listFormule[2]:
+            if self._gestionnaire.getGestFNC().getFNCWork().addComptageOnTableur(caseStart,caseEnd,caseDest):
+                showinfo("Succès", f"La formule COMPTAGE a été ajoutée à la case {caseDest}.")
+            else:
+                showerror("Erreur", "Une erreur est survenue lors de l'ajout du comptage.")
+        elif formule == self.__listFormule[3]:
+            if self._gestionnaire.getGestFNC().getFNCWork().addMinimumOnTableur(caseStart,caseEnd,caseDest):
+                showinfo("Succès", f"La formule MINIMUM a été ajoutée à la case {caseDest}.")
+            else:
+                showerror("Erreur", "Une erreur est survenue lors de l'ajout du minimum.")
+        elif formule == self.__listFormule[4]:
+            if self._gestionnaire.getGestFNC().getFNCWork().addMaximumOnTableur(caseStart,caseEnd,caseDest):
+                showinfo("Succès", f"La formule MAXIMUM a été ajoutée à la case {caseDest}.")
+            else:
+                showerror("Erreur", "Une erreur est survenue lors de l'ajout du maximum.")
+        else :
+            showerror("Erreur", "La formule sélectionnée n'est pas valide.")
+
+        self.__disableAddTableur()
+
 
     def __viewTableur(self):
         self._gestionnaire.getGestFNC().getFNCWork().getReadTableur()
 
     def __supprValeurTableur(self):
         self._gestionnaire.getGestFNC().getFNCWork().delValeur("A1")
+
+    def __disableAddTableur(self):
+        self.__frameManageTableur.grid_forget()
+        self.__frameAddValeur.grid_forget()
+        self.__frameAddFormule.grid_forget()
+        self.__fDock.grid_forget()
+        self.__disabelFrame()
+        self.__activeTableur()
 
 
     # Partie Word
