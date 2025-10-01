@@ -91,6 +91,12 @@ class fncArreraWork(fncBase):
 
     def addValeurOnTableur(self, case: str, valeur):
         if self.__tableurOpen  and (case != ""):
+
+            try:
+                valeur =  int(valeur)
+            except ValueError:
+                valeur = valeur
+
             if self.__objTableur.write(case, valeur):
                 if self.__objTableur.saveFile():
                     return True
