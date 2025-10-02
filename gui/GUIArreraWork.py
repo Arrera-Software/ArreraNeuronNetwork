@@ -494,6 +494,13 @@ class GUIWork(GuiBase):
             case _ :
                 return False
 
+    def activeReadTableur(self):
+        self.updateEtat()
+        if not self.__tableurOpen:
+            return False
+        self.__readTableur()
+        return True
+
     def __disabelFrame(self):
         self.__fAcceuil.grid_forget()
         self.__fDock.grid_forget()

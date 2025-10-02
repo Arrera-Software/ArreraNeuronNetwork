@@ -113,6 +113,9 @@ class gestGUI:
         """
         return  self.__guiWork.activeManageTableur(mode)
 
+    def activeReadTableur(self):
+        return self.__guiWork.activeReadTableur()
+
     def activeWorkWord(self):
         self.__guiWork.activeWord()
 
