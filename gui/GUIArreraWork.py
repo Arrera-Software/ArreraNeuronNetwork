@@ -122,75 +122,75 @@ class GUIWork(GuiBase):
         # Widgets dans la frame d'accueil
         labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
                                                     ppolice="Arial", ptaille=25)
-        btnArreraTableurAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,
+        btnArreraTableurAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
                                                            height=100, image=imgTableurAcceuil,
                                                            command=self.__activeTableur)
-        btnArreraWordAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,
+        btnArreraWordAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
                                                         height=100, image=imgWordAcceuil,
                                                         command=self.__activeWord)
-        btnArreraProjectAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,
+        btnArreraProjectAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
                                                            height=100, image=imgProjectAcceuil,
                                                            command=self.__activeProjet)
 
         # Widgets dans la frame dock
-        btnArreraTableurDock = self._arrtk.createButton(self.__fDock, width=60,
+        btnArreraTableurDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
                                                         height=60, image=imgTableurDock,
                                                         command=self.__activeTableur)
-        btnArreraWordDock = self._arrtk.createButton(self.__fDock, width=60,
+        btnArreraWordDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
                                                      height=60, image=imgWordDock,
                                                      command=self.__activeWord)
-        btnArreraProjectDock = self._arrtk.createButton(self.__fDock, width=60,
+        btnArreraProjectDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
                                                         height=60, image=imgProjectDock,
                                                         command=self.__activeProjet)
-        btnCloseAcceuilDock = self._arrtk.createButton(self.__fDock, width=60,
+        btnCloseAcceuilDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
                                                        height=60, image =imgAnnulerDock,
                                                        command=self.__closeDock)
 
         # Widgets du frame Tableur
         labelTitleNoOpenTableur = self._arrtk.createLabel(self.__fTableurNoOpen, text="Travail sur un tableur",
                                                           ppolice="Arial", ptaille=25)
-        btnOpenTableur = self._arrtk.createButton(self.__fTableurNoOpen, width=90, height=90,
+        btnOpenTableur = self._arrtk.createButton(self.__fTableurNoOpen, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                   image=imgOpenTableur, command=self.__openTableur)
         labelTitleTableur = self._arrtk.createLabel(self.__fTableur, text="Travail sur un tableur",
                                                     ppolice="Arial", ptaille=25)
-        btnOpenTableurWithComputer = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnOpenTableurWithComputer = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                               image=imgOpenTableurCoputerSoft,
                                                               command=self.__openTableurCoputerSoft)
-        btnCloseTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnCloseTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                    image=imgCloseTableur, command=self.__closeTableur)
 
-        btnAddValeurTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddValeurTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                        image=imgAddValeur, command=self.__viewAddValeurTableur)
-        btnAddMoyenneTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddMoyenneTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                         image=imgAddMoyenne, command=self.__viewMoyenneTableur)
-        btnAddSommeTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddSommeTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                       image=imgAddSomme, command=self.__viewSommeTableur)
-        btnAddComptageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddComptageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                          image=imgAddComptage, command=self.__viewComptageTableur)
-        btnAddMinimumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddMinimumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                         image=imgAddMinimum, command=self.__viewMinimumTableur)
-        btnAddMaximumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAddMaximumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                         image=imgAddMaxmum, command=self.__viewMaximumTableur)
-        btnAffichageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnAffichageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                        image=imgViewTableur, command=self.__readTableur)
-        btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
+        btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                        image=imgSupprValeur,
                                                        command=self.__viewDelValeurTableur)
 
         # Widgets dans la frame Word
         labelTitleNoOpenWord = self._arrtk.createLabel(self.__fWordNoOpen, text="Travail sur un document Word",
                                                        ppolice="Arial", ptaille=25)
-        btnOpenWord = self._arrtk.createButton(self.__fWordNoOpen, width=90, height=90, image=imgOpenWord,
+        btnOpenWord = self._arrtk.createButton(self.__fWordNoOpen, width=90, height=90, image=imgOpenWord,bg=self._btnColor,fg=self._btnTexteColor,
                                                command=self.__openWord)
 
         labelTitleWord = self._arrtk.createLabel(self.__fWord, text="Travail sur un document Word",
                                                  ppolice="Arial", ptaille=25)
-        btnOpenWordWithComputer = self._arrtk.createButton(self.__fWord, width=90, height=90,
+        btnOpenWordWithComputer = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                            image=imgOpenWordWithComputer, command=self.__openWordCoputerSoft)
-        btnCloseWord = self._arrtk.createButton(self.__fWord, width=90, height=90,
+        btnCloseWord = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                 image=imgCloseWord, command=self.__closeWord)
 
-        btnWriteWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,
+        btnWriteWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,bg=self._btnColor,fg=self._btnTexteColor,
                                                 command=self.__writeWord)
 
         # Widget dans la frame Projet
@@ -199,29 +199,29 @@ class GUIWork(GuiBase):
                                                          ppolice="Arial", ptaille=25)
 
         btnOpenProjet = self._arrtk.createButton(self.__fProjetNoOpen, width=90, height=90,
-                                                 image=imgOpenProjet
-                                                 , command=self.__openProjet)
+                                                 image=imgOpenProjet,bg=self._btnColor,fg=self._btnTexteColor,
+                                                 command=self.__openProjet)
 
         btnCreateProjet = self._arrtk.createButton(self.__fProjetNoOpen, width=90, height=90,
-                                                   image=imgCreateProject,
+                                                   image=imgCreateProject,bg=self._btnColor,fg=self._btnTexteColor,
                                                    command=self.__windowsNameNewProjet)
 
         # OPEN
         labelTitleProjet = self._arrtk.createLabel(self.__fProjet, text="Travail sur un projet",
                                                    ppolice="Arial", ptaille=25)
-        btnAddTypeProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,
+        btnAddTypeProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                     image=imgSetTypeProjet, command=self.__windowsTypeFileProjet)
         btnCreateFileProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgCreateFileProjet,
-                                                       command=self.__windowsCreateFileProjet)
+                                                       command=self.__windowsCreateFileProjet,bg=self._btnColor,fg=self._btnTexteColor)
         btnOpenFileProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgOpenFileProjet,
-                                                     command=self.__openFileProjet)
+                                                     command=self.__openFileProjet,bg=self._btnColor,fg=self._btnTexteColor)
         btnViewTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgTaskViewProjet,
-                                                     command=self.__openTaskProjet)
-        btnSayAllTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,
+                                                     command=self.__openTaskProjet,bg=self._btnColor,fg=self._btnTexteColor)
+        btnSayAllTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                        image=imgTaskSayProjet, command=self.__sayTaskProjet)
 
         btnCloseProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgCloseProjet,
-                                                  command=self.__closeProjet)
+                                                  command=self.__closeProjet,bg=self._btnColor,fg=self._btnTexteColor)
 
         # frameTableurAdd
         # frameAddValeur
