@@ -432,7 +432,6 @@ class GUIWork(GuiBase):
         btnCancelDebTableur.grid(row=4, column=0, sticky="sw", padx=10, pady=10)
         btnDelTableur.grid(row=4, column=1, sticky="se", padx=10, pady=10)
 
-        self.__activeAcceuil()
 
     def activeProjet(self):
         self.active()
@@ -448,6 +447,11 @@ class GUIWork(GuiBase):
         self.active()
         self._mainframe()
         self.__activeWord()
+
+    def activeAcceuil(self):
+        self.active()
+        self._mainframe()
+        self.__activeAcceuil()
 
     def __disabelFrame(self):
         self.__fAcceuil.grid_forget()
