@@ -68,8 +68,7 @@ class GUIWork(GuiBase):
                                                  , tailleX=90, tailleY=90)
         imgOpenTableurCoputerSoft = self._arrtk.createImage(self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png"
                                                             , tailleX=90, tailleY=90)
-        imgReadTableur = self._arrtk.createImage(self.__emplacementAsset + "tableur/read-tableur.png"
-                                                 , tailleX=90, tailleY=90)
+
         imgSupprValeur = self._arrtk.createImage(self.__emplacementAsset + "tableur/suppr-valeur.png"
                                                  , tailleX=90, tailleY=90)
         imgViewTableur = self._arrtk.createImage(self.__emplacementAsset + "tableur/view-tableur.png"
@@ -82,8 +81,7 @@ class GUIWork(GuiBase):
                                                           tailleX=90, tailleY=90)
         imgCloseWord = self._arrtk.createImage(self.__emplacementAsset + "word/close-word.png",
                                                tailleX=90, tailleY=90)
-        imgReadWord = self._arrtk.createImage(self.__emplacementAsset + "word/read-word.png",
-                                              tailleX=90, tailleY=90)
+
         imgWriteWord = self._arrtk.createImage(self.__emplacementAsset + "word/write-word.png",
                                                tailleX=90, tailleY=90)
 
@@ -102,8 +100,6 @@ class GUIWork(GuiBase):
                                                    tailleX=90, tailleY=90)
         imgTaskViewProjet = self._arrtk.createImage(self.__emplacementAsset + "project/view-task-project.png",
                                                     tailleX=90, tailleY=90)
-        imgViewTypeFileProjet = self._arrtk.createImage(self.__emplacementAsset + "project/view-type.png",
-                                                        tailleX=90, tailleY=90)
         imgCloseProjet = self._arrtk.createImage(self.__emplacementAsset + "project/close-project.png",
                                                  tailleX=90, tailleY=90)
 
@@ -162,7 +158,6 @@ class GUIWork(GuiBase):
                                                               command=self.__openTableurCoputerSoft)
         btnCloseTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                    image=imgCloseTableur, command=self.__closeTableur)
-        # btnReadTableur = self.__arrTk.createButton(self.__fTableur,width=90,height=90,image=imgReadTableur,command=self.__viewAddValeurTableur())
 
         btnAddValeurTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                        image=imgAddValeur, command=self.__viewAddValeurTableur)
@@ -194,8 +189,7 @@ class GUIWork(GuiBase):
                                                            image=imgOpenWordWithComputer, command=self.__openWordCoputerSoft)
         btnCloseWord = self._arrtk.createButton(self.__fWord, width=90, height=90,
                                                 image=imgCloseWord, command=self.__closeWord)
-        # btnReadWord = self.__arrTk.createButton(self.__fWord,width=90,height=90,
-        #image=imgReadWord,command=self.__readWord)
+
         btnWriteWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,
                                                 command=self.__writeWord)
 
