@@ -93,7 +93,7 @@ class gestGUI:
         self.__guiTache.activeDel()
 
     def activeWork(self):
-        self.__guiWork.active()
+        self.__guiWork.activeAcceuil()
 
     def activeWorkProject(self):
         self.__guiWork.activeProjet()
