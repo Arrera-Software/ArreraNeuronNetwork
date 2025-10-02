@@ -453,6 +453,47 @@ class GUIWork(GuiBase):
         self._mainframe()
         self.__activeAcceuil()
 
+    # Active pour le tableur
+
+    def activeManageTableur(self,mode:int):
+        """
+        1. Add Valeur
+        2. Add Somme
+        3. Add Moyenne
+        4. Add Comptage
+        5. Add Minimum
+        6. Add Maximum
+        7. Suppr valeur
+        """
+        self.updateEtat()
+        if not self.__tableurOpen:
+            return False
+
+        match mode :
+            case 1 :
+                self.__viewAddValeurTableur()
+                return True
+            case 2 :
+                self.__viewSommeTableur()
+                return True
+            case 3 :
+                self.__viewMoyenneTableur()
+                return True
+            case 4 :
+                self.__viewComptageTableur()
+                return True
+            case 5 :
+                self.__viewMinimumTableur()
+                return True
+            case 6 :
+                self.__viewMaximumTableur()
+                return True
+            case 7 :
+                self.__viewDelValeurTableur()
+                return True
+            case _ :
+                return False
+
     def __disabelFrame(self):
         self.__fAcceuil.grid_forget()
         self.__fDock.grid_forget()

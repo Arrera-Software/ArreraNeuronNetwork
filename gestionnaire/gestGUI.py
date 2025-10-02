@@ -101,6 +101,18 @@ class gestGUI:
     def activeWorkTableur(self):
         self.__guiWork.activeTableur()
 
+    def activeManageTableur(self,mode:int):
+        """
+        1. Add Valeur
+        2. Add Somme
+        3. Add Moyenne
+        4. Add Comptage
+        5. Add Minimum
+        6. Add Maximum
+        7. Suppr valeur
+        """
+        return  self.__guiWork.activeManageTableur(mode)
+
     def activeWorkWord(self):
         self.__guiWork.activeWord()
 
