@@ -121,6 +121,7 @@ class GUIWork(GuiBase):
         self.__frameAddValeur = self._arrtk.createFrame(self.__frameManageTableur)
         self.__frameAddFormule = self._arrtk.createFrame(self.__frameManageTableur)
         self.__frameReadTableur = self._arrtk.createFrame(self.__frameManageTableur)
+        self.__frameDelValeurTableur = self._arrtk.createFrame(self.__frameManageTableur)
 
         # Widgets dans la frame d'accueil
         labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
@@ -179,7 +180,7 @@ class GUIWork(GuiBase):
                                                        image=imgViewTableur, command=self.__readTableur)
         btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,
                                                        image=imgSupprValeur,
-                                                       command=self.__supprValeurTableur)
+                                                       command=self.__viewDelValeurTableur)
 
         # Widgets dans la frame Word
         labelTitleNoOpenWord = self._arrtk.createLabel(self.__fWordNoOpen, text="Travail sur un document Word",
@@ -267,6 +268,17 @@ class GUIWork(GuiBase):
         btnQuitReadTableur = self._arrtk.createButton(self.__frameReadTableur, ppolice="Arial", ptaille=20, pstyle="bold",
                                                       text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
                                                       command=self.__disableManageTableur)
+        # frameDelValeurTableur
+        labelTitleDelTableur = self._arrtk.createLabel(self.__frameDelValeurTableur, text="Suppression de valeur",
+                                                        ppolice="Arial", ptaille=25, pstyle="bold")
+        wECaseDel,self.__eCaseDel = self._arrtk.createEntryLegend(self.__frameDelValeurTableur,text="Case a supprimer : ",
+                                                                    ptaille=20,ppolice="Arial",gridUsed=True)
+        btnDelTableur = self._arrtk.createButton(self.__frameDelValeurTableur, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                 text="Supprimer la valeur", bg=self._btnColor, fg=self._btnTexteColor,
+                                                 command=self.__delValeurTableur)
+        btnCancelDebTableur = self._arrtk.createButton(self.__frameDelValeurTableur, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                         text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
+                                                            command=self.__disableManageTableur)
 
         # Grille des frame
         self.__fAcceuil.rowconfigure(0, weight=1)
@@ -339,6 +351,11 @@ class GUIWork(GuiBase):
 
         self.__frameReadTableur.columnconfigure(0, weight=1)
         self.__frameReadTableur.rowconfigure(1, weight=1)
+
+        self.__frameDelValeurTableur.columnconfigure(0, weight=1)
+        self.__frameDelValeurTableur.columnconfigure(1, weight=1)
+        self.__frameDelValeurTableur.rowconfigure(1, weight=1)
+        self.__frameDelValeurTableur.rowconfigure(3, weight=1)
 
 
         # Affichage des frames
@@ -415,6 +432,11 @@ class GUIWork(GuiBase):
         labelTitleReadTableur.grid(row=0, column=0, sticky="new", padx=10, pady=(10, 8))
         self.__fScrolledRead.grid(row=1, column=0, sticky="nsew", padx=10, pady=0)
         btnQuitReadTableur.grid(row=2, column=0, sticky="sew", padx=10, pady=10)
+
+        labelTitleDelTableur.grid(row=0, column=0, columnspan=2, sticky="n", padx=10, pady=(10, 8))
+        wECaseDel.grid(row=2, column=0, columnspan=2, padx=12, pady=6)
+        btnCancelDebTableur.grid(row=4, column=0, sticky="sw", padx=10, pady=10)
+        btnDelTableur.grid(row=4, column=1, sticky="se", padx=10, pady=10)
 
         self.__activeAcceuil()
 
@@ -509,10 +531,6 @@ class GUIWork(GuiBase):
         self._gestionnaire.getGestFNC().getFNCWork().openTableur()
         self.updateEtat()
         self.__activeTableur()
-
-    def __readTableur(self):
-        pass
-
 
     def __openTableurCoputerSoft(self):
         """
@@ -655,14 +673,32 @@ class GUIWork(GuiBase):
 
 
 
-    def __supprValeurTableur(self):
-        self._gestionnaire.getGestFNC().getFNCWork().delValeur("A1")
+    def __viewDelValeurTableur(self):
+        self.__disabelFrame()
+        self.__disableManageTableur()
+        self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
+        self.__frameDelValeurTableur.grid(row=0, column=0, sticky="nsew")
+        self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+
+        self.__eCaseDel.delete(0,ctk.END)
+        self._screen.update()
+
+    def __delValeurTableur(self):
+        case = self.__eCaseDel.get()
+        if not case:
+            showerror("Erreur", "La case ne peut pas être vide.")
+            return
+        if self._gestionnaire.getGestFNC().getFNCWork().delValeur(case):
+            showinfo("Succès", f"La valeur de la case {case} a été supprimée.")
+
+        self.__disableManageTableur()
 
     def __disableManageTableur(self):
         self.__frameManageTableur.grid_forget()
         self.__frameAddValeur.grid_forget()
         self.__frameAddFormule.grid_forget()
         self.__frameReadTableur.grid_forget()
+        self.__frameDelValeurTableur.grid_forget()
         self.__fDock.grid_forget()
         self.__disabelFrame()
         self.__activeTableur()
