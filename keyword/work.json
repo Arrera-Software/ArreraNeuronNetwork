@@ -1,1 +1,81 @@
-{}
+{
+  "help-work": [
+    "aide work",
+    "comment utiliser arrera work",
+    "aide arrera work",
+    "comment utiliser work",
+    "aide sur work",
+    "aide sur arrera work"],
+  "help-tableur": [
+    "aide tableur",
+    "comment utiliser les tableurs",
+    "aide arrera tableur",
+    "comment utiliser tableur",
+    "aide sur tableur",
+    "aide sur arrera tableur"],
+  "question-open": ["est ce que"],
+  "open-file": [
+    "document",
+    "tableur",
+    "fichier","word"],
+  "tableur-file":[
+    "tableur",
+    "excel"],
+  "computer": [
+    "ordinateur",
+    "pc",
+    "mac",
+    "macbook",
+    "imac"],
+  "close": [
+    "ferme",
+    "fermer",
+    "quitte",
+    "quitter",
+    "stoppe",
+    "stopper",
+    "arrête",
+    "stop"],
+  "read": [
+    "lis",
+    "lit",
+    "lire",
+    "lecture",
+    "montre"],
+  "add": [
+    "ajoute",
+    "rajoute",
+    "ajout",
+    "add"],
+  "valeur": [
+    "valeur",
+    "val"],
+  "somme": [
+    "somme",
+    "total"
+  ],
+  "moyenne": [
+      "moyenne",
+      "moy"
+  ],
+  "comptage": [
+      "comptage",
+      "count"
+  ],
+  "max": [
+      "max",
+      "maximum"
+  ],
+  "min": [
+      "min",
+      "minimum"
+  ],
+  "del": [
+    "supprime",
+    "supprimer",
+    "delete",
+    "efface",
+    "effacer",
+    "retire"
+  ]
+}

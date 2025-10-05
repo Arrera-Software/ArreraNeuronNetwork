@@ -1,129 +1,167 @@
-from neuron.CNeuronBase import *
+from neuron.CNeuronBase import neuronBase,gestionnaire
+from tkinter.filedialog import askopenfilename
 
 
 class neuroneWork(neuronBase):
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire)
+        self.__fonctionWork = self._gestionnaire.getGestFNC().getFNCWork()
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["",""]
         self._valeurOut = 0
-        if self._gestNeuron.getWork():
+        if self.__neuronTableur(requette) == 1:
+            return
+        elif self.__neuronProjet(requette) == 1:
+            return
+        elif self.__neuronWord(requette) == 1:
+            return
+        elif self._keyword.checkWork(requette,"help-work"):
 
-            if self.__neuronTableur(requette) == 1:
-                return
-            elif self.__neuronProjet(requette) == 1:
-                return
-            elif self.__neuronWord(requette) == 1:
-                return
-            elif ((("comment" in requette) and ("utiliser" in requette)
-                   and ("arrera work" in requette)) or ("aide work" in requette)):
+            self._listSortie = [self._language.getPhraseHelpArreraWork("5"),"work"]
+            self._valeurOut = 17
+        elif self._keyword.checkWork(requette,"question-open") and self._keyword.checkOpen(requette,"open") and self._keyword.checkWork(requette,"open-file"):
+            word = self.__fonctionWork.getEtatWord()
+            tableur = self.__fonctionWork.getEtatTableur()
 
-                self._listSortie = ["Les fonction d'Arrera work sont :" +
-                                     "\n- Edition tableur (Taper aide tableur)" +
-                                     "\n- Edition fichier de traitement de texte (Taper aide word)" +
-                                     "\n- Fonction Arrera projet (Taper aide projet)","work"]
-                self._valeurOut = 17
-            elif (("ouvert" in requette) and (("document" in requette) or
-                ("tableur" in requette) or ("fichier" in requette) or ("word" in requette))):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieFileOpen(), ""]
-                    self._valeurOut = 1
+            if word and tableur:
+                self._listSortie = [self._language.getPhraseWork("21"),""]
+            elif tableur and not word:
+                self._listSortie = [self._language.getPhraseWork("22"),""]
+            elif word and not tableur:
+                self._listSortie = [self._language.getPhraseWork("23"),""]
+            else :
+                self._listSortie = [self._language.getPhraseWork("24"),""]
+
+            self._valeurOut = 1
+
+
 
     def __neuronTableur(self,requette:str):
-        if self._fonctionArreraNetwork.getTableurOpen() == False:
-            if "ouvre" in requette and (("exel" in requette) or ("tableur" in requette) or ("excel" in requette)):
-                self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableur(), ""]
-                self._objHistorique.setAction("Ouverture d'un fichier exel "+self._fonctionArreraNetwork.getFileTableur())
+        if not self.__fonctionWork.getEtatTableur():
+            if (self._keyword.checkOpen(requette,"open") and
+                    self._keyword.checkWork(requette,"tableur-file")):
+
+                if self.__fonctionWork.openTableur():
+                    self._listSortie = [self._language.getPhraseWork("5"),""]
+                else :
+                    self._listSortie = [self._language.getPhraseWork("6"),""]
+
                 self._valeurOut = 7
                 return 1
-            elif "aide tableur" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkTableur()
+            elif self._keyword.checkWork(requette,"help-tableur"):
+                self._listSortie = [self._language.getPhraseHelpArreraWork("1")
                     ,"tableur"]
                 self._valeurOut = 17
                 return 1
             else :
                 return 0
         else :
-            if "ouvre" in requette and (("exel" in requette or "tableur" in requette) and ("ordinateur" in requette)):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieOpenSoftTableurFile(), ""]
-                    self._objHistorique.setAction("Ouverture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur()+" sur l'ordinateur")
+            if (self._keyword.checkOpen(requette,"open") and
+                    self._keyword.checkWork(requette,"tableur-file") and
+                    self._keyword.checkOpen(requette,"computer")):
+
+                    if self.__fonctionWork.openTableurOs():
+                        self._listSortie = [self._language.getPhraseWork("1"), ""]
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("2"), ""]
+
                     self._valeurOut = 1
                     return 1
-            elif ("ferme" in requette) and(("exel" in requette) or ("tableur" in requette)):
-                name = self._fonctionArreraNetwork.getFileTableur()
-                self._listSortie = [self._fonctionArreraNetwork.sortieCloseTableur(), ""]
-                self._objHistorique.setAction("Fermeture du fichier exel "+name)
+            elif (self._keyword.checkWork(requette,"close") and
+                  self._keyword.checkWork(requette,"tableur-file")):
+
+                if self.__fonctionWork.closeTableur():
+                    self._listSortie = [self._language.getPhraseWork("10"), ""]
+                else :
+                    self._listSortie = [self._language.getPhraseWork("11"), ""]
+
                 self._valeurOut = 8
                 return 1
-            elif ("lis" in requette) and ("liste" not in requette) and ("tableur" in requette):
-                sortieTableur = self._fonctionArreraNetwork.sortieReadTableur()
-                if sortieTableur[0] == "error":
-                    self._valeurOut = 1
-                    self._listSortie = self._fonctionArreraNetwork.sortieErrorReadTableur()
-                else :
-                    self._listSortie = sortieTableur
+            elif (self._keyword.checkWork(requette,"read") and
+                  self._keyword.checkWork(requette,"tableur-file")):
+
+                if self.__fonctionWork.readTableur():
+                    self._listSortie = self.__fonctionWork.getEtatTableur()
                     self._valeurOut = 13
-                    self._objHistorique.setAction("Lecture du fichier tableur "+self._fonctionArreraNetwork.getFileTableur())
+                else :
+                    self._listSortie = [self._language.getPhraseWork("17"), ""]
+                    self._valeurOut = 1
+
                 return 1
-            elif (("ajoute" in requette) or ("rajoute" in requette) or ("ajout" in requette)) and ("tableur" in requette):
-                if "valeur" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddValeurTableur(), ""]
-                    self._objHistorique.setAction("Ajout d'une valeur au tableur "+
-                                                  self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
+            elif self._keyword.checkWork(requette,"add") and self._keyword.checkWork(requette,"tableur-file"):
+                if self._keyword.checkWork(requette,"valeur"):
+                    if self._gestGUI.activeManageTableur(1):
+                        self._listSortie = [self._language.getPhraseWork("25"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("29"),""]
+                        self._valeurOut = 1
                     return 1
-                elif "somme" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                    self._objHistorique.setAction("Ajout d'une formule somme au tableur " +
-                                                  self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
+                elif self._keyword.checkWork(requette,"somme"):
+                    if self._gestGUI.activeManageTableur(2):
+                        self._listSortie = [self._language.getPhraseWork("27"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("28"),""]
+                        self._valeurOut = 1
                     return 1
-                elif "moyenne" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(2), ""]
-                    self._objHistorique.setAction("Ajout d'une formule moyenne au tableur " +
-                                                  self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
+                elif self._keyword.checkWork(requette,"moyenne"):
+                    if self._gestGUI.activeManageTableur(3):
+                        self._listSortie = [self._language.getPhraseWork("29"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("30"),""]
+                        self._valeurOut = 1
                     return 1
-                elif "comptage" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(3), ""]
-                    self._objHistorique.setAction("Ajout d'une formule comptage au tableur " +
-                                                  self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
+                elif self._keyword.checkWork(requette,"comptage"):
+                    if self._gestGUI.activeManageTableur(4):
+                        self._listSortie = [self._language.getPhraseWork("64"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("65"),""]
+                        self._valeurOut = 1
                     return 1
-                elif "minimun" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(4), ""]
-                    self._objHistorique.setAction("Ajout d'une formule minimun au tableur " + self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
+                elif self._keyword.checkWork(requette,"min"):
+                    if self._gestGUI.activeManageTableur(5):
+                        self._listSortie = [self._language.getPhraseWork("31"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("32"),""]
+                        self._valeurOut = 1
                     return 1
-                elif "maximun" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieAddFormuleTableur(1), ""]
-                    self._objHistorique.setAction("Ajout d'une formule maximun au tableur " +
-                                                  self._fonctionArreraNetwork.getFileTableur())
-                    self._valeurOut = 5
-                    return  1
+                elif self._keyword.checkWork(requette,"max"):
+                    if self._gestGUI.activeManageTableur(6):
+                        self._listSortie = [self._language.getPhraseWork("33"),""]
+                        self._valeurOut = 5
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("34"),""]
+                        self._valeurOut = 1
+                    return 1
                 else :
                     return 0
-            elif (("supprime" in requette) or ("suppr" in requette)) and (("tableur" in requette) or ("exel" in requette)):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieSupprValeurTableur(), ""]
-                    self._objHistorique.setAction("Suppression d'une valeur au tableur " +
-                                                  self._fonctionArreraNetwork.getFileTableur())
+            elif self._keyword.checkWork(requette,"del") and self._keyword.checkWork(requette,"tableur-file"):
+                if self._gestGUI.activeManageTableur(7):
+                    self._listSortie = [self._language.getPhraseWork("41"),""]
                     self._valeurOut = 5
-                    return 1
-            elif "aide tableur" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkTableur()
-                        ,"tableur"]
-                    self._valeurOut = 17
-                    return 1
-            elif ("montre" in requette) and(("exel" in requette) or ("tableur" in requette)):
-                self._listSortie = [self._fonctionArreraNetwork.sortieOpenTableurGUI(), ""]
-                self._objHistorique.setAction("Ouverture du tableur " +
-                                              self._fonctionArreraNetwork.getFileTableur() +
-                                              " dans l'interface de l'assistant")
-                self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("42"),""]
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkWork(requette,"read") and self._keyword.checkWork(requette,"tableur-file"):
+                if self._gestGUI.activeReadTableur():
+                    self._listSortie = [self._language.getPhraseWork("36"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("37"),""]
+                    self._valeurOut = 1
                 return 1
             else :
                 return 0
 
     def __neuronProjet(self,requette:str):
+        """
         oldRequette,oldSortie = self._gestionnaire.getOld()
 
         if self._fonctionArreraNetwork.getProjectOpen() == False:
@@ -286,8 +324,11 @@ class neuroneWork(neuronBase):
         else :
             return 0
         return 0
+        """
+        pass
 
     def __neuronWord(self,requette:str):
+        """
         if (self._fonctionArreraNetwork.getWordOpen() == False):
             if (("ouvre" in requette) and (("word" in requette) or
                 ("traitement de texte" in requette) or ("document" in requette))):
@@ -358,3 +399,5 @@ class neuroneWork(neuronBase):
             else :
                 return 0
         return 0
+        """
+        pass

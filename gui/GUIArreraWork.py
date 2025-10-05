@@ -465,6 +465,7 @@ class GUIWork(GuiBase):
         6. Add Maximum
         7. Suppr valeur
         """
+        self.active()
         self.updateEtat()
         if not self.__tableurOpen:
             return False

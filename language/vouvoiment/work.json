@@ -155,5 +155,6 @@
                     "js",
                     "java",
                     "kotlin",
-                    "kt"]
+                    "kt"],
+  "phHelpArreraWork5": "Les fonction d'Arrera work sont :\n- Edition tableur (Taper aide tableur)\n- Edition fichier de traitement de texte (Taper aide word)\n- Fonction Arrera projet (Taper aide projet)"
 }
