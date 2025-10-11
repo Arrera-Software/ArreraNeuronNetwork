@@ -218,7 +218,6 @@ class ABrain :
         if (self.__valeurOut == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11):
             self.__gestionnaire.setOld("requette api",requette)
         else :
-            print(self.__listOut[0])
             self.__gestionnaire.setOld(self.__listOut[0],requette)
 
     def updateAssistant(self):
