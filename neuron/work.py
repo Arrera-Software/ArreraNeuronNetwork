@@ -57,10 +57,10 @@ class neuroneWork(neuronBase):
                 return 1
             else :
                 return 0
-        else :
+        else:
             if (self._keyword.checkOpen(requette,"open") and
-                    self._keyword.checkWork(requette,"tableur-file") and
-                    self._keyword.checkOpen(requette,"computer")):
+                        self._keyword.checkWork(requette,"tableur-file") and
+                        self._keyword.checkOpen(requette,"computer")):
 
                     if self.__fonctionWork.openTableurOs():
                         self._listSortie = [self._language.getPhraseWork("1"), ""]
@@ -78,17 +78,6 @@ class neuroneWork(neuronBase):
                     self._listSortie = [self._language.getPhraseWork("11"), ""]
 
                 self._valeurOut = 8
-                return 1
-            elif (self._keyword.checkWork(requette,"read") and
-                  self._keyword.checkWork(requette,"tableur-file")):
-
-                if self.__fonctionWork.readTableur():
-                    self._listSortie = self.__fonctionWork.getEtatTableur()
-                    self._valeurOut = 13
-                else :
-                    self._listSortie = [self._language.getPhraseWork("17"), ""]
-                    self._valeurOut = 1
-
                 return 1
             elif self._keyword.checkWork(requette,"add") and self._keyword.checkWork(requette,"tableur-file"):
                 if self._keyword.checkWork(requette,"valeur"):
