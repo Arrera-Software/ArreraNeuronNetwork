@@ -496,6 +496,7 @@ class GUIWork(GuiBase):
                 return False
 
     def activeReadTableur(self):
+        self.active()
         self.updateEtat()
         if not self.__tableurOpen:
             return False
