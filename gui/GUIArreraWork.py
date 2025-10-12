@@ -193,8 +193,8 @@ class GUIWork(GuiBase):
                                                  ppolice="Arial", ptaille=25)
         btnOpenWordWithComputer = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                            image=imgOpenWordWithComputer, command=self.__openWordCoputerSoft)
-        btnEditWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,bg=self._btnColor,fg=self._btnTexteColor,
-                                                command=self.__writeWord)
+        btnEditWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord, bg=self._btnColor, fg=self._btnTexteColor,
+                                               command=self.__viewEditWord)
         btnViewReadWord = self._arrtk.createButton(self.__fWord, width=90, height=90, bg=self._btnColor, fg=self._btnTexteColor,
                                                image=imgReadWord, command=self.__viewReadWord)
 
@@ -211,6 +211,16 @@ class GUIWork(GuiBase):
         btnReadWord = self._arrtk.createButton(self.__fReadWord, ppolice="Arial", ptaille=20, pstyle="bold",
                                                 text="Lire", bg=self._btnColor, fg=self._btnTexteColor,
                                                command=self.__readWord)
+
+        labelEditWord = self._arrtk.createLabel(self.__fWriteWord, text="Ecriture dans le document Word",
+                                                    ppolice="Arial", ptaille=25, pstyle="bold")
+        wScrollEditText, self.__textEditWord = self._arrtk.createTextBoxScrolled(self.__fWriteWord)
+        btnQuitEditWord = self._arrtk.createButton(self.__fWriteWord, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                    text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
+                                                    command=self.__quitEditWord)
+        btnWriteWord = self._arrtk.createButton(self.__fWriteWord, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                    text="Ecrire", bg=self._btnColor, fg=self._btnTexteColor,
+                                                command=self.__writeWord)
 
 
 
@@ -381,6 +391,12 @@ class GUIWork(GuiBase):
         self.__fReadWord.grid_rowconfigure(1, weight=1)
         self.__fReadWord.grid_rowconfigure(2, weight=0)
 
+        self.__fWriteWord.grid_columnconfigure(0, weight=1, uniform="buttons")
+        self.__fWriteWord.grid_columnconfigure(1, weight=1, uniform="buttons")
+        self.__fWriteWord.grid_rowconfigure(0, weight=0)
+        self.__fWriteWord.grid_rowconfigure(1, weight=1)
+        self.__fWriteWord.grid_rowconfigure(2, weight=0)
+
 
         # Affichage des frames
         labelTitleAcceuil.grid(row=0, column=0, columnspan=3, sticky='new', pady=20)  # En haut, centré, espacé en haut
@@ -466,6 +482,11 @@ class GUIWork(GuiBase):
         wScrollText.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
         btnQuitReadWord.grid(row=2, column=0, sticky="ew",padx=(8, 4), pady=(4, 8))
         btnReadWord.grid(row=2, column=1, sticky="ew",padx=(4, 8), pady=(4, 8))
+
+        labelEditWord.grid(row=0, column=0, columnspan=2, sticky="ew",padx=8, pady=(8, 4))
+        wScrollEditText.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
+        btnQuitEditWord.grid(row=2, column=0, sticky="ew",padx=(8, 4), pady=(4, 8))
+        btnWriteWord.grid(row=2, column=1, sticky="ew",padx=(4, 8), pady=(4, 8))
 
 
     def activeProjet(self):
@@ -812,11 +833,33 @@ class GUIWork(GuiBase):
         self.updateEtat()
         self.__activeWord()
 
+    def __viewEditWord(self):
+        if self._gestionnaire.getGestFNC().getFNCWork().readWord():
+
+            self.__disabelFrame()
+            self.__disableManageWord()
+            self.__frameManageWord.grid(row=0, column=0, columnspan=3, sticky='nsew')
+            self.__fWriteWord.grid(row=0, column=0, sticky="nsew")
+            self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+            self.__textEditWord.configure(state="normal")
+
+            text = self._gestionnaire.getGestFNC().getFNCWork().getReadWord()
+            if text :
+                self.__textEditWord.delete(1.0, ctk.END)
+                self.__textEditWord.insert(ctk.END, text)
+        else :
+            showinfo("Erreur", "Une erreur est survenue.")
+
     def __writeWord(self):
-        """
-        Écrit dans le document Word.
-        """
-        self._gestionnaire.getGestFNC().getFNCWork().writeWord("")
+        newTexte = self.__textEditWord.get(1.0, ctk.END)
+        if self._gestionnaire.getGestFNC().getFNCWork().writeWordEcrase(newTexte):
+            showinfo("Succès", "Le document a été mis à jour.")
+        else :
+            showerror("Erreur", "Une erreur est survenue lors de la mise à jour du document.")
+        self.__disableManageWord()
+
+    def __quitEditWord(self):
+        self.__disableManageWord()
 
     def __viewReadWord(self):
         if self._gestionnaire.getGestFNC().getFNCWork().readWord():
