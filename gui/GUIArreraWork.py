@@ -551,6 +551,22 @@ class GUIWork(GuiBase):
             case _ :
                 return False
 
+    def activeReadWord(self):
+        self.active()
+        self.updateEtat()
+        if not self.__wordOpen:
+            return False
+        self.__viewReadWord()
+        return True
+
+    def activeWriteWord(self):
+        self.active()
+        self.updateEtat()
+        if not self.__wordOpen:
+            return False
+        self.__viewEditWord()
+        return True
+
     def activeReadTableur(self):
         self.active()
         self.updateEtat()
