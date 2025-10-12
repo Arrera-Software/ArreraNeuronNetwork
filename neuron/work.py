@@ -317,6 +317,67 @@ class neuroneWork(neuronBase):
         pass
 
     def __neuronWord(self,requette:str):
+        if not self.__fonctionWork.getEtatWord():
+            if (self._keyword.checkOpen(requette,"open") and
+                    self._keyword.checkWork(requette,"word-file")):
+                if self.__fonctionWork.openWord():
+                    self._listSortie = [self._language.getPhraseWork("7"),""]
+                    self._valeurOut = 7
+                else :
+                    self._listSortie = [self._language.getPhraseWork("8"),""]
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkWork(requette,"help-word"):
+                self._listSortie = [self._language.getPhraseHelpArreraWork("2"),"word"]
+                self._valeurOut = 17
+                return 1
+        else :
+            if (self._keyword.checkOpen(requette,"open") and
+                    self._keyword.checkWork(requette,"word-file") and
+                    self._keyword.checkOpen(requette,"computer")):
+
+                if self.__fonctionWork.openWordOs():
+                    self._listSortie = [self._language.getPhraseWork("3"), ""]
+                else :
+                    self._listSortie = [self._language.getPhraseWork("4"), ""]
+
+                self._valeurOut = 1
+                return 1
+            elif (self._keyword.checkWork(requette,"close") and
+                  self._keyword.checkWork(requette,"word-file")):
+
+                if self.__fonctionWork.closeTableur():
+                    self._listSortie = [self._language.getPhraseWork("12"), ""]
+                else :
+                    self._listSortie = [self._language.getPhraseWork("13"), ""]
+
+                self._valeurOut = 8
+                return 1
+            elif self._keyword.checkWork(requette,"help-word"):
+                self._listSortie = [self._language.getPhraseHelpArreraWork("2"),"word"]
+                self._valeurOut = 17
+                return 1
+            elif (self._keyword.checkWork(requette,"write") and
+                  self._keyword.checkWork(requette,"word-file")):
+                if self._gestGUI.activeWriteWord():
+                    self._listSortie = [self._language.getPhraseWork("18"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("19"),""]
+                    self._valeurOut = 1
+                return 1
+            elif (self._keyword.checkWork(requette,"read") and
+                  self._keyword.checkWork(requette,"word-file")):
+                if self._gestGUI.activeReadWord():
+                    self._listSortie = [self._language.getPhraseWork("61"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("16"),""]
+                    self._valeurOut = 1
+                return 1
+
+
+
         """
         if (self._fonctionArreraNetwork.getWordOpen() == False):
             if (("ouvre" in requette) and (("word" in requette) or

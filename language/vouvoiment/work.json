@@ -82,7 +82,7 @@
   "phWork59": "Votre fichier de traitement de texte a bien été ouvert correctement {genre}. Il ne nous reste plus qu'à écrire dessus.",
   "phWork60": "Désolé {genre}, mais il m'est impossible d'ouvrir un fichier Word.",
   "phProjetFileOpen20": "Je vous ai ouvert votre pense-bête {name} {genre} {user}.",
-  "phWork61": "Un problème est survenu, je ne peux pas vous ouvrir l'outil de pense-bête.",
+  "phWork61": "Je vous ouvre l'interface pour que tu puisse lire le fichier",
   "phWork62": "",
   "phWork63": "",
   "phWork64": "Très bien, je vous ouvre l'interface pour ajouter un comptage de valeur à votre tableur.",

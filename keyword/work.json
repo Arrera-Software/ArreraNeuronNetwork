@@ -13,6 +13,16 @@
     "comment utiliser tableur",
     "aide sur tableur",
     "aide sur arrera tableur"],
+  "help-word": [
+    "aide word",
+    "aide traitement de texte",
+    "comment utiliser les word",
+    "comment utiliser les traitements de textes",
+    "aide arrera word",
+    "aide arrera traitements de textes",
+    "comment utiliser tableur",
+    "aide sur word",
+    "aide sur traitement de texte"],
   "question-open": ["est ce que"],
   "open-file": [
     "document",
@@ -21,6 +31,11 @@
   "tableur-file":[
     "tableur",
     "excel"],
+  "word-file":[
+    "document",
+    "word",
+    "texte",
+    "traitement de texte"],
   "computer": [
     "ordinateur",
     "pc",
@@ -77,5 +92,10 @@
     "efface",
     "effacer",
     "retire"
-  ]
+  ],
+  "write": [
+    "ecrit",
+    "ecrire",
+    "write",
+    "ajoute"]
 }
