@@ -81,6 +81,8 @@ class GUIWork(GuiBase):
                                                           tailleX=90, tailleY=90)
         imgCloseWord = self._arrtk.createImage(self.__emplacementAsset + "word/close-word.png",
                                                tailleX=90, tailleY=90)
+        imgReadWord = self._arrtk.createImage(self.__emplacementAsset + "word/read-word.png",
+                                              tailleX=90, tailleY=90)
 
         imgWriteWord = self._arrtk.createImage(self.__emplacementAsset + "word/write-word.png",
                                                tailleX=90, tailleY=90)
@@ -118,6 +120,10 @@ class GUIWork(GuiBase):
         self.__frameAddFormule = self._arrtk.createFrame(self.__frameManageTableur)
         self.__frameReadTableur = self._arrtk.createFrame(self.__frameManageTableur)
         self.__frameDelValeurTableur = self._arrtk.createFrame(self.__frameManageTableur)
+
+        self.__frameManageWord = self._arrtk.createFrame(self._screen)
+        self.__fReadWord = self._arrtk.createFrame(self.__frameManageWord)
+        self.__fWriteWord = self._arrtk.createFrame(self.__frameManageWord)
 
         # Widgets dans la frame d'accueil
         labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
@@ -187,11 +193,26 @@ class GUIWork(GuiBase):
                                                  ppolice="Arial", ptaille=25)
         btnOpenWordWithComputer = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                            image=imgOpenWordWithComputer, command=self.__openWordCoputerSoft)
+        btnEditWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,bg=self._btnColor,fg=self._btnTexteColor,
+                                                command=self.__writeWord)
+        btnViewReadWord = self._arrtk.createButton(self.__fWord, width=90, height=90, bg=self._btnColor, fg=self._btnTexteColor,
+                                               image=imgReadWord, command=self.__viewReadWord)
+
         btnCloseWord = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                 image=imgCloseWord, command=self.__closeWord)
 
-        btnWriteWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord,bg=self._btnColor,fg=self._btnTexteColor,
-                                                command=self.__writeWord)
+        # Manage Word
+        labelTitleReadWord = self._arrtk.createLabel(self.__fReadWord, text="Lecture du document Word",
+                                                        ppolice="Arial", ptaille=25, pstyle="bold")
+        wScrollText,self.__textReadWord = self._arrtk.createTextBoxScrolled(self.__fReadWord)
+        btnQuitReadWord = self._arrtk.createButton(self.__fReadWord, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                   text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
+                                                   command=self.__quitReadWord)
+        btnReadWord = self._arrtk.createButton(self.__fReadWord, ppolice="Arial", ptaille=20, pstyle="bold",
+                                                text="Lire", bg=self._btnColor, fg=self._btnTexteColor,
+                                               command=self.__readWord)
+
+
 
         # Widget dans la frame Projet
         # No OPEN
@@ -351,6 +372,15 @@ class GUIWork(GuiBase):
         self.__frameDelValeurTableur.rowconfigure(1, weight=1)
         self.__frameDelValeurTableur.rowconfigure(3, weight=1)
 
+        self.__frameManageWord.grid_rowconfigure(0, weight=1)
+        self.__frameManageWord.grid_columnconfigure(0, weight=1)
+
+        self.__fReadWord.grid_columnconfigure(0, weight=1, uniform="buttons")
+        self.__fReadWord.grid_columnconfigure(1, weight=1, uniform="buttons")
+        self.__fReadWord.grid_rowconfigure(0, weight=0)
+        self.__fReadWord.grid_rowconfigure(1, weight=1)
+        self.__fReadWord.grid_rowconfigure(2, weight=0)
+
 
         # Affichage des frames
         labelTitleAcceuil.grid(row=0, column=0, columnspan=3, sticky='new', pady=20)  # En haut, centré, espacé en haut
@@ -390,10 +420,10 @@ class GUIWork(GuiBase):
         btnOpenWord.grid(row=2, column=1, sticky="n")
 
         labelTitleWord.grid(row=0, column=0, columnspan=3, sticky='ew')
-        btnOpenWordWithComputer.grid(row=1, column=0, padx=20, pady=20)
-        btnCloseWord.grid(row=1, column=1, padx=20, pady=20)
-        btnWriteWord.grid(row=1, column=2, padx=20, pady=20)
-        # btnReadWord.grid(row=2, column=0, padx=20, pady=20)
+        btnViewReadWord.grid(row=1, column=0, padx=20, pady=20)
+        btnEditWord.grid(row=1, column=1, padx=20, pady=20)
+        btnOpenWordWithComputer.grid(row=1, column=2, padx=20, pady=20)
+        btnCloseWord.grid(row=2, column=0, padx=20, pady=20)
 
         # Placement des widgets dans la frame Projet
         labelTitleProjet.grid(row=0, column=0, columnspan=3, sticky='new')
@@ -431,6 +461,11 @@ class GUIWork(GuiBase):
         wECaseDel.grid(row=2, column=0, columnspan=2, padx=12, pady=6)
         btnCancelDebTableur.grid(row=4, column=0, sticky="sw", padx=10, pady=10)
         btnDelTableur.grid(row=4, column=1, sticky="se", padx=10, pady=10)
+
+        labelTitleReadWord.grid(row=0, column=0, columnspan=2, sticky="ew",padx=8, pady=(8, 4))
+        wScrollText.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
+        btnQuitReadWord.grid(row=2, column=0, sticky="ew",padx=(8, 4), pady=(4, 8))
+        btnReadWord.grid(row=2, column=1, sticky="ew",padx=(4, 8), pady=(4, 8))
 
 
     def activeProjet(self):
@@ -587,6 +622,7 @@ class GUIWork(GuiBase):
         self._gestionnaire.getGestFNC().getFNCWork().openTableurOs()
 
     def __closeTableur(self):
+        self.__disableManageTableur()
         self._gestionnaire.getGestFNC().getFNCWork().closeTableur()
         self.updateEtat()
         self.__activeTableur()
@@ -771,6 +807,7 @@ class GUIWork(GuiBase):
         """
         Ferme le document Word.
         """
+        self.__disableManageWord()
         self._gestionnaire.getGestFNC().getFNCWork().closeWord()
         self.updateEtat()
         self.__activeWord()
@@ -781,11 +818,46 @@ class GUIWork(GuiBase):
         """
         self._gestionnaire.getGestFNC().getFNCWork().writeWord("")
 
+    def __viewReadWord(self):
+        if self._gestionnaire.getGestFNC().getFNCWork().readWord():
+            text = self._gestionnaire.getGestFNC().getFNCWork().getReadWord()
+            if text :
+                self.__disabelFrame()
+                self.__disableManageWord()
+                self.__frameManageWord.grid(row=0, column=0, columnspan=3, sticky='nsew')
+                self.__fReadWord.grid(row=0, column=0, sticky="nsew")
+                self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
+                self.__textReadWord.configure(state="normal")
+                self.__textReadWord.delete(1.0, ctk.END)
+                self.__textReadWord.insert(ctk.END, text)
+                self.__textReadWord.configure(state="disabled")
+            else :
+                showinfo("Info", "Le document est vide.")
+        else :
+            showinfo("Erreur", "Une erreur est survenue lors de la lecture du document.")
+
+    def __quitReadWord(self):
+        self.__disableManageWord()
+
     def __readWord(self):
-        """
-        Lit le document Word.
-        """
-        self._gestionnaire.getGestFNC().getFNCWork().readWord()
+        if self._gestionnaire.getGestFNC().getFNCWork().readWord():
+            text = self._gestionnaire.getGestFNC().getFNCWork().getReadWord()
+            if text :
+                self._gestionnaire.getArrVoice().say(text)
+            else :
+                showinfo("Info", "Le document est vide.")
+        else :
+            showinfo("Erreur", "Une erreur est survenue lors de la lecture du document.")
+
+    def __disableManageWord(self):
+        self.__frameManageWord.grid_forget()
+        self.__fReadWord.grid_forget()
+        self.__fWriteWord.grid_forget()
+        self.__fDock.grid_forget()
+        self.__disabelFrame()
+        self.__activeWord()
+
+
     # Partie Projet
 
     def __openProjet(self):
