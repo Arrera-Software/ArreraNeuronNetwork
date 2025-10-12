@@ -119,6 +119,12 @@ class gestGUI:
     def activeWorkWord(self):
         self.__guiWork.activeWord()
 
+    def activeReadWord(self):
+        return self.__guiWork.activeReadWord()
+
+    def activeWriteWord(self):
+        return self.__guiWork.activeWriteWord()
+
     def activeTraducteur(self):
         self.__guiTraducteur.active()
 
