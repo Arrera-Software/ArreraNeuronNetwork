@@ -247,7 +247,7 @@ class GUIWork(GuiBase):
         btnOpenFileProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgOpenFileProjet,
                                                      command=self.__openFileProjet,bg=self._btnColor,fg=self._btnTexteColor)
         btnViewTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgTaskViewProjet,
-                                                     command=self.__openTaskProjet,bg=self._btnColor,fg=self._btnTexteColor)
+                                                     command=self.openTaskProjet, bg=self._btnColor, fg=self._btnTexteColor)
         btnSayAllTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
                                                        image=imgTaskSayProjet, command=self.__sayTaskProjet)
 
@@ -642,6 +642,14 @@ class GUIWork(GuiBase):
         self.__wordOpen = self._gestionnaire.getGestFNC().getFNCWork().getEtatWord()
         self.__tableurOpen = self._gestionnaire.getGestFNC().getFNCWork().getEtatTableur()
         self.__projectOpen = self._gestionnaire.getGestFNC().getFNCWork().getEtatProject()
+        if self.__projectOpen:
+            self.__nameProjet = self._gestionnaire.getGestFNC().getFNCWork().getNameProjet()
+            self.__guiTaskProject = GUITaskProject(self._gestionnaire,
+                                                   self.__nameProjet,
+                                                   self._gestionnaire.getGestFNC().getFNCWork().getFNCTaskProjet())
+        else :
+            self.__nameProjet = None
+            self.__guiTaskProject = None
 
     # Partie Tableur
     def __openTableur(self):
@@ -1046,11 +1054,50 @@ class GUIWork(GuiBase):
                                                    self.__nameProjet,
                                                    self._gestionnaire.getGestFNC().getFNCWork().getFNCTaskProjet())
 
-    def __openTaskProjet(self):
+    def openTaskProjet(self):
         """
         Ouvre une tâche dans le projet.
         """
-        self.__guiTaskProject.active()
+        self.updateEtat()
+        if self.__guiTaskProject is not None :
+            self.__guiTaskProject.active()
+            return True
+        else :
+            return False
+
+    def openTaskProjetAdd(self):
+        """
+        Ouvre une fenêtre pour ajouter une tâche dans le projet.
+        """
+        self.updateEtat()
+        if self.__guiTaskProject is not None :
+            self.__guiTaskProject.activeAdd()
+            return True
+        else :
+            return False
+
+
+    def openTaskProjetdel(self):
+        """
+        Ouvre une fenêtre pour ajouter une tâche dans le projet.
+        """
+        self.updateEtat()
+        if self.__guiTaskProject is not None :
+            self.__guiTaskProject.activeDel()
+            return True
+        else :
+            return False
+
+    def openTaskProjetfinish(self):
+        """
+        Ouvre une fenêtre pour ajouter une tâche dans le projet.
+        """
+        self.updateEtat()
+        if self.__guiTaskProject is not None :
+            self.__guiTaskProject.activeFinish()
+            return True
+        else :
+            return False
 
 
     def __closeProjet(self):
@@ -1058,8 +1105,8 @@ class GUIWork(GuiBase):
         Ferme le projet.
         """
         self._gestionnaire.getGestFNC().getFNCWork().closeProjet()
-        self.updateEtat()
         self.__activeAcceuil()
         self.__nameProjet = None
         del self.__guiTaskProject
         self.__guiTaskProject = None
+        self.updateEtat()

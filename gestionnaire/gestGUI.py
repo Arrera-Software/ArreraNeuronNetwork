@@ -125,6 +125,22 @@ class gestGUI:
     def activeWriteWord(self):
         return self.__guiWork.activeWriteWord()
 
+    def activeTaskProject(self,mode:int):
+        """
+        1. Add Projet
+        2. Del Projet
+        3. View Projet
+        """
+        match mode :
+            case 1:
+                return self.__guiWork.openTaskProjetAdd()
+            case 2:
+                return self.__guiWork.openTaskProjetdel()
+            case 3:
+                return self.__guiWork.openTaskProjet()
+            case _ :
+                return False
+
     def activeTraducteur(self):
         self.__guiTraducteur.active()
 
