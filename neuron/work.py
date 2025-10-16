@@ -6,6 +6,9 @@ class neuroneWork(neuronBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire)
         self.__fonctionWork = self._gestionnaire.getGestFNC().getFNCWork()
+        self.__fileProjectCreate = False
+        self.__nameFileProjectCreate = ""
+        self.__typeFileProjectCreate = ""
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -150,171 +153,205 @@ class neuroneWork(neuronBase):
                 return 0
 
     def __neuronProjet(self,requette:str):
-        """
-        oldRequette,oldSortie = self._gestionnaire.getOld()
-
-        if self._fonctionArreraNetwork.getProjectOpen() == False:
-            if (("ouvre le projet nommer" in requette) or
-                    ("ouvre le projet nomme" in requette) or
-                    ("ouvre le projet" in requette)):
-                projet,text = self._fonctionArreraNetwork.sortieOpenProjet(requette)
-                self._listSortie = [text, ""]
-                self._objHistorique.setAction("Ouverture du projet " + projet)
-                self._valeurOut = 14
+        if not self.__fonctionWork.getEtatProject():
+            if self._keyword.checkWork(requette,"open-project"):
+                listKeyword = self._keyword.getListKeyword("work","open-project")
+                for mot in listKeyword:
+                    requette = requette.replace(mot,"")
+                project = requette.strip()
+                if self.__fonctionWork.openProjet(project):
+                    self._listSortie = [self._language.getPhraseProjetFileOpen("6",project),""]
+                    self._valeurOut = 14
+                else :
+                    self._listSortie = [self._language.getPhraseProjetFileOpen("7",project),""]
+                    self._valeurOut = 1
                 return 1
-
-            elif (("cree un projet nommer" in requette) or ("cree un nouveau projet nommer" in requette )
-                  or ("cree un projet nomme" in requette) or ("cree un nouveau projet nomme" in requette)):
-                self._listSortie = [self._fonctionArreraNetwork.sortieCreateFolder(requette), ""]
-                self._objHistorique.setAction("Creation d'un projet nommer " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 10
+            elif self._keyword.checkWork(requette, "create-project"):
+                listKeyword = self._keyword.getListKeyword("work","create-project")
+                for mot in listKeyword:
+                    requette = requette.replace(mot,"")
+                project = requette.strip()
+                if self.__fonctionWork.createProjet(project):
+                    self._listSortie = [self._language.getPhraseProjetFileOpen("4",project),""]
+                    self._valeurOut = 10
+                else :
+                    self._listSortie = [self._language.getPhraseProjetFileOpen("5",project),""]
+                    self._valeurOut = 1
                 return 1
+            elif (self._keyword.checkWork(requette,"liste") and
+                  self._keyword.checkWork(requette,"project-file")):
+                listProject = self.__fonctionWork.getListProjet()
+                nbProject = len(listProject)
+                if nbProject == 0:
+                    debutPhrase = self._language.getPhraseWork("68")
 
-            elif "aide projet" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieHelpArreraWork()
-                    ,"projet"]
+                elif nbProject == 1:
+                    debutPhrase = self._language.getPhraseWork("67")
+
+                else :
+                    debutPhrase = self._language.getPhraseWork("66")
+
+                self._valeurOut = 1
+                text = ""
+
+                for i in range(0,nbProject):
+                    if i == nbProject-1:
+                        if nbProject == 1:
+                            text = debutPhrase + " " + listProject[i] + "."
+                        else :
+                            text = text + " et " + listProject[i] + "."
+                    elif i == 0:
+                        text = debutPhrase + " " + listProject[i]
+                    else :
+                        text = text + ", " + listProject[i]
+
+                self._listSortie = [text,"liste project"]
+                return 1
+            elif self._keyword.checkWork(requette,"help-project"):
+                self._listSortie = [self._language.getPhraseHelpArreraWork("3"),
+                                    "project"]
                 self._valeurOut = 17
                 return 1
-
-            elif "liste" in requette and "projet" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieListeProjet(),"liste projet"]
-                self._valeurOut = 1
-                return 1
-
-            else :
-                return 0
-
-        elif ("ouvre" in requette) and ("projet" in requette) and ("nommer" in requette) and ("le" in requette):
-            text,file = self._fonctionArreraNetwork.sortieOpenFileProject(requette)
-            self._listSortie = [text, ""]
-            if ("Il a peux être pas un projet ouvert." not in self._listSortie[0]):
-                self._objHistorique.setAction("Ouverture du fichier "
-                                              + file + " du projet " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 7
-            else :
-                self._valeurOut = 1
-            return 1
-
-        elif "aide projet" in requette:
-            self._listSortie = [self._fonctionArreraNetwork.sortieHelpArreraWork()
-                ,"projet"]
-            self._valeurOut = 17
-            return 1
-
-        elif "cree un fichier" in requette:
-            if ("nommer" in requette and (
-                    ("word"in requette) or ("odt"in requette) or
-                    ("txt"in requette) or ("python" in requette)
-                    or ("json" in requette) or ("html" in requette) or
-                    ("css" in requette) or("md" in requette) or
-                    ("cpp" in requette) or ("exel" in requette) or
-                    ("texte" in requette) or ("en tete" in requette)or
-                    ("open texte document " in requette) or ("tableur" in requette)
-                    or ("language c++" in requette) or ("php" in requette) or
-                    ("javascript" in requette) or ("java script" in requette) or
-                    ("js" in requette) or ("java" in requette) or
-                    ("kotlin" in requette )or ("kt" in requette) or
-                    ("postite" in requette) or ("ab" in requette))):
-                self._listSortie = [self._fonctionArreraNetwork.sortieCreateFileDirect(requette), ""]
-                self._objHistorique.setAction("Creation du fichier " + self._fonctionArreraNetwork.getNameLastFile() +
-                                              " dans le projet " + self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 16
-                return 1
-
-        elif (("Voulez-vous l'ouvrir ?" in oldSortie or "Es que tu veux que je te l'ouvre ?" in oldSortie) and
-              ("oui" in requette or "ouvre le" in requette or "vasy" in requette or "comme tu veux" in requette)):
-            nameFile = self._fonctionArreraNetwork.getNameLastFile()
-            self._listSortie = [self._fonctionArreraNetwork.sortieopenFileCreated(), ""]
-            self._objHistorique.setAction("Ouverture du fichier " + nameFile + " du projet " +
-                                          self._fonctionArreraNetwork.getNameProjetOpen())
-            self._valeurOut = 7
-            return 1
-
-        elif (("liste" in requette) and ("fichier" in requette) and
-              (("projet" in requette ) or ("project" in requette ))):
-            self._listSortie = [self._fonctionArreraNetwork.sortieListFileProject(), ""]
-            self._objHistorique.setAction("Liste de fichier du projet " +
-                                          self._fonctionArreraNetwork.getNameProjetOpen())
-            self._valeurOut = 1
-            return 1
-        elif ("taches" in requette or "tache" in requette) and "projet" in requette:
-            if "montre" in requette or "fais voir" in requette or "ouvre" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieShowTacheProjet(), ""]
-                self._objHistorique.setAction("Activation de l'interface des tache du projet " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 5
-                return 1
-            elif ("ajoute" in requette or "ajouter" in requette
-                  or "ajout" in requette or "add" in requette) :
-                self._listSortie = [self._fonctionArreraNetwork.sortieAddTacheProjet(), ""]
-                self._objHistorique.setAction("Ajout d'une tache au projet " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 5
-                return 1
-            elif "supprime" in requette or "supprimer" in requette or "suppr" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieSupprTacheProjet(), ""]
-                self._objHistorique.setAction("Suppression d'une tache au projet " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 5
-                return 1
-            elif "finir" in requette or "terminer" in requette or "termine" in requette or "fini" in requette:
-                self._listSortie = [self._fonctionArreraNetwork.sortieSupprTacheProjet(), ""]
-                self._objHistorique.setAction("Finnision d'une tache au projet " +
-                                              self._fonctionArreraNetwork.getNameProjetOpen())
-                self._valeurOut = 5
-                return 1
-            elif ("dit moi" in requette) and (("nombre" in requette) or ("combien" in requette)):
-                if ("jour" in requette) or ("aujourd'hui" in requette):
-                    self._listSortie = [self._fonctionArreraNetwork.sortieListeTacheTodayProjet(), ""]
-                    self._objHistorique.setAction("Enumeration des taches du " +
-                                                  self._fonctionArreraNetwork.getNameProjetOpen() + " pour aujourd'hui")
-                    self._valeurOut = 1
-                    return 1
-                elif "demain" in requette:
-                    self._listSortie = [self._fonctionArreraNetwork.sortieListTacheTowmorowProjet(), ""]
-                    self._objHistorique.setAction("Enumeration des taches du " + self._fonctionArreraNetwork.getNameProjetOpen() + " pour demain")
-                    self._valeurOut = 1
-                    return 1
-                else :
-                    self._listSortie = [self._fonctionArreraNetwork.sortieNbTacheProjet(), ""]
-                    self._objHistorique.setAction("Enumeration des taches du " +
-                                                  self._fonctionArreraNetwork.getNameProjetOpen())
-                    self._valeurOut = 1
-                    return 1
-            else :
-                return 0
-
-        elif ("Quelle est le type de projet ?" in oldSortie) and ("le type est" in requette):
-            self._listSortie = [self._fonctionArreraNetwork.sortieSetTypeProjet(requette), ""]
-            self._objHistorique.setAction("Mise en place d'un type au projet")
-            self._valeurOut = 5
-            return 1
-
-        elif "le type du projet est" in requette:
-            self._listSortie = [self._fonctionArreraNetwork.sortieSetTypeProjet(requette), ""]
-            self._objHistorique.setAction("Mise en place d'un type au projet")
-            self._valeurOut = 5
-            return 1
-
-        elif "ferme" in requette and "projet" in requette:
-            nameProjet = self._fonctionArreraNetwork.getNameProjetOpen()
-            self._listSortie = [self._fonctionArreraNetwork.sortieCloseProject(), ""]
-            self._objHistorique.setAction("Fermeture du projet " + nameProjet)
-            self._valeurOut = 21
-            return 1
-
-        elif "type fichier" in requette:
-            self._listSortie = [self._fonctionArreraNetwork.sortieHelpWorkType()
-                ,"fichier"]
-            self._valeurOut = 17
-            return 1
         else :
-            return 0
-        return 0
-        """
-        pass
+            if (self._keyword.checkWork(requette,"project-file") and
+                    self._keyword.checkWork(requette,"close")):
+                if self.__fonctionWork.closeProjet():
+                    self._listSortie = [self._language.getPhraseWork("14"),""]
+                    self.__fileProjectCreate = False
+                    self.__nameFileProjectCreate = ""
+                    self.__typeFileProjectCreate = ""
+                    self._valeurOut = 21
+                else :
+                    self._listSortie = [self._language.getPhraseWork("15"),""]
+                    self._valeurOut = 1
+                return 1
+            elif (self._keyword.checkWork(requette,"project-file") and
+                  self._keyword.checkWork(requette,"file") and
+                  self._keyword.checkWork(requette,"liste")):
+                self._listSortie = [self._language.getPhraseHelpArreraWork("4"),""]
+                self._valeurOut = 17
+                return 1
+            elif (self._keyword.checkWork(requette,"project-file") and
+                  (self._keyword.checkTime(requette,"montre") or
+                   self._keyword.checkTime(requette,"open")) and
+                  self._keyword.checkTime(requette,"tache")):
+
+                if self._gestGUI.activeTaskProject(3):
+                    self._listSortie = [
+                        self._language.getPhraseProjetFileOpen("10",
+                                                               self.__fonctionWork.getNameProjet()),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("51"),""]
+                    self._valeurOut = 1
+            elif (self._keyword.checkWork(requette,"project-file") and
+                  self._keyword.checkTime(requette,"add") and
+                  self._keyword.checkTime(requette,"tache")):
+
+                if self._gestGUI.activeTaskProject(1):
+                    self._listSortie = [
+                        self._language.getPhraseProjetFileOpen("11",
+                                                               self.__fonctionWork.getNameProjet()),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("52"),""]
+                    self._valeurOut = 1
+            elif (self._keyword.checkWork(requette,"project-file") and
+                  self._keyword.checkTime(requette,"delete") and
+                  self._keyword.checkTime(requette,"tache")):
+
+                if self._gestGUI.activeTaskProject(2):
+                    self._listSortie = [
+                        self._language.getPhraseProjetFileOpen("12",
+                                                               self.__fonctionWork.getNameProjet()),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseWork("53"),""]
+                    self._valeurOut = 1
+
+            elif (self._keyword.checkWork(requette,"project-file") and
+                  self._keyword.checkWork(requette,"file") and
+                  self._keyword.checkWork(requette,"create")):
+                self._listSortie = [self._language.getPhraseWork("72")
+                    ,""]
+                self._valeurOut = 1
+                self.__fileProjectCreate = True
+                self.__nameFileProjectCreate = ""
+                self.__typeFileProjectCreate = ""
+                return 1
+
+            elif self.__fileProjectCreate:
+                if self._keyword.checkWork(requette,"name-file"):
+                    listKeyword = self._keyword.getListKeyword("work","name-file")
+                    for mot in listKeyword:
+                        requette = requette.replace(mot,"")
+
+                    self.__nameFileProjectCreate = requette.strip()
+
+                    if self.__nameFileProjectCreate != "":
+                        if self.__typeFileProjectCreate == "":
+                            self._listSortie = [self._language.getPhraseWork("45")
+                                ,""]
+                            self._valeurOut = 1
+                        elif self.__fonctionWork.createFileProject(self.__nameFileProjectCreate,
+                                                                     self.__typeFileProjectCreate):
+                            nameTypeFile = self.__nameFileProjectCreate+"."+self.__typeFileProjectCreate
+                            self._listSortie = [
+                                self._language.getPhraseProjetFileOpen("8",
+                                                                       nameTypeFile),""]
+                            self._valeurOut = 1
+                            self.__fileProjectCreate = False
+                            self.__nameFileProjectCreate = ""
+                            self.__typeFileProjectCreate = ""
+                        else :
+                            self._listSortie = [self._language.getPhraseWork("63")
+                                ,""]
+                            self._valeurOut = 1
+                    else :
+                        self._listSortie = [self._language.getPhraseWork("62")
+                            ,""]
+                        self._valeurOut = 1
+
+                    return 1
+
+                elif self._keyword.checkWork(requette,"type-file"):
+                    listKeyword = self._keyword.getListKeyword("work","type-file")
+                    for mot in listKeyword:
+                        requette = requette.replace(mot,"")
+
+                    self.__typeFileProjectCreate = requette.strip().replace(" ","")
+
+                    if (self.__typeFileProjectCreate in self.__fonctionWork.getListTypeFileName()
+                        or self.__typeFileProjectCreate in self.__fonctionWork.getListTypeFileExtension() or
+                            self.__typeFileProjectCreate != ""):
+
+                        if self.__nameFileProjectCreate == "":
+                            self._listSortie = [
+                                self._language.getPhraseWork("70")
+                                ,""]
+                            self._valeurOut = 1
+                        elif self.__fonctionWork.createFileProject(self.__nameFileProjectCreate,
+                                                                   self.__typeFileProjectCreate):
+                            nameTypeFile = self.__nameFileProjectCreate+"."+self.__typeFileProjectCreate
+                            self._listSortie = [
+                                self._language.getPhraseProjetFileOpen("8",
+                                                                       nameTypeFile),""]
+                            self._valeurOut = 1
+                            self.__fileProjectCreate = False
+                            self.__nameFileProjectCreate = ""
+                            self.__typeFileProjectCreate = ""
+                        else :
+                            self._listSortie = [self._language.getPhraseWork("63")
+                                ,""]
+                            self._valeurOut = 1
+
+                    else :
+                        self._listSortie = [
+                            self._language.getPhraseWork("71")
+                            ,""]
+                        self._valeurOut = 1
+
+                    return 1
 
     def __neuronWord(self,requette:str):
         if not self.__fonctionWork.getEtatWord():

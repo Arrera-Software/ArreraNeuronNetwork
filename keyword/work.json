@@ -13,6 +13,19 @@
     "comment utiliser tableur",
     "aide sur tableur",
     "aide sur arrera tableur"],
+  "help-project": [
+    "aide projet",
+    "comment utiliser arrera projet",
+    "aide arrera projet",
+    "aide projets",
+    "comment utiliser arrera projets",
+    "aide arrera projets",
+    "aide project",
+    "comment utiliser arrera project",
+    "aide arrera project",
+    "aide projects",
+    "comment utiliser arrera projects",
+    "aide arrera projects"],
   "help-word": [
     "aide word",
     "aide traitement de texte",
@@ -24,6 +37,28 @@
     "aide sur word",
     "aide sur traitement de texte"],
   "question-open": ["est ce que"],
+  "open-project": [
+    "ouvre le projet",
+    "ouvre le projet nommer",
+    "ouvre le projet nomme",
+    "ouvre le projets",
+    "ouvre le projets nommer",
+    "ouvre le projets nomme",
+    "ouvre le project",
+    "ouvre le project nommer",
+    "ouvre le project nomme",
+    "ouvre le projects",
+    "ouvre le projects nommer",
+    "ouvre le projects nomme"],
+  "create-project": [
+    "cree un projet nommer",
+    "cree un projet nomme",
+    "cree un nouveau projets nommer",
+    "cree un nouveau projets nomme",
+    "cree un project nommer",
+    "cree un project nomme",
+    "cree un nouveau projects nommer",
+    "cree un nouveau projects nomme"],
   "open-file": [
     "document",
     "tableur",
@@ -97,5 +132,40 @@
     "ecrit",
     "ecrire",
     "write",
-    "ajoute"]
+    "ajoute"],
+  "project-file": [
+    "projet",
+    "project",
+    "projets",
+    "projects"
+  ],
+  "liste": [
+    "liste",
+    "list",
+    "listes",
+    "lists"
+  ],
+  "project-type": [
+    "le type du projet est"
+  ],
+  "file": [
+    "fichier",
+    "file",
+    "fichiers",
+    "files"
+  ],
+  "create": [
+    "cree",
+    "creer"
+  ],
+  "name-file": [
+    "le nom est",
+    "le nom du fichier est",
+    "le nom de fichier est"
+  ],
+  "type-file": [
+        "le type est",
+        "le type du fichier est",
+        "le type de fichier est"
+    ]
 }
