@@ -167,5 +167,11 @@
         "le type est",
         "le type du fichier est",
         "le type de fichier est"
-    ]
+    ],
+  "gui-work": [
+    "interface work",
+    "gui work",
+    "interface arrera work",
+    "gui arrera work"
+  ],
 }

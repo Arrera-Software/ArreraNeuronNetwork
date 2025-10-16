@@ -412,3 +412,40 @@ class neuroneWork(neuronBase):
                     self._listSortie = [self._language.getPhraseWork("16"),""]
                     self._valeurOut = 1
                 return 1
+
+    def __neuronGUI(self,requette):
+        if self._keyword.checkOpen(requette,"open") and self._keyword.checkWork(requette,"gui-work"):# open
+            if self._keyword.checkwork(requette,"project-file"): # projet
+                if self._gestGUI.activeWorkProject():
+                    self._listSortie = []
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = []
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkwork(requette,"tableur-file"): # tableur
+                if self._gestGUI.activeWorkTableur():
+                    self._listSortie = []
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = []
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkwork(requette,"word-file"): # word
+                if self._gestGUI.activeWorkWord():
+                    self._listSortie = []
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = []
+                    self._valeurOut = 1
+                return 1
+            else :
+                if self._gestGUI.activeWork():
+                    self._listSortie = []
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = []
+                    self._valeurOut = 1
+
+
+
