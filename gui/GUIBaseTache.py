@@ -331,3 +331,7 @@ class GUIBaseTache(GuiBase):
     def activeFinish(self):
         self.active()
         self.__viewTaskFinish()
+
+    def activeAdd(self):
+        self.active()
+        self.__viewAddTask()
