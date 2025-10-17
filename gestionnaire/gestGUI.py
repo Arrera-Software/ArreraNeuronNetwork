@@ -93,13 +93,25 @@ class gestGUI:
         self.__guiTache.activeDel()
 
     def activeWork(self):
-        self.__guiWork.activeAcceuil()
+        try :
+            self.__guiWork.activeAcceuil()
+            return True
+        except Exception as e:
+            return False
 
     def activeWorkProject(self):
-        self.__guiWork.activeProjet()
+        try :
+            self.__guiWork.activeProjet()
+            return True
+        except Exception as e:
+            return False
 
     def activeWorkTableur(self):
-        self.__guiWork.activeTableur()
+        try :
+            self.__guiWork.activeTableur()
+            return True
+        except Exception as e:
+            return False
 
     def activeManageTableur(self,mode:int):
         """
@@ -117,7 +129,11 @@ class gestGUI:
         return self.__guiWork.activeReadTableur()
 
     def activeWorkWord(self):
-        self.__guiWork.activeWord()
+        try:
+            self.__guiWork.activeWord()
+            return True
+        except Exception as e:
+            return False
 
     def activeReadWord(self):
         return self.__guiWork.activeReadWord()
