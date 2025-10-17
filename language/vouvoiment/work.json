@@ -143,5 +143,15 @@
   "phHelpArreraWork5": "Les fonction d'Arrera work sont :\n- Edition tableur (Taper aide tableur)\n- Edition fichier de traitement de texte (Taper aide word)\n- Fonction Arrera projet (Taper aide projet)",
   "phWork70": "J'ai bien enregistré le type de fichier. Comment voulez-vous l'appeler ?",
   "phWork71": "Je n'ai pas compris le type de fichier que vous voulez créer. Pouvez-vous répéter ?",
-  "phWork72": "Tres bien dit moi quelle est le nom du fichier et son type."
+  "phWork72": "Tres bien dit moi quelle est le nom du fichier et son type.",
+
+
+  "phOpenGUIWork1": "Je vous ouvre l’interface de travail en mode projet pour vous aider au mieux à travailler.",
+  "phOpenGUIWork2": "Une erreur est survenue, je ne peux pas vous ouvrir l'interface de travail en mode projet.",
+  "phOpenGUIWork3": "Je vous ouvre l’interface de travail en mode tableur pour vous aider au mieux à travailler.",
+  "phOpenGUIWork4": "Une erreur est survenue, je ne peux pas vous ouvrir l'interface de travail en mode tableur.",
+  "phOpenGUIWork5": "Je vous ouvre l’interface de travail en mode traitement de texte pour vous aider au mieux à travailler.",
+  "phOpenGUIWork6": "Une erreur est survenue, je ne peux pas vous ouvrir l'interface de travail en mode traitement de texte",
+  "phOpenGUIWork7": "Je vous ouvre l’interface de gestion d’Arrera Work.",
+  "phOpenGUIWork8": "Imposible d'ouvrir l’interface de gestion d’Arrera Work."
 }

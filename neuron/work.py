@@ -20,6 +20,8 @@ class neuroneWork(neuronBase):
             return
         elif self.__neuronWord(requette) == 1:
             return
+        elif self.__neuronGUI(requette) == 1:
+            return
         elif self._keyword.checkWork(requette,"help-work"):
 
             self._listSortie = [self._language.getPhraseHelpArreraWork("5"),"work"]
@@ -44,7 +46,8 @@ class neuroneWork(neuronBase):
     def __neuronTableur(self,requette:str):
         if not self.__fonctionWork.getEtatTableur():
             if (self._keyword.checkOpen(requette,"open") and
-                    self._keyword.checkWork(requette,"tableur-file")):
+                    self._keyword.checkWork(requette,"tableur-file") and
+                    not self._keyword.checkWork(requette,"gui-work")):
 
                 if self.__fonctionWork.openTableur():
                     self._listSortie = [self._language.getPhraseWork("5"),""]
@@ -154,7 +157,8 @@ class neuroneWork(neuronBase):
 
     def __neuronProjet(self,requette:str):
         if not self.__fonctionWork.getEtatProject():
-            if self._keyword.checkWork(requette,"open-project"):
+            if (self._keyword.checkWork(requette,"open-project")and
+                not self._keyword.checkWork(requette,"gui-work")):
                 listKeyword = self._keyword.getListKeyword("work","open-project")
                 for mot in listKeyword:
                     requette = requette.replace(mot,"")
@@ -356,7 +360,8 @@ class neuroneWork(neuronBase):
     def __neuronWord(self,requette:str):
         if not self.__fonctionWork.getEtatWord():
             if (self._keyword.checkOpen(requette,"open") and
-                    self._keyword.checkWork(requette,"word-file")):
+                    self._keyword.checkWork(requette,"word-file")and
+                    not self._keyword.checkWork(requette,"gui-work")):
                 if self.__fonctionWork.openWord():
                     self._listSortie = [self._language.getPhraseWork("7"),""]
                     self._valeurOut = 7
@@ -383,7 +388,7 @@ class neuroneWork(neuronBase):
             elif (self._keyword.checkWork(requette,"close") and
                   self._keyword.checkWork(requette,"word-file")):
 
-                if self.__fonctionWork.closeTableur():
+                if self.__fonctionWork.closeWord():
                     self._listSortie = [self._language.getPhraseWork("12"), ""]
                 else :
                     self._listSortie = [self._language.getPhraseWork("13"), ""]
@@ -415,37 +420,34 @@ class neuroneWork(neuronBase):
 
     def __neuronGUI(self,requette):
         if self._keyword.checkOpen(requette,"open") and self._keyword.checkWork(requette,"gui-work"):# open
-            if self._keyword.checkwork(requette,"project-file"): # projet
+            if self._keyword.checkWork(requette,"project-file"): # projet
                 if self._gestGUI.activeWorkProject():
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("1"),""]
                     self._valeurOut = 5
                 else :
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("2"),""]
                     self._valeurOut = 1
                 return 1
-            elif self._keyword.checkwork(requette,"tableur-file"): # tableur
+            elif self._keyword.checkWork(requette,"tableur-file"): # tableur
                 if self._gestGUI.activeWorkTableur():
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("3"),""]
                     self._valeurOut = 5
                 else :
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("4"),""]
                     self._valeurOut = 1
                 return 1
-            elif self._keyword.checkwork(requette,"word-file"): # word
+            elif self._keyword.checkWork(requette,"word-file"): # word
                 if self._gestGUI.activeWorkWord():
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("5"),""]
                     self._valeurOut = 5
                 else :
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("6"),""]
                     self._valeurOut = 1
                 return 1
             else :
                 if self._gestGUI.activeWork():
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("7"),""]
                     self._valeurOut = 5
                 else :
-                    self._listSortie = []
+                    self._listSortie = [self._language.getPhraseOpenGUIWork("8"),""]
                     self._valeurOut = 1
-
-
-
