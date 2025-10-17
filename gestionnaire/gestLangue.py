@@ -373,6 +373,16 @@ class gestLangue:
         formule = self.__time.getContentJsonFlag("phNBTache" + nb)
         return formule.format(genre=self.__genre,user=self.__user,nombre1=nombre1,nombre2=nombre2)
 
+    def getPhraseSocket(self,name:str):
+        return self.__socket.getContentJsonFlag(name)
+
+    def getPhraseMorningBreef(self,nb:str):
+        formule = self.__api.getContentJsonFlag("phMorningBreef" + nb)
+        return formule.format(genre=self.__genre, user=self.__user)
+
+
+    # Partie work
+
     def getPhraseWork(self, nb:str):
         formule = self.__work.getContentJsonFlag("phWork" + nb)
         return formule.format(genre=self.__genre,user=self.__user)
@@ -396,9 +406,6 @@ class gestLangue:
                 phraseOut = phraseOut + "\n\n- " + liste[i]
         return phraseOut
 
-    def getPhraseSocket(self,name:str):
-        return self.__socket.getContentJsonFlag(name)
-
-    def getPhraseMorningBreef(self,nb:str):
-        formule = self.__api.getContentJsonFlag("phMorningBreef" + nb)
-        return formule.format(genre=self.__genre, user=self.__user)
+    def getPhraseOpenGUIWork(self,nb:str):
+        formule = self.__work.getContentJsonFlag("phOpenGUIWork" + nb)
+        return formule.format(genre=self.__genre,user=self.__user)
