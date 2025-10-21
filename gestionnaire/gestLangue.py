@@ -406,6 +406,22 @@ class gestLangue:
                 phraseOut = phraseOut + "\n\n- " + liste[i]
         return phraseOut
 
+    def getPhraseArreraWorkNeuron(self,nb:str):
+        formule = self.__work.getContentJsonFlag("phArreraWork" + nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseArreraWorkTableur(self,nb:str):
+        formule = self.__work.getContentJsonFlag("phTableur" + nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
+    def getPhraseArreraWorkProjet(self,nb:str,name:str=""):
+        formule = self.__work.getContentJsonFlag("phProjet" + nb)
+        return formule.format(genre=self.__genre,user=self.__user,name=name)
+
+    def getPhraseArreraWorkWord(self,nb:str,):
+        formule = self.__work.getContentJsonFlag("phWord" + nb)
+        return formule.format(genre=self.__genre,user=self.__user)
+
     def getPhraseOpenGUIWork(self,nb:str):
         formule = self.__work.getContentJsonFlag("phOpenGUIWork" + nb)
         return formule.format(genre=self.__genre,user=self.__user)
