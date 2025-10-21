@@ -383,18 +383,6 @@ class gestLangue:
 
     # Partie work
 
-    def getPhraseWork(self, nb:str):
-        formule = self.__work.getContentJsonFlag("phWork" + nb)
-        return formule.format(genre=self.__genre,user=self.__user)
-
-    def getPhraseProjetFileOpen(self,nb:str,nameFile:str):
-        formule = self.__work.getContentJsonFlag("phProjetFileOpen" + nb)
-        return formule.format(genre=self.__genre,user=self.__user,name=nameFile)
-
-    def getPhraseProjetNbTache(self, nb:str, nombre1:str, nameProjet:str, nombre2:str=""):
-        formule = self.__work.getContentJsonFlag("phProjetNbTache" + nb)
-        return formule.format(genre=self.__genre, user=self.__user, nombre=nombre1, name=nameProjet, nombre2=nombre2)
-
     def getPhraseHelpArreraWork(self,nb:str):
         formule = self.__work.getFlagListJson("phHelpArreraWork" + nb)
         liste = [phrase.format(genre=self.__genre,user=self.__user) for phrase in formule]
