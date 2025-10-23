@@ -181,11 +181,11 @@ class gestLangue:
 
     def getPhraseChatBotNormal(self, index:str):
         phrases = self.__chatbot.getContentJsonFlag(index)
-        return phrases.format(genre=self.__genre, user=self.__userFirstname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur)
+        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur)
 
     def getPhraseChatBotList(self, index:str):
         phrases = self.__chatbot.getFlagListJson(index)
-        return [phrase.format(genre=self.__genre, user=self.__userFirstname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur) for phrase in phrases]
 
     def getPhraseListeFonction(self):
         self.__nbFonction = 0
@@ -295,7 +295,7 @@ class gestLangue:
 
     def getPhraseCoordonnees(self,ville:str,latitude:str,longitude:str):
         phrases = self.__api.getContentJsonFlag("phCoordonnees")
-        return phrases.format(genre=self.__genre, user=self.__userFirstname, ville=ville, latitude=latitude, longitude=longitude)
+        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, ville=ville, latitude=latitude, longitude=longitude)
 
     def getPhraseTemperature(self,temperature:str):
         formule = self.__api.getContentJsonFlag("phTemperature")
@@ -303,7 +303,7 @@ class gestLangue:
 
     def getPhraseGPSError(self,nb:str):
         formule = self.__api.getContentJsonFlag("phGPSError" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
 
     def getPhraseIteneraireError(self,nb:str):
         formule = self.__api.getContentJsonFlag("phIteneraireError" + nb)
@@ -356,14 +356,14 @@ class gestLangue:
 
     def getPhraseMorningBreef(self,nb:str):
         formule = self.__api.getContentJsonFlag("phMorningBreef" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
 
 
     # Partie work
 
     def getPhraseHelpArreraWork(self,nb:str):
         formule = self.__work.getFlagListJson("phHelpArreraWork" + nb)
-        liste = [phrase.format(genre=self.__genre, user=self.__userFirstname) for phrase in formule]
+        liste = [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname) for phrase in formule]
         phraseOut = ""
         for i in range(0,len(liste)):
             if i == 0:
@@ -374,20 +374,20 @@ class gestLangue:
 
     def getPhraseArreraWorkNeuron(self,nb:str):
         formule = self.__work.getContentJsonFlag("phArreraWork" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
 
     def getPhraseArreraWorkTableur(self,nb:str):
         formule = self.__work.getContentJsonFlag("phTableur" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
 
     def getPhraseArreraWorkProjet(self,nb:str,name:str=""):
         formule = self.__work.getContentJsonFlag("phProjet" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname, name=name)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, name=name)
 
     def getPhraseArreraWorkWord(self,nb:str,):
         formule = self.__work.getContentJsonFlag("phWord" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
 
     def getPhraseOpenGUIWork(self,nb:str):
         formule = self.__work.getContentJsonFlag("phOpenGUIWork" + nb)
-        return formule.format(genre=self.__genre, user=self.__userFirstname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
