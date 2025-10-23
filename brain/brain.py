@@ -101,6 +101,7 @@ class ABrain :
 
     def neuron(self,var:str) :
         # Var local
+        requetteNo = str(var).lower()
         requette = self.__gestionnaire.netoyageChaine(str(var))
         # Var de l'objet
         self.__valeurOut = 0
@@ -110,7 +111,7 @@ class ABrain :
         if self.__gestNeuron.nservice is None:
             self.__valeurOut = 0
         else :
-            self.__gestNeuron.nservice.neurone(requette)
+            self.__gestNeuron.nservice.neurone(requetteNo)
             self.__valeurOut = self.__gestNeuron.nservice.getValeurSortie()
         if self.__valeurOut == 0 :
             #software
