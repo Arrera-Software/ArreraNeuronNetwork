@@ -16,6 +16,7 @@ class gestLangue:
         self.__time = jsonWork(emplacement + index.getContentJsonFlag("time"))
         self.__work = jsonWork(emplacement + index.getContentJsonFlag("work"))
         self.__socket = jsonWork(emplacement + index.getContentJsonFlag("socket"))
+        self.__fncHist = None
         # Variable
         self.__listFonction = listFonc
         self.__nbFonction = len(self.__listFonction)
@@ -39,127 +40,103 @@ class gestLangue:
         if 0 <= hour < 3:
             formule = self.getPhraseBootNormale("1")
             return formule[nbrand]
+        elif 3 <= hour <= 6:
+            formule = self.getPhraseBootNormale("2")
+            return formule[nbrand]
+        elif 6 <= hour <= 10:
+            formule = self.getPhraseBootNormale("3")
+            return formule[nbrand]
+        elif 10 <= hour <= 12:
+            formule = self.getPhraseBootNormale("4")
+            return formule[nbrand]
+        elif 13 <= hour <= 14:
+            formule = self.getPhraseBootNormale("5")
+            return formule[nbrand]
+        elif 15 <= hour <= 18:
+            formule = self.getPhraseBootNormale("6")
+            return formule[nbrand]
+        elif 18 <= hour <= 20:
+            formule = self.getPhraseBootNormale("7")
+            return formule[nbrand]
+        elif 20 <= hour <= 23:
+            formule = self.getPhraseBootNormale("8")
+            return formule[nbrand]
+        elif 0 <= hour < 3:
+            formule = self.getPhraseBootNormale("9")
+            return formule[nbrand]
         else:
-            if hour >= 3 and hour <= 6:
-                formule = self.getPhraseBootNormale("2")
-                return formule[nbrand]
-            else:
-                if hour >= 6 and hour <= 10:
-                    formule = self.getPhraseBootNormale("3")
-                    return formule[nbrand]
-                else:
-                    if hour >= 10 and hour <= 12:
-                        formule = self.getPhraseBootNormale("4")
-                        return formule[nbrand]
-                    else:
-                        if hour >= 13 and hour <= 14:
-                            formule = self.getPhraseBootNormale("5")
-                            return formule[nbrand]
-                        else:
-                            if hour >= 15 and hour <= 18:
-                                formule = self.getPhraseBootNormale("6")
-                                return formule[nbrand]
-                            else:
-                                if hour >= 18 and hour <= 20:
-                                    formule = self.getPhraseBootNormale("7")
-                                    return formule[nbrand]
-                                else:
-                                    if hour >= 20 and hour <= 23:
-                                        formule = self.getPhraseBootNormale("8")
-                                        return formule[nbrand]
-                                    else:
-                                        if hour >= 0 and hour < 3:
-                                            formule = self.getPhraseBootNormale("9")
-                                            return formule[nbrand]
-                                        else:
-                                            formule = self.getPhraseBootNormale("10")
-                                            return formule
+            formule = self.getPhraseBootNormale("10")
+            return formule
 
     def aurevoir(self, hour):
         nbrand = random.randrange(0, 1)
-        if hour >= 0 and hour < 3:
+        if 0 <= hour < 3:
             formule = self.getPhraseAurevoir("1")
             return formule[nbrand]
+        elif 3 <= hour <= 6:
+            formule = self.getPhraseAurevoir("2")
+            return formule[nbrand]
+        elif 6 <= hour <= 10:
+            formule = self.getPhraseAurevoir("3")
+            return formule[nbrand]
+        elif 10 <= hour <= 12:
+            formule = self.getPhraseAurevoir("4")
+            return formule[nbrand]
+        elif 13 <= hour <= 16:
+            formule = self.getPhraseAurevoir("5")
+            return formule[nbrand]
+        elif 16 <= hour <= 18:
+            formule = self.getPhraseAurevoir("6")
+            return formule[nbrand]
+        elif 18 <= hour <= 20:
+            formule = self.getPhraseAurevoir("7")
+            return formule[nbrand]
+        elif 20 <= hour <= 23:
+            formule = self.getPhraseAurevoir("8")
+            return formule[nbrand]
+        elif 0 <= hour < 3:
+            formule = self.getPhraseAurevoir("9")
+            return formule[nbrand]
         else:
-            if hour >= 3 and hour <= 6:
-                formule = self.getPhraseAurevoir("2")
-                return formule[nbrand]
-            else:
-                if hour >= 6 and hour <= 10:
-                    formule = self.getPhraseAurevoir("3")
-                    return formule[nbrand]
-                else:
-                    if hour >= 10 and hour <= 12:
-                        formule = self.getPhraseAurevoir("4")
-                        return formule[nbrand]
-                    else:
-                        if hour >= 13 and hour <= 16:
-                            formule = self.getPhraseAurevoir("5")
-                            return formule[nbrand]
-                        else:
-                            if hour >= 16 and hour <= 18:
-                                formule = self.getPhraseAurevoir("6")
-                                return formule[nbrand]
-                            else:
-                                if hour >= 18 and hour <= 20:
-                                    formule = self.getPhraseAurevoir("7")
-                                    return formule[nbrand]
-                                else:
-                                    if hour >= 20 and hour <= 23:
-                                        formule = self.getPhraseAurevoir("8")
-                                        return formule[nbrand]
-                                    else:
-                                        if hour >= 0 and hour < 3:
-                                            formule = self.getPhraseAurevoir("9")
-                                            return formule[nbrand]
-                                        else:
-                                            formule = self.getPhraseAurevoir("10")
-                                            return formule[nbrand]
+            formule = self.getPhraseAurevoir("10")
+            return formule[nbrand]
 
     def bootWithHist(self, hour):
 
         sortie = self.__fncHist.verfiHist()
-        if (sortie == True):
+        if sortie == True:
             self.__fncHist.startHistAction()
 
-            if hour >= 0 and hour < 3:
+            if 0 <= hour < 3:
                 formule = self.getPhraseBootHist("1")
                 return formule
+            elif 3 <= hour <= 6:
+                formule = self.getPhraseBootHist("2")
+                return formule
+            elif 6 <= hour <= 10:
+                formule = self.getPhraseBootHist("3")
+                return formule
+            elif 10 <= hour <= 12:
+                formule = self.getPhraseBootHist("4")
+                return formule
+            elif 13 <= hour <= 14:
+                formule = self.getPhraseBootHist("5")
+                return formule
+            elif 15 <= hour <= 18:
+                formule = self.getPhraseBootHist("6")
+                return formule
+            elif 18 <= hour <= 20:
+                formule = self.getPhraseBootHist("7")
+                return formule
+            elif 20 <= hour <= 23:
+                formule = self.getPhraseBootHist("8")
+                return formule
+            elif 0 <= hour < 3:
+                formule = self.getPhraseBootHist("9")
+                return formule
             else:
-                if hour >= 3 and hour <= 6:
-                    formule = self.getPhraseBootHist("2")
-                    return formule
-                else:
-                    if hour >= 6 and hour <= 10:
-                        formule = self.getPhraseBootHist("3")
-                        return formule
-                    else:
-                        if hour >= 10 and hour <= 12:
-                            formule = self.getPhraseBootHist("4")
-                            return formule
-                        else:
-                            if hour >= 13 and hour <= 14:
-                                formule = self.getPhraseBootHist("5")
-                                return formule
-                            else:
-                                if hour >= 15 and hour <= 18:
-                                    formule = self.getPhraseBootHist("6")
-                                    return formule
-                                else:
-                                    if hour >= 18 and hour <= 20:
-                                        formule = self.getPhraseBootHist("7")
-                                        return formule
-                                    else:
-                                        if hour >= 20 and hour <= 23:
-                                            formule = self.getPhraseBootHist("8")
-                                            return formule
-                                        else:
-                                            if hour >= 0 and hour < 3:
-                                                formule = self.getPhraseBootHist("9")
-                                                return formule
-                                            else:
-                                                formule = self.getPhraseBootHist("10")
-                                                return formule
+                formule = self.getPhraseBootHist("10")
+                return formule
 
         else :
             return self.bootNoHist(hour)
