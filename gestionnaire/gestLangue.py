@@ -155,15 +155,18 @@ class gestLangue:
 
     def getPhraseBootNormale(self,nb:str):
         phrases = self.__formule.getFlagListJson("bootN" + nb)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname) for phrase in phrases]
 
     def getPhraseAurevoir(self,nb:str):
         phrases = self.__formule.getFlagListJson("stop" + nb)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname) for phrase in phrases]
 
     def getPhraseBootHist(self,nb:str):
         phrase = self.__formule.getContentJsonFlag("bootHist" + nb)
-        return phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                             user_lastname=self.__userLastname)
 
     def getBlague(self,nb:int):
         """
@@ -181,11 +184,15 @@ class gestLangue:
 
     def getPhraseChatBotNormal(self, index:str):
         phrases = self.__chatbot.getContentJsonFlag(index)
-        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur)
+        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, bute = self.__bute,
+                              name=self.__nameAssistant, createur=self.__createur)
 
     def getPhraseChatBotList(self, index:str):
         phrases = self.__chatbot.getFlagListJson(index)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, bute = self.__bute, name=self.__nameAssistant, createur=self.__createur) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, bute = self.__bute,
+                              name=self.__nameAssistant, createur=self.__createur) for phrase in phrases]
 
     def getPhraseListeFonction(self):
         self.__nbFonction = 0
@@ -203,44 +210,54 @@ class gestLangue:
 
     def getPhraseCodehelp(self,nb:str):
         formule = self.__codeHelp.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpen(self,nb:str):
         formule = self.__open.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpenList(self,nb:str):
         phrases = self.__open.getFlagListJson("ph" + nb)
         nb = random.randint(0, len(phrases) - 1)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname) for phrase in phrases]
 
     def getPhraseOpenError(self,nb:str):
         formule = self.__open.getContentJsonFlag("phError" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpenRadio(self, radio:str, etat:bool):
         if etat:
             formule = self.__open.getContentJsonFlag("phRadio")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, radio=radio)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname, radio=radio)
         else:
             formule = self.__open.getContentJsonFlag("phRadioError")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, radio=radio)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname, radio=radio)
 
     def getPhraseOpenSite(self,site:str,etat:bool):
         if etat :
             formule = self.__open.getContentJsonFlag("phSite")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, site=site)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname, site=site)
         else :
             formule = self.__open.getContentJsonFlag("phSiteError")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, site=site)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname, site=site)
 
     def getPhraseNbOpenSoftware(self, nb:str):
         formule = self.__open.getContentJsonFlag("phNbSite")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, nombre=nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, nombre=nb)
 
     def getPhraseNbOpenSite(self, nb: str):
         formule = self.__open.getContentJsonFlag("phNbSoftware")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, nombre=nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, nombre=nb)
 
     def getPhraseListeRadio(self):
         listRadio = self.__open.getFlagListJson("phListRadion")
@@ -251,119 +268,150 @@ class gestLangue:
 
     def getPhraseSearch(self,nb:str):
         formule = self.__search.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseResultatCalcule(self,resultat:str):
         formule = self.__service.getContentJsonFlag("phcalcule")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, resultat=resultat)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, resultat=resultat)
 
     def getPhraseService(self,nb:str):
         formule = self.__service.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseSoftware(self,nb:str):
         formule = self.__software.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpenSoftware(self,nb:str,name:str):
         formule = self.__software.getContentJsonFlag("phOpen" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, name=name)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, name=name)
 
     def getPhraseResumerActu(self):
         formule = self.__api.getContentJsonFlag("phResumerActu")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseResumerTask(self):
         formule = self.__api.getContentJsonFlag("phResumerTask")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseResumerAll(self,nb:str):
         formule = self.__api.getContentJsonFlag("phResumerAll" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseApi(self,nb:str):
         formule = self.__api.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseMeteo(self,nb:str,ville:str,description:str,temperature:str):
         phrases = self.__api.getFlagListJson("phMeteo" + nb)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, ville=ville, description=description, temperature=temperature) for phrase in phrases]
+        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, ville=ville,
+                              description=description,
+                              temperature=temperature) for phrase in phrases]
 
     def getPhraseMeteoError(self,nb:str):
         formule = self.__api.getContentJsonFlag("phMeteoError" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseCoordonnees(self,ville:str,latitude:str,longitude:str):
         phrases = self.__api.getContentJsonFlag("phCoordonnees")
-        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, ville=ville, latitude=latitude, longitude=longitude)
+        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, ville=ville,
+                              latitude=latitude, longitude=longitude)
 
     def getPhraseTemperature(self,temperature:str):
         formule = self.__api.getContentJsonFlag("phTemperature")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, temperature=temperature)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, temperature=temperature)
 
     def getPhraseGPSError(self,nb:str):
         formule = self.__api.getContentJsonFlag("phGPSError" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseIteneraireError(self,nb:str):
         formule = self.__api.getContentJsonFlag("phIteneraireError" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseIteneraire(self,nb:str,texte:str=""):
         formule = self.__api.getContentJsonFlag("phIteneraire"+nb)
         if texte != "":
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, texte=texte)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname, texte=texte)
         else :
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                                  user_lastname=self.__userLastname)
 
     def getTexteHelpIteneraire(self):
         formule = self.__api.getContentJsonFlag("phhelpIteneraire")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getOpenHelpIteneraire(self):
         formule = self.__api.getContentJsonFlag("phOpenHelpIteneraire")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpenTraducteur(self):
         formule = self.__api.getContentJsonFlag("phTraducteur")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseErrorLangue(self):
         formule = self.__api.getContentJsonFlag("phErrorLangue")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseHeure(self,heure:str,minute:str):
         formule = self.__time.getContentJsonFlag("phHeure")
-        return formule.format(ggenre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, heure=heure, minute=minute)
+        return formule.format(ggenre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, heure=heure, minute=minute)
 
     def getPhraseDate(self,jour:str,mois:str,annee:str):
         formule = self.__time.getContentJsonFlag("phDate")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, jour=jour, mois=mois, annee=annee)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, jour=jour, mois=mois, annee=annee)
 
     def getPhraseTime(self,nb:str,task:str=""):
         formule = self.__time.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, task=task)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, task=task)
     def getPhraseEvent(self,nb:str):
         formule = self.__time.getContentJsonFlag("phEvent")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, nombre=nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, nombre=nb)
 
     def getPhraseNBTache(self,nb:str,nombre1:str,nombre2:str):
         formule = self.__time.getContentJsonFlag("phNBTache" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, nombre1=nombre1, nombre2=nombre2)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, nombre1=nombre1, nombre2=nombre2)
 
     def getPhraseSocket(self,name:str):
         return self.__socket.getContentJsonFlag(name)
 
     def getPhraseMorningBreef(self,nb:str):
         formule = self.__api.getContentJsonFlag("phMorningBreef" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
 
     # Partie work
 
     def getPhraseHelpArreraWork(self,nb:str):
         formule = self.__work.getFlagListJson("phHelpArreraWork" + nb)
-        liste = [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname) for phrase in formule]
+        liste = [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                               user_lastname=self.__userLastname) for phrase in formule]
         phraseOut = ""
         for i in range(0,len(liste)):
             if i == 0:
@@ -374,20 +422,25 @@ class gestLangue:
 
     def getPhraseArreraWorkNeuron(self,nb:str):
         formule = self.__work.getContentJsonFlag("phArreraWork" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseArreraWorkTableur(self,nb:str):
         formule = self.__work.getContentJsonFlag("phTableur" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseArreraWorkProjet(self,nb:str,name:str=""):
         formule = self.__work.getContentJsonFlag("phProjet" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname, name=name)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname, name=name)
 
     def getPhraseArreraWorkWord(self,nb:str,):
         formule = self.__work.getContentJsonFlag("phWord" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseOpenGUIWork(self,nb:str):
         formule = self.__work.getContentJsonFlag("phOpenGUIWork" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,user_lastname=self.__userLastname)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
