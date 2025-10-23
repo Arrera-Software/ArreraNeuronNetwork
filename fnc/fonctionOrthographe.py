@@ -60,3 +60,6 @@ class fncOrthographe(fncBase):
             return True
         except Exception as e:
             return False
+
+    def getToolLaunched(self):
+        return self.__toolLaunched
