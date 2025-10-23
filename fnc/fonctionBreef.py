@@ -66,7 +66,6 @@ class fncBreef(fncBase):
 
     def morningBreef(self,ville:str = ""):
         try:
-            tacheProjet = {}
             meteo = {}
             task = self._gestionnaire.getGestFNC().getFNCTask()
             taskToday = task.getListTaskToday()
@@ -84,11 +83,12 @@ class fncBreef(fncBase):
             workfnc = self._gestionnaire.getGestFNC().getFNCWork()
             listProjet =  workfnc.getListProjet()
             tacheProjet = {}
-            for projet in listProjet:
-                if workfnc.openProjet(projet):
-                    if workfnc.setListTacheTodayProjet():
-                        tacheProjet[projet] = workfnc.getListTacheTodayProjet()
-                    workfnc.closeProjet()
+            if listProjet is not None:
+                for projet in listProjet:
+                    if workfnc.openProjet(projet):
+                        if workfnc.setListTacheTodayProjet():
+                            tacheProjet[projet] = workfnc.getListTacheTodayProjet()
+                        workfnc.closeProjet()
 
             return {"task": taskToday, "meteo": meteo, "tacheProjet": tacheProjet}
         except Exception as e:
