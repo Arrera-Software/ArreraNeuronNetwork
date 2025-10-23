@@ -25,8 +25,8 @@
   ],
   "ph1Blague": "Je ne peux pas raconter une blague si je ne suis pas drôle.",
   "ph2Blague": [
-    "Désolé de ne pas être drôle pour toi {user}.",
-    "Désolé si je ne suis pas drôle {user}.",
+    "Désolé de ne pas être drôle pour toi {user_firstname}.",
+    "Désolé si je ne suis pas drôle {user_firstname}.",
     "Je peux t'en raconter une autre."
   ],
   "ph3Blague": [
@@ -34,31 +34,31 @@
     "Avant de dire ça, laisse-moi t'en raconter une."
   ],
   "ph4Blague": [
-    "Ok, comme tu veux {user}.",
-    "Es-tu vraiment sûr de toi {user} ?"
+    "Ok, comme tu veux {user_firstname}.",
+    "Es-tu vraiment sûr de toi {user_firstname} ?"
   ],
-  "ph5Blague": "Ok {user}, je t'en raconte une.",
+  "ph5Blague": "Ok {user_firstname}, je t'en raconte une.",
   "php6Blague": [
-    "Ok, comme tu veux {user}.",
-    "Es-tu vraiment sûr de toi {user} ?"
+    "Ok, comme tu veux {user_firstname}.",
+    "Es-tu vraiment sûr de toi {user_firstname} ?"
   ],
-  "ph7Blague": "Ok {user}, en voici une autre.",
+  "ph7Blague": "Ok {user_firstname}, en voici une autre.",
   "ph8Phrase": "Je ne peux pas rester sur un échec. Si tu veux, je peux t'en raconter une autre.",
   "ph9Phrase": "Excuse-moi. Veux-tu faire autre chose ?",
   "ph10Phrase": [
     "Je suis un programme informatique, je ne ressens pas de sentiment.",
     "Je ne peux pas ressentir de sentiment, je ne suis qu'un programme informatique."
   ],
-  "ph1Presentation": "Je te l'ai déjà dit {user}, je ne peux pas trop t'en dire plus. Je n'ai pas de passion ni de hobby, je ne suis qu'un programme informatique qui a pour but {bute}.",
+  "ph1Presentation": "Je te l'ai déjà dit {user_firstname}, je ne peux pas trop t'en dire plus. Je n'ai pas de passion ni de hobby, je ne suis qu'un programme informatique qui a pour but {bute}.",
   "ph2Presentation": "Je suis un assistant personnel nommé {name} qui a été créé par {createur}. Je n'ai pas de passion ni de hobby, dû à ma condition de programme informatique.",
   "ph1Other": [
-    "Oui, je suis toujours là {user}. Je ne peux pas partir de toute façon.",
-    "Oui, je suis toujours là {user}. Je ne peux pas partir tant que je peux servir.",
-    "Oui, je suis toujours là {user}. À moins de m'arrêter, ce qui serait un acte horrible, je suis toujours là."
+    "Oui, je suis toujours là {user_firstname}. Je ne peux pas partir de toute façon.",
+    "Oui, je suis toujours là {user_firstname}. Je ne peux pas partir tant que je peux servir.",
+    "Oui, je suis toujours là {user_firstname}. À moins de m'arrêter, ce qui serait un acte horrible, je suis toujours là."
   ],
-  "phNon": "Ok {user}, je reste là si tu as besoin de moi.",
+  "phNon": "Ok {user_firstname}, je reste là si tu as besoin de moi.",
   "phOui": "OK, parfait.",
-  "phMerci": "De rien {user}, sur quoi puis-je encore t'aider ?",
+  "phMerci": "De rien {user_firstname}, sur quoi puis-je encore t'aider ?",
   "phTG": "Okay, je me tais.",
   "phListFonc": "Je peux t'aider à faire."
 }

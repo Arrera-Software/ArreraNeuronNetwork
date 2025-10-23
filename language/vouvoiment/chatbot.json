@@ -52,11 +52,11 @@
   "ph1Presentation": "Je vous l'ai déjà dit {genre}, je ne peux pas trop vous en dire plus, je n’ai pas de passion ni de hobby. Je ne suis qu'un programme informatique qui a pour but {but}.",
   "ph2Presentation": "Je suis un assistant personnel nommé {name} qui a été créé par {createur}. Je n’ai pas de passion ni de hobby en raison de ma condition de programme informatique.",
   "ph1Other": [
-    "Oui, je suis toujours là {genre} {user}. Je ne peux pas partir de toute façon.",
-    "Oui, je suis toujours là {genre} {user}. Je ne peux pas partir tant que je peux servir.",
-    "Oui, je suis toujours là {genre} {user}. À moins de m’arrêter, ce qui serait un acte horrible, je suis toujours là."
+    "Oui, je suis toujours là {genre} {user_lastname}. Je ne peux pas partir de toute façon.",
+    "Oui, je suis toujours là {genre} {user_lastname}. Je ne peux pas partir tant que je peux servir.",
+    "Oui, je suis toujours là {genre} {user_lastname}. À moins de m’arrêter, ce qui serait un acte horrible, je suis toujours là."
   ],
-  "phNon": "OK {genre} {user}, je reste là au besoin.",
+  "phNon": "OK {genre} {user_lastname}, je reste là au besoin.",
   "phOui": "OK, parfait.",
   "phMerci": "De rien {genre}, je reste à votre service si vous avez besoin de moi.",
   "phTG": "D’accord, je me tais.",
