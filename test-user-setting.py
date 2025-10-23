@@ -56,7 +56,7 @@ def main():
                 print("Au revoir !")
                 boucle = False
             case 1:
-                print("1.AJouter\n2.Lire")
+                print("1.Prenom\n2.Nom de famille\n3.Lire")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -67,10 +67,13 @@ def main():
                         print("Veuillez entrer un nombre valide.")
                 match nb:
                     case 1:
-                        nom = input("Nom : ")
-                        user.setUser(nom)
+                        prenom = input("Prenom : ")
+                        user.setFirstnameUser(prenom)
                     case 2:
-                        print(user.getUser())
+                        nom = input("Prenom : ")
+                        user.setLastnameUser(nom)
+                    case 3:
+                        print(f"Prenom : {user.getFirstnameUser()}\nNom : {user.getLastnameUser()}")
             case 2:
                 print("1.AJouter\n2.Lire")
                 boucleVerif = True

@@ -5,7 +5,8 @@ from tkinter import filedialog,messagebox
 import os
 
 DICTUSER = {
-    "user":"",
+    "firstname-user":"",
+    "lastname-user":"",
     "genre":"",
     "listVille":[""],
     "lieuDomicile":"",
@@ -50,14 +51,17 @@ class gestUserSetting:
             with path.open("x", encoding="utf-8") as f:
                 json.dump(DICTUSER, f, ensure_ascii=False, indent=2)
 
+        if not Path(self.__userTaskPath).is_file():
             path = Path(self.__userTaskPath)
             with path.open("x", encoding="utf-8") as f:
                 json.dump({}, f, ensure_ascii=False, indent=2)
 
+        if not Path(self.__userHistoriquePath).is_file():
             path = Path(self.__userHistoriquePath)
             with path.open("x", encoding="utf-8") as f:
                 json.dump({}, f, ensure_ascii=False, indent=2)
 
+        if not Path(self.__userEventPath).is_file():
             path = Path(self.__userEventPath)
             with path.open("x", encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
@@ -81,13 +85,21 @@ class gestUserSetting:
 
     # Partie USER
 
-    def setUser(self, user:str):
+    def setFirstnameUser(self, user:str):
         if user == "":
             return False
-        return self.__fileUser.setValeurJson("user", user)
+        return self.__fileUser.setValeurJson("firstname-user", user)
 
-    def getUser(self):
-        return self.__fileUser.getContentJsonFlag("user")
+    def setLastnameUser(self, user:str):
+        if user == "":
+            return False
+        return self.__fileUser.setValeurJson("lastname-user", user)
+
+    def getFirstnameUser(self):
+        return self.__fileUser.getContentJsonFlag("firstname-user")
+
+    def getLastnameUser(self):
+        return self.__fileUser.getContentJsonFlag("lastname-user")
 
     # Partie Genre
 

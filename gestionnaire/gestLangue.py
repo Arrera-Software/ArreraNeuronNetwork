@@ -166,7 +166,7 @@ class gestLangue:
 
 
     def setVarUser(self):
-        self.__user = self.__userData.getUser()
+        self.__user = self.__userData.getFirstnameUser()
         self.__genre = self.__userData.getGenre()
 
     def getDataUser(self):
