@@ -13,7 +13,6 @@ class gestNeuron :
     def __init__(self,gestionnaire:gestionnaire) -> None:
         # Recuperation des etat de chaque neurone
         self.__etatService = gestionnaire.getConfigFile().etatService
-        self.__etatSoftware = gestionnaire.getConfigFile().etatSoftware
         self.__etatTime = gestionnaire.getConfigFile().etatTime
         self.__etatOpen = gestionnaire.getConfigFile().etatOpen
         self.__etatSearch = gestionnaire.getConfigFile().etatSearch
@@ -29,14 +28,11 @@ class gestNeuron :
         self.nopen = None
         self.nsearch = None
         self.nservice = None
-        self.nsoftware = None
         self.ntime = None
         self.nwork = None
         # Init des neurones
         if self.__etatService == 1 :
             self.nservice = neuroneService(gestionnaire)
-        if self.__etatSoftware == 1 :
-            self.nsoftware = neuroneSoftware(gestionnaire)
         if self.__etatTime == 1 :
             self.ntime = neuroneTime(gestionnaire)
         if self.__etatOpen == 1 :

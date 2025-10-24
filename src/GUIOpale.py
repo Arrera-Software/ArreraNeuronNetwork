@@ -29,7 +29,6 @@ class GUIOpale:
                                   title = "Opale",resizable=False,
                                   icon="asset/icon.png")
         self.__varService = tkinter.BooleanVar(value=True)
-        self.__varSoftware = tkinter.BooleanVar(value=True)
         self.__varTime = tkinter.BooleanVar(value=True)
         self.__varOpen = tkinter.BooleanVar(value=True)
         self.__varRecherche = tkinter.BooleanVar(value=True)
@@ -45,7 +44,6 @@ class GUIOpale:
         # Widget FrameNeuron
         labelTitleNeuron = self.__arrTK.createLabel(screen,text="Gestion de neurone",ptaille=25)
         self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice",variable=self.__varService)
-        self.__checkSoftware = ctk.CTkCheckBox(frameNeuron, text="Neuron\nLogiciel",variable=self.__varSoftware)
         self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps",variable=self.__varTime)
         self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen",variable=self.__varOpen)
         self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron\nRecherche",variable=self.__varRecherche)
@@ -66,15 +64,14 @@ class GUIOpale:
         # FrameNeuron
         self.__arrTK.placeTopCenter(labelTitleNeuron)
         self.__checkService.place(x=10,  y=30,anchor="nw")
-        self.__checkSoftware.place(x=130, y=30,anchor="nw")
-        self.__checkTime.place(x=260, y=30,anchor="nw")
-        self.__checkOpen.place(x=380, y=30,anchor="nw")
-        self.__checkRecherche.place(x=10,  y=85,anchor="nw")
-        self.__checkChatbot.place(x=130, y=85,anchor="nw")
-        self.__checkAPI.place(x=260, y=85,anchor="nw")
-        self.__checkCodeHelp.place(x=380, y=85,anchor="nw")
-        self.__checkWork.place(x=130, y=160,anchor="nw")
-        self.__checkSocket.place(x=260, y=160,anchor="nw")
+        self.__checkTime.place(x=130, y=30,anchor="nw")
+        self.__checkOpen.place(x=260, y=30,anchor="nw")
+        self.__checkRecherche.place(x=380, y=30,anchor="nw")
+        self.__checkChatbot.place(x=10,  y=85,anchor="nw")
+        self.__checkAPI.place(x=130, y=85,anchor="nw")
+        self.__checkCodeHelp.place(x=260, y=85,anchor="nw")
+        self.__checkWork.place(x=380, y=85,anchor="nw")
+        self.__checkSocket.place(x=130, y=160,anchor="nw")
         # FrameLangue
         self.__arrTK.placeTopCenter(labelTitleLangue)
         self.__arrTK.placeLeftCenter(self.__btnVous)
@@ -108,7 +105,6 @@ class GUIOpale:
     def __setConfig(self):
         try :
             if (not self.__varService.get() and
-                    not self.__varSoftware.get() and
                     not self.__varTime.get() and
                     not self.__varOpen.get() and
                     not self.__varRecherche.get() and
@@ -131,7 +127,6 @@ class GUIOpale:
                                                      "faire un résumer des actualités"],
                                        moteurderecherche="google",
                                        etatService=int(self.__checkService.get()),
-                                       etatSoftware=(int(self.__checkSoftware.get())),
                                        etatTime=int(self.__checkTime.get()),
                                        etatOpen=int(self.__checkOpen.get()),
                                        etatSearch=int(self.__checkRecherche.get()),

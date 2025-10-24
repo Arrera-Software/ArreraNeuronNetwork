@@ -14,7 +14,6 @@ class confNeuron:
     listFonction: List[str] = field(default_factory=list)
     moteurderecherche: str = ""
     etatService: int = 0
-    etatSoftware: int = 0
     etatTime: int = 0
     etatOpen: int = 0
     etatSearch: int = 0

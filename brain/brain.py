@@ -114,103 +114,92 @@ class ABrain :
             self.__gestNeuron.nservice.neurone(requetteNo)
             self.__valeurOut = self.__gestNeuron.nservice.getValeurSortie()
         if self.__valeurOut == 0 :
-            #software
-            if self.__gestNeuron.nsoftware is None:
+            #time
+            if self.__gestNeuron.ntime is None:
                 self.__valeurOut = 0
             else :
-                self.__gestNeuron.nsoftware.neurone(requette)
-                self.__valeurOut = self.__gestNeuron.nsoftware.getValeurSortie()
+                self.__gestNeuron.ntime.neurone(requette)
+                self.__valeurOut = self.__gestNeuron.ntime.getValeurSortie()
 
             if self.__valeurOut == 0 :
-                #time
-                if self.__gestNeuron.ntime is None:
+                #code help
+                if self.__gestNeuron.ncodehelp is None:
                     self.__valeurOut = 0
                 else :
-                    self.__gestNeuron.ntime.neurone(requette)
-                    self.__valeurOut = self.__gestNeuron.ntime.getValeurSortie()
+                    self.__gestNeuron.ncodehelp.neurone(requette)
+                    self.__valeurOut = self.__gestNeuron.ncodehelp.getValeurSortie()
 
-                if self.__valeurOut == 0 :
-                    #code help
-                    if self.__gestNeuron.ncodehelp is None:
+                if self.__valeurOut == 0:
+                    #work
+                    if self.__gestNeuron.nwork is None:
                         self.__valeurOut = 0
                     else :
-                        self.__gestNeuron.ncodehelp.neurone(requette)
-                        self.__valeurOut = self.__gestNeuron.ncodehelp.getValeurSortie()
+                        self.__gestNeuron.nwork.neurone(requette)
+                        self.__valeurOut = self.__gestNeuron.nwork.getValeurSortie()
 
                     if self.__valeurOut == 0:
-                        #work
-                        if self.__gestNeuron.nwork is None:
+                        #open
+                        if self.__gestNeuron.nopen is None:
                             self.__valeurOut = 0
                         else :
-                            self.__gestNeuron.nwork.neurone(requette)
-                            self.__valeurOut = self.__gestNeuron.nwork.getValeurSortie()
+                            self.__gestNeuron.nopen.neurone(requette)
+                            self.__valeurOut = self.__gestNeuron.nopen.getValeurSortie()
 
-                        if self.__valeurOut == 0:
-                            #open
-                            if self.__gestNeuron.nopen is None:
+                        if self.__valeurOut == 0 :
+                            #search
+                            if not self.__etatReseau or self.__gestNeuron.nsearch is None :
                                 self.__valeurOut = 0
                             else :
-                                self.__gestNeuron.nopen.neurone(requette)
-                                self.__valeurOut = self.__gestNeuron.nopen.getValeurSortie()
+                                self.__gestNeuron.nsearch.neurone(requette)
+                                self.__valeurOut = self.__gestNeuron.nsearch.getValeurSortie()
 
                             if self.__valeurOut == 0 :
-                                #search
-                                if not self.__etatReseau or self.__gestNeuron.nsearch is None :
+                                #chatBot
+                                if self.__gestNeuron.nchatbot is None:
                                     self.__valeurOut = 0
                                 else :
-                                    self.__gestNeuron.nsearch.neurone(requette)
-                                    self.__valeurOut = self.__gestNeuron.nsearch.getValeurSortie()
+                                    self.__gestNeuron.nchatbot.neurone(requette)
+                                    self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
 
                                 if self.__valeurOut == 0 :
-                                    #chatBot
-                                    if self.__gestNeuron.nchatbot is None:
+                                    #api
+                                    if not self.__etatReseau  or self.__gestNeuron.napi is None :
                                         self.__valeurOut = 0
                                     else :
-                                        self.__gestNeuron.nchatbot.neurone(requette)
-                                        self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
+                                        self.__gestNeuron.napi.neurone(requette)
+                                        self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
 
                                     if self.__valeurOut == 0 :
-                                        #api
-                                        if not self.__etatReseau  or self.__gestNeuron.napi is None :
+                                        if (("stop" in requette) or ("au revoir" in requette)
+                                            or ("quitter" in requette) or ("bonne nuit" in requette)
+                                            or ("adieu" in requette) or ("bonne soirée" in requette)
+                                            or ("arreter" in requette)) :
+                                            self.__listOut = [self.shutdown(),""]
+                                            self.__valeurOut = 15
+                                        else :
                                             self.__valeurOut = 0
-                                        else :
-                                            self.__gestNeuron.napi.neurone(requette)
-                                            self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
-
-                                        if self.__valeurOut == 0 :
-                                            if (("stop" in requette) or ("au revoir" in requette)
-                                                or ("quitter" in requette) or ("bonne nuit" in requette)
-                                                or ("adieu" in requette) or ("bonne soirée" in requette)
-                                                or ("arreter" in requette)) :
-                                                self.__listOut = [self.shutdown(),""]
-                                                self.__valeurOut = 15
-                                            else :
-                                                self.__valeurOut = 0
-                                                self.__listOut = [self.__gestLangue.nocomprehension(), ""]
-                                        else :
-                                            self.__listOut = self.__gestNeuron.napi.getListSortie()
-                                            self.__neuronUsed = self.__listNeuron[2]
+                                            self.__listOut = [self.__gestLangue.nocomprehension(), ""]
                                     else :
-                                        self.__listOut = self.__gestNeuron.nchatbot.getListSortie()
-                                        self.__neuronUsed = self.__listNeuron[0]
+                                        self.__listOut = self.__gestNeuron.napi.getListSortie()
+                                        self.__neuronUsed = self.__listNeuron[2]
                                 else :
-                                    self.__listOut = self.__gestNeuron.nsearch.getListSortie()
-                                    self.__neuronUsed = self.__listNeuron[5]
+                                    self.__listOut = self.__gestNeuron.nchatbot.getListSortie()
+                                    self.__neuronUsed = self.__listNeuron[0]
                             else :
-                                self.__listOut = self.__gestNeuron.nopen.getListSortie()
-                                self.__neuronUsed = self.__listNeuron[4]
+                                self.__listOut = self.__gestNeuron.nsearch.getListSortie()
+                                self.__neuronUsed = self.__listNeuron[5]
                         else :
-                            self.__listOut = self.__gestNeuron.nwork.getListSortie()
-                            self.__neuronUsed = self.__listNeuron[8]
+                            self.__listOut = self.__gestNeuron.nopen.getListSortie()
+                            self.__neuronUsed = self.__listNeuron[4]
                     else :
-                        self.__listOut = self.__gestNeuron.ncodehelp.getListSortie()
-                        self.__neuronUsed = self.__listNeuron[7]
+                        self.__listOut = self.__gestNeuron.nwork.getListSortie()
+                        self.__neuronUsed = self.__listNeuron[8]
                 else :
-                    self.__listOut = self.__gestNeuron.ntime.getListSortie()
-                    self.__neuronUsed = self.__listNeuron[6]
+                    self.__listOut = self.__gestNeuron.ncodehelp.getListSortie()
+                    self.__neuronUsed = self.__listNeuron[7]
             else :
-                self.__listOut = self.__gestNeuron.nsoftware.getListSortie()
-                self.__neuronUsed = self.__listNeuron[3]
+                self.__listOut = self.__gestNeuron.ntime.getListSortie()
+                self.__neuronUsed = self.__listNeuron[6]
         else :
             self.__listOut = self.__gestNeuron.nservice.getListSortie()
             self.__neuronUsed = self.__listNeuron[1]
