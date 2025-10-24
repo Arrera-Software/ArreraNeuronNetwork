@@ -12,7 +12,24 @@ class fonctionOpen(fncBase):
         else:
             self.__socketEnabled = False
 
-    def openSoft(self,name:str) -> bool:
+    def openSoft(self,name:str) -> int:
+        """
+        :param name:
+        :return: 1 if software opened with assistant, 2 if software opened with socket, 0 if not opened
+        """
+        if name == "":
+            return 0
+        if self.openSoftAssistant(name):
+            return 1
+        elif self.__socketEnabled:
+            if self.openSoftSocket(name):
+                return 2
+            else :
+                return 0
+        else:
+            return 0
+
+    def openSoftAssistant(self, name:str) -> bool:
         if name == "":
             return False
 
