@@ -84,6 +84,7 @@ class ABrain :
         19 : Resumer all ok 
         20 : Resumer all fail
         21 : Close projet
+        22 : Lancement de radio
         """
         return self.__valeurOut
     
