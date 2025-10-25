@@ -1,1 +1,12 @@
-{"open": ["ouvre","ouvrir","lance","lancer","affiche","afficher","montre","montrer"]}
+{
+  "open": ["ouvre","ouvrir","lance","lancer","affiche","afficher","montre","montrer"],
+  "launch": ["lance","lancer","démarre","démarrer"],
+  "youtube": ["youtube","yt"],
+  "youtube_music": ["youtube musique","yt musique","youtube music","yt music"],
+  "youtube_downloader": ["youtube downloader","yt downloader","youtube telecharger","yt telecharger","arrera video download","arrera download"],
+  "calculator": ["calculatrice","calculette"],
+  "complex_mode": ["mode complexe","nombres complexes","nombre complex","nb complex","nombre complexe","nb complexe","complex","complexe"],
+  "pythagore_mode": ["mode pythagore","pythagore"],
+  "radio": ["radio","station"],
+  "stop": ["arrête","arrêter","stoppe","stop","coupe"]
+}

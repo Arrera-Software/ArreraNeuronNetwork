@@ -1,11 +1,36 @@
-from neuron.CNeuronBase import *
+import random
+
+from neuron.CNeuronBase import gestionnaire,neuronBase
 
 class neuroneOpen(neuronBase) :
+    def __init__(self,gestionnaire:gestionnaire):
+        super().__init__(gestionnaire)
+        self.__fncOpen = self._gestionnaire.getGestFNC().getFNCOpen()
+        self.__fncRadio = self._gestionnaire.getGestFNC().getFNCRadio()
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["", ""]
         self._valeurOut = 0
+
+        if self.partUserRadio(requette) == 1:
+            return
+
+        if self._keyword.checkOpen(requette,"open"):
+
+            if self.partPreSaved(requette) == 1:
+                return
+
+            if self.partArreraSoft(requette) == 1:
+                return
+
+            if self.partUserWeb(requette) == 1:
+                return
+
+            if self.partUserSoft(requette) == 1:
+                return
+
+        """
         if self._gestNeuron.getOpen():
             #fonction neuron Open
             if ("ouvre" in requette) or ("ouvrir" in requette):
@@ -16,7 +41,7 @@ class neuroneOpen(neuronBase) :
                         self._listSortie = [self._fonctionArreraNetwork.sortieOpenYoutube(), ""]
                         self._objHistorique.setAction("Ouverture de youtube")
                     else :
-                        siteOpen = self._fonctionArreraNetwork.openWebSiteAssistant(requette)
+                        siteOpen = self._fonctionArreraNetwork.openSaveWebSiteAssistant(requette)
                         if siteOpen:
                             self._listSortie = [self._fonctionArreraNetwork.sortieOpenSite(requette,siteOpen), ""]
                         elif self._gestNeuron.getSocket():
@@ -106,3 +131,242 @@ class neuroneOpen(neuronBase) :
             #Mise a jour de la valeur
             if self._valeurOut == 0:
                 self._valeurOut = self._gestionnaire.verrifSortie(self._listSortie[0])
+        """
+
+    def partUserSoft(self, requette: str) -> int:
+        pass
+
+    def partUserWeb(self, requette: str) -> int:
+        pass
+
+    def partUserRadio(self, requette: str) -> int:
+        if (self._keyword.checkOpen(requette,"launch") and
+                self._keyword.checkOpen(requette,"radio")):
+            if not self.__fncRadio.getRadioRunning():
+                nbRadom = str(random.randint(1,6))
+                if "eupope 1" in requette:
+                    try :
+                        if self.__fncRadio.startEurope1():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"Europe 1"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "europe 2" in requette:
+                    try :
+                        if self.__fncRadio.startEurope2():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"Europe 2"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "france info" in requette:
+                    try :
+                        if self.__fncRadio.startFranceInfo():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"France info"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "france inter" in requette:
+                    try :
+                        if self.__fncRadio.startFranceInter():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"France inter"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "france musique" in requette:
+                    try :
+                        if self.__fncRadio.startFranceMusique():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"France Musique"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "france culture" in requette:
+                    try :
+                        if self.__fncRadio.startFranceCulture():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"France Culture"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "france bleu" in requette:
+                    try :
+                        if self.__fncRadio.startFranceBleu():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"France bleu"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "fun radio" in requette:
+                    try :
+                        if self.__fncRadio.startFunRadio():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"Fun radio"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "nrj" in requette:
+                    try :
+                        if self.__fncRadio.startNRJ():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"NRJ"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "rfm" in requette:
+                    try :
+                        if self.__fncRadio.startRFM():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"RFM"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "nostalgi" in requette:
+                    try :
+                        if self.__fncRadio.startNostalgi():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"Nostalgi"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "skyrock" in requette:
+                    try :
+                        if self.__fncRadio.startSkyrock():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"Skyrock"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                elif "rtl" in requette:
+                    try :
+                        if self.__fncRadio.startRTL():
+                            self._listSortie = [self._language.getPhraseRadioLaunch(nbRadom,"RTL"),""]
+                            self._valeurOut = 22
+                        else :
+                            self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                            self._valeurOut = 1
+                    except :
+                        self._listSortie = [self._language.getPhraseRadioLaunch("8"),""]
+                        self._valeurOut = 1
+                return 1
+            else :
+                self._listSortie = [self._language.getPhraseRadioLaunch("7"),""]
+                self._valeurOut = 1
+                return 1
+        elif (self._keyword.checkOpen(requette,"stop") and
+              self._keyword.checkOpen(requette,"radio")):
+            if self.__fncRadio.stop():
+                self._listSortie = [self._language.getPhraseRadioLaunch("9"),""]
+            else :
+                self._listSortie = [self._language.getPhraseRadioLaunch("10"),""]
+            self._valeurOut = 1
+            return 1
+        else :
+            return 0
+
+    def partArreraSoft(self, requette: str) -> int:
+        if (not self._keyword.checkOpen(requette,"youtube_music")
+              and self._keyword.checkOpen(requette,"youtube_downloader")):
+            if self._gestGUI.activeArreraDownload():
+                self._listSortie = [self._language.getPhraseArreraSoftOpen("1"),""]
+            else :
+                self._listSortie = [self._language.getPhraseArreraSoftOpen("2"),""]
+
+            self._valeurOut = 5
+            return 1
+        if self._keyword.checkOpen(requette,"calculator"):
+            if self._keyword.checkOpen(requette,"complex_mode"):
+                if self._gestGUI.activeCalculatriceComplex():
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("3"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("4"),""]
+                    self._valeurOut = 1
+            elif self._keyword.checkOpen(requette,"pythagore_mode"):
+                if self._gestGUI.activeCalculatricePythagore():
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("5"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("6"),""]
+                    self._valeurOut = 1
+            else :
+                if self._gestGUI.activeCalculatriceNormal():
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("7"),""]
+                    self._valeurOut = 5
+                else :
+                    self._listSortie = [self._language.getPhraseArreraSoftOpen("8"),""]
+                    self._valeurOut = 1
+            return 1
+        else :
+            return 0
+
+    def partPreSaved(self, requette: str) -> int:
+
+        if (self._keyword.checkOpen(requette,"youtube")
+                and not self._keyword.checkOpen(requette,"youtube_music")
+                and not self._keyword.checkOpen(requette,"youtube_downloader")
+                and not self._keyword.checkOpen(requette,"pythagore_mode")):
+            outfnc = self.__fncOpen.openWebSite("https://www.youtube.com/")
+
+            if  outfnc == 1:
+                self._listSortie = [self._language.getPhrasePresavedOpen("1"),""]
+            elif outfnc == 2:
+                self._listSortie = [self._language.getPhrasePresavedOpen("2"),""]
+            else :
+                self._listSortie = [self._language.getPhrasePresavedOpen("3"),""]
+            self._valeurOut = 1
+            return 1
+
+        elif (self._keyword.checkOpen(requette,"youtube_music")
+              and not self._keyword.checkOpen(requette,"youtube_downloader")):
+            outfnc = self.__fncOpen.openWebSite("https://music.youtube.com/")
+            if  outfnc == 1:
+                self._listSortie = [self._language.getPhrasePresavedOpen("4"),""]
+            elif outfnc == 2:
+                self._listSortie = [self._language.getPhrasePresavedOpen("5"),""]
+            else :
+                self._listSortie = [self._language.getPhrasePresavedOpen("6"),""]
+            self._valeurOut = 1
+            return 1
+
+        else :
+            return 0
