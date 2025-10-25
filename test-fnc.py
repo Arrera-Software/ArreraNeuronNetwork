@@ -1091,7 +1091,7 @@ def partOPEN():
                     print(f"Erreur lors de l'ouverture du logiciel {name}")
             case 2:
                 name = input("Name du site : ")
-                if fnc.getFNCOpen().openWebSite(name):
+                if fnc.getFNCOpen().openSaveWebSiteAssistant(name):
                     print(f"Site {name} ouvert")
                 else:
                     print(f"Erreur lors de l'ouverture du site {name}")
