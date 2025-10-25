@@ -44,13 +44,25 @@ class gestGUI:
         self.__guiBreef = GUIViewBreef(self.__gest)
 
     def activeCalculatriceNormal(self):
-        self.__guiCalculatrice.activeCalcule()
+        try :
+            self.__guiCalculatrice.activeCalcule()
+            return True
+        except Exception as e:
+            return False
 
     def activeCalculatriceComplex(self):
-        self.__guiCalculatrice.activeComplex()
+        try :
+            self.__guiCalculatrice.activeComplex()
+            return True
+        except Exception as e:
+            return False
 
     def activeCalculatricePythagore(self):
-        self.__guiCalculatrice.activePythagore()
+        try :
+            self.__guiCalculatrice.activePythagore()
+            return True
+        except Exception as e:
+            return False
 
     def activeOrthographe(self,texte:str):
         if texte != "":
