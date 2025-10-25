@@ -296,7 +296,7 @@ class gestHistorique :
                     return True
             if ("site" in action):
                 site = action.replace("site","").replace(" ","")
-                return self.__objFNCArrera.openWebSiteAssistant(site)
+                return self.__objFNCArrera.openSaveWebSiteAssistant(site)
             else : 
                 if ("soft" in action):
                     soft = action.replace("soft","").replace(" ","")
