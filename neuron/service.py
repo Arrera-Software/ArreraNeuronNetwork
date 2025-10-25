@@ -29,7 +29,7 @@ class neuroneService(neuronBase) :
 
         elif (self._keyword.checkOpen(requette,"open") and
               self._keyword.checkService(requette,"doc")) :
-            if self._gestFNC.getFNCOpen().openWebSite(self._gestionnaire.getLinkDoc()):
+            if self._gestFNC.getFNCOpen().openSaveWebSiteAssistant(self._gestionnaire.getLinkDoc()):
                 self._listSortie = [self._language.getPhraseService("2"), ""]
             else :
                 self._listSortie = [self._language.getPhraseService("8"), ""]
