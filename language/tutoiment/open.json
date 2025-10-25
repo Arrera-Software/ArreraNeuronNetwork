@@ -46,5 +46,32 @@
     "RFM",
     "Skyrock",
     "RTL"
-  ]
+  ],
+
+  "open_presaved1": "Voici youtube {user_firstname}.",
+  "open_presaved2": "L'application Arrera vas t'ouvrir youtube {user_firstname}.",
+  "open_presaved3": "Un problème est survenu en ouvrant youtube {user_firstname}.",
+  "open_presaved4": "Voici Youtube musique {user_firstname}. Bonne écoute !",
+  "open_presaved5": "L'application Arrera vas t'ouvrir Youtube musique {user_firstname}. Bonne écoute !",
+  "open_presaved6": "Un problème est survenu en ouvrant Youtube musique {user_firstname}.",
+
+  "open_arrerasoft1": "Ouverture d'Arrera Video Download {user_firstname}.",
+  "open_arrerasoft2": "Impossible d'ouvrir Arrera Video Download {user_firstname}.",
+  "open_arrerasoft3": "Ouverture de la calculatrice en mode nombre complex {user_firstname}.",
+  "open_arrerasoft4": "Une erreur est survenue en ouvrant la calculatrice en mode nombre complex.",
+  "open_arrerasoft5": "Ouverture de la calculatrice Pythagore {user_firstname}.",
+  "open_arrerasoft6": "Une erreur est survenue en ouvrant la calculatrice Pythagore.",
+  "open_arrerasoft7": "Ouverture de la caluculatrice.",
+  "open_arrerasoft8": "Impossible d'ouvrir la calculatrice.",
+
+  "ph_radio1": "Tres bien, je lance la radio {radio} pour toi.",
+  "ph_radio2": "Je te lance la radio {radio} tout de suite {user_firstname}.",
+  "ph_radio3": "Lancement de la radio {radio}. Bonne ecoute {user_firstname} !",
+  "ph_radio4": "Je te lance la radio {radio}. Profitez bien de ton écoute {user_firstname}.",
+  "ph_radio5": "Tres bien, je lance la radio {radio}. Bonne écoute {user_firstname} !",
+  "ph_radio6": "Lancement de la radio {radio}. Profitez bien de ton écoute {user_firstname}.",
+  "ph_radio7": "Arreter la radio en cours avant de lancer une autre.",
+  "ph_radio8": "Un probleme est survenu lors du lancement de la radio.",
+  "ph_radio9": "Je t'arrete la radio tout de suite {user_firstname}.",
+  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio."
 }

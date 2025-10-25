@@ -444,3 +444,19 @@ class gestLangue:
         formule = self.__work.getContentJsonFlag("phOpenGUIWork" + nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname)
+
+    # Open
+    def getPhrasePresavedOpen(self,nb:str):
+        formule = self.__open.getContentJsonFlag("open_presaved" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
+
+    def getPhraseArreraSoftOpen(self,nb:str):
+        formule = self.__open.getContentJsonFlag("open_arrerasoft" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
+
+    def getPhraseRadioLaunch(self,nb:str,radio:str=""):
+        formule = self.__open.getContentJsonFlag("ph_radio" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,radio=radio)

@@ -46,5 +46,32 @@
     "RFM",
     "Skyrock",
     "RTL"
-  ]
+  ],
+
+  "open_presaved1": "Je vous ouvre youtube {genre} {user_lastname}.",
+  "open_presaved2": "Arrera va vous ouvrir youtube {genre} {user_lastname}.",
+  "open_presaved3": "Un probleme est survenu en ouvrant youtube {genre} {user_lastname}.",
+  "open_presaved4": "Je vous ouvre Youtube musique {genre} {user_lastname}. Bonne écoute !",
+  "open_presaved5": "Arrera va vous ouvrir Youtube musique {genre} {user_lastname}. Bonne écoute !",
+  "open_presaved6": "Un problème est survenu en ouvrant Youtube musique {genre} {user_lastname}.",
+
+  "open_arrerasoft1": "Ouverture d'Arrera Video Download {genre} {user_lastname}.",
+  "open_arrerasoft2": "Impossible d'ouvrir Arrera Video Download {genre} {user_lastname}.",
+  "open_arrerasoft3": "Je vous ouvre la calculatrice en mode nombres complexes {genre} {user_lastname}.",
+  "open_arrerasoft4": "Je ne peux pas vous ouvrir la calculatrice en mode nombres complexes {genre} {user_lastname}.",
+  "open_arrerasoft5": "Je vous ouvre la calculatrice en mode Pythagore {genre} {user_lastname}.",
+  "open_arrerasoft6": "Je ne peux pas vous ouvrir la calculatrice en mode Pythagore {genre} {user_lastname}.",
+  "open_arrerasoft7": "Je vous ouvre la calculatrice {genre} {user_lastname}.",
+  "open_arrerasoft8": "Impossible d'ouvrir la calculatrice {genre} {user_lastname}.",
+
+  "ph_radio1": "Tres bien, je lance la radio {radio} pour vous.",
+  "ph_radio2": "Je vous lance la radio {radio} tout de suite {genre} {user_lastname}.",
+  "ph_radio3": "Lancement de la radio {radio}. Bonne ecoute {genre} {user_lastname} !",
+  "ph_radio4": "Je vous lance la radio {radio}. Profitez bien de votre écoute {genre} {user_lastname}.",
+  "ph_radio5": "Tres bien, je lance la radio {radio}. Bonne écoute {genre} {user_lastname} !",
+  "ph_radio6": "Lancement de la radio {radio}. Profitez bien de votre écoute {genre} {user_lastname}.",
+  "ph_radio7": "Il est imposible de lancer la radio avant que vous avez arrêté celle en cours.",
+  "ph_radio8": "Un probleme est survenu lors du lancement de la radio.",
+  "ph_radio9": "Je vous arrete la radio tout de suite {genre} {user_lastname}.",
+  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio."
 }
