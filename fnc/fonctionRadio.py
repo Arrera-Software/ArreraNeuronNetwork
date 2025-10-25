@@ -19,6 +19,9 @@ class fncRadio(fncBase) :
         self.__stations = self.__rdBrowser.search(name=radio, country="France")
         return bool(self.__stations)
 
+    def getRadioRunning(self):
+        return self.__isRunning
+
     def __launchRadioThread(self):
         if not self.__isRunning and self.__stations and self.__etatNetwork:
             try :
