@@ -5,7 +5,6 @@ from neuron.codehelp import neuroneCodehelp
 from neuron.open import neuroneOpen
 from neuron.search import neuroneSearch
 from neuron.service import neuroneService
-from neuron.software import neuroneSoftware
 from neuron.time import neuroneTime
 from neuron.work import neuroneWork
 

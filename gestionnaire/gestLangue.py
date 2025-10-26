@@ -11,7 +11,6 @@ class gestLangue:
         self.__open = jsonWork(emplacement + index.getContentJsonFlag("open"))
         self.__search = jsonWork(emplacement + index.getContentJsonFlag("search"))
         self.__service = jsonWork(emplacement + index.getContentJsonFlag("service"))
-        self.__software = jsonWork(emplacement + index.getContentJsonFlag("software"))
         self.__api = jsonWork(emplacement + index.getContentJsonFlag("api"))
         self.__time = jsonWork(emplacement + index.getContentJsonFlag("time"))
         self.__work = jsonWork(emplacement + index.getContentJsonFlag("work"))
@@ -228,16 +227,6 @@ class gestLangue:
         formule = self.__service.getContentJsonFlag("ph" + nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname)
-
-    def getPhraseSoftware(self,nb:str):
-        formule = self.__software.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname)
-
-    def getPhraseOpenSoftware(self,nb:str,name:str):
-        formule = self.__software.getContentJsonFlag("phOpen" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname, name=name)
 
     def getPhraseResumerActu(self):
         formule = self.__api.getContentJsonFlag("phResumerActu")

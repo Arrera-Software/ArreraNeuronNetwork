@@ -3,8 +3,8 @@ import json
 class gestKeyword:
     def __init__(self,emplacement:str):
         self.__listFileKeyword = ["api.json","chatbot.json","codehelp.json",
-                                  "open.json","search.json","service.json",
-                                  "software.json","time.json","work.json"]
+                                  "open.json","search.json","service.json"
+                                ,"time.json","work.json"]
         self.__directoryKeyword = emplacement
         self.__keyWordLoaded = False
         self.__apiFile = None
@@ -13,7 +13,6 @@ class gestKeyword:
         self.__openFile = None
         self.__searchFile = None
         self.__serviceFile = None
-        self.__softwareFile = None
         self.__timeFile = None
         self.__workFile = None
 
@@ -32,10 +31,8 @@ class gestKeyword:
             with open(self.__directoryKeyword+self.__listFileKeyword[5],"r",encoding="utf-8") as f:
                 self.__serviceFile = json.load(f)
             with open(self.__directoryKeyword+self.__listFileKeyword[6],"r",encoding="utf-8") as f:
-                self.__softwareFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[7],"r",encoding="utf-8") as f:
                 self.__timeFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[8],"r",encoding="utf-8") as f:
+            with open(self.__directoryKeyword+self.__listFileKeyword[7],"r",encoding="utf-8") as f:
                 self.__workFile = json.load(f)
             self.__keyWordLoaded = True
             return True
