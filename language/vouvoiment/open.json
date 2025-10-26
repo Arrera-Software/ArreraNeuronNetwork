@@ -73,5 +73,17 @@
   "ph_radio7": "Il est imposible de lancer la radio avant que vous avez arrêté celle en cours.",
   "ph_radio8": "Un probleme est survenu lors du lancement de la radio.",
   "ph_radio9": "Je vous arrete la radio tout de suite {genre} {user_lastname}.",
-  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio."
+  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio.",
+
+  "ph_user_soft1": "Je vous ouvre {soft} {genre} {user_lastname}.",
+  "ph_user_soft2": "Je vous lance le logiciel {soft} {genre} {user_lastname}.",
+  "ph_user_soft3": "J'ai demander a Arrera d'ouvrir le logiciel {soft} pour vous {genre} {user_lastname}.",
+  "ph_user_soft4": "J'ai envoyer la demande a Arrera de lancer le logiciel {soft} pour vous {genre} {user_lastname}.",
+
+  "ph_user_web1": "Je vous ouvre {site} {genre} {user_lastname}.",
+  "ph_user_web2": "Je vous lance votre site {site} {genre} {user_lastname} sur le navigateur internet.",
+  "ph_user_web3": "Je demande a Arrera d'ouvrir le site {site} pour vous {genre} {user_lastname}.",
+  "ph_user_web4": "J'ai envoyer la demande a Arrera d'ouvrir le site {site} pour vous {genre} {user_lastname}.",
+
+  "ph_user_noopen1": "Desoler {genre} {user_lastname}, je ne peux pas ouvrir ce que vous demandez."
 }

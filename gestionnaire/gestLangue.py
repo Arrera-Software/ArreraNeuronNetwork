@@ -460,3 +460,18 @@ class gestLangue:
         formule = self.__open.getContentJsonFlag("ph_radio" + nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname,radio=radio)
+
+    def getPhraseUserSoft(self,nb:str,soft:str=""):
+        formule = self.__open.getContentJsonFlag("ph_user_soft" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,soft=soft)
+
+    def getPhraseUserWeb(self,nb:str,site:str=""):
+        formule = self.__open.getContentJsonFlag("ph_user_web" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,site=site)
+
+    def getPhraseNoOpen(self,nb:str):
+        formule = self.__open.getContentJsonFlag("ph_user_noopen" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)

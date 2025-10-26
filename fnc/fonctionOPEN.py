@@ -35,7 +35,9 @@ class fonctionOpen(fncBase):
 
         dictSoft = self._gestionnaire.getUserConf().getSoft()
 
-        if name in dictSoft:
+        listKey = dictSoft.keys()
+
+        if name in listKey:
             emplacement = dictSoft[name]
             if self.__softopen.setLocation(emplacement):
                 return self.__softopen.open()

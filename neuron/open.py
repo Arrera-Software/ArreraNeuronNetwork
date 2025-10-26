@@ -24,9 +24,6 @@ class neuroneOpen(neuronBase) :
             if self.partArreraSoft(requette) == 1:
                 return
 
-            if self.partUserWeb(requette) == 1:
-                return
-
             if self.partUserSoft(requette) == 1:
                 return
 
@@ -134,10 +131,57 @@ class neuroneOpen(neuronBase) :
         """
 
     def partUserSoft(self, requette: str) -> int:
-        pass
+        listKeyword = self._keyword.getListKeyword("open","open")
+        software = requette
+        for keyword in listKeyword:
+            software = software.replace(keyword, "")
+        software = software.strip().replace(" ","")
+        outfnc = self.__fncOpen.openSoft(software)
+
+        if outfnc == 1:
+            nbRand = str(random.randint(1,2))
+            self._listSortie = [
+                self._language.getPhraseUserSoft(nbRand,software)
+                ,""]
+            self._valeurOut = 1
+            return 1
+        elif outfnc == 2:
+            nbRand = str(random.randint(3,4))
+            self._listSortie = [
+                self._language.getPhraseUserSoft(nbRand,software)
+                ,""]
+            self._valeurOut = 1
+            return 1
+        elif outfnc == 0:
+            return self.partUserWeb(requette)
+
 
     def partUserWeb(self, requette: str) -> int:
-        pass
+        listKeyword = self._keyword.getListKeyword("open","open")
+        site = requette
+        for keyword in listKeyword:
+            site = site.replace(keyword, "")
+        site = site.strip()
+
+        outfnc = self.__fncOpen.openSaveWebSite(site)
+
+        if  outfnc == 1:
+            nbRand = str(random.randint(1,2))
+            self._listSortie = [self._language.getPhraseUserWeb(nbRand,site)]
+            self._valeurOut = 1
+            return 1
+        elif outfnc == 2:
+            nbRand = str(random.randint(3,4))
+            self._listSortie = [self._language.getPhraseUserWeb(nbRand,site)]
+            self._valeurOut = 1
+            return 1
+        elif outfnc == 0:
+            self._listSortie = [self._language.getPhraseNoOpen("1")]
+            self._valeurOut = 1
+            return 0
+        else :
+            return 0
+
 
     def partUserRadio(self, requette: str) -> int:
         if (self._keyword.checkOpen(requette,"launch") and

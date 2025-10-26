@@ -73,5 +73,17 @@
   "ph_radio7": "Arreter la radio en cours avant de lancer une autre.",
   "ph_radio8": "Un probleme est survenu lors du lancement de la radio.",
   "ph_radio9": "Je t'arrete la radio tout de suite {user_firstname}.",
-  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio."
+  "ph_radio10": "Un probleme est survenu lors de l'arret de la radio.",
+
+  "ph_user_soft1": "Je t'ouvre ton logiciel {soft} {user_firstname}.",
+  "ph_user_soft2": "Je te lance ton logiciel {soft} {user_firstname}.",
+  "ph_user_soft3": "Je demande l'ouverture de ton logiciel {soft} à l'interface Arrera.",
+  "ph_user_soft4": "Je demande a l'interface Arrera de lancer ton logiciel {soft}.",
+
+  "ph_user_web1": "Je t'ouvre {site} {user_firstname}.",
+  "ph_user_web2": "J'ouvre votre site {site} pour toi {user_firstname}.",
+  "ph_user_web3": "Je demande a Arrera d'ouvrir le site {site} pour toi {user_firstname}.",
+  "ph_user_web4": "J'ouvre le site {site} avec l'inteface Arrera.",
+
+  "ph_user_noopen1" : "Impossible d'ouvrir ce que tu demande {user_firstname}."
 }
