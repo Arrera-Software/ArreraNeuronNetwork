@@ -213,58 +213,6 @@ class gestLangue:
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname)
 
-    def getPhraseOpen(self,nb:str):
-        formule = self.__open.getContentJsonFlag("ph" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname)
-
-    def getPhraseOpenList(self,nb:str):
-        phrases = self.__open.getFlagListJson("ph" + nb)
-        nb = random.randint(0, len(phrases) - 1)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname) for phrase in phrases]
-
-    def getPhraseOpenError(self,nb:str):
-        formule = self.__open.getContentJsonFlag("phError" + nb)
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname)
-
-    def getPhraseOpenRadio(self, radio:str, etat:bool):
-        if etat:
-            formule = self.__open.getContentJsonFlag("phRadio")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                                  user_lastname=self.__userLastname, radio=radio)
-        else:
-            formule = self.__open.getContentJsonFlag("phRadioError")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                                  user_lastname=self.__userLastname, radio=radio)
-
-    def getPhraseOpenSite(self,site:str,etat:bool):
-        if etat :
-            formule = self.__open.getContentJsonFlag("phSite")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                                  user_lastname=self.__userLastname, site=site)
-        else :
-            formule = self.__open.getContentJsonFlag("phSiteError")
-            return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                                  user_lastname=self.__userLastname, site=site)
-
-    def getPhraseNbOpenSoftware(self, nb:str):
-        formule = self.__open.getContentJsonFlag("phNbSite")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname, nombre=nb)
-
-    def getPhraseNbOpenSite(self, nb: str):
-        formule = self.__open.getContentJsonFlag("phNbSoftware")
-        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname, nombre=nb)
-
-    def getPhraseListeRadio(self):
-        listRadio = self.__open.getFlagListJson("phListRadion")
-        text = listRadio[0]
-        for i in range(1, len(listRadio)):
-            text = text + "\n- " + listRadio[i]
-        return text
 
     def getPhraseSearch(self,nb:str):
         formule = self.__search.getContentJsonFlag("ph" + nb)

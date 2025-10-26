@@ -1,36 +1,4 @@
 {
-  "ph1": [
-    "Voici ton logiciel de présentation {user_firstname}.",
-    "Je t'ai ouvert ton logiciel de diaporama. En quoi puis-je t'aider de plus {user_firstname} ?"
-  ],
-  "phError1": "Il y a un problème qui m'empêche d'ouvrir ton logiciel de présentation",
-  "ph2": [
-    "Voici ton navigateur web {user_firstname}.",
-    "Ok je t'ouvre ton explorateur web {user_firstname}.",
-    "Voilà ton explorateur web {user_firstname}.",
-    "Voici ton navigateur internet {user_firstname}.",
-    "Ok je t'ouvre ton explorateur internet {user_firstname}.",
-    "Voilà ton explorateur internet {user_firstname}."
-  ],
-  "phError2": "Il y a un problème qui m'empêche d'ouvrir ton navigateur internet",
-  "ph3": "Voici tes notes {user_firstname}.",
-  "phError3": "Il y a un problème qui m'empêche d'ouvrir tes notes",
-  "ph4": "Voici {user_firstname}, bonne écoute.",
-  "phError4": "Il y a un problème qui m'empêche d'ouvrir ton logiciel d'écoute musicale.",
-  "phRadio": "Voici la radio {radio}. Profite bien de ton écoute {user_firstname}.",
-  "phRadioError": "Désolé {user_firstname}, je ne peux pas lancer une radio. Un problème est survenu.",
-  "ph5": "Ok, je t'ai ouvert ton stockage distant.",
-  "phError5": "Il y a un problème qui m'empêche d'ouvrir ton stockage distant.",
-  "ph6": "Ok, je t'ai ouvert YouTube.",
-  "phError6": "Il y a un problème qui m'empêche d'ouvrir YouTube.",
-  "phSite": "Ok je t'ouvre {site} {user_firstname}",
-  "phSiteError": "Il y a un problème qui m'empêche d'ouvrir {site}",
-  "ph7": "Désolé {user_firstname}, mais je ne peux pas ouvrir ce que tu me demandes.",
-  "ph8": "Tu n'as pas de logiciel enregistré. Ouvre les paramètres pour en enregistrer un.",
-  "ph9": "Tu as un seul logiciel enregistré, qui est ",
-  "phNbSite": "Tu as {nombre} logiciels enregistrés, qui sont ",
-  "ph10": "Tu n'as pas de site internet enregistré dans l'assistant. Ouvre les paramètres pour en enregistrer un.",
-  "ph11": "Tu as un seul site internet enregistré, qui est ",
   "phNbSoftware": "Tu as {nombre} sites internet enregistrés, qui sont ",
   "phListRadion": [
     "Les radios qui peuvent être lancées par l'assistant sont :",
