@@ -7,6 +7,9 @@
   "calculator": ["calculatrice","calculette"],
   "complex_mode": ["mode complexe","nombres complexes","nombre complex","nb complex","nombre complexe","nb complexe","complex","complexe"],
   "pythagore_mode": ["mode pythagore","pythagore"],
-  "radio": ["radio","station"],
-  "stop": ["arrête","arrêter","stoppe","stop","coupe"]
+  "radio": ["radio","station","radios","stations"],
+  "stop": ["arrête","arrêter","stoppe","stop","coupe"],
+  "say": ["dis","dit moi","dis moi"],
+  "site": ["site","site web","site internet","page web","page internet","sites","sites webs","sites internets","pages webs","pages internets"],
+  "software": ["logiciel","application","app","programme","soft","software","logiciels","applications","apps","programmes","softs","softwares"]
 }

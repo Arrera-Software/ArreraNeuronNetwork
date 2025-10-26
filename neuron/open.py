@@ -7,6 +7,7 @@ class neuroneOpen(neuronBase) :
         super().__init__(gestionnaire)
         self.__fncOpen = self._gestionnaire.getGestFNC().getFNCOpen()
         self.__fncRadio = self._gestionnaire.getGestFNC().getFNCRadio()
+        self.__gestUser = self._gestionnaire.getUserConf()
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
@@ -14,6 +15,9 @@ class neuroneOpen(neuronBase) :
         self._valeurOut = 0
 
         if self.partUserRadio(requette) == 1:
+            return
+
+        if self.partListSoftWebRadio(requette) == 1:
             return
 
         if self._keyword.checkOpen(requette,"open"):
@@ -412,5 +416,70 @@ class neuroneOpen(neuronBase) :
             self._valeurOut = 1
             return 1
 
+        else :
+            return 0
+
+    def partListSoftWebRadio(self,requette:str)->int:
+        if self._keyword.checkOpen(requette,"say") :
+            if self._keyword.checkOpen(requette,"software"):
+                listNameSoft = list(self.__gestUser.getSoft().keys())
+                print(listNameSoft)
+                nbSoft = len(listNameSoft)
+                if nbSoft == 0 :
+                    self._listSortie = [self._language.getNbRadioSoftSite("2"),""]
+                    self._valeurOut = 1
+                elif nbSoft == 1 :
+                    text = self._language.getNbRadioSoftSite("3")+listNameSoft[0]
+                    self._listSortie = [text,""]
+                    self._valeurOut = 1
+                else :
+                    text = self._language.getNbRadioSoftSite("1",str(nbSoft))
+                    for nameSoft in listNameSoft :
+                        text = text + "- " + nameSoft + "\n"
+                    self._listSortie = [text,""]
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkOpen(requette,"site"):
+                listNameSite = list(self.__gestUser.getSite().keys())
+                print(listNameSite)
+                nbSite = len(listNameSite)
+                if nbSite == 0 :
+                    self._listSortie = [self._language.getNbRadioSoftSite("5"),""]
+                    self._valeurOut = 1
+                elif nbSite == 1 :
+                    text = self._language.getNbRadioSoftSite("6")+listNameSite[0]
+                    self._listSortie = [text,""]
+                    self._valeurOut = 1
+                else :
+                    text = self._language.getNbRadioSoftSite("4",str(nbSite))
+                    for nameSite in listNameSite :
+                        text = text + "- " + nameSite + "\n"
+                    self._listSortie = [text,""]
+                    self._valeurOut = 1
+                return 1
+            elif self._keyword.checkOpen(requette,"radio"):
+                radios = list(self._language.getListRadio())
+                baseTexte = self._language.getNbRadioSoftSite("7")
+
+                texte = baseTexte  # on part de la base
+                nbRadio = len(radios)
+
+                for i, nom in enumerate(radios):
+                    if i == 0:
+                        # premier élément : on colle directement
+                        separateur = ""
+                    elif i == nbRadio - 1:
+                        # dernier élément : on met " et "
+                        separateur = " et "
+                    else:
+                        # éléments intermédiaires : virgule + espace
+                        separateur = ", "
+                    texte += separateur + str(nom)
+
+                self._listSortie = [texte,""]
+                self._valeurOut = 1
+                return 1
+            else :
+                return 0
         else :
             return 0

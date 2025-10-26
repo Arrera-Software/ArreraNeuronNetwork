@@ -423,3 +423,11 @@ class gestLangue:
         formule = self.__open.getContentJsonFlag("ph_user_noopen" + nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname)
+
+    def getNbRadioSoftSite(self,nb:str,nombre:str=""):
+        formule = self.__open.getContentJsonFlag("ph_nb-softradiosite" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,nombre=nombre)
+
+    def getListRadio(self):
+        return self.__open.getFlagListJson("ph_list_radio")

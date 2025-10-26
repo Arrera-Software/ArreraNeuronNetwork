@@ -1,7 +1,13 @@
 {
-  "phNbSoftware": "Vous avez {nombre} de sites internet enregistrés. Ils sont :",
-  "phListRadion": [
-    "Les radios qui peuvent être lancées par l'assistant sont :",
+  "ph_nb-softradiosite1": "Vous avez {nombre} logiciels enregistrés. Ils sont ",
+  "ph_nb-softradiosite2": "Il n'y a pas de logiciel enregistré pour le moment.",
+  "ph_nb-softradiosite3": "Il y a qu'un seul logiciel enregistré, qui est ",
+  "ph_nb-softradiosite4": "Vous avez {nombre} sites enregistrés. Ils sont ",
+  "ph_nb-softradiosite5": "Il n'y a pas site enregistré pour le moment.",
+  "ph_nb-softradiosite6": "Il y a qu'un seul site enregistré, qui est ",
+  "ph_nb-softradiosite7": "Les radio disponibles sont ",
+
+  "ph_list_radio": [
     "Europe 1",
     "Europe 2",
     "France Info",
