@@ -20,11 +20,17 @@ class ABrain :
         self.__gestionnaire = gestionnaire(config)
         self.__gestNeuron = self.__gestionnaire.getGestNeuron()
         # Partie serveur
-        self.__socket = self.__gestionnaire.getSocketObjet()
+        self.__gestSocket = self.__gestionnaire.getSocketObjet()
         #initilisation du gestionnaire du reseau de neuron
         self.__gestLangue = self.__gestionnaire.getLanguageObjet()
         #recuperation etat du reseau
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()
+        # Theard recevied message socket
+        if self.__gestSocket is not None and self.__gestSocket.getServeurOn():
+            print("Theard socket started")
+            self.__threadSocket = th.Thread(target=self.__gestSocket.receivedMessageServer)
+            self.__threadSocket.daemon = True
+            self.__threadSocket.start()
 
     def getNeuronRunning(self):
         return self.__networkRunning
@@ -51,8 +57,8 @@ class ABrain :
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
         if self.__gestionnaire.getGestNeuron().getSocket():
-            if self.__socket.getServeurOn():
-                self.__socket.stopSocket()
+            if self.__gestSocket.getServeurOn():
+                self.__gestSocket.stopSocket()
         return str(text)
     
     def getListSortie(self)->list :
@@ -212,6 +218,7 @@ class ABrain :
             self.__gestionnaire.setOld(self.__listOut[0],requette)
 
     def updateAssistant(self):
+        print("updateAssistant")
         # Ajouter la partie mise a jour du socket
         self.__gestionnaire.updateDate()
         if (time(6,0) <= datetime.now().time() < time(11,0) and not
@@ -221,5 +228,12 @@ class ABrain :
             self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
             self.__valeurOut = 5
             return True
+        elif self.__gestSocket.getMessageIsReceived():
+            message = self.__gestSocket.getMessageServer()
+            self.__gestNeuron.ninterface.neurone(message)
+            self.__listOut = self.__gestNeuron.ninterface.getListSortie()
+            self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
+            print("Assistant updated via socket")
+            return  True
         else :
             return False
