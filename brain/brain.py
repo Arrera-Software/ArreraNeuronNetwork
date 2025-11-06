@@ -27,7 +27,7 @@ class ABrain :
         self.__etatReseau = self.__gestionnaire.getNetworkObjet().getEtatInternet()
         # Theard recevied message socket
         if self.__gestSocket is not None and self.__gestSocket.getServeurOn():
-            print("Theard socket started")
+            # print("Theard socket started")
             self.__threadSocket = th.Thread(target=self.__gestSocket.receivedMessageServer)
             self.__threadSocket.daemon = True
             self.__threadSocket.start()
@@ -218,7 +218,7 @@ class ABrain :
             self.__gestionnaire.setOld(self.__listOut[0],requette)
 
     def updateAssistant(self):
-        print("updateAssistant")
+        # print("updateAssistant")
         # Ajouter la partie mise a jour du socket
         self.__gestionnaire.updateDate()
         if (time(6,0) <= datetime.now().time() < time(11,0) and not
@@ -233,7 +233,7 @@ class ABrain :
             self.__gestNeuron.ninterface.neurone(message)
             self.__listOut = self.__gestNeuron.ninterface.getListSortie()
             self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
-            print("Assistant updated via socket")
+            # print("Assistant updated via socket")
             return  True
         else :
             return False

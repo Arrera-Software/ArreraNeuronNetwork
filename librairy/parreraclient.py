@@ -39,7 +39,7 @@ class PArreraClient:
                     self.__connection.send("Message Received")
                     return response
             except Exception as e:
-                print(f"Erreur receiveMessage: {e}")
+                # print(f"Erreur receiveMessage: {e}")
                 return None
         else:
             return None
