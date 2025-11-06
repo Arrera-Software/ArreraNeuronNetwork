@@ -7,6 +7,7 @@ from neuron.search import neuroneSearch
 from neuron.service import neuroneService
 from neuron.time import neuroneTime
 from neuron.work import neuroneWork
+from neuron.interface import interface
 
 class gestNeuron :
     def __init__(self,gestionnaire:gestionnaire) -> None:
@@ -29,6 +30,7 @@ class gestNeuron :
         self.nservice = None
         self.ntime = None
         self.nwork = None
+        self.ninterface = None
         # Init des neurones
         if self.__etatService == 1 :
             self.nservice = neuroneService(gestionnaire)
@@ -46,6 +48,8 @@ class gestNeuron :
             self.ncodehelp = neuroneCodehelp(gestionnaire)
         if self.__etatWork == 1 :
             self.nwork = neuroneWork(gestionnaire)
+        if self.__etatSocket == 1 :
+            self.ninterface = interface(gestionnaire)
 
 
     def getSocket(self):

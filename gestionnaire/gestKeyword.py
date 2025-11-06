@@ -4,7 +4,7 @@ class gestKeyword:
     def __init__(self,emplacement:str):
         self.__listFileKeyword = ["api.json","chatbot.json","codehelp.json",
                                   "open.json","search.json","service.json"
-                                ,"time.json","work.json"]
+                                ,"time.json","work.json","interface.json"]
         self.__directoryKeyword = emplacement
         self.__keyWordLoaded = False
         self.__apiFile = None
@@ -15,6 +15,7 @@ class gestKeyword:
         self.__serviceFile = None
         self.__timeFile = None
         self.__workFile = None
+        self.__interfaceFile = None
 
     def __loadKeyword(self)->bool:
         try :
@@ -34,6 +35,8 @@ class gestKeyword:
                 self.__timeFile = json.load(f)
             with open(self.__directoryKeyword+self.__listFileKeyword[7],"r",encoding="utf-8") as f:
                 self.__workFile = json.load(f)
+            with open(self.__directoryKeyword+self.__listFileKeyword[8],"r",encoding="utf-8") as f:
+                self.__interfaceFile = json.load(f)
             self.__keyWordLoaded = True
             return True
         except Exception as e:
@@ -65,9 +68,9 @@ class gestKeyword:
         elif neuron == "service":
             if fonction in self.__serviceFile:
                 return self.__serviceFile[fonction]
-        elif neuron == "software":
-            if fonction in self.__softwareFile:
-                return self.__softwareFile[fonction]
+        elif neuron == "interface":
+            if fonction in self.__interfaceFile:
+                return self.__interfaceFile[fonction]
         elif neuron == "time":
             if fonction in self.__timeFile:
                 return self.__timeFile[fonction]
@@ -119,8 +122,12 @@ class gestKeyword:
         listWord = self.__getKeyWork("work",fonction)
         return self.__checkContainWord(texte,listWord)
 
+    def checkInterface(self,texte:str,fonction:str)->bool:
+        listWord = self.__getKeyWork("interface",fonction)
+        return self.__checkContainWord(texte,listWord)
+
     def getListKeyword(self,neuron:str,fonction:str)->list:
-        if neuron not in ["api","chatbot","codehelp","open","search","service","software","time","work"]:
+        if neuron not in ["api","chatbot","codehelp","open","search","service","software","time","work","interface"]:
             return []
         if neuron == "" or fonction == "":
             return []
