@@ -1,1 +1,5 @@
-{"noopensoft": "noopensoft"}
+{
+  "noopensoft": ["noopensoft"],
+  "opensoft": ["opensoft"],
+  "erreuropensoft": ["erreuropensoft"]
+}
