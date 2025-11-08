@@ -8,5 +8,6 @@
   "service": "service.json",
   "time": "time.json",
   "work": "work.json",
-  "socket": "socket.json"
+  "socket": "socket.json",
+  "interface": "interface.json"
 }

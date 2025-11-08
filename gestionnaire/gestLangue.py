@@ -15,6 +15,7 @@ class gestLangue:
         self.__time = jsonWork(emplacement + index.getContentJsonFlag("time"))
         self.__work = jsonWork(emplacement + index.getContentJsonFlag("work"))
         self.__socket = jsonWork(emplacement + index.getContentJsonFlag("socket"))
+        self.__interface = jsonWork(emplacement + index.getContentJsonFlag("interface"))
         self.__fncHist = None
         # Variable
         self.__listFonction = listFonc
@@ -420,3 +421,8 @@ class gestLangue:
 
     def getListRadio(self):
         return self.__open.getFlagListJson("ph_list_radio")
+
+    def getPhraseInterfaceOpenSoft(self,nb:str,soft:str=""):
+        formule = self.__interface.getContentJsonFlag("phOpenSoft"+nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,soft=soft)
