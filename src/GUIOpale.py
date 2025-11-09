@@ -273,8 +273,12 @@ class GUIOpale:
 
 
     def __updateAssistant(self,screen:ctk.CTk=None):
+
         if self.__assistantBrain.updateAssistant():
+            varOut = self.__assistantBrain.getValeurSortie()
             self.__labelAssistantText.configure(text=self.__assistantBrain.getListSortie()[0], wraplength=200)
-            self.__labelAssistantNumber.configure(text=str(self.__assistantBrain.getValeurSortie()))
+            self.__labelAssistantNumber.configure(text=str(varOut))
+            if varOut == 15:
+                self.__close()
 
         screen.after(1000,self.__updateAssistant,screen)

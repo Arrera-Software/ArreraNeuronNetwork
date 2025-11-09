@@ -52,3 +52,5 @@ class interface(neuronBase):
             self._valeurOut = 1
             self._listSortie = [self._language.getPhraseTime("8"), ""]
             self._gestGUI.activeAgenda()
+        elif self._keyword.checkInterface(requette,"close"):
+            self._valeurOut = 15
