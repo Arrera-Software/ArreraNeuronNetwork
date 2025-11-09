@@ -10,6 +10,10 @@ class gestSocket :
         self.__running = True
         if not self.__serverOn:
             self.__socket = None
+        else :
+            if not self.__socket.sendMessage("ArreraSoftConnected"):
+                self.__serverOn = False
+                self.__socket = None
 
 
     def receivedMessageServer(self):
