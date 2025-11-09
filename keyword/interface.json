@@ -1,5 +1,9 @@
 {
   "noopensoft": ["noopensoft"],
   "opensoft": ["opensoft"],
-  "erreuropensoft": ["erreuropensoft"]
+  "erreuropensoft": ["erreuropensoft"],
+  "breef": ["breef"],
+  "meteo": ["weather"],
+  "task": ["task"],
+  "agenda": ["agenda"]
 }
