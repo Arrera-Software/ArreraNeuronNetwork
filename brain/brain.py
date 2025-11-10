@@ -229,11 +229,21 @@ class ABrain :
             self.__valeurOut = 5
             return True
         elif self.__gestSocket.getMessageIsReceived():
-            message = self.__gestSocket.getMessageServer()
-            self.__gestNeuron.ninterface.neurone(message)
-            self.__listOut = self.__gestNeuron.ninterface.getListSortie()
-            self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
-            # print("Assistant updated via socket")
-            return  True
+            if self.__gestionnaire.getKeywordObjet().checkInterface(
+                    self.__gestSocket.getMessageServer(),"requette"):
+                mots = self.__gestionnaire.getKeywordObjet().getListKeyword("interface","requette")
+                message = self.__gestSocket.getMessageServer().replace(mots[0],"").strip()
+                self.neuron(message)
+                return True
+            else:
+                message = self.__gestSocket.getMessageServer()
+                self.__gestNeuron.ninterface.neurone(message)
+                self.__listOut = self.__gestNeuron.ninterface.getListSortie()
+                self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
+                # print("Assistant updated via socket")
+                return  True
+
+
+
         else :
             return False

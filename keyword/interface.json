@@ -6,5 +6,6 @@
   "meteo": ["weather"],
   "task": ["task"],
   "agenda": ["agenda"],
-  "close": ["stop"]
+  "close": ["stop"],
+  "requette": ["requette : "]
 }
