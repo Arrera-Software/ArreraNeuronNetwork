@@ -240,10 +240,6 @@ class ABrain :
                 self.__gestNeuron.ninterface.neurone(message)
                 self.__listOut = self.__gestNeuron.ninterface.getListSortie()
                 self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
-                # print("Assistant updated via socket")
                 return  True
-
-
-
         else :
             return False
