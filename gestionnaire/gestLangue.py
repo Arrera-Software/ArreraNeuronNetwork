@@ -426,3 +426,8 @@ class gestLangue:
         formule = self.__interface.getContentJsonFlag("phOpenSoft"+nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname,soft=soft)
+
+    def getPhraseInterfaceLaunchModeLieu(self,nb:str,name:str=""):
+        formule = self.__interface.getContentJsonFlag("phModeLieu"+nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,name=name)

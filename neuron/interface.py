@@ -52,5 +52,30 @@ class interface(neuronBase):
             self._valeurOut = 1
             self._listSortie = [self._language.getPhraseTime("8"), ""]
             self._gestGUI.activeAgenda()
+        elif self._keyword.checkInterface(requette,"modeone"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modeone")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("1",name),""]
+        elif self._keyword.checkInterface(requette,"modetwo"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modetwo")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("2",name),""]
+        elif self._keyword.checkInterface(requette,"modetheer"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modetheer")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("3",name),""]
+        elif self._keyword.checkInterface(requette,"modefoor"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modefoor")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("4",name),""]
+        elif self._keyword.checkInterface(requette,"modefive"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modefive")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("5",name),""]
+        elif self._keyword.checkInterface(requette,"modesix"):
+            self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","modesix")[0],"").strip()
+            self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("6",name),""]
+
         elif self._keyword.checkInterface(requette,"close"):
             self._valeurOut = 15
