@@ -57,6 +57,10 @@ class gestionnaire:
         self.__oldRequette = ""
         self.__oldSorti = ""
 
+        # Mode interface
+        self.__nameMode = {}
+        self.__modeIsEnabled = False
+
     def getConfigFile(self):
         return self.__config
 
@@ -232,3 +236,28 @@ class gestionnaire:
             self.__dateStart = datetime.now().date()
             self.__breefIsLaunch = False
             return True
+
+    def getNameMode(self):
+        return self.__nameMode
+
+    def setNameMode(self,requette:str):
+        try :
+            requette = requette.replace("namemode","").strip()
+            parts = requette.lstrip("|").split("|")
+
+            result = {}
+            for part in parts:
+                key, value = part.split(":", 1)
+                result[key] = value.lower()
+
+            self.__nameMode = result
+            return True
+        except Exception as e :
+            #print(e)
+            return False
+
+    def getModeIsEnabled(self)->bool:
+        return self.__modeIsEnabled
+
+    def setModeIsEnabled(self,etat:bool):
+        self.__modeIsEnabled = etat

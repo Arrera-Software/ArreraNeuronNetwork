@@ -13,5 +13,8 @@
   "modetheer": ["mode-theer-launch name:"],
   "modefoor": ["mode-four-launch name:"],
   "modefive": ["mode-five-launch name:"],
-  "modesix": ["mode-six-launch name:"]
+  "modesix": ["mode-six-launch name:"],
+  "namemode": ["namemode"],
+  "errorlaunchmode": ["error launch mode"],
+  "closemode": ["close mode"]
 }

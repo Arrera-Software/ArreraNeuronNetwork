@@ -59,5 +59,13 @@
   "ph_user_web3": "Je demande a Arrera d'ouvrir le site {site} pour vous {genre} {user_lastname}.",
   "ph_user_web4": "J'ai envoyer la demande a Arrera d'ouvrir le site {site} pour vous {genre} {user_lastname}.",
 
-  "ph_user_noopen1": "Desoler {genre} {user_lastname}, je ne peux pas ouvrir ce que vous demandez."
+  "ph_user_noopen1": "Desoler {genre} {user_lastname}, je ne peux pas ouvrir ce que vous demandez.",
+
+  "ph_mode_interface1": "Je demande à l’interface de vous lancer le mode 1 nommé {name}",
+  "ph_mode_interface2": "Je demande a l'interface de vous lancer le mode 2 nommé {name}",
+  "ph_mode_interface3": "Je demande a l'interface de vous lancer le mode 3 nommé {name}",
+  "ph_mode_interface4": "Je demande a l'interface de vous lancer le mode 4 nommé {name}",
+  "ph_mode_interface5": "Je demande a l'interface de vous lancer le mode 5 nommé {name}",
+  "ph_mode_interface6": "Je demande a l'interface de vous lancer le mode 6 nommé {name}",
+  "ph_mode_interface7": "Je demande a l'interface de fermer le mode {genre} {user_lastname}."
 }

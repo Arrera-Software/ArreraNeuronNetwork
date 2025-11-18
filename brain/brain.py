@@ -50,6 +50,7 @@ class ABrain :
         else :
             text= self.__gestLangue.bootWithHist(hour)
         self.__gestionnaire.setOld("boot","boot")
+
         return str(text)
     
     def shutdown(self):
@@ -235,6 +236,9 @@ class ABrain :
                 message = self.__gestSocket.getMessageServer().replace(mots[0],"").strip()
                 self.neuron(message)
                 return True
+            elif self.__gestionnaire.getKeywordObjet().checkInterface(self.__gestSocket.getMessageServer(),"namemode"):
+                self.__gestionnaire.setNameMode(self.__gestSocket.getMessageServer())
+                return False
             else:
                 message = self.__gestSocket.getMessageServer()
                 self.__gestNeuron.ninterface.neurone(message)

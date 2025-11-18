@@ -20,6 +20,9 @@ class neuroneOpen(neuronBase) :
         if self.partListSoftWebRadio(requette) == 1:
             return
 
+        if self.__partSocket(requette) == 1:
+            return
+
         if self._keyword.checkOpen(requette,"open"):
 
             if self.partPreSaved(requette) == 1:
@@ -377,6 +380,75 @@ class neuroneOpen(neuronBase) :
                 self._valeurOut = 1
                 return 1
             else :
+                return 0
+        else :
+            return 0
+
+    def __partSocket(self,requette:str)->int:
+        if self._keyword.checkOpen(requette,"mode_interface"):
+            if self._keyword.checkOpen(requette,"open"):
+                if self._gestionnaire.getSocketObjet() is not None:
+                    if self._gestionnaire.getSocketObjet().getServeurOn():
+                        dictMode = self._gestionnaire.getNameMode()
+                        if dictMode == {}:
+                            return 0
+                        else :
+                            if ("mode1" in dictMode and (requette in dictMode["mode1"] or
+                                                         self._keyword.checkOpen(requette,"mode_one"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("1", dictMode["mode1"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode1")
+                                return 1
+                            elif ("mode2" in dictMode and (requette in dictMode["mode2"] or
+                                                           self._keyword.checkOpen(requette,"mode_two"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("2", dictMode["mode2"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode2")
+                                return 1
+                            elif ("mode3" in dictMode and (requette in dictMode["mode3"] or
+                                                           self._keyword.checkOpen(requette,"mode_three"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("3", dictMode["mode3"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode3")
+                                return 1
+                            elif ("mode4" in dictMode and (requette in dictMode["mode4"] or
+                                                           self._keyword.checkOpen(requette,"mode_four"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("4", dictMode["mode4"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode4")
+                                return 1
+                            elif ("mode5" in dictMode and (requette in dictMode["mode5"] or
+                                                           self._keyword.checkOpen(requette,"mode_five"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("5", dictMode["mode5"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode5")
+                                return 1
+                            elif ("mode6" in dictMode and (requette in dictMode["mode6"] or
+                                                           self._keyword.checkOpen(requette,"mode_six"))):
+                                self._listSortie = [self._language.getPhraseModeInterface("6", dictMode["mode6"])
+                                    ,""]
+                                self._valeurOut = 1
+                                self._gestionnaire.getSocketObjet().sendData("launch mode6")
+                                return 1
+                            else :
+                                return 0
+                    else :
+                        return 0
+                else :
+                    return 0
+            elif (self._keyword.checkOpen(requette,"close") and
+                  self._gestionnaire.getModeIsEnabled()):
+                self._listSortie = [self._language.getPhraseModeInterface("7")
+                    ,""]
+                self._valeurOut = 1
+                self._gestionnaire.getSocketObjet().sendData("close mode")
+                return 1
+            else:
                 return 0
         else :
             return 0

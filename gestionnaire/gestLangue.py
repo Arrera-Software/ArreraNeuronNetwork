@@ -422,6 +422,13 @@ class gestLangue:
     def getListRadio(self):
         return self.__open.getFlagListJson("ph_list_radio")
 
+    def getPhraseModeInterface(self, nb:str, name:str= ""):
+        formule = self.__open.getContentJsonFlag("ph_mode_interface"+nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname,name=name)
+
+    # Interface
+
     def getPhraseInterfaceOpenSoft(self,nb:str,soft:str=""):
         formule = self.__interface.getContentJsonFlag("phOpenSoft"+nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
@@ -431,3 +438,9 @@ class gestLangue:
         formule = self.__interface.getContentJsonFlag("phModeLieu"+nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname,name=name)
+
+    def getPhraseCloseMode(self):
+        nb = str(random.randint(1,2))
+        formule = self.__interface.getContentJsonFlag("phCloseMode"+nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)

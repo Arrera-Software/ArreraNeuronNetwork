@@ -7,5 +7,7 @@
   "phModeLieu3": "",
   "phModeLieu4": "",
   "phModeLieu5": "",
-  "phModeLieu6": ""
+  "phModeLieu6": "",
+  "phCloseMode1": "Le mode lancer a bien étais arrêter.",
+  "phCloseMode2": "Le mode lancer a bien étais arrêter {user_firstname}."
 }

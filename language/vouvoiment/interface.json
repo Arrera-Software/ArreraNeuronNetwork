@@ -7,5 +7,7 @@
   "phModeLieu3": "Le mode {name} vous a bien etais ouvert.",
   "phModeLieu4": "Le mode {name} vous a bien etais ouvert.",
   "phModeLieu5": "Le mode {name} vous a bien etais ouvert.",
-  "phModeLieu6": "Le mode {name} vous a bien etais ouvert."
+  "phModeLieu6": "Le mode {name} vous a bien etais ouvert.",
+  "phCloseMode1": "Le mode lancer a bien étais arrêter.",
+  "phCloseMode2": "Le mode lancer a bien étais arrêter {genre} {user_lastname}."
 }
