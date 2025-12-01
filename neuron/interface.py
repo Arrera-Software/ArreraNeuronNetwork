@@ -87,7 +87,6 @@ class interface(neuronBase):
             self._listSortie = ["Erreur mode",""]
         elif self._keyword.checkInterface(requette,"closemode"):
             self._valeurOut = 1
-            nb = str(random.randint(1,2))
             self._listSortie = [self._language.getPhraseCloseMode(),""]
             self._gestionnaire.setModeIsEnabled(False)
         elif self._keyword.checkInterface(requette,"close"):
