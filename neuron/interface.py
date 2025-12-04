@@ -56,38 +56,46 @@ class interface(neuronBase):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modeone")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("1",name),""]
+            self._gestHist.add_action("open_mode","mode1")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"modetwo"):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modetwo")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("2",name),""]
+            self._gestHist.add_action("open_mode","mode2")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"modetheer"):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modetheer")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("3",name),""]
+            self._gestHist.add_action("open_mode","mode3")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"modefoor"):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modefoor")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("4",name),""]
+            self._gestHist.add_action("open_mode","mode4")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"modefive"):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modefive")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("5",name),""]
+            self._gestHist.add_action("open_mode","mode5")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"modesix"):
             self._valeurOut = 1
             name = requette.replace(self._keyword.getListKeyword("interface","modesix")[0],"").strip()
             self._listSortie = [self._language.getPhraseInterfaceLaunchModeLieu("6",name),""]
+            self._gestHist.add_action("open_mode","mode6")
             self._gestionnaire.setModeIsEnabled(True)
         elif self._keyword.checkInterface(requette,"errorlaunchmode"):
             self._valeurOut = 1
             self._listSortie = ["Erreur mode",""]
         elif self._keyword.checkInterface(requette,"closemode"):
             self._valeurOut = 1
+            name = requette.replace(self._keyword.getListKeyword("interface","closemode")[0],"").strip()
             self._listSortie = [self._language.getPhraseCloseMode(),""]
+            self._gestHist.add_action("close_mode",name)
             self._gestionnaire.setModeIsEnabled(False)
         elif self._keyword.checkInterface(requette,"close"):
             self._valeurOut = 15
