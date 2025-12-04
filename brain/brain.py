@@ -39,13 +39,11 @@ class ABrain :
         return self.__gestionnaire.boot()
     
     def shutdown(self):
-        #self.__historique.saveHistorique()
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
         if self.__gestionnaire.getGestNeuron().getSocket():
             if self.__gestSocket.getServeurOn():
                 self.__gestSocket.stopSocket()
-        print("Save hist")
         self.__gestionnaire.getGestHist().saveHist()
         return str(text)
     
