@@ -216,21 +216,24 @@ class ABrain :
             self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
             self.__valeurOut = 5
             return True
-        elif self.__gestSocket.getMessageIsReceived():
-            if self.__gestionnaire.getKeywordObjet().checkInterface(
-                    self.__gestSocket.getMessageServer(),"requette"):
-                mots = self.__gestionnaire.getKeywordObjet().getListKeyword("interface","requette")
-                message = self.__gestSocket.getMessageServer().replace(mots[0],"").strip()
-                self.neuron(message)
-                return True
-            elif self.__gestionnaire.getKeywordObjet().checkInterface(self.__gestSocket.getMessageServer(),"namemode"):
-                self.__gestionnaire.setNameMode(self.__gestSocket.getMessageServer())
+        elif self.__gestSocket is not None:
+            if self.__gestSocket.getMessageIsReceived():
+                if self.__gestionnaire.getKeywordObjet().checkInterface(
+                        self.__gestSocket.getMessageServer(),"requette"):
+                    mots = self.__gestionnaire.getKeywordObjet().getListKeyword("interface","requette")
+                    message = self.__gestSocket.getMessageServer().replace(mots[0],"").strip()
+                    self.neuron(message)
+                    return True
+                elif self.__gestionnaire.getKeywordObjet().checkInterface(self.__gestSocket.getMessageServer(),"namemode"):
+                    self.__gestionnaire.setNameMode(self.__gestSocket.getMessageServer())
+                    return False
+                else:
+                    message = self.__gestSocket.getMessageServer()
+                    self.__gestNeuron.ninterface.neurone(message)
+                    self.__listOut = self.__gestNeuron.ninterface.getListSortie()
+                    self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
+                    return  True
+            else :
                 return False
-            else:
-                message = self.__gestSocket.getMessageServer()
-                self.__gestNeuron.ninterface.neurone(message)
-                self.__listOut = self.__gestNeuron.ninterface.getListSortie()
-                self.__valeurOut = self.__gestNeuron.ninterface.getValeurSortie()
-                return  True
         else :
             return False
