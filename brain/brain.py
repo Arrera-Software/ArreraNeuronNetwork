@@ -60,6 +60,8 @@ class ABrain :
         if self.__gestionnaire.getGestNeuron().getSocket():
             if self.__gestSocket.getServeurOn():
                 self.__gestSocket.stopSocket()
+        print("Save hist")
+        self.__gestionnaire.getGestHist().saveHist()
         return str(text)
     
     def getListSortie(self)->list :

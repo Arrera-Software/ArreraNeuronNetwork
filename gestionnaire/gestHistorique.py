@@ -4,12 +4,14 @@ from pathlib import Path
 from datetime import date,timedelta
 
 DICTHIST = {}
-LICTACTION = ["open_soft"
-              "open_website"
-              "open_mode"
-              "close_mode"
-              "open_project"
-              "close_project"]
+LICTACTION = [
+    "open_soft",
+    "open_website",
+    "open_mode",
+    "close_mode",
+    "open_project",
+    "close_project"
+]
 
 class gestHistorique :
     def __init__(self,gestionnaire:gestionnaire):
@@ -18,8 +20,7 @@ class gestHistorique :
         self.__todayHist = []
         self.__yesterdayHist = []
 
-        self.__gestFnc = gestionnaire.getGestFNC()
-        self.__gestSocket = gestionnaire.getSocketObjet()
+        self.__gestionnaire = gestionnaire
 
         self.__osDect = gestionnaire.getOSObjet()
 
@@ -70,28 +71,33 @@ class gestHistorique :
                 for hist in self.__todayHist:
                     listStart = self.__testAction(hist,self.__todayHist,listStart)
 
+            if listStart:
+                return True
+            else :
+                return False
+        return None
 
     def __testAction(self,hist:str,listAction:list,listStart:list):
         listStart = listStart
         if "open_soft" in hist:
-            soft = hist.replace("open_soft","").strip()
+            soft = hist.replace("open_soft","").replace(":","").strip()
             if not str("soft" + soft) in listStart:
-                self.__gestFnc.getFNCOpen().openSoft(soft)
+                self.__gestionnaire.getGestFNC().getFNCOpen().openSoft(soft)
                 listStart.append("soft" + soft)
         elif "open_website" in hist:
-            site = hist.replace("open_website","").strip()
+            site = hist.replace("open_website","").replace(":","").strip()
             if not str("site" + site) in listStart:
-                self.__gestFnc.getFNCOpen().openSoft(site)
+                self.__gestionnaire.getGestFNC().getFNCOpen().openSoft(site)
                 listStart.append("site" + site)
         elif "open_mode" in hist:
-            mode = hist.replace("open_mode","").strip()
+            mode = hist.replace("open_mode","").replace(":","").strip()
             if not str("mode" + mode) in listStart and not str("close_mode "+mode) in listAction:
-                self.__gestSocket.sendData("launch "+mode)
+                self.__gestionnaire.getSocketObjet().sendData("launch "+mode)
                 listStart.append("mode" + mode)
         elif "open_project" in hist:
-            project = hist.replace("open_project","").strip()
+            project = hist.replace("open_project","").replace(":","").strip()
             if not str("project" + project) in listStart and not str("close_project "+project) in listAction:
-                self.__gestFnc.getFNCWork().openProjet(project)
+                self.__gestionnaire.getGestFNC().getFNCWork().openProjet(project)
                 listStart.append("project" + project)
 
         return listStart
@@ -109,10 +115,8 @@ class gestHistorique :
         :param action:
         :return:
         """
-
         if type not in LICTACTION:
             return False
-
         if not action:
             return False
 

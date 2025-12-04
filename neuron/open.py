@@ -48,6 +48,7 @@ class neuroneOpen(neuronBase) :
                 self._language.getPhraseUserSoft(nbRand,software)
                 ,""]
             self._valeurOut = 1
+            self._gestHist.add_action("open_soft",software)
             return 1
         elif outfnc == 2:
             nbRand = str(random.randint(3,4))
@@ -55,6 +56,7 @@ class neuroneOpen(neuronBase) :
                 self._language.getPhraseUserSoft(nbRand,software)
                 ,""]
             self._valeurOut = 1
+            self._gestHist.add_action("open_soft",software)
             return 1
         elif outfnc == 0:
             return self.partUserWeb(requette)
@@ -73,11 +75,13 @@ class neuroneOpen(neuronBase) :
             nbRand = str(random.randint(1,2))
             self._listSortie = [self._language.getPhraseUserWeb(nbRand,site)]
             self._valeurOut = 1
+            self._gestHist.add_action("open_website",site)
             return 1
         elif outfnc == 2:
             nbRand = str(random.randint(3,4))
             self._listSortie = [self._language.getPhraseUserWeb(nbRand,site)]
             self._valeurOut = 1
+            self._gestHist.add_action("open_website",site)
             return 1
         elif outfnc == 0:
             self._listSortie = [self._language.getPhraseNoOpen("1")]

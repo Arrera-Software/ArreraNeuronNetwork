@@ -33,8 +33,9 @@ class gestionnaire:
         self.__userConf = gestUserSetting(self)
         self.__fichierFete = jsonWork("config/listFete.json")
         # Initialisation des tout les gestionnaires
+        self.__gestHist = gestHistorique(self)
         self.__gestLang = gestLangue(self.__config.fichierLangue,
-                                     self.__userConf, [self.__config.name,
+                                     self, [self.__config.name,
                                                        self.__config.bute,
                                                        self.__config.createur],
                                      self.__config.listFonction)
@@ -93,6 +94,9 @@ class gestionnaire:
 
     def getSocketObjet(self):
         return self.__gestSocket
+
+    def getGestHist(self):
+        return self.__gestHist
         
     def getName(self):
         return  self.__config.name

@@ -91,13 +91,13 @@ class GUIOpale:
         match mode:
             case 1 :
                 self.__emplacementLangue = "language/vouvoiment/"
-                self.__langSet.configure(text="Vouvoiement")
+                self.__langSet.configure(text="Vouvoiment")
             case 2 :
                 self.__emplacementLangue = "language/tutoiment/"
                 self.__langSet.configure(text="Tutoiement")
             case _ :
                 self.__emplacementLangue = "language/vouvoiment/"
-                self.__langSet.configure(text="Vouvoiement")
+                self.__langSet.configure(text="Vouvoiment")
         self.__btnVous.place_forget()
         self.__btnTutoiement.place_forget()
         self.__arrTK.placeCenter(self.__langSet)
@@ -159,6 +159,7 @@ class GUIOpale:
 
 
     def __GUIAssistant(self):
+        print("GUI")
         screen = self.__arrTK.aTK(width=500, height=500,
                                   title="Opale Assistant", resizable=False,
                                   icon="asset/icon.png")
@@ -207,8 +208,9 @@ class GUIOpale:
         """
         Fonction qui permet de lancer l'assistant
         """
+
         try :
-            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(1), wraplength=200
+            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(2), wraplength=200
                                                 ,justify=LEFT)
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}",wraplength=200
@@ -246,6 +248,7 @@ class GUIOpale:
 
     def __close(self):
         out = askyesno("Fermeture","Enregistrer le log avant de quitter ?")
+        self.__assistantBrain.shutdown()
         if out:
             if self.__saveLog():
                 print("Log sauvegardé avec succès.")

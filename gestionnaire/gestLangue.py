@@ -1,9 +1,10 @@
 import random
 from librairy.travailJSON import *
-from gestionnaire.gestUserSetting import gestUserSetting
+from gestionnaire.gestion import gestionnaire
+
 
 class gestLangue:
-    def __init__(self,emplacement:str,user_data:gestUserSetting,listVar:list,listFonc:list):
+    def __init__(self,emplacement:str,gestion:gestionnaire,listVar:list,listFonc:list):
         index = jsonWork(emplacement+"index.json")
         self.__formule = jsonWork(emplacement + index.getContentJsonFlag("formule"))
         self.__chatbot = jsonWork(emplacement + index.getContentJsonFlag("chatbot"))
@@ -16,12 +17,12 @@ class gestLangue:
         self.__work = jsonWork(emplacement + index.getContentJsonFlag("work"))
         self.__socket = jsonWork(emplacement + index.getContentJsonFlag("socket"))
         self.__interface = jsonWork(emplacement + index.getContentJsonFlag("interface"))
-        self.__fncHist = None
+        self.__fncHist = gestion.getGestHist()
         # Variable
         self.__listFonction = listFonc
         self.__nbFonction = len(self.__listFonction)
         # Fichier JSON
-        self.__userData = user_data
+        self.__userData = gestion.getUserConf()
         # Atribut
         self.__userFirstname = ""
         self.__genre = ""
@@ -103,10 +104,8 @@ class gestLangue:
 
     def bootWithHist(self, hour):
 
-        sortie = self.__fncHist.verfiHist()
-        if sortie == True:
-            self.__fncHist.startHistAction()
-
+        sortie = self.__fncHist.loadHist()
+        if sortie:
             if 0 <= hour < 3:
                 formule = self.getPhraseBootHist("1")
                 return formule
