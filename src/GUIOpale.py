@@ -179,6 +179,7 @@ class GUIOpale:
         entryUser = self.__arrTK.createEntry(frameUser, width=200)
         btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=25,
                                             command= lambda : self.__sendAssistantMessage(entryUser))
+        btnOpen = self.__arrTK.createButton(screen, text="OPEN",width=10,command=self.__viewOpen)
 
         # Affichage
 
@@ -192,9 +193,38 @@ class GUIOpale:
         self.__arrTK.placeLeftCenter(entryUser)
         self.__arrTK.placeRightCenter(btnSend)
 
+        self.__arrTK.placeBottomLeft(btnOpen)
+
         self.__keyboard(screen,entryUser)
 
         screen.after(200, self.__updateAssistant,screen)
+
+    def __viewOpen(self):
+        w = self.__arrTK.aTopLevel(title="Ouvert par l'assistant",width=300, height=100)
+
+        word = self.__arrTK.createLabel(w,text="WORD",ptaille=15)
+        project = self.__arrTK.createLabel(w,text="PROJECT",ptaille=15)
+        tableur = self.__arrTK.createLabel(w,text="TABLEUR",ptaille=15)
+
+        self.__arrTK.placeCenterLeft(word)
+        self.__arrTK.placeCenterRight(project)
+        self.__arrTK.placeCenter(tableur)
+
+        if self.__assistantBrain.getWord():
+            word.configure(fg_color="green")
+        else:
+            word.configure(fg_color="red")
+
+        if self.__assistantBrain.getProject():
+            project.configure(fg_color="green")
+        else:
+            project.configure(fg_color="red")
+
+        if self.__assistantBrain.getTableur():
+            tableur.configure(fg_color="green")
+        else:
+            tableur.configure(fg_color="red")
+
 
     def __startAssistantBrain(self):
         try :
