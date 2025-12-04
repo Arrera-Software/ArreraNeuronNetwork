@@ -165,6 +165,7 @@ class neuroneWork(neuronBase):
                 project = requette.strip()
                 if self.__fonctionWork.openProjet(project):
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("1",project),""]
+                    self._gestHist.add_action("open_project",project)
                     self._valeurOut = 14
                 else :
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("2",project),""]
@@ -177,6 +178,7 @@ class neuroneWork(neuronBase):
                 project = requette.strip()
                 if self.__fonctionWork.createProjet(project):
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("3",project),""]
+                    self._gestHist.add_action("open_project",project)
                     self._valeurOut = 10
                 else :
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("4",project),""]
@@ -185,32 +187,41 @@ class neuroneWork(neuronBase):
             elif (self._keyword.checkWork(requette,"liste") and
                   self._keyword.checkWork(requette,"project-file")):
                 listProject = self.__fonctionWork.getListProjet()
-                nbProject = len(listProject)
-                if nbProject == 0:
-                    debutPhrase = self._language.getPhraseArreraWorkProjet("5")
 
-                elif nbProject == 1:
-                    debutPhrase = self._language.getPhraseArreraWorkProjet("6")
+                if listProject is not None:
+                    nbProject = len(listProject)
 
-                else :
-                    debutPhrase = self._language.getPhraseArreraWorkProjet("7")
+                    if nbProject == 0:
+                        self._listSortie = [self._language.getPhraseArreraWorkProjet("5"),""]
+                        self._valeurOut = 1
+                        return 1
 
-                self._valeurOut = 1
-                text = ""
+                    elif nbProject == 1:
+                        debutPhrase = self._language.getPhraseArreraWorkProjet("6")
 
-                for i in range(0,nbProject):
-                    if i == nbProject-1:
-                        if nbProject == 1:
-                            text = debutPhrase + " " + listProject[i] + "."
-                        else :
-                            text = text + " et " + listProject[i] + "."
-                    elif i == 0:
-                        text = debutPhrase + " " + listProject[i]
                     else :
-                        text = text + ", " + listProject[i]
+                        debutPhrase = self._language.getPhraseArreraWorkProjet("7")
 
-                self._listSortie = [text,"liste project"]
-                return 1
+                    self._valeurOut = 1
+                    text = ""
+
+                    for i in range(0,nbProject):
+                        if i == nbProject-1:
+                            if nbProject == 1:
+                                text = debutPhrase + " " + listProject[i] + "."
+                            else :
+                                text = text + " et " + listProject[i] + "."
+                        elif i == 0:
+                            text = debutPhrase + " " + listProject[i]
+                        else :
+                            text = text + ", " + listProject[i]
+
+                    self._listSortie = [text,"liste project"]
+                    return 1
+                else :
+                    self._listSortie = [self._language.getPhraseArreraWorkProjet("5"),""]
+                    self._valeurOut = 1
+                    return 1
             elif self._keyword.checkWork(requette,"help-project"):
                 self._listSortie = [self._language.getPhraseHelpArreraWork("3"),
                                     "project"]
@@ -219,11 +230,13 @@ class neuroneWork(neuronBase):
         else :
             if (self._keyword.checkWork(requette,"project-file") and
                     self._keyword.checkWork(requette,"close")):
+                project = self.__fonctionWork.getNameProjet()
                 if self.__fonctionWork.closeProjet():
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("8"),""]
                     self.__fileProjectCreate = False
                     self.__nameFileProjectCreate = ""
                     self.__typeFileProjectCreate = ""
+                    self._gestHist.add_action("close_project",project)
                     self._valeurOut = 21
                 else :
                     self._listSortie = [self._language.getPhraseArreraWorkProjet("9"),""]
