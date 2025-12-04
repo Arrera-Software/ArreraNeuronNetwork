@@ -88,7 +88,7 @@ class gestHistorique :
         elif "open_website" in hist:
             site = hist.replace("open_website","").replace(":","").strip()
             if not str("site" + site) in listStart:
-                self.__gestionnaire.getGestFNC().getFNCOpen().openSoft(site)
+                self.__gestionnaire.getGestFNC().getFNCOpen().openSaveWebSite(site)
                 listStart.append("site" + site)
         elif "open_mode" in hist:
             mode = hist.replace("open_mode","").replace(":","").strip()
