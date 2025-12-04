@@ -62,6 +62,15 @@ class gestionnaire:
         self.__nameMode = {}
         self.__modeIsEnabled = False
 
+    def boot(self):
+        if self.__userConf.getHist() == 1:
+            if self.__gestHist.loadHist():
+                return self.__gestLang.bootWithHist()
+            else :
+                return self.__gestLang.bootNoHist()
+        else :
+            return self.__gestLang.bootNoHist()
+
     def getConfigFile(self):
         return self.__config
 

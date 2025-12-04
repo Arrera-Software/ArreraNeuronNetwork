@@ -38,7 +38,8 @@ def main():
               "\n4.Domicile\n5.Travail\n6.Adresse Domicile"
               "\n7.Adresse Travail\n8.LOGICIEL\n9.Site Internet"
               "\n10.Moteur de recherche\n11.Token github\n12.Dossier de travail"
-              "\n13.Dossier video\n14.Sound Micro\n15.Tiger Word\n0.Quitter")
+              "\n13.Dossier video\n14.Sound Micro\n"
+              "15.Tiger Word\n16.Historique\n0.Quitter")
 
         print("_____________________________________________________")
         boucleVerif = True
@@ -358,6 +359,15 @@ def main():
                             print("Mot supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du mot ou le mot n'existe pas.")
+            case 16 :
+                print("Historique")
+                print(f"Etat de l'hitorique : {user.getHist()}")
+                out = input("1. Activer\n2. Desactiver\n0.Rien faire\nChoix : ")
+                match out:
+                    case "1":
+                        user.setHist(True)
+                    case "0":
+                        user.setHist(False)
             case _:
                 print("Errureur, veuillez choisir un nombre entre 0 et 13.")
 

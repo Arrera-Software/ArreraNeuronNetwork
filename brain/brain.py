@@ -35,23 +35,8 @@ class ABrain :
     def getNeuronRunning(self):
         return self.__networkRunning
 
-    def boot(self,mode:int):
-        """_summary_
-
-        Args:
-            mode (int): 1.no hist | 2. Hist
-
-        Returns:
-            _type_: _description_
-        """
-        hour = datetime.now().hour
-        if mode == 1 :
-            text= self.__gestLangue.bootNoHist(hour)
-        else :
-            text= self.__gestLangue.bootWithHist(hour)
-        self.__gestionnaire.setOld("boot","boot")
-
-        return str(text)
+    def boot(self):
+        return self.__gestionnaire.boot()
     
     def shutdown(self):
         #self.__historique.saveHistorique()

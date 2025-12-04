@@ -210,7 +210,7 @@ class GUIOpale:
         """
 
         try :
-            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(2), wraplength=200
+            self.__labelAssistantText.configure(text=self.__assistantBrain.boot(), wraplength=200
                                                 ,justify=LEFT)
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}",wraplength=200

@@ -20,7 +20,8 @@ DICTUSER = {
     "wordFolder":"",
     "videoDownloadFolder":"",
     "soundMicro":"0",
-    "listWord":[]
+    "listWord":[],
+    "bootHist":1
 }
 
 class gestUserSetting:
@@ -405,3 +406,10 @@ class gestUserSetting:
         if listWord is None:
             return []
         return listWord
+
+    # Partie hist
+    def getHist(self):
+        return self.__fileUser.getContentJsonFlag("bootHist")
+
+    def setHist(self,v:bool):
+        return self.__fileUser.setValeurJson("bootHist",int(v))

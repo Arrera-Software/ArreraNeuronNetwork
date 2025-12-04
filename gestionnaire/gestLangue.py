@@ -1,6 +1,7 @@
 import random
 from librairy.travailJSON import *
 from gestionnaire.gestion import gestionnaire
+from datetime import datetime
 
 
 class gestLangue:
@@ -36,7 +37,8 @@ class gestLangue:
     def nocomprehension(self):
         return self.getNoComprehension()
 
-    def bootNoHist(self, hour):
+    def bootNoHist(self):
+        hour = datetime.now().hour
         nbrand = random.randrange(0, 1)
         if 0 <= hour < 3:
             formule = self.getPhraseBootNormale("1")
@@ -102,43 +104,40 @@ class gestLangue:
             formule = self.getPhraseAurevoir("10")
             return formule[nbrand]
 
-    def bootWithHist(self, hour):
+    def bootWithHist(self):
+        hour = datetime.now().hour
+        if 0 <= hour < 3:
+            formule = self.getPhraseBootHist("1")
+            return formule
+        elif 3 <= hour <= 6:
+            formule = self.getPhraseBootHist("2")
+            return formule
+        elif 6 <= hour <= 10:
+            formule = self.getPhraseBootHist("3")
+            return formule
+        elif 10 <= hour <= 12:
+            formule = self.getPhraseBootHist("4")
+            return formule
+        elif 13 <= hour <= 14:
+            formule = self.getPhraseBootHist("5")
+            return formule
+        elif 15 <= hour <= 18:
+            formule = self.getPhraseBootHist("6")
+            return formule
+        elif 18 <= hour <= 20:
+            formule = self.getPhraseBootHist("7")
+            return formule
+        elif 20 <= hour <= 23:
+            formule = self.getPhraseBootHist("8")
+            return formule
+        elif 0 <= hour < 3:
+            formule = self.getPhraseBootHist("9")
+            return formule
+        else:
+            formule = self.getPhraseBootHist("10")
+            return formule
 
-        sortie = self.__fncHist.loadHist()
-        if sortie:
-            if 0 <= hour < 3:
-                formule = self.getPhraseBootHist("1")
-                return formule
-            elif 3 <= hour <= 6:
-                formule = self.getPhraseBootHist("2")
-                return formule
-            elif 6 <= hour <= 10:
-                formule = self.getPhraseBootHist("3")
-                return formule
-            elif 10 <= hour <= 12:
-                formule = self.getPhraseBootHist("4")
-                return formule
-            elif 13 <= hour <= 14:
-                formule = self.getPhraseBootHist("5")
-                return formule
-            elif 15 <= hour <= 18:
-                formule = self.getPhraseBootHist("6")
-                return formule
-            elif 18 <= hour <= 20:
-                formule = self.getPhraseBootHist("7")
-                return formule
-            elif 20 <= hour <= 23:
-                formule = self.getPhraseBootHist("8")
-                return formule
-            elif 0 <= hour < 3:
-                formule = self.getPhraseBootHist("9")
-                return formule
-            else:
-                formule = self.getPhraseBootHist("10")
-                return formule
 
-        else :
-            return self.bootNoHist(hour)
 
 
     def setVarUser(self):
