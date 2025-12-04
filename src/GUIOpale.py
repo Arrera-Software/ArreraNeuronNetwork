@@ -6,11 +6,6 @@ from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
 from datetime import datetime
-"""
-Todo : 
-1 . GUI qui permet de decider la conf qu'on veux 
-2 . GUI avec Sortie TEXTE et NOMBRE et UNE Zone d'entrer de texte
-"""
 
 class GUIOpale:
     def __init__(self):
