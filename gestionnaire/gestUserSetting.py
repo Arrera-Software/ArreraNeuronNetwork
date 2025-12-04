@@ -409,7 +409,7 @@ class gestUserSetting:
 
     # Partie hist
     def getHist(self):
-        return self.__fileUser.getContentJsonFlag("bootHist")
+        return int(self.__fileUser.getContentJsonFlag("bootHist"))
 
     def setHist(self,v:bool):
         return self.__fileUser.setValeurJson("bootHist",int(v))
