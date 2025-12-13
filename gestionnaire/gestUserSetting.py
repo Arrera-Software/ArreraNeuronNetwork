@@ -21,7 +21,9 @@ DICTUSER = {
     "videoDownloadFolder":"",
     "soundMicro":"0",
     "listWord":[],
-    "bootHist":1
+    "bootHist":1,
+    "ia_use":0,
+    "ia_model":""
 }
 
 class gestUserSetting:
@@ -413,3 +415,17 @@ class gestUserSetting:
 
     def setHist(self,v:bool):
         return self.__fileUser.setValeurJson("bootHist",int(v))
+
+    # Partie ia
+
+    def get_use_ia(self):
+        return int(self.__fileUser.getContentJsonFlag("ia_use"))
+
+    def get_ia_model(self):
+        return self.__fileUser.getContentJsonFlag("ia_model")
+
+    def set_use_ia(self,v:bool):
+        return self.__fileUser.setValeurJson("ia_use",int(v))
+
+    def set_ia_model(self,v:str):
+        return self.__fileUser.setValeurJson("ia_model",v)

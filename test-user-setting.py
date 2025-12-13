@@ -39,7 +39,8 @@ def main():
               "\n7.Adresse Travail\n8.LOGICIEL\n9.Site Internet"
               "\n10.Moteur de recherche\n11.Token github\n12.Dossier de travail"
               "\n13.Dossier video\n14.Sound Micro\n"
-              "15.Tiger Word\n16.Historique\n0.Quitter")
+              "15.Tiger Word\n16.Historique\n"
+              "17.IA\n0.Quitter")
 
         print("_____________________________________________________")
         boucleVerif = True
@@ -368,6 +369,21 @@ def main():
                         user.setHist(True)
                     case "0":
                         user.setHist(False)
+            case 17 :
+                print("IA")
+                out = input("1.Activer\n2.Desactiver\n3.Voir l'etat\n4.Voir le model\n5.Choisir le model\nChoix : ")
+                match out:
+                    case "1":
+                        user.set_use_ia(True)
+                    case "2":
+                        user.set_use_ia(False)
+                    case "3":
+                        print(user.get_use_ia())
+                    case "4":
+                        print(user.get_ia_model())
+                    case "5":
+                        model = input("Model : ")
+                        user.set_ia_model(model)
             case _:
                 print("Errureur, veuillez choisir un nombre entre 0 et 13.")
 
