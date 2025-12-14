@@ -11,7 +11,6 @@ class gestIA :
         self.__ia_loader = None
 
         self.__reponse_ia = ""
-        self.__confidence_ia = 0.0
 
         self.__model_reponse_ok = False
 
@@ -47,11 +46,12 @@ class gestIA :
     def send_request_ia(self,requette:str):
         if self.__ia_mode_enabled:
             try :
-                self.__reponse_ia, self.__confidence_ia = self.__ia_loader.send_request(requette)
+                self.__reponse_ia = self.__ia_loader.send_request(requette)
                 self.__model_reponse_ok = True
                 return True
             except Exception as e :
                 self.__model_reponse_ok = False
+                print(e)
                 return False
         else :
             self.__model_reponse_ok = False
@@ -62,9 +62,6 @@ class gestIA :
 
     def get_reponse_ia(self):
         return self.__reponse_ia
-
-    def get_confidence_ia(self):
-        return self.__confidence_ia
 
     def get_ia_is_enable(self):
         return self.__ia_mode_enabled

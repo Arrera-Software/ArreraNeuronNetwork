@@ -65,6 +65,7 @@ class gestionnaire:
         self.__modeIsEnabled = False
 
     def boot(self):
+        self.__gestIA.loadIA()
         if self.__userConf.getHist() == 1:
             if self.__gestHist.loadHist():
                 return self.__gestLang.bootWithHist()
