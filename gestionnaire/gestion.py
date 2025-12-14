@@ -19,6 +19,7 @@ class gestionnaire:
         from gestionnaire.gestGUI import gestGUI
         from gestionnaire.gestUserSetting import gestUserSetting
         from gestionnaire.gestKeyword import gestKeyword
+        from gestionnaire.gestIA import gestIA
         # Librairy
         # Importation des librairies
         from librairy.arrera_voice import CArreraVoice
@@ -40,6 +41,7 @@ class gestionnaire:
                                                        self.__config.createur],
                                      self.__config.listFonction)
         self.__gestKeyword = gestKeyword(self.__config.fichierKeyword)
+        self.__gestIA = gestIA(self)
 
         if self.__config.etatSocket == 1 :
            self.__gestSocket = gestSocket(self.__config.name)
@@ -106,6 +108,9 @@ class gestionnaire:
 
     def getGestHist(self):
         return self.__gestHist
+
+    def getGestIA(self):
+        return self.__gestIA
         
     def getName(self):
         return  self.__config.name
