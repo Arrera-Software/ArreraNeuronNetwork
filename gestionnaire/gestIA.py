@@ -15,6 +15,8 @@ class gestIA :
 
         self.__model_reponse_ok = False
 
+        self.__downloader_model = model_downloader()
+
         self.loadIA()
 
     def loadIA(self):
@@ -23,16 +25,24 @@ class gestIA :
 
         if user_conf.get_use_ia() == 1 and model_name !="":
             try :
-                self.__ia_loader= ArreraIALoad()
-                self.__ia_loader.load_model_gguf(model_name)
-                self.__ia_mode_enabled = True
+                if model_name in self.get_list_model_download():
+                    self.__ia_loader= ArreraIALoad()
+                    self.__ia_loader.load_model_gguf(self.__downloader_model.get_path_model(model_name))
+                    if self.__ia_loader.load_help_file("config/ia_instruction.txt"):
+                        self.__ia_mode_enabled = True
+                        return True
+                    else :
+                        return False
+                else :
+                    self.__ia_mode_enabled = False
+                    return False
             except Exception as e :
                 # print(e)
                 self.__ia_mode_enabled = False
-
-            self.__ia_mode_enabled = True
+                return False
         else :
             self.__ia_mode_enabled = False
+            return False
 
     def send_request_ia(self,requette:str):
         if self.__ia_mode_enabled:
@@ -47,7 +57,7 @@ class gestIA :
             self.__model_reponse_ok = False
             return False
 
-    def __state_ia_reponse(self):
+    def get_state_ia_reponse(self):
         return self.__model_reponse_ok
 
     def get_reponse_ia(self):
@@ -55,3 +65,21 @@ class gestIA :
 
     def get_confidence_ia(self):
         return self.__confidence_ia
+
+    def get_ia_is_enable(self):
+        return self.__ia_mode_enabled
+
+    def get_list_model_available(self):
+        return self.__downloader_model.get_model_list()
+
+    def gest_data_model(self,model:str):
+        if model in self.get_list_model_available():
+            return self.__downloader_model.get_data_model(model)
+        else :
+            return None,None,None
+
+    def get_list_model_download(self):
+        return self.__downloader_model.get_model_download()
+
+    def download_model(self,model:str):
+        return self.__downloader_model.download_model(model)
