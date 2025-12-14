@@ -16,8 +16,6 @@ class gestIA :
 
         self.__downloader_model = model_downloader()
 
-        self.loadIA()
-
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
         model_name = user_conf.get_ia_model()

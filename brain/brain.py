@@ -1,6 +1,4 @@
 import threading as th
-import tkinter
-
 from gestionnaire.gestion import *
 from datetime import datetime, time
 

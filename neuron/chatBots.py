@@ -9,6 +9,7 @@ class neuroneChatbot(neuronBase) :
         # self.__formule = self._gestNeuro
         self.__language = self._gestionnaire.getLanguageObjet()
         self.__gestIA = self._gestionnaire.getGestIA()
+        self.__gestIA.loadIA()
 
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
