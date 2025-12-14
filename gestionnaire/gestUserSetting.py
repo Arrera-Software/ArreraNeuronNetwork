@@ -29,6 +29,7 @@ DICTUSER = {
 class gestUserSetting:
     def __init__(self,gestionnaire:gestionnaire):
         self.__osDect = gestionnaire.getOSObjet()
+        self.__gestionnaire = gestionnaire
         self.__firstRun = False
         # Mise en place du chemin du fichier de configuration utilisateur
         if self.__osDect.osLinux() or self.__osDect.osMac():
@@ -425,7 +426,27 @@ class gestUserSetting:
         return self.__fileUser.getContentJsonFlag("ia_model")
 
     def set_use_ia(self,v:bool):
-        return self.__fileUser.setValeurJson("ia_use",int(v))
+        b =  self.__fileUser.setValeurJson("ia_use",int(v))
+        if b:
+            return self.__gestionnaire.getGestIA().loadIA()
+        else :
+            return False
+
 
     def set_ia_model(self,v:str):
-        return self.__fileUser.setValeurJson("ia_model",v)
+        b = self.__fileUser.setValeurJson("ia_model",v)
+        if b:
+            return self.__gestionnaire.getGestIA().loadIA()
+        else :
+            return False
+
+    # Partie IA pour l'inteface setting
+
+    def get_list_model_ia_available(self):
+        return self.__gestionnaire.getGestIA().get_list_model_available()
+
+    def download_ia_model(self,model:str):
+        return self.__gestionnaire.getGestIA().download_model(model)
+
+    def get_model_downloaded(self):
+        return self.__gestionnaire.getGestIA().get_list_model_download()

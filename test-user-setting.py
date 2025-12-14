@@ -371,7 +371,9 @@ def main():
                         user.setHist(False)
             case 17 :
                 print("IA")
-                out = input("1.Activer\n2.Desactiver\n3.Voir l'etat\n4.Voir le model\n5.Choisir le model\nChoix : ")
+                out = input("1.Activer\n2.Desactiver\n3.Voir l'etat\n4.Voir le model\n"
+                            "5.Choisir le model\n6.Download un model\n"
+                            "7.Voir les model telecharger\nChoix : ")
                 match out:
                     case "1":
                         user.set_use_ia(True)
@@ -384,6 +386,17 @@ def main():
                     case "5":
                         model = input("Model : ")
                         user.set_ia_model(model)
+                    case "6":
+                        print("Model disponible")
+                        d = user.get_model_downloaded()
+                        for m in user.get_list_model_ia_available():
+                            if m not in d:
+                                print(f"-{m}")
+                        model = input("Model : ")
+                        user.download_model(model)
+                    case "7":
+                        print("Model telecharger")
+                        print(user.get_model_downloaded())
             case _:
                 print("Errureur, veuillez choisir un nombre entre 0 et 13.")
 
