@@ -163,10 +163,7 @@ class ABrain :
                                         self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
 
                                     if self.__valeurOut == 0 :
-                                        if (("stop" in requette) or ("au revoir" in requette)
-                                            or ("quitter" in requette) or ("bonne nuit" in requette)
-                                            or ("adieu" in requette) or ("bonne soirée" in requette)
-                                            or ("arreter" in requette)) :
+                                        if self.__gestionnaire.getKeywordObjet().checkChatBot(requette,"stop") :
                                             self.__listOut = [self.shutdown(),""]
                                             self.__valeurOut = 15
                                         else :
