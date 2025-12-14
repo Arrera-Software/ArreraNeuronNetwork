@@ -154,7 +154,6 @@ class GUIOpale:
 
 
     def __GUIAssistant(self):
-        print("GUI")
         screen = self.__arrTK.aTK(width=500, height=500,
                                   title="Opale Assistant", resizable=False,
                                   icon="asset/icon.png")
