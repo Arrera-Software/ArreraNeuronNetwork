@@ -145,20 +145,20 @@ class ABrain :
                                 self.__valeurOut = self.__gestNeuron.nsearch.getValeurSortie()
 
                             if self.__valeurOut == 0 :
-                                #chatBot
-                                if self.__gestNeuron.nchatbot is None:
+                                #api
+                                if not self.__etatReseau  or self.__gestNeuron.napi is None :
                                     self.__valeurOut = 0
                                 else :
-                                    self.__gestNeuron.nchatbot.neurone(requette)
-                                    self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
+                                    self.__gestNeuron.napi.neurone(requette)
+                                    self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
 
                                 if self.__valeurOut == 0 :
-                                    #api
-                                    if not self.__etatReseau  or self.__gestNeuron.napi is None :
+                                    #chatBot
+                                    if self.__gestNeuron.nchatbot is None:
                                         self.__valeurOut = 0
                                     else :
-                                        self.__gestNeuron.napi.neurone(requette)
-                                        self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
+                                        self.__gestNeuron.nchatbot.neurone(requette)
+                                        self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
 
                                     if self.__valeurOut == 0 :
                                         if self.__gestionnaire.getKeywordObjet().checkChatBot(requette,"stop") :
@@ -168,10 +168,10 @@ class ABrain :
                                             self.__valeurOut = 0
                                             self.__listOut = [self.__gestLangue.nocomprehension(), ""]
                                     else :
-                                        self.__listOut = self.__gestNeuron.napi.getListSortie()
+                                        self.__listOut = self.__gestNeuron.nchatbot.getListSortie()
                                         self.__neuronUsed = self.__listNeuron[2]
                                 else :
-                                    self.__listOut = self.__gestNeuron.nchatbot.getListSortie()
+                                    self.__listOut = self.__gestNeuron.napi.getListSortie()
                                     self.__neuronUsed = self.__listNeuron[0]
                             else :
                                 self.__listOut = self.__gestNeuron.nsearch.getListSortie()
