@@ -166,6 +166,10 @@ class gestLangue:
         return phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
                              user_lastname=self.__userLastname)
 
+    def getPhraseChatBot(self,nb:str):
+        formule = self.__chatbot.getContentJsonFlag("ph" + nb)
+        return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
+                              user_lastname=self.__userLastname)
 
     def getPhraseCodehelp(self,nb:str):
         formule = self.__codeHelp.getContentJsonFlag("ph" + nb)
