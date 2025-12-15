@@ -166,45 +166,6 @@ class gestLangue:
         return phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
                              user_lastname=self.__userLastname)
 
-    def getBlague(self,nb:int):
-        """
-        :param nb: Max 9
-        :return:
-        """
-        return self.__chatbot.getFlagListJson("blague")[nb]
-
-    def getReponseBlague(self,nb:int):
-        """
-        :param nb: Max 9
-        :return:
-        """
-        return self.__chatbot.getFlagListJson("reponse")[nb]
-
-    def getPhraseChatBotNormal(self, index:str):
-        phrases = self.__chatbot.getContentJsonFlag(index)
-        return phrases.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname, bute = self.__bute,
-                              name=self.__nameAssistant, createur=self.__createur)
-
-    def getPhraseChatBotList(self, index:str):
-        phrases = self.__chatbot.getFlagListJson(index)
-        return [phrase.format(genre=self.__genre, user_firstname=self.__userFirstname,
-                              user_lastname=self.__userLastname, bute = self.__bute,
-                              name=self.__nameAssistant, createur=self.__createur) for phrase in phrases]
-
-    def getPhraseListeFonction(self):
-        self.__nbFonction = 0
-        nb = self.__nbFonction - 1
-        text = self.__chatbot.getContentJsonFlag("phListFonc")
-        for i in range(0, self.__nbFonction):
-            if i == nb:
-                text = text + " et " + self.__listFonction[i]
-            else:
-                if i == 0:
-                    text = text + self.__listFonction[i]
-                else:
-                    text = text + ", " + self.__listFonction[i]
-        return text + " ."
 
     def getPhraseCodehelp(self,nb:str):
         formule = self.__codeHelp.getContentJsonFlag("ph" + nb)
