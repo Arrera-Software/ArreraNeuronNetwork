@@ -161,7 +161,7 @@ class ABrain :
                                         self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
 
                                     if self.__valeurOut == 0 :
-                                        if self.__gestionnaire.getKeywordObjet().checkChatBot(requette,"stop") :
+                                        if self.__gestionnaire.getKeywordObjet().checkUtils(requette, "stop") :
                                             self.__listOut = [self.shutdown(),""]
                                             self.__valeurOut = 15
                                         else :

@@ -31,7 +31,7 @@ class neuroneAPI(neuronBase) :
 
 
     def __meteo(self,requette:str)->int:
-        if not self._keyword.checkChatBot(requette,"question-fonction"):
+        if not self._keyword.checkUtils(requette, "question-fonction"):
             townHouse = self._userConf.getLieuDomicile()
             townWork = self._userConf.getLieuTravail()
 
@@ -95,7 +95,7 @@ class neuroneAPI(neuronBase) :
         19 : Resumer all ok
         20 : Resumer all fail
         """
-        if not self._keyword.checkChatBot(requette,"question-fonction"):
+        if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"resumer"):
                 if time(6,0) <= datetime.now().time() < time(11,0):
                     texte = self._language.getPhraseMorningBreef("1")
@@ -134,7 +134,7 @@ class neuroneAPI(neuronBase) :
         return 0
 
     def __gps(self,requette:str):
-        if not self._keyword.checkChatBot(requette,"question-fonction"):
+        if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"gps"):
                 if self._keyword.checkAPI(requette,"coordonnees") :
                     if self.__fncGPS.locate():
@@ -214,7 +214,7 @@ class neuroneAPI(neuronBase) :
         return 0
 
     def __news(self,requette:str):
-        if not self._keyword.checkChatBot(requette,"question-fonction"):
+        if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"actualite"):
                 if self.__fncActu.setActu(3,"fr"):
                     listActu = self.__fncActu.getActu()
@@ -230,7 +230,7 @@ class neuroneAPI(neuronBase) :
         return 0
 
     def __translate(self,requette:str):
-        if not self._keyword.checkChatBot(requette,"question-fonction"):
+        if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"traducteur"):
                 self._listSortie = [self._language.getPhraseOpenTraducteur(), ""]
                 self._gestGUI.activeTraducteur()

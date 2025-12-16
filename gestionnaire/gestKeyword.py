@@ -90,7 +90,7 @@ class gestKeyword:
         listWord = self.__getKeyWork("api",fonction)
         return self.__checkContainWord(texte,listWord)
 
-    def checkChatBot(self,texte:str,fonction:str)->bool:
+    def checkUtils(self, texte:str, fonction:str)->bool:
         listWord = self.__getKeyWork("utils",fonction)
         return self.__checkContainWord(texte,listWord)
 

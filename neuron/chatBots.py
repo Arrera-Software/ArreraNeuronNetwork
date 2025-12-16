@@ -27,7 +27,7 @@ class neuroneChatbot(neuronBase) :
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["", ""]
         self._valeurOut = 0
-        if not self._keyword.checkChatBot(requette,"stop"):
+        if not self._keyword.checkUtils(requette, "stop"):
             if self.__gestIA.get_ia_is_enable():
                 if self.__gestIA.send_request_ia(requette):
                     if self.__gestIA.get_state_ia_reponse():
