@@ -46,6 +46,15 @@ class ABrain :
         return str(text)
     
     def getListSortie(self)->list :
+        if self.__valeurOut == 5 or self.__valeurOut == 12 or self.__valeurOut == 18 or self.__valeurOut == 19:
+            if not self.__valeurOut == 12 or not self.__valeurOut == 18 or not self.__valeurOut == 19:
+                texte = self.__getTextWithTkinterWindows()
+                if texte is not None:
+                    self.__listOut = texte
+
+        if self.__listOut == ["",""]:
+            self.__listOut = [self.__gestLangue.nocomprehension(), ""]
+
         return self.__listOut
 
     def getNeuronUsed(self)-> type[str]:
@@ -77,6 +86,12 @@ class ABrain :
         22 : Lancement de radio
         """
         return self.__valeurOut
+
+    def __getTextWithTkinterWindows(self):
+        if self.__gestionnaire.getGestGUI().launch_gui():
+            return [self.__gestionnaire.getGestGUI().textOut(),""]
+        else :
+            return None
     
     def getTableur(self):
         return self.__gestionnaire.getGestFNC().getFNCWork().getEtatTableur()
