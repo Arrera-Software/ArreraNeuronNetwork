@@ -81,15 +81,15 @@ class neuroneCodehelp(neuronBase) :
                     self._valeurOut = 1
             elif self._keyword.checkOpen(requette,"open"):
                 if self._keyword.checkCodeHelp(requette,"orga-var"):
-                    self.__fncCodeHelp.openGUIOrgaVar()
+                    self.__fncCodeHelp.setGUICodeHelp("GUIOrgaVar")
                     self._listSortie = [self._language.getPhraseCodehelp("1"),
                                         ""]
-                    self._valeurOut = 5
+                    self._valeurOut = 23
                 elif self._keyword.checkCodeHelp(requette,"color-select"):
-                    self.__fncCodeHelp.openGUIColorSelector()
+                    self.__fncCodeHelp.setGUICodeHelp("GUIColorSelector")
                     self._listSortie = [self._language.getPhraseCodehelp("2"),
                                         ""]
-                    self._valeurOut = 5
+                    self._valeurOut = 23
                 elif self._keyword.checkCodeHelp(requette,"github") and  not self._keyword.checkCodeHelp(requette,"gestion"):
 
                     self.__fncCodeHelp.openSiteGithub()
@@ -97,12 +97,12 @@ class neuroneCodehelp(neuronBase) :
                                         ""]
                     self._valeurOut = 5
                 elif self._keyword.checkCodeHelp(requette,"gestion") and self._keyword.checkCodeHelp(requette,"github"):
-                    self.__fncCodeHelp.openGUIGithubGestion()
+                    self.__fncCodeHelp.setGUICodeHelp("GUIGithubGestion")
                     self._listSortie = [self._language.getPhraseCodehelp("4"),
                                         ""]
-                    self._valeurOut = 5
+                    self._valeurOut = 23
                 elif self._keyword.checkCodeHelp(requette,"librairie"):
-                    self.__fncCodeHelp.openGUILibrairy()
+                    self.__fncCodeHelp.setGUICodeHelp("GUILibrairy")
                     self._listSortie = [self._language.getPhraseCodehelp("5"),
                                         ""]
-                    self._valeurOut = 5
+                    self._valeurOut = 23

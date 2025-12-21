@@ -15,6 +15,7 @@ class fncCodehelp(fncBase) :
         self.__colorSelector = CCHcolorSelector(gestionnaire)
         self.__githubObjet = CHGithub(gestionnaire)
         self.__librairyCodehelp = CHLibrairy(gestionnaire)
+        self.__guiLaunch = ""
 
     def searchDocInDevDoc(self, recherche:str)->bool:
         if self._gestionnaire.getNetworkObjet().getEtatInternet():
@@ -39,6 +40,38 @@ class fncCodehelp(fncBase) :
             return self.__githubObjet.search(requette)
         else :
             return False
+
+    def setGUICodeHelp(self,gui:str):
+        """
+        GUIColorSelector
+        GUIGithubGestion
+        GUILibrairy
+        GUIOrgaVar
+        """
+        self.__guiLaunch = gui
+
+    def launchGui(self):
+        """
+        GUIColorSelector
+        GUIGithubGestion
+        GUILibrairy
+        GUIOrgaVar
+        """
+        if self.__guiLaunch == "GUIColorSelector":
+            self.__colorSelector.active()
+            return True
+        elif self.__guiLaunch == "GUIGithubGestion":
+            self.__githubObjet.active()
+            return True
+        elif self.__guiLaunch == "GUILibrairy":
+            self.__librairyCodehelp.active()
+            return True
+        elif self.__guiLaunch == "GUIOrgaVar":
+            self.__orgaVar.active()
+            return True
+        else :
+            return False
+
 
     def openSiteGithub(self):
         wb.open("https://github.com/")

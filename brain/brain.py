@@ -52,6 +52,9 @@ class ABrain :
                 if texte is not None:
                     self.__listOut = texte
 
+        if self.__valeurOut == 23 :
+            self.__gestionnaire.getGestFNC().getFNCCodeHelp().launchGui()
+
         if self.__listOut == ["",""]:
             self.__listOut = [self.__gestLangue.nocomprehension(), ""]
 
@@ -84,6 +87,7 @@ class ABrain :
         20 : Resumer all fail
         21 : Close projet
         22 : Lancement de radio
+        23 : GUI Codehelp
         """
         return self.__valeurOut
 
