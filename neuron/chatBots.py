@@ -19,7 +19,7 @@ class neuroneChatbot(neuronBase) :
 
         nb = len(texte)
         if nb >= 220:
-            return [17,texte]
+            return [5,texte]
         else :
             return [1,texte]
 
@@ -33,9 +33,7 @@ class neuroneChatbot(neuronBase) :
                     if self.__gestIA.get_state_ia_reponse():
                         out_ia = self.__gestIA.get_reponse_ia()
                         out_clear = self.__clear_out_ia(out_ia)
-                        if out_clear[0] == 17:
-                            self._gestGUI.activeHelp(out_clear[1])
-                            self._listSortie = [self._language.getPhraseChatBot("1"),""]
+                        if out_clear[0] == 5:
                             self._gestGUI.setGUIActive("aide",[out_clear[1],
                                                                self._language.getPhraseChatBot("1")])
                         else :
