@@ -5,23 +5,10 @@ class gestGUI:
     def __init__(self, gest: gestionnaire):
         self.__name_gui = None
         self.__gest = gest
-        self.__liste_gui = ["calculatrice_normal","calculatrice_pythagore",
-                            "calculatrice_complex","orthographe",
-                            "arrera_download","agenda",
-                            "agenda_add","agenda_delete",
-                            "horloge","minuteur",
-                            "chrono","lecture",
-                            "tache","tache_finish",
-                            "tache_del","work",
-                            "work_projet","work_tableur",
-                            "work_manage_tableur","work_read_tableur",
-                            "work_word","work_word_read","work_word_write",
-                            "tache_projet","tache_projet_add","tache_projet_del",
-                            "traducteur","resumer",
-                            "aide","breef"]
         self.__parms = None
         self.__textOut = None
         self.__valOut = 0
+        
         # Importation des GUI
         from gui.GUICalculatrice import GUICalculatrice
         from gui.GUIorthographe import GUIOrthographe
@@ -61,468 +48,234 @@ class gestGUI:
         # Breef
         self.__guiBreef = GUIViewBreef(self.__gest)
 
-    def setGUIActive(self,gui:str,parms=None):
-        if gui in self.__liste_gui:
+        # Dictionnaire des actions
+        self.__gui_actions = {
+            "calculatrice_normal": lambda: self.__generic_try_action(
+                self.__guiCalculatrice.activeCalcule,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("7"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("8")
+            ),
+            "calculatrice_pythagore": lambda: self.__generic_try_action(
+                self.__guiCalculatrice.activePythagore,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("5"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("6")
+            ),
+            "calculatrice_complex": lambda: self.__generic_try_action(
+                self.__guiCalculatrice.activeComplex,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("3"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("4")
+            ),
+            "orthographe": self.__action_orthographe,
+            "arrera_download": lambda: self.__generic_try_action(
+                self.__guiArreraDownload.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("1"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("2")
+            ),
+            "agenda": lambda: self.__generic_action(
+                self.__guiAgenda.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("8")
+            ),
+            "agenda_add": lambda: self.__generic_action(
+                self.__guiAgenda.activeAdd,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("4")
+            ),
+            "agenda_delete": lambda: self.__generic_action(
+                self.__guiAgenda.activeDel,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("5")
+            ),
+            "horloge": lambda: self.__generic_action(
+                self.__guiHorloge.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("2")
+            ),
+            "minuteur": lambda: self.__generic_action(
+                self.__guiHorloge.activeMinuteur,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("3")
+            ),
+            "chrono": lambda: self.__generic_action(
+                self.__guiHorloge.activeChrono,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("1")
+            ),
+            "lecture": lambda: self.__generic_action(
+                self.__guiLecture.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseService("6")
+            ),
+            "tache": lambda: self.__generic_action(
+                self.__guiTache.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("9")
+            ),
+            "tache_finish": lambda: self.__generic_action(
+                self.__guiTache.activeFinish,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("11")
+            ),
+            "tache_del": lambda: self.__generic_action(
+                self.__guiTache.activeDel,
+                lambda: self.__gest.getLanguageObjet().getPhraseTime("12")
+            ),
+            "work": lambda: self.__generic_try_action(
+                self.__guiWork.activeAcceuil,
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("7"),
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("8")
+            ),
+            "work_projet": lambda: self.__generic_try_action(
+                self.__guiWork.activeProjet,
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("1"),
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("2")
+            ),
+            "work_tableur": lambda: self.__generic_try_action(
+                self.__guiWork.activeTableur,
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("3"),
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("4")
+            ),
+            "work_manage_tableur": lambda: self.__guiManageTableur(self.__parms),
+            "work_read_tableur": lambda: self.__generic_bool_action(
+                self.__guiWork.activeReadTableur,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("21"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("22")
+            ),
+            "work_word": lambda: self.__generic_try_action(
+                self.__guiWork.activeWord,
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("5"),
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("6")
+            ),
+            "work_word_read": lambda: self.__generic_try_action(
+                self.__guiWork.activeReadWord,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("9"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("10")
+            ),
+            "work_word_write": lambda: self.__generic_try_action(
+                self.__guiWork.activeWriteWord,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("7"),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("8")
+            ),
+            "tache_projet": lambda: self.__generic_bool_action(
+                self.__guiWork.openTaskProjet,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("10", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("11")
+            ),
+            "tache_projet_add": lambda: self.__generic_bool_action(
+                self.__guiWork.openTaskProjetAdd,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("12", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("13")
+            ),
+            "tache_projet_del": lambda: self.__generic_bool_action(
+                self.__guiWork.openTaskProjetdel,
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("14", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
+                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("15")
+            ),
+            "traducteur": lambda: self.__generic_action(
+                self.__guiTraducteur.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
+            ),
+            "resumer": self.__action_resumer,
+            "aide": self.__action_aide,
+            "breef": lambda: self.__generic_action(
+                self.__guiBreef.activeBreef,
+                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+            )
+        }
+
+    def setGUIActive(self, gui: str, parms=None):
+        if gui in self.__gui_actions:
             self.__name_gui = gui
             self.__parms = parms
             return True
-        else :
+        else:
             return False
 
     def launch_gui(self):
-        if self.__name_gui is not None:
-            if self.__name_gui == self.__liste_gui[0]:
-                try :
-                    self.__guiCalculatrice.activeCalcule()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("7")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("8")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[1]:
-                try :
-                    self.__guiCalculatrice.activePythagore()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("5")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("6")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[2]:
-                try :
-                    self.__guiCalculatrice.activeComplex()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("3")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("4")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[3]:
-                if self.__parms != "" and self.__gest.getGestFNC().getFNCOrthographe().getToolLaunched():
-                    self.__guiOrthographe.active()
-                    self.__guiOrthographe.setTexte(self.__parms)
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseService("3")
-                    self.__valOut = 5
-                    return True
-                else :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseService("4")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[4]:
-                try :
-                    self.__guiArreraDownload.active()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("1")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("2")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[5]:
-                self.__guiAgenda.active()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("8")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[6]:
-                self.__guiAgenda.activeAdd()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("4")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[7]:
-                self.__guiAgenda.activeDel()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("5")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[8]:
-                self.__guiHorloge.active()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("2")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[9]:
-                self.__guiHorloge.activeMinuteur()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("3")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[10]:
-                self.__guiHorloge.activeChrono()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("1")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[11]:
-                self.__guiLecture.active()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseService("6")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[12]:
-                self.__guiTache.active()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("9")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[13]:
-                self.__guiTache.activeFinish()
-                self.__textOut =  self.__gest.getLanguageObjet().getPhraseTime("11")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[14]:
-                self.__guiTache.activeDel()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseTime("12")
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[15]:
-                try :
-                    self.__guiWork.activeAcceuil()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("7")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("8")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[16]:
-                try :
-                    self.__guiWork.activeProjet()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("1")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("2")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[17]:
-                try :
-                    self.__guiWork.activeTableur()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("3")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("4")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[18]:
-                return  self.__guiManageTableur(self.__parms)
-            elif self.__name_gui == self.__liste_gui[19]:
-                if self.__guiWork.activeReadTableur():
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("21")
-                    self.__valOut = 5
-                    return True
-                else :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("22")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[20]:
-                try:
-                    self.__guiWork.activeWord()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("5")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenGUIWork("6")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[21]:
-                try:
-                    self.__guiWork.activeReadWord()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkWord("9")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkWord("10")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[22]:
-                try:
-                    self.__guiWork.activeWriteWord()
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkWord("7")
-                    self.__valOut = 5
-                    return True
-                except Exception as e:
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkWord("8")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[23]:
-                if self.__guiWork.openTaskProjet() :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("10",
-                                                                                  self.__gest.getGestFNC().getFNCWork().getNameProjet())
-                    self.__valOut = 5
-                    return True
-                else :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("11")
-                    self.__valOut = 1
-                    return False
+        if self.__name_gui in self.__gui_actions:
+            return self.__gui_actions[self.__name_gui]()
+        return False
 
-            elif self.__name_gui == self.__liste_gui[24]:
-                if self.__guiWork.openTaskProjetAdd() :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("12",
-                                                                                              self.__gest.getGestFNC().getFNCWork().getNameProjet())
-                    self.__valOut = 5
-                    return True
-                else :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("13")
-                    self.__valOut = 1
-                    return False
-
-            elif self.__name_gui == self.__liste_gui[25]:
-                if self.__guiWork.openTaskProjetdel() :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("14",
-                                                                                              self.__gest.getGestFNC().getFNCWork().getNameProjet())
-                    self.__valOut = 5
-                    return True
-                else :
-                    self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("15")
-                    self.__valOut = 1
-                    return False
-            elif self.__name_gui == self.__liste_gui[26]:
-                self.__guiTraducteur.active()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[27]:
-                dicte = self.__parms[0]
-                liste = self.__parms[1]
-                intIn = self.__parms[2]
-                self.__guiResumer.activeView(dict=dicte,list=liste,intIn=intIn)
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[28]:
-                self.__guiHelp.activeHelp(self.__parms[0])
-                self.__textOut = self.__parms[1]
-                self.__valOut = 5
-                return True
-            elif self.__name_gui == self.__liste_gui[29]:
-                self.__guiBreef.activeBreef()
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
-                self.__valOut = 5
-                return True
-            else :
-                return False
-        else :
+    def __generic_try_action(self, action, success_msg_provider, fail_msg_provider):
+        try:
+            action()
+            self.__textOut = success_msg_provider()
+            self.__valOut = 5
+            return True
+        except Exception:
+            self.__textOut = fail_msg_provider()
+            self.__valOut = 1
             return False
 
-    def __guiManageTableur(self,param:int):
-        try :
+    def __generic_action(self, action, success_msg_provider):
+        action()
+        self.__textOut = success_msg_provider()
+        self.__valOut = 5
+        return True
+
+    def __generic_bool_action(self, action, success_msg_provider, fail_msg_provider):
+        if action():
+            self.__textOut = success_msg_provider()
+            self.__valOut = 5
+            return True
+        else:
+            self.__textOut = fail_msg_provider()
+            self.__valOut = 1
+            return False
+
+    def __action_orthographe(self):
+        if self.__parms != "" and self.__gest.getGestFNC().getFNCOrthographe().getToolLaunched():
+            self.__guiOrthographe.active()
+            self.__guiOrthographe.setTexte(self.__parms)
+            self.__textOut = self.__gest.getLanguageObjet().getPhraseService("3")
+            self.__valOut = 5
+            return True
+        else:
+            self.__textOut = self.__gest.getLanguageObjet().getPhraseService("4")
+            self.__valOut = 1
+            return False
+
+    def __action_resumer(self):
+        dicte = self.__parms[0]
+        liste = self.__parms[1]
+        intIn = self.__parms[2]
+        self.__guiResumer.activeView(dict=dicte, list=liste, intIn=intIn)
+        self.__textOut = self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
+        self.__valOut = 5
+        return True
+
+    def __action_aide(self):
+        self.__guiHelp.activeHelp(self.__parms[0])
+        self.__textOut = self.__parms[1]
+        self.__valOut = 5
+        return True
+
+    def __guiManageTableur(self, param: int):
+        try:
             out = self.__guiWork.activeManageTableur(int(param))
-        except Exception as e:
+        except Exception:
             self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("8")
             self.__valOut = 1
             return False
 
-        if param == 1:
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("7")
+        if 1 <= param <= 7:
+            if out:
+                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur(str(5 + param * 2))
                 self.__valOut = 5
                 return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("8")
+            else:
+                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur(str(6 + param * 2))
                 self.__valOut = 1
                 return False
-        elif param == 2 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("9")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("10")
-                self.__valOut = 1
-                return False
-        elif param == 3 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("11")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("12")
-                self.__valOut = 1
-                return False
-        elif param == 4 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("13")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("14")
-                self.__valOut = 1
-                return False
-        elif param == 5 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("15")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("16")
-                self.__valOut = 1
-                return False
-        elif param == 6 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("17")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("18")
-                self.__valOut = 1
-                return False
-        elif param == 7 :
-            if out :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("19")
-                self.__valOut = 5
-                return True
-            else :
-                self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("20")
-                self.__valOut = 1
-                return False
-        else :
+        else:
             self.__textOut = self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("8")
             self.__valOut = 1
             return False
-
 
     def textOut(self):
         return self.__textOut
 
-    def valOut(self):
-        return self.__valOut
-
-
-    def activeCalculatriceNormal(self):
-        try :
-            self.__guiCalculatrice.activeCalcule()
-            return True
-        except Exception as e:
-            return False
-
-    def activeCalculatriceComplex(self):
-        try :
-            self.__guiCalculatrice.activeComplex()
-            return True
-        except Exception as e:
-            return False
-
-    def activeCalculatricePythagore(self):
-        try :
-            self.__guiCalculatrice.activePythagore()
-            return True
-        except Exception as e:
-            return False
-
-    def activeOrthographe(self,texte:str):
-        if texte != "":
-            self.__guiOrthographe.active()
-            self.__guiOrthographe.setTexte(texte)
-        else :
-            return
-
-    def activeArreraDownload(self):
-        self.__guiArreraDownload.active()
-
     def activeAgenda(self):
         self.__guiAgenda.active()
-
-    def activeAgendaAdd(self):
-        self.__guiAgenda.activeAdd()
-
-    def activeAgendaDel(self):
-        self.__guiAgenda.activeDel()
-
-    def activeHorloge(self):
-        self.__guiHorloge.active()
-
-    def activeMinuteur(self):
-        self.__guiHorloge.activeMinuteur()
-
-    def activeChrono(self):
-        self.__guiHorloge.activeChrono()
-
-    def activeLecture(self):
-        self.__guiLecture.active()
 
     def activeTache(self):
         self.__guiTache.active()
 
-    def activeTaskFinish(self):
-        self.__guiTache.activeFinish()
+    def activeViewResumer(self, dict: dict = None, list: list = None, intIn: int = 0):
+        self.__guiResumer.activeView(dict=dict, list=list, intIn=intIn)
 
-    def activeDelTask(self):
-        self.__guiTache.activeDel()
-
-    def activeWork(self):
-        try :
-            self.__guiWork.activeAcceuil()
-            return True
-        except Exception as e:
-            return False
-
-    def activeWorkProject(self):
-        try :
-            self.__guiWork.activeProjet()
-            return True
-        except Exception as e:
-            return False
-
-    def activeWorkTableur(self):
-        try :
-            self.__guiWork.activeTableur()
-            return True
-        except Exception as e:
-            return False
-
-    def activeManageTableur(self,mode:int):
-        """
-        1. Add Valeur
-        2. Add Somme
-        3. Add Moyenne
-        4. Add Comptage
-        5. Add Minimum
-        6. Add Maximum
-        7. Suppr valeur
-        """
-        return  self.__guiWork.activeManageTableur(mode)
-
-    def activeReadTableur(self):
-        return self.__guiWork.activeReadTableur()
-
-    def activeWorkWord(self):
-        try:
-            self.__guiWork.activeWord()
-            return True
-        except Exception as e:
-            return False
-
-    def activeReadWord(self):
-        return self.__guiWork.activeReadWord()
-
-    def activeWriteWord(self):
-        return self.__guiWork.activeWriteWord()
-
-    def activeTaskProject(self,mode:int):
-        """
-        1. Add Projet
-        2. Del Projet
-        3. View Projet
-        """
-        match mode :
-            case 1:
-                return self.__guiWork.openTaskProjetAdd()
-            case 2:
-                return self.__guiWork.openTaskProjetdel()
-            case 3:
-                return self.__guiWork.openTaskProjet()
-            case _ :
-                return False
-
-    def activeTraducteur(self):
-        self.__guiTraducteur.active()
-
-    def activeResumer(self):
-        self.__guiResumer.active()
-
-    def activeViewResumer(self,dict:dict=None,list:list=None, intIn:int=0):
-        self.__guiResumer.activeView(dict=dict,list=list,intIn=intIn)
-
-    def activeHelp(self, texte:str):
+    def activeHelp(self, texte: str):
         self.__guiHelp.activeHelp(texte)
 
     def activeBreef(self):
