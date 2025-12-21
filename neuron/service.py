@@ -6,11 +6,9 @@ class neuroneService(neuronBase) :
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["", ""]
         self._valeurOut = 0
-        self._keyword.checkService(requette,"read")
         if (self._keyword.checkService(requette,"read") and
                 self._keyword.checkService(requette,"lecture-contenu")) :
-            self._gestGUI.activeLecture()
-            self._listSortie = [self._language.getPhraseService("6"), ""]
+            self._gestGUI.setGUIActive("lecture")
             self._valeurOut = 5
         elif self._keyword.checkService(requette,"calcule"):
             listKeyword = self._keyword.getListKeyword("service","calcule")
@@ -37,17 +35,14 @@ class neuroneService(neuronBase) :
 
         elif self._keyword.checkService(requette,"corige"):
             if self._gestionnaire.getNetworkObjet().getEtatInternet():
-                if self._gestFNC.getFNCOrthographe().getToolLaunched():
-                    listKeyword = self._keyword.getListKeyword("service","corige")
+                listKeyword = self._keyword.getListKeyword("service","corige")
 
-                    for word in listKeyword:
-                        requette = requette.replace(word,"")
-                    requette = requette.strip()
+                for word in listKeyword:
+                    requette = requette.replace(word,"")
+                requette = requette.strip()
 
-                    self._gestGUI.activeOrthographe(requette)
-                    self._listSortie = [self._language.getPhraseService("3"), ""]
-                else :
-                    self._listSortie = [self._language.getPhraseService("4"), ""]
+                self._gestGUI.setGUIActive("orthographe",requette)
+                self._valeurOut = 5
             else :
                 self._listSortie = [self._language.getPhraseService("7"), ""]
-            self._valeurOut = 1
+                self._valeurOut = 1

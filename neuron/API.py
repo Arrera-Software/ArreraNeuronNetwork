@@ -98,15 +98,14 @@ class neuroneAPI(neuronBase) :
         if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"resumer"):
                 if time(6,0) <= datetime.now().time() < time(11,0):
-                    texte = self._language.getPhraseMorningBreef("1")
                     outInt = 5
-                    self._gestGUI.activeBreef()
+                    self._gestGUI.setGUIActive("breef")
                 elif self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
                     out = self.__fncBreef.summarizeActuAndMeteo(self._userConf.getLieuDomicile())
                     texte = self._language.getPhraseResumerActu()
                     if out is not None:
                         outInt = 12
-                        self._gestGUI.activeViewResumer(dict=out,list=None,intIn=outInt)
+                        self._gestGUI.setGUIActive("resumer",[out,None,outInt])
                     else :
                         outInt = 11
                 elif self._keyword.checkAPI(requette,"taches"):
@@ -114,7 +113,7 @@ class neuroneAPI(neuronBase) :
                     texte = self._language.getPhraseResumerTask()
                     if out is not None:
                         outInt = 18
-                        self._gestGUI.activeViewResumer(dict=None,list=out,intIn=outInt)
+                        self._gestGUI.setGUIActive("resumer",[None,out,outInt])
                     else :
                         outInt = 11
                 else:
@@ -122,7 +121,7 @@ class neuroneAPI(neuronBase) :
                     texte = self._language.getPhraseResumerAll("2")
                     if out is not None:
                         outInt = 19
-                        self._gestGUI.activeViewResumer(dict=out,list=None,intIn=outInt)
+                        self._gestGUI.setGUIActive("resumer",[out,None,outInt])
                     else :
                         outInt = 20
 
@@ -145,9 +144,9 @@ class neuroneAPI(neuronBase) :
                         self._listSortie = [self._language.getPhraseGPSError(str(random.randint(0,1))),""]
                     return 4
                 elif self._keyword.checkAPI(requette,"aide"):
-                    self._listSortie = [self._language.getOpenHelpIteneraire(), ""]
-                    self._gestGUI.activeHelp(self._language.getTexteHelpIteneraire())
-                    return 1
+                    self._gestGUI.setGUIActive("aide",[self._language.getTexteHelpIteneraire(),
+                                                       self._language.getOpenHelpIteneraire()])
+                    return 5
             elif self._keyword.checkAPI(requette,"launch-itinerary"):
                 if not self.__itineraire:
                     self.__itineraire = True
@@ -232,9 +231,8 @@ class neuroneAPI(neuronBase) :
     def __translate(self,requette:str):
         if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"traducteur"):
-                self._listSortie = [self._language.getPhraseOpenTraducteur(), ""]
-                self._gestGUI.activeTraducteur()
-                return 1
+                self._gestGUI.setGUIActive("traducteur")
+                return 5
         return 0
 
     def neurone(self,requette:str):

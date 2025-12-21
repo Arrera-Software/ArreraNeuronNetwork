@@ -258,35 +258,19 @@ class neuroneOpen(neuronBase) :
     def partArreraSoft(self, requette: str) -> int:
         if (not self._keyword.checkOpen(requette,"youtube_music")
               and self._keyword.checkOpen(requette,"youtube_downloader")):
-            if self._gestGUI.activeArreraDownload():
-                self._listSortie = [self._language.getPhraseArreraSoftOpen("1"),""]
-            else :
-                self._listSortie = [self._language.getPhraseArreraSoftOpen("2"),""]
-
+            self._gestGUI.setGUIActive("arrera_download")
             self._valeurOut = 5
             return 1
         if self._keyword.checkOpen(requette,"calculator"):
             if self._keyword.checkOpen(requette,"complex_mode"):
-                if self._gestGUI.activeCalculatriceComplex():
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("3"),""]
-                    self._valeurOut = 5
-                else :
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("4"),""]
-                    self._valeurOut = 1
+                self._gestGUI.setGUIActive("calculatrice_complex")
+                self._valeurOut = 5
             elif self._keyword.checkOpen(requette,"pythagore_mode"):
-                if self._gestGUI.activeCalculatricePythagore():
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("5"),""]
-                    self._valeurOut = 5
-                else :
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("6"),""]
-                    self._valeurOut = 1
+                self._gestGUI.setGUIActive("calculatrice_pythagore")
+                self._valeurOut = 5
             else :
-                if self._gestGUI.activeCalculatriceNormal():
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("7"),""]
-                    self._valeurOut = 5
-                else :
-                    self._listSortie = [self._language.getPhraseArreraSoftOpen("8"),""]
-                    self._valeurOut = 1
+                self._gestGUI.setGUIActive("calculatrice_normal")
+                self._valeurOut = 5
             return 1
         else :
             return 0

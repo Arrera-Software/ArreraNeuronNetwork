@@ -36,6 +36,8 @@ class neuroneChatbot(neuronBase) :
                         if out_clear[0] == 17:
                             self._gestGUI.activeHelp(out_clear[1])
                             self._listSortie = [self._language.getPhraseChatBot("1"),""]
+                            self._gestGUI.setGUIActive("aide",[out_clear[1],
+                                                               self._language.getPhraseChatBot("1")])
                         else :
                             self._listSortie = [out_clear[1],""]
                         self._valeurOut = out_clear[0]

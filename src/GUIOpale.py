@@ -6,6 +6,7 @@ from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
 from datetime import datetime
+import threading as th
 
 class GUIOpale:
     def __init__(self):
@@ -77,6 +78,8 @@ class GUIOpale:
         self.__arrTK.pack(frameNeuron)
         self.__arrTK.pack(frameLangue)
         self.__arrTK.pack(frameValidate)
+        # Thead Assistant
+        self.__thAssistant = th.Thread()
 
     def __setLangue(self,mode:int):
         """
@@ -172,7 +175,7 @@ class GUIOpale:
 
         entryUser = self.__arrTK.createEntry(frameUser, width=200)
         btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=25,
-                                            command= lambda : self.__sendAssistantMessage(entryUser))
+                                            command= lambda : self.__sendAssistantMessage(entryUser,screen))
         btnOpen = self.__arrTK.createButton(screen, text="OPEN",width=10,command=self.__viewOpen)
 
         # Affichage
@@ -240,34 +243,45 @@ class GUIOpale:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}",wraplength=200
                                                 ,justify=LEFT)
 
-    def __sendAssistantMessage(self,entry:ctk.CTkEntry):
-        message = entry.get()
-        if message:
-            self.__assistantBrain.neuron(message)
+    def __sendAssistantMessage(self,entry:ctk.CTkEntry,screen:ctk.CTk):
+        if not self.__thAssistant.is_alive():
+            message = entry.get()
+            if message:
+                self.__thAssistant = th.Thread(target=self.__assistantBrain.neuron,args=(message,))
+                self.__thAssistant.start()
+                entry.delete(0, 'end')  # Clear the entry after sending
+                self.__updateRequetteAssistant(screen,message)
+            else:
+                self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
+                                                    ,justify=LEFT)
+
+    def __updateRequetteAssistant(self,screen:ctk.CTk,message:str):
+        if self.__thAssistant.is_alive():
+            print("Generation...")
+            screen.after(1000,self.__updateRequetteAssistant,screen,message)
+        else :
+            del self.__thAssistant
+            self.__thAssistant = th.Thread()
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
             self.__labelAssistantText.configure(text=texte[0], wraplength=200
                                                 ,justify=LEFT)
             self.__labelAssistantNumber.configure(text=str(nb))
-            entry.delete(0, 'end')  # Clear the entry after sending
             self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
-        else:
-            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
-                                                ,justify=LEFT)
 
     def __keyboard(self,win:ctk.CTk,entry:ctk.CTkEntry):
         def anychar(event):
             if self.__objOS.osWindows():
                 if event.keycode == 13:
-                    self.__sendAssistantMessage(entry)
+                    self.__sendAssistantMessage(entry,win)
             elif self.__objOS.osLinux():
                 if event.keycode == 36:
-                    self.__sendAssistantMessage(entry)
+                    self.__sendAssistantMessage(entry,win)
             elif self.__objOS.osMac():
                 if event.keycode == 603979789:
-                    self.__sendAssistantMessage(entry)
+                    self.__sendAssistantMessage(entry,win)
         win.bind("<Key>", anychar)
 
     def __close(self):

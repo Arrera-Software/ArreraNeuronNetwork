@@ -33,21 +33,14 @@ class neuroneTime(neuronBase):
                                                              annee=year),""]
             return 1
         elif self._keyword.checkTime(requette,"chrono"):
-            self._gestGUI.activeChrono()
-            self._listSortie = [self._language.getPhraseTime("1"),""]
-            return 1
+            self._gestGUI.setGUIActive("chrono")
+            return 5
         elif self._keyword.checkTime(requette,"clock"):
-            self._gestGUI.activeHorloge()
-            self._listSortie = [self._language.getPhraseTime("2"),""]
-            return 1
-        elif self._keyword.checkTime(requette,"clock"):
-            self._gestGUI.activeHorloge()
-            self._listSortie = [self._language.getPhraseTime("3"),""]
-            return 1
+            self._gestGUI.setGUIActive("horloge")
+            return 5
         elif self._keyword.checkTime(requette,"timer"):
-            self._gestGUI.activeMinuteur()
-            self._listSortie = [self._language.getPhraseTime("4"),""]
-            return 1
+            self._gestGUI.setGUIActive("minuteur")
+            return 5
         else :
             return 0
 
@@ -55,17 +48,14 @@ class neuroneTime(neuronBase):
         if self._keyword.checkTime(requette,"calendar"):
             if (self._keyword.checkTime(requette,"open") or
                     self._keyword.checkTime(requette,"montre")):
-                self._listSortie = [self._language.getPhraseTime("8"), ""]
-                self._gestGUI.activeAgenda()
-                return 1
+                self._gestGUI.setGUIActive("agenda")
+                return 5
             elif self._keyword.checkTime(requette,"add"):
-                self._listSortie = [self._language.getPhraseTime("4"), ""]
-                self._gestGUI.activeAgendaAdd()
-                return 1
+                self._gestGUI.setGUIActive("agenda_add")
+                return 5
             elif self._keyword.checkTime(requette,"delete"):
-                self._listSortie = [self._language.getPhraseTime("5"), ""]
-                self._gestGUI.activeAgendaDel()
-                return 1
+                self._gestGUI.setGUIActive("agenda_delete")
+                return 5
             else :
                 return 0
 
@@ -73,21 +63,20 @@ class neuroneTime(neuronBase):
             return 0
 
     def __neuronTache(self, requette:str):
-        if self._keyword.checkTime(requette,"tache"):
+        if (self._keyword.checkTime(requette,"tache") and
+                not self._keyword.checkWork(requette,"project-file")):
             if (self._keyword.checkTime(requette, "open") or
                     self._keyword.checkTime(requette, "montre")):
-                self._listSortie = [self._language.getPhraseTime("9"), ""]
-                self._gestGUI.activeTache()
-                return 1
+                self._gestGUI.setGUIActive("tache")
+                return 5
             elif self._keyword.checkTime(requette,"add"):
                 self._listSortie = [self._language.getPhraseTime("10"), ""]
                 self.__taskAdd = True
                 self.__taskEnd = False
                 return 1
             elif self._keyword.checkTime(requette,"delete") :
-                self._listSortie = [self._language.getPhraseTime("11"), ""]
-                self._gestGUI.activeDelTask()
-                return 1
+                self._gestGUI.setGUIActive("tache_del")
+                return 5
             elif self._keyword.checkTime(requette,"finish") :
                 self._listSortie = [self._language.getPhraseTime("12"), ""]
                 self.__taskEnd = True
