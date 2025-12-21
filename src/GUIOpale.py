@@ -177,6 +177,7 @@ class GUIOpale:
         btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=25,
                                             command= lambda : self.__sendAssistantMessage(entryUser,screen))
         btnOpen = self.__arrTK.createButton(screen, text="OPEN",width=10,command=self.__viewOpen)
+        self.__labelGeneration = self.__arrTK.createLabel(screen,text="Generation...",ptaille=15)
 
         # Affichage
 
@@ -257,10 +258,11 @@ class GUIOpale:
 
     def __updateRequetteAssistant(self,screen:ctk.CTk,message:str):
         if self.__thAssistant.is_alive():
-            print("Generation...")
+            self.__arrTK.placeBottomRight(self.__labelGeneration)
             screen.after(1000,self.__updateRequetteAssistant,screen,message)
         else :
             del self.__thAssistant
+            self.__labelGeneration.place_forget()
             self.__thAssistant = th.Thread()
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
