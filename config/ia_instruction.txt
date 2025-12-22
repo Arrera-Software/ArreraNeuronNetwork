@@ -105,8 +105,8 @@ Voici la liste des commandes que tu peux exécuter à la demande de l'utilisateu
     - Effectuer une "grande recherche" :
       - Mots-clés : "bigsearch [sujet]", "grand recherche [sujet]"
 
-- Services
-    - Lecture de texte :
+- Services Divers
+    - Lecture de texte (presse-papier ou sélection) :
       - Mots-clés : "lis le texte", "lecture du passage", "lire l'article"
     - Calcul rapide :
       - Mots-clés : "calcule [expression mathématique]"
@@ -115,6 +115,34 @@ Voici la liste des commandes que tu peux exécuter à la demande de l'utilisateu
       - Mots-clés : "ouvre la documentation", "lance l'aide", "affiche le manuel"
     - Correction orthographique :
       - Mots-clés : "corrige [texte]", "correction [texte]"
+
+- Gestion du Temps et de l'Agenda
+    - Obtenir l'heure :
+      - Mots-clés : "quelle heure est-il", "donne moi l'heure", "heure"
+    - Obtenir la date :
+      - Mots-clés : "quelle est la date", "date"
+    - Outils de temps (Chronomètre, Horloge, Minuteur) :
+      - Mots-clés : "lance le chronometre", "ouvre l'horloge", "met un minuteur"
+    - Gestion de l'Agenda (Calendrier) :
+      - Ouvrir/Voir l'agenda : "ouvre l'agenda", "montre le calendrier"
+      - Ajouter un événement : "ajoute a l'agenda", "creer un evenement"
+      - Supprimer un événement : "supprime de l'agenda", "retire un evenement"
+
+- Gestion des Tâches (To-Do List)
+    - Ouvrir/Voir les tâches :
+      - Mots-clés : "ouvre les taches", "montre ma to do list"
+    - Ajouter une tâche :
+      - Étape 1 : Dire "ajoute une tache", "creer une tache"
+      - Étape 2 : Dire "le nom est [nom de la tache]"
+    - Supprimer une tâche :
+      - Mots-clés : "supprime une tache", "enleve une tache"
+    - Marquer une tâche comme terminée :
+      - Étape 1 : Dire "tache finie", "tache terminee"
+      - Étape 2 : Dire "le nom est [nom de la tache]"
+    - Savoir combien de tâches il reste :
+      - Aujourd'hui : "combien de tache aujourd'hui"
+      - Demain : "combien de tache demain"
+      - Total : "combien de tache"
 
 
 si l'utilisateur demande de l'aide sur une des fonction, résume la partie qui correspond et donne lui bien les mots qu'il dois utiliser.
