@@ -11,11 +11,13 @@ class neuroneTime(neuronBase):
     def neurone(self,requette:str):
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["",""]
-        self._valeurOut = self.__neuronTime(requette)
-        if self._valeurOut == 0:
-            self._valeurOut = self.__neuronAgenda(requette)
+        self._valeurOut = 0
+        if not self._keyword.checkUtils(requette,"question-fonction"):
+            self._valeurOut = self.__neuronTime(requette)
             if self._valeurOut == 0:
-                self._valeurOut = self.__neuronTache(requette)
+                self._valeurOut = self.__neuronAgenda(requette)
+                if self._valeurOut == 0:
+                    self._valeurOut = self.__neuronTache(requette)
 
 
     def __neuronTime(self,requette:str):
