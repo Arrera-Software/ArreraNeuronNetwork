@@ -17,7 +17,6 @@ websocket-client
 customtkinter
 pillow
 playsound3
-pyttslib
 speechRecognition
 meteofrance_api
 pyradios
@@ -27,3 +26,4 @@ tensorflow
 numpy
 llama_cpp_python
 torch
+pyttsx3
