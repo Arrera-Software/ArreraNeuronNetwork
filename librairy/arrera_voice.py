@@ -1,7 +1,10 @@
 from playsound3 import playsound as pl
-from pyttslib import TextToSpeech
+from pathlib import Path
 from gestionnaire.gestion import gestionnaire
 import speech_recognition as sr
+import pyttsx3
+from gtts import gTTS
+import os
 
 
 class CArreraVoice:
@@ -14,16 +17,16 @@ class CArreraVoice:
         self.__outPutText = ""
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
-            self.__tts = TextToSpeech(engine="google")
-            self.__tts.set_voice("fr")
+            self.__tts = None
+            Path("tmp").mkdir(parents=True, exist_ok=True)
         else:
-            self.__tts = TextToSpeech(engine="pyttsx3",engine_config={
-                "rate": 150,    # Words per minute
-                "volume": 0.8,  # Volume level (0.0 to 1.0)
-            })
-            self.__tts.set_voice("French (France)")
-
-
+            self.__tts = pyttsx3.init()
+            for voice in self.__tts.getProperty('voices'):
+                if "french" in voice.name.lower() or "fr" in voice.id.lower():
+                    voice_id = voice.id
+                    self.__tts.setProperty('voice', voice_id)
+                    break
+            self.__tts.setProperty('rate', 150)
 
     def loadConfig(self):
         self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().asset+"sound/micro.mp3"
@@ -35,7 +38,27 @@ class CArreraVoice:
         self.__nbWord = len(self.__listWord)
 
     def say(self,text:str):
-        self.__tts.speak(text)
+        if self.__gestionnaire.getNetworkObjet().getEtatInternet():
+            try :
+                tts = gTTS(text=text, lang='fr', slow=False)
+                if os.path.exists("tmp/voice.mp3"):
+                    os.remove("tmp/voice.mp3")
+
+                tts.save("tmp/voice.mp3")
+
+                pl("tmp/voice.mp3")
+
+                os.remove("tmp/voice.mp3")
+                return True
+            except:
+                return False
+        else:
+            try :
+                self.__tts.say(text)
+                self.__tts.runAndWait()
+                return True
+            except:
+                return False
 
     def playFile(self,file:str):
         pl(file)
