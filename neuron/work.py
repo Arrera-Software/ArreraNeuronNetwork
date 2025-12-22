@@ -14,14 +14,16 @@ class neuroneWork(neuronBase):
         #Initilisation des variable nbRand et text et valeur
         self._listSortie = ["",""]
         self._valeurOut = self.__neuronTableur(requette)
-        if self._valeurOut == 0:
-            self._valeurOut = self.__neuronProjet(requette)
+        self._valeurOut = 0
+        if not self._keyword.checkUtils(requette,"question-fonction"):
             if self._valeurOut == 0:
-                self._valeurOut = self.__neuronHelp(requette)
+                self._valeurOut = self.__neuronProjet(requette)
                 if self._valeurOut == 0:
-                    self._valeurOut = self.__neuronWord(requette)
+                    self._valeurOut = self.__neuronHelp(requette)
                     if self._valeurOut == 0:
-                        self._valeurOut = self.__neuronGUI(requette)
+                        self._valeurOut = self.__neuronWord(requette)
+                        if self._valeurOut == 0:
+                            self._valeurOut = self.__neuronGUI(requette)
 
 
     def __neuronHelp(self,requette:str):
