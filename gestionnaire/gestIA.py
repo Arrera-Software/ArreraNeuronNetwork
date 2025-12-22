@@ -25,7 +25,7 @@ class gestIA :
                 if model_name in self.get_list_model_download():
                     self.__ia_loader= ArreraIALoad()
                     self.__ia_loader.load_model_gguf(model_path=self.__downloader_model.get_path_model(model_name)
-                                                     ,n_ctx=4096)
+                                                     ,n_ctx=8192)
                     if self.__ia_loader.load_help_file("config/ia_instruction.txt"):
                         self.__ia_mode_enabled = True
                         return True
