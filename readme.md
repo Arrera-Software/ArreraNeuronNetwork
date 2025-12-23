@@ -4,6 +4,8 @@
 
 Projet qui a pour but de créer la base permettant de développer des assistants personnels en Python 3.13 uniquement.
 
+[Readme in english](./readme_en.md) 
+
 ## Fonctionnalités
 
 L'assistant Arrera Neuron Network dispose de plusieurs neurones spécialisés pour répondre à diverses requêtes :
