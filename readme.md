@@ -38,8 +38,12 @@ L'assistant Arrera Neuron Network dispose de plusieurs neurones spécialisés po
 *   **Modes d'affichage** : Active différents modes d'affichage (mode 1 à 6).
 *   **Fermeture** : Gère la fermeture de l'assistant ou des modes.
 
-Arrera Neuron Network a aussi une fonctionnaliter d'intergartion de model IA dans le neuron chatbot
+Arrera Neuron Network a aussi une fonctionnalité d’intégration de modèle IA dans le Neuron Chatbot
 
 # Architecture 
 
 [Voir l'architecture du projet](./ARCHITECTURE.md)
+
+# Dépendance du projet 
+
+[Voir les dependances du projet](./dependency.md)
