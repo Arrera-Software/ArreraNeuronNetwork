@@ -1,29 +1,40 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
+import sys
+import glob
+from PyInstaller.utils.hooks import collect_all
 
-# ========= CONFIG À ADAPTER =========
-APP_NAME = "ARRERA OPALE"               # Nom de l'app .app
-ENTRY_SCRIPT = "main.py"                     # Script d'entrée
-ICON_ICNS = None           # .icns pour l'icône du dock (ou None)
-BUNDLE_ID = "com.arrera.opale"            # Identifiant de bundle macOS
-MIN_MACOS = "10.13"                          # Version minimale macOS
-TARGET_ARCH = None                           # "arm64" ou "x86_64" si besoin
-RESOURCE_EXTS = ["png", "json"]              # Extensions à embarquer comme ressources
-# ========= FIN CONFIG =========
+# ========= CONFIGURATION =========
+APP_NAME = "ARRERA OPALE"
+ENTRY_SCRIPT = "main.py"
+ICON_ICNS = None
+BUNDLE_ID = "com.arrera.opale"
+MIN_MACOS = "10.13"
+TARGET_ARCH = None
+RESOURCE_EXTS = ["png", "json"]
+# =================================
 
-import os, glob
-
-block_cipher = None
 PROJECT_ROOT = os.path.abspath(".")
 
-EXCLUDE_DIRS = {"build", "dist", ".git", "__pycache__"}
+# --- PARTIE 1 : VERIFICATION TENSORFLOW ---
+try:
+    import tensorflow
+    tf_init_path = tensorflow.__file__
+    tf_root = os.path.dirname(tf_init_path)
+    site_packages_root = os.path.dirname(tf_root)
+    print(f"\n✅ TensorFlow détecté : {tf_root}")
+except ImportError:
+    print("\n❌ ERREUR : TensorFlow introuvable. Vérifiez votre venv.")
+    sys.exit(1)
+
+# --- PARTIE 2 : FONCTIONS ---
+EXCLUDE_DIRS = {"build", "dist", ".git", "__pycache__", "tests"}
 
 def is_excluded(path):
-    # Exclut si un segment de chemin correspond à une entrée d'exclusion
     parts = set(os.path.normpath(path).split(os.sep))
     return any(x in parts for x in EXCLUDE_DIRS)
 
 def collect_files_by_ext(root, exts):
-    # Recherche récursive, insensible à la casse
     files = []
     patterns = []
     for ext in exts:
@@ -33,7 +44,6 @@ def collect_files_by_ext(root, exts):
         for p in group:
             if os.path.isfile(p) and not is_excluded(p):
                 files.append(os.path.normpath(p))
-    # Déduplique en préservant l'ordre
     seen, unique = set(), []
     for p in files:
         if p not in seen:
@@ -41,33 +51,56 @@ def collect_files_by_ext(root, exts):
             unique.append(p)
     return unique
 
-# Collecte des ressources (PNG, JSON, etc.)
-resource_files = collect_files_by_ext(PROJECT_ROOT, RESOURCE_EXTS)
-
-# Construit "datas" en préservant l'arborescence relative.
-# IMPORTANT: remplace "" par "." pour les fichiers à la racine.
+# --- PARTIE 3 : DONNÉES (DATAS) ---
 datas = []
+binaries = []
+
+# 3.1 Vos ressources
+resource_files = collect_files_by_ext(PROJECT_ROOT, RESOURCE_EXTS)
 for fp in resource_files:
     relpath = os.path.relpath(fp, PROJECT_ROOT)
-    dest = os.path.dirname(relpath) or "."   # <-- le correctif principal
+    dest = os.path.dirname(relpath) or "."
     datas.append((fp, dest))
 
-# Ajoute le fichier VERSION situé à la racine (s'il existe)
+# 3.2 Fichier VERSION
 version_file = os.path.join(PROJECT_ROOT, "VERSION")
 if os.path.isfile(version_file):
-    datas.append((version_file, "."))  # ira dans Contents/Resources/
+    datas.append((version_file, "."))
 
-# Si tu as des imports dynamiques, renseigne-les ici (sinon laisse vide)
-hiddenimports = [
-    "pyaudio",
-    "sounddevice",
-    "AppKit", "Foundation", "objc",
+# 3.3 COPIE FORCÉE TENSORFLOW & DEPENDANCES
+libs_to_force = [
+    "tensorflow", "keras", "tensorflow_estimator", "google",
+    "absl", "astunparse", "gast", "opt_einsum", "termcolor",
+    "wrapt", "flatbuffers"
 ]
+for lib in libs_to_force:
+    source_path = os.path.join(site_packages_root, lib)
+    if os.path.exists(source_path):
+        datas.append((source_path, lib))
+
+# 3.4 CORRECTIF LLAMA
+try:
+    llama_datas, llama_binaries, llama_hiddenimports = collect_all('llama_cpp')
+    datas += llama_datas
+    binaries += llama_binaries
+    print("✅ Llama CPP : Binaires collectés.")
+except Exception as e:
+    print(f"⚠️ Info : Pas de module llama_cpp trouvé ou erreur ({e})")
+    llama_hiddenimports = []
+
+# --- PARTIE 4 : IMPORTS CACHÉS ---
+hiddenimports = [
+    "pyaudio", "sounddevice", "AppKit", "Foundation", "objc",
+    "tensorflow", "numpy", "google.protobuf"
+] + llama_hiddenimports
+
+# --- PARTIE 5 : ANALYSE ---
+block_cipher = None
 
 a = Analysis(
     [ENTRY_SCRIPT],
     pathex=[PROJECT_ROOT],
-    binaries=[],
+    binaries=binaries,
     datas=datas,
     hiddenimports=hiddenimports,
     hookspath=[],
@@ -92,17 +125,17 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,                    # désactive si UPX n'est pas installé sur ta machine
+    upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,               # pas de fenêtre terminal
+    console=False,
     disable_windowed_traceback=False,
-    target_arch=TARGET_ARCH,     # "arm64" ou "x86_64" si tu veux forcer
-    codesign_identity=None,      # tu pourras signer plus tard si besoin
+    target_arch=TARGET_ARCH,
+    codesign_identity=None,
     entitlements_file=None,
 )
 
-# Lis la version si disponible (pour Info.plist)
+# Infos Info.plist
 version_str = "0.0.0"
 try:
     with open(version_file, "r", encoding="utf-8") as f:
@@ -114,18 +147,17 @@ info_plist = {
     "CFBundleName": APP_NAME,
     "CFBundleDisplayName": APP_NAME,
     "CFBundleIdentifier": BUNDLE_ID,
-    "CFBundleShortVersionString": version_str,  # visible dans “Lire les informations”
-    "CFBundleVersion": version_str,             # build number
+    "CFBundleShortVersionString": version_str,
+    "CFBundleVersion": version_str,
     "LSMinimumSystemVersion": MIN_MACOS,
     "NSHighResolutionCapable": "True",
-    # Ajoute ici des clés Info.plist spécifiques à ta GUI (ex: autorisations)
-    "NSMicrophoneUsageDescription": "L’application a besoin du micro pour enregistrer/traiter l’audio.",
+    "NSMicrophoneUsageDescription": "L'application a besoin du micro.",
 }
 
 app = BUNDLE(
     exe,
     name=f"{APP_NAME}.app",
-    icon=ICON_ICNS,               # .icns pour l’icône du dock (optionnel)
+    icon=ICON_ICNS,
     bundle_identifier=BUNDLE_ID,
     info_plist=info_plist,
 )
