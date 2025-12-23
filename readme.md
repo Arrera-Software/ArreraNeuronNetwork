@@ -47,3 +47,7 @@ Arrera Neuron Network a aussi une fonctionnalité d’intégration de modèle IA
 # Dépendance du projet 
 
 [Voir les dependances du projet](./dependency.md)
+
+# Integration 
+
+[Voir l'integration du projet](./INTEGRATION.md)
