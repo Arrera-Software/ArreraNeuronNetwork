@@ -5,6 +5,7 @@ from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
+import os
 from datetime import datetime
 import threading as th
 
@@ -148,18 +149,24 @@ class GUIOpale:
         Fonction qui permet de lancer l'assistant GUI
         """
         if self.__setConfig():
-            screen.destroy()
             if self.__startAssistantBrain():
-                self.__GUIAssistant()
+                for widget in screen.winfo_children():
+                    widget.destroy()
+                self.__GUIAssistant(screen)
                 self.__bootAssistant()
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
 
 
-    def __GUIAssistant(self):
-        screen = self.__arrTK.aTK(width=500, height=500,
+    def __GUIAssistant(self, screen:ctk.CTk = None):
+        if screen is None:
+            screen = self.__arrTK.aTK(width=500, height=500,
                                   title="Opale Assistant", resizable=False,
                                   icon="asset/icon.png")
+        else:
+            screen.title("Opale Assistant")
+            screen.geometry("500x500")
+            screen.resizable(False, False)
 
         screen.protocol("WM_DELETE_WINDOW", self.__close)
 
