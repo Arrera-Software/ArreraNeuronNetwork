@@ -1,13 +1,14 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_all  # <--- IMPORT IMPORTANT
 
 # ========= CONFIG À ADAPTER (Linux, Arch x86_64) =========
-APP_NAME = "ARRERA OPALE"            # Nom du dossier/binaire final
-ENTRY_SCRIPT = "main.py"         # Script d'entrée (if __name__ == "__main__")
-ICON_FILE = None                 # Exemple: "assets/icon.png" ou ".ico" (optionnel)
-UPX_ENABLED = True               # Désactive si UPX indisponible
-DEBUG_BUILD = False              # True pour debug
-HIDDENIMPORTS = []               # Ajoute ici des imports dynamiques si nécessaire
-EXCLUDES = []                    # Modules à exclure si besoin
+APP_NAME = "ARRERA_OPALE"
+ENTRY_SCRIPT = "main.py"
+ICON_FILE = None
+UPX_ENABLED = True
+DEBUG_BUILD = False
+HIDDENIMPORTS = []
+EXCLUDES = []
 # ========= FIN CONFIG =========
 
 import os
@@ -15,12 +16,25 @@ block_cipher = None
 
 PROJECT_ROOT = os.path.abspath(".")
 
+# --- ÉTAPE 1 : Récupérer tout ce qui concerne llama_cpp ---
+# Cela va chercher les .so, les dépendances et les imports cachés
+# Note : on utilise 'llama_cpp' car c'est le nom du package importé dans le code
+tmp_ret = collect_all('llama_cpp')
+
+# On sépare les résultats pour les ajouter à l'Analysis
+llama_datas = tmp_ret[0]
+llama_binaries = tmp_ret[1]
+llama_hiddenimports = tmp_ret[2]
+
+# On ajoute tes imports manuels s'il y en a
+final_hiddenimports = HIDDENIMPORTS + llama_hiddenimports
+
 a = Analysis(
     [ENTRY_SCRIPT],
     pathex=[PROJECT_ROOT],
-    binaries=[],
-    datas=[],                     # Pas de fichiers supplémentaires intégrés
-    hiddenimports=HIDDENIMPORTS,
+    binaries=llama_binaries,      # <--- AJOUT DES BINAIRES LLAMA
+    datas=llama_datas,            # <--- AJOUT DES DATAS LLAMA
+    hiddenimports=final_hiddenimports, # <--- AJOUT DES IMPORTS CACHÉS
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -32,11 +46,10 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-# Patron one-folder: exclude_binaries=True dans EXE, puis COLLECT(...)
 exe = EXE(
     pyz,
     a.scripts,
-    [],                           # NE PAS passer a.binaries/zipfiles/datas ici
+    [],
     exclude_binaries=True,
     name=APP_NAME,
     debug=DEBUG_BUILD,
@@ -45,9 +58,9 @@ exe = EXE(
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,                # appli graphique, pas de terminal
+    console=True, # Si tu as encore des erreurs, passe à True temporairement pour voir les logs au lancement
     disable_windowed_traceback=False,
-    icon=ICON_FILE,               # .png ou .ico (selon ton DE)
+    icon=ICON_FILE,
 )
 
 coll = COLLECT(
