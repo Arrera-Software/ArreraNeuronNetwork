@@ -4,7 +4,6 @@ tkcalendar
 datetime
 geocoder
 requests
-playsound
 gTTS
 translate
 python-docx
