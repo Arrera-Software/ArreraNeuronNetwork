@@ -52,7 +52,6 @@ exe = EXE(
     debug=DEBUG_BUILD,
     bootloader_ignore_signals=False,
     strip=True,  # Important sous Linux
-    upx=True,    # Compression binaire
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
