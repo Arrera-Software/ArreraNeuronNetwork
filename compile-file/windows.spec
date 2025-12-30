@@ -1,16 +1,17 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_all
+import os, sys
 
 # ========= CONFIG À ADAPTER (Windows) =========
-APP_NAME = "ARRERA OPALE"           # Nom du binaire (PyInstaller ajoutera .exe)
-ENTRY_SCRIPT = "main.py"         # Script d'entrée (if __name__ == "__main__")
-ICON_FILE = None                 # Exemple: r"assets\icon.ico" (doit être .ico sous Windows)
-UPX_ENABLED = True               # Désactive si UPX n'est pas installé sur la machine
-DEBUG_BUILD = False              # True pour debug
-HIDDENIMPORTS = []               # Ajoute ici des imports dynamiques si nécessaire
-EXCLUDES = []                    # Modules à exclure si besoin
+APP_NAME = "ARRERA OPALE"
+ENTRY_SCRIPT = "main.py"
+ICON_FILE = None
+UPX_ENABLED = True
+DEBUG_BUILD = False
+HIDDENIMPORTS = []
+EXCLUDES = []
 # ========= FIN CONFIG =========
 
-import os, sys
 block_cipher = None
 
 # Sécurité: ce .spec ne doit être utilisé que sous Windows
@@ -19,11 +20,21 @@ if not sys.platform.startswith("win"):
 
 PROJECT_ROOT = os.path.abspath(".")
 
+# -----------------------------------------------------------
+# AJOUT POUR LLAMA CPP
+# On récupère automatiquement les binaires, les datas et les imports cachés
+# -----------------------------------------------------------
+tmp_ret = collect_all('llama_cpp')
+datas_llama, binaries_llama, hiddenimports_llama = tmp_ret
+
+# On fusionne avec vos listes existantes
+HIDDENIMPORTS += hiddenimports_llama
+
 a = Analysis(
     [ENTRY_SCRIPT],
     pathex=[PROJECT_ROOT],
-    binaries=[],
-    datas=[],                     # Pas de fichiers supplémentaires intégrés
+    binaries=binaries_llama,      # Ajout des binaires llama
+    datas=datas_llama,            # Ajout des fichiers de données (lib, etc.)
     hiddenimports=HIDDENIMPORTS,
     hookspath=[],
     hooksconfig={},
@@ -36,11 +47,10 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-# Patron one-folder (onedir): EXE avec exclude_binaries=True, puis COLLECT
 exe = EXE(
     pyz,
     a.scripts,
-    [],                           # NE PAS passer a.binaries/zipfiles/datas ici
+    [],
     exclude_binaries=True,
     name=APP_NAME,
     debug=DEBUG_BUILD,
@@ -49,9 +59,9 @@ exe = EXE(
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,                # appli GUI: pas de fenêtre console
+    console=False, # Mettre à True si vous voulez voir les erreurs au lancement pour tester
     disable_windowed_traceback=False,
-    icon=ICON_FILE,               # .ico uniquement sous Windows
+    icon=ICON_FILE,
 )
 
 coll = COLLECT(
