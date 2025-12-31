@@ -40,22 +40,21 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-# En mode One-File, tout est regroupé ici
+# --- MODE ONE-DIR (Dossier) ---
+# L'EXE ne contient que le script de démarrage, pas les bibliothèques
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,       # <--- AJOUTÉ ICI
-    a.zipfiles,       # <--- AJOUTÉ ICI
-    a.datas,          # <--- AJOUTÉ ICI
-    [],
+    [], # <-- VIDE : On ne met pas les binaires ici
+    exclude_binaries=True, # <-- IMPORTANT : On sépare les binaires
     name=APP_NAME,
     debug=DEBUG_BUILD,
     bootloader_ignore_signals=False,
-    strip=True,  # Important sous Linux
+    strip=True,
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
+    console=True, # Mettre à True pour voir les erreurs au début, False pour la prod
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -64,4 +63,15 @@ exe = EXE(
     icon=ICON_FILE,
 )
 
-# La section COLLECT a été supprimée
+# --- SECTION COLLECT (Création du dossier) ---
+# C'est ici que tout est rassemblé dans un dossier dist/ARRERA_OPALE
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=True,
+    upx=UPX_ENABLED,
+    upx_exclude=[],
+    name=APP_NAME
+)
