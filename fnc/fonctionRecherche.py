@@ -2,6 +2,7 @@ from fnc.fncBase import fncBase,gestionnaire
 import webbrowser
 import requests
 import time
+import urllib.parse
 
 class fncArreraSearch(fncBase) :
     def __init__(self,gestionnaire:gestionnaire):
@@ -15,8 +16,10 @@ class fncArreraSearch(fncBase) :
         self.__verifConnexion()
         if self.__etatConnexion:
             # Recherche avec l'interface Arrera
-            if self._gestionnaire.getGestNeuron().getSocket():
-                return self._gestSocket.sendData("recherche "+query)
+            if (self._gestionnaire.getGestNeuron().getSocket() and
+                    self._gestionnaire.getSocketObjet().getServeurOn()):
+                self._gestSocket.sendData("recherche "+query)
+                return True
             else :
                 moteurUser = self._gestionnaire.getUserConf().getMoteurRecherche()
                 if moteurUser == "google":
@@ -57,10 +60,9 @@ class fncArreraSearch(fncBase) :
     def braveSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://search.brave.com/search?q='
-            urllink = requests.get(url+query+"&source=web")
-            lienBrave = urllink.url
-            webbrowser.open(lienBrave)
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://search.brave.com/search?q={encoded_query}&source=web"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -68,10 +70,9 @@ class fncArreraSearch(fncBase) :
     def amazonSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://www.amazon.fr/s?k='
-            urllink = requests.get(url+query)
-            lienAmazon = urllink.url
-            webbrowser.open(lienAmazon)
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.amazon.fr/s?k={encoded_query}"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -79,11 +80,9 @@ class fncArreraSearch(fncBase) :
     def googleSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://www.google.com/search?q'
-            query = {'q': query}
-            urllink = requests.get(url, params=query)
-            liengoogle = urllink.url
-            webbrowser.open(liengoogle)
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.google.com/search?q={encoded_query}"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -91,9 +90,9 @@ class fncArreraSearch(fncBase) :
     def duckduckgoSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://duckduckgo.com/?q='
-            lienduck = url+query
-            webbrowser.open(lienduck) 
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://duckduckgo.com/?q={encoded_query}"
+            webbrowser.open(url) 
             return True
         else :
             return False 
@@ -101,11 +100,9 @@ class fncArreraSearch(fncBase) :
     def qwantSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://www.qwant.com/?l=fr&q'
-            query = {'q': query}
-            urllink = requests.get(url, params=query)
-            lienQwant = urllink.url
-            webbrowser.open(lienQwant)
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.qwant.com/?l=fr&q={encoded_query}"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -114,11 +111,9 @@ class fncArreraSearch(fncBase) :
     def ecosiaSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = 'https://www.ecosia.org/search'
-            query = {'q': query}
-            urllink = requests.get(url,query)
-            lienEcosia = urllink.url
-            webbrowser.open(lienEcosia) 
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.ecosia.org/search?q={encoded_query}"
+            webbrowser.open(url) 
             return True
         else :
             return False
@@ -126,11 +121,9 @@ class fncArreraSearch(fncBase) :
     def bingSearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = "https://www.bing.com/search"
-            query = {'q': query}
-            urllink = requests.get(url, params=query)
-            lienbing = urllink.url
-            webbrowser.open(lienbing)
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.bing.com/search?q={encoded_query}"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -138,8 +131,9 @@ class fncArreraSearch(fncBase) :
     def perplexitySearch(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            url = "https://www.perplexity.ai/search/new?q"
-            webbrowser.open(url+"="+query+". Repond en francais")
+            encoded_query = urllib.parse.quote_plus(query + ". Repond en francais")
+            url = f"https://www.perplexity.ai/search/new?q={encoded_query}"
+            webbrowser.open(url)
             return True
         else :
             return False
@@ -147,29 +141,16 @@ class fncArreraSearch(fncBase) :
     def bigRecherche(self,query:str):
         self.__verifConnexion()
         if self.__etatConnexion:
-            i = 0
-            while(i!=6):
-                if (i==1) :
-                    self.googleSearch(query)
-                    time.sleep(1.5)
-                else :
-                    if (i==2):                
-                        self.qwantSearch(query)
-                        time.sleep(1.5)
-                    else :
-                        if(i==3):
-                            self.duckduckgoSearch(query)
-                            time.sleep(1.5)
-                        else :
-                            if(i==4):
-                                self.bingSearch(query)
-                                time.sleep(1.5)
-                            else :
-                                if(i==5):
-                                    self.perplexitySearch(query)
-                                    time.sleep(1.5)
-                                        
-                i = i + 1
+            search_methods = [
+                self.googleSearch,
+                self.qwantSearch,
+                self.duckduckgoSearch,
+                self.bingSearch,
+                self.perplexitySearch
+            ]
+            for method in search_methods:
+                method(query)
+                time.sleep(1.5)
             return True
         else :
             return False

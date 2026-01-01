@@ -9,6 +9,8 @@ class network:
             self.__etatConnexion = True
         except requests.ConnectionError :
             self.__etatConnexion = False
+        except Exception :
+            self.__etatConnexion = False
     
     def getEtatInternet(self):
         self.__check()
