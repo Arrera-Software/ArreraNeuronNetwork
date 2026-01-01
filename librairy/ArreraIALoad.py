@@ -1,9 +1,5 @@
-import tensorflow as tf
-import json
-import numpy as np
 import os
 from llama_cpp import Llama
-import torch
 
 LISTMODELSUPPROT = [
     "arrera_model_2026",
@@ -21,7 +17,7 @@ class ArreraIALoad:
         self.__system_context = ""
 
     # Methode private
-
+    """
     def __predict_arrera_2026_model(self, sentence: str, confidence_threshold: float = 0.70):
         if not self.__is_loaded:
             return None, 0.0
@@ -44,6 +40,7 @@ class ArreraIALoad:
             return None, float(confidence)
 
         return predicted_tag, float(confidence)
+    """
 
     def __predict_gguf_model(self, prompt, max_tokens=512):
         consigne_langue = "\n\n(Réponds impérativement en français, même si je parle anglais ou technique)."
@@ -62,7 +59,7 @@ class ArreraIALoad:
         return output['choices'][0]['message']['content']
 
     # Methode public
-
+    """
     def loadArreraModel2026(self, model_path:str, classes_path:str):
         if not os.path.exists(model_path) or not os.path.exists(classes_path):
             raise ValueError("Erreur : Fichiers modèles introuvables.")
@@ -80,6 +77,7 @@ class ArreraIALoad:
             return True
         except Exception as e:
             raise ValueError(f"Erreur lors du chargement du chatbot : {e}")
+    """
 
     def load_help_file(self, file_path: str):
         if os.path.exists(file_path):
@@ -103,12 +101,10 @@ class ArreraIALoad:
     def load_model_gguf(self, model_path:str, n_ctx:int=2048):
         try:
 
-            n_gpu_layers = -1 if torch.cuda.is_available() else 0
-
             self.__model = Llama(
                 model_path=model_path,
                 n_ctx=n_ctx,
-                n_gpu_layers=n_gpu_layers,
+                n_gpu_layers=0,
                 verbose=False
             )
 
@@ -120,7 +116,7 @@ class ArreraIALoad:
 
     def send_request(self, sentence: str, confidence_threshold: float = 0.70):
         if self.__model_type == LISTMODELSUPPROT[0]:
-            return self.__predict_arrera_2026_model(sentence, confidence_threshold)
+            return None, 0.0
         elif self.__model_type == LISTMODELSUPPROT[1]:
             return self.__predict_gguf_model(sentence)
         else:
