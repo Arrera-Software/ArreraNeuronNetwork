@@ -1,8 +1,7 @@
+setuptools
+wheel
 yt_dlp
-pathlib
 tkcalendar
-datetime
-geocoder
 requests
 gTTS
 translate
@@ -10,10 +9,8 @@ python-docx
 odfpy
 openpyxl
 PyGithub
-language_tool_python
 pyperclip
 websocket-client
-customtkinter
 pillow
 playsound3
 speechRecognition
@@ -21,8 +18,5 @@ meteofrance_api
 pyradios
 python-vlc
 pyspellchecker
-tensorflow
-numpy
 llama_cpp_python
-torch
 pyttsx3
