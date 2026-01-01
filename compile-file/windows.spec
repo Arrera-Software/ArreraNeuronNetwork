@@ -3,10 +3,12 @@ from PyInstaller.utils.hooks import collect_all
 import os, sys
 
 # ========= CONFIG À ADAPTER (Windows) =========
-APP_NAME = "ARRERA OPALE"
+APP_NAME = "ARRERA_OPALE"
 ENTRY_SCRIPT = "main.py"
 ICON_FILE = None
-UPX_ENABLED = True
+# CONSEIL : Mettre à False pour éviter les faux positifs antivirus
+# et les erreurs de DLL corrompues avec llama_cpp
+UPX_ENABLED = False
 DEBUG_BUILD = False
 HIDDENIMPORTS = []
 EXCLUDES = []
@@ -22,7 +24,6 @@ PROJECT_ROOT = os.path.abspath(".")
 
 # -----------------------------------------------------------
 # AJOUT POUR LLAMA CPP
-# On récupère automatiquement les binaires, les datas et les imports cachés
 # -----------------------------------------------------------
 tmp_ret = collect_all('llama_cpp')
 datas_llama, binaries_llama, hiddenimports_llama = tmp_ret
@@ -42,8 +43,8 @@ final_datas = datas_llama + extra_datas
 a = Analysis(
     [ENTRY_SCRIPT],
     pathex=[PROJECT_ROOT],
-    binaries=binaries_llama,      # Ajout des binaires llama
-    datas=final_datas,            # Ajout des fichiers de données (lib, etc.)
+    binaries=binaries_llama,
+    datas=final_datas,
     hiddenimports=HIDDENIMPORTS,
     hookspath=[],
     hooksconfig={},
@@ -56,11 +57,15 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
+# --- MODE ONE-FILE (Windows) ---
+# Tout est dans l'EXE, pas de COLLECT
 exe = EXE(
     pyz,
     a.scripts,
+    a.binaries,   # <-- AJOUTÉ : Les binaires (DLLs)
+    a.zipfiles,   # <-- AJOUTÉ
+    a.datas,      # <-- AJOUTÉ : Les assets
     [],
-    exclude_binaries=True,
     name=APP_NAME,
     debug=DEBUG_BUILD,
     bootloader_ignore_signals=False,
@@ -68,18 +73,9 @@ exe = EXE(
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False, # Mettre à True si vous voulez voir les erreurs au lancement pour tester
+    # Mettre à False pour une appli graphique (GUI) sans fenêtre noire
+    # Mettre à True si c'est un outil en ligne de commande
+    console=False,
     disable_windowed_traceback=False,
     icon=ICON_FILE,
-)
-
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=UPX_ENABLED,
-    upx_exclude=[],
-    name=APP_NAME,
 )

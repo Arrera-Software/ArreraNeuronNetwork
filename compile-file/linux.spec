@@ -6,7 +6,8 @@ import os
 APP_NAME = "ARRERA_OPALE"
 ENTRY_SCRIPT = "main.py"
 ICON_FILE = None
-UPX_ENABLED = True
+# IMPORTANT : Toujours False pour éviter l'erreur "ELF load command" sur Red Hat/Fedora
+UPX_ENABLED = False
 DEBUG_BUILD = False
 HIDDENIMPORTS = []
 EXCLUDES = []
@@ -49,38 +50,28 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
-# --- MODE ONE-DIR (Dossier) ---
-# L'EXE ne contient que le script de démarrage, pas les bibliothèques
+# --- MODE ONE-FILE (Fichier unique) ---
+# Tout est compacté dans l'EXE. Il n'y a plus de section COLLECT.
 exe = EXE(
     pyz,
     a.scripts,
-    [], # <-- VIDE : On ne met pas les binaires ici
-    exclude_binaries=True, # <-- IMPORTANT : On sépare les binaires
+    a.binaries,   # <-- AJOUTÉ ICI
+    a.zipfiles,   # <-- AJOUTÉ ICI
+    a.datas,      # <-- AJOUTÉ ICI
+    [],
     name=APP_NAME,
     debug=DEBUG_BUILD,
     bootloader_ignore_signals=False,
-    strip=True,
+    # IMPORTANT : Strip désactivé pour compatibilité Linux (Red Hat/Fedora)
+    strip=False,
     upx=UPX_ENABLED,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True, # Mettre à True pour voir les erreurs au début, False pour la prod
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
     icon=ICON_FILE,
-)
-
-# --- SECTION COLLECT (Création du dossier) ---
-# C'est ici que tout est rassemblé dans un dossier dist/ARRERA_OPALE
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=True,
-    upx=UPX_ENABLED,
-    upx_exclude=[],
-    name=APP_NAME
 )
