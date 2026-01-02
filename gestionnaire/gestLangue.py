@@ -2,22 +2,24 @@ import random
 from librairy.travailJSON import *
 from gestionnaire.gestion import gestionnaire
 from datetime import datetime
+from librairy.resource_lib import resource_lib
 
 
 class gestLangue:
     def __init__(self,emplacement:str,gestion:gestionnaire,listVar:list,listFonc:list):
         index = jsonWork(emplacement+"index.json")
-        self.__formule = jsonWork(emplacement + index.getContentJsonFlag("formule"))
-        self.__chatbot = jsonWork(emplacement + index.getContentJsonFlag("chatbot"))
-        self.__codeHelp = jsonWork(emplacement + index.getContentJsonFlag("codeHelp"))
-        self.__open = jsonWork(emplacement + index.getContentJsonFlag("open"))
-        self.__search = jsonWork(emplacement + index.getContentJsonFlag("search"))
-        self.__service = jsonWork(emplacement + index.getContentJsonFlag("service"))
-        self.__api = jsonWork(emplacement + index.getContentJsonFlag("api"))
-        self.__time = jsonWork(emplacement + index.getContentJsonFlag("time"))
-        self.__work = jsonWork(emplacement + index.getContentJsonFlag("work"))
-        self.__socket = jsonWork(emplacement + index.getContentJsonFlag("socket"))
-        self.__interface = jsonWork(emplacement + index.getContentJsonFlag("interface"))
+        ressource_lib = resource_lib()
+        self.__formule = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("formule")))
+        self.__chatbot = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("chatbot")))
+        self.__codeHelp = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("codeHelp")))
+        self.__open = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("open")))
+        self.__search = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("search")))
+        self.__service = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("service")))
+        self.__api = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("api")))
+        self.__time = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("time")))
+        self.__work = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("work")))
+        self.__socket = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("socket")))
+        self.__interface = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("interface")))
         self.__fncHist = gestion.getGestHist()
         # Variable
         self.__listFonction = listFonc

@@ -1,4 +1,5 @@
 import json
+from librairy.resource_lib import resource_lib
 
 class gestKeyword:
     def __init__(self,emplacement:str):
@@ -17,25 +18,27 @@ class gestKeyword:
         self.__workFile = None
         self.__interfaceFile = None
 
+        self.__r_lib = resource_lib()
+
     def __loadKeyword(self)->bool:
         try :
-            with open(self.__directoryKeyword+self.__listFileKeyword[0],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[0]),"r",encoding="utf-8") as f:
                 self.__apiFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[1],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[1]),"r",encoding="utf-8") as f:
                 self.__utilsFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[2],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[2]),"r",encoding="utf-8") as f:
                 self.__codehelpFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[3],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[3]),"r",encoding="utf-8") as f:
                 self.__openFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[4],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[4]),"r",encoding="utf-8") as f:
                 self.__searchFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[5],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[5]),"r",encoding="utf-8") as f:
                 self.__serviceFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[6],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[6]),"r",encoding="utf-8") as f:
                 self.__timeFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[7],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[7]),"r",encoding="utf-8") as f:
                 self.__workFile = json.load(f)
-            with open(self.__directoryKeyword+self.__listFileKeyword[8],"r",encoding="utf-8") as f:
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[8]),"r",encoding="utf-8") as f:
                 self.__interfaceFile = json.load(f)
             self.__keyWordLoaded = True
             return True

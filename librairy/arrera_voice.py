@@ -4,6 +4,7 @@ import speech_recognition as sr
 import pyttsx3
 from gtts import gTTS
 import os
+from librairy.resource_lib import resource_lib
 
 
 class CArreraVoice:
@@ -14,11 +15,12 @@ class CArreraVoice:
         self.__listWord = []
         self.__nbWord = 0
         self.__outPutText = ""
+        self.__resource_lib = resource_lib()
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             self.__tts = None
-            if not os.path.exists("tmp"):
-                os.makedirs("tmp")
+            if not os.path.exists(self.__resource_lib.tmp_directory()):
+                os.makedirs(self.__resource_lib.tmp_directory())
         else:
             self.__tts = pyttsx3.init()
             for voice in self.__tts.getProperty('voices'):
