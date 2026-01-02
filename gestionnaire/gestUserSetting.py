@@ -1,6 +1,5 @@
 from librairy.travailJSON import *
 from gestionnaire.gestion import gestionnaire
-from pathlib import Path
 from tkinter import filedialog,messagebox
 import os
 
@@ -33,13 +32,13 @@ class gestUserSetting:
         self.__firstRun = False
         # Mise en place du chemin du fichier de configuration utilisateur
         if self.__osDect.osLinux() or self.__osDect.osMac():
-            home = Path.home()
+            home = os.path.expanduser("~")
             self.__userSettingPath = str(home)+"/.config/arrera-assistant/user-config.json"
             self.__userTaskPath = str(home)+"/.config/arrera-assistant/user-task.json"
             self.__userHistoriquePath = str(home)+"/.config/arrera-assistant/user-hist.json"
             self.__userEventPath = str(home)+"/.config/arrera-assistant/user-event.json"
         elif self.__osDect.osWindows():
-            home = Path.home() / "AppData" / "Roaming"
+            home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
             self.__userSettingPath = str(home)+"/arrera-assistant/user-config.json"
             self.__userTaskPath = str(home)+"/arrera-assistant/user-task.json"
             self.__userHistoriquePath = str(home)+"/arrera-assistant/user-hist.json"
@@ -49,25 +48,21 @@ class gestUserSetting:
 
 
         # Teste si le fichier de configuration utilisateur existe
-        if not Path(self.__userSettingPath).is_file():
-            path = Path(self.__userSettingPath)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__userSettingPath):
+            os.makedirs(os.path.dirname(self.__userSettingPath), exist_ok=True)
+            with open(self.__userSettingPath, "x", encoding="utf-8") as f:
                 json.dump(DICTUSER, f, ensure_ascii=False, indent=2)
 
-        if not Path(self.__userTaskPath).is_file():
-            path = Path(self.__userTaskPath)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__userTaskPath):
+            with open(self.__userTaskPath, "x", encoding="utf-8") as f:
                 json.dump({}, f, ensure_ascii=False, indent=2)
 
-        if not Path(self.__userHistoriquePath).is_file():
-            path = Path(self.__userHistoriquePath)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__userHistoriquePath):
+            with open(self.__userHistoriquePath, "x", encoding="utf-8") as f:
                 json.dump({}, f, ensure_ascii=False, indent=2)
 
-        if not Path(self.__userEventPath).is_file():
-            path = Path(self.__userEventPath)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__userEventPath):
+            with open(self.__userEventPath, "x", encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
 
             self.__firstRun = True
@@ -269,7 +264,7 @@ class gestUserSetting:
                 icon="question"
             )
             if reponse == "yes":
-                shorcutDir = str(Path(os.environ["APPDATA"]) / r"Microsoft\Windows\Start Menu\Programs")
+                shorcutDir = os.path.join(os.environ["APPDATA"], r"Microsoft\Windows\Start Menu\Programs")
             else :
                 shorcutDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
 

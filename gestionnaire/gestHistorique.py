@@ -1,6 +1,6 @@
 from librairy.travailJSON import *
 from gestionnaire.gestion import gestionnaire
-from pathlib import Path
+import os
 from datetime import date,timedelta
 
 DICTHIST = {}
@@ -25,18 +25,17 @@ class gestHistorique :
         self.__osDect = gestionnaire.getOSObjet()
 
         if self.__osDect.osLinux() or self.__osDect.osMac():
-            home = Path.home()
+            home = os.path.expanduser("~")
             self.__histFilePath = str(home)+"/.config/arrera-assistant/user-hist.json"
         elif self.__osDect.osWindows():
-            home = Path.home() / "AppData" / "Roaming"
+            home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
             self.__histFilePath = str(home) + "/arrera-assistant/user-hist.json"
         else :
             self.__userSettingPath = None
 
-        if not Path(self.__histFilePath).is_file():
-            path = Path(self.__histFilePath)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__histFilePath):
+            os.makedirs(os.path.dirname(self.__histFilePath), exist_ok=True)
+            with open(self.__histFilePath, "x", encoding="utf-8") as f:
                 json.dump(DICTHIST, f, ensure_ascii=False, indent=2)
 
         self.__fileHist = jsonWork(self.__histFilePath)

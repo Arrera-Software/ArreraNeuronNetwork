@@ -1,6 +1,6 @@
 import requests
 import platform
-from pathlib import Path
+import os
 import json
 
 class model_downloader:
@@ -33,19 +33,18 @@ class model_downloader:
                                              "url":"https://huggingface.co/bartowski/Mixtral-8x22B-v0.1-GGUF/blob/main/Mixtral-8x22B-v0.1-IQ3_M-00001-of-00005.gguf?download=true",
                                              "description":"Modèle de Mistral(Boite française), lourd pour les PC avec une carte graphique de 12 Go de NVRAM ou plus."}}
 
-        os = platform.system()
+        os_name = platform.system()
 
-        if os == "Linux" or os == "Darwin":
-            self.__modelDir = str(Path.home())+"/.config/arrera-model/"
-        elif os == "Windows":
-            self.__modelDir = str(Path.home() / "AppData" / "Roaming")+"/arrera-model/"
+        if os_name == "Linux" or os_name == "Darwin":
+            self.__modelDir = os.path.join(os.path.expanduser("~"), ".config", "arrera-model") + os.sep
+        elif os_name == "Windows":
+            self.__modelDir = os.path.join(os.path.expanduser("~"), "AppData", "Roaming", "arrera-model") + os.sep
 
-        self.__modelDownloadFile = self.__modelDir+"model_download.json"
+        self.__modelDownloadFile = os.path.join(self.__modelDir, "model_download.json")
 
-        if not Path(self.__modelDownloadFile).is_file():
-            path = Path(self.__modelDownloadFile)
-            path.parent.mkdir(parents=True, exist_ok=True)
-            with path.open("x", encoding="utf-8") as f:
+        if not os.path.isfile(self.__modelDownloadFile):
+            os.makedirs(os.path.dirname(self.__modelDownloadFile), exist_ok=True)
+            with open(self.__modelDownloadFile, "x", encoding="utf-8") as f:
                 json.dump({"models": []}, f, ensure_ascii=False, indent=2)
 
     def get_model_list(self):

@@ -7,7 +7,6 @@ from librairy.travailJSON import *
 import subprocess
 import re
 import os
-from pathlib import Path
 
 
 class fncArreraWork(fncBase):
@@ -313,8 +312,7 @@ class fncArreraWork(fncBase):
         wordEmplacement = self._gestionnaire.getWorkEmplacement()
         if wordEmplacement != "":
             try :
-                repertoir = Path(wordEmplacement)
-                return [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+                return [d for d in os.listdir(wordEmplacement) if os.path.isdir(os.path.join(wordEmplacement, d))]
             except:
                 return None
         else :
@@ -323,8 +321,7 @@ class fncArreraWork(fncBase):
     def openProjet(self, project: str):
         if not self.__projectOpen:
             wordEmplacement = self._gestionnaire.getWorkEmplacement()
-            repertoir = Path(wordEmplacement)
-            dossier = [dossier.name for dossier in repertoir.iterdir() if dossier.is_dir()]
+            dossier = [d for d in os.listdir(wordEmplacement) if os.path.isdir(os.path.join(wordEmplacement, d))]
             for i in range(0, len(dossier)):
                 if project == dossier[i]:
                     # Ecriture de l'emplacement du projet

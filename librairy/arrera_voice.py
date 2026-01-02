@@ -1,5 +1,4 @@
 from playsound3 import playsound as pl
-from pathlib import Path
 from gestionnaire.gestion import gestionnaire
 import speech_recognition as sr
 import pyttsx3
@@ -18,7 +17,8 @@ class CArreraVoice:
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             self.__tts = None
-            Path("tmp").mkdir(parents=True, exist_ok=True)
+            if not os.path.exists("tmp"):
+                os.makedirs("tmp")
         else:
             self.__tts = pyttsx3.init()
             for voice in self.__tts.getProperty('voices'):

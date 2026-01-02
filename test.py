@@ -89,7 +89,7 @@ texte_corrige = ' '.join(mots_corriges)
 print("Texte corrigé :", texte_corrige)
 """
 
-from pathlib import Path
-home = Path.home() / "AppData" / "Roaming"
+import os
+home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
 print(home)  # ex: /home/alice
 
