@@ -7,8 +7,8 @@ from librairy.resource_lib import resource_lib
 
 class gestLangue:
     def __init__(self,emplacement:str,gestion:gestionnaire,listVar:list,listFonc:list):
-        index = jsonWork(emplacement+"index.json")
         ressource_lib = resource_lib()
+        index = jsonWork(ressource_lib.resource_path(emplacement+"index.json"))
         self.__formule = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("formule")))
         self.__chatbot = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("chatbot")))
         self.__codeHelp = jsonWork(ressource_lib.resource_path(emplacement + index.getContentJsonFlag("codeHelp")))
