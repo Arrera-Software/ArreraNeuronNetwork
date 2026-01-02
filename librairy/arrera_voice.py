@@ -43,14 +43,14 @@ class CArreraVoice:
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             try :
                 tts = gTTS(text=text, lang='fr', slow=False)
-                if os.path.exists("tmp/voice.mp3"):
-                    os.remove("tmp/voice.mp3")
+                if os.path.exists(self.__resource_lib.tmp_directory()+"/voice.mp3"):
+                    os.remove(self.__resource_lib.tmp_directory()+"/voice.mp3")
 
-                tts.save("tmp/voice.mp3")
+                tts.save(self.__resource_lib.tmp_directory()+"/voice.mp3")
 
-                pl("tmp/voice.mp3")
+                pl(self.__resource_lib.tmp_directory()+"/voice.mp3")
 
-                os.remove("tmp/voice.mp3")
+                os.remove(self.__resource_lib.tmp_directory()+"/voice.mp3")
                 return True
             except:
                 return False
