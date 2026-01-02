@@ -86,6 +86,7 @@ Utility libraries and support modules.
 - `network.py`: Network utilities.
 - `openSoftware.py`: Launching external software.
 - `parreraclient.py`: Client for Arrera services.
+- `resource_lib.py` : Library qui gère l'emplacement des resources (Pour MAC OS)
 - `travailJSON.py`: JSON read/write utilities.
 
 ### neuron/
