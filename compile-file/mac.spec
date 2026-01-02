@@ -1,106 +1,94 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
 import sys
-import glob
 from PyInstaller.utils.hooks import collect_all
 
 # ========= CONFIGURATION =========
 APP_NAME = "ARRERA OPALE"
 ENTRY_SCRIPT = "main.py"
-ICON_ICNS = None
+ICON_ICNS = None  # Mets le chemin vers ton icone.icns si tu en as une, ex: "asset/icon.icns"
 BUNDLE_ID = "com.arrera.opale"
 MIN_MACOS = "10.13"
 TARGET_ARCH = None
-RESOURCE_EXTS = ["png", "json"]
 # =================================
 
 PROJECT_ROOT = os.path.abspath(".")
 
-# --- PARTIE 1 : VERIFICATION TENSORFLOW ---
-try:
-    import tensorflow
-    tf_init_path = tensorflow.__file__
-    tf_root = os.path.dirname(tf_init_path)
-    site_packages_root = os.path.dirname(tf_root)
-    print(f"\n✅ TensorFlow détecté : {tf_root}")
-except ImportError:
-    print("\n❌ ERREUR : TensorFlow introuvable. Vérifiez votre venv.")
-    sys.exit(1)
+# --- PARTIE 1 : FONCTION DE COLLECTE INTELLIGENTE ---
+def collect_data_recursive_no_py(folders_list):
+    """
+    Parcourt récursivement les dossiers donnés, ajoute tous les fichiers
+    SAUF les fichiers .py, .pyc et .DS_Store.
+    Garde la structure des dossiers.
+    """
+    collected_datas = []
 
-# --- PARTIE 2 : FONCTIONS ---
-EXCLUDE_DIRS = {"build", "dist", ".git", "__pycache__", "tests"}
+    for folder_name in folders_list:
+        source_folder = os.path.join(PROJECT_ROOT, folder_name)
 
-def is_excluded(path):
-    parts = set(os.path.normpath(path).split(os.sep))
-    return any(x in parts for x in EXCLUDE_DIRS)
+        if not os.path.exists(source_folder):
+            print(f"⚠️ Attention : Le dossier '{folder_name}' n'existe pas, ignoré.")
+            continue
 
-def collect_files_by_ext(root, exts):
-    files = []
-    patterns = []
-    for ext in exts:
-        patterns.append(glob.glob(os.path.join(root, "**", f"*.{ext}"), recursive=True))
-        patterns.append(glob.glob(os.path.join(root, "**", f"*.{ext.upper()}"), recursive=True))
-    for group in patterns:
-        for p in group:
-            if os.path.isfile(p) and not is_excluded(p):
-                files.append(os.path.normpath(p))
-    seen, unique = set(), []
-    for p in files:
-        if p not in seen:
-            seen.add(p)
-            unique.append(p)
-    return unique
+        for root, dirs, files in os.walk(source_folder):
+            for file in files:
+                # 🚫 ON EXCLUT LES FICHIERS PYTHON ET SYSTÈME
+                if file.endswith(('.py', '.pyc', '.DS_Store')):
+                    continue
 
-# --- PARTIE 3 : DONNÉES (DATAS) ---
+                # Chemin complet du fichier source
+                full_source_path = os.path.join(root, file)
+
+                # On calcule le dossier de destination pour garder la structure
+                # Ex: si fichier est dans 'language/vouvoiment/dict.json'
+                # rel_path sera 'language/vouvoiment'
+                rel_path = os.path.relpath(root, PROJECT_ROOT)
+
+                collected_datas.append((full_source_path, rel_path))
+
+    return collected_datas
+
+# --- PARTIE 2 : PREPARATION DES DONNÉES ---
 datas = []
 binaries = []
 
-# 3.1 Vos ressources
-resource_files = collect_files_by_ext(PROJECT_ROOT, RESOURCE_EXTS)
-for fp in resource_files:
-    relpath = os.path.relpath(fp, PROJECT_ROOT)
-    dest = os.path.dirname(relpath) or "."
-    datas.append((fp, dest))
+# 2.1 Collecte des dossiers demandés (sans les .py)
+# Note : 'language' inclura automatiquement 'vouvoiment' et 'tutoiment' grâce à os.walk
+target_folders = ['asset', 'config', 'keyword', 'language']
+datas += collect_data_recursive_no_py(target_folders)
 
-# 3.2 Fichier VERSION
+# 2.2 Fichier VERSION (s'il existe à la racine)
 version_file = os.path.join(PROJECT_ROOT, "VERSION")
 if os.path.isfile(version_file):
     datas.append((version_file, "."))
 
-# 3.3 COPIE FORCÉE TENSORFLOW & DEPENDANCES
-libs_to_force = [
-    "tensorflow", "keras", "tensorflow_estimator", "google",
-    "absl", "astunparse", "gast", "opt_einsum", "termcolor",
-    "wrapt", "flatbuffers"
-]
-for lib in libs_to_force:
-    source_path = os.path.join(site_packages_root, lib)
-    if os.path.exists(source_path):
-        datas.append((source_path, lib))
-
-# 3.4 CORRECTIF LLAMA
+# 2.3 LLAMA CPP (Gestion des binaires si présents)
 try:
     llama_datas, llama_binaries, llama_hiddenimports = collect_all('llama_cpp')
     datas += llama_datas
     binaries += llama_binaries
-    print("✅ Llama CPP : Binaires collectés.")
-except Exception as e:
-    print(f"⚠️ Info : Pas de module llama_cpp trouvé ou erreur ({e})")
+except Exception:
     llama_hiddenimports = []
 
-# --- Ajout des dossiers asset, config, keyword, language ---
-for folder in ['asset', 'config', 'keyword', 'language']:
-    source_path = os.path.join(PROJECT_ROOT, folder)
-    if os.path.exists(source_path):
-        datas.append((source_path, folder))
+# --- PARTIE 3 : CONFIGURATION TECHNIQUE ---
 
-# --- PARTIE 4 : IMPORTS CACHÉS ---
+# Modules à exclure totalement (pour éviter tes crashs précédents)
+excludes_modules = [
+    "tensorflow",
+    "tensorflow_estimator",
+    "tensorboard",
+    "keras",
+    "cv2",
+    "torch"
+]
+
+# Imports nécessaires mais parfois non détectés
 hiddenimports = [
     "pyaudio", "sounddevice", "AppKit", "Foundation", "objc",
-    "tensorflow", "numpy", "google.protobuf"
+    "numpy", "google.protobuf", "PIL", "PIL.Image", "tkinter", "customtkinter"
 ] + llama_hiddenimports
 
-# --- PARTIE 5 : ANALYSE ---
+# --- PARTIE 4 : BUILD ---
 block_cipher = None
 
 a = Analysis(
@@ -112,7 +100,7 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=excludes_modules,
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     noarchive=False,
@@ -134,15 +122,15 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,
+    console=False, # Application graphique (fenêtrée)
     disable_windowed_traceback=False,
     target_arch=TARGET_ARCH,
     codesign_identity=None,
     entitlements_file=None,
 )
 
-# Infos Info.plist
-version_str = "0.0.0"
+# Infos pour le fichier Info.plist dans le .app
+version_str = "1.0.0"
 try:
     with open(version_file, "r", encoding="utf-8") as f:
         version_str = f.read().strip() or version_str
@@ -157,7 +145,11 @@ info_plist = {
     "CFBundleVersion": version_str,
     "LSMinimumSystemVersion": MIN_MACOS,
     "NSHighResolutionCapable": "True",
-    "NSMicrophoneUsageDescription": "L'application a besoin du micro.",
+    "NSMicrophoneUsageDescription": "Cette application utilise le microphone pour la reconnaissance vocale.",
+    "LSEnvironment": {
+        "LANG": "fr_FR.UTF-8",
+        "LC_ALL": "fr_FR.UTF-8"
+    }
 }
 
 app = BUNDLE(
