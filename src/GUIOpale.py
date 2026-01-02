@@ -312,7 +312,16 @@ class GUIOpale:
 
     def __saveLog(self):
         date = datetime.now().strftime("%d-%m-%Y-%H-%M")
-        file = "log/log_" + date + ".txt"
+        if self.__objOS.osLinux() or self.__objOS.osMac():
+            home = os.path.expanduser("~")
+            file = home+"/log_assistant/log_" + date + ".txt"
+        else :
+            home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
+            file = home+"/log_assistant/log_" + date + ".txt"
+
+        if not os.path.isfile(file):
+            os.makedirs(os.path.dirname(file), exist_ok=True)
+
         try :
             with open(file,"w",encoding="utf-8") as f:
                 f.write(self.__logContent)
