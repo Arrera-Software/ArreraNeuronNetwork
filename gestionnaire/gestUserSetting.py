@@ -179,6 +179,9 @@ class gestUserSetting:
             return False
         return self.__fileUser.setValeurJson("adresseDomicile", adresse)
 
+    def delAdresseDomicile(self):
+        return self.__fileUser.setValeurJson("adresseDomicile", "")
+
     def getAdresseDomicile(self):
         adresseDomicile = self.__fileUser.getContentJsonFlag("adresseDomicile")
         if adresseDomicile is None:
@@ -191,6 +194,9 @@ class gestUserSetting:
         if adresse == "":
             return False
         return self.__fileUser.setValeurJson("adresseTravail", adresse)
+
+    def delAdresseTravail(self):
+        return self.__fileUser.setValeurJson("adresseTravail", "")
 
     def getAdresseTravail(self):
         adresseTravail = self.__fileUser.getContentJsonFlag("adresseTravail")
