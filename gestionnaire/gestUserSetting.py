@@ -334,6 +334,9 @@ class gestUserSetting:
     def getTokenGithub(self):
         return self.__fileUser.getContentJsonFlag("tokenGithub")
 
+    def delTokenGithub(self):
+        return self.__fileUser.setValeurJson("tokenGithub", "")
+
     # Work Folder
 
     def setWorkFolder(self):
