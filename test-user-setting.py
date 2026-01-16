@@ -393,7 +393,7 @@ def main():
                             if m not in d:
                                 print(f"-{m}")
                         model = input("Model : ")
-                        user.download_model(model)
+                        user.download_ia_model(model)
                     case "7":
                         print("Model telecharger")
                         print(user.get_model_downloaded())
