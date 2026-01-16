@@ -99,8 +99,10 @@ class ArreraIALoad:
         self.__system_context = ""
 
     def load_model_gguf(self, model_path:str, n_ctx:int=2048):
-        try:
+        if not os.path.exists(model_path):
+            raise ValueError(f"Le fichier modèle n'existe pas : {model_path}")
 
+        try:
             self.__model = Llama(
                 model_path=model_path,
                 n_ctx=n_ctx,
