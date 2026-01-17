@@ -6,7 +6,7 @@ from datetime import datetime, time
 class ABrain :
     def __init__(self,config:confNeuron):
         # Declaration des diferente var
-        self.__listOut =  [] 
+        self.__listOut =  []
         self.__valeurOut = 0
         self.__networkRunning = True
         self.__update = False
@@ -30,12 +30,15 @@ class ABrain :
             self.__threadSocket.daemon = True
             self.__threadSocket.start()
 
+    def getGestionnaire(self):
+        return self.__gestionnaire
+
     def getNeuronRunning(self):
         return self.__networkRunning
 
     def boot(self):
         return self.__gestionnaire.boot()
-    
+
     def shutdown(self):
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
@@ -44,7 +47,7 @@ class ABrain :
                 self.__gestSocket.stopSocket()
         self.__gestionnaire.getGestHist().saveHist()
         return str(text)
-    
+
     def getListSortie(self)->list :
         if self.__valeurOut == 5 or self.__valeurOut == 12 or self.__valeurOut == 18 or self.__valeurOut == 19:
             if not self.__valeurOut == 12 or not self.__valeurOut == 18 or not self.__valeurOut == 19:
@@ -96,10 +99,10 @@ class ABrain :
             return [self.__gestionnaire.getGestGUI().textOut(),""]
         else :
             return None
-    
+
     def getTableur(self):
         return self.__gestionnaire.getGestFNC().getFNCWork().getEtatTableur()
-    
+
     def getWord(self):
         return self.__gestionnaire.getGestFNC().getFNCWork().getEtatWord()
 
