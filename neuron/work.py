@@ -28,7 +28,6 @@ class neuroneWork(neuronBase):
 
     def __neuronHelp(self,requette:str):
         if self._keyword.checkWork(requette,"help-work"):
-            print(self._language.getPhraseHelpArreraWork("5"))
             self._listSortie = [self._language.getPhraseHelpArreraWork("5"),""]
             return 17
         elif self._keyword.checkWork(requette,"question-open") and self._keyword.checkOpen(requette,"open") and self._keyword.checkWork(requette,"open-file"):
