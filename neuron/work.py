@@ -119,7 +119,7 @@ class neuroneWork(neuronBase):
         if not self.__fonctionWork.getEtatProject():
             if (self._keyword.checkWork(requette,"open-project")and
                     not self._keyword.checkWork(requette,"gui-work")):
-                listKeyword = self._keyword.getListKeyword("work","open-project")
+                listKeyword = self._keyword.getListKeyword("work","list-word-open-project")
                 for mot in listKeyword:
                     requette = requette.replace(mot,"")
                 project = requette.strip()
