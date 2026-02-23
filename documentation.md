@@ -1,8 +1,8 @@
-# **🤖 Manuel d'utilisation \- Arrera OPALE**
+# **Manuel d'utilisation \- Arrera OPALE**
 
 Bienvenue dans la documentation officielle de votre assistant personnel intelligent **Arrera OPALE**, développé par Baptiste P. Ce document vous aidera à maîtriser l'ensemble des neurones et fonctionnalités intégrés à l'assistant.
 
-## **📅 Gestion du Temps et Agenda**
+## **Gestion du Temps et Agenda**
 
 ### **Informations temporelles**
 
@@ -21,7 +21,7 @@ Bienvenue dans la documentation officielle de votre assistant personnel intellig
 * Ajouter un événement : "ajoute a l'agenda" ou "creer un evenement".  
 * Supprimer un événement : "supprime de l'agenda" ou "retire un evenement".
 
-## **🌤️ Météo et Environnement**
+## **Météo et Environnement**
 
 L'assistant peut vous donner des informations précises basées sur votre localisation ou vos lieux enregistrés.
 
@@ -40,7 +40,7 @@ L'assistant peut vous donner des informations précises basées sur votre locali
 * Domicile : Utilisez "chez moi", "maison", "appartement", "residence".  
 * Travail : Utilisez "bureau", "travail", "entreprise", "ecole", "universite".
 
-## **📝 Gestion des Tâches (To-Do List)**
+## **Gestion des Tâches (To-Do List)**
 
 ### **Consultation**
 
@@ -57,7 +57,7 @@ L'assistant peut vous donner des informations précises basées sur votre locali
   2. Précisez "le nom est \[nom\]".  
 * Supprimer : "supprime une tache" ou "enleve une tache".
 
-## **🗺️ GPS et Itinéraires**
+## **GPS et Itinéraires**
 
 ### **Localisation**
 
@@ -70,14 +70,14 @@ L'assistant peut vous donner des informations précises basées sur votre locali
   * Départ : "je pars de \[lieu\]".  
   * Arrivée : "ma destination est \[lieu\]" ou "je veux aller a \[lieu\]".
 
-## **📰 Actualités et Résumés (Breef)**
+## **Actualités et Résumés (Breef)**
 
 Le neurone Breef permet d'obtenir une synthèse rapide de votre journée.
 
 * Résumé global : "resume", "breef", "recapitulatif".  
 * Actualités uniquement : "actualites", "infos", "news", "derniers titres".
 
-## **📻 Divertissement et Multimédia**
+## **Divertissement et Multimédia**
 
 ### **Radio**
 
@@ -91,7 +91,7 @@ Le neurone Breef permet d'obtenir une synthèse rapide de votre journée.
 * YouTube Music : "ouvre youtube music".  
 * Téléchargement (Arrera Download) : "ouvre youtube downloader" ou "lance arrera download".
 
-## **💼 Arrera Work (Bureautique et Projets)**
+## **Arrera Work (Bureautique et Projets)**
 
 C'est l'outil le plus complet pour la productivité.
 
@@ -116,7 +116,7 @@ C'est l'outil le plus complet pour la productivité.
 * Ouverture : "ouvre word" ou "ouvre document".  
 * Actions : "ecrit dans le document" ou "lis le document".
 
-## **💻 Développement (CodeHelp)**
+## **Développement (CodeHelp)**
 
 ### **Recherches techniques**
 
@@ -131,7 +131,7 @@ C'est l'outil le plus complet pour la productivité.
 * Organisateur de variables : "ouvre l'organisateur de variable".  
 * Gestion GitHub : "ouvre le gestionnaire github".
 
-## **🛠️ Services et Outils Divers**
+## **Services et Outils Divers**
 
 * Traducteur : "ouvre le traducteur" ou "traduction".  
 * Correction orthographique : "corrige \[texte\]".  
@@ -140,7 +140,7 @@ C'est l'outil le plus complet pour la productivité.
 * Lecture de texte : "lis le texte" (lit le contenu sélectionné ou le presse-papier).  
 * Documentation de l'assistant : "ouvre l'aide", "affiche le manuel".
 
-## **🖥️ Contrôle de l'Interface**
+## **Contrôle de l'Interface**
 
 L'assistant dispose de plusieurs modes d'affichage (1 à 6).
 
