@@ -1,151 +1,135 @@
-# **Manuel d'utilisation \- Arrera OPALE**
+# Manuel d'utilisation - Arrera OPALE
 
-Bienvenue dans la documentation officielle de votre assistant personnel intelligent **Arrera OPALE**, développé par Baptiste P. Ce document vous aidera à maîtriser l'ensemble des neurones et fonctionnalités intégrés à l'assistant.
+Bienvenue dans la documentation officielle de votre assistant personnel intelligent **Arrera OPALE**, développé par Baptiste P.
 
-## **Gestion du Temps et Agenda**
+## Météo
 
-### **Informations temporelles**
+Obtenez les prévisions météorologiques pour votre localisation ou vos lieux enregistrés.
 
-* Heure actuelle : Dites "quelle heure est-il", "donne moi l'heure" ou simplement "heure".  
-* Date du jour : Demandez "quelle est la date" ou "date".
+*   **Météo actuelle** : "meteo", "temps qu'il fait"
+*   **Température** : "temperature", "degre", "degres"
+*   **Prévisions** :
+    *   Demain matin : "demain matin" (avec un mot-clé météo)
+    *   Demain après-midi : "demain apres midi" (avec un mot-clé météo)
+*   **Lieux spécifiques** :
+    *   Domicile : "domicile", "maison", "chez moi", "residence", "appartement"
+    *   Travail : "bureau", "travail", "entreprise", "ecole", "universite"
 
-### **Outils de précision**
+## Résumé (Breef)
 
-* Chronomètre : "lance le chronometre".  
-* Horloge mondiale : "ouvre l'horloge".  
-* Minuteur : "met un minuteur".
+Obtenez une synthèse rapide de vos informations.
 
-### **Agenda (Calendrier)**
+*   **Résumé général** : "resume", "breef", "recapitulatif", "synthèse"
+*   **Actualités** : "actualites", "infos", "news", "titres"
+*   **Tâches** : "taches", "a faire", "devoirs", "missions"
 
-* Consulter : "ouvre l'agenda" ou "montre le calendrier".  
-* Ajouter un événement : "ajoute a l'agenda" ou "creer un evenement".  
-* Supprimer un événement : "supprime de l'agenda" ou "retire un evenement".
+## GPS et Itinéraire
 
-## **Météo et Environnement**
+Gérez vos déplacements et votre localisation.
 
-L'assistant peut vous donner des informations précises basées sur votre localisation ou vos lieux enregistrés.
+*   **Coordonnées GPS** : "gps", "position", "coordonnees", "localisation"
+*   **Itinéraire** :
+    *   Lancer : "lance l'itineraire", "demarre l'itineraire"
+    *   Point de départ : "je pars de", "je compte partir de", "je veux aller a"
+    *   Point d'arrivée : "je veux arriver a", "ma destination est", "je desire arriver a"
+    *   Aide : "aide", "help"
 
-### **Commandes de base**
+## Actualités
 
-* Météo actuelle : "meteo", "temps qu'il fait".  
-* Température : "temperature", "degre".
+*   **Consulter** : "actualites", "nouvelles", "infos", "news"
 
-### **Prévisions**
+## Traducteur
 
-* Demain matin : Ajoutez "demain matin" à votre requête (ex: "meteo demain matin").  
-* Demain après-midi : Ajoutez "demain apres midi".
+*   **Ouvrir** : "traducteur", "traduction", "traduire", "translate"
 
-### **Lieux favoris**
+## Documentation Développement
 
-* Domicile : Utilisez "chez moi", "maison", "appartement", "residence".  
-* Travail : Utilisez "bureau", "travail", "entreprise", "ecole", "universite".
+Recherchez de la documentation technique spécifique.
 
-## **Gestion des Tâches (To-Do List)**
+*   **DevDoc** : "cherche [sujet] sur devdoc"
+*   **Microsoft Learn** : "cherche [sujet] sur learn microsoft"
+*   **Python** : "cherche [sujet] sur python"
+*   **GitHub** : "cherche [sujet] sur github"
 
-### **Consultation**
+## Outils de Développement
 
-* Voir vos tâches : "ouvre les taches", "montre ma to do list".  
-* Statistiques : "combien de tache aujourd'hui", "combien de tache au total".
+*   **Organisateur de variables** : "ouvre l'organisateur de variable", "lance orga var"
+*   **Sélecteur de couleurs** : "ouvre le sélecteur de couleur"
+*   **GitHub** :
+    *   Site Web : "ouvre github"
+    *   Gestionnaire de projet : "ouvre le gestionnaire github"
+*   **Librairie de projets** : "ouvre la librairie"
 
-### **Actions**
+## Applications et Sites Web
 
-* Ajouter une tâche :  
-  1. Dites "ajoute une tache".  
-  2. L'assistant vous demandera le nom, répondez par "le nom est \[nom de la tache\]".  
-* Marquer comme terminée :  
-  1. Dites "tache finie" ou "tache terminee".  
-  2. Précisez "le nom est \[nom\]".  
-* Supprimer : "supprime une tache" ou "enleve une tache".
+*   **Ouvrir un logiciel/site** : "ouvre [nom]", "lance [nom]", "affiche [nom]"
+*   **YouTube** : "ouvre youtube"
+*   **YouTube Music** : "ouvre youtube music"
+*   **Arrera Download** : "ouvre youtube downloader", "lance arrera download"
+*   **Calculatrice** :
+    *   Standard : "ouvre calculatrice"
+    *   Complexe : "ouvre calculatrice mode complexe"
+    *   Pythagore : "ouvre calculatrice mode pythagore"
 
-## **GPS et Itinéraires**
+## Radio
 
-### **Localisation**
+*   **Lancer une station** : "lance la radio [nom]"
+    *   *Stations supportées* : Europe 1, Europe 2, France Info, France Inter, France Musique, France Culture, France Bleu, Fun Radio, NRJ, RFM, Nostalgie, Skyrock, RTL.
+*   **Arrêter** : "arrete la radio", "stoppe la radio"
 
-* Coordonnées : "donne moi mes coordonnées gps" ou "position geographique".
+## Ressources Disponibles
 
-### **Navigation (Google Maps)**
+*   **Lister les logiciels** : "dis moi les logiciels"
+*   **Lister les sites** : "dis moi les sites"
+*   **Lister les radios** : "dis moi les radios"
 
-* Lancer un itinéraire : "lance l'itineraire" ou "demarre l'itineraire".  
-* Configurer le trajet :  
-  * Départ : "je pars de \[lieu\]".  
-  * Arrivée : "ma destination est \[lieu\]" ou "je veux aller a \[lieu\]".
+## Interface
 
-## **Actualités et Résumés (Breef)**
+*   **Activer un mode** : "lance le mode [1-6]"
+*   **Désactiver** : "ferme le mode"
 
-Le neurone Breef permet d'obtenir une synthèse rapide de votre journée.
+## Recherche Internet
 
-* Résumé global : "resume", "breef", "recapitulatif".  
-* Actualités uniquement : "actualites", "infos", "news", "derniers titres".
+*   **Recherche simple** : "recherche [sujet]", "search [sujet]"
+*   **Grande recherche** : "bigsearch [sujet]", "grand recherche [sujet]"
 
-## **Divertissement et Multimédia**
+## Services Divers
 
-### **Radio**
+*   **Lecture de texte** : "lis le texte", "lecture du passage"
+*   **Calcul rapide** : "calcule [expression]" (+, -, *, /)
+*   **Aide Assistant** : "ouvre la documentation", "lance l'aide"
+*   **Correction orthographique** : "corrige [texte]"
 
-* Lancer une station : "lance la radio \[nom\]".  
-* Stations supportées : Europe 1, Europe 2, France Info, NRJ, Skyrock, RTL, Fun Radio, Nostalgie, etc.  
-* Arrêter : "arrete la radio", "stoppe la radio".
+## Temps et Agenda
 
-### **Vidéo et Téléchargement**
+*   **Heure** : "quelle heure est-il", "heure"
+*   **Date** : "quelle est la date", "date"
+*   **Outils** : "lance le chronometre", "ouvre l'horloge", "met un minuteur"
+*   **Agenda** :
+    *   Voir : "ouvre l'agenda"
+    *   Ajouter : "ajoute a l'agenda"
+    *   Supprimer : "supprime de l'agenda"
 
-* YouTube : "ouvre youtube".  
-* YouTube Music : "ouvre youtube music".  
-* Téléchargement (Arrera Download) : "ouvre youtube downloader" ou "lance arrera download".
+## Gestion des Tâches (To-Do List)
 
-## **Arrera Work (Bureautique et Projets)**
+*   **Voir** : "ouvre les taches", "montre ma to do list"
+*   **Ajouter** : Dire "ajoute une tache", puis préciser le nom.
+*   **Supprimer** : "supprime une tache"
+*   **Terminer** : Dire "tache finie", puis préciser le nom.
+*   **Statistiques** : "combien de tache [aujourd'hui/demain]"
 
-C'est l'outil le plus complet pour la productivité.
+## Arrera Work (Gestion de Projets)
 
-### **Gestion de Projets**
-
-* Créer : "cree un projet nommer \[nom\]".  
-* Ouvrir : "ouvre le projet \[nom\]".  
-* Lister : "liste les projets".  
-* Créer un fichier dans le projet :  
-  1. Dites "cree un fichier dans le projet".  
-  2. Précisez "le nom du fichier est \[nom\]".  
-  3. Précisez "le type du fichier est \[extension\]" (ex: python, txt).
-
-### **Tableur (Type Excel)**
-
-* Ouverture : "ouvre tableur" ou "ouvre excel".  
-* Calculs automatiques : "ajoute somme", "ajoute moyenne", "ajoute min", "ajoute max".  
-* Données : "ajoute valeur" ou "suppr valeur".
-
-### **Traitement de Texte (Type Word)**
-
-* Ouverture : "ouvre word" ou "ouvre document".  
-* Actions : "ecrit dans le document" ou "lis le document".
-
-## **Développement (CodeHelp)**
-
-### **Recherches techniques**
-
-* "cherche \[sujet\] sur python" (Doc officielle Python).  
-* "cherche \[sujet\] sur github".  
-* "cherche \[sujet\] sur learn microsoft".  
-* "cherche \[sujet\] sur devdoc".
-
-### **Outils internes**
-
-* Sélecteur de couleurs : "ouvre le sélecteur de couleur".  
-* Organisateur de variables : "ouvre l'organisateur de variable".  
-* Gestion GitHub : "ouvre le gestionnaire github".
-
-## **Services et Outils Divers**
-
-* Traducteur : "ouvre le traducteur" ou "traduction".  
-* Correction orthographique : "corrige \[texte\]".  
-* Calcul rapide : "calcule \[expression mathématique\]" (ex: "calcule 25 \* 4").  
-* Calculatrice avancée : "ouvre calculatrice mode complexe" ou "mode pythagore".  
-* Lecture de texte : "lis le texte" (lit le contenu sélectionné ou le presse-papier).  
-* Documentation de l'assistant : "ouvre l'aide", "affiche le manuel".
-
-## **Contrôle de l'Interface**
-
-L'assistant dispose de plusieurs modes d'affichage (1 à 6).
-
-* Activer un mode : "lance le mode \[numéro\]".  
-* Fermer un mode : "ferme le mode" ou "arrete le mode".  
-* Quitter l'assistant : "ferme l'assistant" ou "quitte OPALE".
-
-*Fin du manuel utilisateur.*
+*   **Aide** : "aide work"
+*   **Projets** :
+    *   Créer : "cree un projet nommer [nom]"
+    *   Ouvrir : "ouvre le projet [nom]"
+    *   Lister : "liste les projets"
+    *   Fermer : "ferme le projet"
+*   **Contenu du Projet** :
+    *   Tâches : "montre les taches du projet", "ajoute une tache au projet", "supprime une tache du projet"
+    *   Fichiers : "cree un fichier dans le projet" (suivre les étapes), "liste les fichiers du projet"
+*   **Bureautique** :
+    *   Tableur : "ouvre tableur", "ajoute valeur/somme/moyenne..."
+    *   Traitement de texte : "ouvre word", "lis le document", "ecrit dans le document"
+*   **Interface** : "ouvre interface work"
