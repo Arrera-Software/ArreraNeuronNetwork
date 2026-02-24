@@ -1,4 +1,4 @@
-# Manuel d'utilisation - Arrera OPALE
+# Manuel d'utilisation - Arrera Neuron Network
 
 Bienvenue dans la documentation officielle de votre assistant personnel intelligent **Arrera OPALE**, développé par Baptiste P.
 
