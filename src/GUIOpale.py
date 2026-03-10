@@ -2,6 +2,7 @@ import tkinter
 from tkinter.messagebox import showerror, askyesno
 from librairy.dectectionOS import OS
 from librairy.arrera_tk_old import *
+from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
@@ -19,12 +20,12 @@ class GUIOpale:
 
     def active(self):
         self.__guiConf()
-        self.__arrTK.view()
+
 
     def __guiConf(self):
-        screen = self.__arrTK.aTK(width=500,height=500,
-                                  title = "Opale",resizable=False,
-                                  icon="asset/icon.png")
+        screen = aTk(theme_file="asset/theme/theme_default.json",
+                     title = "Opale",resizable=False,
+                     icon="asset/icon.png",width=500,height=500)
         self.__varService = tkinter.BooleanVar(value=True)
         self.__varTime = tkinter.BooleanVar(value=True)
         self.__varOpen = tkinter.BooleanVar(value=True)
@@ -35,11 +36,11 @@ class GUIOpale:
         self.__varWork = tkinter.BooleanVar(value=True)
         self.__varSocket = tkinter.BooleanVar(value=False)
 
-        frameNeuron = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
-        frameLangue = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
-        frameValidate = self.__arrTK.createFrame(screen,width=500,height=50,wightBoder=True)
+        frameNeuron = aFrame(screen,width=500,height=225,border_width=1)
+        frameLangue = aFrame(screen,width=500,height=225,border_width=1)
+        frameValidate = aFrame(screen,width=500,height=225,border_width=1)
         # Widget FrameNeuron
-        labelTitleNeuron = self.__arrTK.createLabel(screen,text="Gestion de neurone",ptaille=25)
+        labelTitleNeuron = aLabel(screen,text="Gestion de neurone",police_size=25)
         self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice",variable=self.__varService)
         self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps",variable=self.__varTime)
         self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen",variable=self.__varOpen)
@@ -50,16 +51,16 @@ class GUIOpale:
         self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork",variable=self.__varWork)
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket",variable=self.__varSocket)
         # Widget FrameLangue
-        labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
-        self.__langSet = self.__arrTK.createLabel(frameLangue,text="",ptaille=25)
-        self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
-        self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
+        labelTitleLangue = aLabel(frameLangue,text="Gestion de la langue",police_size=25)
+        self.__langSet = aLabel(frameLangue,text="",police_size=25)
+        self.__btnVous = aButton(frameLangue,text="Vouvoiment",size=20,command=lambda: self.__setLangue(1))
+        self.__btnTutoiement = aButton(frameLangue,text="Tutoiement",size=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
-        btnValidate = self.__arrTK.createButton(frameValidate, text="Valider", ptaille=25,
+        btnValidate = aButton(frameValidate, text="Valider", size=25,
                                                 command=lambda : self.__activateAssistantGUI(screen))
         # Affichage
         # FrameNeuron
-        self.__arrTK.placeTopCenter(labelTitleNeuron)
+        labelTitleNeuron.placeTopCenter()
         self.__checkService.place(x=10,  y=30,anchor="nw")
         self.__checkTime.place(x=130, y=30,anchor="nw")
         self.__checkOpen.place(x=260, y=30,anchor="nw")
@@ -70,17 +71,19 @@ class GUIOpale:
         self.__checkWork.place(x=380, y=85,anchor="nw")
         self.__checkSocket.place(x=130, y=160,anchor="nw")
         # FrameLangue
-        self.__arrTK.placeTopCenter(labelTitleLangue)
-        self.__arrTK.placeLeftCenter(self.__btnVous)
-        self.__arrTK.placeRightCenter(self.__btnTutoiement)
+        labelTitleLangue.placeTopCenter()
+        self.__btnVous.placeLeftCenter()
+        self.__btnTutoiement.placeRightCenter()
         # FrameValidate
-        self.__arrTK.placeCenter(btnValidate)
+        btnValidate.placeCenter()
         # Frame
-        self.__arrTK.pack(frameNeuron)
-        self.__arrTK.pack(frameLangue)
-        self.__arrTK.pack(frameValidate)
+        frameNeuron.pack()
+        frameLangue.pack()
+        frameValidate.pack()
         # Thead Assistant
         self.__thAssistant = th.Thread()
+
+        screen.mainloop()
 
     def __setLangue(self,mode:int):
         """
