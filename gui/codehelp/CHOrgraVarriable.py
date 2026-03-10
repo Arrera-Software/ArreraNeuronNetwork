@@ -1,7 +1,7 @@
 from tkinter import StringVar,Text,Menu
 from tkinter.messagebox import *
 from tkinter.filedialog import *
-from librairy.arrera_tk import *
+from librairy.arrera_tk_old import *
 import json
 
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire

@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from gestionnaire.gestion import*
-from librairy.arrera_tk import *
+from librairy.arrera_tk_old import *
 
 class GuiBase:
     def __init__(self,gestionnaire:gestionnaire,name:str):

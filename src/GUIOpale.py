@@ -1,7 +1,7 @@
 import tkinter
 from tkinter.messagebox import showerror, askyesno
 from librairy.dectectionOS import OS
-from librairy.arrera_tk import *
+from librairy.arrera_tk_old import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
