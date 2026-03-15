@@ -1,6 +1,7 @@
 from abc import abstractmethod
 from gestionnaire.gestion import*
 from librairy.arrera_tk_old import *
+from librairy.arrera_tk import *
 
 class GuiBase:
     def __init__(self,gestionnaire:gestionnaire,name:str):
@@ -20,11 +21,10 @@ class GuiBase:
         pass
 
     def active(self):
-        self._screen = self._arrtk.aTopLevel(
+        self._screen = aTopLevel(
             title=self._titleGUI,
             width=800,
             height=600,
             resizable=True,
-            icon=self.__icon,
-        )
+            icon=self.__icon)
         self._mainframe()

@@ -1,7 +1,7 @@
 from tkinter.messagebox import showerror, askyesno, showinfo
 from tkcalendar import Calendar
 from fnc.fonctionTache import fncArreraTache
-from gui.guibase import GuiBase,gestionnaire
+from gui.guibase import*
 import tkinter as tk
 from datetime import datetime,date
 from functools import partial
@@ -19,13 +19,13 @@ class GUIBaseTache(GuiBase):
         self.__varAddDescription = tk.BooleanVar(value=False)
         self.__varAddDate = tk.BooleanVar(value=False)
         # Frame
-        frameTitle = self._arrtk.createFrame(self._screen)
-        self.__frameTask = self._arrtk.createFrame(self._screen)
-        self.__frameAdd = self._arrtk.createFrame(self._screen)
-        self.__frameAddTask = self._arrtk.createFrame(self.__frameAdd)
-        frameBTNAdd = self._arrtk.createFrame(self.__frameAddTask)
-        self.__frameSuppression = self._arrtk.createFrame(self._screen)
-        self.__frameSuppr = self._arrtk.createFrame(self.__frameSuppression)
+        frameTitle = aFrame(self._screen)
+        self.__frameTask = aFrame(self._screen)
+        self.__frameAdd = aFrame(self._screen)
+        self.__frameAddTask = aFrame(self.__frameAdd)
+        frameBTNAdd = aFrame(self.__frameAddTask)
+        self.__frameSuppression = aFrame(self._screen)
+        self.__frameSuppr = aFrame(self.__frameSuppression)
 
 
         # Config
@@ -43,38 +43,33 @@ class GUIBaseTache(GuiBase):
         self.__frameSuppression.grid_rowconfigure(1, weight=1)
 
         # img
-        imgLogo = self._arrtk.createImage(pathLight=self.__directoryAsset+"task.png",
-                                          pathDark=self.__directoryAsset+"task.png",
-                                          tailleX=64, tailleY=64)
-        imgSuppr = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-suppr.png",
-                                          pathDark=self.__directoryAsset+"task-suppr.png",
-                                            tailleX=32, tailleY=32)
-        imgPlus = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-plus.png",
-                                           pathDark=self.__directoryAsset+"task-plus.png",
-                                           tailleX=32, tailleY=32)
+        imgLogo = aImage(path_light=self.__directoryAsset+"task.png",
+                                          path_dark=self.__directoryAsset+"task.png",
+                                          width=64, height=64)
+        imgSuppr = aImage(path_light=self.__directoryAsset+"task-suppr.png",
+                                          path_dark=self.__directoryAsset+"task-suppr.png",
+                                            width=32, height=32)
+        imgPlus = aImage(path_light=self.__directoryAsset+"task-plus.png",
+                                           path_dark=self.__directoryAsset+"task-plus.png",
+                                           width=32, height=32)
 
-        self.__imgNoFinish = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-nofinish.png",
-                                                     pathDark=self.__directoryAsset+"task-nofinish.png",
-                                                     tailleX=32, tailleY=32)
+        self.__imgNoFinish = aImage(path_light=self.__directoryAsset+"task-nofinish.png",
+                                                     path_dark=self.__directoryAsset+"task-nofinish.png",
+                                                     width=32, height=32)
 
-        self.__imgFinish = self._arrtk.createImage(pathLight=self.__directoryAsset+"task-finish.png",
-                                                     pathDark=self.__directoryAsset+"task-finish.png",
-                                                     tailleX=32, tailleY=32)
+        self.__imgFinish = aImage(path_light=self.__directoryAsset+"task-finish.png",
+                                                     path_dark=self.__directoryAsset+"task-finish.png",
+                                                     width=32, height=32)
         # Widgets
-        labelLogo = self._arrtk.createLabel(frameTitle,text="",image=imgLogo)
-        labelTitle = self._arrtk.createLabel(frameTitle,text=self._title,
-                                             ppolice="Arial",ptaille=20,pstyle="bold")
-        btnAddTask = self._arrtk.createButton(frameTitle,text="",image=imgPlus,command=self.__viewAddTask
-                                              ,bg=self._btnColor,fg=self._btnTexteColor)
-        btnDelTask = self._arrtk.createButton(frameTitle,text="",image=imgSuppr,command=self.__viewSuppr
-                                              ,bg=self._btnColor,fg=self._btnTexteColor)
-        self.__btnFinishTask = self._arrtk.createButton(frameTitle,text="",image=self.__imgFinish
-                                                        ,bg=self._btnColor,fg=self._btnTexteColor)
+        labelLogo = aLabel(frameTitle,text="",image=imgLogo)
+        labelTitle = aLabel(frameTitle,text=self._title,police_size=20)
+        btnAddTask = aButton(frameTitle,text="",image=imgPlus,command=self.__viewAddTask)
+        btnDelTask = aButton(frameTitle,text="",image=imgSuppr,command=self.__viewSuppr)
+        self.__btnFinishTask = aButton(frameTitle,text="",image=self.__imgFinish)
 
         # Add task frame
         # Add
-        labelTitleAddTask = self._arrtk.createLabel(self.__frameAddTask, text="Ajouter une tâche",
-                                                    ppolice="Arial", ptaille=35, pstyle="bold")
+        labelTitleAddTask = aLabel(self.__frameAddTask, text="Ajouter une tâche",police_size=35)
         widgetName,self.__entryNameTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Nom de la tache : ", ppolice="Arial",
                                                                         ptaille=20, gridUsed=True)
 
@@ -84,19 +79,13 @@ class GUIBaseTache(GuiBase):
         wDescription,self.__entryDescriptionTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Description : ", ppolice="Arial",
                                                      ptaille=20, gridUsed=True)
 
-        btnCancelAddTask = self._arrtk.createButton(frameBTNAdd,text="Annuler",command=self.__backToMain
-                                                    ,bg=self._btnColor,fg=self._btnTexteColor,
-                                                    ppolice="Arial", ptaille=25,pstyle="bold")
-        btnConfirmAddTask = self._arrtk.createButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask
-                                                     ,bg=self._btnColor,fg=self._btnTexteColor,
-                                                     ppolice="Arial", ptaille=25,pstyle="bold")
+        btnCancelAddTask = aButton(frameBTNAdd,text="Annuler",command=self.__backToMain,size=25)
+        btnConfirmAddTask = aButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask,size =25)
 
         # Supp
-        labelTitleSuppr = self._arrtk.createLabel(self.__frameSuppression, text="Supprimer une tâche",
-                                                  ppolice="Arial", ptaille=35, pstyle="bold")
-        btnBackSuppr = self._arrtk.createButton(self.__frameSuppression, text="Retourner a l'acceuil",
-                                                command=self.__backToMain,bg=self._btnColor,fg=self._btnTexteColor,
-                                                ppolice="Arial", ptaille=25,pstyle="bold")
+        labelTitleSuppr = aLabel(self.__frameSuppression, text="Supprimer une tâche",police_size=35)
+        btnBackSuppr = aButton(self.__frameSuppression, text="Retourner a l'acceuil",
+                                                command=self.__backToMain,size=25)
 
         # Placement
         # Widget
@@ -166,8 +155,8 @@ class GUIBaseTache(GuiBase):
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = self._arrtk.createLabel(self.__frameTask,text="Aucune tâche pour le moment",
-                                                  ppolice="Arial",ptaille=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche pour le moment",
+                                                  ppolice="Arial",police_size=40,pstyle="bold")
             labelNoTask.pack(pady=20)
 
         self._screen.update()
@@ -212,8 +201,8 @@ class GUIBaseTache(GuiBase):
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = self._arrtk.createLabel(self.__frameTask,text="Aucune tâche fini pour le moment",
-                                                  ppolice="Arial",ptaille=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche fini pour le moment",
+                                                  ppolice="Arial",police_size=40,pstyle="bold")
             labelNoTask.pack(pady=20)
 
         self._screen.update()
@@ -309,8 +298,8 @@ class GUIBaseTache(GuiBase):
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = self._arrtk.createLabel(self.__frameSuppr,text="Aucune tâche enregistré",
-                                                  ppolice="Arial",ptaille=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameSuppr,text="Aucune tâche enregistré",
+                                                  ppolice="Arial",police_size=40,pstyle="bold")
             labelNoTask.pack(pady=20)
 
         self._screen.update()
