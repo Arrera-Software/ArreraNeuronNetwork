@@ -1,4 +1,4 @@
-import tkinter as tk
+from librairy.arrera_tk import *
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
 
@@ -34,12 +34,12 @@ gest = gestionnaire(conf)
 gest_gui = gest.getGestGUI()
 
 # Créer la fenêtre principale
-window = tk.Tk()
+window = aTk(theme_file="asset/theme/theme_default.json")
 window.title("Test des interfaces graphiques")
 window.geometry("800x600")
 
 # Créer un cadre pour les boutons
-button_frame = tk.Frame(window)
+button_frame = aFrame(window)
 button_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
 # Dictionnaire des interfaces à tester et de leurs fonctions de lancement
@@ -68,7 +68,7 @@ i = 0
 for name, action in gui_to_test.items():
     row = i // cols
     col = i % cols
-    btn = tk.Button(button_frame, text=name, command=action, height=4, width=15)
+    btn = aButton(button_frame, text=name, command=action, height=4, width=15)
     btn.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
     i += 1
 
