@@ -70,14 +70,14 @@ class GUIBaseTache(GuiBase):
         # Add task frame
         # Add
         labelTitleAddTask = aLabel(self.__frameAddTask, text="Ajouter une tâche",police_size=35)
-        widgetName,self.__entryNameTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Nom de la tache : ", ppolice="Arial",
-                                                                        ptaille=20, gridUsed=True)
+
+        self.__entryNameTask = aEntryLengend(self.__frameAddTask,text="Nom de la tache",police_size=20,gridUsed=True)
 
         self.__calendarDate = Calendar(self.__frameAddTask,selectmode="day",year=date.today().year,
                                        month=date.today().month,locale="fr_FR",firstweekday="monday",
                                        showweeknumbers=False,borderwidth=0)
-        wDescription,self.__entryDescriptionTask = self._arrtk.createEntryLegend(self.__frameAddTask, text="Description : ", ppolice="Arial",
-                                                     ptaille=20, gridUsed=True)
+
+        self.__entryDescriptionTask = aEntryLengend(self.__frameAddTask,text="Description",police_size=20,gridUsed=True)
 
         btnCancelAddTask = aButton(frameBTNAdd,text="Annuler",command=self.__backToMain,size=25)
         btnConfirmAddTask = aButton(frameBTNAdd, text="Confirmer", command=self.__addNewTask,size =25)
@@ -96,9 +96,9 @@ class GUIBaseTache(GuiBase):
         btnAddTask.pack(side="right", padx=(10, 5))
 
         labelTitleAddTask.grid(row=0, column=0, sticky="n", pady=(10, 8))
-        widgetName.grid(row=1, column=0, sticky="ew", padx=10, pady=(2, 8))
+        self.__entryNameTask.grid(row=1, column=0, sticky="ew", padx=10, pady=(2, 8))
         self.__calendarDate.grid(row=2, column=0, sticky="", padx=10, pady=(0, 8))
-        wDescription.grid(row=3, column=0, sticky="ew", padx=10, pady=(0, 8))
+        self.__entryDescriptionTask.grid(row=3, column=0, sticky="ew", padx=10, pady=(0, 8))
 
         frameBTNAdd.grid(row=5, column=0, sticky="ew", padx=10, pady=(8, 10))
 
@@ -139,7 +139,7 @@ class GUIBaseTache(GuiBase):
 
         # 3) un unique conteneur scrollable, toujours
         if len(tasks) != 0:
-            container = self._arrtk.createScrollFrame(self.__frameTask,bg="transparent")
+            container = aScrollableFrame(self.__frameTask)
             container.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
             # 4) les colonnes du conteneur prennent la largeur
@@ -149,14 +149,11 @@ class GUIBaseTache(GuiBase):
             self._task_vars = []  # pour relire l'état plus tard
             for i, label in enumerate(tasks):
                 var = tk.BooleanVar(value=False)
-                cb = self._arrtk.createCheckbox(container, text=label,
-                                                var_chk=var,
-                                                command= partial (self.__finishTask,var, label))
+                cb = ctk.CTkCheckBox(container,text=label,variable=var,command= partial (self.__finishTask,var, label))
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche pour le moment",
-                                                  ppolice="Arial",police_size=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche pour le moment",police_size=40)
             labelNoTask.pack(pady=20)
 
         self._screen.update()
@@ -185,7 +182,7 @@ class GUIBaseTache(GuiBase):
 
         # 3) un unique conteneur scrollable, toujours
         if len(tasks) != 0:
-            container = self._arrtk.createScrollFrame(self.__frameTask,bg="transparent")
+            container = aScrollableFrame(self.__frameTask)
             container.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
             # 4) les colonnes du conteneur prennent la largeur
@@ -195,14 +192,11 @@ class GUIBaseTache(GuiBase):
             self._task_vars = []  # pour relire l'état plus tard
             for i, label in enumerate(tasks):
                 var = tk.BooleanVar(value=True)
-                cb = self._arrtk.createCheckbox(container, text=label,
-                                                var_chk=var,
-                                                command=partial(self.__unfinishTask, var, label))
+                cb = ctk.CTkCheckBox(container,text=label, variable=var, command=partial(self.__unfinishTask, var, label))
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche fini pour le moment",
-                                                  ppolice="Arial",police_size=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameTask,text="Aucune tâche fini pour le moment",police_size=40)
             labelNoTask.pack(pady=20)
 
         self._screen.update()
@@ -216,7 +210,7 @@ class GUIBaseTache(GuiBase):
         self.__disableAllFrame()
         self.__varAddDate.set(False)
         self.__varAddDescription.set(False)
-        self.__entryNameTask.delete(0, tk.END)
+        self.__entryNameTask.getEntry().delete(0, tk.END)
         self.__frameAdd.pack(side="top", fill="both", expand=True, pady=(2, 2))
         self.__frameAddTask.grid(row=0, column=0, sticky="nsew")
         self._screen.update()
@@ -226,7 +220,7 @@ class GUIBaseTache(GuiBase):
         dateAdd = False
         descriptionAdd = False
 
-        name = self.__entryNameTask.get()
+        name = self.__entryNameTask.getEntry().get()
         if name == "":
             showerror("Erreur",
                       "Le nom de la tâche ne peut pas être vide")
@@ -238,10 +232,10 @@ class GUIBaseTache(GuiBase):
             self.__calendarDate.selection_clear()
             dateAdd = True
 
-        description = self.__entryDescriptionTask.get()
+        description = self.__entryDescriptionTask.getEntry().get()
         if description != "":
             descriptionAdd = True
-            self.__entryDescriptionTask.delete(0, tk.END)
+            self.__entryDescriptionTask.getEntry().delete(0, tk.END)
 
         if dateAdd and not descriptionAdd:
             if not self._fnctask.addTask(name,date=dateCalendar):
@@ -282,7 +276,7 @@ class GUIBaseTache(GuiBase):
 
         # 3) un unique conteneur scrollable, toujours
         if len(tasks) != 0:
-            container = self._arrtk.createScrollFrame(self.__frameSuppr,bg="transparent")
+            container = aScrollableFrame(self.__frameSuppression)
             container.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
             # 4) les colonnes du conteneur prennent la largeur
@@ -292,14 +286,11 @@ class GUIBaseTache(GuiBase):
             self._task_vars = []  # pour relire l'état plus tard
             for i, label in enumerate(tasks):
                 var = tk.BooleanVar(value=False)
-                cb = self._arrtk.createCheckbox(container, text=label,
-                                                var_chk=var,
-                                                command= partial(self.__delTask,var, label))
+                cb = ctk.CTkCheckBox(container,text=label, variable=var, command=partial(self.__delTask,var, label))
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = aLabel(self.__frameSuppr,text="Aucune tâche enregistré",
-                                                  ppolice="Arial",police_size=40,pstyle="bold")
+            labelNoTask = aLabel(self.__frameSuppr,text="Aucune tâche enregistré",police_size=40)
             labelNoTask.pack(pady=20)
 
         self._screen.update()
