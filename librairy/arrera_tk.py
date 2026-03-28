@@ -7,7 +7,7 @@ import os
 import sys
 from typing import Union, Callable
 
-from customtkinter import CTkCanvas
+from customtkinter import CTkCanvas, CTkImage
 
 VERSIONARRERATK = "2.0.3"
 
@@ -116,7 +116,7 @@ class aImage(ctk.CTkImage):
 
 class aLabel(placement_Tool_Kit_internet, ctk.CTkLabel):
     def __init__(self, master, text: str = "Arrera Label", police_size: int = 0, dark_color: str = "",
-                 light_color: str = "", light_text_color: str = "", dark_text_color: str = "", **kwargs):
+                 light_color: str = "", light_text_color: str = "", dark_text_color: str = "",image : CTkImage = None, **kwargs):
         super().__init__(master, text=text, **kwargs)
         if police_size != 0:
             self.configure(font=("Roboto", police_size, "bold"))
@@ -127,6 +127,8 @@ class aLabel(placement_Tool_Kit_internet, ctk.CTkLabel):
         if dark_text_color != "" and light_text_color != "":
             self.configure(text_color=(light_text_color, dark_text_color))
 
+        if image is not None:
+            self.configure(image=image,text="")
 
 class aButton(placement_Tool_Kit_internet, ctk.CTkButton):
     def __init__(self, master, text: str = "Arrera Button", width: int = 140, height: int = 40, command=None,
