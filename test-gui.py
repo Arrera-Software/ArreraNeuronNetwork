@@ -50,6 +50,8 @@ gui_to_test = {
     "Aide": lambda: gest_gui.activeHelp("Texte d'aide de test"),
     "Breef": gest_gui.activeBreef,
     "Calculatrice": lambda: gest_gui.setGUIActive("calculatrice_normal") and gest_gui.launch_gui(),
+    "Calculatrice Pythagore": lambda: gest_gui.setGUIActive("calculatrice_pythagore") and gest_gui.launch_gui(),
+    "Calculatrice Complex": lambda: gest_gui.setGUIActive("calculatrice_complex") and gest_gui.launch_gui(),
     "Orthographe": lambda: gest_gui.setGUIActive("orthographe", "Ceci est un texte de test.") and gest_gui.launch_gui(),
     "Arrera Download": lambda: gest_gui.setGUIActive("arrera_download") and gest_gui.launch_gui(),
     "Horloge": lambda: gest_gui.setGUIActive("horloge") and gest_gui.launch_gui(),

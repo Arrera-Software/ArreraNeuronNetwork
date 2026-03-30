@@ -1,8 +1,7 @@
-from tkinter import PhotoImage, END
-import customtkinter as ctk
 from tkinter.messagebox import showerror
 from gui.guibase import GuiBase,gestionnaire
 import math
+from librairy.arrera_tk import *
 
 class GUICalculatrice(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
@@ -15,17 +14,17 @@ class GUICalculatrice(GuiBase) :
         self._screen.grid_columnconfigure(0, weight=1)
         #cadre
         # Partie calculatrice
-        self.__mainView = self._arrtk.createFrame(self._screen)
-        fclavier = self._arrtk.createFrame(self.__mainView)
+        self.__mainView = aFrame(self._screen)
+        fclavier = aFrame(self.__mainView)
         # Partie historique
-        self.__fhistorique = self._arrtk.createFrame(self._screen)
+        self.__fhistorique = aFrame(self._screen)
         # Partie Complex
-        self.__fComplex = self._arrtk.createFrame(self._screen)
-        fEntryNB1 = self._arrtk.createFrame(self.__fComplex)
-        fOperateurComplex = self._arrtk.createFrame(self.__fComplex)
-        fEntryNB2 = self._arrtk.createFrame(self.__fComplex)
+        self.__fComplex = aFrame(self._screen)
+        fEntryNB1 = aFrame(self.__fComplex)
+        fOperateurComplex = aFrame(self.__fComplex)
+        fEntryNB2 = aFrame(self.__fComplex)
         # Partie pythagore
-        self.__fPythagore = self._arrtk.createFrame(self._screen)
+        self.__fPythagore = aFrame(self._screen)
 
         # Configuration des frame
         fclavier.grid_columnconfigure(0, weight=1, uniform="col")
@@ -64,138 +63,117 @@ class GUICalculatrice(GuiBase) :
         self.__fPythagore.grid_rowconfigure(3, weight=1)
 
         # widget
-        self.__zoneCalcule = self._arrtk.createText(self.__mainView, ptaille=30,
-                                                    ppolice="Arial", pstyle="bold", center=True)
+        self.__zoneCalcule = aText(self.__mainView,center=True)
         #touche clavier
         #chiffre
-        btnNb0 = self._arrtk.createButton(fclavier,text="0", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("0"),pstyle="bold",ptaille=20)
-        btnNb1 = self._arrtk.createButton(fclavier,text="1", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("1"),pstyle="bold",ptaille=20)
-        btnNb2 = self._arrtk.createButton(fclavier,text="2", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("2"),pstyle="bold",ptaille=20)
-        btnNb3 = self._arrtk.createButton(fclavier,text="3", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("3"),pstyle="bold",ptaille=20)
-        btnNb4 = self._arrtk.createButton(fclavier,text="4", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("4"),pstyle="bold",ptaille=20)
-        btnNb5 = self._arrtk.createButton(fclavier,text="5", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("5"),pstyle="bold",ptaille=20)
-        btnNb6 = self._arrtk.createButton(fclavier,text="6", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("6"),pstyle="bold",ptaille=20)
-        btnNb7 = self._arrtk.createButton(fclavier,text="7", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("7"),pstyle="bold",ptaille=20)
-        btnNb8 = self._arrtk.createButton(fclavier,text="8", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("8"),pstyle="bold",ptaille=20)
-        btnNb9 = self._arrtk.createButton(fclavier,text="9", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("9"),pstyle="bold",ptaille=20)
-        btnPI = self._arrtk.createButton(fclavier,text="PI", bg=self._btnColor, fg=self._btnTexteColor,
-                              command= lambda : self.__ecritureCarractere("3.1415926535897932"),pstyle="bold",ptaille=20)
+        btnNb0 = aButton(fclavier,text="0",command= lambda : self.__ecritureCarractere("0"))
+        btnNb1 = aButton(fclavier,text="1",
+                               command= lambda : self.__ecritureCarractere("1"))
+        btnNb2 = aButton(fclavier,text="2",
+                               command= lambda : self.__ecritureCarractere("2"))
+        btnNb3 = aButton(fclavier,text="3",
+                               command= lambda : self.__ecritureCarractere("3"))
+        btnNb4 = aButton(fclavier,text="4",
+                               command= lambda : self.__ecritureCarractere("4"))
+        btnNb5 = aButton(fclavier,text="5",
+                               command= lambda : self.__ecritureCarractere("5"))
+        btnNb6 = aButton(fclavier,text="6",
+                               command= lambda : self.__ecritureCarractere("6"))
+        btnNb7 = aButton(fclavier,text="7",
+                               command= lambda : self.__ecritureCarractere("7"))
+        btnNb8 = aButton(fclavier,text="8",
+                               command= lambda : self.__ecritureCarractere("8"))
+        btnNb9 = aButton(fclavier,text="9",
+                               command= lambda : self.__ecritureCarractere("9"))
+        btnPI = aButton(fclavier,text="PI",
+                              command= lambda : self.__ecritureCarractere("3.1415926535897932"))
         # operateur
-        btnVirgule = self._arrtk.createButton(fclavier,text=".", bg=self._btnColor, fg=self._btnTexteColor,
-                                   command= lambda : self.__ecritureCarractere("."),pstyle="bold",ptaille=20)
-        btnPuissanceDix = self._arrtk.createButton(fclavier,text="10^", bg=self._btnColor, fg=self._btnTexteColor,
-                                        command= lambda : self.__ecritureCarractere("*10**"),pstyle="bold",ptaille=20)
-        btnEgal = self._arrtk.createButton(fclavier,text="=", bg=self._btnColor, fg=self._btnTexteColor,
-                                command=self.__calcule,pstyle="bold",ptaille=30)
-        btnplus = self._arrtk.createButton(fclavier,text="+", bg=self._btnColor, fg=self._btnTexteColor,
-                                command= lambda : self.__ecritureCarractere("+"),pstyle="bold",ptaille=30)
-        btnMoin = self._arrtk.createButton(fclavier,text="-", bg=self._btnColor, fg=self._btnTexteColor,
-                                command= lambda : self.__ecritureCarractere("-"),pstyle="bold",ptaille=30)
-        btnFois = self._arrtk.createButton(fclavier,text="*", bg=self._btnColor, fg=self._btnTexteColor,
-                                command= lambda : self.__ecritureCarractere("*"),pstyle="bold",ptaille=30)
-        btnDiviser = self._arrtk.createButton(fclavier,text="/", bg=self._btnColor, fg=self._btnTexteColor,
-                                   command= lambda : self.__ecritureCarractere("/"),pstyle="bold",ptaille=30)
-        btnParenthese1 = self._arrtk.createButton(fclavier,text="(", bg=self._btnColor, fg=self._btnTexteColor,
-                                       command= lambda : self.__ecritureCarractere("("),pstyle="bold",ptaille=30)
-        btnParenthese2 = self._arrtk.createButton(fclavier,text=")", bg=self._btnColor, fg=self._btnTexteColor,
-                                       command= lambda : self.__ecritureCarractere(")"),pstyle="bold",ptaille=30)
-        btnRacine = self._arrtk.createButton(fclavier,text="sqrt", bg=self._btnColor, fg=self._btnTexteColor,
-                                  command= lambda : self.__ecritureCarractere("math.sqrt("),pstyle="bold",ptaille=20)
-        btnExposant = self._arrtk.createButton(fclavier,text="^", bg=self._btnColor, fg=self._btnTexteColor,
-                                    command= lambda : self.__ecritureCarractere("**"),pstyle="bold",ptaille=30)
-        btnExpodentiel = self._arrtk.createButton(fclavier,text="e^", bg=self._btnColor, fg=self._btnTexteColor,
-                                       command= lambda : self.__ecritureCarractere("math.exp("),pstyle="bold",ptaille=30)
-        btnLN = self._arrtk.createButton(fclavier,text="ln", bg=self._btnColor, fg=self._btnTexteColor,
-                              command= lambda : self.__ecritureCarractere("math.log(x,math.e)"),pstyle="bold",ptaille=20)
-        btnLOG = self._arrtk.createButton(fclavier,text="log", bg=self._btnColor, fg=self._btnTexteColor,
-                               command= lambda : self.__ecritureCarractere("math.log(x,10)"),pstyle="bold",ptaille=20)
+        btnVirgule = aButton(fclavier,text=".",
+                                   command= lambda : self.__ecritureCarractere("."))
+        btnPuissanceDix = aButton(fclavier,text="10^",
+                                        command= lambda : self.__ecritureCarractere("*10**"))
+        btnEgal = aButton(fclavier,text="=",
+                                command=self.__calcule)
+        btnplus = aButton(fclavier,text="+",
+                                command= lambda : self.__ecritureCarractere("+"))
+        btnMoin = aButton(fclavier,text="-",
+                                command= lambda : self.__ecritureCarractere("-"))
+        btnFois = aButton(fclavier,text="*",
+                                command= lambda : self.__ecritureCarractere("*"))
+        btnDiviser = aButton(fclavier,text="/",
+                                   command= lambda : self.__ecritureCarractere("/"))
+        btnParenthese1 = aButton(fclavier,text="(",
+                                       command= lambda : self.__ecritureCarractere("("))
+        btnParenthese2 = aButton(fclavier,text=")",
+                                       command= lambda : self.__ecritureCarractere(")"))
+        btnRacine = aButton(fclavier,text="sqrt",
+                                  command= lambda : self.__ecritureCarractere("math.sqrt("))
+        btnExposant = aButton(fclavier,text="^",
+                                    command= lambda : self.__ecritureCarractere("**"))
+        btnExpodentiel = aButton(fclavier,text="e^",
+                                       command= lambda : self.__ecritureCarractere("math.exp("))
+        btnLN = aButton(fclavier,text="ln",
+                              command= lambda : self.__ecritureCarractere("math.log(x,math.e)"))
+        btnLOG = aButton(fclavier,text="log",
+                               command= lambda : self.__ecritureCarractere("math.log(x,10)"))
         #cercle trigo
-        btnSIN = self._arrtk.createButton(fclavier,text="SIN", bg=self._btnColor, fg=self._btnTexteColor,
-                               command=lambda : self.__ecritureCarractere("math.sin("),pstyle="bold",ptaille=20)
-        btnCOS = self._arrtk.createButton(fclavier,text="COS", bg=self._btnColor, fg=self._btnTexteColor,
-                               command=lambda : self.__ecritureCarractere("math.cos("),pstyle="bold",ptaille=20)
-        btnTAN = self._arrtk.createButton(fclavier,text="TAN", bg=self._btnColor, fg=self._btnTexteColor,
-                               command=lambda :self.__ecritureCarractere("math.tan("),pstyle="bold",ptaille=20)
-        btnARCSIN = self._arrtk.createButton(fclavier,text="SIN-1", bg=self._btnColor, fg=self._btnTexteColor,
-                                  command=lambda : self.__ecritureCarractere("math.asin("),pstyle="bold",ptaille=18)
-        btnARCCOS = self._arrtk.createButton(fclavier,text="COS-1", bg=self._btnColor, fg=self._btnTexteColor,
-                                  command=lambda : self.__ecritureCarractere("math.acos("),pstyle="bold",ptaille=18)
-        btnARCTAN = self._arrtk.createButton(fclavier,text="TAN-1", bg=self._btnColor, fg=self._btnTexteColor,
-                                  command=lambda : self.__ecritureCarractere("math.cos("),pstyle="bold",ptaille=18)
+        btnSIN = aButton(fclavier,text="SIN",
+                               command=lambda : self.__ecritureCarractere("math.sin("))
+        btnCOS = aButton(fclavier,text="COS",
+                               command=lambda : self.__ecritureCarractere("math.cos("))
+        btnTAN = aButton(fclavier,text="TAN",
+                               command=lambda :self.__ecritureCarractere("math.tan("))
+        btnARCSIN = aButton(fclavier,text="SIN-1",
+                                  command=lambda : self.__ecritureCarractere("math.asin("))
+        btnARCCOS = aButton(fclavier,text="COS-1",
+                                  command=lambda : self.__ecritureCarractere("math.acos("))
+        btnARCTAN = aButton(fclavier,text="TAN-1",
+                                  command=lambda : self.__ecritureCarractere("math.cos("))
         #autre
-        btnClear = self._arrtk.createButton(fclavier,text="C",command=self.__clearAll,
-                                                   bg=self._btnColor, fg=self._btnTexteColor,pstyle="bold",ptaille=20)
-        btnSuppr = self._arrtk.createButton(fclavier,text="CE",bg=self._btnColor,
-                                                   fg=self._btnTexteColor,command=self.__suppr,pstyle="bold",ptaille=20)
+        btnClear = aButton(fclavier,text="C",command=self.__clearAll)
+        btnSuppr = aButton(fclavier,text="CE",command=self.__suppr)
         #btn fonction special
-        btnAngle = self._arrtk.createButton(fclavier, text="Randian en degres", ppolice="Arial",pstyle="bold",ptaille=14
-                                                   , bg=self._btnColor, fg=self._btnTexteColor, command=self.__convertiseurDegRad)
-        btnPythagore = self._arrtk.createButton(fclavier, text="Theoreme de pythagore", ppolice="Arial",pstyle="bold",ptaille=16
-                                                       , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewPythagore)
-        btnNbComplex = self._arrtk.createButton(fclavier, text="Nombre Complex", ppolice="Arial",pstyle="bold",ptaille=15
-                                                     , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewComplex)
-        btnHist = self._arrtk.createButton(fclavier, text="Historique", ppolice="Arial",pstyle="bold",ptaille=20
-                                          , bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewHistorique)
+        btnAngle = aButton(fclavier, text="Randian en degres",command=self.__convertiseurDegRad)
+        btnPythagore = aButton(fclavier, text="Theoreme de pythagore",command=self.__viewPythagore)
+        btnNbComplex = aButton(fclavier, text="Nombre Complex", command=self.__viewComplex)
+        btnHist = aButton(fclavier, text="Historique",command=self.__viewHistorique)
 
         # Frame Historique
-        labelHist = self._arrtk.createLabel(self.__fhistorique, text="Historique",
-                                            ppolice="Arial", ptaille=20)
-        self.__affichageHistorique = self._arrtk.createText(self.__fhistorique)
+        labelHist = aLabel(self.__fhistorique, text="Historique")
+        self.__affichageHistorique = aText(self.__fhistorique)
         scroll_y = ctk.CTkScrollbar(self.__fhistorique, orientation="vertical", command=self.__affichageHistorique.yview)
         self.__affichageHistorique.configure(state='disabled')
-        btnBackHist = self._arrtk.createButton(self.__fhistorique, text="Retour", ppolice="Arial", ptaille=25,
-                                               bg=self._btnColor, fg=self._btnTexteColor,
-                                               command=self.__viewCalcule)
+        btnBackHist = aButton(self.__fhistorique, text="Retour",command=self.__viewCalcule)
 
         # Frame Complex
-        lTitleNombreComplex = self._arrtk.createLabel(self.__fComplex, text="Nombre Complex",
-                                                      ppolice="Arial", ptaille=25, pstyle="bold")
+        lTitleNombreComplex = aLabel(self.__fComplex, text="Nombre Complex")
 
-        lComplexNB1 = self._arrtk.createLabel(fEntryNB1, text=" j ", ppolice="Arial", ptaille=20)
-        self.__entryComplexNB1_1 = self._arrtk.createEntry(fEntryNB1, ppolice="Arial", ptaille=20)
-        self.__entryComplexNB1_2 = self._arrtk.createEntry(fEntryNB1, ppolice="Arial", ptaille=20)
+        lComplexNB1 = aLabel(fEntryNB1, text=" j ")
+        self.__entryComplexNB1_1 = aEntry(fEntryNB1)
+        self.__entryComplexNB1_2 = aEntry(fEntryNB1)
 
-        lComplexNB2 = self._arrtk.createLabel(fEntryNB2, text=" j ", ppolice="Arial", ptaille=20)
-        self.__entryComplexNB2_1 = self._arrtk.createEntry(fEntryNB2, ppolice="Arial", ptaille=20)
-        self.__entryComplexNB2_2 = self._arrtk.createEntry(fEntryNB2, ppolice="Arial", ptaille=20)
+        lComplexNB2 = aLabel(fEntryNB2, text=" j ")
+        self.__entryComplexNB2_1 = aEntry(fEntryNB2)
+        self.__entryComplexNB2_2 = aEntry(fEntryNB2)
 
         # Bouton operateur Complex
-        btnComplexPlus = self._arrtk.createButton(fOperateurComplex, text="+", ppolice="Arial", ptaille=30,
-                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__additionComplex)
-        btnComplexMoin = self._arrtk.createButton(fOperateurComplex, text="-", ppolice="Arial", ptaille=30,
-                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__soustrationComplex)
-        btnComplexFois = self._arrtk.createButton(fOperateurComplex, text="*", ppolice="Arial", ptaille=30,
-                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__multiplicationComplex)
-        btnComplexDiv = self._arrtk.createButton(fOperateurComplex, text="/", ppolice="Arial", ptaille=30,
-                                                  bg=self._btnColor, fg=self._btnTexteColor,command=self.__divisionComplex)
+        btnComplexPlus = aButton(fOperateurComplex, text="+",command=self.__additionComplex)
+        btnComplexMoin = aButton(fOperateurComplex, text="-",command=self.__soustrationComplex)
+        btnComplexFois = aButton(fOperateurComplex, text="*",command=self.__multiplicationComplex)
+        btnComplexDiv = aButton(fOperateurComplex, text="/",command=self.__divisionComplex)
 
         # Resultat Complex
-        self.__lResultatComplex = self._arrtk.createLabel(self.__fComplex,text="",ppolice="Arial", ptaille=25)
+        self.__lResultatComplex = aLabel(self.__fComplex,text="")
 
-        btnBackComplex = self._arrtk.createButton(self.__fComplex, text="Retour", ppolice="Arial", ptaille=25,
-                                                    bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
+        btnBackComplex = aButton(self.__fComplex, text="Retour",command=self.__viewCalcule)
 
         # Partie Pythagore
-        lTitlePythagore = self._arrtk.createLabel(self.__fPythagore, text="Theoreme de Pythagore",
-                                                    ppolice="Arial", ptaille=25, pstyle="bold")
-        self.__entryPythagoreNB1 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
-        self.__entryPythagoreNB2 = self._arrtk.createEntry(self.__fPythagore, ppolice="Arial", ptaille=20)
-        btnPythagoreTheoreme = self._arrtk.createButton(self.__fPythagore, text="Theoreme", ppolice="Arial", ptaille=20,
-                                                        bg=self._btnColor, fg=self._btnTexteColor,command=self.__theoremePythagore)
-        btnPythagoreRecibroque = self._arrtk.createButton(self.__fPythagore, text="Réciproque", ppolice="Arial", ptaille=20,
-                                                        bg=self._btnColor, fg=self._btnTexteColor,command=self.__reciproquePythagore)
-        btnBackPythagore = self._arrtk.createButton(self.__fPythagore, text="Retour", ppolice="Arial", ptaille=20,
-                                                    bg=self._btnColor, fg=self._btnTexteColor,command=self.__viewCalcule)
+        lTitlePythagore = aLabel(self.__fPythagore, text="Theoreme de Pythagore")
+        self.__entryPythagoreNB1 = aEntry(self.__fPythagore)
+        self.__entryPythagoreNB2 = aEntry(self.__fPythagore)
+        btnPythagoreTheoreme = aButton(self.__fPythagore, text="Theoreme",command=self.__theoremePythagore)
+        btnPythagoreRecibroque = aButton(self.__fPythagore, text="Réciproque",command=self.__reciproquePythagore)
+        btnBackPythagore = aButton(self.__fPythagore, text="Retour",command=self.__viewCalcule)
 
         # Affichage des widgets
         # Clavier
@@ -245,18 +223,18 @@ class GUICalculatrice(GuiBase) :
         self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
         # Frame Complex
-        self.__entryComplexNB1_1.pack(side="left")
-        self.__entryComplexNB1_2.pack(side="left")
-        lComplexNB1.pack(side="left")
+        self.__entryComplexNB1_1.grid(row=0, column=0)
+        self.__entryComplexNB1_2.grid(row=0, column=1)
+        lComplexNB1.grid(row=0, column=0)
 
-        self.__entryComplexNB2_1.pack(side="left")
-        self.__entryComplexNB2_2.pack(side="left")
-        lComplexNB2.pack(side="left")
+        self.__entryComplexNB1_1.grid(row=0, column=0)
+        self.__entryComplexNB1_2.grid(row=0, column=1)
+        lComplexNB2.grid(row=0, column=0)
 
-        btnComplexPlus.pack(side="left")
-        btnComplexMoin.pack(side="left")
-        btnComplexFois.pack(side="right")
-        btnComplexDiv.pack(side="right")
+        btnComplexPlus.grid(row=0, column=0)
+        btnComplexMoin.grid(row=0, column=0)
+        btnComplexFois.grid(row=0, column=1)
+        btnComplexDiv.grid(row=0, column=1)
 
         lTitleNombreComplex.grid(row=0, column=0, sticky="n", padx=10, pady=(10, 0))
         fEntryNB1.grid(row=2, column=0, sticky="n", padx=10, pady=(0, 8))
@@ -278,7 +256,6 @@ class GUICalculatrice(GuiBase) :
         # Configuration de la zone de calcul
         self.__zoneCalcule.bind("<KeyPress-Return>",self.__enterPressed)
         self.__zoneCalcule.bind("<KeyPress>",self.__carractereInterdit)
-
     
     def __viewCalcule(self):
         self.__fhistorique.grid_forget()
@@ -327,7 +304,6 @@ class GUICalculatrice(GuiBase) :
             return "break"
         elif event.char in carractereSpeciaux2:
             return "break"
-        self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
         
     def __enterPressed(self,event):
         self.__calcule()
@@ -335,7 +311,6 @@ class GUICalculatrice(GuiBase) :
         
     def __ecritureCarractere(self,crc:str):
         self.__zoneCalcule.insert("end",crc)
-        self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
         self._screen.update()
         
     def __clearAll(self):
@@ -353,7 +328,6 @@ class GUICalculatrice(GuiBase) :
             # Mettre à jour le widget Text avec le nouveau contenu
             self.__zoneCalcule.delete("1.0", "end")
             self.__zoneCalcule.insert("1.0", contenu)
-            self._arrtk.centerTextOnTextWidget(self.__zoneCalcule)
         self._screen.update()
             
     def __calcule(self):
