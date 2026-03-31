@@ -59,7 +59,7 @@ class CHLibrairy(CCHguiBase):
 
         # Widget
         # welcome Frame
-        label_title = aLabel(self.__h_frame, text="Arrera librairie",police_size=30)
+        label_title = aLabel(self.__h_frame, text="CodeHelp : librairie",police_size=30)
 
         # Error Frame
         label_error = aLabel(self.__f_error, text="Impossible de récuper l'index",police_size=25)
