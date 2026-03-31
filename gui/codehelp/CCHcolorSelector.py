@@ -1,4 +1,5 @@
-from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
+from librairy.arrera_tk import *
+from gui.codehelp.CCHguiBase import*
 from tkinter import colorchooser
 
 class CCHcolorSelector(CCHguiBase):
@@ -11,21 +12,14 @@ class CCHcolorSelector(CCHguiBase):
         self._screen.resizable(False, False)
         #fonction
         #cadre
-        cadreNoir = self._arrtk.createFrame(self._screen, bg="black", width=325, height=325)
-        self.__cadreColor = self._arrtk.createFrame(cadreNoir,bg="#ffffff",width=310,height=310)
+        cadreNoir = aFrame(self._screen, fg_color="black", width=325, height=325)
+        self.__cadreColor = aFrame(cadreNoir,fg_color="#ffffff",width=310,height=310)
         #label
-        self.__labelIndicationCode = self._arrtk.createLabel(self._screen, text="Code HTML : #ffffff \nCode RGB : (255,255,255)",
-                                                             ppolice="Arial",ptaille=25, justify="left")
+        self.__labelIndicationCode = aLabel(self._screen, text="Code HTML : #ffffff \nCode RGB : (255,255,255)", justify="left")
         #declaration des bouton
-        buttonSelection = self._arrtk.createButton(self._screen, text="Selectionner la couleur",
-                                                   bg=self._btnColor, fg=self._btnTexteColor,
-                                                   ppolice="Arial",ptaille=15, command=self.__selecteur)
-        self.__buttonCopiHTLM = self._arrtk.createButton(self._screen, text="Copier le code HTML",
-                                                         bg=self._btnColor, fg=self._btnTexteColor,
-                                                         ppolice="Arial",ptaille=15)
-        self.__buttonCopiRGB = self._arrtk.createButton(self._screen, text="Copier le code RGB",
-                                                        bg=self._btnColor, fg=self._btnTexteColor,
-                                                        ppolice="Arial",ptaille=15)
+        buttonSelection = aButton(self._screen, text="Selectionner la couleur",command=self.__selecteur)
+        self.__buttonCopiHTLM = aButton(self._screen, text="Copier le code HTML")
+        self.__buttonCopiRGB = aButton(self._screen, text="Copier le code RGB")
         #affichage
         self._arrtk.placeCenter(self.__cadreColor)
         cadreNoir.pack(side="right")
