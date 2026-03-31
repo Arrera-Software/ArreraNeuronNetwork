@@ -20,9 +20,9 @@ class GUICalculatrice(GuiBase) :
         self.__fhistorique = aFrame(self._screen)
         # Partie Complex
         self.__fComplex = aFrame(self._screen)
-        fEntryNB1 = aFrame(self.__fComplex)
-        fOperateurComplex = aFrame(self.__fComplex)
-        fEntryNB2 = aFrame(self.__fComplex)
+        fEntryNB1 = aFrame(self.__fComplex,fg_color=self.__fComplex.cget("fg_color"))
+        fOperateurComplex = aFrame(self.__fComplex,fg_color=self.__fComplex.cget("fg_color"))
+        fEntryNB2 = aFrame(self.__fComplex,fg_color=self.__fComplex.cget("fg_color"))
         # Partie pythagore
         self.__fPythagore = aFrame(self._screen)
 
@@ -147,24 +147,24 @@ class GUICalculatrice(GuiBase) :
         btnBackHist = aButton(self.__fhistorique, text="Retour",command=self.__viewCalcule)
 
         # Frame Complex
-        lTitleNombreComplex = aLabel(self.__fComplex, text="Nombre Complex")
+        lTitleNombreComplex = aLabel(self.__fComplex, text="Nombre Complex",police_size=30)
 
         lComplexNB1 = aLabel(fEntryNB1, text=" j ")
-        self.__entryComplexNB1_1 = aEntry(fEntryNB1)
-        self.__entryComplexNB1_2 = aEntry(fEntryNB1)
+        self.__entryComplexNB1_1 = aEntry(fEntryNB1,width=100)
+        self.__entryComplexNB1_2 = aEntry(fEntryNB1,width=100)
 
         lComplexNB2 = aLabel(fEntryNB2, text=" j ")
-        self.__entryComplexNB2_1 = aEntry(fEntryNB2)
-        self.__entryComplexNB2_2 = aEntry(fEntryNB2)
+        self.__entryComplexNB2_1 = aEntry(fEntryNB2,width=100)
+        self.__entryComplexNB2_2 = aEntry(fEntryNB2,width=100)
 
         # Bouton operateur Complex
-        btnComplexPlus = aButton(fOperateurComplex, text="+",command=self.__additionComplex)
-        btnComplexMoin = aButton(fOperateurComplex, text="-",command=self.__soustrationComplex)
-        btnComplexFois = aButton(fOperateurComplex, text="*",command=self.__multiplicationComplex)
-        btnComplexDiv = aButton(fOperateurComplex, text="/",command=self.__divisionComplex)
+        btnComplexPlus = aButton(fOperateurComplex, text="+",command=lambda : self.__calcule_complex("plus"))
+        btnComplexMoin = aButton(fOperateurComplex, text="-",command=lambda : self.__calcule_complex("moin"))
+        btnComplexFois = aButton(fOperateurComplex, text="*",command=lambda : self.__calcule_complex("fois"))
+        btnComplexDiv = aButton(fOperateurComplex, text="/",command=lambda : self.__calcule_complex("div"))
 
         # Resultat Complex
-        self.__lResultatComplex = aLabel(self.__fComplex,text="")
+        self.__lResultatComplex = aLabel(self.__fComplex,text="Résultat : en attente",police_size=25)
 
         btnBackComplex = aButton(self.__fComplex, text="Retour",command=self.__viewCalcule)
 
@@ -224,26 +224,27 @@ class GUICalculatrice(GuiBase) :
         self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
         fclavier.grid(row=1, column=0, sticky="nsew", padx=8, pady=(0, 8))
         # Frame Complex
-        self.__entryComplexNB1_1.grid(row=0, column=0)
-        self.__entryComplexNB1_2.grid(row=0, column=1)
-        lComplexNB1.grid(row=0, column=0)
+        lTitleNombreComplex.grid(row=0, column=0, pady=(10, 0))
 
-        self.__entryComplexNB1_1.grid(row=0, column=0)
-        self.__entryComplexNB1_2.grid(row=0, column=1)
-        lComplexNB2.grid(row=0, column=0)
+        self.__entryComplexNB1_1.grid(row=0, column=0, padx=(0, 5))
+        self.__entryComplexNB1_2.grid(row=0, column=1, padx=(0, 5))
+        lComplexNB1.grid(row=0, column=2)
 
-        btnComplexPlus.grid(row=0, column=0)
-        btnComplexMoin.grid(row=0, column=0)
-        btnComplexFois.grid(row=0, column=1)
-        btnComplexDiv.grid(row=0, column=1)
+        self.__entryComplexNB2_1.grid(row=0, column=0, padx=(0, 5))
+        self.__entryComplexNB2_2.grid(row=0, column=1, padx=(0, 5))
+        lComplexNB2.grid(row=0, column=2)
 
-        lTitleNombreComplex.grid(row=0, column=0, sticky="n", padx=10, pady=(10, 0))
-        fEntryNB1.grid(row=2, column=0, sticky="n", padx=10, pady=(0, 8))
-        fOperateurComplex.grid(row=3, column=0, sticky="n", padx=10, pady=(0, 8))
-        fEntryNB2.grid(row=4, column=0, sticky="n", padx=10, pady=(0, 8))
-        self.__lResultatComplex.grid(row=5, column=0, sticky="n", padx=10, pady=(0, 8))
+        btnComplexPlus.grid(row=0, column=0, padx=5, pady=5)
+        btnComplexMoin.grid(row=0, column=1, padx=5, pady=5)
+        btnComplexFois.grid(row=1, column=0, padx=5, pady=5)
+        btnComplexDiv.grid(row=1, column=1, padx=5, pady=5)
 
-        btnBackComplex.grid(row=6, column=0, sticky="ew", padx=10, pady=(0, 10))
+        fEntryNB1.grid(row=2, column=0, pady=(0, 15))
+        fEntryNB2.grid(row=3, column=0, pady=(0, 20))
+        fOperateurComplex.grid(row=4, column=0, pady=(0, 15))
+        self.__lResultatComplex.grid(row=5, column=0, pady=(0, 10))
+
+        btnBackComplex.grid(row=7, column=0, sticky="ew", padx=20, pady=(0, 20))
 
         lTitlePythagore.grid(row=0, column=0, columnspan=5, sticky="n", pady=(10, 20))
         self.__entryPythagoreNB1.grid(row=1, column=1, sticky="", padx=(10, 0), pady=(0, 12))
@@ -355,60 +356,44 @@ class GUICalculatrice(GuiBase) :
             self.__ecritureCarractere(str(math.degrees(int(contenu))))
         self._screen.update()
 
-    def __additionComplex(self):
-        """Additionne deux nombres complexes."""
-        try:
+    def __calcule_complex(self,calcule:str):
+        """
+        :param calcule: plus,moin,fois,div
+        :return:
+        """
+        try :
             nb1_1 = int(self.__entryComplexNB1_1.get())
             nb1_2 = int(self.__entryComplexNB1_2.get())
             nb2_1 = int(self.__entryComplexNB2_1.get())
             nb2_2 = int(self.__entryComplexNB2_2.get())
+
+            self.__entryComplexNB1_1.delete(0, END)
+            self.__entryComplexNB1_2.delete(0, END)
+            self.__entryComplexNB2_1.delete(0, END)
+            self.__entryComplexNB2_2.delete(0, END)
+        except ValueError:
+            self.__lResultatComplex.configure(text="Erreur 'Nombre invalide'")
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+            return
+
+        if calcule == "plus":
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().aditionNbComplex()
-            self.__lResultatComplex.configure(text=str(resultat))
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
-        self._screen.update()
-
-    def __soustrationComplex(self):
-        """Additionne deux nombres complexes."""
-        try:
-            nb1_1 = int(self.__entryComplexNB1_1.get())
-            nb1_2 = int(self.__entryComplexNB1_2.get())
-            nb2_1 = int(self.__entryComplexNB2_1.get())
-            nb2_2 = int(self.__entryComplexNB2_2.get())
+        elif calcule == "moin":
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().soustrationNbComplex()
-            self.__lResultatComplex.configure(text=str(resultat))
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
-        self._screen.update()
-
-    def __multiplicationComplex(self):
-        """Additionne deux nombres complexes."""
-        try:
-            nb1_1 = int(self.__entryComplexNB1_1.get())
-            nb1_2 = int(self.__entryComplexNB1_2.get())
-            nb2_1 = int(self.__entryComplexNB2_1.get())
-            nb2_2 = int(self.__entryComplexNB2_2.get())
+        elif calcule == "fois":
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().multiplicationNbComplex()
-            self.__lResultatComplex.configure(text=str(resultat))
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
-        self._screen.update()
-
-    def __divisionComplex(self):
-        try:
-            nb1_1 = int(self.__entryComplexNB1_1.get())
-            nb1_2 = int(self.__entryComplexNB1_2.get())
-            nb2_1 = int(self.__entryComplexNB2_1.get())
-            nb2_2 = int(self.__entryComplexNB2_2.get())
+        elif calcule == "div":
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setComplexNb(nb1_1, nb1_2, nb2_1, nb2_2)
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().divisionNbComplex()
-            self.__lResultatComplex.configure(text=str(resultat))
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
-        self._screen.update()
+        else :
+            self.__lResultatComplex.configure(text="Erreur 'Operateur inconnu'")
+            showerror("Erreur","Operateur inconnu")
+            return
+
+        self.__lResultatComplex.configure(text=str(resultat))
 
     def __calcule_pythagore(self,theoreme:bool):
         """Calcule Pythagore
