@@ -33,6 +33,8 @@ gest = gestionnaire(conf)
 # Récupération du gestionnaire de GUI
 gest_gui = gest.getGestGUI()
 
+fnc_codehelp = gest.getGestFNC().getFNCCodeHelp()
+
 # Créer la fenêtre principale
 window = aTk(theme_file="asset/theme/theme_default.json")
 window.title("Test des interfaces graphiques")
@@ -58,7 +60,11 @@ gui_to_test = {
     "Lecture": lambda: gest_gui.setGUIActive("lecture") and gest_gui.launch_gui(),
     "Arrera Work": lambda: gest_gui.setGUIActive("work") and gest_gui.launch_gui(),
     "Traducteur": lambda: gest_gui.setGUIActive("traducteur") and gest_gui.launch_gui(),
-    "Resumer": lambda: gest_gui.activeViewResumer(dict={}, list=[], intIn=0)
+    "Resumer": lambda: gest_gui.activeViewResumer(dict={}, list=[], intIn=0),
+    "Color Select" : lambda : (fnc_codehelp.setGUICodeHelp("GUIColorSelector"),fnc_codehelp.launchGui()),
+    "Github" : lambda : (fnc_codehelp.setGUICodeHelp("GUIGithubGestion"),fnc_codehelp.launchGui()),
+    "Librairy" : lambda : (fnc_codehelp.setGUICodeHelp("GUILibrairy"),fnc_codehelp.launchGui()),
+    "Orga Var" : lambda : (fnc_codehelp.setGUICodeHelp("GUIOrgaVar"),fnc_codehelp.launchGui()),
 }
 
 
