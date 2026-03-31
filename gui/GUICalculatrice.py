@@ -140,7 +140,7 @@ class GUICalculatrice(GuiBase) :
         btnHist = aButton(fclavier, text="Historique",command=self.__viewHistorique)
 
         # Frame Historique
-        labelHist = aLabel(self.__fhistorique, text="Historique")
+        labelHist = aLabel(self.__fhistorique, text="Historique",police_size=30)
         self.__affichageHistorique = aText(self.__fhistorique)
         scroll_y = ctk.CTkScrollbar(self.__fhistorique, orientation="vertical", command=self.__affichageHistorique.yview)
         self.__affichageHistorique.configure(state='disabled')
@@ -353,7 +353,12 @@ class GUICalculatrice(GuiBase) :
             self.__ecritureCarractere("Erreur 'clear pour uttiliser la calculatrice'")
         else:
             self.__zoneCalcule.delete("1.0", END)
-            self.__ecritureCarractere(str(math.degrees(int(contenu))))
+            try :
+                self.__ecritureCarractere(str(math.degrees(int(contenu))))
+            except ValueError:
+                self.__zoneCalcule.delete("1.0", END)
+                self.__ecritureCarractere("Impossible de faire la conversion")
+
         self._screen.update()
 
     def __calcule_complex(self,calcule:str):
