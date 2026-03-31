@@ -60,6 +60,7 @@ class GUICalculatrice(GuiBase) :
         self.__fPythagore.grid_columnconfigure(2, weight=0, minsize=60)
         self.__fPythagore.grid_columnconfigure(3, weight=0)
         self.__fPythagore.grid_columnconfigure(4, weight=1)
+        self.__fPythagore.grid_rowconfigure(0, weight=1)
         self.__fPythagore.grid_rowconfigure(3, weight=1)
 
         # widget
@@ -168,11 +169,11 @@ class GUICalculatrice(GuiBase) :
         btnBackComplex = aButton(self.__fComplex, text="Retour",command=self.__viewCalcule)
 
         # Partie Pythagore
-        lTitlePythagore = aLabel(self.__fPythagore, text="Theoreme de Pythagore")
-        self.__entryPythagoreNB1 = aEntry(self.__fPythagore)
-        self.__entryPythagoreNB2 = aEntry(self.__fPythagore)
-        btnPythagoreTheoreme = aButton(self.__fPythagore, text="Theoreme",command=self.__theoremePythagore)
-        btnPythagoreRecibroque = aButton(self.__fPythagore, text="Réciproque",command=self.__reciproquePythagore)
+        lTitlePythagore = aLabel(self.__fPythagore, text="Theoreme de Pythagore",police_size=30)
+        self.__entryPythagoreNB1 = aEntryLengend(self.__fPythagore,text="a")
+        self.__entryPythagoreNB2 = aEntryLengend(self.__fPythagore,text="b")
+        btnPythagoreTheoreme = aButton(self.__fPythagore, text="Theoreme",command=lambda : self.__calcule_pythagore(True))
+        btnPythagoreRecibroque = aButton(self.__fPythagore, text="Réciproque",command=lambda : self.__calcule_pythagore(False))
         btnBackPythagore = aButton(self.__fPythagore, text="Retour",command=self.__viewCalcule)
 
         # Affichage des widgets
@@ -409,38 +410,35 @@ class GUICalculatrice(GuiBase) :
             showerror("Erreur", "Veuillez entrer des nombres valides.")
         self._screen.update()
 
-    def __theoremePythagore(self):
-        """Calcule le théorème de Pythagore."""
+    def __calcule_pythagore(self,theoreme:bool):
+        """Calcule Pythagore
+        :arg theoreme: True pour le théorème de Pythagore, False pour la réciproque
+        """
         try:
-            a = int(self.__entryPythagoreNB1.get())
-            b = int(self.__entryPythagoreNB2.get())
+            a = int(self.__entryPythagoreNB1.getEntry().get())
+            b = int(self.__entryPythagoreNB2.getEntry().get())
             self._gestionnaire.getGestFNC().getFNCCalculatrice().setNbPythagore(a, b)
+            self.__entryPythagoreNB1.getEntry().delete(0, END)
+            self.__entryPythagoreNB2.getEntry().delete(0, END)
+            self.__zoneCalcule.delete("1.0", END)
+            self.__viewCalcule()
+            self._screen.update()
+        except ValueError:
+            showerror("Erreur", "Veuillez entrer des nombres valides.")
+            return
+
+        if theoreme:
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().theoremePythagore()
             calcule = self._gestionnaire.getGestFNC().getFNCCalculatrice().getCalculePythagore()
-            self.__viewCalcule()
-            self.__zoneCalcule.delete("1.0", END)
-            self.__ecritureCarractere(f"{calcule} = {resultat}")
-            self.__entryPythagoreNB1.delete(0, END)
-            self.__entryPythagoreNB2.delete(0, END)
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
-        self._screen.update()
-
-    def __reciproquePythagore(self):
-        """Calcule le théorème de Pythagore."""
-        try:
-            a = int(self.__entryPythagoreNB1.get())
-            b = int(self.__entryPythagoreNB2.get())
-            self._gestionnaire.getGestFNC().getFNCCalculatrice().setNbPythagore(a, b)
+        else :
+            if b > a :
+                showerror("Erreur","Impossible de faire la reciproque de Pythagore")
+                return
             resultat = self._gestionnaire.getGestFNC().getFNCCalculatrice().reciproquePythagore()
             calcule = self._gestionnaire.getGestFNC().getFNCCalculatrice().getCalculePythagore()
-            self.__viewCalcule()
-            self.__zoneCalcule.delete("1.0", END)
-            self.__ecritureCarractere(f"{calcule} = {resultat}")
-            self.__entryPythagoreNB1.delete(0, END)
-            self.__entryPythagoreNB2.delete(0, END)
-        except ValueError:
-            showerror("Erreur", "Veuillez entrer des nombres valides.")
+
+        self.__ecritureCarractere(f"{calcule} = {resultat}")
+
         self._screen.update()
 
     def activeCalcule(self):
