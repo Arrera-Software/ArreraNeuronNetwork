@@ -38,13 +38,32 @@ class CCHcolorSelector(CCHguiBase):
         f_main.grid_columnconfigure(1, weight=1)
         f_main.grid_rowconfigure(0, weight=1)
 
+        f_footer.grid_columnconfigure(0, weight=1)
+        f_footer.grid_columnconfigure(1, weight=1)
+        f_footer.grid_rowconfigure(0, weight=1)
+
         #label
-        #self.__labelIndicationCode = aLabel(self._screen, text="Code HTML : #ffffff \nCode RGB : (255,255,255)", justify="left")
         label_title = aLabel(f_header, text="Codehelp : Selecteur de couleur", anchor="center",font=("Roboto",30,"bold"))
         #declaration des bouton
         buttonSelection = aButton(f_btn, text="Selectionner la couleur",command=self.__selecteur)
         self.__buttonCopiHTLM = aButton(f_btn, text="Copier le code HTML")
         self.__buttonCopiRGB = aButton(f_btn, text="Copier le code RGB")
+        # Entry
+        f_code_rgb = aFrame(f_footer)
+        l_seperator = [aLabel(f_code_rgb, text="Code RGB : (",font=("Roboto", 15, "bold")),
+                       aLabel(f_code_rgb, text=",",font=("Roboto", 15, "bold")),
+                       aLabel(f_code_rgb, text=",",font=("Roboto", 15, "bold")),
+                       aLabel(f_code_rgb, text=")",font=("Roboto", 15, "bold"))]
+        self.__e_red = aEntry(f_code_rgb)
+        self.__e_green = aEntry(f_code_rgb)
+        self.__e_blue = aEntry(f_code_rgb)
+
+        self.__entry_code_html = aEntryLengend(f_footer,text="Code HTML",gridUsed=True)
+
+        for i in range(7):
+            f_code_rgb.grid_columnconfigure(i, weight=0)
+
+        f_code_rgb.grid_rowconfigure(0, weight=1)
 
         #affichage
         f_header.grid(row=0, column=0, sticky="ew", padx=10, pady=5)
@@ -61,6 +80,16 @@ class CCHcolorSelector(CCHguiBase):
         self.__buttonCopiRGB.grid(row=5, column=0, pady=10)
 
         f_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=5)
+        self.__entry_code_html.grid(row=0,column=0,sticky="w",padx=20,pady=10)
+        f_code_rgb.grid(row=0,column=1,sticky="e",padx=20,pady=10)
+
+        l_seperator[0].grid(row=0, column=0)
+        self.__e_red.grid(row=0, column=1)
+        l_seperator[1].grid(row=0, column=2)
+        self.__e_green.grid(row=0, column=3)
+        l_seperator[2].grid(row=0, column=4)
+        self.__e_blue.grid(row=0, column=5)
+        l_seperator[3].grid(row=0, column=6)
 
     def __selecteur(self):
         self.__color = colorchooser.askcolor(title="Ryley : CodeHelp selecteur de couleur")
