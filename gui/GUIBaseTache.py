@@ -62,7 +62,7 @@ class GUIBaseTache(GuiBase):
                                                      width=32, height=32)
         # Widgets
         labelLogo = aLabel(frameTitle,text="",image=imgLogo)
-        labelTitle = aLabel(frameTitle,text=self._title,police_size=20)
+        labelTitle = aLabel(frameTitle,text=self._title,police_size=20,wraplength=100)
         btnAddTask = aButton(frameTitle,text="",image=imgPlus,command=self.__viewAddTask)
         btnDelTask = aButton(frameTitle,text="",image=imgSuppr,command=self.__viewSuppr)
         self.__btnFinishTask = aButton(frameTitle,text="",image=self.__imgFinish)
