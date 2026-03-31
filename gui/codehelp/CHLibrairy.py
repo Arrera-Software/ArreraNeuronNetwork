@@ -1,5 +1,5 @@
 from tkinter import StringVar
-
+from librairy.arrera_tk import *
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
 import webbrowser as w
 import requests
@@ -42,19 +42,16 @@ class CHLibrairy(CCHguiBase):
         # Var
         self.__varName = StringVar(self._screen)
         # Frame
-        self.__welcomeFrame = self._arrtk.createFrame(self._screen,width=700, height=500)
-        self.__errorFrame = self._arrtk.createFrame(self._screen,width=700, height=500)
+        self.__welcomeFrame = aFrame(self._screen,width=700, height=500)
+        self.__errorFrame = aFrame(self._screen,width=700, height=500)
 
         # Widget
         # welcome Frame
-        labelAcceuilTop = self._arrtk.createLabel(self.__welcomeFrame,text="Arrera librairie"
-                                                  ,ppolice="arial",ptaille=25)
+        labelAcceuilTop = aLabel(self.__welcomeFrame,text="Arrera librairie")
         self.__optionName = None
-        btnView = self._arrtk.createButton(self.__welcomeFrame, text="Consulter", bg=self._btnColor,
-                                           fg=self._btnTexteColor,ppolice="Arial",ptaille=25)
+        btnView = aButton(self.__welcomeFrame, text="Consulter")
         # Error Frame
-        labelError = self._arrtk.createLabel(self.__errorFrame,text="Impossible de récuper l'index",
-                                             ppolice="arial",ptaille=25)
+        labelError = aLabel(self.__errorFrame,text="Impossible de récuper l'index")
 
         # Affichage
         self._arrtk.placeTopCenter(labelAcceuilTop)
