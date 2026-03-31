@@ -5,6 +5,11 @@ from tkinter import colorchooser
 class CCHcolorSelector(CCHguiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Selecteur de couleur")
+        self.__color_html = "#ffffff"
+        self.__red = 255
+        self.__green = 255
+        self.__blue = 255
+        self.__color_rgb = f"{self.__red},{self.__green},{self.__blue}"
 
     def _mainframe(self):
 
@@ -49,14 +54,14 @@ class CCHcolorSelector(CCHguiBase):
         self.__buttonCopiHTLM = aButton(f_btn, text="Copier le code HTML")
         self.__buttonCopiRGB = aButton(f_btn, text="Copier le code RGB")
         # Entry
-        f_code_rgb = aFrame(f_footer)
+        f_code_rgb = aFrame(f_footer,fg_color=f_footer.cget("fg_color"))
         l_seperator = [aLabel(f_code_rgb, text="Code RGB : (",font=("Roboto", 15, "bold")),
                        aLabel(f_code_rgb, text=",",font=("Roboto", 15, "bold")),
                        aLabel(f_code_rgb, text=",",font=("Roboto", 15, "bold")),
                        aLabel(f_code_rgb, text=")",font=("Roboto", 15, "bold"))]
-        self.__e_red = aEntry(f_code_rgb)
-        self.__e_green = aEntry(f_code_rgb)
-        self.__e_blue = aEntry(f_code_rgb)
+        self.__e_red = aEntry(f_code_rgb,width=90)
+        self.__e_green = aEntry(f_code_rgb,width=90)
+        self.__e_blue = aEntry(f_code_rgb,width=90)
 
         self.__entry_code_html = aEntryLengend(f_footer,text="Code HTML",gridUsed=True)
 
@@ -91,19 +96,45 @@ class CCHcolorSelector(CCHguiBase):
         self.__e_blue.grid(row=0, column=5)
         l_seperator[3].grid(row=0, column=6)
 
+        self.__update_frame_color()
+
+    def __update_frame_color(self):
+        self.__f_color.configure(fg_color=self.__color_html)
+
+        self.__entry_code_html.getEntry().delete(0, "end")
+        self.__entry_code_html.getEntry().insert(0, self.__color_html)
+
+        self.__e_red.delete(0, "end")
+        self.__e_green.delete(0, "end")
+        self.__e_blue.delete(0, "end")
+        self.__e_red.insert(0, str(self.__red))
+        self.__e_green.insert(0, str(self.__green))
+        self.__e_blue.insert(0, str(self.__blue))
+
+
     def __selecteur(self):
-        self.__color = colorchooser.askcolor(title="Ryley : CodeHelp selecteur de couleur")
-        self.__colorHTLM = str(self.__color[1])
-        self.__colorRGB = str(self.__color[0])
-        self.__f_color.configure(fg_color=self.__colorHTLM)
+        color = colorchooser.askcolor(title="Selection de la couleur")
+        r,g,b = color[0]
+        self.__color_html = str(color[1])
+        self.set_color_rgb(r,g,b)
+
         self.__buttonCopiHTLM.configure(command=self.__copieHTLM)
+
+        self.__update_frame_color()
+
+    def set_color_rgb(self,r,g,b):
+        self.__red = int(r)
+        self.__green = int(g)
+        self.__blue = int(b)
+        self.__color_rgb = f"{self.__red},{self.__green},{self.__blue}"
+
         self.__buttonCopiRGB.configure(command=self.__copieRGB)
-        #self.__labelIndicationCode.configure(text="Code HTML : "+self.__colorHTLM+"\nCode RGB : "+self.__colorRGB)
+
     
     def __copieHTLM(self):
         self._screen.clipboard_clear()
-        self._screen.clipboard_append(self.__colorHTLM)
+        self._screen.clipboard_append(self.__color_html)
     
     def __copieRGB(self):
         self._screen.clipboard_clear()
-        self._screen.clipboard_append(self.__colorRGB)
+        self._screen.clipboard_append(self.__color_rgb)
