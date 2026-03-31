@@ -3,6 +3,7 @@ import webbrowser as w
 from github import Github
 import requests
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
+from librairy.arrera_tk import *
 
 class CHGithub(CCHguiBase):
     def __init__(self,gestionnaire:gestionnaire):
@@ -12,38 +13,25 @@ class CHGithub(CCHguiBase):
 
     def _mainframe(self):
         #Frame
-        self.__frameWelcome = self._arrtk.createFrame(self._screen, width=500, height=500)
-        self.__frameSearch = self._arrtk.createFrame(self._screen, width=500, height=500)
-        self.__frameError = self._arrtk.createFrame(self._screen, width=500, height=500)
-        self.__frameList = self._arrtk.createFrame(self._screen, width=500, height=500)
+        self.__frameWelcome = aFrame(self._screen, width=500, height=500)
+        self.__frameSearch = aFrame(self._screen, width=500, height=500)
+        self.__frameError = aFrame(self._screen, width=500, height=500)
+        self.__frameList = aFrame(self._screen, width=500, height=500)
         # Label
-        labelWelcome = self._arrtk.createLabel(self.__frameWelcome, text="GitHub", ppolice="Arial", ptaille=35)
-        labelError = self._arrtk.createLabel(self.__frameError,
-                                             text="Aucun token enregistrer\nRendez-vous\ndans les parametre pour\nl'enregistrer",
-                                             ppolice="Arial", ptaille=25)
-        labelSearch = self._arrtk.createLabel(self.__frameSearch, text="Recherche sur Github", ppolice="Arial",
-                                              ptaille=25)
+        labelWelcome = aLabel(self.__frameWelcome, text="GitHub")
+        labelError = aLabel(self.__frameError,text="Aucun token enregistrer\nRendez-vous\ndans les parametre pour\nl'enregistrer")
+        labelSearch = aLabel(self.__frameSearch, text="Recherche sur Github")
         # BTN
-        btnWelcomeDirectory = self._arrtk.createButton(self.__frameWelcome, text="Vos depot", bg=self._btnColor,
-                                           fg=self._btnTexteColor, ppolice="Arial", ptaille=25,
-                                           command=self.__GUIListDepos)
-        btnWelcomeSearch = self._arrtk.createButton(self.__frameWelcome, text="Recherche", bg=self._btnColor,
-                                                fg=self._btnTexteColor, ppolice="Arial", ptaille=25,
-                                                command=self.__GUISearch)
-        btnValidateSearch = self._arrtk.createButton(self.__frameSearch, text="Valider", bg=self._btnColor,
-                                             fg=self._btnTexteColor, ppolice="Arial", ptaille=15, command=self.__search)
-        btnBackSearch = self._arrtk.createButton(self.__frameSearch, text="Retour", bg=self._btnColor,
-                                                 fg=self._btnTexteColor, ppolice="Arial", ptaille=15,command=self.__backMain)
-        btnErrorDirectory = self._arrtk.createButton(self.__frameError, text="Quitter", bg=self._btnColor,
-                                            fg=self._btnTexteColor, ppolice="Arial", ptaille=15,
-                                            command=self.__backMain)
-        btnListQuit = self._arrtk.createButton(self.__frameList, text="Quitter", bg=self._btnColor,
-                                               fg=self._btnTexteColor, ppolice="Arial", ptaille=15,
-                                               width=self.__frameList.winfo_reqwidth(), command=self.__backMain)
+        btnWelcomeDirectory = aButton(self.__frameWelcome, text="Vos depot",command=self.__GUIListDepos)
+        btnWelcomeSearch = aButton(self.__frameWelcome, text="Recherche",command=self.__GUISearch)
+        btnValidateSearch = aButton(self.__frameSearch, text="Valider", command=self.__search)
+        btnBackSearch = aButton(self.__frameSearch, text="Retour",command=self.__backMain)
+        btnErrorDirectory = aButton(self.__frameError, text="Quitter", command=self.__backMain)
+        btnListQuit = aButton(self.__frameList, text="Quitter",command=self.__backMain)
         #scrollbar
         self.__scroll = Scrollbar(self.__frameList,orient="vertical")
         #Entry
-        self.__entrySearch = self._arrtk.createEntry(self.__frameSearch, ppolice="Arial", ptaille=25, width=400)
+        self.__entrySearch = aEntry(self.__frameSearch,width=400)
         # Listbox
         self.__boxlistDepot = Listbox(self.__frameList, width=500, height=500)
         #Affichage
