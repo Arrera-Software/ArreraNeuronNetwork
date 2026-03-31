@@ -1,3 +1,5 @@
+from tkinter.messagebox import showerror
+
 from librairy.arrera_tk import *
 from gui.codehelp.CCHguiBase import*
 from tkinter import colorchooser
@@ -96,6 +98,13 @@ class CCHcolorSelector(CCHguiBase):
         self.__e_blue.grid(row=0, column=5)
         l_seperator[3].grid(row=0, column=6)
 
+        # Event HTML
+        self.__e_red.bind("<KeyRelease>", self.__on_rgb_change)
+        self.__e_green.bind("<KeyRelease>", self.__on_rgb_change)
+        self.__e_blue.bind("<KeyRelease>", self.__on_rgb_change)
+
+        self.__entry_code_html.getEntry().bind("<KeyRelease>", self.__on_html_change)
+
         self.__update_frame_color()
 
     def __update_frame_color(self):
@@ -138,3 +147,51 @@ class CCHcolorSelector(CCHguiBase):
     def __copieRGB(self):
         self._screen.clipboard_clear()
         self._screen.clipboard_append(self.__color_rgb)
+
+    def __on_rgb_change(self, event=None):
+        try:
+            r = int(self.__e_red.get())
+            g = int(self.__e_green.get())
+            b = int(self.__e_blue.get())
+
+            # clamp (sécurité 0-255)
+            r = max(0, min(255, r))
+            g = max(0, min(255, g))
+            b = max(0, min(255, b))
+
+            color_hex = f"#{r:02x}{g:02x}{b:02x}"
+
+            self.__entry_code_html.getEntry().delete(0, "end")
+            self.__entry_code_html.getEntry().insert(0, color_hex)
+
+            self.set_color_rgb(r, g, b)
+            self.__update_frame_color()
+            self.__color_html = color_hex
+
+        except ValueError:
+            pass
+
+    def __on_html_change(self, event=None):
+        value = self.__entry_code_html.getEntry().get().strip()
+
+        if value.startswith("#"):
+            value = value[1:]
+
+        if len(value) != 6:
+            return
+
+        try:
+            r = int(value[0:2], 16)
+            g = int(value[2:4], 16)
+            b = int(value[4:6], 16)
+
+            self.set_color_rgb(r, g, b)
+
+            # update preview
+            color_hex = f"#{value}"
+            self.__f_color.configure(fg_color=color_hex)
+
+            self.__color_html = color_hex
+
+        except ValueError:
+            pass
