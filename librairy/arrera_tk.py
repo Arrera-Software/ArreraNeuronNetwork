@@ -353,10 +353,14 @@ class aOptionMenuLengend(placement_Tool_Kit_internet, ctk.CTkFrame):
 
 
 class aHourPickers(placement_Tool_Kit_internet, ctk.CTkFrame):
-    def __init__(self, master):
+    def __init__(self, master,minute_pickers:bool = False, **kwargs):
         super().__init__(master)
 
-        hours = [f"{h:02d}" for h in range(24)]
+        if not minute_pickers:
+            hours = [f"{h:02d}" for h in range(24)]
+        else :
+            hours = [f"{h:02d}" for h in range(60)]
+
         minutes = [f"{m:02d}" for m in range(60)]
 
         self.__hour = aOptionMenu(self, value=hours, width=10)

@@ -81,11 +81,11 @@ class GUIHorloge(GuiBase):
         btnChrono = aButton(self.__frameNav,text="",image=imgChrono,
                                              command=self.__viewChrono)
         # Horloge
-        self.__labelViewClock = self._arrtk.createLabel(self.__frameHorloge,text="00:00:00")
+        self.__labelViewClock = aLabel(self.__frameHorloge,text="00:00:00")
 
         # Minuteur
         # Set Minuteur
-        self.__picket_minuteur = aHourPickers(self.__frameSetMinuteur)
+        self.__picket_minuteur = aHourPickers(self.__frameSetMinuteur,minute_pickers=True)
         btnReset = aButton(self.__frameSetMinuteur,text="Reset"
                                             ,command=self.__resetMinuteur)
         btnStartMinuteur1 = aButton(self.__frameSetMinuteur,text="Start",
