@@ -374,6 +374,12 @@ class aHourPickers(placement_Tool_Kit_internet, ctk.CTkFrame):
     def getValueMinute(self):
         return self.__minute.getValue()
 
+    def setValueMinute(self, minute:str):
+        self.__minute.set(minute)
+
+    def setValueHour(self,hour:str):
+        self.__hour.set(hour)
+
 
 class aSwicht(placement_Tool_Kit_internet, ctk.CTkSwitch):
     def __init__(self, master, text="Arrera Button Swicht", default_value: bool = False, **kwargs):
