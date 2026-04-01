@@ -354,7 +354,7 @@ class aOptionMenuLengend(placement_Tool_Kit_internet, ctk.CTkFrame):
 
 class aHourPickers(placement_Tool_Kit_internet, ctk.CTkFrame):
     def __init__(self, master,minute_pickers:bool = False, **kwargs):
-        super().__init__(master)
+        super().__init__(master,fg_color=master.cget("fg_color"),**kwargs)
 
         if not minute_pickers:
             hours = [f"{h:02d}" for h in range(24)]
