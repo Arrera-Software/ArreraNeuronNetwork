@@ -62,7 +62,7 @@ class CHLibrairy(CCHguiBase):
         label_title = aLabel(self.__h_frame, text="CodeHelp : librairie",police_size=30)
 
         # Error Frame
-        label_error = aLabel(self.__f_error, text="Impossible de récuper l'index",police_size=25)
+        label_error = aLabel(self.__f_error, text="Impossible de récupérer l'index",police_size=25)
 
         self.__readme_box = aText(self.__right_panel)
         self.__readme_box.configure(state="disabled")

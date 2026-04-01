@@ -1,12 +1,10 @@
-from tkinter.messagebox import showerror
-
 from librairy.arrera_tk import *
 from gui.codehelp.CCHguiBase import*
 from tkinter import colorchooser
 
 class CCHcolorSelector(CCHguiBase):
     def __init__(self,gestionnaire:gestionnaire):
-        super().__init__(gestionnaire,"Selecteur de couleur")
+        super().__init__(gestionnaire,"Sélecteur de couleur")
         self.__color_html = "#ffffff"
         self.__red = 255
         self.__green = 255
@@ -50,9 +48,9 @@ class CCHcolorSelector(CCHguiBase):
         f_footer.grid_rowconfigure(0, weight=1)
 
         #label
-        label_title = aLabel(f_header, text="Codehelp : Selecteur de couleur", anchor="center",font=("Roboto",30,"bold"))
+        label_title = aLabel(f_header, text="CodeHelp : Sélecteur de couleur", anchor="center",font=("Roboto",30,"bold"))
         #declaration des bouton
-        buttonSelection = aButton(f_btn, text="Selectionner la couleur",command=self.__selecteur)
+        buttonSelection = aButton(f_btn, text="Sélectionner la couleur",command=self.__selecteur)
         self.__buttonCopiHTLM = aButton(f_btn, text="Copier le code HTML")
         self.__buttonCopiRGB = aButton(f_btn, text="Copier le code RGB")
         # Entry
@@ -122,7 +120,7 @@ class CCHcolorSelector(CCHguiBase):
 
 
     def __selecteur(self):
-        color = colorchooser.askcolor(title="Selection de la couleur")
+        color = colorchooser.askcolor(title="Sélection de la couleur")
         r,g,b = color[0]
         self.__color_html = str(color[1])
         self.set_color_rgb(r,g,b)

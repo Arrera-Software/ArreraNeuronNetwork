@@ -43,8 +43,8 @@ class CHGithub(CCHguiBase):
         self.__f_load.grid_columnconfigure(0, weight=1)
 
         # Label
-        label_title = aLabel(f_hearder, text="CodeHelp : Github",font=("Roboto",30,"bold"))
-        self.__l_load = aLabel(self.__f_load,text="Chargement des depots",font=("Roboto",25,"bold"))
+        label_title = aLabel(f_hearder, text="CodeHelp : GitHub",font=("Roboto",30,"bold"))
+        self.__l_load = aLabel(self.__f_load,text="Chargement des dépôts",font=("Roboto",25,"bold"))
 
         self.__label_error = aLabel(self.__f_error,font=("Roboto",25,"bold"))
 
@@ -115,7 +115,7 @@ class CHGithub(CCHguiBase):
             self.__f_depot.grid_columnconfigure(0, weight=1)
         else :
             self.__f_load.grid_forget()
-            self.__label_error.configure(text="Erreur lors de la récupération des dépots")
+            self.__label_error.configure(text="Erreur lors de la récupération des dépôts")
             self.__f_error.grid(row=1, column=0, sticky="nsew")
 
     def __update_during_load_depots(self):
@@ -125,9 +125,9 @@ class CHGithub(CCHguiBase):
 
     def __show_error(self):
         if not self._gestionnaire.getNetworkObjet().getEtatInternet():
-            self.__label_error.configure(text="L'application a besoin d'une\nconnexion internet pour fonctionner")
+            self.__label_error.configure(text="L'application a besoin d'une\nconnexion Internet pour fonctionner")
         else :
-            self.__label_error.configure(text="Aucun token enregistrer\nRendez-vous\ndans les parametre pour\nl'enregistrer")
+            self.__label_error.configure(text="Aucun token enregistré\nRendez-vous\ndans les paramètres pour\nl'enregistrer")
         self.__f_error.grid(row=1, column=0, sticky="nsew")
 
     def __on_click_repo(self, repo_name):
@@ -164,7 +164,7 @@ class CHGithub(CCHguiBase):
         btn_issues = aButton(top_frame, text="Issues",
                                    command=lambda: self.__show_issues(c, s, p))
 
-        btn_web = aButton(self.__f_info, text="Debot github",
+        btn_web = aButton(self.__f_info, text="Dépôt GitHub",
                           command=lambda : w.open(info_depots["link"]))
 
         # Utiliser grid au lieu de pack pour les boutons

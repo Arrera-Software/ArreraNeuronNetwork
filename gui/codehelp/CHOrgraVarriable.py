@@ -206,7 +206,7 @@ class CHOrgraVarriable(CCHguiBase):
             self.__refreshSuppr()
         else :
             showwarning("Imposible de supprimer une varriable","Aucun varriable selectionner")
-    
+
     def __clearMenuSuppr(self):
         self.__menuSuppr.place_forget()
         self.__menuSuppr.destroy()
