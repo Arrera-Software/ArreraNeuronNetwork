@@ -81,34 +81,26 @@ class GUIHorloge(GuiBase):
         btnChrono = aButton(self.__frameNav,text="",image=imgChrono,
                                              command=self.__viewChrono)
         # Horloge
-        self.__labelViewClock = aLabel(self.__frameHorloge,text="00:00:00")
+        self.__labelViewClock = aLabel(self.__frameHorloge,text="00:00:00",font=("Roboto", 45, "bold"))
 
         # Minuteur
         # Set Minuteur
         self.__picket_minuteur = aHourPickers(self.__frameSetMinuteur,minute_pickers=True)
-        btnReset = aButton(self.__frameSetMinuteur,text="Reset"
-                                            ,command=self.__resetMinuteur)
-        btnStartMinuteur1 = aButton(self.__frameSetMinuteur,text="Start",
-                                                     command=self.__startMinuteur)
-        btnStartMinuteur2 = aButton(self.__frameSetMinuteur,text="1 Min",
-                                                     command=self.__setOneMin)
-        btnStartMinuteur3 = aButton(self.__frameSetMinuteur, text="3 Min",
-                                                     command=self.__setThreeMin)
-
+        btnReset = aButton(self.__frameSetMinuteur,text="Reset",command=self.__resetMinuteur)
+        btnStartMinuteur1 = aButton(self.__frameSetMinuteur,text="Start",command=self.__startMinuteur)
+        btnStartMinuteur2 = aButton(self.__frameSetMinuteur,text="1 Min",command=self.__setOneMin)
+        btnStartMinuteur3 = aButton(self.__frameSetMinuteur, text="3 Min",command=self.__setThreeMin)
 
         # View Minuteur
-        self.__labelViewTimeMinuteur = aLabel(self.__frameViewMinuteur,text="00:00:00")
-        btnStopMinuteur = aButton(self.__frameViewMinuteur,text="Stop",
-                                                  command=self.__fncHorloge.stopMinuteur)
+        self.__labelViewTimeMinuteur = aLabel(self.__frameViewMinuteur,text="00:00:00",font=("Roboto", 45, "bold"))
+        btnStopMinuteur = aButton(self.__frameViewMinuteur,text="Stop",command=self.__fncHorloge.stopMinuteur)
 
         # Chrono
-        self.__labelViewChrono = aLabel(self.__frameChrono,text="00:00:00")
+        self.__labelViewChrono = aLabel(self.__frameChrono,text="00:00:00",font=("Roboto", 45, "bold"))
 
-        btnResetChrono = aButton(self.__frameChrono,text="Reset",
-                                                  command=self.__resetChrono)
+        btnResetChrono = aButton(self.__frameChrono,text="Reset",command=self.__resetChrono)
 
-        self.__btnStartStopChrono = aButton(self.__frameChrono,text="Start",
-                                                             command=self.__enableOrDisableChrono)
+        self.__btnStartStopChrono = aButton(self.__frameChrono,text="Start",command=self.__enableOrDisableChrono)
 
         # Placement des widget
         btnHorloge.grid( row=0, column=1, padx=(8, 8), pady=10)
