@@ -1,7 +1,7 @@
 from tkinter.messagebox import showerror
 import threading as th
 from gui.guibase import GuiBase,gestionnaire
-import customtkinter as ctk
+from librairy.arrera_tk import *
 
 class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
@@ -14,14 +14,14 @@ class GUIViewBreef(GuiBase):
         self._screen.grid_rowconfigure(0, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
         # Frame
-        mainFrame = self._arrtk.createFrame(self._screen)
+        mainFrame = aFrame(self._screen)
 
-        weatherFrame = self._arrtk.createFrame(mainFrame)
-        alertFrame = self._arrtk.createFrame(weatherFrame)
+        weatherFrame = aFrame(mainFrame)
+        alertFrame = aFrame(weatherFrame)
 
-        tasksContainer = self._arrtk.createFrame(mainFrame)
-        taskFrame = self._arrtk.createFrame(tasksContainer)
-        taskProjectFrame = self._arrtk.createFrame(tasksContainer)
+        tasksContainer = aFrame(mainFrame,fg_color=mainFrame.cget("fg_color"))
+        taskFrame = aFrame(tasksContainer,fg_color=weatherFrame.cget("fg_color"))
+        taskProjectFrame = aFrame(tasksContainer,fg_color=weatherFrame.cget("fg_color"))
 
         # Configuration
         mainFrame.grid_columnconfigure(0, weight=1)
@@ -54,38 +54,27 @@ class GUIViewBreef(GuiBase):
         tasksContainer.grid_rowconfigure(0, weight=1)
 
         # Widgets
-        labelTitle = self._arrtk.createLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",
-                                             ppolice="Arial",ptaille=30,pstyle="bold")
-        btnRead = self._arrtk.createButton(mainFrame,text="Lire",ppolice="Arial",ptaille=20,command=self.__readBreef,
-                                           pstyle="normal",bg=self._btnColor,fg=self._btnTexteColor)
+        labelTitle = aLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",police_size=35)
+        btnRead = aButton(mainFrame,text="Lire",size=25,command=self.__readBreef)
 
         # Meteo
-        self.__labelLogoMeteo = self._arrtk.createLabel(weatherFrame,text="Logo")
+        self.__labelLogoMeteo = aLabel(weatherFrame,text="Logo")
 
-        self.__lnameTown = self._arrtk.createLabel(weatherFrame,text="Ville",
-                                                   ppolice="Arial",ptaille=30,pstyle="bold",justify="left")
-        self.__ltemp = self._arrtk.createLabel(weatherFrame,text="Temperature",
-                                               ppolice="Arial",ptaille=40,pstyle="bold",justify="left")
-        self.__lweather = self._arrtk.createLabel(weatherFrame,text="description",
-                                                  ppolice="Arial",ptaille=25,pstyle="bold",justify="left")
+        self.__lnameTown = aLabel(weatherFrame,text="Ville",justify="left",police_size=25)
+        self.__ltemp = aLabel(weatherFrame,text="Temperature",justify="left",police_size=25)
+        self.__lweather = aLabel(weatherFrame,text="description",justify="left",police_size=25)
 
-        self.__lAlertRed = self._arrtk.createLabel(alertFrame,text="Alerte",bg="red",
-                                                   ppolice="Arial",ptaille=20,pstyle="bold",justify="left")
-        self.__lAlertOrange = self._arrtk.createLabel(alertFrame,text="Alerte",bg="orange",fg="black",
-                                                      ppolice="Arial",ptaille=20,pstyle="bold",justify="left")
-        self.__lAlertYellow = self._arrtk.createLabel(alertFrame,text="Alerte",bg="yellow",fg="black",
-                                                      ppolice="Arial",ptaille=20,pstyle="bold",justify="left")
-        self.__lNoAlert = self._arrtk.createLabel(alertFrame,text="Aucune d'alerte",
-                                                  ppolice="Arial",ptaille=20,pstyle="bold",justify="left")
+        self.__lAlertRed = aLabel(alertFrame,text="Alerte",justify="left",police_size=25)
+        self.__lAlertOrange = aLabel(alertFrame,text="Alerte",justify="left",police_size=25)
+        self.__lAlertYellow = aLabel(alertFrame,text="Alerte",justify="left",police_size=25)
+        self.__lNoAlert = aLabel(alertFrame,text="Aucune d'alerte",justify="left",police_size=25)
 
         # Task
-        lTitleTask = self._arrtk.createLabel(taskFrame,text="Tâches du jour",
-                                             ppolice="Arial",ptaille=35,pstyle="bold")
-        self.__fViewTask = self._arrtk.createScrollFrame(taskFrame)
+        lTitleTask = aLabel(taskFrame,text="Tâches du jour",police_size=30)
+        self.__fViewTask = aScrollableFrame(taskFrame)
 
-        lTitleTaskProject = self._arrtk.createLabel(taskProjectFrame,text="Tâches sur le projet",
-                                             ppolice="Arial",ptaille=35,pstyle="bold")
-        self.__fViewTaskProject = self._arrtk.createScrollFrame(taskProjectFrame)
+        lTitleTaskProject = aLabel(taskProjectFrame,text="Tâches sur les projets",police_size=30)
+        self.__fViewTaskProject = aScrollableFrame(taskProjectFrame)
         # Placement
         labelTitle.grid(row=0, column=0, sticky="ew", padx=10, pady=(10, 5))
         weatherFrame.grid(row=1, column=0, sticky="ew", padx=10, pady=5)
@@ -128,12 +117,10 @@ class GUIViewBreef(GuiBase):
 
         if len(listTask) != 0:
             for i,task in enumerate(listTask):
-                ltask = self._arrtk.createLabel(frame,text=f"- {task}",
-                                                ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
+                ltask = aLabel(frame,text=f"- {task}",justify="left")
                 ltask.grid(row=i, column=0, sticky="w", padx=8, pady=4)
         else:
-            ltask = self._arrtk.createLabel(frame,text="Aucune tâche à faire !",
-                                            ppolice="Arial",ptaille=20,pstyle="normal",justify="left")
+            ltask = aLabel(frame,text="Aucune tâche à faire !",justify="left")
             ltask.grid(row=0, column=0, sticky="w", padx=8, pady=4)
 
     def __setTaskProjet(self,taskProject:dict):
