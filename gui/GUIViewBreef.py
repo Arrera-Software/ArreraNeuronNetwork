@@ -154,7 +154,7 @@ class GUIViewBreef(GuiBase):
         try :
             imgMeteo = self._arrtk.createImage(meteoDict["icon"],tailleX=100,tailleY=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
-        except:
+        except Exception as e:
             imgMeteo = self._arrtk.createImage(self._gestionnaire.getConfigFile().asset+"meteo/meteo-error.png",
                                                tailleX=100,tailleY=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
