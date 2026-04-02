@@ -1,6 +1,6 @@
 from gui.guibase import GuiBase,gestionnaire
 from tkinter.filedialog import askdirectory,askopenfilename
-import customtkinter as ctk
+from librairy.arrera_tk import *
 from tkinter.messagebox import showerror, showinfo
 from tkinter import StringVar
 from gui.GUITaskProject import GUITaskProject
@@ -33,277 +33,200 @@ class GUIWork(GuiBase):
         self._screen.columnconfigure(2, weight=1)
 
         # Recuperation des image
-        imgTableurAcceuil = self._arrtk.createImage(self.__emplacementAsset + "acceuil/tableur.png",
-                                                    tailleX=100, tailleY=100)
-        imgWordAcceuil = self._arrtk.createImage(self.__emplacementAsset + "acceuil/word.png",
-                                                 tailleX=100, tailleY=100)
-        imgProjectAcceuil = self._arrtk.createImage(self.__emplacementAsset + "acceuil/project.png",
-                                                    tailleX=100, tailleY=100)
+        imgTableurAcceuil = aImage(path_light=self.__emplacementAsset + "acceuil/tableur.png",width=100, height=100)
+        imgWordAcceuil = aImage(path_light=self.__emplacementAsset + "acceuil/word.png",
+                                                 width=100, height=100)
+        imgProjectAcceuil = aImage(path_light=self.__emplacementAsset + "acceuil/project.png",
+                                                    width=100, height=100)
 
-        imgTableurDock = self._arrtk.createImage(self.__emplacementAsset + "acceuil/tableur.png",
-                                                 tailleX=50, tailleY=50)
-        imgWordDock = self._arrtk.createImage(self.__emplacementAsset + "acceuil/word.png",
-                                              tailleX=50, tailleY=50)
-        imgProjectDock = self._arrtk.createImage(self.__emplacementAsset + "acceuil/project.png",
-                                                 tailleX=50, tailleY=50)
-        imgAnnulerDock = self._arrtk.createImage(self.__emplacementAsset + "acceuil/annuler.png",
-                                                 tailleX=50, tailleY=50)
+        imgTableurDock = aImage(path_light=self.__emplacementAsset + "acceuil/tableur.png",
+                                                 width=50, height=50)
+        imgWordDock = aImage(path_light=self.__emplacementAsset + "acceuil/word.png",
+                                              width=50, height=50)
+        imgProjectDock = aImage(path_light=self.__emplacementAsset + "acceuil/project.png",
+                                                 width=50, height=50)
+        imgAnnulerDock = aImage(path_light=self.__emplacementAsset + "acceuil/annuler.png",
+                                                 width=50, height=50)
 
         # Images pour la frame Tableur
-        imgAddComptage = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-comptagexcf.png",
-                                                 tailleX=90, tailleY=90)
-        imgAddMaxmum = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-maxmum.png",
-                                               tailleX=90, tailleY=90)
-        imgAddMinimum = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-minimum.png",
-                                                tailleX=90, tailleY=90)
-        imgAddMoyenne = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-moyenne.png",
-                                                tailleX=90, tailleY=90)
-        imgAddSomme = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-somme.png"
-                                              , tailleX=90, tailleY=90)
-        imgAddValeur = self._arrtk.createImage(self.__emplacementAsset + "tableur/add-valeur.png"
-                                               , tailleX=90, tailleY=90)
-        imgCloseTableur = self._arrtk.createImage(self.__emplacementAsset + "tableur/close-tableur.png"
-                                                  , tailleX=90, tailleY=90)
-        imgOpenTableur = self._arrtk.createImage(self.__emplacementAsset + "tableur/open-tableur.png"
-                                                 , tailleX=90, tailleY=90)
-        imgOpenTableurCoputerSoft = self._arrtk.createImage(self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png"
-                                                            , tailleX=90, tailleY=90)
+        imgAddComptage = aImage(path_light=self.__emplacementAsset + "tableur/add-comptagexcf.png",
+                                                 width=90, height=90)
+        imgAddMaxmum = aImage(path_light=self.__emplacementAsset + "tableur/add-maxmum.png",
+                                               width=90, height=90)
+        imgAddMinimum = aImage(path_light=self.__emplacementAsset + "tableur/add-minimum.png",
+                                                width=90, height=90)
+        imgAddMoyenne = aImage(path_light=self.__emplacementAsset + "tableur/add-moyenne.png",
+                                                width=90, height=90)
+        imgAddSomme = aImage(path_light=self.__emplacementAsset + "tableur/add-somme.png"
+                                              , width=90, height=90)
+        imgAddValeur = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png"
+                                               , width=90, height=90)
+        imgCloseTableur = aImage(path_light=self.__emplacementAsset + "tableur/close-tableur.png"
+                                                  , width=90, height=90)
+        imgOpenTableur = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur.png"
+                                                 , width=90, height=90)
+        imgOpenTableurCoputerSoft = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png"
+                                                            , width=90, height=90)
 
-        imgSupprValeur = self._arrtk.createImage(self.__emplacementAsset + "tableur/suppr-valeur.png"
-                                                 , tailleX=90, tailleY=90)
-        imgViewTableur = self._arrtk.createImage(self.__emplacementAsset + "tableur/view-tableur.png"
-                                                 , tailleX=90, tailleY=90)
+        imgSupprValeur = aImage(path_light=self.__emplacementAsset + "tableur/suppr-valeur.png"
+                                                 , width=90, height=90)
+        imgViewTableur = aImage(path_light=self.__emplacementAsset + "tableur/view-tableur.png"
+                                                 , width=90, height=90)
 
         # Images pour la frame Word
-        imgOpenWord = self._arrtk.createImage(self.__emplacementAsset + "word/open-word.png",
-                                              tailleX=90, tailleY=90)
-        imgOpenWordWithComputer = self._arrtk.createImage(self.__emplacementAsset + "word/open-word-coputer-soft.png",
-                                                          tailleX=90, tailleY=90)
-        imgCloseWord = self._arrtk.createImage(self.__emplacementAsset + "word/close-word.png",
-                                               tailleX=90, tailleY=90)
-        imgReadWord = self._arrtk.createImage(self.__emplacementAsset + "word/read-word.png",
-                                              tailleX=90, tailleY=90)
+        imgOpenWord = aImage(path_light=self.__emplacementAsset + "word/open-word.png",
+                                              width=90, height=90)
+        imgOpenWordWithComputer = aImage(path_light=self.__emplacementAsset + "word/open-word-coputer-soft.png",
+                                                          width=90, height=90)
+        imgCloseWord = aImage(path_light=self.__emplacementAsset + "word/close-word.png",
+                                               width=90, height=90)
+        imgReadWord = aImage(path_light=self.__emplacementAsset + "word/read-word.png",
+                                              width=90, height=90)
 
-        imgWriteWord = self._arrtk.createImage(self.__emplacementAsset + "word/write-word.png",
-                                               tailleX=90, tailleY=90)
+        imgWriteWord = aImage(path_light=self.__emplacementAsset + "word/write-word.png",
+                                               width=90, height=90)
 
         # Images pour la frame Projet
-        imgCreateFileProjet = self._arrtk.createImage(self.__emplacementAsset + "project/create-file-project.png",
-                                                      tailleX=90, tailleY=90)
-        imgCreateProject = self._arrtk.createImage(self.__emplacementAsset + "project/create-projet.png",
-                                                   tailleX=90, tailleY=90)
-        imgOpenFileProjet = self._arrtk.createImage(self.__emplacementAsset + "project/open-file-project.png",
-                                                    tailleX=90, tailleY=90)
-        imgOpenProjet = self._arrtk.createImage(self.__emplacementAsset + "project/open-project.png",
-                                                tailleX=90, tailleY=90)
-        imgSetTypeProjet = self._arrtk.createImage(self.__emplacementAsset + "project/setType-project.png",
-                                                   tailleX=90, tailleY=90)
-        imgTaskSayProjet = self._arrtk.createImage(self.__emplacementAsset + "project/task-say.png",
-                                                   tailleX=90, tailleY=90)
-        imgTaskViewProjet = self._arrtk.createImage(self.__emplacementAsset + "project/view-task-project.png",
-                                                    tailleX=90, tailleY=90)
-        imgCloseProjet = self._arrtk.createImage(self.__emplacementAsset + "project/close-project.png",
-                                                 tailleX=90, tailleY=90)
+        imgCreateFileProjet = aImage(path_light=self.__emplacementAsset + "project/create-file-project.png",
+                                                      width=90, height=90)
+        imgCreateProject = aImage(path_light=self.__emplacementAsset + "project/create-projet.png",
+                                                   width=90, height=90)
+        imgOpenFileProjet = aImage(path_light=self.__emplacementAsset + "project/open-file-project.png",
+                                                    width=90, height=90)
+        imgOpenProjet = aImage(path_light=self.__emplacementAsset + "project/open-project.png",
+                                                width=90, height=90)
+        imgSetTypeProjet = aImage(path_light=self.__emplacementAsset + "project/setType-project.png",
+                                                   width=90, height=90)
+        imgTaskSayProjet = aImage(path_light=self.__emplacementAsset + "project/task-say.png",
+                                                   width=90, height=90)
+        imgTaskViewProjet = aImage(path_light=self.__emplacementAsset + "project/view-task-project.png",
+                                                    width=90, height=90)
+        imgCloseProjet = aImage(path_light=self.__emplacementAsset + "project/close-project.png",
+                                                 width=90, height=90)
 
         # Frames
-        self.__fAcceuil = self._arrtk.createFrame(self._screen)
-        self.__fDock = self._arrtk.createFrame(self._screen, bg="grey", height=70)
-        self.__fTableur = self._arrtk.createFrame(self._screen)
-        self.__fTableurNoOpen = self._arrtk.createFrame(self._screen)
-        self.__fWord = self._arrtk.createFrame(self._screen)
-        self.__fWordNoOpen = self._arrtk.createFrame(self._screen)
-        self.__fProjet = self._arrtk.createFrame(self._screen)
-        self.__fProjetNoOpen = self._arrtk.createFrame(self._screen)
+        self.__fAcceuil = aFrame(self._screen)
+        self.__fDock = aFrame(self._screen,height=70)
+        self.__fTableur = aFrame(self._screen)
+        self.__fTableurNoOpen = aFrame(self._screen)
+        self.__fWord = aFrame(self._screen)
+        self.__fWordNoOpen = aFrame(self._screen)
+        self.__fProjet = aFrame(self._screen)
+        self.__fProjetNoOpen = aFrame(self._screen)
 
-        self.__frameManageTableur = self._arrtk.createFrame(self._screen)
-        self.__frameAddValeur = self._arrtk.createFrame(self.__frameManageTableur)
-        self.__frameAddFormule = self._arrtk.createFrame(self.__frameManageTableur)
-        self.__frameReadTableur = self._arrtk.createFrame(self.__frameManageTableur)
-        self.__frameDelValeurTableur = self._arrtk.createFrame(self.__frameManageTableur)
+        self.__frameManageTableur = aFrame(self._screen)
+        self.__frameAddValeur = aFrame(self.__frameManageTableur)
+        self.__frameAddFormule = aFrame(self.__frameManageTableur)
+        self.__frameReadTableur = aFrame(self.__frameManageTableur)
+        self.__frameDelValeurTableur = aFrame(self.__frameManageTableur)
 
-        self.__frameManageWord = self._arrtk.createFrame(self._screen)
-        self.__fReadWord = self._arrtk.createFrame(self.__frameManageWord)
-        self.__fWriteWord = self._arrtk.createFrame(self.__frameManageWord)
+        self.__frameManageWord = aFrame(self._screen)
+        self.__fReadWord = aFrame(self.__frameManageWord)
+        self.__fWriteWord = aFrame(self.__frameManageWord)
 
         # Widgets dans la frame d'accueil
-        labelTitleAcceuil = self._arrtk.createLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work",
-                                                    ppolice="Arial", ptaille=25)
-        btnArreraTableurAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
-                                                           height=100, image=imgTableurAcceuil,
-                                                           command=self.__activeTableur)
-        btnArreraWordAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        height=100, image=imgWordAcceuil,
-                                                        command=self.__activeWord)
-        btnArreraProjectAcceuil = self._arrtk.createButton(self.__fAcceuil, width=100,bg=self._btnColor,fg=self._btnTexteColor,
-                                                           height=100, image=imgProjectAcceuil,
-                                                           command=self.__activeProjet)
+        labelTitleAcceuil = aLabel(self.__fAcceuil, text=self._gestionnaire.getConfigFile().name + " : Arrera Work")
+        btnArreraTableurAcceuil = aButton(self.__fAcceuil, width=100,height=100, image=imgTableurAcceuil,
+                                                           command=self.__activeTableur,text="")
+        btnArreraWordAcceuil = aButton(self.__fAcceuil, width=100,height=100, image=imgWordAcceuil,
+                                                        command=self.__activeWord,text="")
+        btnArreraProjectAcceuil = aButton(self.__fAcceuil, width=100,height=100, image=imgProjectAcceuil,
+                                                           command=self.__activeProjet,text="")
 
         # Widgets dans la frame dock
-        btnArreraTableurDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        height=60, image=imgTableurDock,
-                                                        command=self.__activeTableur)
-        btnArreraWordDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
-                                                     height=60, image=imgWordDock,
-                                                     command=self.__activeWord)
-        btnArreraProjectDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        height=60, image=imgProjectDock,
-                                                        command=self.__activeProjet)
-        btnCloseAcceuilDock = self._arrtk.createButton(self.__fDock, width=60,bg=self._btnColor,fg=self._btnTexteColor,
-                                                       height=60, image =imgAnnulerDock,
-                                                       command=self.__closeDock)
+        btnArreraTableurDock = aButton(self.__fDock, width=60,height=60, image=imgTableurDock,
+                                                        command=self.__activeTableur,text="")
+        btnArreraWordDock = aButton(self.__fDock, width=60,height=60, image=imgWordDock,
+                                                     command=self.__activeWord,text="")
+        btnArreraProjectDock = aButton(self.__fDock, width=60, image=imgProjectDock,
+                                                        command=self.__activeProjet,text="")
+        btnCloseAcceuilDock = aButton(self.__fDock, width=60,height=60, image =imgAnnulerDock,
+                                                       command=self.__closeDock,text="")
 
         # Widgets du frame Tableur
-        labelTitleNoOpenTableur = self._arrtk.createLabel(self.__fTableurNoOpen, text="Travail sur un tableur",
-                                                          ppolice="Arial", ptaille=25)
-        btnOpenTableur = self._arrtk.createButton(self.__fTableurNoOpen, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                  image=imgOpenTableur, command=self.__openTableur)
-        labelTitleTableur = self._arrtk.createLabel(self.__fTableur, text="Travail sur un tableur",
-                                                    ppolice="Arial", ptaille=25)
-        btnOpenTableurWithComputer = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                              image=imgOpenTableurCoputerSoft,
-                                                              command=self.__openTableurCoputerSoft)
-        btnCloseTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                   image=imgCloseTableur, command=self.__closeTableur)
+        labelTitleNoOpenTableur = aLabel(self.__fTableurNoOpen, text="Travail sur un tableur")
+        btnOpenTableur = aButton(self.__fTableurNoOpen, width=90, height=90,image=imgOpenTableur,command=self.__openTableur,text="")
+        labelTitleTableur = aLabel(self.__fTableur, text="Travail sur un tableur")
+        btnOpenTableurWithComputer = aButton(self.__fTableur, width=90, height=90,image=imgOpenTableurCoputerSoft,text="",command=self.__openTableurCoputerSoft)
+        btnCloseTableur = aButton(self.__fTableur, width=90, height=90,image=imgCloseTableur,text="", command=self.__closeTableur)
 
-        btnAddValeurTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                       image=imgAddValeur, command=self.__viewAddValeurTableur)
-        btnAddMoyenneTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        image=imgAddMoyenne, command=self.__viewMoyenneTableur)
-        btnAddSommeTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                      image=imgAddSomme, command=self.__viewSommeTableur)
-        btnAddComptageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                         image=imgAddComptage, command=self.__viewComptageTableur)
-        btnAddMinimumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        image=imgAddMinimum, command=self.__viewMinimumTableur)
-        btnAddMaximumTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        image=imgAddMaxmum, command=self.__viewMaximumTableur)
-        btnAffichageTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                       image=imgViewTableur, command=self.__readTableur)
-        btnSupprDataTableur = self._arrtk.createButton(self.__fTableur, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                       image=imgSupprValeur,
-                                                       command=self.__viewDelValeurTableur)
+        btnAddValeurTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddValeur,text="", command=self.__viewAddValeurTableur)
+        btnAddMoyenneTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddMoyenne,text="", command=self.__viewMoyenneTableur)
+        btnAddSommeTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddSomme,text="", command=self.__viewSommeTableur)
+        btnAddComptageTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddComptage,text="", command=self.__viewComptageTableur)
+        btnAddMinimumTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddMinimum,text="", command=self.__viewMinimumTableur)
+        btnAddMaximumTableur = aButton(self.__fTableur, width=90, height=90,image=imgAddMaxmum,text="", command=self.__viewMaximumTableur)
+        btnAffichageTableur = aButton(self.__fTableur, width=90, height=90,image=imgViewTableur,text="", command=self.__readTableur)
+        btnSupprDataTableur = aButton(self.__fTableur, width=90, height=90,image=imgSupprValeur,text="",command=self.__viewDelValeurTableur)
 
         # Widgets dans la frame Word
-        labelTitleNoOpenWord = self._arrtk.createLabel(self.__fWordNoOpen, text="Travail sur un document Word",
-                                                       ppolice="Arial", ptaille=25)
-        btnOpenWord = self._arrtk.createButton(self.__fWordNoOpen, width=90, height=90, image=imgOpenWord,bg=self._btnColor,fg=self._btnTexteColor,
-                                               command=self.__openWord)
+        labelTitleNoOpenWord = aLabel(self.__fWordNoOpen, text="Travail sur un document Word")
+        btnOpenWord = aButton(self.__fWordNoOpen, width=90, height=90, image=imgOpenWord,text="",command=self.__openWord)
 
-        labelTitleWord = self._arrtk.createLabel(self.__fWord, text="Travail sur un document Word",
-                                                 ppolice="Arial", ptaille=25)
-        btnOpenWordWithComputer = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                           image=imgOpenWordWithComputer, command=self.__openWordCoputerSoft)
-        btnEditWord = self._arrtk.createButton(self.__fWord, width=90, height=90, image=imgWriteWord, bg=self._btnColor, fg=self._btnTexteColor,
-                                               command=self.__viewEditWord)
-        btnViewReadWord = self._arrtk.createButton(self.__fWord, width=90, height=90, bg=self._btnColor, fg=self._btnTexteColor,
-                                               image=imgReadWord, command=self.__viewReadWord)
+        labelTitleWord = aLabel(self.__fWord, text="Travail sur un document Word")
+        btnOpenWordWithComputer = aButton(self.__fWord, width=90, height=90,image=imgOpenWordWithComputer,text="", command=self.__openWordCoputerSoft)
+        btnEditWord = aButton(self.__fWord, width=90, height=90, image=imgWriteWord,text="",command=self.__viewEditWord)
+        btnViewReadWord = aButton(self.__fWord, width=90, height=90,image=imgReadWord,text="", command=self.__viewReadWord)
 
-        btnCloseWord = self._arrtk.createButton(self.__fWord, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                image=imgCloseWord, command=self.__closeWord)
+        btnCloseWord = aButton(self.__fWord, width=90, height=90,image=imgCloseWord,text="", command=self.__closeWord)
 
         # Manage Word
-        labelTitleReadWord = self._arrtk.createLabel(self.__fReadWord, text="Lecture du document Word",
-                                                        ppolice="Arial", ptaille=25, pstyle="bold")
-        wScrollText,self.__textReadWord = self._arrtk.createTextBoxScrolled(self.__fReadWord)
-        btnQuitReadWord = self._arrtk.createButton(self.__fReadWord, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                   text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
-                                                   command=self.__quitReadWord)
-        btnReadWord = self._arrtk.createButton(self.__fReadWord, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                text="Lire", bg=self._btnColor, fg=self._btnTexteColor,
-                                               command=self.__readWord)
+        labelTitleReadWord = aLabel(self.__fReadWord, text="Lecture du document Word")
+        self.__textReadWord = aTextScrollable(self.__fReadWord)
+        btnQuitReadWord = aButton(self.__fReadWord,text="Quitter",command=self.__quitReadWord)
+        btnReadWord = aButton(self.__fReadWord,text="Lire",command=self.__readWord)
 
-        labelEditWord = self._arrtk.createLabel(self.__fWriteWord, text="Ecriture dans le document Word",
-                                                    ppolice="Arial", ptaille=25, pstyle="bold")
-        wScrollEditText, self.__textEditWord = self._arrtk.createTextBoxScrolled(self.__fWriteWord)
-        btnQuitEditWord = self._arrtk.createButton(self.__fWriteWord, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                    text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
-                                                    command=self.__quitEditWord)
-        btnWriteWord = self._arrtk.createButton(self.__fWriteWord, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                    text="Ecrire", bg=self._btnColor, fg=self._btnTexteColor,
-                                                command=self.__writeWord)
+        labelEditWord = aLabel(self.__fWriteWord, text="Ecriture dans le document Word")
+        self.__textEditWord = aTextScrollable(self.__fWriteWord)
+        btnQuitEditWord = aButton(self.__fWriteWord,text="Quitter",command=self.__quitEditWord)
+        btnWriteWord = aButton(self.__fWriteWord,text="Ecrire",command=self.__writeWord)
 
 
 
         # Widget dans la frame Projet
         # No OPEN
-        labelTitleNoOpenProjet = self._arrtk.createLabel(self.__fProjetNoOpen, text="Travail sur un projet",
-                                                         ppolice="Arial", ptaille=25)
+        labelTitleNoOpenProjet = aLabel(self.__fProjetNoOpen, text="Travail sur un projet")
 
-        btnOpenProjet = self._arrtk.createButton(self.__fProjetNoOpen, width=90, height=90,
-                                                 image=imgOpenProjet,bg=self._btnColor,fg=self._btnTexteColor,
-                                                 command=self.__openProjet)
+        btnOpenProjet = aButton(self.__fProjetNoOpen, width=90, height=90,image=imgOpenProjet,text="",command=self.__openProjet)
 
-        btnCreateProjet = self._arrtk.createButton(self.__fProjetNoOpen, width=90, height=90,
-                                                   image=imgCreateProject,bg=self._btnColor,fg=self._btnTexteColor,
-                                                   command=self.__windowsNameNewProjet)
+        btnCreateProjet = aButton(self.__fProjetNoOpen, width=90, height=90,image=imgCreateProject,text="",command=self.__windowsNameNewProjet)
 
         # OPEN
-        labelTitleProjet = self._arrtk.createLabel(self.__fProjet, text="Travail sur un projet",
-                                                   ppolice="Arial", ptaille=25)
-        btnAddTypeProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                    image=imgSetTypeProjet, command=self.__windowsTypeFileProjet)
-        btnCreateFileProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgCreateFileProjet,
-                                                       command=self.__windowsCreateFileProjet,bg=self._btnColor,fg=self._btnTexteColor)
-        btnOpenFileProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgOpenFileProjet,
-                                                     command=self.__openFileProjet,bg=self._btnColor,fg=self._btnTexteColor)
-        btnViewTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgTaskViewProjet,
-                                                     command=self.openTaskProjet, bg=self._btnColor, fg=self._btnTexteColor)
-        btnSayAllTaskProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90,bg=self._btnColor,fg=self._btnTexteColor,
-                                                       image=imgTaskSayProjet, command=self.__sayTaskProjet)
+        labelTitleProjet = aLabel(self.__fProjet, text="Travail sur un projet")
+        btnAddTypeProjet = aButton(self.__fProjet, width=90, height=90,image=imgSetTypeProjet,text="", command=self.__windowsTypeFileProjet)
+        btnCreateFileProjet = aButton(self.__fProjet, width=90, height=90, image=imgCreateFileProjet,text="",command=self.__windowsCreateFileProjet)
+        btnOpenFileProjet = aButton(self.__fProjet, width=90, height=90, image=imgOpenFileProjet,text="",command=self.__openFileProjet)
+        btnViewTaskProjet = aButton(self.__fProjet, width=90, height=90, image=imgTaskViewProjet,text="",command=self.openTaskProjet)
+        btnSayAllTaskProjet = aButton(self.__fProjet, width=90, height=90,image=imgTaskSayProjet,text="", command=self.__sayTaskProjet)
 
-        btnCloseProjet = self._arrtk.createButton(self.__fProjet, width=90, height=90, image=imgCloseProjet,
-                                                  command=self.__closeProjet,bg=self._btnColor,fg=self._btnTexteColor)
+        btnCloseProjet = aButton(self.__fProjet, width=90, height=90, image=imgCloseProjet,text="",command=self.__closeProjet)
 
         # frameTableurAdd
         # frameAddValeur
-        labelTitleAddValeur = self._arrtk.createLabel(self.__frameAddValeur, text="Ajout d'une valeur",
-                                                        ppolice="Arial", ptaille=25,pstyle="bold")
-        wECaseValeur,self.__eCaseAddValeur = self._arrtk.createEntryLegend(self.__frameAddValeur,text="Case de la valeur : ",
-                                                     ptaille=20,ppolice="Arial",gridUsed=True)
-        wEValueValeur,self.__eValueAddValeur = self._arrtk.createEntryLegend(self.__frameAddValeur,text="Valeur : ",
-                                                        ptaille=20,ppolice="Arial",gridUsed=True)
-        btnAddValeur = self._arrtk.createButton(self.__frameAddValeur,ppolice="Arial",ptaille=25,pstyle="bold",
-                                                  text="Ajouter la valeur",bg=self._btnColor,fg=self._btnTexteColor,
-                                                command=self.__addValeurTableur)
-        btnCancelAddValeur = self._arrtk.createButton(self.__frameAddValeur, ppolice="Arial", ptaille=25, pstyle="bold",
-                                                      text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
-                                                      command=self.__disableManageTableur)
+        labelTitleAddValeur = aLabel(self.__frameAddValeur, text="Ajout d'une valeur")
+        self.__eCaseAddValeur = aEntryLengend(self.__frameAddValeur,text="Case de la valeur : ",gridUsed=True)
+        self.__eValueAddValeur = aEntryLengend(self.__frameAddValeur,text="Valeur : ",gridUsed=True)
+        btnAddValeur = aButton(self.__frameAddValeur,text="Ajouter la valeur",command=self.__addValeurTableur)
+        btnCancelAddValeur = aButton(self.__frameAddValeur,text="Annuler",command=self.__disableManageTableur)
         # frameAddFormule
-        lTitleAddFormule = self._arrtk.createLabel(self.__frameAddFormule, text="Ajout d'une formule",
-                                                            ppolice="Arial", ptaille=25, pstyle="bold")
-        menuChoixFormule = self._arrtk.createOptionMenu(self.__frameAddFormule,value=self.__listFormule,
-                                                        var=self.__varFormule,bg=self._btnColor,fg=self._btnTexteColor,
-                                                        police="Arial",taille=20)
-        wECaseStart,self.__eCaseStartFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de debut : ",
-                                                        ptaille=20,ppolice="Arial",gridUsed=True)
-        wECaseEnd,self.__eCaseEndFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de fin : ",
-                                                        ptaille=20,ppolice="Arial",gridUsed=True)
-        wECaseDest,self.__eCaseDestFormule = self._arrtk.createEntryLegend(self.__frameAddFormule,text="Case de destination : ",
-                                                        ptaille=20,ppolice="Arial",gridUsed=True)
-        btnAddFormule = self._arrtk.createButton(self.__frameAddFormule,ppolice="Arial",ptaille=20,pstyle="bold",
-                                                    text="Ajouter la formule",bg=self._btnColor,fg=self._btnTexteColor,
-                                                 command=self.__addFormuleTableur)
-        btnCancelAddFormule = self._arrtk.createButton(self.__frameAddFormule, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                       text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
-                                                       command=self.__disableManageTableur)
+        lTitleAddFormule = aLabel(self.__frameAddFormule, text="Ajout d'une formule")
+        self.__menuChoixFormule = aOptionMenu(self.__frameAddFormule,value=self.__listFormule)
+
+        self.__eCaseStartFormule = aEntryLengend(self.__frameAddFormule,text="Case de debut : ",gridUsed=True)
+        self.__eCaseEndFormule = aEntryLengend(self.__frameAddFormule,text="Case de fin : ",gridUsed=True)
+        self.__eCaseDestFormule = aEntryLengend(self.__frameAddFormule,text="Case de destination : ",gridUsed=True)
+
+        btnAddFormule = aButton(self.__frameAddFormule,text="Ajouter la formule",command=self.__addFormuleTableur)
+        btnCancelAddFormule = aButton(self.__frameAddFormule,text="Annuler",command=self.__disableManageTableur)
         # frameReadTableur
-        labelTitleReadTableur = self._arrtk.createLabel(self.__frameReadTableur, text="Lecture du tableur",
-                                                         ppolice="Arial", ptaille=25, pstyle="bold")
-        self.__fScrolledRead = self._arrtk.createScrollFrame(self.__frameReadTableur)
-        btnQuitReadTableur = self._arrtk.createButton(self.__frameReadTableur, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                      text="Quitter", bg=self._btnColor, fg=self._btnTexteColor,
-                                                      command=self.__disableManageTableur)
+        labelTitleReadTableur = aLabel(self.__frameReadTableur, text="Lecture du tableur")
+        self.__fScrolledRead = aScrollableFrame(self.__frameReadTableur)
+        btnQuitReadTableur = aButton(self.__frameReadTableur,text="Quitter",command=self.__disableManageTableur)
         # frameDelValeurTableur
-        labelTitleDelTableur = self._arrtk.createLabel(self.__frameDelValeurTableur, text="Suppression de valeur",
-                                                        ppolice="Arial", ptaille=25, pstyle="bold")
-        wECaseDel,self.__eCaseDel = self._arrtk.createEntryLegend(self.__frameDelValeurTableur,text="Case a supprimer : ",
-                                                                    ptaille=20,ppolice="Arial",gridUsed=True)
-        btnDelTableur = self._arrtk.createButton(self.__frameDelValeurTableur, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                 text="Supprimer la valeur", bg=self._btnColor, fg=self._btnTexteColor,
-                                                 command=self.__delValeurTableur)
-        btnCancelDebTableur = self._arrtk.createButton(self.__frameDelValeurTableur, ppolice="Arial", ptaille=20, pstyle="bold",
-                                                         text="Annuler", bg=self._btnColor, fg=self._btnTexteColor,
-                                                            command=self.__disableManageTableur)
+        labelTitleDelTableur = aLabel(self.__frameDelValeurTableur, text="Suppression de valeur")
+        self.__eCaseDel = aEntryLengend(self.__frameDelValeurTableur,text="Case a supprimer : ",gridUsed=True)
+        btnDelTableur = aButton(self.__frameDelValeurTableur,text="Supprimer la valeur",command=self.__delValeurTableur)
+        btnCancelDebTableur = aButton(self.__frameDelValeurTableur,text="Annuler",command=self.__disableManageTableur)
 
         # Grille des frame
         self.__fAcceuil.rowconfigure(0, weight=1)
@@ -456,16 +379,16 @@ class GUIWork(GuiBase):
         btnCloseProjet.grid(row=3, column=2, padx=5, pady=5)
 
         labelTitleAddValeur.grid(row=0, column=0, columnspan=2, sticky="n", pady=(10, 20))
-        wECaseValeur.grid(row=2, column=0, columnspan=2, sticky="ew", padx=20, pady=(0, 10))
-        wEValueValeur.grid(row=3, column=0, columnspan=2, sticky="ew", padx=20)
+        self.__eCaseAddValeur.grid(row=2, column=0, columnspan=2, sticky="ew", padx=20, pady=(0, 10))
+        self.__eValueAddValeur.grid(row=3, column=0, columnspan=2, sticky="ew", padx=20)
         btnCancelAddValeur.grid(row=5, column=0, sticky="sw", padx=10, pady=10)
         btnAddValeur.grid(row=5, column=1, sticky="se", padx=10, pady=10)
 
         lTitleAddFormule.grid(row=0, column=0, columnspan=2, sticky="n", padx=10, pady=(10, 6))
-        menuChoixFormule.grid(row=1, column=0, columnspan=2, sticky="w", padx=10, pady=(0, 10))
-        wECaseStart.grid(row=2, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
-        wECaseEnd.grid(row=3, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
-        wECaseDest.grid(row=4, column=0, columnspan=2, sticky="ew", padx=12)
+        self.__menuChoixFormule.grid(row=1, column=0, columnspan=2, sticky="w", padx=10, pady=(0, 10))
+        self.__eCaseStartFormule.grid(row=2, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
+        self.__eCaseEndFormule.grid(row=3, column=0, columnspan=2, sticky="ew", padx=12, pady=(0, 6))
+        self.__eCaseDestFormule.grid(row=4, column=0, columnspan=2, sticky="ew", padx=12)
         btnCancelAddFormule.grid(row=6, column=0, sticky="sw", padx=10, pady=10)
         btnAddFormule.grid(row=6, column=1, sticky="se", padx=10, pady=10)
 
@@ -474,17 +397,17 @@ class GUIWork(GuiBase):
         btnQuitReadTableur.grid(row=2, column=0, sticky="sew", padx=10, pady=10)
 
         labelTitleDelTableur.grid(row=0, column=0, columnspan=2, sticky="n", padx=10, pady=(10, 8))
-        wECaseDel.grid(row=2, column=0, columnspan=2, padx=12, pady=6)
+        self.__eCaseDel.grid(row=2, column=0, columnspan=2, padx=12, pady=6)
         btnCancelDebTableur.grid(row=4, column=0, sticky="sw", padx=10, pady=10)
         btnDelTableur.grid(row=4, column=1, sticky="se", padx=10, pady=10)
 
         labelTitleReadWord.grid(row=0, column=0, columnspan=2, sticky="ew",padx=8, pady=(8, 4))
-        wScrollText.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
+        self.__textReadWord.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
         btnQuitReadWord.grid(row=2, column=0, sticky="ew",padx=(8, 4), pady=(4, 8))
         btnReadWord.grid(row=2, column=1, sticky="ew",padx=(4, 8), pady=(4, 8))
 
         labelEditWord.grid(row=0, column=0, columnspan=2, sticky="ew",padx=8, pady=(8, 4))
-        wScrollEditText.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
+        self.__textEditWord.grid(row=1, column=0, columnspan=2, sticky="nsew",padx=8, pady=4)
         btnQuitEditWord.grid(row=2, column=0, sticky="ew",padx=(8, 4), pady=(4, 8))
         btnWriteWord.grid(row=2, column=1, sticky="ew",padx=(4, 8), pady=(4, 8))
 
@@ -679,13 +602,13 @@ class GUIWork(GuiBase):
         self.__frameAddValeur.grid(row=0, column=0, sticky="nsew")
         self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
 
-        self.__eCaseAddValeur.delete(0,ctk.END)
-        self.__eValueAddValeur.delete(0,ctk.END)
+        self.__eCaseAddValeur.getEntry().delete(0,ctk.END)
+        self.__eValueAddValeur.getEntry().delete(0,ctk.END)
         self._screen.update()
 
     def __addValeurTableur(self):
-        case = self.__eCaseAddValeur.get()
-        valeur = self.__eValueAddValeur.get()
+        case = self.__eCaseAddValeur.getEntry().get()
+        valeur = self.__eValueAddValeur.getEntry().get()
         if not case or not valeur:
             showerror("Erreur", "La case et la valeur ne peuvent pas être vide.")
             return
@@ -702,40 +625,40 @@ class GUIWork(GuiBase):
         self.__frameManageTableur.grid(row=0, column=0, columnspan=3, sticky='nsew')
         self.__frameAddFormule.grid(row=0, column=0, sticky="nsew")
         self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
-        self.__eCaseDestFormule.delete(0,ctk.END)
-        self.__eCaseEndFormule.delete(0,ctk.END)
-        self.__eCaseStartFormule.delete(0,ctk.END)
+        self.__eCaseDestFormule.getEntry().delete(0,ctk.END)
+        self.__eCaseEndFormule.getEntry().delete(0,ctk.END)
+        self.__eCaseStartFormule.getEntry().delete(0,ctk.END)
 
     def __viewMoyenneTableur(self):
         self.__viewAddFormuleTableur()
-        self.__varFormule.set(self.__listFormule[1])
+        self.__menuChoixFormule.set(self.__listFormule[1])
         self._screen.update()
 
     def __viewSommeTableur(self):
         self.__viewAddFormuleTableur()
-        self.__varFormule.set(self.__listFormule[0])
+        self.__menuChoixFormule.set(self.__listFormule[0])
         self._screen.update()
 
     def __viewComptageTableur(self):
         self.__viewAddFormuleTableur()
-        self.__varFormule.set(self.__listFormule[2])
+        self.__menuChoixFormule.set(self.__listFormule[2])
         self._screen.update()
 
     def __viewMinimumTableur(self):
         self.__viewAddFormuleTableur()
-        self.__varFormule.set(self.__listFormule[3])
+        self.__menuChoixFormule.set(self.__listFormule[3])
         self._screen.update()
 
     def __viewMaximumTableur(self):
         self.__viewAddFormuleTableur()
-        self.__varFormule.set(self.__listFormule[4])
+        self.__menuChoixFormule.set(self.__listFormule[4])
         self._screen.update()
 
     def __addFormuleTableur(self):
-        caseDest = self.__eCaseDestFormule.get()
-        caseEnd = self.__eCaseEndFormule.get()
-        caseStart = self.__eCaseStartFormule.get()
-        formule = self.__varFormule.get()
+        caseDest = self.__eCaseDestFormule.getEntry().get()
+        caseEnd = self.__eCaseEndFormule.getEntry().get()
+        caseStart = self.__eCaseStartFormule.getEntry().get()
+        formule = self.__menuChoixFormule.get()
 
         if not caseDest or not caseEnd or not caseStart or not formule:
             showerror("Erreur", "Les cases et la formule ne peuvent pas être vide.")
@@ -785,13 +708,11 @@ class GUIWork(GuiBase):
 
             data = self._gestionnaire.getGestFNC().getFNCWork().getReadTableur()
             if not data:
-                lbl = self._arrtk.createLabel(self.__fScrolledRead, text="Le tableur est vide.",
-                                              ppolice="Arial", ptaille=15)
+                lbl = aLabel(self.__fScrolledRead, text="Le tableur est vide.")
                 lbl.pack(pady=10)
             else:
                 for row in data:
-                    lbl = self._arrtk.createLabel(self.__fScrolledRead, text=row+"\n",
-                                                  ppolice="Arial", ptaille=15,justify="left")
+                    lbl = aLabel(self.__fScrolledRead, text=row+"\n")
                     lbl.configure(anchor="w")
                     lbl.pack(side="top", anchor="w", fill="x", padx=5, pady=2)
 
@@ -865,17 +786,17 @@ class GUIWork(GuiBase):
             self.__frameManageWord.grid(row=0, column=0, columnspan=3, sticky='nsew')
             self.__fWriteWord.grid(row=0, column=0, sticky="nsew")
             self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
-            self.__textEditWord.configure(state="normal")
+            self.__textEditWord.enableTextBox()
 
             text = self._gestionnaire.getGestFNC().getFNCWork().getReadWord()
             if text :
-                self.__textEditWord.delete(1.0, ctk.END)
-                self.__textEditWord.insert(ctk.END, text)
+                self.__textEditWord.getTextBox().delete(1.0, ctk.END)
+                self.__textEditWord.getTextBox().insert(ctk.END, text)
         else :
             showinfo("Erreur", "Une erreur est survenue.")
 
     def __writeWord(self):
-        newTexte = self.__textEditWord.get(1.0, ctk.END)
+        newTexte = self.__textEditWord.getTextBox().get(1.0, ctk.END)
         if self._gestionnaire.getGestFNC().getFNCWork().writeWordEcrase(newTexte):
             showinfo("Succès", "Le document a été mis à jour.")
         else :
@@ -894,10 +815,10 @@ class GUIWork(GuiBase):
                 self.__frameManageWord.grid(row=0, column=0, columnspan=3, sticky='nsew')
                 self.__fReadWord.grid(row=0, column=0, sticky="nsew")
                 self.__fDock.grid(row=1, column=0, columnspan=3, sticky='ew')
-                self.__textReadWord.configure(state="normal")
-                self.__textReadWord.delete(1.0, ctk.END)
-                self.__textReadWord.insert(ctk.END, text)
-                self.__textReadWord.configure(state="disabled")
+                self.__textReadWord.enableTextBox()
+                self.__textReadWord.getTextBox().delete(1.0, ctk.END)
+                self.__textReadWord.getTextBox().insert(ctk.END, text)
+                self.__textReadWord.disableTextBox()
             else :
                 showinfo("Info", "Le document est vide.")
         else :
@@ -948,12 +869,10 @@ class GUIWork(GuiBase):
 
     def __windowsTexteProjet(self,title:str, texte:str,fnc:callable):
         screen = self._arrtk.aTopLevel(width=225, height=100,resizable=False,title=title)
-        self._arrtk.placeTopCenter(self._arrtk.createLabel(screen, text=texte,
-                                                           ppolice="Arial", ptaille=15))
-        self.__entryNameProjet = self._arrtk.createEntry(screen)
-        self._arrtk.placeCenter(self.__entryNameProjet)
-        self._arrtk.placeBottomCenter(self._arrtk.createButton(screen, text="Valider",
-                                                               command= lambda :fnc(screen)))
+        aLabel(screen, text=texte).placeTopCenter()
+        self.__entryNameProjet = aEntry(screen)
+        self.__entryNameProjet.placeCenter()
+        aButton(screen, text="Valider",command= lambda :fnc(screen)).placeBottomCenter()
 
     def __windowsNameNewProjet(self):
         """
@@ -1019,14 +938,12 @@ class GUIWork(GuiBase):
 
         self.__var = StringVar(screen)
 
-        self._arrtk.placeTopCenter(self._arrtk.createLabel(screen, text="Creation d'un fichier dans le projet",
-                                                           ppolice="Arial", ptaille=15))
-        self.__entryNameFile = self._arrtk.createEntry(screen)
-        self._arrtk.placeLeftCenter(self.__entryNameFile)
+        aLabel(screen, text="Creation d'un fichier dans le projet").placeTopCenter()
+        self.__entryNameFile = aEntry(screen)
+        self.__entryNameFile.placeLeftCenter()
         self._arrtk.placeRightCenter(self._arrtk.createOptionMenu(screen, value=listType, var=self.__var))
         self.__var.set(listType[0])
-        self._arrtk.placeBottomCenter(self._arrtk.createButton(screen, text="Valider",
-                                                               command=lambda: self.__createFileProjet(screen)))
+        aButton(screen, text="Valider",command=lambda: self.__createFileProjet(screen)).placeBottomCenter()
 
     def __createFileProjet(self, screen: ctk.CTkToplevel):
         name_file = self.__entryNameFile.get()
