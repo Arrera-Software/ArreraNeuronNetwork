@@ -44,6 +44,9 @@ window.geometry("800x600")
 button_frame = aFrame(window)
 button_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
+fnc_breef = gest.getGestFNC().getFNCBreef()
+language = gest.getLanguageObjet()
+
 # Dictionnaire des interfaces à tester et de leurs fonctions de lancement
 # Nous utilisons les méthodes directes exposées à la fin de gestGUI.py
 gui_to_test = {
@@ -60,7 +63,7 @@ gui_to_test = {
     "Lecture": lambda: gest_gui.setGUIActive("lecture") and gest_gui.launch_gui(),
     "Arrera Work": lambda: gest_gui.setGUIActive("work") and gest_gui.launch_gui(),
     "Traducteur": lambda: gest_gui.setGUIActive("traducteur") and gest_gui.launch_gui(),
-    "Resumer": lambda: gest_gui.activeViewResumer(dict={}, list=[], intIn=0),
+    "Resumer": lambda: gest_gui.activeViewResumer(dict=fnc_breef.summarizeAll(), list=language.getPhraseResumerAll("2"), intIn=19),
     "Color Select" : lambda : (fnc_codehelp.setGUICodeHelp("GUIColorSelector"),fnc_codehelp.launchGui()),
     "Github" : lambda : (fnc_codehelp.setGUICodeHelp("GUIGithubGestion"),fnc_codehelp.launchGui()),
     "Librairy" : lambda : (fnc_codehelp.setGUICodeHelp("GUILibrairy"),fnc_codehelp.launchGui()),
