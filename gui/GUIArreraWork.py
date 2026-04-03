@@ -27,10 +27,23 @@ class GUIWork(GuiBase):
         f_welcome_btn = aFrame(self.__f_welcome)
         f_welcome_task_projet = aFrame(self.__f_welcome)
 
+        self.__f_projet = aFrame(self._screen)
+        f_projet_header = aFrame(self.__f_projet,height=50)
+        self.__f_projet_body = aFrame(self.__f_projet)
+        f_projet_footer = aFrame(self.__f_projet,height=50)
+
         # Configuration des grid
         self.__f_welcome.grid_rowconfigure(0, weight=1)
         self.__f_welcome.grid_columnconfigure(0, weight=1)
         self.__f_welcome.grid_columnconfigure(1, weight=1)
+
+        self.__f_projet.grid_rowconfigure(0, weight=0)
+        self.__f_projet.grid_rowconfigure(1, weight=1)
+        self.__f_projet.grid_rowconfigure(2, weight=0)
+        self.__f_projet.grid_columnconfigure(0, weight=1)
+
+        self.__f_projet_body.grid_rowconfigure(0, weight=1)
+        self.__f_projet_body.grid_columnconfigure(0, weight=1)
 
         for i in range(3):
             f_welcome_btn.grid_rowconfigure(i, weight=1)
@@ -40,12 +53,26 @@ class GUIWork(GuiBase):
         f_welcome_task_projet.grid_rowconfigure(1, weight=1)
         f_welcome_task_projet.grid_columnconfigure(0, weight=1)
 
+        f_projet_header.grid_rowconfigure(0, weight=1)
+        f_projet_header.grid_columnconfigure(0, weight=1)
+
+        f_projet_footer.grid_rowconfigure(0, weight=1)
+        f_projet_footer.grid_columnconfigure(0, weight=1)
+
+        f_projet_header.grid_propagate(False)
+        f_projet_footer.grid_propagate(False)
         # header
         l_title = aLabel(f_header,police_size=30,text=f"{self._gestionnaire.getConfigFile().name} : Work")
         # Welcome
-        btn_w_tableur = aButton(f_welcome_btn,text="Tableur",image=img_w_tableur)
+        btn_w_tableur = aButton(f_welcome_btn,text="Tableur",
+                                image=img_w_tableur)
         btn_w_word = aButton(f_welcome_btn,text="Traitement\nde texte",image=img_w_texte)
-        btn_w_projet = aButton(f_welcome_btn,text="Projet",image=img_w_project)
+        btn_w_projet = aButton(f_welcome_btn,text="Projet",
+                               image=img_w_project,command=self.__view_projet)
+
+        # Projet
+        l_title_projet = aLabel(f_projet_header,text="Projet",police_size=25)
+        btn_p_exit = aButton(f_projet_footer,text="Retour",command=self.__view_acceuil)
 
         # Welcome Task Projet
         l_title_task = aLabel(f_welcome_task_projet,text="Tache des projets",police_size=25)
@@ -66,6 +93,13 @@ class GUIWork(GuiBase):
 
         f_welcome_btn.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
         f_welcome_task_projet.grid(row=0, column=1, sticky="nsew",padx=10,pady=10)
+
+        f_projet_header.grid(row=0, column=0, sticky="ew",padx=10,pady=10)
+        self.__f_projet_body.grid(row=1, column=0, sticky="nsew",padx=10,pady=10)
+        f_projet_footer.grid(row=2, column=0, sticky="ew",padx=10,pady=10)
+
+        l_title_projet.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
+        btn_p_exit.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
 
         self.__f_welcome.grid(row=1, column=0, sticky="nsew")
 
@@ -103,12 +137,10 @@ class GUIWork(GuiBase):
         if name_project is not None:
             self.__fnc_work.openProjet(name_project)
 
-
-
     def activeProjet(self):
         self.active()
         self._mainframe()
-        #self.__activeProjet()
+        self.__view_projet()
 
     def activeTableur(self):
         self.active()
@@ -123,4 +155,34 @@ class GUIWork(GuiBase):
     def activeAcceuil(self):
         self.active()
         self._mainframe()
-        #self.__activeAcceuil()
+        self.__view_acceuil()
+
+    def __view_acceuil(self):
+        self.__f_projet.grid_forget()
+        self.__f_welcome.grid(row=1, column=0, sticky="nsew")
+
+    def __view_projet(self):
+        self.__f_welcome.grid_forget()
+        self.__f_projet.grid(row=1, column=0, sticky="nsew")
+
+        for widget in self.__f_projet_body.winfo_children():
+            widget.destroy()
+ 
+        list_projet = self.__fnc_work.getListProjet()
+        f_view_projet = aScrollableFrame(self.__f_projet_body)
+        f_view_projet.grid_columnconfigure(0, weight=1)
+
+        for i, p in enumerate(list_projet):
+            b = aButton(f_view_projet, text=p,command= lambda : self.__fnc_work.openProjet(p))
+            b.grid(row=i, column=0, sticky="ew", padx=15, pady=15)
+
+        f_view_projet.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    def __open_projet(self,name:str):
+        if self.__fnc_work.openProjet(name):
+            for widget in self.__f_projet_body.winfo_children():
+                widget.destroy()
+
+            f_projet = aFrame(self.__f_projet_body)
+
+            f_projet.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
