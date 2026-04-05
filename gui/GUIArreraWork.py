@@ -111,28 +111,28 @@ class GUIWork(GuiBase):
         if self.__fnc_work.getEtatProject():
             name_project = self.__fnc_work.getNameProjet()
             self.__fnc_work.closeProjet()
-
         list_projet = self.__fnc_work.getListProjet()
-
         if list_projet is not None:
             for projet in list_projet:
                 if self.__fnc_work.openProjet(projet):
+                    # Récupération des tâches non terminées
                     if self.__fnc_work.setListTacheNoFinishProjet():
                         for i in self.__fnc_work.getListTacheNoFinishProjet():
                             list_tache.append(f"{projet} : {i}")
-            self.__text_view_task.enableTextBox()
-            self.__text_view_task.getTextBox().delete(1.0, END)
-            if len(list_tache) > 0:
-                for task in list_tache:
-                    self.__text_view_task.getTextBox().insert(END, f"{task}\n\n")
-            else :
-                self.__text_view_task.getTextBox().insert(END, "Aucune tache enregistrer dans les projet")
-            self.__text_view_task.disableTextBox()
-        else :
-            self.__text_view_task.enableTextBox()
-            self.__text_view_task.getTextBox().delete(1.0, END)
-            self.__text_view_task.getTextBox().insert(END, "Aucun projet enregistrer")
-            self.__text_view_task.disableTextBox()
+                    self.__fnc_work.closeProjet()
+
+        self.__text_view_task.enableTextBox()
+        self.__text_view_task.getTextBox().delete(1.0, END)
+
+        if list_projet is None:
+            self.__text_view_task.getTextBox().insert(END, "Aucun projet enregistré")
+        elif len(list_tache) > 0:
+            for task in list_tache:
+                self.__text_view_task.getTextBox().insert(END, f"{task}\n\n")
+        else:
+            self.__text_view_task.getTextBox().insert(END, "Aucune tâche enregistrée dans les projets")
+
+        self.__text_view_task.disableTextBox()
 
         if name_project is not None:
             self.__fnc_work.openProjet(name_project)
