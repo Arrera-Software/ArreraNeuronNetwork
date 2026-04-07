@@ -44,6 +44,11 @@ class GUIWork(GuiBase):
         self.__f_word_body = aFrame(self.__f_word)
         self.__f_word_footer = aFrame(self.__f_word,height=50)
 
+        self.__f_tableur = aFrame(self._screen)
+        f_tableur_header = aFrame(self.__f_tableur, height=50)
+        self.__f_tableur_body = aFrame(self.__f_tableur)
+        self.__f_tableur_footer = aFrame(self.__f_tableur, height=50)
+
         # Configuration des grid
         self.__f_welcome.grid_rowconfigure(0, weight=1)
         self.__f_welcome.grid_columnconfigure(0, weight=1)
@@ -59,8 +64,16 @@ class GUIWork(GuiBase):
         self.__f_word.grid_rowconfigure(2, weight=0)
         self.__f_word.grid_columnconfigure(0, weight=1)
 
+        self.__f_tableur.grid_rowconfigure(0, weight=0)
+        self.__f_tableur.grid_rowconfigure(1, weight=1)
+        self.__f_tableur.grid_rowconfigure(2, weight=0)
+        self.__f_tableur.grid_columnconfigure(0, weight=1)
+
         self.__f_projet_body.grid_rowconfigure(0, weight=1)
         self.__f_projet_body.grid_columnconfigure(0, weight=1)
+
+        self.__f_tableur_body.grid_rowconfigure(0, weight=1)
+        self.__f_tableur_body.grid_columnconfigure(0, weight=1)
 
         for i in range(3):
             f_welcome_btn.grid_rowconfigure(i, weight=1)
@@ -85,16 +98,22 @@ class GUIWork(GuiBase):
         self.__f_word_body.grid_rowconfigure(0, weight=1)
         self.__f_word_body.grid_columnconfigure(0, weight=1)
 
+        self.__f_tableur_footer.grid_rowconfigure(0, weight=1)
+        self.__f_tableur_footer.grid_columnconfigure(0, weight=1)
+
         f_projet_header.grid_propagate(False)
         self.__f_projet_footer.grid_propagate(False)
 
         f_word_header.grid_propagate(False)
         self.__f_word_footer.grid_propagate(False)
+
+        f_tableur_header.grid_propagate(False)
+        self.__f_tableur_footer.grid_propagate(False)
         # header
         l_title = aLabel(f_header,police_size=30,text=f"{self._gestionnaire.getConfigFile().name} : Work")
         # Welcome
         btn_w_tableur = aButton(f_welcome_btn,text="Tableur",
-                                image=img_w_tableur)
+                                image=img_w_tableur,command=self.__activeTableur)
         btn_w_word = aButton(f_welcome_btn, text="Traitement\nde texte",
                              image=img_w_texte, command=self.__view_word)
         btn_w_projet = aButton(f_welcome_btn,text="Projet",
@@ -113,6 +132,10 @@ class GUIWork(GuiBase):
 
         btn_w_exit = aButton(self.__f_word_footer, text="Retour", command=self.__view_acceuil)
 
+        # Tableur
+        l_title_tableur = aLabel(f_tableur_header, text="Tableur", police_size=25)
+
+        btn_t_exit = aButton(self.__f_tableur_footer, text="Retour", command=self.__view_acceuil)
         # Placement
         l_title.pack(pady=10)
 
@@ -137,8 +160,15 @@ class GUIWork(GuiBase):
         self.__f_word_body.grid(row=1, column=0, sticky="nsew",padx=10,pady=10)
         self.__f_word_footer.grid(row=2, column=0, sticky="ew",padx=10,pady=10)
 
+        f_tableur_header.grid(row=0, column=0, sticky="ew", padx=10, pady=10)
+        self.__f_tableur_body.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+        self.__f_tableur_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+
         l_title_projet.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
         btn_p_exit.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
+
+        l_title_tableur.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        btn_t_exit.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
         l_title_word.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
         btn_w_exit.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
@@ -213,21 +243,34 @@ class GUIWork(GuiBase):
     def __view_acceuil(self):
         self.__f_projet.grid_forget()
         self.__f_word.grid_forget()
+        self.__f_tableur.grid_forget()
         self.__f_welcome.grid(row=1, column=0, sticky="nsew")
 
     def __view_word(self):
         self.__f_welcome.grid_forget()
         self.__f_projet.grid_forget()
+        self.__f_tableur.grid_forget()
         self.__f_word.grid(row=1, column=0, sticky="nsew")
         if not self.__fnc_work.getEtatWord():
             self.__view_word_noopen()
         else :
             self.__view_word_open()
 
+    def __activeTableur(self):
+        self.__f_welcome.grid_forget()
+        self.__f_projet.grid_forget()
+        self.__f_word.grid_forget()
+        self.__f_tableur.grid(row=1, column=0, sticky="nsew")
+        if not self.__fnc_work.getEtatTableur():
+            self.__view_tableur_noopen()
+        else :
+            self.__view_tableur_open()
+
 
     def __view_projet(self):
         self.__f_welcome.grid_forget()
         self.__f_word.grid_forget()
+        self.__f_tableur.grid_forget()
         self.__f_projet.grid(row=1, column=0, sticky="nsew")
 
         self.__f_projet_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
@@ -485,4 +528,71 @@ class GUIWork(GuiBase):
 
         self.__fnc_work.writeWordEcrase(data)
 
+    def __view_tableur_noopen(self):
+        self.__f_tableur_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+        for widget in self.__f_tableur_body.winfo_children():
+            widget.destroy()
 
+        f = aFrame(self.__f_tableur_body, fg_color=self.__f_word_body.cget("fg_color"))
+
+        f.grid_rowconfigure(0, weight=1)
+        f.grid_columnconfigure(0, weight=1)
+
+        img_open = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur.png",
+                          width=80, height=80)
+
+        btn_open = aButton(f, text="", image=img_open,command=self.__open_tableur)
+
+        f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        btn_open.grid(row=0, column=0)
+
+    def __open_tableur(self):
+        if self.__fnc_work.openTableur():
+            self.__view_tableur_open()
+            self.__update_etat()
+
+    def __close_tableur(self):
+        self.__fnc_work.closeTableur()
+        self.__view_tableur_noopen()
+
+    def __view_tableur_open(self):
+        if self.__fnc_work.getEtatTableur():
+            self.__f_tableur_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+            for widget in self.__f_tableur_body.winfo_children():
+                widget.destroy()
+
+            f = aFrame(self.__f_tableur_body, fg_color=self.__f_word_body.cget("fg_color"))
+
+            f.grid_rowconfigure(0, weight=0)
+            f.grid_rowconfigure(1, weight=1)
+
+            f.grid_columnconfigure(0, weight=1)
+            f.grid_columnconfigure(6, weight=1)
+
+            for i in range(1, 6):
+                f.grid_columnconfigure(i, weight=0)
+
+            label = aLabel(f,text=f"Tableur : {self.__fnc_work.getNameFileTableur()}",police_size=25)
+
+            img_view = aImage(path_light=self.__emplacementAsset + "tableur/view-tableur.png",height=80, width=80)
+            img_computer = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png",height=80, width=80)
+            img_add = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png",height=80, width=80)
+            img_read = aImage(path_light=self.__emplacementAsset + "tableur/read-tableur.png",height=80, width=80)
+            img_close = aImage(path_light=self.__emplacementAsset + "tableur/close-tableur.png",height=80, width=80)
+
+            btn_view = aButton(f, text="",image=img_view)
+            btn_computer = aButton(f, text="",image=img_computer,command= self.__fnc_work.openTableurOs)
+            btn_add = aButton(f, text="",image=img_add)
+            btn_read = aButton(f, text="",image=img_read)
+            btn_close = aButton(f, text="",image=img_close,command=self.__close_tableur)
+
+            label.grid(row=0, column=0, columnspan=7, sticky="w", padx=10, pady=(10, 5))
+
+            btn_view.grid(row=1, column=1, padx=5, pady=10)
+            btn_computer.grid(row=1, column=2, padx=5, pady=10)
+            btn_add.grid(row=1, column=3, padx=5, pady=10)
+            btn_read.grid(row=1, column=4, padx=5, pady=10)
+            btn_close.grid(row=1, column=5, padx=5, pady=10)
+
+            f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
