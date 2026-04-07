@@ -39,6 +39,11 @@ class GUIWork(GuiBase):
         self.__f_projet_body = aFrame(self.__f_projet)
         self.__f_projet_footer = aFrame(self.__f_projet,height=50)
 
+        self.__f_word = aFrame(self._screen)
+        f_word_header = aFrame(self.__f_word,height=50)
+        self.__f_word_body = aFrame(self.__f_word)
+        self.__f_word_footer = aFrame(self.__f_word,height=50)
+
         # Configuration des grid
         self.__f_welcome.grid_rowconfigure(0, weight=1)
         self.__f_welcome.grid_columnconfigure(0, weight=1)
@@ -48,6 +53,11 @@ class GUIWork(GuiBase):
         self.__f_projet.grid_rowconfigure(1, weight=1)
         self.__f_projet.grid_rowconfigure(2, weight=0)
         self.__f_projet.grid_columnconfigure(0, weight=1)
+
+        self.__f_word.grid_rowconfigure(0, weight=0)
+        self.__f_word.grid_rowconfigure(1, weight=1)
+        self.__f_word.grid_rowconfigure(2, weight=0)
+        self.__f_word.grid_columnconfigure(0, weight=1)
 
         self.__f_projet_body.grid_rowconfigure(0, weight=1)
         self.__f_projet_body.grid_columnconfigure(0, weight=1)
@@ -66,14 +76,24 @@ class GUIWork(GuiBase):
         self.__f_projet_footer.grid_rowconfigure(0, weight=1)
         self.__f_projet_footer.grid_columnconfigure(0, weight=1)
 
+        f_word_header.grid_rowconfigure(0, weight=1)
+        f_word_header.grid_columnconfigure(0, weight=1)
+
+        self.__f_word_footer.grid_rowconfigure(0, weight=1)
+        self.__f_word_footer.grid_columnconfigure(0, weight=1)
+
         f_projet_header.grid_propagate(False)
         self.__f_projet_footer.grid_propagate(False)
+
+        f_word_header.grid_propagate(False)
+        self.__f_word_footer.grid_propagate(False)
         # header
         l_title = aLabel(f_header,police_size=30,text=f"{self._gestionnaire.getConfigFile().name} : Work")
         # Welcome
         btn_w_tableur = aButton(f_welcome_btn,text="Tableur",
                                 image=img_w_tableur)
-        btn_w_word = aButton(f_welcome_btn,text="Traitement\nde texte",image=img_w_texte)
+        btn_w_word = aButton(f_welcome_btn, text="Traitement\nde texte",
+                             image=img_w_texte, command=self.__view_word)
         btn_w_projet = aButton(f_welcome_btn,text="Projet",
                                image=img_w_project,command=self.__view_projet)
 
@@ -84,6 +104,11 @@ class GUIWork(GuiBase):
         # Welcome Task Projet
         l_title_task = aLabel(f_welcome_task_projet,text="Tache des projets",police_size=25)
         self.__text_view_task = aTextScrollable(f_welcome_task_projet)
+
+        # Word
+        l_title_word = aLabel(f_word_header,text="Traitement de texte",police_size=25)
+
+        btn_w_exit = aButton(self.__f_word_footer, text="Retour", command=self.__view_acceuil)
 
         # Placement
         l_title.pack(pady=10)
@@ -105,8 +130,15 @@ class GUIWork(GuiBase):
         self.__f_projet_body.grid(row=1, column=0, sticky="nsew",padx=10,pady=10)
         self.__f_projet_footer.grid(row=2, column=0, sticky="ew",padx=10,pady=10)
 
+        f_word_header.grid(row=0, column=0, sticky="ew",padx=10,pady=10)
+        self.__f_word_body.grid(row=1, column=0, sticky="nsew",padx=10,pady=10)
+        self.__f_word_footer.grid(row=2, column=0, sticky="ew",padx=10,pady=10)
+
         l_title_projet.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
         btn_p_exit.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
+
+        l_title_word.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
+        btn_w_exit.grid(row=0, column=0, sticky="nsew",padx=10,pady=10)
 
         self.__f_welcome.grid(row=1, column=0, sticky="nsew")
 
@@ -168,7 +200,7 @@ class GUIWork(GuiBase):
     def activeWord(self):
         self.active()
         self._mainframe()
-        #self.__activeWord()
+        self.__view_word()
 
     def activeAcceuil(self):
         self.active()
@@ -177,10 +209,18 @@ class GUIWork(GuiBase):
 
     def __view_acceuil(self):
         self.__f_projet.grid_forget()
+        self.__f_word.grid_forget()
         self.__f_welcome.grid(row=1, column=0, sticky="nsew")
+
+    def __view_word(self):
+        self.__f_welcome.grid_forget()
+        self.__f_projet.grid_forget()
+        self.__f_word.grid(row=1, column=0, sticky="nsew")
+
 
     def __view_projet(self):
         self.__f_welcome.grid_forget()
+        self.__f_word.grid_forget()
         self.__f_projet.grid(row=1, column=0, sticky="nsew")
 
         self.__f_projet_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
