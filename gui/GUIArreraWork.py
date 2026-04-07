@@ -1,4 +1,4 @@
-from tkinter.messagebox import showerror
+from tkinter.messagebox import showerror, showinfo
 
 from librairy.arrera_tk import *
 from gui.guibase import GuiBase,gestionnaire
@@ -81,6 +81,9 @@ class GUIWork(GuiBase):
 
         self.__f_word_footer.grid_rowconfigure(0, weight=1)
         self.__f_word_footer.grid_columnconfigure(0, weight=1)
+
+        self.__f_word_body.grid_rowconfigure(0, weight=1)
+        self.__f_word_body.grid_columnconfigure(0, weight=1)
 
         f_projet_header.grid_propagate(False)
         self.__f_projet_footer.grid_propagate(False)
@@ -216,6 +219,10 @@ class GUIWork(GuiBase):
         self.__f_welcome.grid_forget()
         self.__f_projet.grid_forget()
         self.__f_word.grid(row=1, column=0, sticky="nsew")
+        if not self.__fnc_work.getEtatWord():
+            self.__view_word_noopen()
+        else :
+            self.__view_word_open()
 
 
     def __view_projet(self):
@@ -352,3 +359,123 @@ class GUIWork(GuiBase):
         self.__fnc_work.closeProjet()
         self.__guiTaskProject = None
         self.__view_projet()
+
+    def __view_word_noopen(self):
+        self.__f_word_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+        for widget in self.__f_word_body.winfo_children():
+            widget.destroy()
+
+        f = aFrame(self.__f_word_body,fg_color=self.__f_word_body.cget("fg_color"))
+
+        f.grid_rowconfigure(0, weight=1)
+        f.grid_columnconfigure(0, weight=1)
+
+        img_open = aImage(path_light=self.__emplacementAsset+"word/open-word.png",
+                          width=80, height=80)
+
+        btn_open = aButton(f,text="",image=img_open,command=self.__open_word)
+
+        f.grid(row=0, column=0, sticky="nsew",padx=10, pady=10)
+
+        btn_open.grid(row=0, column=0)
+
+    def __open_word(self):
+        if self.__fnc_work.openWord():
+            self.__view_word_open()
+            self.__update_etat()
+
+
+    def __close_word(self):
+        self.__fnc_work.closeWord()
+        self.__view_word_noopen()
+
+    def __view_word_open(self):
+        self.__f_word_footer.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
+        for widget in self.__f_word_body.winfo_children():
+            widget.destroy()
+
+        f = aFrame(self.__f_word_body,fg_color=self.__f_word_body.cget("fg_color"))
+
+        f.grid_rowconfigure(0, weight=0)
+        f.grid_rowconfigure(1, weight=1)
+
+        f.grid_columnconfigure(0, weight=0)
+        f.grid_columnconfigure(1, weight=1)
+        f.grid_columnconfigure(2, weight=0)
+
+        l = aLabel(f,text=f"Document : {self.__fnc_work.getNameFileWord()}",police_size=25)
+
+        img_edit = aImage(path_light=self.__emplacementAsset+"word/write-word.png",height=80,width=80)
+        img_close = aImage(path_light=self.__emplacementAsset+"word/close-word.png",height=80,width=80)
+
+        btn_edit = aButton(f,text="",command=self.__edit_word,
+                           image=img_edit)
+        btn_close = aButton(f,text="",command=self.__close_word,
+                            image=img_close)
+
+        f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+        l.grid(row=0, column=0, columnspan=3, padx=10, pady=(10, 5), sticky="w")
+
+        btn_edit.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+        btn_close.grid(row=1, column=2, padx=10, pady=10, sticky="e")
+
+    def __edit_word(self):
+        if self.__fnc_work.getEtatWord():
+            self.__f_word_footer.grid_forget()
+
+            for widget in self.__f_word_body.winfo_children():
+                widget.destroy()
+
+            main = aFrame(self.__f_word_body,fg_color=self.__f_word_body.cget("fg_color"))
+            b = aFrame(main,fg_color=self.__f_word_body.cget("fg_color"))
+
+            main.grid_rowconfigure(0, weight=0)
+            main.grid_rowconfigure(1, weight=1)
+            main.grid_rowconfigure(2, weight=0)
+            main.grid_columnconfigure(0, weight=1)
+
+            b.grid_columnconfigure(0, weight=0)
+            b.grid_columnconfigure(1, weight=1)
+            b.grid_columnconfigure(2, weight=0)
+            b.grid_rowconfigure(0, weight=0)
+
+            l = aLabel(main,text=f"Edition : {self.__fnc_work.getNameFileWord()} ",police_size=20)
+
+            self.__textbox_word = aTextScrollable(main)
+
+            self.__textbox_word.enableTextBox()
+            self.__textbox_word.getTextBox().delete("1.0", "end")
+            self.__fnc_work.readWord()
+            self.__textbox_word.getTextBox().insert("1.0",self.__fnc_work.getReadWord())
+
+            self.__textbox_word.getTextBox().bind("<KeyRelease>", self.__safe_write_document)
+
+            btn_read = aButton(b, text="Lire", size=15, command=self.read_word)
+            btn_exit = aButton(b,text="Retour",size=15,command=self.__view_word_open)
+
+            main.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+            b.grid(row=2, column=0, padx=10, pady=(5, 10), sticky="ew")
+
+            l.grid(row=0, column=0, padx=10, pady=(10, 5), sticky="w")
+            self.__textbox_word.grid(row=1, column=0, padx=10, pady=5, sticky="nsew")
+            btn_read.grid(row=0, column=0, sticky="w")
+            btn_exit.grid(row=0, column=2, sticky="e")
+
+    def read_word(self):
+        if self.__fnc_work.readWord():
+            text = self.__fnc_work.getReadWord()
+            if text :
+                self._gestionnaire.getArrVoice().say(text)
+            else :
+                showinfo("Info", "Le document est vide.")
+        else :
+            showinfo("Erreur", "Une erreur est survenue lors de la lecture du document.")
+
+    def __safe_write_document(self,event=None):
+        data = self.__textbox_word.getTextBox().get("1.0", "end")
+
+        self.__fnc_work.writeWordEcrase(data)
+
+
