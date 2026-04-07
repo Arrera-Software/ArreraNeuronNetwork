@@ -405,11 +405,17 @@ class GUIWork(GuiBase):
 
         l = aLabel(f,text=f"Document : {self.__fnc_work.getNameFileWord()}",police_size=25)
 
-        img_edit = aImage(path_light=self.__emplacementAsset+"word/write-word.png",height=80,width=80)
-        img_close = aImage(path_light=self.__emplacementAsset+"word/close-word.png",height=80,width=80)
+        img_edit = aImage(path_light=self.__emplacementAsset+"word/write-word.png",
+                          height=80,width=80)
+        img_computer = aImage(path_light=self.__emplacementAsset+"word/open-word-coputer-soft.png",
+                              height=80,width=80)
+        img_close = aImage(path_light=self.__emplacementAsset+"word/close-word.png",
+                           height=80,width=80)
 
         btn_edit = aButton(f,text="",command=self.__edit_word,
                            image=img_edit)
+        btn_computer = aButton(f,text="",command=self.__fnc_work.openWordOs,
+                               image=img_computer)
         btn_close = aButton(f,text="",command=self.__close_word,
                             image=img_close)
 
@@ -418,6 +424,7 @@ class GUIWork(GuiBase):
         l.grid(row=0, column=0, columnspan=3, padx=10, pady=(10, 5), sticky="w")
 
         btn_edit.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+        btn_computer.grid(row=1, column=1)
         btn_close.grid(row=1, column=2, padx=10, pady=10, sticky="e")
 
     def __edit_word(self):
