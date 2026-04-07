@@ -286,9 +286,9 @@ class GUIWork(GuiBase):
             frame_center.grid_rowconfigure(i, weight=1)
 
         buttons = []
-        list_image = [aImage(path_light="asset/work/project/setType-project.png", width=80, height=80),
-                      aImage(path_light="asset/work/project/create-file-project.png", width=80, height=80),
-                      aImage(path_light="asset/work/project/view-task-project.png", width=80, height=80)]
+        list_image = [aImage(path_light=self.__emplacementAsset +"project/setType-project.png", width=80, height=80),
+                      aImage(path_light=self.__emplacementAsset +"project/create-file-project.png", width=80, height=80),
+                      aImage(path_light=self.__emplacementAsset +"project/view-task-project.png", width=80, height=80)]
 
         for i in range(3):
             btn = aButton(frame_center, text="", image=list_image[i])
