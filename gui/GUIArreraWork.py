@@ -578,13 +578,11 @@ class GUIWork(GuiBase):
             img_view = aImage(path_light=self.__emplacementAsset + "tableur/view-tableur.png",height=80, width=80)
             img_computer = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png",height=80, width=80)
             img_add = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png",height=80, width=80)
-            img_read = aImage(path_light=self.__emplacementAsset + "tableur/read-tableur.png",height=80, width=80)
             img_close = aImage(path_light=self.__emplacementAsset + "tableur/close-tableur.png",height=80, width=80)
 
             btn_view = aButton(f, text="",image=img_view)
             btn_computer = aButton(f, text="",image=img_computer,command= self.__fnc_work.openTableurOs)
             btn_add = aButton(f, text="",image=img_add)
-            btn_read = aButton(f, text="",image=img_read)
             btn_close = aButton(f, text="",image=img_close,command=self.__close_tableur)
 
             label.grid(row=0, column=0, columnspan=7, sticky="w", padx=10, pady=(10, 5))
@@ -592,7 +590,6 @@ class GUIWork(GuiBase):
             btn_view.grid(row=1, column=1, padx=5, pady=10)
             btn_computer.grid(row=1, column=2, padx=5, pady=10)
             btn_add.grid(row=1, column=3, padx=5, pady=10)
-            btn_read.grid(row=1, column=4, padx=5, pady=10)
-            btn_close.grid(row=1, column=5, padx=5, pady=10)
+            btn_close.grid(row=1, column=4, padx=5, pady=10)
 
             f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
