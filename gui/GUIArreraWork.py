@@ -577,19 +577,19 @@ class GUIWork(GuiBase):
 
             img_view = aImage(path_light=self.__emplacementAsset + "tableur/view-tableur.png",height=80, width=80)
             img_computer = aImage(path_light=self.__emplacementAsset + "tableur/open-tableur-coputer-soft.png",height=80, width=80)
-            img_add = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png",height=80, width=80)
+            img_edit = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png",height=80, width=80)
             img_close = aImage(path_light=self.__emplacementAsset + "tableur/close-tableur.png",height=80, width=80)
 
             btn_view = aButton(f, text="",image=img_view,command=self.__read_tableur)
             btn_computer = aButton(f, text="",image=img_computer,command= self.__fnc_work.openTableurOs)
-            btn_add = aButton(f, text="",image=img_add)
+            btn_edit = aButton(f, text="",image=img_edit,command=self.__edit_tableur)
             btn_close = aButton(f, text="",image=img_close,command=self.__close_tableur)
 
             label.grid(row=0, column=0, columnspan=7, sticky="w", padx=10, pady=(10, 5))
 
             btn_view.grid(row=1, column=1, padx=5, pady=10)
             btn_computer.grid(row=1, column=2, padx=5, pady=10)
-            btn_add.grid(row=1, column=3, padx=5, pady=10)
+            btn_edit.grid(row=1, column=3, padx=5, pady=10)
             btn_close.grid(row=1, column=4, padx=5, pady=10)
 
             f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -624,5 +624,58 @@ class GUIWork(GuiBase):
                 lbl.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
             b.grid(row=1, column=0, padx=10, pady=5)
+
+            f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    def __edit_tableur(self):
+        if self.__fnc_work.getEtatTableur():
+
+            list_action = ["Ajout de valeur",
+                           "Ajout d'un maximun",
+                           "Ajout d'un minimun",
+                           "Ajout d'une moyenne",
+                           "Ajout d'une somme",
+                           "Ajout d'un comptage",
+                           "Suppression d'une valeur"]
+
+            self.__f_tableur_footer.grid_forget()
+
+            for widget in self.__f_tableur_body.winfo_children():
+                widget.destroy()
+
+            f = aFrame(self.__f_tableur_body, fg_color=self.__f_word_body.cget("fg_color"))
+
+            c = aFrame(f,fg_color=f.cget("fg_color"))
+            b = aFrame(f,fg_color=f.cget("fg_color"))
+
+            f.grid_rowconfigure(0, weight=0)
+            f.grid_rowconfigure(1, weight=1)
+            f.grid_rowconfigure(2, weight=0)
+            f.grid_columnconfigure(0, weight=1)
+
+            c.grid_columnconfigure(0, weight=1)
+
+            b.grid_columnconfigure(0, weight=1)
+            b.grid_columnconfigure(1, weight=1)
+
+            l_title = aLabel(f,text=f"Edition : {self.__fnc_work.getNameFileTableur()}",police_size=15)
+
+            menu = aOptionMenuLengend(c,text="Action",values=list_action,gridUsed=True)
+            e_case = aEntryLengend(c,text="Case",gridUsed=True)
+            e_val = aEntryLengend(c,text="Valeur",gridUsed=True)
+
+            btn1 = aButton(b, text="Annuler",command=self.__view_tableur_open)
+            btn2 = aButton(b, text="Valider")
+
+            l_title.grid(row=0, column=0, sticky="w", padx=10, pady=(10, 5))
+            c.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
+            b.grid(row=2, column=0, sticky="ew", padx=20, pady=10)
+
+            menu.grid(row=0, column=0, sticky="ew", pady=5)
+            e_case.grid(row=1, column=0, sticky="ew", pady=5)
+            e_val.grid(row=2, column=0, sticky="ew", pady=5)
+
+            btn1.grid(row=0, column=0, padx=5, sticky="ew")
+            btn2.grid(row=0, column=1, padx=5, sticky="ew")
 
             f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
