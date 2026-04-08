@@ -501,7 +501,7 @@ class GUIWork(GuiBase):
 
             self.__textbox_word.getTextBox().bind("<KeyRelease>", self.__safe_write_document)
 
-            btn_read = aButton(b, text="Lire", size=15, command=self.read_word)
+            btn_read = aButton(b, text="Lire", size=15, command=self.__read_word)
             btn_exit = aButton(b,text="Retour",size=15,command=self.__view_word_open)
 
             main.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
@@ -513,7 +513,7 @@ class GUIWork(GuiBase):
             btn_read.grid(row=0, column=0, sticky="w")
             btn_exit.grid(row=0, column=2, sticky="e")
 
-    def read_word(self):
+    def __read_word(self):
         if self.__fnc_work.readWord():
             text = self.__fnc_work.getReadWord()
             if text :
