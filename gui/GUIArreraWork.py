@@ -580,7 +580,7 @@ class GUIWork(GuiBase):
             img_add = aImage(path_light=self.__emplacementAsset + "tableur/add-valeur.png",height=80, width=80)
             img_close = aImage(path_light=self.__emplacementAsset + "tableur/close-tableur.png",height=80, width=80)
 
-            btn_view = aButton(f, text="",image=img_view)
+            btn_view = aButton(f, text="",image=img_view,command=self.__read_tableur)
             btn_computer = aButton(f, text="",image=img_computer,command= self.__fnc_work.openTableurOs)
             btn_add = aButton(f, text="",image=img_add)
             btn_close = aButton(f, text="",image=img_close,command=self.__close_tableur)
@@ -591,5 +591,38 @@ class GUIWork(GuiBase):
             btn_computer.grid(row=1, column=2, padx=5, pady=10)
             btn_add.grid(row=1, column=3, padx=5, pady=10)
             btn_close.grid(row=1, column=4, padx=5, pady=10)
+
+            f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    def __read_tableur(self):
+        if self.__fnc_work.readTableur():
+
+            self.__f_tableur_footer.grid_forget()
+
+            for widget in self.__f_tableur_body.winfo_children():
+                widget.destroy()
+
+            f = aFrame(self.__f_tableur_body, fg_color=self.__f_word_body.cget("fg_color"))
+
+            f.grid_rowconfigure(0, weight=1)
+            f.grid_rowconfigure(1, weight=0)
+            f.grid_columnconfigure(0, weight=1)
+
+            b = aButton(f,text="Quitter",size=20,command=self.__view_tableur_open)
+
+            data = self.__fnc_work.getReadTableur()
+
+            if data:
+                fscroll = aScrollableFrame(f)
+                for row in data:
+                    lbl = aLabel(fscroll, text=row+"\n",police_size=15)
+                    lbl.configure(anchor="w")
+                    lbl.pack(side="top", anchor="w", fill="x", padx=5, pady=2)
+                fscroll.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+            else :
+                lbl = aLabel(f, text="Le tableur est vide.",police_size=15)
+                lbl.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+
+            b.grid(row=1, column=0, padx=10, pady=5)
 
             f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
