@@ -1,5 +1,8 @@
 from tkinter.messagebox import showerror, showinfo
 
+from numpy.ma.core import empty
+from setuptools._distutils import command
+
 from librairy.arrera_tk import *
 from gui.guibase import GuiBase,gestionnaire
 from gui.GUITaskProject import GUITaskProject
@@ -661,21 +664,107 @@ class GUIWork(GuiBase):
             l_title = aLabel(f,text=f"Edition : {self.__fnc_work.getNameFileTableur()}",police_size=15)
 
             menu = aOptionMenuLengend(c,text="Action",values=list_action,gridUsed=True)
-            e_case = aEntryLengend(c,text="Case",gridUsed=True)
-            e_val = aEntryLengend(c,text="Valeur",gridUsed=True)
+            menu.getOptionMenu().configure(command=lambda action: self.__change_optionmenu(action,e_1,e_2))
+
+            e_1 = aEntryLengend(c,text="Case",gridUsed=True)
+            e_2 = aEntryLengend(c,text="Valeur",gridUsed=True)
 
             btn1 = aButton(b, text="Annuler",command=self.__view_tableur_open)
-            btn2 = aButton(b, text="Valider")
+            btn2 = aButton(b, text="Valider",
+                           command=lambda :self.__set_action(menu,e_1,e_2))
 
             l_title.grid(row=0, column=0, sticky="w", padx=10, pady=(10, 5))
             c.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
             b.grid(row=2, column=0, sticky="ew", padx=20, pady=10)
 
             menu.grid(row=0, column=0, sticky="ew", pady=5)
-            e_case.grid(row=1, column=0, sticky="ew", pady=5)
-            e_val.grid(row=2, column=0, sticky="ew", pady=5)
+            e_1.grid(row=1, column=0, sticky="ew", pady=5)
+            e_2.grid(row=2, column=0, sticky="ew", pady=5)
 
             btn1.grid(row=0, column=0, padx=5, sticky="ew")
             btn2.grid(row=0, column=1, padx=5, sticky="ew")
 
             f.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    def __change_optionmenu(self,action,ecase:aEntryLengend,eval:aEntryLengend):
+
+        ecase.grid(row=1, column=0, sticky="ew", pady=5)
+        eval.grid(row=2, column=0, sticky="ew", pady=5)
+
+        if action == "Ajout de valeur":
+            ecase.changeTextLabel("Case : ")
+            eval.changeTextLabel("Valeur : ")
+        elif action == "Ajout d'un maximun":
+            ecase.changeTextLabel("Case de debut : ")
+            eval.changeTextLabel("Case de fin : ")
+        elif action == "Ajout d'un minimun":
+            ecase.changeTextLabel("Case de debut : ")
+            eval.changeTextLabel("Case de fin : ")
+        elif action == "Ajout d'une moyenne":
+            ecase.changeTextLabel("Case de debut : ")
+            eval.changeTextLabel("Case de fin : ")
+        elif action == "Ajout d'une somme":
+            ecase.changeTextLabel("Case de debut : ")
+            eval.changeTextLabel("Case de fin : ")
+        elif action == "Ajout d'un comptage":
+            ecase.changeTextLabel("Case de debut :" )
+            eval.changeTextLabel("Case de fin : ")
+        elif action == "Suppression d'une valeur":
+            ecase.changeTextLabel("Case : ")
+            eval.changeTextLabel("")
+            eval.grid_forget()
+
+    def __set_action(self,m:aOptionMenuLengend,ecase:aEntryLengend,eval:aEntryLengend):
+        if self.__fnc_work.getEtatTableur():
+            action = m.getValue()
+
+            case = ecase.getEntry().get()
+            val = eval.getEntry().get()
+
+            ecase.getEntry().delete(0, "end")
+            eval.getEntry().delete(0, "end")
+
+            if action == "Ajout de valeur":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addValeurOnTableur(case, val):
+                    showinfo("Tableur","Valeur ajouter")
+            elif action == "Ajout d'un maximun":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addMaximumOnTableur(case, val):
+                    showinfo("Tableur", "Maximun ajouter")
+            elif action == "Ajout d'un minimun":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addMinimumOnTableur(case, val):
+                    showinfo("Tableur", "Minimum ajouter")
+            elif action == "Ajout d'une moyenne":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addMoyenneOnTableur(case, val):
+                    showinfo("Tableur", "Minimum ajouter")
+            elif action == "Ajout d'une somme":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addSommeOnTableur(case, val):
+                    showinfo("Tableur", "Somme ajouter")
+            elif action == "Ajout d'un comptage":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.addComptageOnTableur(case, val):
+                    showinfo("Tableur", "Comptage ajouter")
+            elif action == "Suppression d'une valeur":
+                if case == "" or val == "":
+                    showerror("Erreur", "Veuillez remplir tous les champs.")
+                    return
+                if self.__fnc_work.delValeur(case):
+                    showinfo("Tableur", "Valeur supprimer")
+
+            self.__view_tableur_open()
