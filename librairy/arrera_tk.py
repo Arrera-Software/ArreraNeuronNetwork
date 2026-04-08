@@ -201,13 +201,15 @@ class aText(placement_Tool_Kit_internet, ctk.CTkTextbox):
 
 
 class aTextScrollable(placement_Tool_Kit_internet, ctk.CTkFrame):
-    def __init__(self, master):
+    def __init__(self, master,police_size: int = 15):
         super().__init__(master)
         self.configure(border_width=0)
 
         self.__textbox = ctk.CTkTextbox(self, wrap="word", state="disabled")
         scrollbar = ctk.CTkScrollbar(self, command=self.__textbox.yview)
         self.__textbox.configure(yscrollcommand=scrollbar.set)
+
+        self.__textbox.configure(font=("Roboto", police_size, "normal"))
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
