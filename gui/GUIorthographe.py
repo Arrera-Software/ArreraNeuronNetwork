@@ -4,6 +4,7 @@ from tkinter.scrolledtext import*
 from gui.guibase import GuiBase,gestionnaire
 from tkinter import WORD
 from tkinter.messagebox import showinfo
+from librairy.arrera_tk import *
 
 class GUIOrthographe(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
@@ -16,29 +17,20 @@ class GUIOrthographe(GuiBase) :
         self._screen.rowconfigure(0, weight=1)
         self._screen.columnconfigure(0, weight=1)
         # Frame
-        self.__frameErreur =  self._arrtk.createFrame(self._screen)
-        self.__frameCorrect =  self._arrtk.createFrame(self._screen)
-        self.__frameOut =  self._arrtk.createFrame(self._screen)
+        self.__frameErreur =  aFrame(self._screen)
+        self.__frameCorrect =  aFrame(self._screen)
+        self.__frameOut =  aFrame(self._screen)
         # Widget
         # Label
-        labelTitle = self._arrtk.createLabel(self.__frameCorrect,text="Correcteur d'orthographe",
-                                             ptaille=20,ppolice="Arial",pstyle="bold")
-        labelTitleOut = self._arrtk.createLabel(self.__frameOut,text="Texte corrigé",
-                                                ptaille=20,ppolice="Arial",pstyle="bold")
-        self.__labelOutCorrect = self._arrtk.createLabel(self.__frameOut,justify="left",
-                                                       ptaille=20,ppolice="Arial",pstyle="bold")
-        self.__labelOutViewCorrect = self._arrtk.createLabel(self.__frameOut,justify="left",
-                                                             ptaille=20,ppolice="Arial",pstyle="bold")
+        labelTitle = aLabel(self.__frameCorrect,text="Correcteur d'orthographe",police_size=25)
+        labelTitleOut = aLabel(self.__frameOut,text="Texte corrigé",police_size=25)
+        self.__labelOutCorrect = aLabel(self.__frameOut,justify="left")
+        self.__labelOutViewCorrect = aLabel(self.__frameOut,justify="left")
         # ScrolledText
         self.__zoneSortie = ScrolledText(self.__frameCorrect, wrap=WORD, width=80, height=15)
         # Bouton
-        self.__btnCorrect = self._arrtk.createButton(self.__frameCorrect,text="",
-                                                     ptaille=20,ppolice="Arial",pstyle="bold"
-                                                     ,bg=self._btnColor,fg=self._btnTexteColor)
-        btnCopyOut = self._arrtk.createButton(self.__frameOut,text="Copier le texte",
-                                              ptaille=20,ppolice="Arial",pstyle="bold"
-                                              ,bg=self._btnColor,fg=self._btnTexteColor,
-                                              command=self.__copyText)
+        self.__btnCorrect = aButton(self.__frameCorrect,text="")
+        btnCopyOut = aButton(self.__frameOut,text="Copier le texte",command=self.__copyText)
 
         # Parametrage des grid
         # Frame Correct
