@@ -152,11 +152,11 @@ class GUIViewBreef(GuiBase):
         self.__readVar = f"La meteo à {meteoDict["ville"]} est {meteoDict["weather"]} avec une temperature de {meteoDict["temperature"]}°C. "
 
         try :
-            imgMeteo = self._arrtk.createImage(meteoDict["icon"],tailleX=100,tailleY=100)
+            imgMeteo = aImage(path_light=meteoDict["icon"],width=100,height=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
         except Exception as e:
-            imgMeteo = self._arrtk.createImage(self._gestionnaire.getConfigFile().asset+"meteo/meteo-error.png",
-                                               tailleX=100,tailleY=100)
+            imgMeteo = aImage(path_light=self._gestionnaire.getConfigFile().asset+"meteo/meteo-error.png",
+                              width=100, height=100)
             self.__labelLogoMeteo.configure(image=imgMeteo,text="")
 
         self.__lNoAlert.grid(row=1, column=0, sticky="ew", padx=8, pady=4)

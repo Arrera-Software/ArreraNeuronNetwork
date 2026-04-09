@@ -1,7 +1,6 @@
 from librairy.arrera_tk import *
 from tkinter.messagebox import *
 from tkinter.filedialog import *
-from librairy.arrera_tk_old import *
 import json
 
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
@@ -56,8 +55,8 @@ class CHOrgraVarriable(CCHguiBase):
         labelAdd = aLabel(self.__frameAdd,text="Ajouter une varriable")
         btnAdd = aButton(self.__frameAdd,text="Valider",command=self.__addValeur)
         # Entry
-        self.__entryName = self._arrtk.createEntry(frameEntry,ptaille=20)
-        self.__entryValeur = self._arrtk.createEntry(frameEntry,ptaille=20)
+        self.__entryName = aEntry(frameEntry,police_size=20)
+        self.__entryValeur = aEntry(frameEntry,police_size=20)
         # OptionMenu
         menuType = ctk.CTkOptionMenu(frameEntry,variable=self.__varType,values=self.__listType)
         #Widget frameSuppr
@@ -66,21 +65,21 @@ class CHOrgraVarriable(CCHguiBase):
         self.__menuSuppr = ctk.CTkOptionMenu(self.__frameSuppr,variable = self.__varSuppr,values = self.__listSuppr)
 
         #Affichage
-        self._arrtk.placeCenter(self.__frameNoOpenDoc)
+        self.__frameNoOpenDoc.placeCenter()
         #frameAdd
-        self._arrtk.placeTopCenter(labelAdd)
-        self._arrtk.placeBottomCenter(btnAdd)
-        self._arrtk.placeCenter(frameEntry)
-        self._arrtk.placeLeftCenter(self.__entryName)
-        self._arrtk.placeCenter(menuType)
-        self._arrtk.placeRightCenter(self.__entryValeur)
+        labelAdd.placeTopCenter()
+        btnAdd.placeBottomCenter()
+        frameEntry.placeCenter()
+        self.__entryName.placeLeftCenter()
+        placeCenter(menuType)
+        self.__entryValeur.placeRightCenter()
         #frameSuppr
         labelSuppr.place(x=((self.__frameSuppr.winfo_reqwidth()-labelSuppr.winfo_reqwidth())//2),y=0)
         self.__menuSuppr.place(relx=0.5,rely=0.5,anchor="center")
-        self._arrtk.placeBottomCenter(btnSuppr)
+        btnSuppr.placeBottomCenter()
         #frameNoOpenDoc
-        self._arrtk.placeCenter(labelNoDoc)
-        self._arrtk.placeBottomCenter(btnOpenNoDoc)
+        labelNoDoc.placeCenter()
+        btnOpenNoDoc.placeBottomCenter()
         #Ajout de menu a la fenetre
         self.__varType.set(self.__listType[0])
 
@@ -103,8 +102,8 @@ class CHOrgraVarriable(CCHguiBase):
                         self.__zoneEcriture.config(state="normal")
                         self.__zoneEcriture.insert(END, f"{key}:{value}\n")
                         self.__zoneEcriture.config(state="disable")
-                    self._arrtk.placeTopRight(self.__frameAdd)
-                    self._arrtk.placeBottomRight(self.__frameSuppr)
+                    self.__frameAdd.placeTopRight()
+                    self.__frameSuppr.placeBottomRight()
                     self.__refreshSuppr()
             else :
                 showwarning("Aucun document selectionner","Veuillez selectionner un document")
@@ -121,8 +120,8 @@ class CHOrgraVarriable(CCHguiBase):
             self.__fichiermenu.entryconfigure("Ouvrir",label="Fermer",command=self.__closeDoc)
             self.__frameNoOpenDoc.place_forget()
             self.__zoneEcriture.place(relx=0, rely=0, relwidth=0.5, relheight=1)
-            self._arrtk.placeTopRight(self.__frameAdd)
-            self._arrtk.placeBottomRight(self.__frameSuppr)
+            self.__frameAdd.placeTopRight()
+            self.__frameSuppr.placeBottomRight()
             self.__refreshSuppr()
             self.__saveOnFile()
         else :

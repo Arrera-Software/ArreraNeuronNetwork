@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from gestionnaire.gestion import*
-from librairy.arrera_tk_old import *
 from librairy.arrera_tk import *
 
 class GuiBase:
@@ -11,8 +10,6 @@ class GuiBase:
         self.__icon = self._gestionnaire.getIcon()
         self._btnColor = self._gestionnaire.getConfigFile().assistant_color
         self._btnTexteColor = self._gestionnaire.getConfigFile().assistant_texte_color
-        # Arrera TK
-        self._arrtk = CArreraTK()
         # Init de la var de la fenetre
         self._screen = None
 

@@ -1,7 +1,6 @@
 import tkinter
 from tkinter.messagebox import showerror, askyesno
 from librairy.dectectionOS import OS
-from librairy.arrera_tk_old import *
 from librairy.arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
@@ -12,7 +11,6 @@ import threading as th
 
 class GUIOpale:
     def __init__(self):
-        self.__arrTK = CArreraTK()
         self.__emplacementLangue = "language/vouvoiment/"
         self.__objOS = OS()
         self.__logContent = ""
