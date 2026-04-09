@@ -29,11 +29,12 @@ class GuiTraducteur(GuiBase):
         frameTrad.grid_rowconfigure(1, weight=1)
         frameTrad.grid_rowconfigure(2, weight=0)
         # Widgets
-        labelTitle = aLabel(frameTop,text=self._gestionnaire.getName()+" : Traducteur")
+        labelTitle = aLabel(frameTop,text=self._gestionnaire.getName()+" : Traducteur",
+                            police_size=30)
         self.__textBoxIn = aText(frameTrad)
         self.__textBoxOut = aText(frameTrad)
 
-        btnTrad = aButton(frameTrad,text="Traduire",command=self.__translate)
+        btnTrad = aButton(frameTrad,text="Traduire",command=self.__translate,size=20)
         self.__menuLangIn = aOptionMenuLengend(frameTrad,text="Langue d'entrée ",
                                                values=self.__listLang,gridUsed=True)
         self.__menuLangOut = aOptionMenuLengend(frameTrad,text="Langue de sortie ",
