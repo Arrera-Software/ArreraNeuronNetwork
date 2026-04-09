@@ -285,11 +285,39 @@ class GUIWork(GuiBase):
         f_view_projet = aScrollableFrame(self.__f_projet_body,fg_color=self.__f_projet_body.cget("fg_color"))
         f_view_projet.grid_columnconfigure(0, weight=1)
 
+        i = 0
         for i, p in enumerate(list_projet):
-            b = aButton(f_view_projet, text=p,size=17,command= lambda p=p: self.__open_projet(p))
+            b = aButton(f_view_projet, text=p, size=17, command=lambda p=p: self.__open_projet(p))
             b.grid(row=i, column=0, sticky="ew", padx=15, pady=15)
 
+        btn_create = aButton(f_view_projet, text="Créer un projet",command=self.__windows_create_projet, size=17)
+        if i != 0:
+            i += 1
+
+        btn_create.grid(row=i, column=0, sticky="ew", padx=15, pady=15)
+
+
         f_view_projet.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+
+    def __windows_create_projet(self):
+        screen = aTopLevel(width=300, height=125, resizable=False, title="Création d'un projet")
+        aLabel(screen, text="Création d'un projet", police_size=25).placeTopCenter()
+        entry = aEntryLengend(screen,text="Nom du projet", width=150)
+        entry.placeCenter()
+        aButton(screen,text="Valider",size=15,command = lambda : self.__create_projet(screen,entry)).placeBottomRight()
+        aButton(screen, text="Annuler",size=15).placeBottomLeft()
+
+    def __create_projet(self,s:aTopLevel,e:aEntryLengend):
+        projet = e.getEntry().get()
+        e.getEntry().delete(0,END)
+        if self.__fnc_work.createProjet(projet):
+            showinfo("Info", "Projet créé avec succès")
+            self.__update_etat()
+            self.__view_projet_open()
+            s.destroy()
+        else :
+            showerror("Erreur", "Impossible de créer le projet")
+
 
     def __windows_action_projet(self, title:str, texte:str):
         screen = aTopLevel(width=300, height=125,resizable=False,title=title)
