@@ -304,6 +304,9 @@ class aOptionMenu(placement_Tool_Kit_internet, ctk.CTkOptionMenu):
     def changePolice(self, font: (str, int, str) = ("Roboto", 15, "bold")):
         self.configure(font=font)
 
+    def set_text(self, text: str):
+        self.__var.set(text)
+
 
 class aOptionMenuLengend(placement_Tool_Kit_internet, ctk.CTkFrame):
     def __init__(self, master, values: list, text: str = "Arrera OptionMenu Legend", bg: str = "", fg: str = "",
