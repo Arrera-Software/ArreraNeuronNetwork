@@ -32,11 +32,12 @@ class GuiTraducteur(GuiBase):
         labelTitle = aLabel(frameTop,text=self._gestionnaire.getName()+" : Traducteur")
         self.__textBoxIn = aText(frameTrad)
         self.__textBoxOut = aText(frameTrad)
+
         btnTrad = aButton(frameTrad,text="Traduire",command=self.__translate)
-        labelIndicationIn = aLabel(frameTrad,text="Langue d'entrée :")
-        labelIndicationOut = aLabel(frameTrad,text="Langue de sortie :")
-        self.__menuLangIn = aOptionMenu(frameTrad,value=self.__listLang)
-        self.__menuLangOut = aOptionMenu(frameTrad,value=self.__listLang)
+        self.__menuLangIn = aOptionMenuLengend(frameTrad,text="Langue d'entrée ",
+                                               values=self.__listLang,gridUsed=True)
+        self.__menuLangOut = aOptionMenuLengend(frameTrad,text="Langue de sortie ",
+                                                values=self.__listLang,gridUsed=True)
 
         # Placement
         frameTop.grid(row=0, column=0, sticky="ew")
@@ -44,11 +45,8 @@ class GuiTraducteur(GuiBase):
 
         labelTitle.pack(side="left", anchor="nw", padx=10, pady=5)
 
-        labelIndicationIn.grid(row=0, column=0, sticky="w", padx=(10,5), pady=(10,5))
-        self.__menuLangIn.grid(row=0, column=1, sticky="w", padx=(0,10), pady=(10,5))
-
-        labelIndicationOut.grid(row=0, column=2, sticky="e", padx=(10,5), pady=(10,5))
-        self.__menuLangOut.grid(row=0, column=3, sticky="e", padx=(0,10), pady=(10,5))
+        self.__menuLangIn.grid(row=0, column=0, columnspan=2, sticky="ew", padx=(10, 5), pady=(10, 5))
+        self.__menuLangOut.grid(row=0, column=2, columnspan=2, sticky="ew", padx=(10, 5), pady=(10, 5))
 
         self.__textBoxIn.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=(10,5), pady=(0,10))
         self.__textBoxOut.grid(row=1, column=2, columnspan=2, sticky="nsew", padx=(5,10), pady=(0,10))
