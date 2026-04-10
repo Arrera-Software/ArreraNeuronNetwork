@@ -115,8 +115,8 @@ class GUIWork(GuiBase):
         # header
         l_title = aLabel(f_header,police_size=30,text=f"{self._gestionnaire.getConfigFile().name} : Work")
         # Welcome
-        btn_w_tableur = aButton(f_welcome_btn,text="Tableur",
-                                image=img_w_tableur,command=self.__activeTableur)
+        btn_w_tableur = aButton(f_welcome_btn, text="Tableur",
+                                image=img_w_tableur, command=self.__view_tableur)
         btn_w_word = aButton(f_welcome_btn, text="Traitement\nde texte",
                              image=img_w_texte, command=self.__view_word)
         btn_w_projet = aButton(f_welcome_btn,text="Projet",
@@ -231,7 +231,7 @@ class GUIWork(GuiBase):
     def activeTableur(self):
         self.active()
         self._mainframe()
-        #self.__activeTableur()
+        self.__view_tableur()
 
     def activeWord(self):
         self.active()
@@ -259,7 +259,7 @@ class GUIWork(GuiBase):
         else :
             self.__view_word_open()
 
-    def __activeTableur(self):
+    def __view_tableur(self):
         self.__f_welcome.grid_forget()
         self.__f_projet.grid_forget()
         self.__f_word.grid_forget()
@@ -796,3 +796,60 @@ class GUIWork(GuiBase):
                     showinfo("Tableur", "Valeur supprimer")
 
             self.__view_tableur_open()
+
+    # Methode qui sert juste a l'ouverture de l'interface de task des projet
+
+    def open_task_projet(self):
+        self.__open_task_projet()
+
+    def open_task_projet_add(self):
+        self.__update_etat()
+        if self.__guiTaskProject is not None:
+            self.__guiTaskProject.activeAdd()
+            return True
+        else:
+            return False
+
+    def open_task_projet_del(self):
+        self.__update_etat()
+        if self.__guiTaskProject is not None:
+            self.__guiTaskProject.activeDel()
+            return True
+        else:
+            return False
+
+    def active_manage_tableur(self):
+        self.__update_etat()
+        if self.__tableurOpen:
+            self.__view_tableur()
+            self.__edit_tableur()
+            return True
+        else :
+            return False
+
+    def active_read_tableur(self):
+        self.__update_etat()
+        if self.__tableurOpen:
+            self.__view_tableur()
+            self.__read_tableur()
+            return True
+        else:
+            return False
+
+    def active_read_word(self):
+        self.__update_etat()
+        if self.__wordOpen:
+            self.__view_word()
+            self.__read_word()
+            return True
+        else:
+            return False
+
+    def active_write_word(self):
+        self.__update_etat()
+        if self.__wordOpen:
+            self.__view_word()
+            self.__edit_word()
+            return True
+        else:
+            return False
