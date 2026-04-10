@@ -9,7 +9,7 @@ from typing import Union, Callable
 
 from customtkinter import CTkCanvas, CTkImage
 
-VERSIONARRERATK = "2.0.3"
+VERSIONARRERATK = "2.1.0"
 
 
 # Fonction pour gerer les resource sur mac os
