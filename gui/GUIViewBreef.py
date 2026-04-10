@@ -1,3 +1,4 @@
+import threading
 from tkinter.messagebox import showerror
 import threading as th
 from gui.guibase import GuiBase,gestionnaire
@@ -7,29 +8,36 @@ class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Breef")
         self.__readVar = ""
+        self.__out_breef = None
         self.__thRead = th.Thread()
+        self.__thLoad = th.Thread()
 
     def _mainframe(self):
         # Configuration de la fenetre
         self._screen.grid_rowconfigure(0, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
         # Frame
-        mainFrame = aFrame(self._screen)
+        self.__main_frame = aFrame(self._screen)
 
-        weatherFrame = aFrame(mainFrame)
+        self.__load_frame = aFrame(self._screen)
+
+        weatherFrame = aFrame(self.__main_frame)
         alertFrame = aFrame(weatherFrame)
 
-        tasksContainer = aFrame(mainFrame,fg_color=mainFrame.cget("fg_color"))
+        tasksContainer = aFrame(self.__main_frame,fg_color=self.__main_frame.cget("fg_color"))
         taskFrame = aFrame(tasksContainer,fg_color=weatherFrame.cget("fg_color"))
         taskProjectFrame = aFrame(tasksContainer,fg_color=weatherFrame.cget("fg_color"))
 
         # Configuration
-        mainFrame.grid_columnconfigure(0, weight=1)
-        mainFrame.grid_rowconfigure(0, weight=0)
-        mainFrame.grid_rowconfigure(1, weight=0)
-        mainFrame.grid_rowconfigure(2, weight=1)
-        mainFrame.grid_rowconfigure(3, weight=0)
-        mainFrame.grid_rowconfigure(4, weight=0)
+        self.__main_frame.grid_columnconfigure(0, weight=1)
+        self.__main_frame.grid_rowconfigure(0, weight=0)
+        self.__main_frame.grid_rowconfigure(1, weight=0)
+        self.__main_frame.grid_rowconfigure(2, weight=1)
+        self.__main_frame.grid_rowconfigure(3, weight=0)
+        self.__main_frame.grid_rowconfigure(4, weight=0)
+
+        self.__load_frame.grid_rowconfigure(0, weight=1)
+        self.__load_frame.grid_columnconfigure(0, weight=1)
 
         weatherFrame.rowconfigure(0, weight=1)
         weatherFrame.rowconfigure(1, weight=1)
@@ -54,8 +62,11 @@ class GUIViewBreef(GuiBase):
         tasksContainer.grid_rowconfigure(0, weight=1)
 
         # Widgets
-        labelTitle = aLabel(mainFrame,text=self._gestionnaire.getName()+" : Breef",police_size=35)
-        btnRead = aButton(mainFrame,text="Lire",size=25,command=self.__readBreef)
+        labelTitle = aLabel(self.__main_frame,text=self._gestionnaire.getName()+" : Breef",police_size=35)
+        btnRead = aButton(self.__main_frame,text="Lire",size=25,command=self.__readBreef)
+
+        # Load
+        label_load = aLabel(self.__load_frame,text="Chargement du breef en cours...",police_size=25)
 
         # Meteo
         self.__labelLogoMeteo = aLabel(weatherFrame,text="Logo")
@@ -96,19 +107,37 @@ class GUIViewBreef(GuiBase):
         lTitleTaskProject.grid(row=0, column=0, sticky="n", pady=(10, 6))
         self.__fViewTaskProject.grid(row=1, column=0, sticky="nsew", padx=10, pady=(0, 10))
 
-        mainFrame.grid(row=0, column=0, sticky="nsew")
+        label_load.grid(row=0, column=0)
 
     def activeBreef(self):
         self.active()
-        outBreef = self._gestionnaire.getGestFNC().getFNCBreef().morningBreef()
-        if outBreef is None:
-            showerror("Erreur","Impossible de charger le breef du jour")
-            self._screen.destroy()
-        else:
-            self.__selectMeteo(outBreef)
-            self.__setTask(self.__fViewTask,outBreef["task"])
-            self.__setReadForTask(outBreef["task"])
-            self.__setTaskProjet(outBreef["tacheProjet"])
+        self.__load_frame.grid(row=0, column=0, sticky="nsew")
+        self.__thLoad = threading.Thread(target=self.__load_breef)
+        self.__thLoad.start()
+        self._screen.update()
+        self._screen.after(100, self.__update_during_load_breef)
+
+    def __load_breef(self):
+        self.__out_breef = self._gestionnaire.getGestFNC().getFNCBreef().morningBreef()
+
+    def __update_during_load_breef(self):
+        if self.__thLoad.is_alive():
+            self._screen.update()
+            self._screen.after(100,self.__update_during_load_breef)
+        else :
+            self._screen.update()
+            if self.__out_breef is None:
+                showerror("Erreur", "Impossible de charger le breef du jour")
+                self._screen.destroy()
+            else:
+                self.__load_frame.grid_forget()
+                self.__main_frame.grid(row=0, column=0, sticky="nsew")
+
+                self.__selectMeteo(self.__out_breef)
+                self.__setTask(self.__fViewTask, self.__out_breef["task"])
+                self.__setReadForTask(self.__out_breef["task"])
+                self.__setTaskProjet(self.__out_breef["tacheProjet"])
+
 
     def __setTask(self,frame:ctk.CTkFrame,listTask:list):
 
