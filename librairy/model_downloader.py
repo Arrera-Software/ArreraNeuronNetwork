@@ -33,17 +33,18 @@ class model_downloader:
                                 "url": "https://huggingface.co/bartowski/Mistral-Small-24B-Instruct-2501-GGUF/resolve/main/Mistral-Small-24B-Instruct-2501-Q4_K_M.gguf?download=true",
                                 "description": "Modèle avancé et très performant. Lourd, il nécessite une bonne carte graphique (au moins 16 Go de VRAM) ou beaucoup de RAM vive pour tourner confortablement."
                             },
-
-                            "leger-llama":{"name":"LLaMA 3.2 1B Q4_K_M",
-                                           "url":"https://huggingface.co/hugging-quants/Llama-3.2-1B-Instruct-Q4_K_M-GGUF/resolve/main/llama-3.2-1b-instruct-q4_k_m.gguf?download=true",
-                                           "description":"Petit modèle Meta(Facebook) LLaMA, parfait pour tourner sur un PC sans carte graphique ou NPU."},
-                            "moyen-llama":{"name":"LLaMA 3.1 8B Q4_K_M",
-                                           "url":"https://huggingface.co/YorkieOH10/Meta-Llama-3.1-8B-Instruct-hf-Q4_K_M-GGUF/resolve/main/meta-llama-3.1-8b-instruct-hf-q4_k_m.gguf?download=true",
-                                           "description":"Modèle Meta(Facebook) LLaMA de taille moyenne, parfait pour tourner sur un PC avec une carte graphique ou équipé de NPU."},
-                            "lourd-llama":{"name":"LLaMA 3.1 34B FP16",
-                                           "url":"https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/resolve/main/codellama-34b-instruct.Q4_0.gguf?download=true",
-                                           "description":"Modèle Meta(Facebook) LLaMA 3.1, lourd pour les PC avec une carte graphique de 12 Go de NVRAM ou plus."},
-                            }
+                            "leger-llama": {
+                                "name": "LLaMA 3.2 3B Instruct Q4_K_M",
+                                "url": "https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf?download=true",
+                                "description": "Petit modèle Meta très intelligent. Parfait pour tourner sur le processeur (CPU) d'un PC sans carte graphique, avec une excellente rapidité."},
+                            "moyen-llama": {
+                                "name": "LLaMA 3.1 8B Instruct Q4_K_M",
+                                "url": "https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf?download=true",
+                                "description": "Le classique incontournable de Meta. Taille moyenne, tourne parfaitement sur un PC avec une carte graphique standard (8 Go de VRAM)."},
+                            "lourd-llama": {
+                                "name": "LLaMA 3.3 70B Instruct Q3_K_M",
+                                "url": "https://huggingface.co/bartowski/Llama-3.3-70B-Instruct-GGUF/resolve/main/Llama-3.3-70B-Instruct-Q3_K_M.gguf?download=true",
+                                "description": "Un modèle massif aux performances comparables à GPT-4. Attention : très lourd ! Nécessite au moins 32 Go de mémoire (VRAM + RAM combinées) pour fonctionner."}}
 
         os_name = platform.system()
 
