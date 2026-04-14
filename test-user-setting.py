@@ -401,6 +401,13 @@ def main():
                     case "8":
                         print("Model dans le dossier")
                         print(user.get_model_ia_on_directory())
+                    case "9" :
+                        model = input("Model a supprimer : ")
+                        if user.del_ia_model(model):
+                            print("Model supprimer")
+                        else :
+                            print("Impossible de supprimer le model")
+
             case _:
                 print("Errureur, veuillez choisir un nombre entre 0 et 13.")
 

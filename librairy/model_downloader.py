@@ -113,6 +113,23 @@ class model_downloader:
         except Exception as e :
             return False
 
+    def del_model(self,model:str):
+        if model in self.get_model_download():
+           file = self.get_path_model(model)
+           if os.path.isfile(file):
+               os.remove(file)
+               openfile = open(self.__modelDownloadFile, 'r' , encoding='utf-8')
+               dict = json.load(openfile)
+               openfile.close()
+               writeFile = open(self.__modelDownloadFile, 'w', encoding='utf-8')
+               dict["models"].remove(model)
+               json.dump(dict,writeFile,indent=2)
+               writeFile.close()
+               return True
+           else :
+               return False
+
+
     def get_path_model(self,key:str):
         if key in self.get_model_download():
             return self.__modelDir+key+".gguf"

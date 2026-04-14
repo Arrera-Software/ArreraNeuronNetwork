@@ -458,5 +458,8 @@ class gestUserSetting:
     def download_ia_model(self,model:str):
         return self.__gestionnaire.getGestIA().download_model(model)
 
+    def del_ia_model(self,model:str):
+        return self.__gestionnaire.getGestIA().del_model(model)
+
     def get_model_downloaded(self):
         return self.__gestionnaire.getGestIA().get_list_model_download()

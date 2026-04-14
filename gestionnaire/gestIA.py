@@ -103,3 +103,6 @@ class gestIA :
 
     def download_model(self,model:str):
         return self.__downloader_model.download_model(model)
+
+    def del_model(self,model:str):
+        return self.__downloader_model.del_model(model)
