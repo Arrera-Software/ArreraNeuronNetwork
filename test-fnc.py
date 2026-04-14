@@ -680,12 +680,9 @@ def partOrthographe():
         match nb:
             case 1:
                 text = input("Text : ")
-                if fnc.getFNCOrthographe().check(text):
-                    print(f"Mots incorrects : {fnc.getFNCOrthographe().getMotsIncorrects()}")
-                    if fnc.getFNCOrthographe().correctionText():
-                        print(f"Correction : {fnc.getFNCOrthographe().getCorrections()}")
-                    else :
-                        print("Erreur lors de la correction")
+                if fnc.getFNCOrthographe().corrected_text(text):
+                    print(f"Texte originaux : {fnc.getFNCOrthographe().get_text_no_corrected()}")
+                    print(f"Texte corriger : {fnc.getFNCOrthographe().getCorrections()}")
                 else :
                     print("Erreur lors du check de l'orthographe")
             case 2:

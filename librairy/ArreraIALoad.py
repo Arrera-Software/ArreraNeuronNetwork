@@ -42,8 +42,11 @@ class ArreraIALoad:
         return predicted_tag, float(confidence)
     """
 
-    def __predict_gguf_model(self, prompt, max_tokens=512):
-        consigne_langue = "\n\n(Réponds impérativement en français, même si je parle anglais ou technique)."
+    def __predict_gguf_model(self, prompt, max_tokens=512,enable_consigne_langue:bool=True):
+        if enable_consigne_langue:
+            consigne_langue = "\n\n(Réponds impérativement en français, même si je parle anglais ou technique)."
+        else :
+            consigne_langue = ""
         messages = []
 
         if self.__system_context_is_loaded and len(self.__system_instructions) > 0:
@@ -132,10 +135,10 @@ class ArreraIALoad:
         except Exception as e:
             raise ValueError(f"Erreur lors du chargement : {e}")
 
-    def send_request(self, sentence: str, confidence_threshold: float = 0.70):
+    def send_request(self, sentence: str, confidence_threshold: float = 0.70,consigne_langue: bool = False):
         if self.__model_type == LISTMODELSUPPROT[0]:
             return None, 0.0
         elif self.__model_type == LISTMODELSUPPROT[1]:
-            return self.__predict_gguf_model(sentence)
+            return self.__predict_gguf_model(sentence,512,consigne_langue)
         else:
             return None, 0.0

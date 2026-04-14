@@ -19,11 +19,11 @@ class gestIA :
         self.__dir_ia_instruction = "instruction_ia/"
 
         self.__dict_help_file = {"agenda-tache":"help_agenda_taches.txt",
-                          "work":"help_arrera_work.txt",
-                          "dev-recherche":"help_dev_recherche.txt",
-                          "gps":"help_gps.txt",
-                          "infos-meteo":"help_infos_meteo.txt",
-                          "medias-apps":"help_medias_apps.txt"}
+                                 "work":"help_arrera_work.txt",
+                                 "dev-recherche":"help_dev_recherche.txt",
+                                 "gps":"help_gps.txt",
+                                 "medias-apps":"help_medias_apps.txt",
+                                 "orthographe":"prompt_orthographe.txt"}
 
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
@@ -75,6 +75,33 @@ class gestIA :
                 return False
         else :
             self.__model_reponse_ok = False
+            return False
+
+    def correted_text(self,text:str):
+        if self.__ia_mode_enabled:
+            self.__ia_loader.unload_help()
+
+            try:
+                with open(self.__dir_ia_instruction+"prompt_orthographe.txt", 'r', encoding='utf-8') as f:
+                    content = f.read()
+                self.__reponse_ia = self.__ia_loader.send_request(content+text,0.2,False)
+
+                self.__model_reponse_ok = True
+                self.__ia_loader.unload_help()
+                if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                    self.__ia_mode_enabled = True
+                return True
+
+            except Exception as e:
+                self.__model_reponse_ok = False
+                if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                    self.__ia_mode_enabled = True
+                print(e)
+                return False
+        else:
+            self.__model_reponse_ok = False
+            if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                self.__ia_mode_enabled = True
             return False
 
     def get_state_ia_reponse(self):
