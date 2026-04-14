@@ -4,6 +4,7 @@ from PIL import Image
 import webbrowser as wb
 import platform
 import os
+import subprocess
 import sys
 from typing import Union, Callable
 
@@ -22,6 +23,32 @@ def resource_path(relative_path):
         return relative_path
 
 # Class de placement custome
+
+def copie_text(text:str):
+    current_os = platform.system()
+    text_to_copy = str(text)
+
+    try:
+        if current_os == "Windows":
+            subprocess.run(['clip'], input=text_to_copy, check=True, text=True)
+
+        elif current_os == "Darwin":
+            subprocess.run(['pbcopy'], input=text_to_copy, check=True, text=True)
+
+        elif current_os == "Linux":
+            try:
+                subprocess.run(['xclip', '-selection', 'clipboard'], input=text_to_copy, check=True, text=True)
+            except FileNotFoundError:
+                subprocess.run(['xsel', '--clipboard', '--input'], input=text_to_copy, check=True, text=True)
+
+        return True
+
+    except Exception as e:
+        print(f"Erreur lors de la copie système : {e}")
+        return False
+
+
+
 
 class placement_Tool_Kit_internet:
     def placeCenter(self):
