@@ -63,6 +63,18 @@ class model_downloader:
     def get_model_list(self):
         return list(self.__dictModel.keys())
 
+    def get_model_on_dir(self):
+        list_model = []
+        for dossier_racine, sous_dossiers, fichiers in os.walk(self.__modelDir):
+            for fichier in fichiers:
+                if fichier.endswith(".gguf"):
+                    list_model.append(fichier)
+
+        if len(list_model) == 0:
+            return None
+        else :
+            return list_model
+
     def get_data_model(self,key:str):
         data = self.__dictModel[key]
         return data["name"],data["url"],data["description"]

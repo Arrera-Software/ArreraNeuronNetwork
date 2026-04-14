@@ -89,6 +89,9 @@ class gestIA :
     def get_list_model_available(self):
         return self.__downloader_model.get_model_list()
 
+    def get_list_model_on_dir(self):
+        return self.__downloader_model.get_model_on_dir()
+
     def gest_data_model(self,model:str):
         if model in self.get_list_model_available():
             return self.__downloader_model.get_data_model(model)
