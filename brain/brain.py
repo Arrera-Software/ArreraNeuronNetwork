@@ -241,7 +241,19 @@ class ABrain :
                 self.__valeurOut = 1
                 return True
             elif self.__gestSocket.get_message_is_received_from_server():
-                return False
+                out = self.__gestSocket.get_message_from_server()
+                client = out["client"]
+                message = out["message"]
+                if message != "Message Received" :
+                    if client == "arrera_markdown":
+                        self.__gestNeuron.nmarkdown.neurone(message)
+                        self.__listOut = self.__gestNeuron.nmarkdown.getListSortie()
+                        self.__valeurOut = self.__gestNeuron.nmarkdown.getValeurSortie()
+                        return True
+                    else :
+                        return False
+                else :
+                    return False
             elif self.__gestSocket.get_message_is_received_form_client():
                 if self.__gestionnaire.getKeywordObjet().checkInterface(
                         self.__gestSocket.get_message_form_client(), "requette"):
