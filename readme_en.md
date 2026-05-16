@@ -37,6 +37,7 @@ The Arrera Neuron Network assistant is equipped with several specialized neurons
 *   **Development Tools**: Opens tools like the variable organizer, color selector, or GitHub management.
 *   **Window Management**: Opens task, agenda, or summary (brief) windows.
 *   **Display Modes**: Activates different display modes (mode 1 to 6).
+*   **Network & Communication**: Integrates a WebSocket client and server to interact with external services and "Arrera Markdown".
 *   **Shutdown**: Manages the shutdown of the assistant or modes.
 
 Arrera Neuron Network also features AI model integration within the Chatbot Neuron.
