@@ -12,6 +12,7 @@ openpyxl
 PyGithub
 pyperclip
 websocket-client
+websockets
 pillow
 playsound3
 speechRecognition
