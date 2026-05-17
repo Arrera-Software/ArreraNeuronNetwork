@@ -127,10 +127,15 @@ C'est l'outil le plus complet pour la productivité.
 * Organisateur de variables : "ouvre l'organisateur de variable".  
 * Gestion GitHub : "ouvre le gestionnaire github".
 
+## **Arrera Markdown et Services Réseaux**
+
+* Markdown : Utilisation du client/serveur WebSocket ("Arrera Markdown") pour la communication réseau.
+* Serveur/Client : Permet d'interagir à distance ou de lier des interfaces Markdown spécifiques.
+
 ## **Services et Outils Divers**
 
 * Traducteur : "ouvre le traducteur" ou "traduction".  
-* Correction orthographique : "corrige \[texte\]".  
+* Correction orthographique : "corrige [texte]" ou "correction orthographe".
 * Calcul rapide : "calcule \[expression mathématique\]" (ex: "calcule 25 \* 4").  
 * Calculatrice avancée : "ouvre calculatrice mode complexe" ou "mode pythagore".  
 * Lecture de texte : "lis le texte" (lit le contenu sélectionné ou le presse-papier).  

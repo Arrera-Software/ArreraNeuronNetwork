@@ -1,5 +1,6 @@
 .idea/
 .venv/
+.py314/
 __pycache__/
 *.pyc
 .DS_Store

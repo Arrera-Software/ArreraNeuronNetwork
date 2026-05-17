@@ -2,7 +2,7 @@
 
 ## Dossier
 
-Déplacer les dossiers ```asset/```, ```brain/```, ```config/```, ```fnc/```, ```gestionnaire/```, ```gui/```, ```keywork/```, ```librairy/```, ```neuron/``` et ```objet/``` dans la racine de votre projet d'assistant.
+Déplacer les dossiers ```asset/```, ```brain/```, ```config/```, ```fnc/```, ```gestionnaire/```, ```gui/```, ```keyword/```, ```librairy/```, ```neuron/```, ```instruction_ia/``` et ```objet/``` dans la racine de votre projet d'assistant.
 
 Une fois ça fait, choisissez un langage que vous voulez dans le dossier ```language/```, soit ```tutoiment``` ou ```vouvoiment```.
 
@@ -39,9 +39,9 @@ config = confNeuron(name="Opale",
                    lienDoc="www.google.com",
                    fichierLangue="language/",
                    fichierKeyword="keyword/",
-                    voiceAssistant=True)
+                   voiceAssistant=True)
 ```
-Les paramètres qui commencent par ```etat``` sont des paramètres à mettre soit à 1 ou 0, ce qui correspond au fait que vous voulez activer telle ou telle fonction de l'assistant.  
+Les paramètres qui commencent par ```etat``` sont des paramètres à mettre soit à 1 ou 0, ce qui correspond au fait que vous voulez activer telle ou telle fonction de l'assistant (y compris `etatMarkdown` pour la fonctionnalité serveur Markdown).  
 Le paramètre ```asset``` correspond à l'emplacement des assets de l'assistant.  
 ```icon``` est le paramètre pour l'icône de l'assistant.  
 ```assistant_color``` et ```assistant_texte_color``` sont la couleur et la couleur du texte de l'interface de l'assistant.  
@@ -142,12 +142,13 @@ Une fois la réflexion de l'assistant finie, il faut utiliser la méthode ```get
 - 21 : Close projet
 - 22 : Lancement de radio
 - 23 : GUI Codehelp
+- (D'autres codes pour le Markdown/Serveur selon votre développement)
 
 Et pour récupérer les textes qu'a générés l'assistant, il faut utiliser la méthode ```getListSortie()``` qui ressort une liste Python, et le texte se trouve à l'index 0.
 
 ### Étape 4 : Récupération des requêtes envoyées par le socket
 
-Les assistants développés sur la base de l'Arrera Neuron Network peuvent être connectés à l'application Arrera par l'intermédiaire d'un websocket.  
+Les assistants développés sur la base de l'Arrera Neuron Network peuvent être connectés à l'application Arrera par l'intermédiaire d'un websocket ou interagir via Arrera Markdown.
 Pour en profiter, il faut créer une méthode qui tourne tout le temps pour récupérer les requêtes :  
 Voici un exemple
 

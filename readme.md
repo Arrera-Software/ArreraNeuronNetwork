@@ -38,6 +38,7 @@ L'assistant Arrera Neuron Network dispose de plusieurs neurones spécialisés po
 *   **Outils de développement** : Ouvre des outils comme l'organisateur de variables, le sélecteur de couleurs, ou la gestion GitHub.
 *   **Gestion des fenêtres** : Ouvre les fenêtres de tâches, d'agenda, de résumé (breef).
 *   **Modes d'affichage** : Active différents modes d'affichage (mode 1 à 6).
+*   **Réseau / Communication** : Intègre un serveur et un client WebSocket pour interagir avec des services externes et "Arrera Markdown".
 *   **Fermeture** : Gère la fermeture de l'assistant ou des modes.
 
 Arrera Neuron Network a aussi une fonctionnalité d’intégration de modèle IA dans le Neuron Chatbot

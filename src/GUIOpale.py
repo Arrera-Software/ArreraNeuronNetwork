@@ -11,7 +11,6 @@ import threading as th
 
 class GUIOpale:
     def __init__(self):
-        self.__arrTK = CArreraTK()
         self.__emplacementLangue = "language/vouvoiment/"
         self.__objOS = OS()
         self.__logContent = ""
@@ -19,12 +18,12 @@ class GUIOpale:
 
     def active(self):
         self.__guiConf()
-        self.__arrTK.view()
+
 
     def __guiConf(self):
-        screen = self.__arrTK.aTK(width=500,height=500,
-                                  title = "Opale",resizable=False,
-                                  icon="asset/icon.png")
+        screen = aTk(theme_file="asset/theme/theme_default.json",
+                     title = "Opale",resizable=False,
+                     icon="asset/icon.png",width=500,height=500)
         self.__varService = tkinter.BooleanVar(value=True)
         self.__varTime = tkinter.BooleanVar(value=True)
         self.__varOpen = tkinter.BooleanVar(value=True)
@@ -35,11 +34,11 @@ class GUIOpale:
         self.__varWork = tkinter.BooleanVar(value=True)
         self.__varSocket = tkinter.BooleanVar(value=False)
 
-        frameNeuron = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
-        frameLangue = self.__arrTK.createFrame(screen,width=500,height=225,wightBoder=True)
-        frameValidate = self.__arrTK.createFrame(screen,width=500,height=50,wightBoder=True)
+        frameNeuron = aFrame(screen,width=500,height=225,border_width=1)
+        frameLangue = aFrame(screen,width=500,height=225,border_width=1)
+        frameValidate = aFrame(screen,width=500,height=225,border_width=1)
         # Widget FrameNeuron
-        labelTitleNeuron = self.__arrTK.createLabel(screen,text="Gestion de neurone",ptaille=25)
+        labelTitleNeuron = aLabel(screen,text="Gestion de neurone",police_size=25)
         self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice",variable=self.__varService)
         self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps",variable=self.__varTime)
         self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen",variable=self.__varOpen)
@@ -50,16 +49,16 @@ class GUIOpale:
         self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork",variable=self.__varWork)
         self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket",variable=self.__varSocket)
         # Widget FrameLangue
-        labelTitleLangue = self.__arrTK.createLabel(frameLangue,text="Gestion de la langue",ptaille=25)
-        self.__langSet = self.__arrTK.createLabel(frameLangue,text="",ptaille=25)
-        self.__btnVous = self.__arrTK.createButton(frameLangue,text="Vouvoiment",ptaille=20,command=lambda: self.__setLangue(1))
-        self.__btnTutoiement = self.__arrTK.createButton(frameLangue,text="Tutoiement",ptaille=20,command=lambda: self.__setLangue(2))
+        labelTitleLangue = aLabel(frameLangue,text="Gestion de la langue",police_size=25)
+        self.__langSet = aLabel(frameLangue,text="",police_size=25)
+        self.__btnVous = aButton(frameLangue,text="Vouvoiment",size=20,command=lambda: self.__setLangue(1))
+        self.__btnTutoiement = aButton(frameLangue,text="Tutoiement",size=20,command=lambda: self.__setLangue(2))
         # Widget FrameValidate
-        btnValidate = self.__arrTK.createButton(frameValidate, text="Valider", ptaille=25,
+        btnValidate = aButton(frameValidate, text="Valider", size=25,
                                                 command=lambda : self.__activateAssistantGUI(screen))
         # Affichage
         # FrameNeuron
-        self.__arrTK.placeTopCenter(labelTitleNeuron)
+        labelTitleNeuron.placeTopCenter()
         self.__checkService.place(x=10,  y=30,anchor="nw")
         self.__checkTime.place(x=130, y=30,anchor="nw")
         self.__checkOpen.place(x=260, y=30,anchor="nw")
@@ -70,17 +69,19 @@ class GUIOpale:
         self.__checkWork.place(x=380, y=85,anchor="nw")
         self.__checkSocket.place(x=130, y=160,anchor="nw")
         # FrameLangue
-        self.__arrTK.placeTopCenter(labelTitleLangue)
-        self.__arrTK.placeLeftCenter(self.__btnVous)
-        self.__arrTK.placeRightCenter(self.__btnTutoiement)
+        labelTitleLangue.placeTopCenter()
+        self.__btnVous.placeLeftCenter()
+        self.__btnTutoiement.placeRightCenter()
         # FrameValidate
-        self.__arrTK.placeCenter(btnValidate)
+        btnValidate.placeCenter()
         # Frame
-        self.__arrTK.pack(frameNeuron)
-        self.__arrTK.pack(frameLangue)
-        self.__arrTK.pack(frameValidate)
+        frameNeuron.pack()
+        frameLangue.pack()
+        frameValidate.pack()
         # Thead Assistant
         self.__thAssistant = th.Thread()
+
+        screen.mainloop()
 
     def __setLangue(self,mode:int):
         """
@@ -99,7 +100,7 @@ class GUIOpale:
                 self.__langSet.configure(text="Vouvoiment")
         self.__btnVous.place_forget()
         self.__btnTutoiement.place_forget()
-        self.__arrTK.placeCenter(self.__langSet)
+        self.__langSet.placeCenter()
 
     def __setConfig(self):
         try :
@@ -160,9 +161,9 @@ class GUIOpale:
 
     def __GUIAssistant(self, screen:ctk.CTk = None):
         if screen is None:
-            screen = self.__arrTK.aTK(width=500, height=500,
-                                  title="Opale Assistant", resizable=False,
-                                  icon="asset/icon.png")
+            screen = aTk(theme_file="asset/theme/theme_default.json",
+                         title="Opale", resizable=False,
+                         icon="asset/icon.png", width=500, height=500)
         else:
             screen.title("Opale Assistant")
             screen.geometry("500x500")
@@ -171,49 +172,49 @@ class GUIOpale:
         screen.protocol("WM_DELETE_WINDOW", self.__close)
 
         # Frame
-        frameAssistant = self.__arrTK.createFrame(screen, width=500, height=225)
-        frameUser = self.__arrTK.createFrame(screen, width=350, height=50)
+        frameAssistant = aFrame(screen, width=500, height=225)
+        frameUser = aFrame(screen, width=350, height=50)
 
         # Widget
-        labelTitle = self.__arrTK.createLabel(screen, text="Assistant Opale", ptaille=25)
+        labelTitle = aLabel(screen, text="Assistant Opale", police_size=25)
 
-        self.__labelAssistantText = self.__arrTK.createLabel(frameAssistant, text="TEXTE", ptaille=20)
-        self.__labelAssistantNumber = self.__arrTK.createLabel(frameAssistant, text="NUMBER", ptaille=20)
+        self.__labelAssistantText = aLabel(frameAssistant, text="TEXTE", police_size=20)
+        self.__labelAssistantNumber = aLabel(frameAssistant, text="NUMBER", police_size=20)
 
-        entryUser = self.__arrTK.createEntry(frameUser, width=200)
-        btnSend = self.__arrTK.createButton(frameUser, text="Envoyer",ptaille=25,
+        entryUser = aEntry(frameUser, width=200)
+        btnSend = aButton(frameUser, text="Envoyer",size=15,
                                             command= lambda : self.__sendAssistantMessage(entryUser,screen))
-        btnOpen = self.__arrTK.createButton(screen, text="OPEN",width=10,command=self.__viewOpen)
-        self.__labelGeneration = self.__arrTK.createLabel(screen,text="Generation...",ptaille=15)
+        btnOpen = aButton(screen, text="OPEN",width=10,command=self.__viewOpen)
+        self.__labelGeneration = aLabel(screen,text="Generation...",police_size=15)
 
         # Affichage
 
-        self.__arrTK.placeTopCenter(labelTitle)
-        self.__arrTK.placeCenter(frameAssistant)
-        self.__arrTK.placeBottomCenterNoStick(frameUser)
+        labelTitle.placeTopCenter()
+        frameAssistant.placeCenter()
+        frameUser.placeBottomRight()
 
-        self.__arrTK.placeTopCenter(self.__labelAssistantText)
-        self.__arrTK.placeBottomCenter(self.__labelAssistantNumber)
+        self.__labelAssistantText.placeTopCenter()
+        self.__labelAssistantNumber.placeBottomCenter()
 
-        self.__arrTK.placeLeftCenter(entryUser)
-        self.__arrTK.placeRightCenter(btnSend)
+        entryUser.placeLeftCenter()
+        btnSend.placeRightCenter()
 
-        self.__arrTK.placeBottomLeft(btnOpen)
+        btnOpen.placeBottomLeft()
 
         self.__keyboard(screen,entryUser)
 
         screen.after(200, self.__updateAssistant,screen)
 
     def __viewOpen(self):
-        w = self.__arrTK.aTopLevel(title="Ouvert par l'assistant",width=300, height=100)
+        w = aTopLevel(title="Ouvert par l'assistant",width=300, height=100)
 
-        word = self.__arrTK.createLabel(w,text="WORD",ptaille=15)
-        project = self.__arrTK.createLabel(w,text="PROJECT",ptaille=15)
-        tableur = self.__arrTK.createLabel(w,text="TABLEUR",ptaille=15)
+        word = aLabel(w,text="WORD",police_size=15)
+        project = aLabel(w,text="PROJECT",police_size=15)
+        tableur = aLabel(w,text="TABLEUR",police_size=15)
 
-        self.__arrTK.placeCenterLeft(word)
-        self.__arrTK.placeCenterRight(project)
-        self.__arrTK.placeCenter(tableur)
+        word.placeCenterLeft()
+        project.placeCenterRight()
+        tableur.placeCenter()
 
         if self.__assistantBrain.getWord():
             word.configure(fg_color="green")
@@ -265,7 +266,7 @@ class GUIOpale:
 
     def __updateRequetteAssistant(self,screen:ctk.CTk,message:str):
         if self.__thAssistant.is_alive():
-            self.__arrTK.placeBottomRight(self.__labelGeneration)
+            self.__labelGeneration.placeBottomRight()
             screen.after(1000,self.__updateRequetteAssistant,screen,message)
         else :
             del self.__thAssistant

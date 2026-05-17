@@ -93,12 +93,17 @@ Recherchez de la documentation technique spécifique.
 *   **Recherche simple** : "recherche [sujet]", "search [sujet]"
 *   **Grande recherche** : "bigsearch [sujet]", "grand recherche [sujet]"
 
+## Arrera Markdown et Services Réseaux
+
+*   **Serveur/Client Markdown** : Interaction via WebSocket pour l'éditeur Arrera Markdown.
+*   **Connexion** : "ouvre arrera markdown", "lance le serveur markdown" (selon implémentation)
+
 ## Services Divers
 
 *   **Lecture de texte** : "lis le texte", "lecture du passage"
 *   **Calcul rapide** : "calcule [expression]" (+, -, *, /)
 *   **Aide Assistant** : "ouvre la documentation", "lance l'aide"
-*   **Correction orthographique** : "corrige [texte]"
+*   **Correction orthographique** : "corrige [texte]", "correction orthographe"
 
 ## Temps et Agenda
 
