@@ -1,6 +1,6 @@
 setuptools
 wheel
-customtkinter
+arrera-tk
 yt_dlp
 tkcalendar
 requests

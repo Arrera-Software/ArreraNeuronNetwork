@@ -1,7 +1,6 @@
-import tkinter
 from tkinter.messagebox import showerror, askyesno
 from librairy.dectectionOS import OS
-from librairy.arrera_tk import *
+from arrera_tk import *
 from config.confNeuron import confNeuron
 from brain.brain import ABrain
 import signal
@@ -21,33 +20,23 @@ class GUIOpale:
 
 
     def __guiConf(self):
-        screen = aTk(theme_file="asset/theme/theme_default.json",
-                     title = "Opale",resizable=False,
+        screen = aTk(title = "Opale",resizable=False,
                      icon="asset/icon.png",width=500,height=500)
-        self.__varService = tkinter.BooleanVar(value=True)
-        self.__varTime = tkinter.BooleanVar(value=True)
-        self.__varOpen = tkinter.BooleanVar(value=True)
-        self.__varRecherche = tkinter.BooleanVar(value=True)
-        self.__varChatbot = tkinter.BooleanVar(value=True)
-        self.__varAPI = tkinter.BooleanVar(value=True)
-        self.__varCodeHelp = tkinter.BooleanVar(value=True)
-        self.__varWork = tkinter.BooleanVar(value=True)
-        self.__varSocket = tkinter.BooleanVar(value=False)
 
         frameNeuron = aFrame(screen,width=500,height=225,border_width=1)
         frameLangue = aFrame(screen,width=500,height=225,border_width=1)
         frameValidate = aFrame(screen,width=500,height=225,border_width=1)
         # Widget FrameNeuron
         labelTitleNeuron = aLabel(screen,text="Gestion de neurone",police_size=25)
-        self.__checkService = ctk.CTkCheckBox(frameNeuron,text="Neuron\nservice",variable=self.__varService)
-        self.__checkTime = ctk.CTkCheckBox(frameNeuron, text="Neuron\nTemps",variable=self.__varTime)
-        self.__checkOpen = ctk.CTkCheckBox(frameNeuron, text="Neuron\nOpen",variable=self.__varOpen)
-        self.__checkRecherche = ctk.CTkCheckBox(frameNeuron, text="Neuron\nRecherche",variable=self.__varRecherche)
-        self.__checkChatbot = ctk.CTkCheckBox(frameNeuron, text="Neuron\nChatbots",variable=self.__varChatbot)
-        self.__checkAPI = ctk.CTkCheckBox(frameNeuron, text="Neuron\nAPI",variable=self.__varAPI)
-        self.__checkCodeHelp = ctk.CTkCheckBox(frameNeuron, text="Neuron\nCodeHelp",variable=self.__varCodeHelp)
-        self.__checkWork = ctk.CTkCheckBox(frameNeuron, text="Neuron\nWork",variable=self.__varWork)
-        self.__checkSocket = ctk.CTkCheckBox(frameNeuron, text="Utilisation des socket",variable=self.__varSocket)
+        self.__checkService = aCheckBox(frameNeuron,text="Neuron\nservice",boolean_value=True)
+        self.__checkTime = aCheckBox(frameNeuron, text="Neuron\nTemps",boolean_value=True)
+        self.__checkOpen = aCheckBox(frameNeuron, text="Neuron\nOpen",boolean_value=True)
+        self.__checkRecherche = aCheckBox(frameNeuron, text="Neuron\nRecherche",boolean_value=True)
+        self.__checkChatbot = aCheckBox(frameNeuron, text="Neuron\nChatbots",boolean_value=True)
+        self.__checkAPI = aCheckBox(frameNeuron, text="Neuron\nAPI",boolean_value=True)
+        self.__checkCodeHelp = aCheckBox(frameNeuron, text="Neuron\nCodeHelp",boolean_value=True)
+        self.__checkWork = aCheckBox(frameNeuron, text="Neuron\nWork",boolean_value=True)
+        self.__checkSocket = aCheckBox(frameNeuron, text="Utilisation des socket",boolean_value=True)
         # Widget FrameLangue
         labelTitleLangue = aLabel(frameLangue,text="Gestion de la langue",police_size=25)
         self.__langSet = aLabel(frameLangue,text="",police_size=25)
@@ -104,14 +93,14 @@ class GUIOpale:
 
     def __setConfig(self):
         try :
-            if (not self.__varService.get() and
-                    not self.__varTime.get() and
-                    not self.__varOpen.get() and
-                    not self.__varRecherche.get() and
-                    not self.__varChatbot.get() and
-                    not self.__varAPI.get() and
-                    not self.__varCodeHelp.get() and
-                    not self.__varWork.get()):
+            if (not self.__checkService.getBooleanVar().get() and
+                    not self.__checkTime.getBooleanVar().get() and
+                    not self.__checkOpen.getBooleanVar().get() and
+                    not self.__checkRecherche.getBooleanVar().get() and
+                    not self.__checkChatbot.getBooleanVar().get() and
+                    not self.__checkAPI.getBooleanVar().get() and
+                    not self.__checkCodeHelp.getBooleanVar().get() and
+                    not self.__checkCodeHelp.getBooleanVar().get()):
                 showerror("Assistant"," Vous devez activer au moins un neurone.")
                 return False
 
@@ -145,7 +134,7 @@ class GUIOpale:
             return False
 
 
-    def __activateAssistantGUI(self,screen:ctk.CTk):
+    def __activateAssistantGUI(self,screen:aTk):
         """
         Fonction qui permet de lancer l'assistant GUI
         """
@@ -159,7 +148,7 @@ class GUIOpale:
             print("Erreur lors de la création de la configuration de l'assistant.")
 
 
-    def __GUIAssistant(self, screen:ctk.CTk = None):
+    def __GUIAssistant(self, screen:aTk = None):
         if screen is None:
             screen = aTk(theme_file="asset/theme/theme_default.json",
                          title="Opale", resizable=False,
@@ -247,12 +236,12 @@ class GUIOpale:
 
         try :
             self.__labelAssistantText.configure(text=self.__assistantBrain.boot(), wraplength=200
-                                                ,justify=LEFT)
+                                                ,justify="left")
         except Exception as e:
             self.__labelAssistantText.configure(text=f"Erreur lors du boot de l'assistant : {e}",wraplength=200
-                                                ,justify=LEFT)
+                                                ,justify="left")
 
-    def __sendAssistantMessage(self,entry:ctk.CTkEntry,screen:ctk.CTk):
+    def __sendAssistantMessage(self,entry:aEntry,screen:aTk):
         if not self.__thAssistant.is_alive():
             message = entry.get()
             if message:
@@ -262,9 +251,9 @@ class GUIOpale:
                 self.__updateRequetteAssistant(screen,message)
             else:
                 self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
-                                                    ,justify=LEFT)
+                                                    ,justify="left")
 
-    def __updateRequetteAssistant(self,screen:ctk.CTk,message:str):
+    def __updateRequetteAssistant(self,screen:aTk,message:str):
         if self.__thAssistant.is_alive():
             self.__labelGeneration.placeBottomRight()
             screen.after(1000,self.__updateRequetteAssistant,screen,message)
@@ -275,13 +264,13 @@ class GUIOpale:
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
             self.__labelAssistantText.configure(text=texte[0], wraplength=200
-                                                ,justify=LEFT)
+                                                ,justify="left")
             self.__labelAssistantNumber.configure(text=str(nb))
             self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
 
-    def __keyboard(self,win:ctk.CTk,entry:ctk.CTkEntry):
+    def __keyboard(self,win:aTk,entry:aEntry):
         def anychar(event):
             if self.__objOS.osWindows():
                 if event.keycode == 13:
@@ -332,7 +321,7 @@ class GUIOpale:
             return False
 
 
-    def __updateAssistant(self,screen:ctk.CTk=None):
+    def __updateAssistant(self,screen:aTk=None):
 
         if self.__assistantBrain.updateAssistant():
             varOut = self.__assistantBrain.getValeurSortie()
