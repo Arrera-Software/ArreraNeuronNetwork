@@ -8,7 +8,7 @@ from librairy.resource_lib import resource_lib
 
 
 class CArreraVoice:
-    def __init__(self,gestionnaire:gestionnaire):
+    def __init__(self, gestionnaire: gestionnaire):
         self.__gestionnaire = gestionnaire
         self.__emplacementSoundMicro = ""
         self.__soundMicro = True
@@ -16,6 +16,7 @@ class CArreraVoice:
         self.__nbWord = 0
         self.__outPutText = ""
         self.__resource_lib = resource_lib()
+        self.__stop_flag = False
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
             self.__tts = None
@@ -31,7 +32,7 @@ class CArreraVoice:
             self.__tts.setProperty('rate', 150)
 
     def loadConfig(self):
-        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().asset+"sound/micro.mp3"
+        self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().asset + "sound/micro.mp3"
         if self.__gestionnaire.getUserConf().getSoundMicro():
             self.__soundMicro = True
         else:
@@ -39,31 +40,34 @@ class CArreraVoice:
         self.__listWord = self.__gestionnaire.getUserConf().getListWord()
         self.__nbWord = len(self.__listWord)
 
-    def say(self,text:str):
+    def say(self, text: str):
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
-            try :
+            try:
                 tts = gTTS(text=text, lang='fr', slow=False)
-                if os.path.exists(self.__resource_lib.tmp_directory()+"/voice.mp3"):
-                    os.remove(self.__resource_lib.tmp_directory()+"/voice.mp3")
+                if os.path.exists(self.__resource_lib.tmp_directory() + "/voice.mp3"):
+                    os.remove(self.__resource_lib.tmp_directory() + "/voice.mp3")
 
-                tts.save(self.__resource_lib.tmp_directory()+"/voice.mp3")
+                tts.save(self.__resource_lib.tmp_directory() + "/voice.mp3")
 
-                pl(self.__resource_lib.tmp_directory()+"/voice.mp3")
+                pl(self.__resource_lib.tmp_directory() + "/voice.mp3")
 
-                os.remove(self.__resource_lib.tmp_directory()+"/voice.mp3")
+                os.remove(self.__resource_lib.tmp_directory() + "/voice.mp3")
                 return True
             except:
                 return False
         else:
-            try :
+            try:
                 self.__tts.say(text)
                 self.__tts.runAndWait()
                 return True
             except:
                 return False
 
-    def playFile(self,file:str):
+    def playFile(self, file: str):
         pl(file)
+
+    def stop_listen(self):
+        self.__stop_flag = True
 
     def listen(self):
         self.loadConfig()
@@ -71,9 +75,21 @@ class CArreraVoice:
             pl(self.__emplacementSoundMicro)
 
         r = sr.Recognizer()
+        self.__stop_flag = False
         with sr.Microphone() as source:
             r.adjust_for_ambient_noise(source)
-            audio = r.listen(source)
+            audio = None
+            while not self.__stop_flag:
+                try:
+                    audio = r.listen(source, timeout=0.5)
+                    break
+                except sr.WaitTimeoutError:
+                    continue
+
+        if self.__stop_flag or audio is None:
+            self.__outPutText = ""
+            return -1
+
         try:
             text = r.recognize_google(audio, language='fr-FR')
             self.__outPutText = text
