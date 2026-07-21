@@ -9,3 +9,5 @@ env/
 *.log
 log/
 tmp/
+dist/
+build/
