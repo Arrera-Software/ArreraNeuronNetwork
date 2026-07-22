@@ -43,7 +43,7 @@ class gestFNC:
         # Fonction Meteo
         self.__meteo = fncMeteo(self.__gestionnaire,self.__gps)
         # Fonction Actualité
-        self.__actu = fncActualiter(self.__gestionnaire,"3b43e18afcf945888748071d177b8513")
+        self.__actu = fncActualiter(self.__gestionnaire)
         # Fonction horloge
         self.__horloge = fncHorloge(self.__gestionnaire)
         # Fonction de lecture

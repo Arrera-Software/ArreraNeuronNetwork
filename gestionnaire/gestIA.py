@@ -1,3 +1,4 @@
+import json
 from gestionnaire.gestion import gestionnaire
 from librairy.ArreraIALoad import ArreraIALoad
 from librairy.model_downloader import *
@@ -23,7 +24,8 @@ class gestIA :
                                  "dev-recherche":"help_dev_recherche.txt",
                                  "gps":"help_gps.txt",
                                  "medias-apps":"help_medias_apps.txt",
-                                 "orthographe":"prompt_orthographe.txt"}
+                                 "orthographe":"prompt_orthographe.txt",
+                                 "dedoublonnage":"prompt_dedoublonnage.txt"}
 
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
@@ -103,6 +105,48 @@ class gestIA :
             if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
                 self.__ia_mode_enabled = True
             return False
+
+    def deduplicate_actu(self, articles: list) -> list:
+        if not articles or not isinstance(articles, list):
+            return articles
+
+        if self.__ia_mode_enabled:
+            self.__ia_loader.unload_help()
+
+            try:
+                with open(self.__dir_ia_instruction + "prompt_dedoublonnage.txt", 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                articles_json = json.dumps(articles, ensure_ascii=False)
+                request_text = f"{content}\n\n{articles_json}"
+
+                raw_reponse = self.__ia_loader.send_request(request_text, 0.2, False)
+
+                start_idx = raw_reponse.find('[')
+                end_idx = raw_reponse.rfind(']')
+
+                if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+                    json_str = raw_reponse[start_idx:end_idx + 1]
+                    clean_articles = json.loads(json_str)
+                    if isinstance(clean_articles, list):
+                        self.__reponse_ia = raw_reponse
+                        self.__model_reponse_ok = True
+                        self.__ia_loader.unload_help()
+                        if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                            self.__ia_mode_enabled = True
+                        return clean_articles
+
+            except Exception as e:
+                print(f"Erreur lors du dédoublonnage par l'IA : {e}")
+
+            self.__model_reponse_ok = False
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                self.__ia_mode_enabled = True
+            return articles
+        else:
+            self.__model_reponse_ok = False
+            return articles
 
     def get_state_ia_reponse(self):
         return self.__model_reponse_ok

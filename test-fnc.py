@@ -471,9 +471,12 @@ def partMeteo():
                 print("Choix invalide, veuillez réessayer.")
 
 def partActu():
-    if fnc.getFNCActu().setActu(10,"fr"):
+    if fnc.getFNCActu().setActu():
         print("Actualité récupéré")
-        print(fnc.getFNCActu().getActu())
+        print(f"NON Netoyer : {fnc.getFNCActu().getActu()}")
+        fnc.getFNCActu().clear_articles()
+        print("Netoyage en cours")
+        print(f"Netoyer : {fnc.getFNCActu().getActu()}")
 
 def partHorloge():
     horlogeBoucle = True
@@ -1107,7 +1110,7 @@ def main():
 
     while True:
         boucleVerif = True
-        print("Teste des fonction d'Arrera Neuron NetworkW\n")
+        print("Teste des fonction d'Arrera Neuron Network\n")
         print("1.Taches\n2.Recherche\n"
               "3.Download\n4.Calendrier\n"
               "5.GPS\n6.Meteo\n7.Actualites\n"
