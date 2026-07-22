@@ -2,17 +2,159 @@ from fnc.fncBase import fncBase,gestionnaire
 import requests
 import webbrowser
 import urllib.parse
+import platform
+
+if platform.system() == "Darwin":
+    import objc
+    from CoreLocation import CLLocationManager, NSObject
+    from Foundation import NSRunLoop, NSDate
+
+    class ArreraLocationDelegate(NSObject):
+        def __init__(self):
+            self.__error = None
+            self.__done = None
+            self.__location = None
+
+        def locationManager_didUpdateLocations_(self, manager, locations):
+            self.__location = locations[-1]
+            manager.stopUpdatingLocation()
+            self.__done = True
+
+        def locationManager_didFailWithError_(self, manager, error):
+            self.__error = error
+            self.__done = True
+
+        def locationManager_didChangeAuthorizationStatus_(self, manager, status):
+            # 2 = Denied, 3 = AuthorizedAlways, 4 = AuthorizedWhenInUse
+            if status == 2:
+                self.__error = "Denied"
+                self.__done = True
+            elif status == 3 or status == 4:
+                manager.startUpdatingLocation()
 
 class fncGPS(fncBase):
     def __init__(self,gestionnaire: gestionnaire):
         super().__init__(gestionnaire)
+        self.__os_name = platform.system()
         self.__latitude = None
         self.__longitude = None
         self.__region = None
+        
+        # Demande l'autorisation native sur macOS dès l'initialisation du brain
+        if self.__os_name == "Darwin":
+            self.__request_mac_auth()
+
+    def __request_mac_auth(self):
+        try:
+            self.__auth_manager = CLLocationManager.alloc().init()
+            self.__auth_manager.requestWhenInUseAuthorization()
+        except Exception:
+            pass
 
     def locate(self):
+        natif = False
+        if self.__os_name == "Windows":
+            natif = self.__get_windows_location()
+        elif self.__os_name == "Linux":
+            natif = self.__get_linux_location()
+        elif self.__os_name == "Darwin":  # Darwin est le noyau de macOS
+            natif = self.__get_mac_location()
+
+        if natif:
+            return True
+        else :
+            return self.__get_locate_with_ip()
+
+    def __get_windows_location(self):
+        """Implémentation pour Windows 10/11 via winsdk."""
+        import asyncio
+        from winsdk.windows.devices.geolocation import Geolocator, GeolocationAccessStatus
+
+        async def fetch_location():
+            locator = Geolocator()
+            status = await Geolocator.request_access_async()
+
+            if status == GeolocationAccessStatus.ALLOWED:
+                pos = await locator.get_geoposition_async()
+                self.__latitude = pos.coordinate.latitude
+                self.__longitude = pos.coordinate.longitude
+                return True
+            else:
+                return False
+
+        # Exécute la fonction asynchrone native dans un thread synchrone
+        return False
+
+    def __get_linux_location(self):
+        import pydbus
+        import time
+
+        bus = pydbus.SystemBus()
+        try:
+            # Récupère le gestionnaire GeoClue2
+            manager = bus.get('org.freedesktop.GeoClue2', '/org/freedesktop/GeoClue2/Manager')
+            client_path = manager.GetClient()
+            client = bus.get('org.freedesktop.GeoClue2', client_path)
+
+            # Identifiant requis par GeoClue
+            client.DesktopId = "Assistant_Meteo"
+            client.Start()
+
+            # On laisse quelques secondes au matériel (Wi-Fi/GPS) pour fixer la position
+            time.sleep(2)
+
+            loc_path = client.Location
+            if loc_path != '/':
+                loc = bus.get('org.freedesktop.GeoClue2', loc_path)
+                lat, lon = loc.Latitude, loc.Longitude
+                client.Stop()
+                self.__latitude = lat
+                self.__longitude = lon
+                return True
+            else:
+                client.Stop()
+                raise False
+
+        except Exception as e:
+            return False
+
+    def __get_mac_location(self):
+        """Implémentation pour macOS via CoreLocation."""
+        delegate = ArreraLocationDelegate.alloc().init()
+        delegate.__done = False
+        delegate.__location = None
+        delegate.__error = None
+
+        manager = CLLocationManager.alloc().init()
+        manager.setDelegate_(delegate)
+        # Demande l'autorisation à macOS
+        manager.requestWhenInUseAuthorization()
+        
+        # Sur macOS, il faut parfois forcer le démarrage même si on attend l'autorisation
+        manager.startUpdatingLocation()
+
+        # Boucle d'attente native macOS
+        while not delegate.__done:
+            NSRunLoop.currentRunLoop().runMode_beforeDate_(
+                "NSDefaultRunLoopMode", NSDate.dateWithTimeIntervalSinceNow_(0.1)
+            )
+
+        if delegate.__error:
+            #print(delegate.error)
+            return False
+
+        if delegate.__location:
+            coord = delegate.__location.coordinate()
+            self.__latitude = coord.latitude
+            self.__longitude = coord.longitude
+            return True
+
+        #print("Autre")
+        return False
+
+    def __get_locate_with_ip(self):
         api_url = 'https://ipinfo.io/json'
-        if self._gestionnaire.getNetworkObjet().getEtatInternet() :
+        if self._gestionnaire.getNetworkObjet().getEtatInternet():
             try:
                 response = requests.get(api_url, timeout=5)
                 response.raise_for_status()
@@ -23,9 +165,8 @@ class fncGPS(fncBase):
                 self.__longitude = loc[1]
                 return True
             except Exception as e:
-                # print(e)
                 return False
-        else :
+        else:
             return False
 
     def getLatitude(self):
