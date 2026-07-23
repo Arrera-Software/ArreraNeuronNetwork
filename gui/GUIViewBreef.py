@@ -2,7 +2,7 @@ import threading
 from tkinter.messagebox import showerror
 import threading as th
 from gui.guibase import GuiBase,gestionnaire
-from librairy.arrera_tk import *
+from arrera_tk import *
 
 class GUIViewBreef(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):
@@ -173,7 +173,20 @@ class GUIViewBreef(GuiBase):
                         self.__readVar += f", {task}"
 
     def __selectMeteo(self,out:dict):
-        meteoDict = out["meteo"]
+        meteoDict = out.get("meteo", {})
+        if not meteoDict:
+            self.__lnameTown.configure(text="Indisponible")
+            self.__ltemp.configure(text="--°C")
+            self.__lweather.configure(text="Météo non chargée")
+            self.__readVar += "La météo n'a pas pu être récupérée. "
+            self.__lNoAlert.grid(row=1, column=0, sticky="ew", padx=8, pady=4)
+            try:
+                imgMeteo = aImage(path_light=self._gestionnaire.getConfigFile().asset+"meteo/meteo-error.png", width=100, height=100)
+                self.__labelLogoMeteo.configure(image=imgMeteo,text="")
+            except Exception:
+                pass
+            return
+
         self.__lnameTown.configure(text=meteoDict["ville"])
         self.__ltemp.configure(text=str(meteoDict["temperature"])+"°C")
         self.__lweather.configure(text=meteoDict["weather"])

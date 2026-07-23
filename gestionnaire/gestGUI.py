@@ -22,6 +22,7 @@ class gestGUI:
         from gui.GUIViewResumer import GUIViewResumer
         from gui.GUIHelp import GUIHelp
         from gui.GUIViewBreef import GUIViewBreef
+        from gui.GuiBrief import guiBrief
 
         # Calculatrice
         self.__guiCalculatrice = GUICalculatrice(self.__gest)
@@ -47,6 +48,8 @@ class gestGUI:
         self.__guiHelp = GUIHelp(self.__gest)
         # Breef
         self.__guiBreef = GUIViewBreef(self.__gest)
+        # Brief
+        self.__guiBrief = guiBrief(self.__gest,self.__gest.getName())
 
         # Dictionnaire des actions
         self.__gui_actions = {
@@ -171,6 +174,10 @@ class gestGUI:
             "breef": lambda: self.__generic_action(
                 self.__guiBreef.activeBreef,
                 lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+            ),
+            "brief": lambda: self.__generic_action(
+                self.__guiBrief.active,
+                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
             )
         }
 
@@ -280,3 +287,6 @@ class gestGUI:
 
     def activeBreef(self):
         self.__guiBreef.activeBreef()
+
+    def activeBrief(self):
+        self.__guiBrief.active()

@@ -68,6 +68,7 @@ gui_to_test = {
     "Github" : lambda : (fnc_codehelp.setGUICodeHelp("GUIGithubGestion"),fnc_codehelp.launchGui()),
     "Librairy" : lambda : (fnc_codehelp.setGUICodeHelp("GUILibrairy"),fnc_codehelp.launchGui()),
     "Orga Var" : lambda : (fnc_codehelp.setGUICodeHelp("GUIOrgaVar"),fnc_codehelp.launchGui()),
+    "Brief": gest_gui.activeBrief,
 }
 
 
