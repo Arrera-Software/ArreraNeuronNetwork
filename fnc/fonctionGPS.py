@@ -39,6 +39,7 @@ class fncGPS(fncBase):
         self.__latitude = None
         self.__longitude = None
         self.__region = None
+        self.__town = None
         
         # Demande l'autorisation native sur macOS dès l'initialisation du brain
         if self.__os_name == "Darwin":
@@ -52,6 +53,9 @@ class fncGPS(fncBase):
             pass
 
     def locate(self):
+        if self.__latitude is not None and self.__longitude is not None:
+            return True
+
         natif = False
         if self.__os_name == "Windows":
             natif = self.__get_windows_location()
@@ -133,8 +137,13 @@ class fncGPS(fncBase):
         # Sur macOS, il faut parfois forcer le démarrage même si on attend l'autorisation
         manager.startUpdatingLocation()
 
-        # Boucle d'attente native macOS
+        import time
+        start_time = time.time()
+
+        # Boucle d'attente native macOS avec cooldown de 5 secondes
         while not delegate.__done:
+            if time.time() - start_time > 5.0:
+                break
             NSRunLoop.currentRunLoop().runMode_beforeDate_(
                 "NSDefaultRunLoopMode", NSDate.dateWithTimeIntervalSinceNow_(0.1)
             )
@@ -179,23 +188,30 @@ class fncGPS(fncBase):
         return self.__region
 
     def getTown(self):
-        url = 'https://nominatim.openstreetmap.org/reverse'
-        params = {
-            'lat': str(self.__latitude),
-            'lon': str(self.__longitude),
-            'format': 'json',
-            'zoom': 10,  # Niveau de détail (10 = ville)
-            'addressdetails': 1,
-        }
-        headers = {
-            'User-Agent': 'my-geocoder'
-        }
-        response = requests.get(url, params=params, headers=headers)
-        data = response.json()
-        city = data.get('address', {}).get('city') \
-               or data.get('address', {}).get('town') \
-               or data.get('address', {}).get('village')
-        return city
+        if self.__town is not None:
+            return self.__town
+
+        try:
+            url = 'https://nominatim.openstreetmap.org/reverse'
+            params = {
+                'lat': str(self.__latitude),
+                'lon': str(self.__longitude),
+                'format': 'json',
+                'zoom': 10,  # Niveau de détail (10 = ville)
+                'addressdetails': 1,
+            }
+            headers = {
+                'User-Agent': 'my-geocoder'
+            }
+            response = requests.get(url, params=params, headers=headers, timeout=5)
+            data = response.json()
+            city = data.get('address', {}).get('city') \
+                   or data.get('address', {}).get('town') \
+                   or data.get('address', {}).get('village')
+            self.__town = city
+            return city
+        except Exception:
+            return None
 
     def launchGoogleMapItinerary(self, depart: str, arrivee: str):
         if depart != "" and arrivee != "":
