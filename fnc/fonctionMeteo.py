@@ -1,5 +1,5 @@
 from fnc.fncBase import fncBase,gestionnaire
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date
 from meteofrance_api import MeteoFranceClient
 from fnc.fonctionGPS import fncGPS
 
@@ -21,201 +21,205 @@ class fncMeteo(fncBase) :
         self.__yellowAlert = []
         self.__greenAlert = []
 
+        self.__place = None
 
-    def getMeteoCurrentHour(self,town:str="",latitude:str="",longitude:str=""):
-        """
-        Récupère la météo actuelle pour une ville ou des coordonnées géographiques.
-        :param town: Nom de la ville (optionnel)
-        :param latitude: Latitude (optionnel)
-        :param longitude: Longitude (optionnel)
-        :return: True si les données sont récupérées avec succès, False sinon.
-        """
-        if self._gestionnaire.getNetworkObjet().getEtatInternet():
-            if town:
-                try:
-                    townWeather = self.__client.search_places(town)
-                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                    place = townWeather[0]
-                    if not place:
-                        return False
+    def __set_lieu(self, emplacment:str, town:str= ""):
+        valeurs_autorisees = {"work", "home", "locate", "custom"}
+        if emplacment in valeurs_autorisees:
+            ville = ""
+            if emplacment == "work":
+                ville = self._gestionnaire.getUserConf().getLieuTravail()
+            elif emplacment == "home":
+                ville = self._gestionnaire.getUserConf().getLieuDomicile()
+            elif emplacment == "locate":
+                if self.__fncGPS.locate():
+                    ville = self.__fncGPS.getTown()
+                else:
+                    ville = ""
+            elif emplacment == "custom":
+                ville = town
+
+            if ville:
+                try :
+                    self.__nameTown = ville
+                    list_places = self.__client.search_places(ville)
+                    self.__place = list_places[0]
+                    print(self.__place)
+                    return True
                 except Exception as e:
-                    # print(f"Erreur lors de la récupération des données météo : {e}")
+                    print(e)
                     return False
-            elif latitude and longitude:
-                try:
-                    town = self.__fncGPS.getTownWithLatitudeAndLongitude(latitude,longitude)
-                    if town is None:
-                        return False
-                    else:
-                        townWeather = self.__client.search_places(town)
-                        place = townWeather[0]
-                        departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                        if not place:
-                            return False
-                except Exception as e:
-                    # print(f"Erreur lors de la récupération des données météo : {e}")
-                    return False
-            elif self.__fncGPS.locate():
-                    try :
-                        town = self.__fncGPS.getTown()
-                        townWeather = self.__client.search_places(town)
-                        departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                        place = townWeather[0]
-                        if not place:
-                            return False
-                    except Exception as e:
-                        # print(f"Erreur lors de la récupération des données météo : {e}")
-                        return False
-            else :
+            else:
                 return False
+        else:
+            return False
 
+    def weather_current(self,emplacment:str,town:str=""):
+        if self.__set_lieu(emplacment, town):
             try :
-                weather = self.__client.get_forecast_for_place(place)
-                dictMeteo = weather.current_forecast
-                self.__nameTown = place.name
-                self.__temperature = dictMeteo['T']['value']
-                self.__humidity = dictMeteo["humidity"]
-                self.__description = dictMeteo['weather']['desc']
-                self.__icon = dictMeteo['weather']['icon']
-                alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
-                self.__rankingAlert(alertes)
+                forecast = self.__client.get_forecast_for_place(self.__place)
+                meteo_en_cours = forecast.current_forecast
+                self.__nameTown = self.__place.name
+                self.__temperature = meteo_en_cours['T']['value']
+                self.__humidity = meteo_en_cours["humidity"]
+                self.__description = meteo_en_cours['weather']['desc']
+                self.__icon = meteo_en_cours['weather']['icon']
                 return True
             except Exception as e:
-                # print(f"Erreur lors de la récupération des données météo : {e}")
+                print(e)
                 return False
-        else :
+        else:
             return False
 
-    def getMeteoTowmorowMorning(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
-        if self._gestionnaire.getNetworkObjet().getEtatInternet():
-            if town:
-                try:
-                    townWeather = self.__client.search_places(town)
-                    place = townWeather[0]
-                    if not place:
-                        return False
-                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                except Exception as e:
-                    print(f"Erreur lors de la récupération des données météo : {e}")
-                    return False
-            elif latitude and longitude:
-                try:
-                    town = self.__fncGPS.getTownWithLatitudeAndLongitude(latitude,longitude)
-                    if town is None:
-                        return False
-                    else:
-                        townWeather = self.__client.search_places(town)
-                        place = townWeather[0]
-                        if not place:
-                            return False
-                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                except Exception as e:
-                    print(f"Erreur lors de la récupération des données météo : {e}")
-                    return False
-            elif self.__fncGPS.locate():
-                    try :
-                        townWeather = self.__client.search_places(self.__fncGPS.getTown())
-                        place = townWeather[0]
-                        if not place:
-                            return False
-                    except Exception as e:
-                        print(f"Erreur lors de la récupération des données météo : {e}")
-                        return False
-            else :
-                return False
-
+    def weather_tomorrow(self,emplacment:str,town:str=""):
+        if self.__set_lieu(emplacment, town):
             try :
-                weather = self.__client.get_forecast_for_place(place)
-                now = datetime.now()
-                tomorrow_morning = (now + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
-                for dictMeteo in weather.forecast:
-                    forecast_time = datetime.fromtimestamp(dictMeteo["dt"])
-                    if forecast_time == tomorrow_morning:
-                        self.__nameTown = place.name
-                        self.__temperature = dictMeteo['T']['value']
-                        self.__humidity = dictMeteo["humidity"]
-                        self.__description = dictMeteo['weather']['desc']
-                        self.__icon = dictMeteo['weather']['icon']
-                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
-                        self.__rankingAlert(alertes)
-                        return True
-                else:
-                    return False
+                forecast = self.__client.get_forecast_for_place(self.__place)
+                meteo_lendemain = forecast.daily_forecast[1]
+                self.__nameTown = self.__place.name
+                self.__temperature = f"Min: {meteo_lendemain.get('T', {}).get('min')} / Max: {meteo_lendemain.get('T', {}).get('max')}"
+                #self.__humidity = "Non disponible en journalier"  # À adapter si besoin
+                self.__description = meteo_lendemain.get('weather', {}).get('desc', 'Inconnu')
+                self.__icon = meteo_lendemain.get('weather', {}).get('icon', '')
+                return True
             except Exception as e:
-                # print(f"Erreur lors de la récupération des données météo : {e}")
+                print(e)
                 return False
-        else :
+        else:
             return False
 
-    def getMeteoTowmorowNoon(self,town:str="",departement:str="75",latitude:str="",longitude:str=""):
-        if self._gestionnaire.getNetworkObjet().getEtatInternet():
-            if town:
-                try:
-                    townWeather = self.__client.search_places(town)
-                    place = townWeather[0]
-                    if not place:
-                        return False
-                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                except Exception as e:
-                    # print(f"Erreur lors de la récupération des données météo : {e}")
-                    return False
-            elif latitude and longitude:
-                try:
-                    town = self.__fncGPS.getTownWithLatitudeAndLongitude(latitude,longitude)
-                    if town is None:
-                        return False
-                    else:
-                        townWeather = self.__client.search_places(town)
-                        place = townWeather[0]
-                        if not place:
-                            return False
-                    departement = self.__fncGPS.getFrenchDepartementWithTown(town)
-                except Exception as e:
-                    # print(f"Erreur lors de la récupération des données météo : {e}")
-                    return False
-            elif self.__fncGPS.locate():
-                    try :
-                        townWeather = self.__client.search_places(self.__fncGPS.getTown())
-                        place = townWeather[0]
-                        if not place:
-                            return False
-                    except Exception as e:
-                        # print(f"Erreur lors de la récupération des données météo : {e}")
-                        return False
-            else :
-                return False
-
+    def __get_data_for_weather(self,emplacment:str,town:str=""):
+        if self.__set_lieu(emplacment, town):
             try :
-                weather = self.__client.get_forecast_for_place(place)
-                now = datetime.now()
-                tomorrow_morning = (now + timedelta(days=1)).replace(hour=13, minute=0, second=0, microsecond=0)
-                for dictMeteo in weather.forecast:
-                    forecast_time = datetime.fromtimestamp(dictMeteo["dt"])
-                    if forecast_time == tomorrow_morning:
-                        self.__nameTown = place.name
-                        self.__temperature = dictMeteo['T']['value']
-                        self.__humidity = dictMeteo["humidity"]
-                        self.__description = dictMeteo['weather']['desc']
-                        self.__icon = dictMeteo['weather']['icon']
-                        alertes = self.__client.get_warning_current_phenomenons(departement).phenomenons_max_colors
-                        self.__rankingAlert(alertes)
-                        return True
-                else:
-                    return False
+                return self.__client.get_forecast_for_place(self.__place)
             except Exception as e:
-                # print(f"Erreur lors de la récupération des données météo : {e}")
+                print(e)
+                return None
+        else:
+            return None
+
+    def weather_afternoon(self,emplacment:str,town:str=""):
+        forecast = self.__get_data_for_weather(emplacment,town)
+        if forecast is None:
+            return False
+        try :
+            meteo_apres_midi = []
+            for f in forecast.forecast:
+                dt = datetime.fromtimestamp(f["dt"])
+                if 12 <= dt.hour < 18 and dt.date() == date.today():
+                    meteo_apres_midi.append(f)
+
+            if meteo_apres_midi:
+                prevision = meteo_apres_midi[0]
+
+                self.__temperature = prevision['T']['value']
+                self.__humidity = prevision["humidity"]
+                self.__description = prevision['weather']['desc']
+                self.__icon = prevision['weather']['icon']
+                return True
+            else:
                 return False
-        else :
+        except Exception as e:
+            print(e)
             return False
 
-    def __rankingAlert(self,alertes:list):
+    def weather_morning(self,emplacment:str,town:str=""):
+        forecast = self.__get_data_for_weather(emplacment, town)
+        if forecast is None:
+            return False
+        try:
+            meteo_matin = []
+            for f in forecast.forecast:
+                dt = datetime.fromtimestamp(f["dt"])
+                if 6 <= dt.hour < 12 and dt.date() == date.today():
+                    meteo_matin.append(f)
+
+            if meteo_matin:
+                prevision = meteo_matin[0]
+
+                self.__temperature = prevision['T']['value']
+                self.__humidity = prevision["humidity"]
+                self.__description = prevision['weather']['desc']
+                self.__icon = prevision['weather']['icon']
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e)
+            return False
+
+    def weather_evening(self,emplacment:str,town:str=""):
+        forecast = self.__get_data_for_weather(emplacment, town)
+        if forecast is None:
+            return False
+        try:
+            meteo_soir = []
+            for f in forecast.forecast:
+                dt = datetime.fromtimestamp(f["dt"])
+                if 18 <= dt.hour < 22 and dt.date() == date.today():
+                    meteo_soir.append(f)
+
+            if meteo_soir:
+                prevision = meteo_soir[0]
+
+                self.__temperature = prevision['T']['value']
+                self.__humidity = prevision["humidity"]
+                self.__description = prevision['weather']['desc']
+                self.__icon = prevision['weather']['icon']
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e)
+            return False
+
+    def weather_night(self,emplacment:str,town:str=""):
+        forecast = self.__get_data_for_weather(emplacment, town)
+        if forecast is None:
+            return False
+        try:
+            meteo_nuit = []
+            for f in forecast.forecast:
+                dt = datetime.fromtimestamp(f["dt"])
+                # La nuit : >= 22h aujourd'hui, ou < 6h aujourd'hui/demain
+                if (dt.hour >= 22 and dt.date() == date.today()) or \
+                   (dt.hour < 6 and (dt.date() == date.today() or dt.date() == date.today() + timedelta(days=1))):
+                    meteo_nuit.append(f)
+
+            if meteo_nuit:
+                prevision = meteo_nuit[0]
+
+                self.__temperature = prevision['T']['value']
+                self.__humidity = prevision["humidity"]
+                self.__description = prevision['weather']['desc']
+                self.__icon = prevision['weather']['icon']
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(e)
+            return False
+
+    def set_alerte(self):
         self.__redAlert = []
         self.__orangeAlert = []
         self.__yellowAlert = []
         self.__greenAlert = []
+
+        try:
+            alertes_data = self.__client.get_warning_current_phenomenons(self.__place.admin2)
+            alertes = alertes_data.phenomenons_max_colors
+        except Exception as e:
+            print(f"Erreur lors de la récupération des alertes : {e}")
+            return  False
+
         for alerte in alertes:
-            idColor = int(alerte.get('phenomenon_max_color_id'))
-            nameWarning = self.__dictWarning.get_phenomenon_by_id(int(alerte.get('phenomenon_id')))['name']
+            idColor = int(alerte.get('phenomenon_max_color_id', 1))
+            idPhenomenon = int(alerte.get('phenomenon_id'))
+
+            nameWarning = self.__dictWarning.get_phenomenon_by_id(idPhenomenon).get('name', 'Inconnu')
+
+            # Rangement dans les attributs de la classe
             if idColor == 1:
                 self.__greenAlert.append(nameWarning)
             elif idColor == 2:
@@ -224,6 +228,7 @@ class fncMeteo(fncBase) :
                 self.__orangeAlert.append(nameWarning)
             elif idColor == 4:
                 self.__redAlert.append(nameWarning)
+        return True
 
     def getNameTown(self):
         return self.__nameTown

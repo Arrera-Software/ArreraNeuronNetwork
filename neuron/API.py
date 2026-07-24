@@ -38,11 +38,11 @@ class neuroneAPI(neuronBase) :
             if self._keyword.checkAPI(requette,"meteo"):
                 if self._keyword.checkAPI(requette, "meteoDemainMatin"):
                     if self._keyword.checkAPI(townHouse,"lieuDomicile"):
-                        state = self.__fncMeteo.getMeteoTowmorowMorning(town=townHouse)
+                        state = self.__fncMeteo.weather_afternoon("home")
                     elif self._keyword.checkAPI(townWork,"lieuTravail"):
-                        state = self.__fncMeteo.getMeteoTowmorowMorning(town=townWork)
+                        state = self.__fncMeteo.weather_tomorrow("work")
                     else :
-                        state = self.__fncMeteo.getMeteoTowmorowMorning()
+                        state = self.__fncMeteo.weather_tomorrow("locate")
 
                     self._listSortie = [self.__texteMeteo(state,3,4),""]
                     return 4
@@ -50,11 +50,11 @@ class neuroneAPI(neuronBase) :
                 elif self._keyword.checkAPI(requette, "meteoDemainApresMidi"):
                     # Recuperation de la meteo de demain apres midi
                     if self._keyword.checkAPI(requette,"lieuDomicile"):
-                        state = self.__fncMeteo.getMeteoTowmorowNoon(town=townHouse)
+                        state = self.__fncMeteo.weather_afternoon("home")
                     elif self._keyword.checkAPI(requette,"lieuTravail"):
-                        state = self.__fncMeteo.getMeteoTowmorowNoon(town=townWork)
+                        state = self.__fncMeteo.weather_tomorrow("work")
                     else :
-                        state = self.__fncMeteo.getMeteoTowmorowNoon()
+                        state = self.__fncMeteo.weather_tomorrow("locate")
 
                     # Mise en place du texte de sortie
                     self._listSortie = [self.__texteMeteo(state, 1, 2), ""]
@@ -62,21 +62,21 @@ class neuroneAPI(neuronBase) :
 
                 else :
                     if self._keyword.checkAPI(requette, "lieuDomicile"):
-                        state = self.__fncMeteo.getMeteoCurrentHour(town=townHouse)
+                        state = self.__fncMeteo.weather_current("home")
                     elif self._keyword.checkAPI(requette, "lieuTravail"):
-                        state = self.__fncMeteo.getMeteoCurrentHour(town=townWork)
+                        state = self.__fncMeteo.weather_current("work")
                     else:
-                        state = self.__fncMeteo.getMeteoCurrentHour()
+                        state = self.__fncMeteo.weather_current("locate")
 
                     self._listSortie = [self.__texteMeteo(state, 5, 6), ""]
                     return 4
             elif self._keyword.checkAPI(requette,"temperature"):
                 if self._keyword.checkAPI(requette, "lieuDomicile"):
-                    state = self.__fncMeteo.getMeteoCurrentHour(town=townHouse)
+                    state = self.__fncMeteo.weather_current("home")
                 elif self._keyword.checkAPI(requette, "lieuTravail"):
-                    state = self.__fncMeteo.getMeteoCurrentHour(town=townWork)
+                    state = self.__fncMeteo.weather_current("work")
                 else:
-                    state = self.__fncMeteo.getMeteoCurrentHour()
+                    state = self.__fncMeteo.weather_current("locate")
 
                 if state:
                     texte = self._language.getPhraseTemperature(self.__fncMeteo.getTemperature())

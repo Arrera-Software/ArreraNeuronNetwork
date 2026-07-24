@@ -338,7 +338,7 @@ def partMeteo():
     meteoBoucle = True
     while meteoBoucle:
         print("Test des fonctions de Météo")
-        print("1.Météo actuelle localisation\n2.Meteo actuel ville\n3.Meteo actuel lat long\n4.Meteo demain matin localisation\n5.Meteo demain matin ville\n6.Meteo demain matin lat long\n7.Meteo demain apres midi localisation\n8.Meteo demain apres midi ville\n9.Meteo demain apres midi lat long\n0.Quitter")
+        print("1.Actuelle\n2.Demain\n3.Matinée\n4.Apres-midi\n5.Soirée\n6.Nuit\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -348,127 +348,81 @@ def partMeteo():
                 boucleVerif = False
             except ValueError:
                 print("Veuillez entrer un nombre valide.")
+        if nb == 0:
+            meteoBoucle = False
+            break
 
-        match nb:
-            case 1:
-                if fnc.getFNCMeteo().getMeteoCurrentHour():
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 2:
-                ville = input("Entrez le nom de la ville : ")
-                if fnc.getFNCMeteo().getMeteoCurrentHour(ville):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 3:
-                lat = input("Entrez la latitude : ")
-                long = input("Entrez la longitude : ")
-                if fnc.getFNCMeteo().getMeteoCurrentHour(latitude=lat, longitude=long):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 4:
-                if fnc.getFNCMeteo().getMeteoTowmorowMorning():
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 5:
-                ville = input("Entrez le nom de la ville : ")
-                if fnc.getFNCMeteo().getMeteoTowmorowMorning(ville):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 6:
-                lat = input("Entrez la latitude : ")
-                long = input("Entrez la longitude : ")
-                if fnc.getFNCMeteo().getMeteoTowmorowMorning(latitude=lat, longitude=long):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                    print(f"Rouge {fnc.getFNCMeteo().getRedAlert()}")
-                    print(f"Orange {fnc.getFNCMeteo().getOrangeAlert()}")
-                    print(f"Jaune {fnc.getFNCMeteo().getYellowAlert()}")
-                    print(f"Vert {fnc.getFNCMeteo().getGreenAlert()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
+        print("Entrer la localisation : Work,Home,Locate ou Custom")
+        data = {"work", "home", "locate", "custom"}
+        choix = input("Choix : ").strip().lower()
 
-            case 7:
-                if fnc.getFNCMeteo().getMeteoTowmorowNoon():
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 8:
-                ville = input("Entrez le nom de la ville : ")
-                if fnc.getFNCMeteo().getMeteoTowmorowNoon(ville):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 9:
-                lat = input("Entrez la latitude : ")
-                long = input("Entrez la longitude : ")
-                if fnc.getFNCMeteo().getMeteoTowmorowNoon(latitude=lat, longitude=long):
-                    print(f"Ville : {fnc.getFNCMeteo().getNameTown()}")
-                    print(f"Temperature : {fnc.getFNCMeteo().getTemperature()}°C")
-                    print(f"Humidité : {fnc.getFNCMeteo().getHumidity()}%")
-                    print(f"Description : {fnc.getFNCMeteo().getDescription()}")
-                    print(f"Icone : {fnc.getFNCMeteo().getIcon()}")
-                else:
-                    print("Erreur lors de la récupération de la météo actuelle")
-            case 0:
-                meteoBoucle = False
-            case _:
-                print("Choix invalide, veuillez réessayer.")
+        if choix in data and nb != 0:
+            if choix == "custom":
+                ville = input("Entrer la ville : ")
+            else :
+                ville = ""
+            ok = False
+
+            match nb:
+                case 1:
+                    if gest.getGestFNC().getFNCMeteo().weather_current(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo actuel :")
+                        ok = True
+                    else :
+                        print("Erreur de recuperer")
+                case 2:
+                    if gest.getGestFNC().getFNCMeteo().weather_tomorrow(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo de demain :")
+                        ok = True
+                    else:
+                        print("Erreur de recuperer")
+                case 3:
+                    if gest.getGestFNC().getFNCMeteo().weather_morning(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo de la matinée :")
+                        ok = True
+                    else:
+                        print("Erreur de recuperer")
+                case 4:
+                    if gest.getGestFNC().getFNCMeteo().weather_afternoon(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo de l'apres-midi :")
+                        ok = True
+                    else:
+                        print("Erreur de recuperer")
+                case 5:
+                    if gest.getGestFNC().getFNCMeteo().weather_evening(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo de la soirée :")
+                        ok = True
+                    else:
+                        print("Erreur de recuperer")
+                case 6:
+                    if gest.getGestFNC().getFNCMeteo().weather_night(choix, ville):
+                        print("Donnée recuperer")
+                        print("Meteo de la nuit :")
+                        ok = True
+                    else:
+                        print("Erreur de recuperer")
+                case _:
+                    print("Choix invalide, veuillez réessayer.")
+            if ok:
+                print(f"Nom de la ville : {gest.getGestFNC().getFNCMeteo().getNameTown()}")
+                print(f"Temperature : {gest.getGestFNC().getFNCMeteo().getTemperature()}")
+                print(f"Humiditer : {gest.getGestFNC().getFNCMeteo().getHumidity()}")
+                print(f"Description : {gest.getGestFNC().getFNCMeteo().getDescription()}")
+                print(f"Icone : {gest.getGestFNC().getFNCMeteo().getIcon()}")
+                if gest.getGestFNC().getFNCMeteo().set_alerte():
+                    print(f"Alerte Rouge : {gest.getGestFNC().getFNCMeteo().getRedAlert()}")
+                    print(f"Alerte Orange : {gest.getGestFNC().getFNCMeteo().getOrangeAlert()}")
+                    print(f"Alerte Jaune : {gest.getGestFNC().getFNCMeteo().getYellowAlert()}")
+                    print(f"Alerte Vert : {gest.getGestFNC().getFNCMeteo().getGreenAlert()}")
+                else :
+                    print("Les alerte n'ont pas etais recuperer")
+        else :
+            print("Erreur : tu dois taper exactement Work, Home, Locate ou Custom. (pas de nom de ville direct)")
 
 def partActu():
     if fnc.getFNCActu().setActu():
