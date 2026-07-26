@@ -19,9 +19,7 @@ class gestGUI:
         from gui.GUITache import GUITache
         from gui.GUIArreraWork import GUIWork
         from gui.GUITraducteur import GuiTraducteur
-        from gui.GUIViewResumer import GUIViewResumer
         from gui.GUIHelp import GUIHelp
-        from gui.GUIViewBreef import GUIViewBreef
         from gui.GuiBrief import guiBrief
 
         # Calculatrice
@@ -42,12 +40,8 @@ class gestGUI:
         self.__guiWork = GUIWork(self.__gest)
         # Traducteur
         self.__guiTraducteur = GuiTraducteur(self.__gest)
-        # Resumer
-        self.__guiResumer = GUIViewResumer(self.__gest)
         # Aide
         self.__guiHelp = GUIHelp(self.__gest)
-        # Breef
-        self.__guiBreef = GUIViewBreef(self.__gest)
         # Brief
         self.__guiBrief = guiBrief(self.__gest,self.__gest.getName())
 
@@ -169,23 +163,18 @@ class gestGUI:
                 self.__guiTraducteur.active,
                 lambda: self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
             ),
-            "resumer": self.__action_resumer,
             "aide": self.__action_aide,
-            "breef": lambda: self.__generic_action(
-                self.__guiBreef.activeBreef,
-                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
-            ),
             "morning_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_morning(),
-                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+                self.__guiBrief.view_morning,
+                lambda: self.__gest.getLanguageObjet().getPhraseBrief("1")
             ),
             "afternoon_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_afternoon(),
-                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+                self.__guiBrief.view_afternoon,
+                lambda: self.__gest.getLanguageObjet().getPhraseBrief("2")
             ),
             "evening_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_evening(),
-                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+                self.__guiBrief.view_evening,
+                lambda: self.__gest.getLanguageObjet().getPhraseBrief("3")
             )
         }
 
@@ -287,14 +276,8 @@ class gestGUI:
     def activeTache(self):
         self.__guiTache.active()
 
-    def activeViewResumer(self, dict: dict = None, list: list = None, intIn: int = 0):
-        self.__guiResumer.activeView(dict=dict, list=list, intIn=intIn)
-
     def activeHelp(self, texte: str):
         self.__guiHelp.activeHelp(texte)
-
-    def activeBreef(self):
-        self.__guiBreef.activeBreef()
 
     def active_morning_brief(self):
         self.__guiBrief.view_morning()

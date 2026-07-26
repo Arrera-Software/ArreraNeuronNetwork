@@ -17,20 +17,18 @@ class interface(neuronBase):
             self._valeurOut = 1
             self._listSortie = [self._language.getPhraseInterfaceOpenSoft("1"),""]
         elif self._keyword.checkInterface(requette,"breef"):
-            if time(6,0) <= datetime.now().time() < time(11,0):
-                texte = self._language.getPhraseMorningBreef("1")
-                self._gestGUI.activeBreef()
-                outInt = 19
+            current_time = datetime.now().time()
+            if time(0,0) <= current_time < time(11,0):
+                texte = self._language.getPhraseBrief("1")
+                self._gestGUI.active_morning_brief()
+            elif time(11,0) <= current_time < time(16,0):
+                texte = self._language.getPhraseBrief("2")
+                self._gestGUI.active_afternoon_brief()
             else :
-                out = self._gestFNC.getFNCBreef().summarizeAll()
-                texte = self._language.getPhraseResumerAll("2")
-                if out is not None:
-                    outInt = 19
-                    self._gestGUI.activeViewResumer(dict=out,list=None,intIn=outInt)
-                else :
-                    outInt = 20
+                texte = self._language.getPhraseBrief("3")
+                self._gestGUI.active_evening_brief()
             self._listSortie = [texte,""]
-            self._valeurOut = outInt
+            self._valeurOut = 19
 
         elif self._keyword.checkInterface(requette,"meteo"):
             state = self._gestFNC.getFNCMeteo().getMeteoCurrentHour()

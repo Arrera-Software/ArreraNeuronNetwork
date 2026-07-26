@@ -990,10 +990,8 @@ def partWork():
 def partBreef():
     breefBoucle = True
     while breefBoucle:
-        print("Test des fonctions de Breef")
-        print("1.Resumer Actualiter\n2.Resumer Tache du jour"
-              "\n3.Resumer ALL\n4.Morning Breef"
-              "\n0.Quitter")
+        print("Test des fonctions de Brief")
+        print("1.Morning Brief\n2.Afternoon Brief\n3.Evening Brief\n0.Quitter")
         print("__________________________\n")
         boucleVerif = True
         while boucleVerif:
@@ -1006,13 +1004,11 @@ def partBreef():
 
         match nb:
             case 1:
-                print(fnc.getFNCBreef().summarizeActuAndMeteo())
+                print(fnc.getFNCBrief().morning_brief())
             case 2:
-                print(fnc.getFNCBreef().summarizeTask())
+                print(fnc.getFNCBrief().afternoon_brief())
             case 3 :
-                print(fnc.getFNCBreef().summarizeAll())
-            case 4:
-                print(fnc.getFNCBreef().morningBreef())
+                print(fnc.getFNCBrief().evening_brief())
             case 0:
                 breefBoucle = False
             case _:

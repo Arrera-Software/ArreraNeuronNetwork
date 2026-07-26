@@ -228,11 +228,25 @@ class ABrain :
         # print("updateAssistant")
         # Ajouter la partie mise a jour du socket
         self.__gestionnaire.updateDate()
-        if (time(6,0) <= datetime.now().time() < time(11,0) and not
-        self.__gestionnaire.getBreefIsLaunch()):
-            self.__gestionnaire.setBreefIsLaunch()
-            self.__gestionnaire.getGestGUI().activeBreef()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseMorningBreef("1"),""]
+        if (time(0,0) <= datetime.now().time() < time(11,0) and not
+        self.__gestionnaire.get_state_morning_brief()):
+            self.__gestionnaire.set_state_morning_brief()
+            self.__gestionnaire.getGestGUI().active_morning_brief()
+            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("1"),""]
+            self.__valeurOut = 5
+            return True
+        elif (time(11,0) <= datetime.now().time() < time(16,0) and not
+        self.__gestionnaire.get_state_afternoon_brief()):
+            self.__gestionnaire.set_state_afternoon_brief()
+            self.__gestionnaire.getGestGUI().active_afternoon_brief()
+            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("2"),""]
+            self.__valeurOut = 5
+            return True
+        elif (time(16,0) <= datetime.now().time() and not
+        self.__gestionnaire.get_state_evening_brief()):
+            self.__gestionnaire.set_state_evening_brief()
+            self.__gestionnaire.getGestGUI().active_evening_brief()
+            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("3"),""]
             self.__valeurOut = 5
             return True
         elif self.__gestSocket is not None:

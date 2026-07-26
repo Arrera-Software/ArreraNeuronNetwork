@@ -44,7 +44,6 @@ window.geometry("800x600")
 button_frame = aFrame(window)
 button_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
-fnc_breef = gest.getGestFNC().getFNCBreef()
 language = gest.getLanguageObjet()
 
 # Dictionnaire des interfaces à tester et de leurs fonctions de lancement
@@ -53,7 +52,6 @@ gui_to_test = {
     "Agenda": gest_gui.activeAgenda,
     "Tâches": gest_gui.activeTache,
     "Aide": lambda: gest_gui.activeHelp("Texte d'aide de test"),
-    "Breef": gest_gui.activeBreef,
     "Calculatrice": lambda: gest_gui.setGUIActive("calculatrice_normal") and gest_gui.launch_gui(),
     "Calculatrice Pythagore": lambda: gest_gui.setGUIActive("calculatrice_pythagore") and gest_gui.launch_gui(),
     "Calculatrice Complex": lambda: gest_gui.setGUIActive("calculatrice_complex") and gest_gui.launch_gui(),
@@ -63,7 +61,6 @@ gui_to_test = {
     "Lecture": lambda: gest_gui.setGUIActive("lecture") and gest_gui.launch_gui(),
     "Arrera Work": lambda: gest_gui.setGUIActive("work") and gest_gui.launch_gui(),
     "Traducteur": lambda: gest_gui.setGUIActive("traducteur") and gest_gui.launch_gui(),
-    "Resumer": lambda: gest_gui.activeViewResumer(dict=fnc_breef.summarizeAll(), list=language.getPhraseResumerAll("2"), intIn=19),
     "Color Select" : lambda : (fnc_codehelp.setGUICodeHelp("GUIColorSelector"),fnc_codehelp.launchGui()),
     "Github" : lambda : (fnc_codehelp.setGUICodeHelp("GUIGithubGestion"),fnc_codehelp.launchGui()),
     "Librairy" : lambda : (fnc_codehelp.setGUICodeHelp("GUILibrairy"),fnc_codehelp.launchGui()),

@@ -2,7 +2,6 @@
   "phResumerActu" : "Voici un tour d'horizon des nouvelles du jour et des prévisions météorologiques.",
   "phResumerTask": "Voici le résumé de toutes vos tâches.",
   "phResumerAll1": "Impossible de vous faire le résumé {genre}.",
-  "phResumerAll2": "Voici votre résumé des actualités du jour avec la météo, ainsi que des tâches que vous avez à faire et des événements du jour.",
   "ph1": "Désolé, une erreur s'est produite pour la récupération des actualités.",
   "phMeteo1": [
     "La météo à {ville} pour demain midi est {description} avec une température de {temperature} °C.",
@@ -61,5 +60,7 @@
     "La météo à votre localisation est {description} avec une température de {temperature} °C.",
     "La météo à votre localisation est {description} avec une température de {temperature} °C."
   ],
-  "phMorningBreef1": "Voici votre morning brief avec la météo, les actualités et vos tâches à faire aujourd'hui."
+  "phBrief1": "Voici votre brief matinal : j'ai rassemblé pour vous les dernières actualités, la météo d'aujourd'hui et vos tâches prévues.",
+  "phBrief2": "Voici votre point de la mi-journée : j'ai rassemblé pour vous les actualités récentes, la météo de cet après-midi et les tâches qu'il vous reste à accomplir.",
+  "phBrief3": "Voici votre brief du soir : j'ai rassemblé pour vous les actualités de la journée et la météo de demain."
 }

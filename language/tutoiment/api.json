@@ -61,5 +61,7 @@
     "La météo à ta localisation est {description} avec une température de {temperature} °C.",
     "La météo à ta localisation est {description} avec une température de {temperature} °C."
   ],
-  "phMorningBreef1": "Voici ton morning brief avec la météo, les actualités et vos tâches à faire aujourd'hui."
+  "phBrief1": "Voici ton brief matinal : j'ai rassemblé pour vous les dernières actualités, la météo d'aujourd'hui et vos tâches prévues.",
+  "phBrief2": "Voici votre point de la mi-journée : j'ai rassemblé pour vous les actualités récentes, la météo de cet après-midi et les tâches qu'il vous reste à accomplir.",
+  "phBrief3": "Voici votre brief du soir : j'ai rassemblé pour vous les actualités de la journée et la météo de demain."
 }

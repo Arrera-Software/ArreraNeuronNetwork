@@ -8,7 +8,6 @@ class neuroneAPI(neuronBase) :
     def __init__(self,gestionnaire:gestionnaire ):
         super().__init__(gestionnaire)
         self.__fncMeteo = self._gestFNC.getFNCMeteo()
-        self.__fncBreef = self._gestFNC.getFNCBreef()
         self.__fncGPS = self._gestFNC.getFNCGPS()
         self.__fncActu = self._gestFNC.getFNCActu()
         self.__itineraire = False
@@ -87,50 +86,26 @@ class neuroneAPI(neuronBase) :
                 return 4
         return 0
 
-    def __breef(self,requette:str):
+    def __brief(self, requette:str):
         """
-        11 : Erreur du resumer actulités
-        12 : Reussite du resumer actulités
-        18 : Resumer tache / agenda
-        19 : Resumer all ok
-        20 : Resumer all fail
         """
         if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"resumer"):
-                if time(6,0) <= datetime.now().time() < time(11,0):
-                    outInt = 5
-                    self._gestGUI.setGUIActive("breef")
-                    texte = self._language.getPhraseMorningBreef("1")
-                elif self._keyword.checkAPI(requette,"actualite") or self._keyword.checkAPI(requette,"meteo"):
-                    out = self.__fncBreef.summarizeActuAndMeteo(self._userConf.getLieuDomicile())
-                    texte = self._language.getPhraseResumerActu()
-                    if out is not None:
-                        outInt = 12
-                        self._gestGUI.setGUIActive("resumer",[out,None,outInt,texte])
-                    else :
-                        outInt = 11
-                elif self._keyword.checkAPI(requette,"taches"):
-                    out = self.__fncBreef.summarizeTask()
-                    texte = self._language.getPhraseResumerTask()
-                    if out is not None:
-                        outInt = 18
-                        self._gestGUI.setGUIActive("resumer",[None,out,outInt,texte])
-                    else :
-                        outInt = 11
-                else:
-                    out = self.__fncBreef.summarizeAll()
-                    texte = self._language.getPhraseResumerAll("2")
-                    if out is not None:
-                        outInt = 19
-                        self._gestGUI.setGUIActive("resumer",[out,None,outInt,texte])
-                    else :
-                        outInt = 20
-
-                if outInt == 12 or outInt == 18 or outInt == 19 or outInt == 5:
-                    self._listSortie = ["resumer",""]
+                if time(0,0) <= datetime.now().time() < time(11,0):
+                    self._gestGUI.setGUIActive("morning_brief")
+                    self._listSortie = [self._language.getPhraseBrief("1"),""]
+                    return 5
+                elif time(11,0) <= datetime.now().time() < time(16,0):
+                    self._gestGUI.setGUIActive("afternoon_brief")
+                    self._listSortie = [self._language.getPhraseBrief("2"),""]
+                    return 5
+                elif time(16,0) <= datetime.now().time():
+                    self._gestGUI.setGUIActive("evening_brief")
+                    self._listSortie = [self._language.getPhraseBrief("3"),""]
+                    return 5
                 else :
                     self._listSortie = [self._language.getPhraseResumerAll("1"),""]
-                return outInt
+                    return 20
         return 0
 
     def __gps(self,requette:str):
@@ -239,7 +214,7 @@ class neuroneAPI(neuronBase) :
     def neurone(self,requette:str):
         self._listSortie = ["", ""]
         self._valeurOut = 0
-        self._valeurOut = self.__breef(requette)
+        self._valeurOut = self.__brief(requette)
         if self._valeurOut == 0:
             self._valeurOut = self.__meteo(requette)
             if self._valeurOut == 0:

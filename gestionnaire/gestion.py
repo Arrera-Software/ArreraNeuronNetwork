@@ -8,7 +8,9 @@ class gestionnaire:
     def __init__(self,confAssistant:confNeuron):
         # Var
         self.__dateStart = datetime.now().date()
-        self.__breefIsLaunch = False
+        self.__breef_morning = False
+        self.__breef_evening = False
+        self.__breef_afternoon = False
         # Importation des gestionnaires
         from gestionnaire.gestSocket import gestSocket
         from gestionnaire.gestLangue import gestLangue
@@ -241,18 +243,32 @@ class gestionnaire:
     def getDateStart(self):
         return self.__dateStart
 
-    def setBreefIsLaunch(self):
-        self.__breefIsLaunch = True
+    def set_state_morning_brief(self):
+        self.__breef_morning = True
 
-    def getBreefIsLaunch(self):
-        return self.__breefIsLaunch
+    def get_state_morning_brief(self):
+        return self.__breef_morning
+
+    def set_state_afternoon_brief(self):
+        self.__breef_afternoon = True
+
+    def get_state_afternoon_brief(self):
+        return self.__breef_afternoon
+
+    def set_state_evening_brief(self):
+        self.__breef_evening = True
+
+    def get_state_evening_brief(self):
+        return self.__breef_evening
 
     def updateDate(self):
         if self.__dateStart == datetime.now().date():
             return False
         else :
             self.__dateStart = datetime.now().date()
-            self.__breefIsLaunch = False
+            self.__breef_morning = False
+            self.__breef_afternoon = False
+            self.__breef_evening = False
             return True
 
     def getNameMode(self):

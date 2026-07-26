@@ -19,7 +19,6 @@ class gestFNC:
         from fnc.fonctionCalculatrice import fncCalculatrice
         from fnc.fonctionCodeHelp import fncCodehelp
         from fnc.fonctionArreraWork import fncArreraWork
-        from fnc.fonctionBreef import fncBreef
         from fnc.fonctionOPEN import fonctionOpen
         from fnc.fonctionBrief import fncBrief
         # Fichier de GUI
@@ -61,8 +60,6 @@ class gestFNC:
         self.__codehelp = fncCodehelp(self.__gestionnaire)
         # Fonction work
         self.__work = fncArreraWork(self.__gestionnaire)
-        # Fonction breef
-        self.__breef = fncBreef(self.__gestionnaire)
         # Fonction open
         self.__open = fonctionOpen(self.__gestionnaire)
         # Fonction brief
@@ -117,9 +114,6 @@ class gestFNC:
 
     def getFNCWork(self):
         return self.__work
-
-    def getFNCBreef(self):
-        return self.__breef
 
     def getFNCOpen(self):
         return self.__open

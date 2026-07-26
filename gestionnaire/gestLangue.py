@@ -305,8 +305,8 @@ class gestLangue:
     def getPhraseSocket(self,name:str):
         return self.__socket.getContentJsonFlag(name)
 
-    def getPhraseMorningBreef(self,nb:str):
-        formule = self.__api.getContentJsonFlag("phMorningBreef" + nb)
+    def getPhraseBrief(self,nb:str):
+        formule = self.__api.getContentJsonFlag("phBrief" + nb)
         return formule.format(genre=self.__genre, user_firstname=self.__userFirstname,
                               user_lastname=self.__userLastname)
 
