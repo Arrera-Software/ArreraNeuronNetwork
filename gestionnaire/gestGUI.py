@@ -175,8 +175,16 @@ class gestGUI:
                 self.__guiBreef.activeBreef,
                 lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
             ),
-            "brief": lambda: self.__generic_action(
-                self.__guiBrief.active,
+            "morning_brief": lambda: self.__generic_action(
+                self.__guiBrief.view_morning(),
+                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+            ),
+            "afternoon_brief": lambda: self.__generic_action(
+                self.__guiBrief.view_afternoon(),
+                lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
+            ),
+            "evening_brief": lambda: self.__generic_action(
+                self.__guiBrief.view_evening(),
                 lambda: self.__gest.getLanguageObjet().getPhraseMorningBreef("1")
             )
         }
@@ -288,5 +296,11 @@ class gestGUI:
     def activeBreef(self):
         self.__guiBreef.activeBreef()
 
-    def activeBrief(self):
-        self.__guiBrief.active()
+    def active_morning_brief(self):
+        self.__guiBrief.view_morning()
+
+    def active_afternoon_brief(self):
+        self.__guiBrief.view_afternoon()
+
+    def active_evening_brief(self):
+        self.__guiBrief.view_evening()
