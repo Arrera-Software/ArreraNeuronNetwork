@@ -44,10 +44,9 @@ class fncMeteo(fncBase) :
                     self.__nameTown = ville
                     list_places = self.__client.search_places(ville)
                     self.__place = list_places[0]
-                    print(self.__place)
                     return True
                 except Exception as e:
-                    print(e)
+                    #print(e)
                     return False
             else:
                 return False
@@ -66,7 +65,7 @@ class fncMeteo(fncBase) :
                 self.__icon = meteo_en_cours['weather']['icon']
                 return True
             except Exception as e:
-                print(e)
+                #print(e)
                 return False
         else:
             return False
@@ -79,11 +78,11 @@ class fncMeteo(fncBase) :
                 self.__nameTown = self.__place.name
                 self.__temperature = f"Min: {meteo_lendemain.get('T', {}).get('min')} / Max: {meteo_lendemain.get('T', {}).get('max')}"
                 #self.__humidity = "Non disponible en journalier"  # À adapter si besoin
-                self.__description = meteo_lendemain.get('weather', {}).get('desc', 'Inconnu')
-                self.__icon = meteo_lendemain.get('weather', {}).get('icon', '')
+                self.__description = meteo_lendemain.get('weather12H', {}).get('desc', 'Inconnu')
+                self.__icon = meteo_lendemain.get('weather12H', {}).get('icon', 'meteo-error')
                 return True
             except Exception as e:
-                print(e)
+                #print(e)
                 return False
         else:
             return False
@@ -93,7 +92,7 @@ class fncMeteo(fncBase) :
             try :
                 return self.__client.get_forecast_for_place(self.__place)
             except Exception as e:
-                print(e)
+                #print(e)
                 return None
         else:
             return None
@@ -120,7 +119,7 @@ class fncMeteo(fncBase) :
             else:
                 return False
         except Exception as e:
-            print(e)
+            #print(e)
             return False
 
     def weather_morning(self,emplacment:str,town:str=""):
@@ -145,7 +144,7 @@ class fncMeteo(fncBase) :
             else:
                 return False
         except Exception as e:
-            print(e)
+            #print(e)
             return False
 
     def weather_evening(self,emplacment:str,town:str=""):
@@ -170,7 +169,7 @@ class fncMeteo(fncBase) :
             else:
                 return False
         except Exception as e:
-            print(e)
+            #print(e)
             return False
 
     def weather_night(self,emplacment:str,town:str=""):
@@ -197,7 +196,7 @@ class fncMeteo(fncBase) :
             else:
                 return False
         except Exception as e:
-            print(e)
+            #print(e)
             return False
 
     def set_alerte(self):
