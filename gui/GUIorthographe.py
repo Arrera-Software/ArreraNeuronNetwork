@@ -1,7 +1,8 @@
 import threading as th
 from gui.guibase import GuiBase,gestionnaire
 from tkinter.messagebox import showinfo
-from librairy.arrera_tk import *
+from arrera_tk import *
+from tkinter import END
 
 class GUIOrthographe(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):

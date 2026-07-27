@@ -1,5 +1,5 @@
 from tkinter import StringVar
-from librairy.arrera_tk import *
+from arrera_tk import *
 from gui.guibase import GuiBase,gestionnaire
 
 class GuiTraducteur(GuiBase):

@@ -1,8 +1,8 @@
 import base64
 from tkinter import StringVar
-from librairy.arrera_tk import *
+from arrera_tk import *
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
-import webbrowser as w
+import webbrowser as wb
 import requests
 
 

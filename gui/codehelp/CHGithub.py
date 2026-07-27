@@ -1,7 +1,7 @@
 import webbrowser as w
 from github import Github, BadCredentialsException
 from gui.codehelp.CCHguiBase import CCHguiBase,gestionnaire
-from librairy.arrera_tk import *
+from arrera_tk import *
 import threading as th
 
 class CHGithub(CCHguiBase):

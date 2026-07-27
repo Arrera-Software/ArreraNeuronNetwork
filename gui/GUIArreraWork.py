@@ -1,9 +1,6 @@
 from tkinter.messagebox import showerror, showinfo
-
-from numpy.ma.core import empty
-from setuptools._distutils import command
-
-from librairy.arrera_tk import *
+from arrera_tk import *
+from tkinter import END
 from gui.guibase import GuiBase,gestionnaire
 from gui.GUITaskProject import GUITaskProject
 
@@ -331,7 +328,7 @@ class GUIWork(GuiBase):
         aButton(screen,text="Enregistrer le type",
                 command=lambda: self.__fnc_work.addTypeProjet(entry.get())).placeBottomCenter()
 
-    def __create_file_projet(self, screen: ctk.CTkToplevel,menu:aOptionMenu):
+    def __create_file_projet(self, screen: aTopLevel,menu:aOptionMenu):
         name_file = self.__entryNameFile.get()
         if not name_file:
             showerror("Erreur", "Imposible de créer un fichier sans nom.")

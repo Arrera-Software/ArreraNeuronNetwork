@@ -1,5 +1,5 @@
 from gui.guibase import GuiBase,gestionnaire
-from librairy.arrera_tk import *
+from arrera_tk import *
 
 class GUILecture(GuiBase):
     def __init__(self,gestionnaire:gestionnaire):

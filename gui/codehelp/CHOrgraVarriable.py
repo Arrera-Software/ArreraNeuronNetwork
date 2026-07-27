@@ -1,4 +1,6 @@
-from librairy.arrera_tk import *
+from arrera_tk import *
+from tkinter import StringVar,FALSE,Text,Menu,END
+import customtkinter as ctk
 from tkinter.messagebox import *
 from tkinter.filedialog import *
 import json
