@@ -1,11 +1,7 @@
-from tkinter import StringVar, BooleanVar
 from tkinter.messagebox import showerror
-
 from gui.guibase import GuiBase,gestionnaire
-from tkcalendar import Calendar
-from datetime import date,datetime
-
-from librairy.arrera_tk import *
+from datetime import datetime
+from arrera_tk import *
 
 
 class GUIAgenda(GuiBase):
@@ -16,8 +12,6 @@ class GUIAgenda(GuiBase):
         self.__dateSelected = None
 
     def _mainframe(self):
-
-        self.__varCheckHour = BooleanVar(value=False)
         # Config de la fenetre
         self._screen.rowconfigure(0, weight=1)
         self._screen.columnconfigure(0, weight=1)
@@ -26,10 +20,9 @@ class GUIAgenda(GuiBase):
         self.__frameAddEvent = aFrame(self._screen)
         self.__frameSuppr = aFrame(self._screen)
         # Frame fille
-        frameLogoTitle = aFrame(self.__frameMain)
-        frameBTNEvent = aFrame(self.__frameMain)
+        frameLogoTitle = aFrame(self.__frameMain,fg_color="transparent")
+        frameBTNEvent = aFrame(self.__frameMain,fg_color="transparent")
         frameEventDay = aFrame(self.__frameMain)
-        frameCalendar = aFrame(self.__frameMain)
 
         self.__frameAdd = aFrame(self.__frameAddEvent)
         frameBTNFAdd = aFrame(self.__frameAdd)
@@ -121,9 +114,9 @@ class GUIAgenda(GuiBase):
                                                      command=self.__viewSuppr)
 
         # Calendrier
-        self.__miniCalendar = Calendar(frameCalendar,selectmode="day",year=date.today().year,
-            month=date.today().month,locale="fr_FR",firstweekday="monday",showweeknumbers=False,
-            borderwidth=0)
+        self.__miniCalendar = aDateSelector(self.__frameMain,
+                                            month_format="letter",
+                                            command=self.__dateSelectedOnCalendar)
 
         # Jour
         self.__labelDate = aLabel(frameEventDay,text="DATE",police_size=20)
@@ -131,14 +124,12 @@ class GUIAgenda(GuiBase):
 
         # Frame Add Event
         self.__labelTitleAddEvent = aLabel(self.__frameAdd,text="Ajouter un événement",police_size=30)
-        self.__calendarAddEvent = Calendar(self.__frameAdd,selectmode="day",year=date.today().year,
-                                           month=date.today().month,locale="fr_FR",firstweekday="monday",
-                                           showweeknumbers=False,borderwidth=0,date_pattern="yyyy-mm-dd")
+        self.__calendarAddEvent = aDateSelector(self.__frameAdd)
         self.__labelDateSelected = aLabel(self.__frameAdd,police_size=20)
-        self.__entryNameEvent = aEntryLengend(self.__frameAdd,text="Titre : ",police_size=20,gridUsed=True)
-        self.__entryDescriptionEvent = aEntryLengend(self.__frameAdd,police_size=20,text="Description : ",gridUsed=True)
-        self.__entryLieuEvent = aEntryLengend(self.__frameAdd,police_size=20,text="Lieu :",gridUsed=True)
-        self.__checkHour = ctk.CTkCheckBox(self.__frameAdd,text="Définir une heure",variable=self.__varCheckHour)
+        self.__entryNameEvent = aEntryLengend(self.__frameAdd,text="Titre",police_size=20,gridUsed=True)
+        self.__entryDescriptionEvent = aEntryLengend(self.__frameAdd,police_size=20,text="Description",gridUsed=True)
+        self.__entryLieuEvent = aEntryLengend(self.__frameAdd,police_size=20,text="Lieu",gridUsed=True)
+        self.__checkHour = aCheckBox(self.__frameAdd,text="Définir une heure",boolean_value=False)
 
         btnAddEvent = aButton(frameBTNFAdd,text="Ajouter",size=20,command=self.__addNewEvent)
         btnCancelEvent = aButton(frameBTNFAdd,text="Annuler",size=20,command=self.__backToMain)
@@ -159,7 +150,6 @@ class GUIAgenda(GuiBase):
         frameEventDay.grid(row=0, column=1, rowspan=3, sticky="nsew", padx=0, pady=0)
         frameLogoTitle.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
         frameBTNEvent.grid(row=1, column=0, sticky="w", padx=(40, 0), pady=0)
-        frameCalendar.grid(row=2, column=0, sticky="sw", padx=0, pady=0)
 
         # Placement des widgets
         # Logo et titre
@@ -169,7 +159,7 @@ class GUIAgenda(GuiBase):
         btnCreateEvent.grid(row=0, column=1, sticky="n")
         btnSupprimerEvent.grid(row=2, column=1, sticky="s")
         # Mini calendrier
-        self.__miniCalendar.pack(expand=True, fill="both", padx=8, pady=8)
+        self.__miniCalendar.grid(row=2, column=0, sticky="sw", padx=0, pady=0)
         # Jour
         self.__labelDate.grid(row=0, column=0, sticky="nw", padx=10, pady=(10, 5))
         self.__labelEvent.grid(row=1, column=0, sticky="w",  padx=10, pady=(0, 10))
@@ -201,7 +191,7 @@ class GUIAgenda(GuiBase):
         self.__viewEventDay(datetime.today().strftime("%Y-%m-%d"))
         
         # Check du mini calendar 
-        self.__miniCalendar.bind("<<CalendarSelected>>", self.__dateSelectedOnCalendar)
+        # (Event is now handled by the command argument in aDateSelector)
         self._screen.update()
 
     def __backToMain(self):
@@ -229,9 +219,12 @@ class GUIAgenda(GuiBase):
         except Exception as e:
             return False
     
-    def __dateSelectedOnCalendar(self,event):
-        date = self.__miniCalendar.get_date()
-        self.__viewEventDay(datetime.strptime(date, "%d/%m/%Y").strftime("%Y-%m-%d"))
+    def __dateSelectedOnCalendar(self, event_or_date):
+        if isinstance(event_or_date, str):
+            date_str = event_or_date
+        else:
+            date_str = self.__miniCalendar.get_date()
+        self.__viewEventDay(date_str)
 
     def __viewAddEvent(self):
 
@@ -265,7 +258,7 @@ class GUIAgenda(GuiBase):
         else :
             date = datetime.strptime(self.__calendarAddEvent.get_date(), "%Y-%m-%d").date()
 
-        if self.__varCheckHour.get():
+        if self.__checkHour.getBooleanVar().get():
             self.__frameAdd.grid_forget()
             self.__frameHeure.grid(row=0, column=0, sticky="nsew")
             self.__btnValiderHour.configure(command = lambda :
