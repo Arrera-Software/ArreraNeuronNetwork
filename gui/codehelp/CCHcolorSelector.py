@@ -1,4 +1,4 @@
-from librairy.arrera_tk import *
+from arrera_tk import *
 from gui.codehelp.CCHguiBase import*
 from tkinter import colorchooser
 
@@ -28,7 +28,7 @@ class CCHcolorSelector(CCHguiBase):
 
         # Autre carde
         f_header = aFrame(self._screen, height=50)
-        f_btn = aFrame(f_main)
+        f_btn = aFrame(f_main,fg_color="transparent")
         f_footer = aFrame(self._screen, height=80)
 
         # Configuration des frame
