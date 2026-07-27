@@ -1,8 +1,9 @@
 from tkinter.messagebox import showerror, askyesno, showinfo
-from tkcalendar import Calendar
+# tkcalendar import Calendar
 from fnc.fonctionTache import fncArreraTache
 from gui.guibase import*
 import tkinter as tk
+import customtkinter as ctk
 from datetime import datetime,date
 from functools import partial
 
@@ -15,9 +16,6 @@ class GUIBaseTache(GuiBase):
 
     def _mainframe(self):
         self._screen.title(self._title)
-        # Var
-        self.__varAddDescription = tk.BooleanVar(value=False)
-        self.__varAddDate = tk.BooleanVar(value=False)
         # Frame
         frameTitle = aFrame(self._screen)
         self.__frameTask = aFrame(self._screen)
@@ -73,9 +71,7 @@ class GUIBaseTache(GuiBase):
 
         self.__entryNameTask = aEntryLengend(self.__frameAddTask,text="Nom de la tache",police_size=20,gridUsed=True)
 
-        self.__calendarDate = Calendar(self.__frameAddTask,selectmode="day",year=date.today().year,
-                                       month=date.today().month,locale="fr_FR",firstweekday="monday",
-                                       showweeknumbers=False,borderwidth=0)
+        self.__calendarDate = aDateSelector(self.__frameAddTask)
 
         self.__entryDescriptionTask = aEntryLengend(self.__frameAddTask,text="Description",police_size=20,gridUsed=True)
 
@@ -208,8 +204,6 @@ class GUIBaseTache(GuiBase):
 
     def __viewAddTask(self):
         self.__disableAllFrame()
-        self.__varAddDate.set(False)
-        self.__varAddDescription.set(False)
         self.__entryNameTask.getEntry().delete(0, tk.END)
         self.__frameAdd.pack(side="top", fill="both", expand=True, pady=(2, 2))
         self.__frameAddTask.grid(row=0, column=0, sticky="nsew")
@@ -226,10 +220,9 @@ class GUIBaseTache(GuiBase):
                       "Le nom de la tâche ne peut pas être vide")
             return
 
-        dateCalendar = self.__calendarDate.selection_get()
+        dateCalendar = self.__calendarDate.get_date()
 
         if dateCalendar:
-            self.__calendarDate.selection_clear()
             dateAdd = True
 
         description = self.__entryDescriptionTask.getEntry().get()
