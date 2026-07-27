@@ -103,3 +103,35 @@ class fncActualiter(fncBase) :
 
     def getActu(self):
         return self.__articles
+
+    def get_actu_say(self):
+        if not self.__articles:
+            self.setActu()
+            if self._gestionnaire.getGestIA() is not None:
+                self.clear_articles()
+        
+        list_generaliste = [a for a in self.__articles if isinstance(a, dict) and a.get("cathegorie") == "Generaliste"]
+        
+        if len(list_generaliste) > 3:
+            list_generaliste = random.sample(list_generaliste, 3)
+            
+        out = []
+        for art in list_generaliste:
+            titre = art.get('titre', 'Titre inconnu')
+            source = art.get('source', 'Source inconnue')
+            out.append(f"{titre} de {source}")
+
+        if not out:
+            return ["error","error"]
+
+        phrase_out = "Les actualités récentes sont : "
+        nb = len(out)
+        for i, article in enumerate(out):
+            if i == 0:
+                phrase_out += f"{article}"
+            elif i == nb - 1:
+                phrase_out += f" et {article}."
+            else:
+                phrase_out += f", {article}"
+
+        return [phrase_out, ""]

@@ -192,7 +192,7 @@ class neuroneAPI(neuronBase) :
         if not self._keyword.checkUtils(requette, "question-fonction"):
             if self._keyword.checkAPI(requette,"actualite"):
                 if self.__fncActu.setActu(3,"fr"):
-                    listActu = self.__fncActu.getActu()
+                    listActu = self.__fncActu.get_actu_say()
                     if listActu != ["error","error"]:
                         self._listSortie = listActu
                         return 3
