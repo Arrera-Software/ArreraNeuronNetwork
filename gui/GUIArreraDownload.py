@@ -2,7 +2,7 @@ from fnc.fonctionArreraDownload import *
 from tkinter.messagebox import showerror,showinfo
 import threading as th
 from gui.guibase import GuiBase,gestionnaire
-from librairy.arrera_tk import *
+from arrera_tk import *
 
 
 class GUIArreraDownload(GuiBase):
@@ -18,7 +18,6 @@ class GUIArreraDownload(GuiBase):
         self.__tDownload = th.Thread()
         # Var
         self.__listMode = ["Vidéo simple", "Juste son", "Juste vidéo"]
-        self.__varGetMode = StringVar(self._screen)
         # Frame
         # main
         self.__fMain = aFrame(self._screen, width=450, height=450)
@@ -30,20 +29,17 @@ class GUIArreraDownload(GuiBase):
 
         self.__entryURL = aEntry(self.__fMain,width=400)
         btnDownload = aButton(self.__fMain, text="Telecharger", command=self.__downlaodView,size=20)
-        modeSelection = ctk.CTkOptionMenu(self.__fMain,variable=self.__varGetMode,values=self.__listMode,font=("Roboto",20,"bold"))
+        self.__modeSelection = aOptionMenu(self.__fMain,value=self.__listMode)
 
         # fDownload
         self.__labelDownload = aLabel(self.__fDownload, text="",font=("Roboto",25,"bold"))
         # fmain
         labelTitle.placeTopCenter()
-        modeSelection.place(x=10, y=60)
+        self.__modeSelection.place(x=10, y=60)
         btnDownload.placeBottomCenterNoStick()
         self.__entryURL.placeCenter()
         # fDonwload
         self.__labelDownload.placeCenter()
-        # Mise d'une valeur sur l'option menu
-        self.__varGetMode.set(self.__listMode[0])
-
         self.__fMain.placeCenter()
 
     def __backMain(self):
@@ -60,7 +56,7 @@ class GUIArreraDownload(GuiBase):
             self.__objetArrera.setDownloadFolderDur(folder)
 
         # Recuperation du mode
-        mode = self.__varGetMode.get()
+        mode = self.__modeSelection.getValue()
 
         if mode == self.__listMode[0]:
             self.__objetArrera.setMode(1)
