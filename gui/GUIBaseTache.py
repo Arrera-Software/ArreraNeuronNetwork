@@ -1,5 +1,4 @@
 from tkinter.messagebox import showerror, askyesno, showinfo
-# tkcalendar import Calendar
 from fnc.fonctionTache import fncArreraTache
 from gui.guibase import*
 import tkinter as tk
@@ -21,9 +20,9 @@ class GUIBaseTache(GuiBase):
         self.__frameTask = aFrame(self._screen)
         self.__frameAdd = aFrame(self._screen)
         self.__frameAddTask = aFrame(self.__frameAdd)
-        frameBTNAdd = aFrame(self.__frameAddTask)
+        frameBTNAdd = aFrame(self.__frameAddTask,fg_color="transparent")
         self.__frameSuppression = aFrame(self._screen)
-        self.__frameSuppr = aFrame(self.__frameSuppression)
+        self.__frameSuppr = aFrame(self.__frameSuppression,fg_color="transparent")
 
 
         # Config
@@ -71,7 +70,9 @@ class GUIBaseTache(GuiBase):
 
         self.__entryNameTask = aEntryLengend(self.__frameAddTask,text="Nom de la tache",police_size=20,gridUsed=True)
 
-        self.__calendarDate = aDateSelector(self.__frameAddTask)
+        f_calendar = aFrame(self.__frameAddTask,fg_color="transparent")
+        self.__add_date_task = aCheckBox(f_calendar,text="Mettre une date",boolean_value=False)
+        self.__calendarDate = aDateSelector(f_calendar)
 
         self.__entryDescriptionTask = aEntryLengend(self.__frameAddTask,text="Description",police_size=20,gridUsed=True)
 
@@ -93,7 +94,9 @@ class GUIBaseTache(GuiBase):
 
         labelTitleAddTask.grid(row=0, column=0, sticky="n", pady=(10, 8))
         self.__entryNameTask.grid(row=1, column=0, sticky="ew", padx=10, pady=(2, 8))
-        self.__calendarDate.grid(row=2, column=0, sticky="", padx=10, pady=(0, 8))
+        f_calendar.grid(row=2, column=0, sticky="", padx=10, pady=(0, 8))
+        self.__calendarDate.pack(side="right", padx=10, pady=(0, 8))
+        self.__add_date_task.pack(side="left", padx=10, pady=(0, 8))
         self.__entryDescriptionTask.grid(row=3, column=0, sticky="ew", padx=10, pady=(0, 8))
 
         frameBTNAdd.grid(row=5, column=0, sticky="ew", padx=10, pady=(8, 10))
@@ -220,9 +223,11 @@ class GUIBaseTache(GuiBase):
                       "Le nom de la tâche ne peut pas être vide")
             return
 
-        dateCalendar = self.__calendarDate.get_date()
 
-        if dateCalendar:
+
+        if self.__add_date_task.getBooleanVar().get():
+            date_str = self.__calendarDate.get_date()
+            date_calendar = datetime.strptime(date_str, "%Y-%m-%d")
             dateAdd = True
 
         description = self.__entryDescriptionTask.getEntry().get()
@@ -231,10 +236,10 @@ class GUIBaseTache(GuiBase):
             self.__entryDescriptionTask.getEntry().delete(0, tk.END)
 
         if dateAdd and not descriptionAdd:
-            if not self._fnctask.addTask(name,date=dateCalendar):
+            if not self._fnctask.addTask(name,date=date_calendar):
                 showerror("Erreur","La tache n'a pas pu être ajouter")
         elif dateAdd and descriptionAdd:
-            if not self._fnctask.addTask(name,date=dateCalendar,description=description):
+            if not self._fnctask.addTask(name,date=date_calendar,description=description):
                 showerror("Erreur","La tache n'a pas pu être ajouter")
         elif not dateAdd and descriptionAdd:
             if not self._fnctask.addTask(name,description=description):
@@ -283,7 +288,7 @@ class GUIBaseTache(GuiBase):
                 cb.grid(row=i, column=0, sticky="w", padx=8, pady=(0, 4))
                 self._task_vars.append(var)
         else:
-            labelNoTask = aLabel(self.__frameSuppr,text="Aucune tâche enregistré",police_size=40)
+            labelNoTask = aLabel(self.__frameSuppr,text="Aucune tâche enregistré",police_size=25)
             labelNoTask.pack(pady=20)
 
         self._screen.update()
