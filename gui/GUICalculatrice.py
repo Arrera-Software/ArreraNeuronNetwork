@@ -1,7 +1,7 @@
 from tkinter.messagebox import showerror
 from gui.guibase import GuiBase,gestionnaire
 import math
-from librairy.arrera_tk import *
+from arrera_tk import *
 
 class GUICalculatrice(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
@@ -141,9 +141,8 @@ class GUICalculatrice(GuiBase) :
 
         # Frame Historique
         labelHist = aLabel(self.__fhistorique, text="Historique",police_size=30)
-        self.__affichageHistorique = aText(self.__fhistorique)
-        scroll_y = ctk.CTkScrollbar(self.__fhistorique, orientation="vertical", command=self.__affichageHistorique.yview)
-        self.__affichageHistorique.configure(state='disabled')
+        self.__affichageHistorique = aTextScrollable(self.__fhistorique)
+        self.__affichageHistorique.disableTextBox()
         btnBackHist = aButton(self.__fhistorique, text="Retour",command=self.__viewCalcule)
 
         # Frame Complex
@@ -218,7 +217,6 @@ class GUICalculatrice(GuiBase) :
         # affichage historique
         labelHist.grid(row=0, column=0)
         self.__affichageHistorique.grid(row=1, column=0, sticky="nsew", padx=(10, 0), pady=10)
-        scroll_y.grid(row=1, column=1, sticky="ns", padx=(0, 10), pady=10)
         btnBackHist.grid(row=2, column=0, sticky="ew", padx=10, pady=10)
         # Affichage MainView
         self.__zoneCalcule.grid(row=0, column=0, sticky="nsew", padx=8, pady=8)
@@ -291,10 +289,10 @@ class GUICalculatrice(GuiBase) :
         """Ajoute un texte à l'historique de la calculatrice."""
         if not texte:
             return
-        self.__affichageHistorique.configure(state='normal')
-        self.__affichageHistorique.insert(END, texte + "\n")
-        self.__affichageHistorique.see(END)
-        self.__affichageHistorique.configure(state='disabled')
+        self.__affichageHistorique.enableTextBox()
+        self.__affichageHistorique.getTextBox().insert(END, texte + "\n")
+        self.__affichageHistorique.getTextBox().see(END)
+        self.__affichageHistorique.disableTextBox()
 
     
     def __carractereInterdit(self,event):
