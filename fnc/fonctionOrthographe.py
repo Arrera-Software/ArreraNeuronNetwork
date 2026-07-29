@@ -6,9 +6,9 @@ class fncOrthographe(fncBase):
         super().__init__(gestionnaire)
         self.__tool_launched = False
         self.__gest_ia = None
-        if gestionnaire.getUserConf().get_use_ia():
-            self.__tool_launched = True
-            self.__gest_ia = gestionnaire.getGestIA()
+        self.__tool_launched = True
+        self.__gest_ia = gestionnaire.getGestIA()
+
 
         self.__text_no_corrected = None
         self.__text_corrected = None

@@ -1,4 +1,4 @@
-from librairy.arrera_tk import *
+from arrera_tk import aFrame,aTk,aButton
 from gestionnaire.gestion import gestionnaire
 from config.confNeuron import confNeuron
 
@@ -7,8 +7,6 @@ conf = confNeuron(name="Opale",
                   lang="fr",
                   icon="asset/icon.png",
                   asset="asset/",
-                  assistant_color="white",
-                  assistant_texte_color="black",
                   bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
                   createur="Pauchet Baptiste",
                   listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
@@ -36,7 +34,7 @@ gest_gui = gest.getGestGUI()
 fnc_codehelp = gest.getGestFNC().getFNCCodeHelp()
 
 # Créer la fenêtre principale
-window = aTk(theme_file="asset/theme/theme_default.json")
+window = aTk()
 window.title("Test des interfaces graphiques")
 window.geometry("800x600")
 

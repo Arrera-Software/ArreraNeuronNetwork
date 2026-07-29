@@ -8,8 +8,6 @@ class GuiBase:
         self._gestionnaire = gestionnaire
         self._titleGUI = self._gestionnaire.getName() + " : " + name
         self.__icon = self._gestionnaire.getIcon()
-        self._btnColor = self._gestionnaire.getConfigFile().assistant_color
-        self._btnTexteColor = self._gestionnaire.getConfigFile().assistant_texte_color
         # Init de la var de la fenetre
         self._screen = None
 

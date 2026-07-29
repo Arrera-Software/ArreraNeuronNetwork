@@ -108,8 +108,6 @@ class GUIOpale:
                                        lang="fr",
                                        asset="asset/",
                                        icon="asset/icon.png",
-                                       assistant_color="white",
-                                       assistant_texte_color="black",
                                        bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
                                        createur="Pauchet Baptiste",
                                        listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",

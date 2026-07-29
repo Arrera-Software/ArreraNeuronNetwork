@@ -19,34 +19,35 @@ class gestIA :
 
         self.__dir_ia_instruction = "instruction_ia/"
 
-        self.__dict_help_file = {"agenda-tache":"help_agenda_taches.txt",
-                                 "work":"help_arrera_work.txt",
-                                 "dev-recherche":"help_dev_recherche.txt",
-                                 "gps":"help_gps.txt",
-                                 "medias-apps":"help_medias_apps.txt",
-                                 "orthographe":"prompt_orthographe.txt",
+        self.__dict_help_file = {"orthographe":"prompt_orthographe.txt",
                                  "dedoublonnage":"prompt_dedoublonnage.txt"}
 
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
         model_name = user_conf.get_ia_model()
-
-        if user_conf.get_use_ia() == 1 and model_name !="":
-            try :
+        print(model_name)
+        if model_name !="":
+            try:
                 if model_name in self.get_list_model_download():
-                    self.__ia_loader= ArreraIALoad()
-                    self.__ia_loader.load_model_gguf(model_path=self.__downloader_model.get_path_model(model_name)
-                                                     ,n_ctx=8192)
-                    if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction+"prompt_main.txt"):
+                    self.__ia_loader = ArreraIALoad()
+                    self.__ia_loader.load_model_gguf(
+                        model_path=self.__downloader_model.get_path_model(model_name),
+                        n_ctx=8192
+                    )
+                    print("OK1")
+
+                    prompt_dynamique = self.generate_main_prompt()
+                    print(prompt_dynamique)
+                    if self.__ia_loader.add_system_instruction_text(prompt_dynamique):
                         self.__ia_mode_enabled = True
+                        print("OK1")
                         return True
-                    else :
+                    else:
                         return False
-                else :
+                else:
                     self.__ia_mode_enabled = False
                     return False
-            except Exception as e :
-                # print(e)
+            except Exception as e:
                 self.__ia_mode_enabled = False
                 return False
         else :
@@ -62,20 +63,24 @@ class gestIA :
         else :
             return False
 
-    def send_request_ia(self,requette:str):
+    def send_request_ia(self, requette: str):
         if self.__ia_mode_enabled:
-            try :
-                self.__reponse_ia = self.__ia_loader.send_request(requette)
-                self.__model_reponse_ok = True
-                self.__ia_loader.unload_help()
-                if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
-                    self.__ia_mode_enabled = True
-                return True
-            except Exception as e :
+            try:
+                # Attention : On utilise bien le nouveau nom de méthode défini dans ArreraIALoad
+                self.__reponse_ia = self.__ia_loader.send_request_ia(requette)
+
+                if self.__reponse_ia is not None:
+                    self.__model_reponse_ok = True
+                    return True
+                else:
+                    self.__model_reponse_ok = False
+                    return False
+
+            except Exception as e:
                 self.__model_reponse_ok = False
-                print(e)
+                print(f"Erreur lors de l'appel IA : {e}")
                 return False
-        else :
+        else:
             self.__model_reponse_ok = False
             return False
 
@@ -86,7 +91,15 @@ class gestIA :
             try:
                 with open(self.__dir_ia_instruction+"prompt_orthographe.txt", 'r', encoding='utf-8') as f:
                     content = f.read()
-                self.__reponse_ia = self.__ia_loader.send_request(content+text,0.2,False)
+                raw_reponse = self.__ia_loader.send_request(content+"\n"+text, False)
+                try:
+                    parsed = json.loads(raw_reponse)
+                    if "texte_corrige" in parsed:
+                        self.__reponse_ia = parsed["texte_corrige"]
+                    else:
+                        self.__reponse_ia = raw_reponse
+                except json.JSONDecodeError:
+                    self.__reponse_ia = raw_reponse
 
                 self.__model_reponse_ok = True
                 self.__ia_loader.unload_help()
@@ -120,7 +133,7 @@ class gestIA :
                 articles_json = json.dumps(articles, ensure_ascii=False)
                 request_text = f"{content}\n\n{articles_json}"
 
-                raw_reponse = self.__ia_loader.send_request(request_text, 0.2, False)
+                raw_reponse = self.__ia_loader.send_request(request_text, False)
 
                 start_idx = raw_reponse.find('[')
                 end_idx = raw_reponse.rfind(']')
@@ -147,6 +160,60 @@ class gestIA :
         else:
             self.__model_reponse_ok = False
             return articles
+
+    def generate_main_prompt(self):
+        conf = self.__gestionnaire.getUserConf()
+
+        prompt = f"""Tu es {conf.name}, un assistant virtuel créé par {conf.createur}. Ton but est : {conf.bute}.
+            Tu fonctionnes comme le routeur principal du système.
+            Tu DOIS IMPÉRATIVEMENT répondre UNIQUEMENT par un objet JSON valide. Ne génère aucun texte avant ou après le JSON.
+        
+            Format JSON attendu :
+            {{
+                "action": "nom_de_la_fonction",
+                "args": ["argument_1", "argument_2"],
+                "reponse": "La phrase que tu diras à l'utilisateur, de manière naturelle et conversationnelle."
+            }}
+        
+            Voici la liste stricte des actions autorisées selon la configuration active :
+            """
+
+        # 2. Ajout dynamique des capacités selon les 'etat'
+        if conf.etatChatbot == 1:
+            pass
+
+        if conf.etatTime == 1:
+            pass
+
+        if conf.etatOpen == 1:
+            pass
+
+        if conf.etatSearch == 1:
+            pass
+
+        if conf.etatService == 1:
+            pass
+
+        if conf.etatApi == 1:
+            pass
+
+        if conf.etatCodehelp == 1:
+            pass
+
+        if conf.etatWork == 1:
+            pass
+
+        if conf.etatSocket == 1:
+            pass
+
+        # 3. Clôture avec des règles comportementales strictes
+        prompt += """
+            Règles strictes :
+            1. Choisis l'action la plus pertinente en fonction de la demande de l'utilisateur.
+            2. Si une action nécessite des arguments, fournis-les dans le tableau "args". Sinon, laisse le tableau vide [].
+            3. Rédige soigneusement le contenu de la clé "reponse", car c'est ce qui sera affiché ou prononcé à l'utilisateur.
+            """
+        return prompt
 
     def get_state_ia_reponse(self):
         return self.__model_reponse_ok

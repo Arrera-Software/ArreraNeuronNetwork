@@ -7,8 +7,6 @@ class confNeuron:
     lang: str
     icon: str
     asset:str
-    assistant_color: str
-    assistant_texte_color: str
     bute: str
     createur: str
     listFonction: List[str] = field(default_factory=list)

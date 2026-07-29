@@ -22,7 +22,6 @@ DICTUSER = {
     "soundMicro":"0",
     "listWord":[],
     "bootHist":1,
-    "ia_use":0,
     "ia_model":""
 }
 
@@ -437,19 +436,8 @@ class gestUserSetting:
 
     # Partie ia
 
-    def get_use_ia(self):
-        return int(self.__fileUser.getContentJsonFlag("ia_use"))
-
     def get_ia_model(self):
         return self.__fileUser.getContentJsonFlag("ia_model")
-
-    def set_use_ia(self,v:bool):
-        b =  self.__fileUser.setValeurJson("ia_use",int(v))
-        if b:
-            return self.__gestionnaire.getGestIA().loadIA()
-        else :
-            return False
-
 
     def set_ia_model(self,v:str):
         b = self.__fileUser.setValeurJson("ia_model",v)
@@ -458,7 +446,8 @@ class gestUserSetting:
         else :
             return False
 
-    # Partie IA pour l'inteface setting
+    def get_use_ia(self):
+        pass
 
     def get_list_model_ia_available(self):
         return self.__gestionnaire.getGestIA().get_list_model_available()

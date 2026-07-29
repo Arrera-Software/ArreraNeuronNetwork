@@ -4,8 +4,6 @@ conf = confNeuron(name="Opale",
                   lang="fr",
                   icon="asset/icon.png",
                   asset="asset/",
-                  assistant_color="white",
-                  assistant_texte_color="black",
                   bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
                   createur="Pauchet Baptiste",
                   listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
@@ -371,23 +369,15 @@ def main():
                         user.setHist(False)
             case 17 :
                 print("IA")
-                out = input("1.Activer\n2.Desactiver\n3.Voir l'etat\n4.Voir le model\n"
-                            "5.Choisir le model\n6.Download un model\n"
-                            "7.Voir les model telecharger\n8.Modele dans le dossier"
+                out = input("1.Voir le model\n"
+                            "2.Choisir le model\n3.Download un model\n"
+                            "4.Voir les model telecharger\n5.Modele dans le dossier"
                             "\nChoix : ")
                 match out:
                     case "1":
-                        user.set_use_ia(True)
-                    case "2":
-                        user.set_use_ia(False)
-                    case "3":
-                        print(user.get_use_ia())
-                    case "4":
-                        print(user.get_ia_model())
-                    case "5":
                         model = input("Model : ")
                         user.set_ia_model(model)
-                    case "6":
+                    case "2":
                         print("Model disponible")
                         d = user.get_model_downloaded()
                         for m in user.get_list_model_ia_available():
@@ -395,13 +385,13 @@ def main():
                                 print(f"-{m}")
                         model = input("Model : ")
                         user.download_ia_model(model)
-                    case "7":
+                    case "3":
                         print("Model telecharger")
                         print(user.get_model_downloaded())
-                    case "8":
+                    case "4":
                         print("Model dans le dossier")
                         print(user.get_model_ia_on_directory())
-                    case "9" :
+                    case "5" :
                         model = input("Model a supprimer : ")
                         if user.del_ia_model(model):
                             print("Model supprimer")
