@@ -8,6 +8,7 @@ class gestGUI:
         self.__gest = gest
         self.__parms = None
         self.__textOut = None
+        self.__prompt = ""
         self.__valOut = 0
 
         conf = gest.getConfigFile()
@@ -69,6 +70,18 @@ class gestGUI:
                     self.__guiTache.activeDel,
                     lambda: self.__gest.getLanguageObjet().getPhraseTime("12"))})
 
+            self.__prompt += """
+                - "gui" avec nom_gui="agenda" : Ouvrir l'interface graphique de l'agenda (calendrier). Arguments : ["agenda", ""].
+                - "gui" avec nom_gui="agenda_add" : Ouvrir l'agenda en mode ajout d'événement. Arguments : ["agenda_add", ""].
+                - "gui" avec nom_gui="agenda_delete" : Ouvrir l'agenda en mode suppression d'événement. Arguments : ["agenda_delete", ""].
+                - "gui" avec nom_gui="horloge" : Ouvrir l'interface de l'horloge. Arguments : ["horloge", ""].
+                - "gui" avec nom_gui="minuteur" : Ouvrir l'interface du minuteur. Arguments : ["minuteur", ""].
+                - "gui" avec nom_gui="chrono" : Ouvrir l'interface du chronomètre. Arguments : ["chrono", ""].
+                - "gui" avec nom_gui="tache" : Ouvrir l'interface de gestion des tâches. Arguments : ["tache", ""].
+                - "gui" avec nom_gui="tache_finish" : Ouvrir l'interface des tâches terminées. Arguments : ["tache_finish", ""].
+                - "gui" avec nom_gui="tache_del" : Ouvrir l'interface de suppression de tâches. Arguments : ["tache_del", ""].
+                """
+
         if conf.etatApi == 1:
             from gui.GUITraducteur import GuiTraducteur # API
             from gui.GuiBrief import guiBrief  # API
@@ -90,6 +103,13 @@ class gestGUI:
                    self.__guiBrief.view_evening,
                    lambda: self.__gest.getLanguageObjet().getPhraseBrief("3"))
            })
+
+            self.__prompt += """
+                - "gui" avec nom_gui="traducteur" : Ouvrir l'interface graphique du traducteur. Arguments : ["traducteur", ""].
+                - "gui" avec nom_gui="morning_brief" : Ouvrir l'interface du brief du matin. Arguments : ["morning_brief", ""].
+                - "gui" avec nom_gui="afternoon_brief" : Ouvrir l'interface du brief de l'après-midi. Arguments : ["afternoon_brief", ""].
+                - "gui" avec nom_gui="evening_brief" : Ouvrir l'interface du brief du soir. Arguments : ["evening_brief", ""].
+                """
 
 
         if conf.etatWork == 1:
@@ -141,6 +161,19 @@ class gestGUI:
                     lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("14", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
                     lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("15"))})
 
+            self.__prompt += """
+                - "gui" avec nom_gui="work" : Ouvrir l'interface d'accueil de l'espace de travail. Arguments : ["work", ""].
+                - "gui" avec nom_gui="work_projet" : Ouvrir l'interface de gestion de projet. Arguments : ["work_projet", ""].
+                - "gui" avec nom_gui="work_tableur" : Ouvrir l'interface du tableur. Arguments : ["work_tableur", ""].
+                - "gui" avec nom_gui="work_read_tableur" : Ouvrir l'interface de lecture du tableur. Arguments : ["work_read_tableur", ""].
+                - "gui" avec nom_gui="work_word" : Ouvrir l'interface du document Word. Arguments : ["work_word", ""].
+                - "gui" avec nom_gui="work_word_read" : Ouvrir l'interface de lecture du document Word. Arguments : ["work_word_read", ""].
+                - "gui" avec nom_gui="work_word_write" : Ouvrir l'interface d'écriture du document Word. Arguments : ["work_word_write", ""].
+                - "gui" avec nom_gui="tache_projet" : Ouvrir l'interface des tâches du projet. Arguments : ["tache_projet", ""].
+                - "gui" avec nom_gui="tache_projet_add" : Ouvrir l'interface d'ajout de tâche au projet. Arguments : ["tache_projet_add", ""].
+                - "gui" avec nom_gui="tache_projet_del" : Ouvrir l'interface de suppression de tâche du projet. Arguments : ["tache_projet_del", ""].
+                """
+
         if conf.etatService == 1:
             from gui.GUICalculatrice import GUICalculatrice  # SERVICE
             from gui.GUIorthographe import GUIOrthographe  # SERVICE
@@ -168,6 +201,14 @@ class gestGUI:
                     self.__guiLecture.active,
                     lambda: self.__gest.getLanguageObjet().getPhraseService("6"))})
 
+            self.__prompt += """
+                - "gui" avec nom_gui="calculatrice_normal" : Ouvrir l'interface de la calculatrice normale. Arguments : ["calculatrice_normal", ""].
+                - "gui" avec nom_gui="calculatrice_pythagore" : Ouvrir l'interface de la calculatrice Pythagore. Arguments : ["calculatrice_pythagore", ""].
+                - "gui" avec nom_gui="calculatrice_complex" : Ouvrir l'interface de la calculatrice nombres complexes. Arguments : ["calculatrice_complex", ""].
+                - "gui" avec nom_gui="orthographe" : Ouvrir l'interface du correcteur orthographique. Arguments : ["orthographe", "texte à corriger"].
+                - "gui" avec nom_gui="lecture" : Ouvrir l'interface du lecteur vocal. Arguments : ["lecture", ""].
+                """
+
         if conf.etatOpen == 1:
             from gui.GUIArreraDownload import GUIArreraDownload  # OPEN
 
@@ -178,6 +219,13 @@ class gestGUI:
                 lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("1"),
                 lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("2")
             )})
+
+            self.__prompt += """
+                - "gui" avec nom_gui="arrera_download" : Ouvrir l'interface du téléchargeur de vidéos YouTube. Arguments : ["arrera_download", ""].
+                """
+
+    def get_prompt(self):
+        return self.__prompt
 
     def setGUIActive(self, gui: str, parms=None):
         if gui in self.__gui_actions:

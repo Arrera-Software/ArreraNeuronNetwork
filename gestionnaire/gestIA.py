@@ -34,7 +34,7 @@ class gestIA :
                         n_ctx=8192
                     )
 
-                    prompt_dynamique = self.generate_main_prompt()
+                    prompt_dynamique = self.__generate_main_prompt()
                     if self.__ia_loader.add_system_instruction(prompt_dynamique):
                         self.__ia_mode_enabled = True
                         return True
@@ -100,19 +100,19 @@ class gestIA :
 
                 self.__model_reponse_ok = True
                 self.__ia_loader.unload_help()
-                if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                     self.__ia_mode_enabled = True
                 return True
 
             except Exception as e:
                 self.__model_reponse_ok = False
-                if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                     self.__ia_mode_enabled = True
                 print(e)
                 return False
         else:
             self.__model_reponse_ok = False
-            if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                 self.__ia_mode_enabled = True
             return False
 
@@ -142,7 +142,7 @@ class gestIA :
                         self.__reponse_ia = raw_reponse
                         self.__model_reponse_ok = True
                         self.__ia_loader.unload_help()
-                        if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+                        if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                             self.__ia_mode_enabled = True
                         return clean_articles
 
@@ -151,14 +151,14 @@ class gestIA :
 
             self.__model_reponse_ok = False
             self.__ia_loader.unload_help()
-            if self.__ia_loader.add_system_instruction(self.__dir_ia_instruction + "prompt_main.txt"):
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                 self.__ia_mode_enabled = True
             return articles
         else:
             self.__model_reponse_ok = False
             return articles
 
-    def generate_main_prompt(self):
+    def __generate_main_prompt(self):
         conf = self.__gestionnaire.getConfigFile()
 
         prompt = f"""Tu es {conf.name}, un assistant virtuel créé par {conf.createur}. Ton but est : {conf.bute}.
@@ -174,6 +174,8 @@ class gestIA :
         
             Voici la liste stricte des actions autorisées selon la configuration active :
             """
+        prompt += self.__gestionnaire.getGestFNC().get_prompt()
+        prompt += self.__gestionnaire.getGestGUI().get_prompt()
 
         # 3. Clôture avec des règles comportementales strictes
         prompt += """
