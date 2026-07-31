@@ -5,7 +5,6 @@ class neuroneMarkdown(neuronBase):
         super().__init__(gestionnaire)
         self.__socket = self._gestionnaire.getSocketObjet()
         self.__gestIA = self._gestionnaire.getGestIA()
-        self.__gestIA.loadIA()
 
     def neurone(self, requette: str):
         self._listSortie = ["", ""]

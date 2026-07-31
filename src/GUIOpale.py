@@ -142,6 +142,8 @@ class GUIOpale:
                     widget.destroy()
                 self.__GUIAssistant(screen)
                 self.__bootAssistant()
+            else:
+                showerror("Erreur", "Impossible de démarrer l'assistant (Erreur de chargement de l'IA). Vérifiez vos logs.")
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
 

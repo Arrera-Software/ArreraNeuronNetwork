@@ -16,6 +16,10 @@ class ABrain :
                              "time","codehelp","word"]
         # Gestionnaire
         self.__gestionnaire = gestionnaire(config)
+        self.__gestIA = self.__gestionnaire.getGestIA()
+        if self.__gestionnaire.getUserConf().get_ia_model() != "":
+            if not self.__gestIA.loadIA():
+                raise Exception("Erreur critique : Impossible de charger le modèle IA.")
         self.__gestNeuron = self.__gestionnaire.getGestNeuron()
         # Partie serveur
         self.__gestSocket = self.__gestionnaire.getSocketObjet()

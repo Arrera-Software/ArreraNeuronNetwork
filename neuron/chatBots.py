@@ -9,7 +9,6 @@ class neuroneChatbot(neuronBase) :
         # self.__formule = self._gestNeuro
         self.__language = self._gestionnaire.getLanguageObjet()
         self.__gestIA = self._gestionnaire.getGestIA()
-        self.__gestIA.loadIA()
 
     def __clear_out_ia(self,texte:str):
         texte = texte.replace("\n\n", "\n").replace("**","")

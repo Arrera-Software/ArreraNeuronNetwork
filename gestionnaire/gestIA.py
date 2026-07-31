@@ -25,7 +25,6 @@ class gestIA :
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
         model_name = user_conf.get_ia_model()
-        print(model_name)
         if model_name !="":
             try:
                 if model_name in self.get_list_model_download():
@@ -34,13 +33,10 @@ class gestIA :
                         model_path=self.__downloader_model.get_path_model(model_name),
                         n_ctx=8192
                     )
-                    print("OK1")
 
                     prompt_dynamique = self.generate_main_prompt()
-                    print(prompt_dynamique)
-                    if self.__ia_loader.add_system_instruction_text(prompt_dynamique):
+                    if self.__ia_loader.add_system_instruction(prompt_dynamique):
                         self.__ia_mode_enabled = True
-                        print("OK1")
                         return True
                     else:
                         return False
@@ -48,6 +44,7 @@ class gestIA :
                     self.__ia_mode_enabled = False
                     return False
             except Exception as e:
+                #print(f"Erreur fatale dans loadIA : {e}")
                 self.__ia_mode_enabled = False
                 return False
         else :
@@ -162,7 +159,7 @@ class gestIA :
             return articles
 
     def generate_main_prompt(self):
-        conf = self.__gestionnaire.getUserConf()
+        conf = self.__gestionnaire.getConfigFile()
 
         prompt = f"""Tu es {conf.name}, un assistant virtuel créé par {conf.createur}. Ton but est : {conf.bute}.
             Tu fonctionnes comme le routeur principal du système.
@@ -177,34 +174,6 @@ class gestIA :
         
             Voici la liste stricte des actions autorisées selon la configuration active :
             """
-
-        # 2. Ajout dynamique des capacités selon les 'etat'
-        if conf.etatChatbot == 1:
-            pass
-
-        if conf.etatTime == 1:
-            pass
-
-        if conf.etatOpen == 1:
-            pass
-
-        if conf.etatSearch == 1:
-            pass
-
-        if conf.etatService == 1:
-            pass
-
-        if conf.etatApi == 1:
-            pass
-
-        if conf.etatCodehelp == 1:
-            pass
-
-        if conf.etatWork == 1:
-            pass
-
-        if conf.etatSocket == 1:
-            pass
 
         # 3. Clôture avec des règles comportementales strictes
         prompt += """
