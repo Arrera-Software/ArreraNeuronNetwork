@@ -9,7 +9,7 @@ class gestIA :
         self.__gestionnaire =  gestionnaire
 
         self.__ia_mode_enabled = False
-        self.__ia_loader = None
+        self.__ia_loader : ArreraIALoad = None
 
         self.__reponse_ia = ""
 
@@ -64,7 +64,7 @@ class gestIA :
         if self.__ia_mode_enabled:
             try:
                 # Attention : On utilise bien le nouveau nom de méthode défini dans ArreraIALoad
-                self.__reponse_ia = self.__ia_loader.send_request_ia(requette)
+                self.__reponse_ia = self.__ia_loader.send_request(requette)
 
                 if self.__reponse_ia is not None:
                     self.__model_reponse_ok = True
