@@ -23,9 +23,13 @@ class ArreraIALoad:
         if self.__system_context_is_loaded and len(self.__system_instructions) > 0:
             combined_system_prompt = "Utilise les informations suivantes pour aider l'utilisateur :\n\n"
             combined_system_prompt += "\n\n---\n\n".join(self.__system_instructions)
-            messages.append({"role": "system", "content": combined_system_prompt})
-
-        messages.append({"role": "user", "content": prompt + consigne_langue})
+            
+            # On combine le system prompt et la requête dans un seul message "user"
+            # car certains modèles (comme Gemma) ne supportent pas le rôle "system".
+            final_prompt = combined_system_prompt + "\n\n---\n\nRequête utilisateur : " + prompt + consigne_langue
+            messages.append({"role": "user", "content": final_prompt})
+        else:
+            messages.append({"role": "user", "content": prompt + consigne_langue})
 
         output = self.__model.create_chat_completion(
             messages=messages,

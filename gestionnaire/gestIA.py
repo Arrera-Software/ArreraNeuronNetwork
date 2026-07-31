@@ -31,7 +31,7 @@ class gestIA :
                     self.__ia_loader = ArreraIALoad()
                     self.__ia_loader.load_model_gguf(
                         model_path=self.__downloader_model.get_path_model(model_name),
-                        n_ctx=8192
+                        n_ctx=4096
                     )
 
                     prompt_dynamique = self.__generate_main_prompt()
@@ -127,7 +127,22 @@ class gestIA :
                 with open(self.__dir_ia_instruction + "prompt_dedoublonnage.txt", 'r', encoding='utf-8') as f:
                     content = f.read()
 
-                articles_json = json.dumps(articles, ensure_ascii=False)
+                # On va tronquer les descriptions pour économiser énormément de tokens
+                truncated_articles = []
+                for art in articles:
+                    new_art = art.copy()
+                    if "description" in new_art and isinstance(new_art["description"], str):
+                        # On limite la description à 150 caractères
+                        if len(new_art["description"]) > 150:
+                            new_art["description"] = new_art["description"][:147] + "..."
+                    truncated_articles.append(new_art)
+
+                articles_json = json.dumps(truncated_articles, ensure_ascii=False)
+                
+                # Sécurité ultime : si le JSON est encore trop long (ex: > 10000 caractères), on le coupe brutalement
+                if len(articles_json) > 10000:
+                    articles_json = articles_json[:10000] + '...}]'
+                    
                 request_text = f"{content}\n\n{articles_json}"
 
                 raw_reponse = self.__ia_loader.send_request(request_text, False)
