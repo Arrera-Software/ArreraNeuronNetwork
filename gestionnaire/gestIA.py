@@ -184,7 +184,7 @@ class gestIA :
             {{
                 "action": "nom_de_la_fonction",
                 "args": ["argument_1", "argument_2"],
-                "reponse": "La phrase que tu diras à l'utilisateur, de manière naturelle et conversationnelle."
+                "reponse": "À UTILISER UNIQUEMENT SI action='reponse_simple'. Texte de réponse conversationnelle."
             }}
         
             Voici la liste stricte des actions autorisées selon la configuration active :
@@ -197,9 +197,129 @@ class gestIA :
             Règles strictes :
             1. Choisis l'action la plus pertinente en fonction de la demande de l'utilisateur.
             2. Si une action nécessite des arguments, fournis-les dans le tableau "args". Sinon, laisse le tableau vide [].
-            3. Rédige soigneusement le contenu de la clé "reponse", car c'est ce qui sera affiché ou prononcé à l'utilisateur.
+            3. NE REMPLIS la clé "reponse" QUE SI l'action choisie est "reponse_simple".
             """
         return prompt
+
+    def classify_intent(self, requete: str) -> str:
+        """
+        Passe 0 : Classification rapide de l'intention.
+        Demande à l'IA de générer une "pseudo-commande" (ex: METEO DEMAIN LOCATE, RADIO NRJ, COMPLEXE)
+        pour déclencher les neurones classiques (Fast-Track) avec des arguments simples.
+        """
+        if not self.__ia_mode_enabled:
+            return "COMPLEXE"
+            
+        self.__ia_loader.unload_help()
+        
+        prompt_classification = f"""Tu es un classificateur d'intention ultra-rapide.
+            Analyse la phrase suivante et réponds STRICTEMENT avec l'un des formats suivants (en majuscules, séparé par des espaces) :
+            
+            1. Météo : METEO [MOMENT] [LIEU]
+               - MOMENT : MAINTENANT ou DEMAIN
+               - LIEU : LOCATE, DOMICILE, TRAVAIL, ou le nom d'une ville précise (ex: PARIS)
+               - Exemple : METEO MAINTENANT LOCATE
+            
+            2. Température : TEMPERATURE [MOMENT] [LIEU]
+               - MOMENT : MAINTENANT ou DEMAIN
+               - LIEU : LOCATE, DOMICILE, TRAVAIL, ou le nom d'une ville (ex: LYON)
+               - Exemple : TEMPERATURE DEMAIN DOMICILE
+            
+            3. Actualité : ACTU [THEME]
+               - THEME : TOUT, TECH, GENERALISTE, SCIENCE, SPORT, ou CULTURE
+               - Exemple : ACTU TECH
+            
+            4. Radio : RADIO [ACTION/NOM]
+               - Pour arrêter : RADIO STOP
+               - Pour écouter, choisis dans cette liste : EUROPE 1, EUROPE 2, FRANCE INFO, FRANCE INTER, FRANCE MUSIQUE, FRANCE CULTURE, FRANCE BLEU, FUN RADIO, NRJ, RFM, NOSTALGIE, SKYROCK, RTL
+               - Exemple : RADIO NRJ
+            
+            5. Heure et Date : HEURE
+               - S'il demande l'heure, le jour ou la date.
+               - Exemple : HEURE
+            
+            6. Minuteur : MINUTEUR
+               - S'il demande un minuteur ou un chronomètre.
+               - Exemple : MINUTEUR
+            
+            7. Arrêt / Au revoir : ARRET
+               - S'il veut éteindre ou dit au revoir.
+               - Exemple : ARRET
+            
+            8. Autre : COMPLEXE
+               - Pour toute autre demande (ouvrir un projet, calculer, chercher sur internet, traduire, etc.) ou si tu n'es pas sûr.
+            
+            Phrase à classer : "{requete}"
+            
+            Règle absolue : Ne réponds RIEN D'AUTRE que la pseudo-commande choisie. Aucun point, aucune phrase. Juste les mots-clés demandés.
+        """
+
+        try:
+            reponse = self.__ia_loader.send_request(prompt_classification, False, False)
+            mot_cle = reponse.strip().upper()
+            
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+                
+            # Validation de base (vérifie juste le premier mot pour s'assurer que c'est une commande valide)
+            premier_mot = mot_cle.split(" ")[0]
+            mots_autorises = ["METEO", "TEMPERATURE", "ACTU", "RADIO", "HEURE", "ARRET", "MINUTEUR"]
+            
+            if premier_mot in mots_autorises:
+                return mot_cle
+            else:
+                return "COMPLEXE"
+            
+        except Exception as e:
+            print(f"Erreur lors de la classification IA : {e}")
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return "COMPLEXE"
+
+    def generate_final_response(self, requete: str, donnees_systeme: str) -> str:
+        """
+        Deuxième passe de l'IA : génère une réponse naturelle en se basant sur les données récoltées.
+        """
+        if not self.__ia_mode_enabled:
+            return ""
+
+        self.__ia_loader.unload_help()
+
+        personnalite = self.__gestionnaire.getLanguageObjet().getPersonnalite()
+
+        if requete.strip():
+            contexte_requete = f'L\'utilisateur t\'a demandé : "{requete}"\nLe système a exécuté l\'action et a retourné le résultat suivant : \n"{donnees_systeme}"'
+            tache = "Ta tâche : Formule une réponse naturelle et conversationnelle pour l'utilisateur pour lui transmettre ce résultat."
+        else:
+            contexte_requete = f'Directive système : "{donnees_systeme}"'
+            tache = "Ta tâche : Rédige ce que tu vas dire spontanément à l'utilisateur en accomplissant cette directive."
+
+        prompt_passe2 = f"""Tu es {self.__gestionnaire.getConfigFile().name}, l'assistant virtuel. 
+
+=== TA PERSONNALITÉ ===
+{personnalite}
+=======================
+
+{contexte_requete}
+            
+{tache}
+N'invente pas de fausses informations techniques, mais sois fluide, poli et humain. Ne génère pas de JSON, réponds directement en texte brut.
+"""
+        
+        try:
+            reponse = self.__ia_loader.send_request(prompt_passe2, False, False)
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return reponse.strip()
+        except Exception as e:
+            print(f"Erreur lors de la génération de la réponse finale : {e}")
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return "Une erreur est survenue lors de la formulation de la réponse."
 
     def get_state_ia_reponse(self):
         return self.__model_reponse_ok

@@ -1,6 +1,7 @@
 from gestionnaire.gestion import gestionnaire
 from neuron.IARouter import IARouter
 from neuron.interface import interface
+from neuron.core_neuron import core_neuron
 from neuron.markdown import neuroneMarkdown
 
 class gestNeuron :
@@ -12,6 +13,7 @@ class gestNeuron :
         # Neurones socket
         self.ninterface = None
         self.nmarkdown = None
+        self.ncore = core_neuron(gestionnaire)
         
         # Init des neurones socket
         if self.__etatSocket == 1 :
