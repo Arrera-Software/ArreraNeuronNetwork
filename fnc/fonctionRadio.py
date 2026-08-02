@@ -8,7 +8,15 @@ class fncRadio(fncBase) :
         super().__init__(gestionnaire)
         self.__etatNetwork = self._gestionnaire.getNetworkObjet().getEtatInternet()
         if self.__etatNetwork:
-            self.__rdBrowser = RadioBrowser()
+            try:
+                self.__rdBrowser = RadioBrowser()
+            except IndexError:
+                # pyradios throws IndexError when it can't find API endpoints
+                print("Erreur: Impossible de se connecter à l'API RadioBrowser (Serveurs inaccessibles).")
+                self.__rdBrowser = None
+            except Exception as e:
+                print(f"Erreur d'initialisation de RadioBrowser : {e}")
+                self.__rdBrowser = None
         self.__stations = []
         self.__player = None
         self.__isRunning = False
@@ -16,8 +24,13 @@ class fncRadio(fncBase) :
 
     def __searchRadio(self, radio):
         self.__stations = []
-        self.__stations = self.__rdBrowser.search(name=radio, country="France")
-        return bool(self.__stations)
+        if self.__rdBrowser is None:
+            return False
+        try:
+            self.__stations = self.__rdBrowser.search(name=radio, country="France")
+            return bool(self.__stations)
+        except Exception:
+            return False
 
     def getRadioRunning(self):
         return self.__isRunning
