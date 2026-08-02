@@ -126,6 +126,19 @@ class IARouter:
             return "\n".join(f"- {item}" for item in data)
         return str(data)
 
+    def __clean_json(self, text: str) -> str:
+        """Nettoie le markdown autour du JSON s'il y en a."""
+        text = text.strip()
+        if text.startswith("```json"):
+            text = text[7:]
+        elif text.startswith("```"):
+            text = text[3:]
+            
+        if text.endswith("```"):
+            text = text[:-3]
+            
+        return text.strip()
+
     # ==========================================
     # MÉTHODE PRINCIPALE DE ROUTAGE
     # ==========================================
@@ -152,8 +165,10 @@ class IARouter:
 
         # 3. Parser la réponse JSON
         reponse_brute = self.__gestIA.get_reponse_ia()
+        json_str = self.__clean_json(reponse_brute)
+        
         try:
-            parsed = json.loads(reponse_brute)
+            parsed = json.loads(json_str)
         except (json.JSONDecodeError, TypeError):
             # L'IA n'a pas retourné du JSON valide → traiter comme texte brut
             self.__set_output(str(reponse_brute))
@@ -165,13 +180,24 @@ class IARouter:
 
         # 4. Dispatcher vers le bon handler
         if action in self.__dispatch:
-            try:
-                self.__dispatch[action](args, reponse)
-            except Exception as e:
-                print(f"Erreur IARouter [{action}]: {e}")
+            if action == "reponse_simple":
                 self.__set_output(reponse)
+            else:
+                try:
+                    donnees, val_out = self.__dispatch[action](args)
+                    if not donnees:
+                        donnees = "Action terminée. (Aucune donnée textuelle retournée par le système)"
+                        
+                    reponse_finale = self.__gestIA.generate_final_response(requette, donnees)
+                    self.__set_output(reponse_finale, val_out)
+                except Exception as e:
+                    print(f"Erreur IARouter [{action}]: {e}")
+                    self.__set_output("Une erreur système s'est produite lors de l'exécution de l'action.", 1)
         else:
-            self.__set_output(reponse)
+            if reponse:
+                self.__set_output(reponse)
+            else:
+                self.__set_output("Action non reconnue.")
 
         return self.__valeurOut != 0
 
@@ -185,11 +211,10 @@ class IARouter:
     # HANDLERS - TÂCHES
     # ==========================================
 
-    def __handle_tache(self, args, reponse):
+    def __handle_tache(self, args):
         fnc = self.__gestFNC.getFNCTask()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Tâche non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
@@ -198,61 +223,59 @@ class IARouter:
             date = self.__parse_date(self.__arg(args, 2))
             description = self.__arg(args, 3) or None
             fnc.addTask(nom, date, description)
-            self.__set_output(reponse)
+            return "Tâche ajoutée avec succès.", 5
 
         elif type_action == "supprimer":
             fnc.delTask(self.__arg(args, 1))
-            self.__set_output(reponse)
+            return "Tâche supprimée.", 5
 
         elif type_action == "terminer":
             fnc.finishTask(self.__arg(args, 1))
-            self.__set_output(reponse)
+            return "Tâche terminée.", 5
 
         elif type_action == "reactiver":
             fnc.unfinishTask(self.__arg(args, 1))
-            self.__set_output(reponse)
+            return "Tâche réactivée.", 5
 
         elif type_action == "lister_tout":
             data = fnc.getAllTask()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche trouvée.", 5
 
         elif type_action == "lister_non_terminees":
             data = fnc.getNoFinishTask()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche non terminée.", 5
 
         elif type_action == "lister_terminees":
             data = fnc.getFinishTask()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche terminée.", 5
 
         elif type_action == "lister_aujourdhui":
             data = fnc.getListTaskToday()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche pour aujourd'hui.", 5
 
         elif type_action == "lister_demain":
             data = fnc.getListTaskTowmorow()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche pour demain.", 5
 
         elif type_action == "lister_retard":
             data = fnc.getListTaskLate()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche en retard.", 5
 
         elif type_action in ("compter", "compter_non_terminees", "compter_terminees",
                              "compter_aujourdhui", "compter_demain", "compter_retard"):
-            # L'IA a déjà le compte dans sa réponse
-            self.__set_output(reponse)
+            return "Demande de comptage des tâches effectuée.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action de tâche non reconnue.", 1
 
     # ==========================================
     # HANDLERS - CALENDRIER
     # ==========================================
 
-    def __handle_calendrier(self, args, reponse):
+    def __handle_calendrier(self, args):
         fnc = self.__gestFNC.getFNCCalendar()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Calendrier non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
@@ -265,106 +288,104 @@ class IARouter:
             repetition = self.__arg(args, 6, "false").lower() == "true"
             if date:
                 fnc.addEventToCalendar(nom, date, heure, description, lieu, repetition)
-            self.__set_output(reponse)
+                return "Événement ajouté avec succès.", 5
+            return "Date invalide.", 1
 
         elif type_action == "supprimer":
             fnc.delEvent(self.__arg(args, 1))
-            self.__set_output(reponse)
+            return "Événement supprimé.", 5
 
         elif type_action == "lister_tout":
             data = fnc.getAllEvents()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucun événement.", 5
 
         elif type_action == "lister_aujourdhui":
             data = fnc.checkDateDayEvent()
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucun événement aujourd'hui.", 5
 
         elif type_action == "lister_date":
             date_str = self.__arg(args, 2)
             data = fnc.checkEventWithDate(date_str)
-            self.__set_output(reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else f"Aucun événement à la date {date_str}.", 5
 
         elif type_action == "details":
             nom = self.__arg(args, 1)
             data = fnc.getInformationEvent(nom)
             if data and isinstance(data, dict):
                 details = "\n".join(f"{k}: {v}" for k, v in data.items())
-                self.__set_output(reponse + "\n" + details)
+                return details, 5
             else:
-                self.__set_output(reponse)
+                return "Événement introuvable.", 1
 
         else:
-            self.__set_output(reponse)
+            return "Action calendrier non reconnue.", 1
 
     # ==========================================
     # HANDLERS - HORLOGE
     # ==========================================
 
-    def __handle_horloge(self, args, reponse):
+    def __handle_horloge(self, args):
         fnc = self.__gestFNC.getFNCHorloge()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Horloge non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
         if type_action == "heure":
-            fnc.getHorloge()
-            self.__set_output(reponse)
+            return fnc.getHorloge(), 5
 
         elif type_action == "chrono_start":
             fnc.startChrono()
-            self.__set_output(reponse)
+            return "Chronomètre démarré.", 5
 
         elif type_action == "chrono_stop":
             fnc.stopChrono()
-            self.__set_output(reponse)
+            return "Chronomètre arrêté.", 5
 
         elif type_action == "chrono_reset":
             fnc.resetChrono()
-            self.__set_output(reponse)
+            return "Chronomètre réinitialisé.", 5
 
         elif type_action == "chrono_temps":
             temps = fnc.getTimeChrono()
             formatted = fnc.formatTemps(temps)
-            self.__set_output(reponse + " " + formatted if formatted else reponse)
+            return f"Temps du chronomètre: {formatted}", 5
 
         elif type_action == "chrono_etat":
-            fnc.getStatChrono()
-            self.__set_output(reponse)
+            etat = fnc.getStatChrono()
+            return f"État du chronomètre: {'En cours' if etat else 'Arrêté'}", 5
 
         elif type_action == "minuteur_start":
             duree = self.__arg(args, 1)
             try:
                 fnc.startMinuteur(int(duree))
+                return f"Minuteur démarré pour {duree} secondes.", 5
             except (ValueError, TypeError):
-                pass
-            self.__set_output(reponse)
+                return "Durée invalide.", 1
 
         elif type_action == "minuteur_stop":
             fnc.stopMinuteur()
-            self.__set_output(reponse)
+            return "Minuteur arrêté.", 5
 
         elif type_action == "minuteur_etat":
-            fnc.getStatMinuteur()
-            self.__set_output(reponse)
+            etat = fnc.getStatMinuteur()
+            return f"État du minuteur: {'En cours' if etat else 'Arrêté'}", 5
 
         elif type_action == "minuteur_temps":
             temps = fnc.getTimeMinuteur()
-            self.__set_output(reponse + " " + str(temps) if temps else reponse)
+            return f"Temps restant du minuteur: {temps}", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action horloge non reconnue.", 1
 
     # ==========================================
     # HANDLERS - GPS
     # ==========================================
 
-    def __handle_gps(self, args, reponse):
+    def __handle_gps(self, args):
         fnc = self.__gestFNC.getFNCGPS()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC GPS non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
@@ -372,50 +393,47 @@ class IARouter:
             depart = self.__arg(args, 1)
             arrivee = self.__arg(args, 2)
             fnc.launchGoogleMapItinerary(depart, arrivee)
-            self.__set_output(reponse)
+            return "Itinéraire lancé dans le navigateur.", 5
 
         elif type_action == "localisation":
             fnc.locate()
-            self.__set_output(reponse)
+            return "Localisation lancée dans le navigateur.", 5
 
         elif type_action == "departement":
             ville = self.__arg(args, 1)
             dept = fnc.getFrenchDepartementWithTown(ville)
-            if dept:
-                self.__set_output(reponse + " " + dept)
-            else:
-                self.__set_output(reponse)
+            return dept if dept else "Département introuvable", 5
 
         elif type_action == "ville_coordonnees":
             lat = self.__arg(args, 1)
             lon = self.__arg(args, 2)
             ville = fnc.getTownWithLatitudeAndLongitude(lat, lon)
-            if ville:
-                self.__set_output(reponse + " " + ville)
-            else:
-                self.__set_output(reponse)
+            return ville if ville else "Ville introuvable pour ces coordonnées.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action GPS non reconnue.", 1
 
     # ==========================================
     # HANDLERS - MÉTÉO
     # ==========================================
 
-    def __handle_meteo(self, args, reponse):
+    def __handle_meteo(self, args):
         fnc = self.__gestFNC.getFNCMeteo()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Météo non disponible.", 1
 
         moment = self.__arg(args, 0)
         emplacement = self.__arg(args, 1)
         ville_custom = self.__arg(args, 2)
 
+        if not emplacement or emplacement.strip() == "":
+            emplacement = "locate"
+        elif emplacement == "custom" and (not ville_custom or ville_custom.strip() == ""):
+            emplacement = "locate"
+
         if moment == "alerte":
             fnc.set_alerte()
-            self.__set_output(reponse, 4)
-            return
+            return f"Alerte météo vérifiée. Rouge: {fnc.getRedAlert()}, Orange: {fnc.getOrangeAlert()}, Jaune: {fnc.getYellowAlert()}", 4
 
         method_name = self.__meteo_map.get(moment)
         if method_name:
@@ -425,21 +443,27 @@ class IARouter:
                     result = method(emplacement, ville_custom)
                 else:
                     result = method(emplacement)
-                self.__set_output(reponse, 4 if result else 1)
+                
+                if result:
+                    ville = fnc.getNameTown()
+                    temp = fnc.getTemperature()
+                    desc = fnc.getDescription()
+                    return f"Météo à {ville}: {desc}, {temp}°C", 4
+                else:
+                    return "Impossible d'obtenir la météo.", 1
             else:
-                self.__set_output(reponse)
+                return "Erreur: méthode météo introuvable.", 1
         else:
-            self.__set_output(reponse)
+            return "Erreur: moment météo non reconnu.", 1
 
     # ==========================================
     # HANDLERS - ACTUALITÉS
     # ==========================================
 
-    def __handle_actu(self, args, reponse):
+    def __handle_actu(self, args):
         fnc = self.__gestFNC.getFNCActu()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Actu non disponible.", 1
 
         limite = self.__arg(args, 0, "3")
         try:
@@ -448,48 +472,46 @@ class IARouter:
             limit_int = 3
 
         if fnc.setActu(limit_int):
-            self.__set_output(reponse, 3)
+            return fnc.get_actu_say() or fnc.getActu() or "Actualités récupérées.", 3
         else:
-            self.__set_output(reponse)
+            return "Impossible d'obtenir les actualités.", 1
 
     # ==========================================
     # HANDLERS - RADIO
     # ==========================================
 
-    def __handle_radio(self, args, reponse):
+    def __handle_radio(self, args):
         fnc = self.__gestFNC.getFNCRadio()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Radio non disponible.", 1
 
         action_radio = self.__arg(args, 0)
 
         if action_radio == "stop":
             fnc.stop()
-            self.__set_output(reponse)
+            return "Radio arrêtée.", 22
 
         elif action_radio == "etat":
             fnc.getRadioRunning()
-            self.__set_output(reponse)
+            return "Statut de la radio consulté.", 22
 
         elif action_radio in self.__radio_map:
             method = getattr(fnc, self.__radio_map[action_radio], None)
             if method and method():
-                self.__set_output(reponse, 22)
+                return f"Radio {action_radio} lancée.", 22
             else:
-                self.__set_output(reponse)
+                return "Impossible de lancer la radio.", 1
         else:
-            self.__set_output(reponse)
+            return "Action radio non reconnue.", 1
 
     # ==========================================
     # HANDLERS - TRADUCTION
     # ==========================================
 
-    def __handle_traduction(self, args, reponse):
+    def __handle_traduction(self, args):
         fnc = self.__gestFNC.getFNCTraduction()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Traduction non disponible.", 1
 
         texte = self.__arg(args, 0)
         lang_source = self.__arg(args, 1, "francais")
@@ -498,17 +520,17 @@ class IARouter:
         if fnc.setTranlator(lang_source, lang_cible):
             result = fnc.tranlate(texte)
             if result:
-                self.__set_output(reponse + "\n" + result)
+                return f"Traduction de '{texte}': {result}", 11
             else:
-                self.__set_output(reponse)
+                return "Impossible de traduire le texte.", 1
         else:
-            self.__set_output(reponse)
+            return "Langues de traduction non supportées.", 1
 
     # ==========================================
     # HANDLERS - BRIEF
     # ==========================================
 
-    def __handle_brief(self, args, reponse):
+    def __handle_brief(self, args):
         moment = self.__arg(args, 0)
 
         brief_gui_map = {
@@ -519,19 +541,18 @@ class IARouter:
 
         gui_name = brief_gui_map.get(moment)
         if gui_name and self.__gestGUI.setGUIActive(gui_name):
-            self.__set_output(reponse, 5)
+            return f"Interface de brief {moment} ouverte.", 5
         else:
-            self.__set_output(reponse)
+            return "Impossible d'ouvrir le brief.", 1
 
     # ==========================================
     # HANDLERS - WORK (Tableur / Word / Projet)
     # ==========================================
 
-    def __handle_work(self, args, reponse):
+    def __handle_work(self, args):
         fnc = self.__gestFNC.getFNCWork()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Work non disponible.", 1
 
         type_action = self.__arg(args, 0)
         param1 = self.__arg(args, 1)
@@ -541,35 +562,33 @@ class IARouter:
         # --- TABLEUR ---
         if type_action == "tableur_ouvrir":
             fnc.openTableur()
-            self.__set_output(reponse, 7)
+            return "Tableur ouvert.", 7
 
         elif type_action == "tableur_ouvrir_direct":
             fnc.openTableurDirectly(param1)
-            self.__set_output(reponse, 7)
+            return "Tableur ouvert directement.", 7
 
         elif type_action == "tableur_fermer":
             fnc.closeTableur()
-            self.__set_output(reponse, 8)
+            return "Tableur fermé.", 8
 
         elif type_action == "tableur_lire":
             if fnc.readTableur():
                 data = fnc.getReadTableur()
-                self.__set_output(
-                    reponse + "\n" + self.__format_list(data) if data else reponse, 13)
+                return self.__format_list(data) if data else "Le tableur est vide.", 13
             else:
-                self.__set_output(reponse)
+                return "Impossible de lire le tableur.", 1
 
         elif type_action == "tableur_ecrire":
             fnc.addValeurOnTableur(param1, param2)
-            self.__set_output(reponse)
+            return "Valeur ajoutée au tableur.", 5
 
         elif type_action == "tableur_supprimer":
             fnc.delValeur(param1)
-            self.__set_output(reponse)
+            return "Valeur supprimée du tableur.", 5
 
         elif type_action == "tableur_formule":
             formule = param1
-            # param2 = "A1:A10" → séparer en case_start et case_stop
             range_parts = param2.split(":") if ":" in param2 else [param2, param2]
             case_start = range_parts[0] if len(range_parts) > 0 else ""
             case_stop = range_parts[1] if len(range_parts) > 1 else ""
@@ -579,142 +598,136 @@ class IARouter:
                 method = getattr(fnc, self.__formule_map[formule], None)
                 if method:
                     method(case_start, case_stop, case_dest)
-            self.__set_output(reponse)
+                    return f"Formule {formule} appliquée.", 5
+            return "Impossible d'appliquer la formule.", 1
 
         elif type_action == "tableur_ouvrir_os":
             fnc.openTableurOs()
-            self.__set_output(reponse)
+            return "Tableur ouvert via OS.", 5
 
         elif type_action == "tableur_etat":
-            fnc.getEtatTableur()
-            self.__set_output(reponse)
+            etat = fnc.getEtatTableur()
+            return f"État du tableur: {'Ouvert' if etat else 'Fermé'}", 5
 
         # --- WORD ---
         elif type_action == "word_ouvrir":
             fnc.openWord()
-            self.__set_output(reponse, 7)
+            return "Document Word ouvert.", 7
 
         elif type_action == "word_ouvrir_direct":
             fnc.openWordDirectly(param1)
-            self.__set_output(reponse, 7)
+            return "Document Word ouvert directement.", 7
 
         elif type_action == "word_fermer":
             fnc.closeWord()
-            self.__set_output(reponse, 8)
+            return "Document Word fermé.", 8
 
         elif type_action == "word_lire":
             if fnc.readWord():
                 data = fnc.getReadWord()
-                self.__set_output(
-                    reponse + "\n" + str(data) if data else reponse, 9)
+                return str(data) if data else "Le document est vide.", 9
             else:
-                self.__set_output(reponse)
+                return "Impossible de lire le document Word.", 1
 
         elif type_action == "word_ecrire":
             fnc.writeWord(param1)
-            self.__set_output(reponse)
+            return "Texte écrit dans Word.", 5
 
         elif type_action == "word_ecrire_ecrase":
             fnc.writeWordEcrase(param1)
-            self.__set_output(reponse)
+            return "Texte écrasé dans Word.", 5
 
         elif type_action == "word_ouvrir_os":
             fnc.openWordOs()
-            self.__set_output(reponse)
+            return "Document Word ouvert via OS.", 5
 
         elif type_action == "word_etat":
-            fnc.getEtatWord()
-            self.__set_output(reponse)
+            etat = fnc.getEtatWord()
+            return f"État de Word: {'Ouvert' if etat else 'Fermé'}", 5
 
         # --- PROJET ---
         elif type_action == "projet_lister":
             data = fnc.getListProjet()
-            self.__set_output(
-                reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucun projet existant.", 5
 
         elif type_action == "projet_creer":
             fnc.createProjet(param1)
-            self.__set_output(reponse, 10)
+            return f"Projet '{param1}' créé.", 10
 
         elif type_action == "projet_ouvrir":
             fnc.openProjet(param1)
-            self.__set_output(reponse, 14)
+            return f"Projet '{param1}' ouvert.", 14
 
         elif type_action == "projet_fermer":
             fnc.closeProjet()
-            self.__set_output(reponse, 21)
+            return "Projet fermé.", 21
 
         elif type_action == "projet_type":
             fnc.addTypeProjet(param1)
-            self.__set_output(reponse)
+            return "Type de projet défini.", 5
 
         elif type_action == "projet_nom":
-            fnc.getNameProjet()
-            self.__set_output(reponse)
+            nom = fnc.getNameProjet()
+            return f"Nom du projet: {nom}", 5
 
         elif type_action == "projet_get_type":
-            fnc.getTypeProjet()
-            self.__set_output(reponse)
+            type_proj = fnc.getTypeProjet()
+            return f"Type du projet: {type_proj}", 5
 
         elif type_action == "projet_etat":
-            fnc.getEtatProject()
-            self.__set_output(reponse)
+            etat = fnc.getEtatProject()
+            return f"État du projet: {'Ouvert' if etat else 'Fermé'}", 5
 
         elif type_action == "projet_creer_fichier":
             fnc.createFileProject(param1, param2)
-            self.__set_output(reponse, 16)
+            return f"Fichier '{param1}' avec extension '{param2}' créé dans le projet.", 16
 
         elif type_action == "projet_lister_fichiers":
             fnc.setlistFileProject()
             data = fnc.getListFileProjet()
-            self.__set_output(
-                reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucun fichier dans le projet.", 5
 
         # --- TÂCHES DU PROJET ---
         elif type_action == "projet_tache_ajouter":
             date = self.__parse_date(param2)
             desc = param3 or None
             fnc.addTacheProjet(param1, date, desc)
-            self.__set_output(reponse)
+            return "Tâche de projet ajoutée.", 5
 
         elif type_action == "projet_tache_supprimer":
             fnc.supprTacheProjet(param1)
-            self.__set_output(reponse)
+            return "Tâche de projet supprimée.", 5
 
         elif type_action == "projet_tache_terminer":
             fnc.finishTacheProjet(param1)
-            self.__set_output(reponse)
+            return "Tâche de projet terminée.", 5
 
         elif type_action == "projet_tache_non_terminees":
             fnc.setListTacheNoFinishProjet()
             data = fnc.getListTacheNoFinishProjet()
-            self.__set_output(
-                reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche de projet non terminée.", 5
 
         elif type_action == "projet_tache_aujourdhui":
             fnc.setListTacheTodayProjet()
             data = fnc.getListTacheTodayProjet()
-            self.__set_output(
-                reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche de projet pour aujourd'hui.", 5
 
         elif type_action == "projet_tache_demain":
             fnc.setListTacheTowmorowProjet()
             data = fnc.getListTacheTowmorowProjet()
-            self.__set_output(
-                reponse + "\n" + self.__format_list(data) if data else reponse)
+            return self.__format_list(data) if data else "Aucune tâche de projet pour demain.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action work non reconnue.", 1
 
     # ==========================================
     # HANDLERS - CALCULATRICE
     # ==========================================
 
-    def __handle_calculatrice(self, args, reponse):
+    def __handle_calculatrice(self, args):
         fnc = self.__gestFNC.getFNCCalculatrice()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Calculatrice non disponible.", 1
 
         type_calcul = self.__arg(args, 0)
         param1 = self.__arg(args, 1)
@@ -725,40 +738,40 @@ class IARouter:
         try:
             if type_calcul == "addition":
                 result = fnc.adition(float(param1), float(param2))
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de l'addition : {result}", 1
 
             elif type_calcul == "soustraction":
                 result = fnc.soustraction(float(param1), float(param2))
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de la soustraction : {result}", 1
 
             elif type_calcul == "multiplication":
                 result = fnc.multiplication(float(param1), float(param2))
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de la multiplication : {result}", 1
 
             elif type_calcul == "division":
                 result = fnc.divsion(float(param1), float(param2))
                 if result is not None:
-                    self.__set_output(f"{reponse}\nRésultat : {result}")
+                    return f"Résultat de la division : {result}", 1
                 else:
-                    self.__set_output(reponse)
+                    return "Erreur: division par zéro", 1
 
             elif type_calcul == "puissance":
                 result = fnc.puissance(float(param1), float(param2))
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de la puissance : {result}", 1
 
             elif type_calcul == "modulo":
                 result = fnc.modulo(float(param1), float(param2))
                 if result is not None:
-                    self.__set_output(f"{reponse}\nRésultat : {result}")
+                    return f"Résultat du modulo : {result}", 1
                 else:
-                    self.__set_output(reponse)
+                    return "Erreur modulo", 1
 
             elif type_calcul == "racine":
                 result = fnc.racine(float(param1), float(param2))
                 if result is not None:
-                    self.__set_output(f"{reponse}\nRésultat : {result}")
+                    return f"Résultat de la racine : {result}", 1
                 else:
-                    self.__set_output(reponse)
+                    return "Erreur de racine", 1
 
             elif type_calcul == "complexe":
                 fnc.setComplexNb(float(param1), float(param2),
@@ -773,57 +786,55 @@ class IARouter:
                 }
                 op_method = complex_ops.get(operation, fnc.aditionNbComplex)
                 result = op_method()
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat du calcul complexe : {result}", 1
 
             elif type_calcul == "pythagore":
                 fnc.setNbPythagore(float(param1), float(param2))
                 result = fnc.theoremePythagore()
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de Pythagore : {result}", 1
 
             elif type_calcul == "pythagore_reciproque":
                 fnc.setNbPythagore(float(param1), float(param2))
                 result = fnc.reciproquePythagore()
-                self.__set_output(f"{reponse}\nRésultat : {result}")
+                return f"Résultat de la réciproque de Pythagore : {result}", 1
 
             else:
-                self.__set_output(reponse)
+                return "Type de calcul non reconnu", 1
 
         except (ValueError, TypeError, ZeroDivisionError):
-            self.__set_output(reponse)
+            return "Erreur de calcul", 1
 
     # ==========================================
     # HANDLERS - LECTURE
     # ==========================================
 
-    def __handle_lecture(self, args, reponse):
+    def __handle_lecture(self, args):
         fnc = self.__gestFNC.getFNCRead()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Lecture non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
         if type_action == "lire":
             texte = self.__arg(args, 1)
             fnc.read(texte)
-            self.__set_output(reponse)
+            return "Lecture démarrée.", 5
 
         elif type_action == "etat":
             fnc.getStatTheard()
-            self.__set_output(reponse)
+            return "État de la lecture consulté.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action lecture non reconnue.", 1
 
     # ==========================================
     # HANDLERS - ORTHOGRAPHE
     # ==========================================
 
-    def __handle_orthographe(self, args, reponse):
+    def __handle_orthographe(self, args):
         fnc = self.__gestFNC.getFNCOrthographe()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Orthographe non disponible.", 1
 
         type_action = self.__arg(args, 0)
 
@@ -831,33 +842,29 @@ class IARouter:
             texte = self.__arg(args, 1)
             if fnc.corrected_text(texte):
                 correction = fnc.getCorrections()
-                if correction:
-                    self.__set_output(reponse + "\n" + correction)
-                else:
-                    self.__set_output(reponse)
+                return f"Texte corrigé: {correction}" if correction else "Correction terminée.", 11
             else:
-                self.__set_output(reponse)
+                return "Impossible de corriger le texte.", 1
 
         elif type_action == "copier":
             fnc.copyCorrections()
-            self.__set_output(reponse)
+            return "Correction copiée dans le presse-papier.", 5
 
         elif type_action == "etat":
             fnc.getToolLaunched()
-            self.__set_output(reponse)
+            return "État du correcteur consulté.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action orthographe non reconnue.", 1
 
     # ==========================================
     # HANDLERS - RECHERCHE
     # ==========================================
 
-    def __handle_recherche(self, args, reponse):
+    def __handle_recherche(self, args):
         fnc = self.__gestFNC.getFNCSearch()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Recherche non disponible.", 1
 
         type_recherche = self.__arg(args, 0, "recherche")
         requete = self.__arg(args, 1)
@@ -867,49 +874,47 @@ class IARouter:
             method = getattr(fnc, method_name, None)
             if method:
                 method(requete)
-                self.__set_output(reponse)
+                return f"Recherche {type_recherche} lancée pour '{requete}'.", 5
             else:
-                self.__set_output(reponse)
+                return "Moteur de recherche introuvable.", 1
         else:
-            self.__set_output(reponse)
+            return "Type de recherche non reconnu.", 1
 
     # ==========================================
     # HANDLERS - OPEN
     # ==========================================
 
-    def __handle_open(self, args, reponse):
+    def __handle_open(self, args):
         fnc = self.__gestFNC.getFNCOpen()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Open non disponible.", 1
 
         type_action = self.__arg(args, 0)
         cible = self.__arg(args, 1)
 
         if type_action == "logiciel":
             fnc.openSoft(cible)
-            self.__set_output(reponse)
+            return f"Logiciel '{cible}' ouvert.", 5
 
         elif type_action == "site_enregistre":
             fnc.openSaveWebSite(cible)
-            self.__set_output(reponse)
+            return f"Site enregistré '{cible}' ouvert.", 5
 
         elif type_action == "url":
             fnc.openWebSite(cible)
-            self.__set_output(reponse)
+            return f"URL '{cible}' ouverte.", 5
 
         else:
-            self.__set_output(reponse)
+            return "Action open non reconnue.", 1
 
     # ==========================================
     # HANDLERS - DOWNLOAD YOUTUBE
     # ==========================================
 
-    def __handle_download(self, args, reponse):
+    def __handle_download(self, args):
         fnc = self.__gestFNC.getFNCDownload()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC Download non disponible.", 1
 
         mode = self.__arg(args, 0, "1")
         url = self.__arg(args, 1)
@@ -920,17 +925,16 @@ class IARouter:
             mode_int = 1
 
         fnc.downloadDirectely(mode_int, url)
-        self.__set_output(reponse)
+        return "Téléchargement YouTube démarré.", 5
 
     # ==========================================
     # HANDLERS - CODEHELP
     # ==========================================
 
-    def __handle_codehelp(self, args, reponse):
+    def __handle_codehelp(self, args):
         fnc = self.__gestFNC.getFNCCodeHelp()
         if fnc is None:
-            self.__set_output(reponse)
-            return
+            return "Erreur: FNC CodeHelp non disponible.", 1
 
         type_action = self.__arg(args, 0)
         param1 = self.__arg(args, 1)
@@ -950,25 +954,26 @@ class IARouter:
         action = codehelp_actions.get(type_action)
         if action:
             action()
-        self.__set_output(reponse)
+            return f"Action CodeHelp '{type_action}' exécutée.", 5
+        return "Action CodeHelp non reconnue.", 1
 
     # ==========================================
     # HANDLERS - GUI
     # ==========================================
 
-    def __handle_gui(self, args, reponse):
+    def __handle_gui(self, args):
         nom_gui = self.__arg(args, 0)
         parametre = self.__arg(args, 1)
 
         parms = parametre if parametre else None
         if self.__gestGUI.setGUIActive(nom_gui, parms):
-            self.__set_output(reponse, 5)
+            return f"Interface graphique '{nom_gui}' ouverte.", 5
         else:
-            self.__set_output(reponse)
+            return f"Impossible d'ouvrir l'interface '{nom_gui}'.", 1
 
     # ==========================================
     # HANDLERS - RÉPONSE SIMPLE (fallback)
     # ==========================================
 
-    def __handle_reponse_simple(self, args, reponse):
-        self.__set_output(reponse)
+    def __handle_reponse_simple(self, args):
+        return "Réponse simple sans fonction.", 1

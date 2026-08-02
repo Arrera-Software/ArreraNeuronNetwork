@@ -16,12 +16,13 @@ class gestKeyword:
         self.__serviceFile = None
         self.__timeFile = None
         self.__workFile = None
-        self.__interfaceFile = None
+        self.__interface_file = None
 
         self.__r_lib = resource_lib()
 
     def __loadKeyword(self)->bool:
         try :
+            """"
             with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[0]),"r",encoding="utf-8") as f:
                 self.__apiFile = json.load(f)
             with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[1]),"r",encoding="utf-8") as f:
@@ -38,8 +39,9 @@ class gestKeyword:
                 self.__timeFile = json.load(f)
             with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[7]),"r",encoding="utf-8") as f:
                 self.__workFile = json.load(f)
-            with open(self.__r_lib.resource_path(self.__directoryKeyword+self.__listFileKeyword[8]),"r",encoding="utf-8") as f:
-                self.__interfaceFile = json.load(f)
+            """
+            with open(self.__r_lib.resource_path(self.__directoryKeyword+"interface.json"),"r",encoding="utf-8") as f:
+                self.__interface_file = json.load(f)
             self.__keyWordLoaded = True
             return True
         except Exception as e:
@@ -53,33 +55,12 @@ class gestKeyword:
             if not self.__loadKeyword():
                 return []
 
-        if neuron == "api":
-            if fonction in self.__apiFile:
-                return self.__apiFile[fonction]
-        elif neuron == "utils":
-            if fonction in self.__utilsFile:
-                return self.__utilsFile[fonction]
-        elif neuron == "codehelp":
-            if fonction in self.__codehelpFile:
-                return self.__codehelpFile[fonction]
-        elif neuron == "open":
-            if fonction in self.__openFile:
-                return self.__openFile[fonction]
-        elif neuron == "search":
-            if fonction in self.__searchFile:
-                return self.__searchFile[fonction]
-        elif neuron == "service":
-            if fonction in self.__serviceFile:
-                return self.__serviceFile[fonction]
-        elif neuron == "interface":
-            if fonction in self.__interfaceFile:
-                return self.__interfaceFile[fonction]
-        elif neuron == "time":
-            if fonction in self.__timeFile:
-                return self.__timeFile[fonction]
-        elif neuron == "work":
-            if fonction in self.__workFile:
-                return self.__workFile[fonction]
+        if neuron == "interface":
+            if fonction in self.__interface_file:
+                return self.__interface_file[fonction]
+        elif neuron == "core":
+            if fonction in self.__core_file:
+                return self.__core_file[fonction]
         return []
 
     def __checkContainWord(self,texte:str,listWord:list)->bool:
@@ -88,7 +69,7 @@ class gestKeyword:
             if word.lower() in texte:
                 return True
         return False
-
+    """
     def checkAPI(self,texte:str,fonction:str)->bool:
         listWord = self.__getKeyWork("api",fonction)
         return self.__checkContainWord(texte,listWord)
@@ -124,13 +105,17 @@ class gestKeyword:
     def checkWork(self,texte:str,fonction:str)->bool:
         listWord = self.__getKeyWork("work",fonction)
         return self.__checkContainWord(texte,listWord)
-
+    """
     def checkInterface(self,texte:str,fonction:str)->bool:
         listWord = self.__getKeyWork("interface",fonction)
         return self.__checkContainWord(texte,listWord)
 
+    def checkCore(self,texte:str,fonction:str)->bool:
+        listWord = self.__getKeyWork("core",fonction)
+        return self.__checkContainWord(texte,listWord)
+
     def getListKeyword(self,neuron:str,fonction:str)->list:
-        if neuron not in ["api","utils","codehelp","open","search","service","software","time","work","interface"]:
+        if neuron not in ["interface","core"]:
             return []
         if neuron == "" or fonction == "":
             return []

@@ -12,7 +12,7 @@ class ArreraIALoad:
         self.__system_instructions = []
 
     # Methode private
-    def __predict_gguf_model(self, prompt, max_tokens=512, enable_consigne_langue: bool = True):
+    def __predict_gguf_model(self, prompt, max_tokens=512, enable_consigne_langue: bool = True, as_json: bool = True):
         if enable_consigne_langue:
             consigne_langue = "\n\n(Réponds impérativement en français, même si je parle anglais ou technique)."
         else:
@@ -24,19 +24,20 @@ class ArreraIALoad:
             combined_system_prompt = "Utilise les informations suivantes pour aider l'utilisateur :\n\n"
             combined_system_prompt += "\n\n---\n\n".join(self.__system_instructions)
             
-            # On combine le system prompt et la requête dans un seul message "user"
-            # car certains modèles (comme Gemma) ne supportent pas le rôle "system".
             final_prompt = combined_system_prompt + "\n\n---\n\nRequête utilisateur : " + prompt + consigne_langue
             messages.append({"role": "user", "content": final_prompt})
         else:
             messages.append({"role": "user", "content": prompt + consigne_langue})
 
-        output = self.__model.create_chat_completion(
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=0.1,
-            response_format={"type": "json_object"}
-        )
+        kwargs = {
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.1,
+        }
+        if as_json:
+            kwargs["response_format"] = {"type": "json_object"}
+
+        output = self.__model.create_chat_completion(**kwargs)
 
         return output['choices'][0]['message']['content']
 
@@ -84,5 +85,5 @@ class ArreraIALoad:
         except Exception as e:
             raise ValueError(f"Erreur lors du chargement : {e}")
 
-    def send_request(self, sentence: str,consigne_langue: bool = True):
-        return self.__predict_gguf_model(sentence,512,consigne_langue)
+    def send_request(self, sentence: str, consigne_langue: bool = True, as_json: bool = True):
+        return self.__predict_gguf_model(sentence, 512, consigne_langue, as_json)

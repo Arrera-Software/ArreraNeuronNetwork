@@ -122,19 +122,28 @@ class ABrain :
 
     def neuron(self,var:str) :
         # Var local
-        requetteNo = str(var).lower()
-        requette = self.__gestionnaire.netoyageChaine(str(var))
+        requette = self.__gestionnaire.netoyageChaine(str(var).lower())
         # Var de l'objet
         self.__valeurOut = 0
         self.__listOut =  []
         self.__neuronUsed = "none"
 
+        intent = self.__gestionnaire.getGestIA().classify_intent(requette)
+        mots_intent = intent.split(" ")
+
         # 1. Check pour arrêt complet
-        if self.__gestionnaire.getKeywordObjet().checkUtils(requette, "stop") :
+        if mots_intent[0] == "ARRET":
             self.__listOut = [self.shutdown(),""]
             self.__valeurOut = 15
+            self.__neuronUsed = "core"
+        elif mots_intent[0] != "COMPLEXE":
+            # 2. Utilisation du core neuron (les intents rapides)
+            self.__gestNeuron.ncore.neuron(intent, requette)
+            self.__valeurOut = self.__gestNeuron.ncore.getValeurSortie()
+            self.__listOut = self.__gestNeuron.ncore.getListSortie()
+            self.__neuronUsed = "core"
         else:
-            # 2. Utilisation du routeur IA unique
+            # 3. Utilisation du routeur IA complexe
             success = self.__gestNeuron.iarouter.route(requette)
             
             if success and self.__gestNeuron.iarouter.getValeurSortie() != 0:
@@ -160,26 +169,26 @@ class ABrain :
         self.__gestionnaire.get_state_morning_brief()):
             self.__gestionnaire.set_state_morning_brief()
             self.__gestionnaire.getGestGUI().active_morning_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("1"),""]
+            self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief du matin est prêt."),""]
             self.__valeurOut = 5
             return True
         elif (time(11,0) <= datetime.now().time() < time(16,0) and not
         self.__gestionnaire.get_state_afternoon_brief()):
             self.__gestionnaire.set_state_afternoon_brief()
             self.__gestionnaire.getGestGUI().active_afternoon_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("2"),""]
+            self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief de l'après-midi est prêt."),""]
             self.__valeurOut = 5
             return True
         elif (time(16,0) <= datetime.now().time() and not
         self.__gestionnaire.get_state_evening_brief()):
             self.__gestionnaire.set_state_evening_brief()
             self.__gestionnaire.getGestGUI().active_evening_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("3"),""]
+            self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief de la soirée est prêt."),""]
             self.__valeurOut = 5
             return True
         elif self.__gestSocket is not None:
             if self.__gestSocket.get_new_client_is_connected():
-                self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseSoftConnected(self.__gestSocket.get_name_new_client()),""]
+                self.__listOut = ["soft connected",""]
                 self.__valeurOut = 1
                 return True
             elif self.__gestSocket.get_message_is_received_from_server():
