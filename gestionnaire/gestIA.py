@@ -31,7 +31,7 @@ class gestIA :
                     self.__ia_loader = ArreraIALoad()
                     self.__ia_loader.load_model_gguf(
                         model_path=self.__downloader_model.get_path_model(model_name),
-                        n_ctx=4096
+                        n_ctx=8192
                     )
 
                     prompt_dynamique = self.__generate_main_prompt()
