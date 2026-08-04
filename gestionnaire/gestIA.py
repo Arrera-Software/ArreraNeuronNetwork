@@ -17,6 +17,8 @@ class gestIA :
 
         self.__downloader_model = model_downloader()
 
+        self.__gest_user = gestionnaire.getUserConf()
+
         self.__dir_ia_instruction = "instruction_ia/"
 
         self.__dict_help_file = {"orthographe":"prompt_orthographe.txt",
