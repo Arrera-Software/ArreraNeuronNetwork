@@ -201,7 +201,6 @@ class ABrain :
                 print(f"Erreur generate_final_response evening: {e}")
                 self.__listOut = ["Brief de la soirée prêt.",""]
             self.__gestionnaire.getGestGUI().active_evening_brief()
-            self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief de la soirée est prêt."),""]
             self.__valeurOut = 5
             return True
         elif self.__gestSocket is not None:
