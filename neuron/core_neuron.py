@@ -78,7 +78,10 @@ class core_neuron(neuronBase):
                     self._listSortie = [reponse, ""]
                     
             elif mots[0] == "HEURE":
-                print("[Neuron Core] Je dois donner l'HEURE ou la DATE.")
+                heure_str = datetime.now().strftime("%H:%M")
+                reponse = self.__gestIA.generate_final_response(requette_raw, heure_str)
+                self._valeurOut = 1
+                self._listSortie = [reponse, ""]
                 
             elif mots[0] == "MINUTEUR":
                 print("[Neuron Core] Je dois lancer un MINUTEUR.")
