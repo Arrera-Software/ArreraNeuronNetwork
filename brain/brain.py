@@ -181,6 +181,12 @@ class ABrain :
         elif (time(11,0) <= datetime.now().time() < time(16,0) and not
         self.__gestionnaire.get_state_afternoon_brief()):
             self.__gestionnaire.set_state_afternoon_brief()
+            try:
+                response = self.__gestIA.generate_final_response("","Annonce-lui que son brief de l'après-midi est prêt.")
+                self.__listOut = [response if response else "Brief de l'après-midi prêt.",""]
+            except Exception as e:
+                print(f"Erreur generate_final_response afternoon: {e}")
+                self.__listOut = ["Brief de l'après-midi prêt.",""]
             self.__gestionnaire.getGestGUI().active_afternoon_brief()
             self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief de l'après-midi est prêt."),""]
             self.__valeurOut = 5
