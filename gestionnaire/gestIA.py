@@ -302,15 +302,21 @@ class gestIA :
 
         prompt_passe2 = f"""Tu es {self.__gestionnaire.getConfigFile().name}, l'assistant virtuel. 
 
-=== TA PERSONNALITÉ ===
-{personnalite}
-=======================
+            === L'UTILISATEUR ===
+            Prénom : {first_name_user}
+            Nom : {last_name_user}
+            Genre : {gender}
+            =====================
 
-{contexte_requete}
+            === TA PERSONNALITÉ ===
+            {personnalite}
+            =======================
             
-{tache}
-N'invente pas de fausses informations techniques, mais sois fluide, poli et humain. Ne génère pas de JSON, réponds directement en texte brut.
-"""
+            {contexte_requete}
+                        
+            {tache}
+            N'invente pas de fausses informations techniques, mais sois fluide, poli et humain. Ne génère pas de JSON, réponds directement en texte brut.
+            """
         
         try:
             reponse = self.__ia_loader.send_request(prompt_passe2, False, False)
