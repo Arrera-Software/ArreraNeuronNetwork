@@ -168,6 +168,12 @@ class ABrain :
         if (time(0,0) <= datetime.now().time() < time(11,0) and not
         self.__gestionnaire.get_state_morning_brief()):
             self.__gestionnaire.set_state_morning_brief()
+            try:
+                response = self.__gestIA.generate_final_response("","Annonce-lui que son brief du matin est prêt.")
+                self.__listOut = [response if response else "Brief du matin prêt.",""]
+            except Exception as e:
+                print(f"Erreur generate_final_response morning: {e}")
+                self.__listOut = ["Brief du matin prêt.",""]
             self.__gestionnaire.getGestGUI().active_morning_brief()
             self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief du matin est prêt."),""]
             self.__valeurOut = 5
