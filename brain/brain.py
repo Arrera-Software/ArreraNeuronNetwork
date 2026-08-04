@@ -69,6 +69,7 @@ class ABrain :
         if self.__listOut == ["",""]:
             self.__listOut = [self.__gestLangue.nocomprehension(), ""]
 
+        #print(self.__listOut)
         return self.__listOut
 
     def getNeuronUsed(self)-> type[str]:
