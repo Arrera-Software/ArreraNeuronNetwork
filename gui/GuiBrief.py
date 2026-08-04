@@ -217,14 +217,31 @@ class guiBrief(GuiBase):
 
         self.__update_weather(weather, True)
         self.__update_actu(actu, True)
-        self.__update_morning()
+        self.__update_evening_check()
 
     def __update_morning(self):
-        if not self.__th_meteo.is_alive() or not self.__th_task.is_alive() or not self.__th_actuality.is_alive():
+        try:
+            if self._screen is None or not self._screen.winfo_exists():
+                return
+        except Exception:
+            return
+        if not self.__th_meteo.is_alive() and not self.__th_task.is_alive() and not self.__th_actuality.is_alive():
             self.__load_frame.grid_forget()
             self.__main_frame.grid(row=1, column=0, sticky="nsew")
         else :
             self._screen.after(100, self.__update_morning)
+
+    def __update_evening_check(self):
+        try:
+            if self._screen is None or not self._screen.winfo_exists():
+                return
+        except Exception:
+            return
+        if not self.__th_meteo.is_alive() and not self.__th_actuality.is_alive():
+            self.__load_frame.grid_forget()
+            self.__main_frame.grid(row=1, column=0, sticky="nsew")
+        else:
+            self._screen.after(100, self.__update_evening_check)
 
     def __update_weather(self, w_f:aFrame, first:bool=False):
         if first:
@@ -234,7 +251,11 @@ class guiBrief(GuiBase):
             l.grid(row=0,column=0,sticky="nsew")
 
         if self.__th_meteo.is_alive():
-            self._screen.after(100, self.__update_weather, w_f, False)
+            try:
+                if self._screen is not None and self._screen.winfo_exists():
+                    self._screen.after(100, self.__update_weather, w_f, False)
+            except Exception:
+                pass
         else :
             for w in w_f.winfo_children():
                 w.grid_forget()
@@ -283,7 +304,11 @@ class guiBrief(GuiBase):
             l.grid(row=0, column=0, sticky="nsew")
 
         if self.__th_actuality.is_alive():
-            self._screen.after(100, self.__update_actu, a_f, False)
+            try:
+                if self._screen is not None and self._screen.winfo_exists():
+                    self._screen.after(100, self.__update_actu, a_f, False)
+            except Exception:
+                pass
         else :
             for w in a_f.winfo_children():
                 w.grid_forget()
@@ -339,7 +364,11 @@ class guiBrief(GuiBase):
             l.grid(row=0, column=0, sticky="nsew")
 
         if self.__th_task.is_alive():
-            self._screen.after(100, self.__update_task, t_f, False)
+            try:
+                if self._screen is not None and self._screen.winfo_exists():
+                    self._screen.after(100, self.__update_task, t_f, False)
+            except Exception:
+                pass
         else:
             for w in t_f.winfo_children():
                 w.grid_forget()
