@@ -179,6 +179,11 @@ class IARouter:
         reponse = parsed.get("reponse", "")
 
         # 4. Dispatcher vers le bon handler
+        if action not in self.__dispatch:
+            if action.startswith("projet_") or action.startswith("tableur_") or action.startswith("word_"):
+                args.insert(0, action)
+                action = "work"
+                
         if action in self.__dispatch:
             if action == "reponse_simple":
                 self.__set_output(reponse)
@@ -648,7 +653,7 @@ class IARouter:
         # --- PROJET ---
         elif type_action == "projet_lister":
             data = fnc.getListProjet()
-            return self.__format_list(data) if data else "Aucun projet existant.", 5
+            return self.__format_list(data) if data else "Aucun projet existant.", 1
 
         elif type_action == "projet_creer":
             fnc.createProjet(param1)
@@ -798,6 +803,15 @@ class IARouter:
                 result = fnc.reciproquePythagore()
                 return f"Résultat de la réciproque de Pythagore : {result}", 1
 
+            elif type_calcul in ("ouvrir_interface", "ouvrir_interface_normal"):
+                return self.__handle_gui(["calculatrice_normal", ""])
+            
+            elif type_calcul == "ouvrir_interface_pythagore":
+                return self.__handle_gui(["calculatrice_pythagore", ""])
+            
+            elif type_calcul == "ouvrir_interface_complex":
+                return self.__handle_gui(["calculatrice_complex", ""])
+
             else:
                 return "Type de calcul non reconnu", 1
 
@@ -823,6 +837,9 @@ class IARouter:
         elif type_action == "etat":
             fnc.getStatTheard()
             return "État de la lecture consulté.", 5
+
+        elif type_action == "ouvrir_interface":
+            return self.__handle_gui(["lecture", ""])
 
         else:
             return "Action lecture non reconnue.", 1
@@ -853,6 +870,9 @@ class IARouter:
         elif type_action == "etat":
             fnc.getToolLaunched()
             return "État du correcteur consulté.", 5
+
+        elif type_action == "ouvrir_interface":
+            return self.__handle_gui(["orthographe", texte if texte else ""])
 
         else:
             return "Action orthographe non reconnue.", 1
@@ -904,6 +924,9 @@ class IARouter:
             fnc.openWebSite(cible)
             return f"URL '{cible}' ouverte.", 5
 
+        elif type_action == "ouvrir_interface":
+            return self.__handle_gui(["open", ""])
+
         else:
             return "Action open non reconnue.", 1
 
@@ -922,6 +945,8 @@ class IARouter:
         try:
             mode_int = int(mode)
         except (ValueError, TypeError):
+            if mode == "ouvrir_interface":
+                return self.__handle_gui(["arrera_download", ""])
             mode_int = 1
 
         fnc.downloadDirectely(mode_int, url)
@@ -969,7 +994,7 @@ class IARouter:
         if self.__gestGUI.setGUIActive(nom_gui, parms):
             return f"Interface graphique '{nom_gui}' ouverte.", 5
         else:
-            return f"Impossible d'ouvrir l'interface '{nom_gui}'.", 1
+            return f"Impossible d'ouvrir l'interface '{nom_gui}'.", 5
 
     # ==========================================
     # HANDLERS - RÉPONSE SIMPLE (fallback)
