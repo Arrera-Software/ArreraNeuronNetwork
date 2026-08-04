@@ -323,7 +323,7 @@ class gestIA :
             self.__ia_loader.unload_help()
             if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
                 self.__ia_mode_enabled = True
-            return reponse.strip()
+            return reponse.strip().replace('"',"")
         except Exception as e:
             print(f"Erreur lors de la génération de la réponse finale : {e}")
             self.__ia_loader.unload_help()
