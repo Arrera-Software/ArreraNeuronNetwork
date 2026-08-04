@@ -287,6 +287,10 @@ class gestIA :
 
         self.__ia_loader.unload_help()
 
+        first_name_user = self.__gest_user.getFirstnameUser()
+        last_name_user = self.__gest_user.getLastnameUser()
+        gender = self.__gest_user.getGenre()
+
         personnalite = self.__gestionnaire.getLanguageObjet().getPersonnalite()
 
         if requete.strip():
