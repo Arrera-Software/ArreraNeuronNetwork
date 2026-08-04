@@ -82,11 +82,10 @@ class gestFNC:
             self.__work = fncArreraWork(self.__gestionnaire)
 
             self.__prompt += """
-                - "work": Args ["action", "p1", "p2", "p3"]
-                  > Tableur: tableur_ouvrir, tableur_ouvrir_direct(p1=chemin), tableur_fermer, tableur_lire, tableur_ecrire(p1=cell,p2=val), tableur_supprimer(p1=cell), tableur_formule(p1=op,p2=plage,p3=dest), tableur_ouvrir_os, tableur_etat.
-                  > Word: word_ouvrir, word_ouvrir_direct(p1=chemin), word_fermer, word_lire, word_ecrire(p1=texte), word_ecrire_ecrase(p1=texte), word_ouvrir_os, word_etat.
-                  > Projet: projet_lister, projet_creer(p1=nom), projet_ouvrir(p1=nom), projet_fermer, projet_type(p1=type), projet_nom, projet_get_type, projet_etat, projet_creer_fichier(p1=nom,p2=type), projet_lister_fichiers.
-                  > Tâches proj: projet_tache_ajouter(p1=nom,p2=date,p3=desc), projet_tache_supprimer(p1=nom), projet_tache_terminer(p1=nom), projet_tache_non_terminees, projet_tache_aujourdhui, projet_tache_demain.
+                - "work": Args ["action", "p1", "p2", "p3"]. 
+                  Actions tableur : tableur_ouvrir, tableur_fermer, tableur_lire, tableur_ecrire, tableur_supprimer, tableur_formule, tableur_etat, tableur_ouvrir_interface.
+                  Actions word : word_ouvrir, word_fermer, word_lire, word_ecrire, word_etat, word_ouvrir_interface.
+                  Actions projet : projet_lister, projet_creer, projet_ouvrir, projet_fermer, projet_etat, projet_creer_fichier, projet_lister_fichiers, projet_tache_ajouter, projet_tache_terminer.
                 """
 
         if conf.etatService == 1 :
@@ -99,9 +98,9 @@ class gestFNC:
             self.__orthographe = fncOrthographe(self.__gestionnaire)
 
             self.__prompt += """
-                - "calculatrice": Args ["action", "p1", "p2", "p3", "p4"]. actions: addition, soustraction, multiplication, division, puissance, modulo, racine, complexe, pythagore, pythagore_reciproque.
-                - "lecture": Args ["action", "texte"]. actions: lire, etat.
-                - "orthographe": Args ["action", "texte"]. actions: corriger, copier, etat.
+                - "calculatrice": Args ["action", "p1", "p2", "p3", "p4"]. actions: addition, soustraction, multiplication, division, puissance, modulo, racine, complexe, pythagore, pythagore_reciproque, ouvrir_interface_normal, ouvrir_interface_pythagore, ouvrir_interface_complex.
+                - "lecture": Args ["action", "texte"]. actions: lire, etat, ouvrir_interface.
+                - "orthographe": Args ["action", "texte"]. actions: corriger, copier, etat, ouvrir_interface.
                 """
 
         if conf.etatSearch == 1 :
@@ -119,8 +118,8 @@ class gestFNC:
             self.__downloader_youtube = fncArreraVideoDownload(self.__gestionnaire)
 
             self.__prompt += """
-                - "open": Args ["action", "cible"]. actions: logiciel, site_enregistre, url.
-                - "download_youtube": Args ["mode", "url"]. modes: "1"(video), "2"(audio).
+                - "open": Args ["action", "cible"]. actions: logiciel, site_enregistre, url, doc_assistant, lister_logiciels, lister_sites, socket_mode.
+                - "download_youtube": Args ["mode", "url"]. modes: "1"(video), "2"(audio), ouvrir_interface.
                 """
 
         if conf.etatCodehelp == 1 :
