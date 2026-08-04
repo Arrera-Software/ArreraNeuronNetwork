@@ -9,6 +9,7 @@ class core_neuron(neuronBase):
 
     def neuron(self, intent:str, requette_raw:str):
         mots = intent.split(" ")
+        #print(intent)
         
         if mots[0] != "COMPLEXE" and mots[0] != "ARRET":
             
