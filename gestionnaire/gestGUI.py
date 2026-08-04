@@ -11,6 +11,8 @@ class gestGUI:
         self.__prompt = ""
         self.__valOut = 0
 
+        self.__gestIA = gest.getGestIA()
+
         conf = gest.getConfigFile()
 
         from gui.GUIHelp import GUIHelp
@@ -41,37 +43,24 @@ class gestGUI:
             self.__gui_actions.update({
                 "agenda": lambda: self.__generic_action(
                 self.__guiAgenda.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("8")),
-                "agenda_add": lambda: self.__generic_action(
-                    self.__guiAgenda.activeAdd,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("4")),
-                "agenda_delete": lambda: self.__generic_action(
-                    self.__guiAgenda.activeDel,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("5")),
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'agenda est maintenant ouvert.")),
                 "horloge": lambda: self.__generic_action(
                     self.__guiHorloge.active,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("2")),
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'horloge est maintenant ouverte.")),
                 "minuteur": lambda: self.__generic_action(
                     self.__guiHorloge.activeMinuteur,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("3")
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface du minuteur est ouverte.")
                 ),
                 "chrono": lambda: self.__generic_action(
                     self.__guiHorloge.activeChrono,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("1")),
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface du chronomètre est ouverte.")),
                 "tache": lambda: self.__generic_action(
                     self.__guiTache.active,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("9")
-                ),
-                "tache_finish": lambda: self.__generic_action(
-                    self.__guiTache.activeFinish,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("11")
-                ),
-                "tache_del": lambda: self.__generic_action(
-                    self.__guiTache.activeDel,
-                    lambda: self.__gest.getLanguageObjet().getPhraseTime("12"))})
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son gestionnaire de tâches est ouvert.")
+                ),})
 
             self.__prompt += """
-                - "gui": Args ["nom_gui", ""]. nom_gui: agenda, agenda_add, agenda_delete, horloge, minuteur, chrono, tache, tache_finish, tache_del.
+                - "gui": Args ["nom_gui", ""]. nom_gui: agenda, horloge, minuteur, chrono, tache.
                 """
 
         if conf.etatApi == 1:
@@ -84,16 +73,16 @@ class gestGUI:
             self.__gui_actions.update({
                 "traducteur": lambda: self.__generic_action(
                     self.__guiTraducteur.active,
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenTraducteur()),
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que le traducteur est ouvert.")),
                "morning_brief": lambda: self.__generic_action(
                    self.__guiBrief.view_morning,
-                   lambda: self.__gest.getLanguageObjet().getPhraseBrief("1")),
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief du matin est prêt et affiché.")),
                "afternoon_brief": lambda: self.__generic_action(
                    self.__guiBrief.view_afternoon,
-                   lambda: self.__gest.getLanguageObjet().getPhraseBrief("2")),
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief de l'après-midi est prêt et affiché.")),
                "evening_brief": lambda: self.__generic_action(
                    self.__guiBrief.view_evening,
-                   lambda: self.__gest.getLanguageObjet().getPhraseBrief("3"))
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief de la soirée est prêt et affiché."))
            })
 
             self.__prompt += """
@@ -109,49 +98,15 @@ class gestGUI:
             self.__gui_actions.update({
                 "work": lambda: self.__generic_try_action(
                     self.__guiWork.activeAcceuil,
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("7"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("8")),
-                "work_projet": lambda: self.__generic_try_action(
-                    self.__guiWork.activeProjet,
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("1"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("2")),
-                "work_tableur": lambda: self.__generic_try_action(
-                    self.__guiWork.activeTableur,
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("3"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("4")),
-                "work_manage_tableur": lambda: self.__guiManageTableur(self.__parms),
-                "work_read_tableur": lambda: self.__generic_bool_action(
-                    self.__guiWork.active_read_tableur,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("21"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("22")),
-                "work_word": lambda: self.__generic_try_action(
-                    self.__guiWork.activeWord,
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("5"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("6")
-                ),
-                "work_word_read": lambda: self.__generic_try_action(
-                    self.__guiWork.active_read_word,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("9"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("10")),
-                "work_word_write": lambda: self.__generic_try_action(
-                    self.__guiWork.active_write_word,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("7"),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("8")),
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface d'Arrera Work est ouverte."),
+                    lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir l'interface d'Arrera Work.")),
                 "tache_projet": lambda: self.__generic_bool_action(
                     self.__guiWork.open_task_projet,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("10", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("11")),
-                "tache_projet_add": lambda: self.__generic_bool_action(
-                    self.__guiWork.open_task_projet_add,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("12", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("13")),
-                "tache_projet_del": lambda: self.__generic_bool_action(
-                    self.__guiWork.open_task_projet_del,
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("14", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                    lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("15"))})
+                    lambda: self.__gestIA.generate_final_response("",f"Annonce à l'utilisateur que les tâches de son projet {self.__gest.getGestFNC().getFNCWork().getNameProjet()} sont ouvertes.") ,
+                    lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir les tâches de son projet."))})
 
             self.__prompt += """
-                - "gui": Args ["nom_gui", ""]. nom_gui: work, work_projet, work_tableur, work_read_tableur, work_word, work_word_read, work_word_write, tache_projet, tache_projet_add, tache_projet_del.
+                - "gui": Args ["nom_gui", ""]. nom_gui: work, tache_projet.
                 """
 
         if conf.etatService == 1:
@@ -166,20 +121,20 @@ class gestGUI:
             self.__gui_actions.update({
                 "calculatrice_normal": lambda: self.__generic_try_action(
                 self.__guiCalculatrice.activeCalcule,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("7"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("8")),
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que la calculatrice est ouverte."),
+                lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice.")),
                "calculatrice_pythagore": lambda: self.__generic_try_action(
                    self.__guiCalculatrice.activePythagore,
-                   lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("5"),
-                   lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("6")),
+                   lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que la calculatrice en mode pythagore est ouverte."),
+                   lambda: self.__gestIA.generate_final_response("", "Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice en mode pythagore.")),
                "calculatrice_complex": lambda: self.__generic_try_action(
                    self.__guiCalculatrice.activeComplex,
-                   lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("3"),
-                   lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("4")),
+                   lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que la calculatrice en mode complexe est ouverte."),
+                   lambda: self.__gestIA.generate_final_response("", "Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice en mode complexe.")),
                 "orthographe": self.__action_orthographe,
                 "lecture": lambda: self.__generic_action(
                     self.__guiLecture.active,
-                    lambda: self.__gest.getLanguageObjet().getPhraseService("6"))})
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface de lecture est ouverte."))})
 
             self.__prompt += """
                 - "gui": Args ["nom_gui", "texte"]. nom_gui: calculatrice_normal, calculatrice_pythagore, calculatrice_complex, orthographe(texte="texte"), lecture.
@@ -192,8 +147,8 @@ class gestGUI:
 
             self.__gui_actions.update({"arrera_download": lambda: self.__generic_try_action(
                 self.__guiArreraDownload.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("1"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("2")
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'application Arrera Download est ouverte."),
+                lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir l'application Arrera Download.")
             )})
 
             self.__prompt += """
@@ -228,8 +183,8 @@ class gestGUI:
             return False
 
     def __generic_action(self, action, success_msg_provider):
-        action()
         self.__textOut = success_msg_provider()
+        action()
         self.__valOut = 5
         return True
 
