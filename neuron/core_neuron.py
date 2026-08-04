@@ -1,3 +1,5 @@
+from datetime import *
+
 from neuron.CNeuronBase import neuronBase,gestionnaire
 
 class core_neuron(neuronBase):
@@ -84,7 +86,40 @@ class core_neuron(neuronBase):
                 self._listSortie = [reponse, ""]
                 
             elif mots[0] == "MINUTEUR":
-                print("[Neuron Core] Je dois lancer un MINUTEUR.")
+                if self._gestionnaire.getGestGUI().setGUIActive("minuteur"):
+                    self._valeurOut = 5
+                    self._listSortie = ["", ""]
+                else :
+                    donnees = f"PAS OK Interface {mots[0]} introuvable"
+                    reponse = self.__gestIA.generate_final_response(requette_raw, donnees)
+                    self._valeurOut = 1
+                    self._listSortie = [reponse, ""]
+            elif mots[0] == "GUI":
+                nom_gui = mots[1].lower() if len(mots) > 1 else ""
+                
+                mapping = {
+                    "calculatrice": "calculatrice_normal",
+                    "lecture": "lecture",
+                    "orthographe": "orthographe",
+                    "traducteur": "traducteur",
+                    "agenda": "agenda",
+                    "tache": "tache",
+                    "work": "work",
+                    "tache_projet": "tache_projet",
+                    "download": "arrera_download"
+                }
+                
+                target_gui = mapping.get(nom_gui, nom_gui)
+                
+                if self._gestionnaire.getGestGUI().setGUIActive(target_gui):
+                    # gestGUI.py handles the AI generation now.
+                    self._valeurOut = 5
+                    self._listSortie = ["", ""]
+                else:
+                    donnees = f"PAS OK Interface {nom_gui} introuvable"
+                    self._valeurOut = 1
+                    reponse = self.__gestIA.generate_final_response(requette_raw, donnees)
+                    self._listSortie = [reponse, ""]
 
         elif mots[0] == "ARRET":
             self._valeurOut = 15

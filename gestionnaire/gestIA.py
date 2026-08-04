@@ -245,10 +245,17 @@ class gestIA :
                - Exemple : MINUTEUR
             
             7. Arrêt / Au revoir : ARRET
-               - S'il veut éteindre ou dit au revoir.
+               - S'il veut éteindre, se fermer ou dit au revoir (ex: "Arrête-toi", "Éteins", "Au revoir").
+               - ATTENTION : Ne confonds pas "Arrera" (le nom de l'organisation) avec "Arrêt".
                - Exemple : ARRET
             
-            8. Autre : COMPLEXE
+            8. Interface / GUI : GUI [NOM_GUI]
+               - S'il veut ouvrir une interface graphique.
+               - NOM_GUI doit être parmi : CALCULATRICE, LECTURE, ORTHOGRAPHE, TRADUCTEUR, AGENDA, TACHE, WORK, TACHE_PROJET, DOWNLOAD.
+               - ATTENTION : Si l'utilisateur demande de lister ses projets, de créer, ou d'ouvrir un projet PRÉCIS (ex: "Ouvre le projet Alpha"), ce n'est PAS une ouverture d'interface globale. Tu DOIS répondre COMPLEXE.
+               - Exemple : GUI CALCULATRICE
+            
+            9. Autre : COMPLEXE
                - Pour toute autre demande (ouvrir un projet, calculer, chercher sur internet, traduire, etc.) ou si tu n'es pas sûr.
             
             Phrase à classer : "{requete}"
@@ -266,7 +273,7 @@ class gestIA :
                 
             # Validation de base (vérifie juste le premier mot pour s'assurer que c'est une commande valide)
             premier_mot = mot_cle.split(" ")[0]
-            mots_autorises = ["METEO", "TEMPERATURE", "ACTU", "RADIO", "HEURE", "ARRET", "MINUTEUR"]
+            mots_autorises = ["METEO", "TEMPERATURE", "ACTU", "RADIO", "HEURE", "ARRET", "MINUTEUR", "GUI"]
             
             if premier_mot in mots_autorises:
                 return mot_cle
