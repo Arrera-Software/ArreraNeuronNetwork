@@ -188,7 +188,6 @@ class ABrain :
                 print(f"Erreur generate_final_response afternoon: {e}")
                 self.__listOut = ["Brief de l'après-midi prêt.",""]
             self.__gestionnaire.getGestGUI().active_afternoon_brief()
-            self.__listOut = [self.__gestIA.generate_final_response("","Salue l'utilisateur et annonce-lui que son brief de l'après-midi est prêt."),""]
             self.__valeurOut = 5
             return True
         elif (time(16,0) <= datetime.now().time() and not
