@@ -27,3 +27,4 @@ feedparser
 winsdk ; sys_platform == 'win32'
 pyobjc-framework-CoreLocation ; sys_platform == 'darwin'
 pydbus ; sys_platform == 'linux'
+gi ; sys_platform == 'linux'
