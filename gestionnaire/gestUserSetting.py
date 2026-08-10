@@ -13,6 +13,8 @@ DICTUSER = {
     "lieuTravail":"",
     "adresseDomicile" : "",
     "adresseTravail":"",
+    "home_address":["","",""],
+    "work_address":["","",""],
     "dictSoft":{},
     "dictSite":{},
     "moteurRecherche":"",
@@ -161,47 +163,65 @@ class gestUserSetting:
             return None
         return listVille
 
-    # Lieu Domicile
-
-    def setLieuDomicile(self, lieu:str):
-        if lieu == "":
+    def set_home_adresse(self,adress:str,postal_code:str,town:str):
+        if adress == "" or postal_code == "" or town == "":
             return False
-        return self.__fileUser.setValeurJson("lieuDomicile", lieu)
+        return self.__fileUser.setValeurJson("home_address", [adress, postal_code, town])
 
-    def getLieuDomicile(self):
-        lieuDomicile = self.__fileUser.getContentJsonFlag("lieuDomicile")
-        if lieuDomicile is None:
-            return ""
-        return lieuDomicile
-
-    # Lieu Travail
-    def setLieuTravail(self, lieu:str):
-        if lieu == "":
+    def set_work_adresse(self,adress:str,postal_code:str,town:str):
+        if adress == "" or postal_code == "" or town == "":
             return False
-        return self.__fileUser.setValeurJson("lieuTravail", lieu)
+        return self.__fileUser.setValeurJson("work_address", [adress, postal_code, town])
 
-    def getLieuTravail(self):
-        lieuTravail = self.__fileUser.getContentJsonFlag("lieuTravail")
-        if lieuTravail is None:
-            return ""
-        return lieuTravail
+    def get_town_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return liste[2]
+        return ""
 
-    # Adresse Domicile
-    def setAdresseDomicile(self, adresse:str):
-        if adresse == "":
-            return False
-        return self.__fileUser.setValeurJson("adresseDomicile", adresse)
+    def get_adresse_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[2]}"
+        return ""
 
-    def delAdresseDomicile(self):
-        return self.__fileUser.setValeurJson("adresseDomicile", "")
+    def get_postal_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return liste[1]
+        return ""
 
-    def getAdresseDomicile(self):
-        adresseDomicile = self.__fileUser.getContentJsonFlag("adresseDomicile")
-        if adresseDomicile is None:
-            return ""
-        return adresseDomicile
+    def get_full_adress_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[1]} {liste[2]}"
+        return ""
 
     # Adresse Travail
+
+    def get_town_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return liste[2]
+        return ""
+
+    def get_adresse_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[2]}"
+        return ""
+
+    def get_postal_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return liste[1]
+        return ""
+
+    def get_full_adress_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[1]} {liste[2]}"
+        return ""
 
     def setAdresseTravail(self, adresse:str):
         if adresse == "":

@@ -31,8 +31,8 @@ class neuroneAPI(neuronBase) :
 
     def __meteo(self,requette:str)->int:
         if not self._keyword.checkUtils(requette, "question-fonction"):
-            townHouse = self._userConf.getLieuDomicile()
-            townWork = self._userConf.getLieuTravail()
+            townHouse = self._userConf.get_town_home()
+            townWork = self._userConf.get_town_work()
 
             if self._keyword.checkAPI(requette,"meteo"):
                 if self._keyword.checkAPI(requette, "meteoDemainMatin"):
