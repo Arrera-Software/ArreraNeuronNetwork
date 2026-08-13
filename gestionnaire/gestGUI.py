@@ -28,6 +28,7 @@ class gestGUI:
         self.__guiOrthographe = None
         self.__guiLecture = None
         self.__guiArreraDownload = None
+        self.__guiNews = None
 
         self.__gui_actions: dict[str, Callable[[], bool]] = {"aide": self.__action_aide}
 
@@ -66,14 +67,20 @@ class gestGUI:
         if conf.etatApi == 1:
             from gui.GUITraducteur import GuiTraducteur # API
             from gui.GuiBrief import guiBrief  # API
+            from gui.GuiNews import GuiNews
 
             self.__guiTraducteur = GuiTraducteur(self.__gest)
             self.__guiBrief = guiBrief(self.__gest, self.__gest.getName())
+            self.__guiNews = GuiNews(self.__gest, self.__gest.getName())
 
             self.__gui_actions.update({
                 "traducteur": lambda: self.__generic_action(
                     self.__guiTraducteur.active,
                     lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que le traducteur est ouvert.")),
+               "actu":lambda: self.__generic_action(
+                   self.__guiNews.active_all,
+                   self.__gestIA.generate_final_response("","Annonce à l'utilisateur que la fenêtre avec toutes les actualités est ouverte.")
+               ),
                "morning_brief": lambda: self.__generic_action(
                    self.__guiBrief.view_morning,
                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief du matin est prêt et affiché.")),
@@ -264,3 +271,7 @@ class gestGUI:
     def active_evening_brief(self):
         if self.__guiBrief is not None:
             self.__guiBrief.view_evening()
+
+    def active_actu_all(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_all()

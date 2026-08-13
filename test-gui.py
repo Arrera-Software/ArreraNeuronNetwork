@@ -66,6 +66,7 @@ gui_to_test = {
     "Morning Brief": gest_gui.active_morning_brief,
     "Afternoon Brief": gest_gui.active_afternoon_brief,
     "Evening Brief": gest_gui.active_evening_brief,
+    "actu":gest_gui.active_actu_all,
 }
 
 
