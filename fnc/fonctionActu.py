@@ -2,6 +2,7 @@ import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import feedparser
 import random
+import time
 from fnc.fncBase import fncBase,gestionnaire
 
 USER_AGENTS = [
@@ -44,8 +45,10 @@ class fncActualiter(fncBase) :
         ]
 
         self.__limit_for_flux = 3
-
         self.__articles = []
+        self.__last_fetch_time = 0
+        self.__cache_duration = 3600  # 1 heure (3600 secondes)
+        self.__is_cleaned = False
 
     def __parse_flux(self, url: str, source: str, cathegorie: str):
         try:
@@ -76,9 +79,15 @@ class fncActualiter(fncBase) :
         except Exception as e:
             return cathegorie, url, []
 
-    def setActu(self, limit: int = 3, *args, **kwargs) -> bool:
+    def setActu(self, limit: int = 3, force: bool = False, *args, **kwargs) -> bool:
+        current_time = time.time()
+        # Si des articles existent déjà et que le cache a moins d'une heure (et pas de forçage)
+        if self.__articles and (current_time - self.__last_fetch_time < self.__cache_duration) and not force:
+            return True
+
         self.__limit_for_flux = limit
         self.__articles = []
+        self.__is_cleaned = False
         try:
             with ThreadPoolExecutor(max_workers=8) as executor:
                 futures = [
@@ -94,12 +103,19 @@ class fncActualiter(fncBase) :
                     except Exception as e:
                         pass
 
+            if self.__articles:
+                self.__last_fetch_time = current_time
+
             return len(self.__articles) > 0
         except Exception as e:
             return False
 
     def clear_articles(self):
-        self.__articles = self._gestionnaire.getGestIA().deduplicate_actu(self.__articles)
+        if self.__is_cleaned:
+            return
+        if self._gestionnaire.getGestIA() is not None:
+            self.__articles = self._gestionnaire.getGestIA().deduplicate_actu(self.__articles)
+            self.__is_cleaned = True
 
     def getActu(self):
         return self.__articles
