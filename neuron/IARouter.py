@@ -139,6 +139,65 @@ class IARouter:
             
         return text.strip()
 
+    def __prefilter_projet(self, requette: str):
+        """
+        Garde-fou PROJET : détecte les actions projet par mots-clés
+        pour bypasser le LLM qui confond souvent les actions.
+        Retourne (args_list, val_out) ou None si pas de match.
+        """
+        req = requette.lower().strip()
+
+        # Mots-clés pour détecter les actions projet
+        mots_ouvrir = ["ouvre le projet", "ouvrir le projet", "ouvre mon projet",
+                       "ouvrir mon projet", "lance le projet", "lancer le projet",
+                       "charge le projet", "charger le projet"]
+        mots_fermer = ["ferme le projet", "fermer le projet", "quitte le projet",
+                       "quitter le projet", "ferme mon projet", "fermer mon projet",
+                       "ferme projet", "quitte projet"]
+        mots_creer = ["crée le projet", "créer le projet", "cree le projet",
+                      "creer le projet", "crée un projet", "créer un projet",
+                      "cree un projet", "creer un projet", "nouveau projet",
+                      "créer un nouveau projet", "crée un nouveau projet"]
+        mots_lister = ["liste mes projets", "lister mes projets", "liste les projets",
+                       "lister les projets", "mes projets", "quels sont mes projets",
+                       "montre mes projets", "affiche mes projets",
+                       "liste projet", "lister projet", "liste des projets"]
+
+        # 1. Ouvrir un projet
+        for mot in mots_ouvrir:
+            if mot in req:
+                # Extraire le nom du projet (tout ce qui suit le mot-clé)
+                nom_projet = req.split(mot, 1)[1].strip()
+                # Nettoyer les mots résiduels
+                for residu in ["s'il te plait", "stp", "s'il te plaît", "please", "svp"]:
+                    nom_projet = nom_projet.replace(residu, "").strip()
+                if nom_projet:
+                    return (["projet_ouvrir", nom_projet], 14)
+                return None
+
+        # 2. Fermer le projet
+        for mot in mots_fermer:
+            if mot in req:
+                return (["projet_fermer"], 21)
+
+        # 3. Créer un projet
+        for mot in mots_creer:
+            if mot in req:
+                nom_projet = req.split(mot, 1)[1].strip()
+                for residu in ["s'il te plait", "stp", "s'il te plaît", "please", "svp",
+                                "nommé", "nomme", "appelé", "appele"]:
+                    nom_projet = nom_projet.replace(residu, "").strip()
+                if nom_projet:
+                    return (["projet_creer", nom_projet], 10)
+                return None
+
+        # 4. Lister les projets
+        for mot in mots_lister:
+            if mot in req:
+                return (["projet_lister"], 1)
+
+        return None
+
     # ==========================================
     # MÉTHODE PRINCIPALE DE ROUTAGE
     # ==========================================
@@ -155,6 +214,21 @@ class IARouter:
         # 1. Vérifier que l'IA est activée
         if not self.__gestIA.get_ia_is_enable():
             return False
+
+        # 1bis. Garde-fou PROJET : détection par mots-clés pour bypasser le LLM
+        projet_result = self.__prefilter_projet(requette)
+        if projet_result is not None:
+            action_args, val_out = projet_result
+            try:
+                donnees, val_out = self.__handle_work(action_args)
+                if not donnees:
+                    donnees = "Action terminée."
+                reponse_finale = self.__gestIA.generate_final_response(requette, donnees)
+                self.__set_output(reponse_finale, val_out)
+            except Exception as e:
+                print(f"Erreur IARouter [prefilter_projet]: {e}")
+                self.__set_output("Une erreur système s'est produite.", 1)
+            return self.__valeurOut != 0
 
         # 2. Envoyer la requête à l'IA
         if not self.__gestIA.send_request_ia(requette):

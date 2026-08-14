@@ -118,6 +118,9 @@ class core_neuron(neuronBase):
                     "tache_projet": "tache_projet",
                     "download": "arrera_download"
                 }
+
+                if nom_gui == "tache" and self._gestionnaire.getGestFNC().getFNCWork().getEtatProject():
+                    nom_gui = "tache_projet"
                 
                 target_gui = mapping.get(nom_gui, nom_gui)
                 
