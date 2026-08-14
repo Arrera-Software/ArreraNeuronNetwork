@@ -45,22 +45,32 @@ class core_neuron(neuronBase):
                 
             elif mots[0] == "ACTU":
                 theme = mots[1] if len(mots) > 1 else ""
-                print(f"[Neuron Core] Action: ACTUALITÉ")
+                #print(f"[Neuron Core] Action: ACTUALITÉ")
                 # Parse theme
                 if theme == "TOUT":
-                    print("  -> Thème : Tout (Général)")
+                    target = "actu_all"
                 elif theme == "TECH":
-                    print("  -> Thème : Technologie")
+                    target = "actu_tech"
                 elif theme == "GENERALISTE":
-                    print("  -> Thème : Généraliste")
+                    target = "actu_main"
                 elif theme == "SCIENCE":
-                    print("  -> Thème : Science")
+                    target = "actu_science"
                 elif theme == "SPORT":
-                    print("  -> Thème : Sport")
+                    target = "actu_sport"
                 elif theme == "CULTURE":
-                    print("  -> Thème : Culture")
+                    target = "actu_culture"
                 else:
-                    print(f"  -> Thème : Inconnu ({theme})")
+                    target = "actu_all"
+
+                if self._gestionnaire.getGestGUI().setGUIActive(target):
+                    self._valeurOut = 5
+                    self._listSortie = ["", ""]
+                else :
+                    self._valeurOut = 1
+                    reponse = self.__gestIA.generate_final_response(requette_raw,
+                                                                    "Informe l'utilisateur qu'il est impossible d'ouvrir l'interface des actualités.")
+                    self._listSortie = [reponse, ""]
+
                 
             elif mots[0] == "RADIO":
                 nom_radio = " ".join(mots[1:]) if len(mots) > 1 else ""
