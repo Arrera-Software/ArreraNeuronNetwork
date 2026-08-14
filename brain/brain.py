@@ -46,6 +46,8 @@ class ABrain :
     def shutdown(self):
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
+        if self.__gestIA is not None:
+            self.__gestIA.stop_worker()
         if self.__gestionnaire.getGestNeuron().getSocket():
             if self.__gestSocket.get_client_is_on():
                 self.__gestSocket.stop_socket_client()
@@ -55,6 +57,17 @@ class ABrain :
                 self.__gestSocket.stop_socket_server()
         self.__gestionnaire.getGestHist().saveHist()
         return str(text)
+
+    def get_ia_queue_size(self) -> int:
+        if self.__gestIA is not None:
+            return self.__gestIA.get_queue_size()
+        return 0
+
+    def is_ia_busy(self) -> bool:
+        if self.__gestIA is not None:
+            return self.__gestIA.is_busy()
+        return False
+
     
     def getListSortie(self)->list :
         if self.__valeurOut == 5 or self.__valeurOut == 12 or self.__valeurOut == 18 or self.__valeurOut == 19:

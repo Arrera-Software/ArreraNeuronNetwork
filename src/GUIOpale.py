@@ -242,25 +242,29 @@ class GUIOpale:
                                                 ,justify="left")
 
     def __sendAssistantMessage(self,entry:aEntry,screen:aTk):
-        if not self.__thAssistant.is_alive():
-            message = entry.get()
-            if message:
-                self.__thAssistant = th.Thread(target=self.__assistantBrain.neuron,args=(message,))
-                self.__thAssistant.start()
-                entry.delete(0, 'end')  # Clear the entry after sending
-                self.__updateRequetteAssistant(screen,message)
-            else:
-                self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
-                                                    ,justify="left")
+        message = entry.get()
+        if message:
+            entry.delete(0, 'end')  # Clear the entry after sending
+            t = th.Thread(target=self.__assistantBrain.neuron, args=(message,))
+            t.start()
+            if not self.__thAssistant.is_alive():
+                self.__thAssistant = t
+                self.__updateRequetteAssistant(screen, message)
+        else:
+            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
+                                                ,justify="left")
 
     def __updateRequetteAssistant(self,screen:aTk,message:str):
-        if self.__thAssistant.is_alive():
+        q_size = self.__assistantBrain.get_ia_queue_size()
+        if self.__thAssistant.is_alive() or q_size > 0:
+            if q_size > 1:
+                self.__labelGeneration.configure(text=f"Generation ({q_size} en attente)...")
+            else:
+                self.__labelGeneration.configure(text="Generation...")
             self.__labelGeneration.placeBottomRight()
-            screen.after(1000,self.__updateRequetteAssistant,screen,message)
+            screen.after(500,self.__updateRequetteAssistant,screen,message)
         else :
-            del self.__thAssistant
             self.__labelGeneration.place_forget()
-            self.__thAssistant = th.Thread()
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
             self.__labelAssistantText.configure(text=texte[0], wraplength=200
@@ -269,6 +273,7 @@ class GUIOpale:
             self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
+
 
     def __keyboard(self,win:aTk,entry:aEntry):
         def anychar(event):
