@@ -276,8 +276,43 @@ class gestIA :
             mots_autorises = ["METEO", "TEMPERATURE", "ACTU", "RADIO", "HEURE", "ARRET", "MINUTEUR", "GUI"]
             
             if premier_mot in mots_autorises:
+                # Garde-fou WORK : si l'IA a classifié GUI WORK mais que la requête
+                # contient des mots-clés de projet/tableur/word, on force COMPLEXE
+                if mot_cle == "GUI WORK":
+                    mots_work_complexe = ["projet", "project", "tableur", "excel",
+                                          "word", "docx", "ferme", "crée", "cree",
+                                          "créer", "creer", "liste", "lister",
+                                          "fichier", "ouvre le projet", "ferme le projet",
+                                          "ouvre un", "ouvrir le projet", "ouvrir un"]
+                    requete_lower = requete.lower()
+                    for mot in mots_work_complexe:
+                        if mot in requete_lower:
+                            return "COMPLEXE"
                 return mot_cle
             else:
+                # Garde-fou ACTU : si l'IA n'a pas reconnu une demande d'actus,
+                # on vérifie avec des mots-clés codés en dur
+                requete_lower = requete.lower()
+                mots_actu = ["actualité", "actualite", "actualités", "actualites",
+                             "actu", "actus", "news", "info", "infos",
+                             "journal", "nouvelles", "presse",
+                             "quoi de neuf", "quoi de nouveau"]
+                theme_map = {
+                    "tech": "TECH", "techno": "TECH", "technologie": "TECH",
+                    "science": "SCIENCE", "scientifique": "SCIENCE",
+                    "sport": "SPORT", "sportif": "SPORT", "sportive": "SPORT",
+                    "culture": "CULTURE", "culturel": "CULTURE", "culturelle": "CULTURE",
+                    "généraliste": "GENERALISTE", "generaliste": "GENERALISTE", "général": "GENERALISTE", "general": "GENERALISTE"
+                }
+                for mot_actu in mots_actu:
+                    if mot_actu in requete_lower:
+                        # Détecter le thème
+                        theme_found = "TOUT"
+                        for mot_theme, code_theme in theme_map.items():
+                            if mot_theme in requete_lower:
+                                theme_found = code_theme
+                                break
+                        return f"ACTU {theme_found}"
                 return "COMPLEXE"
             
         except Exception as e:
