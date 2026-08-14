@@ -71,16 +71,36 @@ class gestGUI:
 
             self.__guiTraducteur = GuiTraducteur(self.__gest)
             self.__guiBrief = guiBrief(self.__gest, self.__gest.getName())
-            self.__guiNews = GuiNews(self.__gest, self.__gest.getName())
+            self.__guiNews = GuiNews(self.__gest)
 
             self.__gui_actions.update({
                 "traducteur": lambda: self.__generic_action(
                     self.__guiTraducteur.active,
                     lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que le traducteur est ouvert.")),
-               "actu":lambda: self.__generic_action(
-                   self.__guiNews.active_all,
-                   self.__gestIA.generate_final_response("","Annonce à l'utilisateur que la fenêtre avec toutes les actualités est ouverte.")
-               ),
+               "actu_all": lambda: self.__generic_action(
+                    self.__guiNews.active_all,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités (toutes les catégories) est ouverte.")
+                ),
+                "actu_main": lambda: self.__generic_action(
+                    self.__guiNews.active_main,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités généralistes est ouverte.")
+                ),
+                "actu_tech": lambda: self.__generic_action(
+                    self.__guiNews.active_tech,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités sur les nouvelles technologies est ouverte.")
+                ),
+                "actu_culture": lambda: self.__generic_action(
+                    self.__guiNews.active_culture,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités culturelles est ouverte.")
+                ),
+                "actu_sport": lambda: self.__generic_action(
+                    self.__guiNews.active_sport,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités sportives est ouverte.")
+                ),
+                "actu_science": lambda: self.__generic_action(
+                    self.__guiNews.active_science,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités scientifiques est ouverte.")
+                ),
                "morning_brief": lambda: self.__generic_action(
                    self.__guiBrief.view_morning,
                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief du matin est prêt et affiché.")),
@@ -93,7 +113,7 @@ class gestGUI:
            })
 
             self.__prompt += """
-                - "gui": Args ["nom_gui", ""]. nom_gui: traducteur, morning_brief, afternoon_brief, evening_brief.
+                - "gui": Args ["nom_gui", ""]. nom_gui: traducteur, actu_all, actu_main, actu_tech, actu_culture, actu_sport, actu_science, morning_brief, afternoon_brief, evening_brief.
                 """
 
 
@@ -275,3 +295,24 @@ class gestGUI:
     def active_actu_all(self):
         if self.__guiNews is not None:
             self.__guiNews.active_all()
+
+    def active_actu_main(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_main()
+
+    def active_actu_tech(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_tech()
+
+    def active_actu_culture(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_culture()
+
+    def active_actu_sport(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_sport()
+
+    def active_actu_science(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_science()
+
