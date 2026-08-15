@@ -118,7 +118,9 @@ class gestFNC:
             self.__downloader_youtube = fncArreraVideoDownload(self.__gestionnaire)
 
             self.__prompt += """
-                - "open": Args ["action", "cible"]. actions: logiciel, site_enregistre, url, doc_assistant, lister_logiciels, lister_sites, socket_mode.
+                - "open": Args ["action", "cible"]. 
+                  actions: logiciel(cible=nom_logiciel), site_enregistre(cible=nom_site), url(cible=url_complete), doc_assistant, lister_logiciels, lister_sites, lister_radios.
+                  Exemples: "ouvre firefox" -> action=logiciel cible=firefox. "quels logiciels j'ai" -> action=lister_logiciels. "ouvre la doc" -> action=doc_assistant. "quels sites j'ai" -> action=lister_sites. "quelles radios sont disponibles" -> action=lister_radios.
                 - "download_youtube": Args ["mode", "url"]. modes: "1"(video), "2"(audio), ouvrir_interface.
                 """
 

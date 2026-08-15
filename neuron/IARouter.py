@@ -1001,6 +1001,33 @@ class IARouter:
         elif type_action == "ouvrir_interface":
             return self.__handle_gui(["open", ""])
 
+        elif type_action == "lister_logiciels":
+            user_conf = self.__gestionnaire.getUserConf()
+            list_soft = list(user_conf.getSoft().keys())
+            if not list_soft:
+                return "Aucun logiciel enregistré.", 1
+            return "Logiciels enregistrés :\n" + "\n".join(f"- {s}" for s in list_soft), 1
+
+        elif type_action == "lister_sites":
+            user_conf = self.__gestionnaire.getUserConf()
+            list_sites = list(user_conf.getSite().keys())
+            if not list_sites:
+                return "Aucun site web enregistré.", 1
+            return "Sites web enregistrés :\n" + "\n".join(f"- {s}" for s in list_sites), 1
+
+        elif type_action == "lister_radios":
+            radios = ["Europe 1", "Europe 2", "France Info", "France Inter",
+                      "France Musique", "France Culture", "France Bleu",
+                      "Fun Radio", "NRJ", "RFM", "Nostalgie", "Skyrock", "RTL"]
+            return "Radios disponibles :\n" + "\n".join(f"- {r}" for r in radios), 1
+
+        elif type_action == "doc_assistant":
+            link = self.__gestionnaire.getLinkDoc()
+            if fnc.openSaveWebSiteAssistant(link):
+                return "Documentation de l'assistant ouverte.", 1
+            else:
+                return "Impossible d'ouvrir la documentation.", 1
+
         else:
             return "Action open non reconnue.", 1
 
