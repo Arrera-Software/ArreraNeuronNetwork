@@ -357,6 +357,8 @@ class gestIA :
                 return mot_cle
             else:
                 requete_lower = requete.lower()
+
+                # Garde-fou ACTU : si l'IA n'a pas reconnu une demande d'actus
                 mots_actu = ["actualité", "actualite", "actualités", "actualites",
                              "actu", "actus", "news", "info", "infos",
                              "journal", "nouvelles", "presse",
@@ -376,6 +378,41 @@ class gestIA :
                                 theme_found = code_theme
                                 break
                         return f"ACTU {theme_found}"
+
+                # Garde-fou GUI : si l'IA n'a pas reconnu une demande d'ouverture d'interface
+                mots_declencheurs_gui = ["ouvre", "ouvrir", "montre", "montrer",
+                                          "affiche", "afficher", "lance", "lancer",
+                                          "démarre", "demarrer", "démarrer",
+                                          "active", "activer"]
+                gui_map = {
+                    # Calculatrice
+                    "calculatrice": "CALCULATRICE", "calculette": "CALCULATRICE", "calcul": "CALCULATRICE",
+                    # Lecture
+                    "lecture": "LECTURE", "lecteur": "LECTURE",
+                    # Orthographe
+                    "orthographe": "ORTHOGRAPHE", "correcteur": "ORTHOGRAPHE",
+                    # Traducteur
+                    "traducteur": "TRADUCTEUR", "traduction": "TRADUCTEUR",
+                    # Agenda
+                    "agenda": "AGENDA", "calendrier": "AGENDA",
+                    # Tâches
+                    "tache": "TACHE", "tâche": "TACHE", "taches": "TACHE", "tâches": "TACHE",
+                    "gestionnaire de tache": "TACHE", "gestionnaire de tâche": "TACHE",
+                    # Work
+                    "arrera work": "WORK", "interface de travail": "WORK", "espace de travail": "WORK",
+                    # Download
+                    "download": "DOWNLOAD", "téléchargement": "DOWNLOAD", "telechargement": "DOWNLOAD",
+                    "arrera download": "DOWNLOAD",
+                }
+
+                # Vérifier qu'un mot déclencheur est présent
+                has_trigger = any(mot in requete_lower for mot in mots_declencheurs_gui)
+                if has_trigger:
+                    # Chercher le nom de GUI le plus long en premier (pour matcher "arrera work" avant "work")
+                    for gui_name, gui_code in sorted(gui_map.items(), key=lambda x: len(x[0]), reverse=True):
+                        if gui_name in requete_lower:
+                            return f"GUI {gui_code}"
+
                 return "COMPLEXE"
             
         except Exception as e:

@@ -125,7 +125,47 @@ Ces garde-fous interviennent **après** la réponse de l'IA pour corriger ses er
 
 ---
 
-### Garde-fou 3 : Pré-filtre PROJET dans `IARouter`
+### Garde-fou 3 : `COMPLEXE` → `GUI [NOM]`
+
+**Problème résolu** : L'IA ne reconnaît pas les phrases naturelles comme "ouvre la calculatrice", "montre l'agenda" et retourne `COMPLEXE` au lieu de `GUI CALCULATRICE` / `GUI AGENDA`.
+
+**Quand** : L'IA a retourné un mot-clé non reconnu (donc `COMPLEXE` par défaut) ET la requête contient un **mot déclencheur** + un **nom d'interface**.
+
+**Mots déclencheurs** :
+
+| Mots déclencheurs |
+|---|
+| `ouvre`, `ouvrir`, `montre`, `montrer`, `affiche`, `afficher` |
+| `lance`, `lancer`, `démarre`, `démarrer`, `active`, `activer` |
+
+**Noms d'interfaces détectés** :
+
+| Mots-clés dans la requête | GUI assignée |
+|---|---|
+| `calculatrice`, `calculette`, `calcul` | `CALCULATRICE` |
+| `lecture`, `lecteur` | `LECTURE` |
+| `orthographe`, `correcteur` | `ORTHOGRAPHE` |
+| `traducteur`, `traduction` | `TRADUCTEUR` |
+| `agenda`, `calendrier` | `AGENDA` |
+| `tache`, `tâche`, `taches`, `tâches`, `gestionnaire de tâche` | `TACHE` |
+| `arrera work`, `interface de travail`, `espace de travail` | `WORK` |
+| `download`, `téléchargement`, `arrera download` | `DOWNLOAD` |
+
+> **Note** : Les noms les plus longs sont testés en premier (ex: "arrera work" avant "work") pour éviter les faux positifs.
+
+**Exemples** :
+| Requête | IA dit | Garde-fou | Résultat final |
+|---|---|---|---|
+| "Ouvre la calculatrice" | `COMPLEXE` | ✅ "ouvre" + "calculatrice" | `GUI CALCULATRICE` → core_neuron |
+| "Montre l'agenda" | `COMPLEXE` | ✅ "montre" + "agenda" | `GUI AGENDA` → core_neuron |
+| "Lance le traducteur" | `COMPLEXE` | ✅ "lance" + "traducteur" | `GUI TRADUCTEUR` → core_neuron |
+| "Affiche mes tâches" | `COMPLEXE` | ✅ "affiche" + "tâches" | `GUI TACHE` → core_neuron |
+| "Ouvre arrera work" | `COMPLEXE` | ✅ "ouvre" + "arrera work" | `GUI WORK` → core_neuron |
+| "Ouvre arrera download" | `COMPLEXE` | ✅ "ouvre" + "arrera download" | `GUI DOWNLOAD` → core_neuron |
+
+---
+
+### Garde-fou 4 : Pré-filtre PROJET dans `IARouter`
 
 **Problème résolu** : Le LLM confond `projet_ouvrir` et `projet_lister` — quand on dit "Ouvre le projet Alpha", il retourne l'action de lister au lieu d'ouvrir.
 
