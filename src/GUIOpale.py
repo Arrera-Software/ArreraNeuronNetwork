@@ -37,6 +37,7 @@ class GUIOpale:
         self.__checkCodeHelp = aCheckBox(frameNeuron, text="Neuron\nCodeHelp",boolean_value=True)
         self.__checkWork = aCheckBox(frameNeuron, text="Neuron\nWork",boolean_value=True)
         self.__checkSocket = aCheckBox(frameNeuron, text="Utilisation des socket",boolean_value=True)
+        self.__checkbrief = aCheckBox(frameNeuron, text="Brief", boolean_value=True)
         # Widget FrameLangue
         labelTitleLangue = aLabel(frameLangue,text="Gestion de la langue",police_size=25)
         self.__langSet = aLabel(frameLangue,text="",police_size=25)
@@ -56,7 +57,8 @@ class GUIOpale:
         self.__checkAPI.place(x=130, y=85,anchor="nw")
         self.__checkCodeHelp.place(x=260, y=85,anchor="nw")
         self.__checkWork.place(x=380, y=85,anchor="nw")
-        self.__checkSocket.place(x=130, y=160,anchor="nw")
+        self.__checkSocket.place(x=10, y=160,anchor="nw")
+        self.__checkbrief.place(x=260, y=160,anchor="nw")
         # FrameLangue
         labelTitleLangue.placeTopCenter()
         self.__btnVous.placeLeftCenter()
@@ -122,6 +124,7 @@ class GUIOpale:
                                        etatCodehelp=int(self.__checkCodeHelp.get()),
                                        etatWork=int(self.__checkWork.get()),
                                        etatSocket=int(self.__checkSocket.get()),
+                                       brief_enable=int(self.__checkbrief.get()),
                                        lienDoc="www.google.com",
                                        fichierLangue=str(self.__emplacementLangue),
                                        fichierKeyword="keyword/",

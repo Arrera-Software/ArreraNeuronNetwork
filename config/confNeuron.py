@@ -20,6 +20,7 @@ class confNeuron:
     etatCodehelp: int = 0
     etatWork: int = 0
     etatSocket: int = 0
+    brief_enable: int = 1
     lienDoc: str = ""
     fichierLangue:str = ""
     fichierKeyword:str = ""

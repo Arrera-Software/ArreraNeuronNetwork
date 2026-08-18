@@ -180,7 +180,7 @@ class ABrain :
         # Ajouter la partie mise a jour du socket
         self.__gestionnaire.updateDate()
         if (time(0,0) <= datetime.now().time() < time(11,0) and not
-        self.__gestionnaire.get_state_morning_brief()):
+        self.__gestionnaire.get_state_morning_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_morning_brief()
             try:
                 response = self.__gestIA.generate_final_response("","Annonce-lui que son brief du matin est prêt.")
@@ -192,7 +192,7 @@ class ABrain :
             self.__valeurOut = 5
             return True
         elif (time(11,0) <= datetime.now().time() < time(16,0) and not
-        self.__gestionnaire.get_state_afternoon_brief()):
+        self.__gestionnaire.get_state_afternoon_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_afternoon_brief()
             try:
                 response = self.__gestIA.generate_final_response("","Annonce-lui que son brief de l'après-midi est prêt.")
@@ -204,7 +204,7 @@ class ABrain :
             self.__valeurOut = 5
             return True
         elif (time(16,0) <= datetime.now().time() and not
-        self.__gestionnaire.get_state_evening_brief()):
+        self.__gestionnaire.get_state_evening_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_evening_brief()
             try:
                 response = self.__gestIA.generate_final_response("","Annonce-lui que son brief de la soirée est prêt.")

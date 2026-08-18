@@ -8,6 +8,7 @@ class gestNeuron :
     def __init__(self,gestionnaire:gestionnaire) -> None:
         # Recuperation de l'etat du socket
         self.__etatSocket = gestionnaire.getConfigFile().etatSocket
+        self.__brief_is_enabled = gestionnaire.getConfigFile().brief_enable
         # Creation du routeur principal (remplace les anciens neurones)
         self.iarouter = IARouter(gestionnaire)
         # Neurones socket
@@ -22,6 +23,12 @@ class gestNeuron :
 
     def getSocket(self):
         if self.__etatSocket == 1 :
+            return True
+        else :
+            return False
+
+    def getBrief(self):
+        if self.__brief_is_enabled == 1 :
             return True
         else :
             return False
