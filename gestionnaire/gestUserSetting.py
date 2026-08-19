@@ -305,7 +305,7 @@ class gestUserSetting:
             if reponse == "yes":
                 shorcutDir = os.path.join(os.environ["APPDATA"], r"Microsoft\Windows\Start Menu\Programs")
             else :
-                shorcutDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
+                shorcutDir = r"C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
 
             command = filedialog.askopenfilename(
                 title="Sélectionner un programme",

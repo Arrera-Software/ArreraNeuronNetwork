@@ -11,9 +11,6 @@ class ABrain :
         self.__networkRunning = True
         self.__update = False
         self.__neuronUsed = str
-        self.__listNeuron = ["chatBot","service","api",
-                             "software","open","search",
-                             "time","codehelp","word"]
         # Gestionnaire
         self.__gestionnaire = gestionnaire(config)
         self.__gestIA = self.__gestionnaire.getGestIA()
