@@ -46,6 +46,7 @@ def main():
               "12.Tiger Word\n"
               "13.Historique\n"
               "14.IA\n"
+              "15.Voice\n"
               "0.Quitter")
 
         print("_____________________________________________________")
@@ -380,6 +381,31 @@ def main():
                             print("Impossible de supprimer le model")
                     case "0":
                         pass
+
+            case 15 :
+                print("Voice")
+                out = input("1. Voir les models\n"
+                            "2. Choisir le model\n"
+                            "3. Voir le model selectionner\n"
+                            "Choix : ")
+                match out:
+                    case "1":
+                        text = "Modele de voix disponible :\n"
+                        for l in user.get_list_voice_available():
+                            text += f"- {l}\n"
+                        print(text)
+                    case "2":
+                        text = "Modele de voix disponible :\n"
+                        for l in user.get_list_voice_available():
+                            text += f"- {l}\n"
+                        print(text)
+                        model = input("Choisir le model : ")
+                        if user.set_voice(model):
+                            print("Modele ajouter")
+                        else :
+                            print("Impossible de modifier le model")
+                    case "3":
+                        print(f"Voix selectionner :{user.get_voice_selected()}")
 
             case _:
                 print("Erreur, veuillez choisir un nombre entre 0 et 14.")

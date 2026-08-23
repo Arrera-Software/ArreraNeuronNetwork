@@ -1,8 +1,8 @@
 setuptools
 wheel
 arrera-tk
+customtkinter
 yt_dlp
-tkcalendar
 requests
 gTTS
 translate
@@ -14,17 +14,17 @@ pyperclip
 websocket-client
 websockets
 pillow
-playsound3
+numpy
+sounddevice
+soundfile
+piper-tts
 speechRecognition
 meteofrance_api
 pyradios
 python-vlc
-pyspellchecker
 llama_cpp_python
-pyttsx3
 pyinstaller
 feedparser
 winsdk ; sys_platform == 'win32'
 pyobjc-framework-CoreLocation ; sys_platform == 'darwin'
 pydbus ; sys_platform == 'linux'
-gi ; sys_platform == 'linux'

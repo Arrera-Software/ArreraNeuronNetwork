@@ -29,12 +29,12 @@ class gestionnaire:
         # Declaration des librairies
         self.__detecteurOS = OS()
         self.__network = network()
-        self.__arrVoice = CArreraVoice(self)
         self.__arrDate = CArreraDate()
         # Fichier JSON
         self.__config = confAssistant
         self.__userConf = gestUserSetting(self)
         self.__fichierFete = jsonWork("config/listFete.json")
+        self.__arrVoice = CArreraVoice(self)
         # Initialisation des tout les gestionnaires
         self.__gestHist = gestHistorique(self)
         self.__gestLang = gestLangue(self.__config.fichierLangue,

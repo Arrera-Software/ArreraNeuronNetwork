@@ -24,7 +24,15 @@ DICTUSER = {
     "soundMicro":"0",
     "listWord":[],
     "bootHist":1,
-    "ia_model":""
+    "ia_model":"",
+    "voice_selected":"google"
+}
+
+DICTVOICE = {
+    "tom_onnx": "",
+    "tom_json": "",
+    "siwis_onnx": "",
+    "siwis_json": ""
 }
 
 class gestUserSetting:
@@ -40,6 +48,7 @@ class gestUserSetting:
             self.__userTaskPath = self.__conf_folder+"user-task.json"
             self.__userHistoriquePath = self.__conf_folder+"user-hist.json"
             self.__userEventPath = self.__conf_folder+"user-event.json"
+            self.__userVoicePath = self.__conf_folder+"voice.json"
         elif self.__osDect.osWindows():
             home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
             self.__conf_folder = str(home)+"/arrera-assistant/"
@@ -47,8 +56,7 @@ class gestUserSetting:
             self.__userTaskPath = self.__conf_folder+"user-task.json"
             self.__userHistoriquePath = self.__conf_folder+"user-hist.json"
             self.__userEventPath = self.__conf_folder+"user-event.json"
-        else :
-            self.__userSettingPath = None
+            self.__userVoicePath = self.__conf_folder + "voice.json"
 
 
         # Teste si le fichier de configuration utilisateur existe
@@ -68,6 +76,10 @@ class gestUserSetting:
         if not os.path.isfile(self.__userEventPath):
             with open(self.__userEventPath, "x", encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
+
+        if not os.path.isfile(self.__userVoicePath):
+            with open(self.__userVoicePath, "x", encoding="utf-8") as f:
+                json.dump(DICTVOICE, f, ensure_ascii=False, indent=2)
 
             self.__firstRun = True
 
@@ -96,6 +108,9 @@ class gestUserSetting:
 
     def getHistoriquePath(self):
         return self.__userHistoriquePath
+
+    def getVoicePath(self):
+        return self.__userVoicePath
 
     # Partie USER
 
@@ -486,3 +501,14 @@ class gestUserSetting:
 
     def get_model_downloaded(self):
         return self.__gestionnaire.getGestIA().get_list_model_download()
+
+    def get_list_voice_available(self):
+        return self.__gestionnaire.getArrVoice().get_list_voice_model()
+
+    def get_voice_selected(self):
+        return self.__fileUser.getContentJsonFlag("voice_selected")
+
+    def set_voice(self,voice:str):
+        if voice in self.get_list_voice_available():
+            return self.__fileUser.setValeurJson("voice_selected", voice)
+        return False

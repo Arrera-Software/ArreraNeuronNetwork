@@ -1,10 +1,16 @@
-from playsound3 import playsound as pl
-from gestionnaire.gestion import gestionnaire
-import speech_recognition as sr
-import pyttsx3
+import io
+import soundfile as sf
+import sounddevice as sd
+import numpy as np
 from gtts import gTTS
 import os
+import glob
+import json
+import requests
+import speech_recognition as sr
+from gestionnaire.gestion import gestionnaire, jsonWork
 from librairy.resource_lib import resource_lib
+from piper.voice import PiperVoice
 
 
 class CArreraVoice:
@@ -17,55 +23,199 @@ class CArreraVoice:
         self.__outPutText = ""
         self.__resource_lib = resource_lib()
         self.__stop_flag = False
+        self.__voice_model_download = True
         self.__trigger_status = 0
+        self.__voice_name = "google"
+        self.__tts = None
+        self.__loaded_voice_name = None
+
+        dectos = self.__gestionnaire.getOSObjet()
+
+        if dectos.osLinux() or dectos.osMac():
+            home = os.path.expanduser("~")
+            self.__model_dir = os.path.join(home, ".config", "arrera-assistant", "voice_model")
+        elif dectos.osWindows():
+            home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
+            self.__model_dir = os.path.join(home, "arrera-assistant", "voice_model")
+        else:
+            self.__model_dir = os.path.join(os.path.expanduser("~"), ".arrera-assistant", "voice_model")
+
+        os.makedirs(self.__model_dir, exist_ok=True)
+        if not os.path.exists(self.__resource_lib.tmp_directory()):
+            os.makedirs(self.__resource_lib.tmp_directory(), exist_ok=True)
+
+        self.__json_conf = jsonWork(self.__gestionnaire.getUserConf().getVoicePath())
+
+        tom_onnx = os.path.join(self.__model_dir, "fr_FR-tom-medium.onnx")
+        tom_json = tom_onnx + ".json"
+        siwis_onnx = os.path.join(self.__model_dir, "fr_FR-siwis-medium.onnx")
+        siwis_json = siwis_onnx + ".json"
 
         if self.__gestionnaire.getNetworkObjet().getEtatInternet():
-            self.__tts = None
-            if not os.path.exists(self.__resource_lib.tmp_directory()):
-                os.makedirs(self.__resource_lib.tmp_directory())
-        else:
-            self.__tts = pyttsx3.init()
-            for voice in self.__tts.getProperty('voices'):
-                if "french" in voice.name.lower() or "fr" in voice.id.lower():
-                    voice_id = voice.id
-                    self.__tts.setProperty('voice', voice_id)
-                    break
-            self.__tts.setProperty('rate', 150)
+            if not os.path.exists(tom_onnx) or not self.__is_valid_json_file(tom_json):
+                if not self.__download_model(
+                        "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/tom/medium/fr_FR-tom-medium.onnx?download=true",
+                        "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/tom/medium/fr_FR-tom-medium.onnx.json?download=true",
+                        "tom"):  # Tom
+                    self.__voice_model_download = False
+
+            if not os.path.exists(siwis_onnx) or not self.__is_valid_json_file(siwis_json):
+                if not self.__download_model(
+                        "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx?download=true",
+                        "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx.json?download=true",
+                        "siwis"):  # Siwis
+                    self.__voice_model_download = False
+
+        if os.path.exists(tom_onnx) and self.__is_valid_json_file(tom_json):
+            self.__json_conf.setValeurJson("tom_onnx", tom_onnx)
+            self.__json_conf.setValeurJson("tom_json", tom_json)
+
+        if os.path.exists(siwis_onnx) and self.__is_valid_json_file(siwis_json):
+            self.__json_conf.setValeurJson("siwis_onnx", siwis_onnx)
+            self.__json_conf.setValeurJson("siwis_json", siwis_json)
+
+        self.__list_model = glob.glob(os.path.join(self.__model_dir, "*.onnx"))
+
+        self.loadConfig()
+        self.load_voice_model()
+
+    def __is_valid_json_file(self, filepath):
+        if not os.path.exists(filepath):
+            return False
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                json.load(f)
+            return True
+        except Exception:
+            return False
+
+    def __download_model(self, link_onnx: str, link_json: str, voice_model: str):
+        if not link_onnx and not link_json:
+            return False
+
+        if voice_model != "tom" and voice_model != "siwis":
+            return False
+
+        json_file = link_json.split('/')[-1].replace('?download=true', '')
+        onnx_path = link_onnx.split('/')[-1].replace('?download=true', '')
+
+        try:
+            response = requests.get(link_onnx, stream=True, timeout=30)
+
+            if response.status_code != 200:
+                return False
+
+            full_path = os.path.join(self.__model_dir, onnx_path)
+            with open(full_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            self.__json_conf.setValeurJson(voice_model + "_onnx", full_path)
+
+            response = requests.get(link_json, stream=True, timeout=30)
+
+            if response.status_code != 200:
+                return False
+
+            full_path = os.path.join(self.__model_dir, json_file)
+            with open(full_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+            self.__json_conf.setValeurJson(voice_model + "_json", full_path)
+
+            return True
+
+        except Exception as e:
+            print(e)
+            return False
+
+    def get_list_voice_model(self):
+        return ["tom", "siwis", "google"]
 
     def loadConfig(self):
         self.__emplacementSoundMicro = self.__gestionnaire.getConfigFile().asset + "sound/micro.mp3"
-        if self.__gestionnaire.getUserConf().getSoundMicro():
-            self.__soundMicro = True
-        else:
-            self.__soundMicro = False
+        sound_val = self.__gestionnaire.getUserConf().getSoundMicro()
+        self.__soundMicro = (sound_val in ("1", 1, True))
         self.__listWord = self.__gestionnaire.getUserConf().getListWord()
         self.__nbWord = len(self.__listWord)
+        self.__voice_name = self.__gestionnaire.getUserConf().get_voice_selected() or "google"
+
+    def load_voice_model(self):
+        if self.__voice_name == "google":
+            self.__tts = None
+            self.__loaded_voice_name = "google"
+            return True
+        else:
+            if self.__tts is not None and self.__loaded_voice_name == self.__voice_name:
+                return True
+            try:
+                if self.__voice_name == "tom":
+                    onnx_path = self.__json_conf.getContentJsonFlag("tom_onnx") or os.path.join(self.__model_dir, "fr_FR-tom-medium.onnx")
+                elif self.__voice_name == "siwis":
+                    onnx_path = self.__json_conf.getContentJsonFlag("siwis_onnx") or os.path.join(self.__model_dir, "fr_FR-siwis-medium.onnx")
+                else:
+                    return False
+
+                if not onnx_path or not os.path.exists(onnx_path):
+                    return False
+
+                self.__tts = PiperVoice.load(onnx_path)
+                self.__loaded_voice_name = self.__voice_name
+                return True
+            except Exception as e:
+                print(e)
+                self.__tts = None
+                return False
 
     def say(self, text: str):
-        if self.__gestionnaire.getNetworkObjet().getEtatInternet():
-            try:
-                tts = gTTS(text=text, lang='fr', slow=False)
-                if os.path.exists(self.__resource_lib.tmp_directory() + "/voice.mp3"):
-                    os.remove(self.__resource_lib.tmp_directory() + "/voice.mp3")
+        if text != "":
+            self.loadConfig()
+            if self.__voice_name == "google":
+                if self.__gestionnaire.getNetworkObjet().getEtatInternet():
+                    try:
+                        tts = gTTS(text=text, lang='fr', slow=False)
+                        fp = io.BytesIO()
+                        tts.write_to_fp(fp)
+                        fp.seek(0)
 
-                tts.save(self.__resource_lib.tmp_directory() + "/voice.mp3")
-
-                pl(self.__resource_lib.tmp_directory() + "/voice.mp3")
-
-                os.remove(self.__resource_lib.tmp_directory() + "/voice.mp3")
-                return True
-            except:
-                return False
+                        data, samplerate = sf.read(fp, dtype='int16')
+                        sd.play(data, samplerate=samplerate)
+                        sd.wait()
+                        return True
+                    except Exception as e:
+                        print(e)
+                        return False
+                else:
+                    return False
+            elif self.__voice_name == "tom" or self.__voice_name == "siwis":
+                if self.__tts is None or self.__loaded_voice_name != self.__voice_name:
+                    if not self.load_voice_model():
+                        return False
+                try:
+                    audio_bytes = b"".join(
+                        chunk.audio_int16_bytes for chunk in self.__tts.synthesize(text))
+                    if len(audio_bytes) == 0:
+                        return False
+                    audio_data = np.frombuffer(audio_bytes, dtype=np.int16)
+                    frequence = self.__tts.config.sample_rate
+                    sd.play(audio_data, samplerate=frequence)
+                    sd.wait()
+                    return True
+                except Exception as e:
+                    print(e)
+                    return False
         else:
-            try:
-                self.__tts.say(text)
-                self.__tts.runAndWait()
-                return True
-            except:
-                return False
+            return False
 
     def playFile(self, file: str):
-        pl(file)
+        try:
+            if os.path.exists(file):
+                data, samplerate = sf.read(file, dtype='int16')
+                sd.play(data, samplerate=samplerate)
+                sd.wait()
+        except Exception as e:
+            print(f"Erreur lecture fichier {file}: {e}")
 
     def stop_listen(self):
         self.__stop_flag = True
@@ -73,7 +223,7 @@ class CArreraVoice:
     def listen(self):
         self.loadConfig()
         if self.__soundMicro:
-            pl(self.__emplacementSoundMicro)
+            self.playFile(self.__emplacementSoundMicro)
 
         r = sr.Recognizer()
         self.__stop_flag = False
