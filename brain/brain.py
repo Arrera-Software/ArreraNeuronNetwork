@@ -5,7 +5,6 @@ from datetime import datetime, time
 
 class ABrain :
     __KEYWORDS_ARRET = {
-        # Mots unitaires univoques
         "arret", "arreter", "arrete", "stop", "stoppe", "stopper",
         "eteindre", "eteins", "quitter", "quitte", "fermer", "exit",
         "shutdown", "bye", "byebye", "ciao", "adieu",
@@ -37,8 +36,7 @@ class ABrain :
     )
 
     def __init__(self,config:confNeuron):
-        # Declaration des diferente var
-        self.__listOut =  [] 
+        self.__listOut =  []
         self.__valeurOut = 0
         self.__networkRunning = True
         self.__update = False
