@@ -44,6 +44,7 @@ class gestIA :
         self.__task_queue.put(None)
         if self.__worker_thread and self.__worker_thread.is_alive():
             self.__worker_thread.join(timeout=1.0)
+            self.__worker_thread = None
 
     def __worker_loop(self):
         while self.__running:
@@ -97,12 +98,25 @@ class gestIA :
     def is_busy(self):
         return self.__is_processing or not self.__task_queue.empty()
 
+    def unloadIA(self):
+        """Désinstancie proprement le worker et le modèle IA en mémoire."""
+        self.stop_worker()
+        if self.__ia_loader is not None:
+            self.__ia_loader.unload_model()
+            del self.__ia_loader
+            self.__ia_loader = None
+        self.__ia_mode_enabled = False
+
     def loadIA(self):
         user_conf = self.__gestionnaire.getUserConf()
         model_name = user_conf.get_ia_model()
-        if model_name !="":
+        if model_name != "":
             try:
                 if model_name in self.get_list_model_download():
+                    # Si un modèle est déjà chargé, on le désinstancie d'abord
+                    if self.__ia_loader is not None or self.__ia_mode_enabled:
+                        self.unloadIA()
+
                     self.__ia_loader = ArreraIALoad()
                     self.__ia_loader.load_model_gguf(
                         model_path=self.__downloader_model.get_path_model(model_name),
@@ -115,16 +129,17 @@ class gestIA :
                         self.__start_worker()
                         return True
                     else:
+                        self.unloadIA()
                         return False
                 else:
-                    self.__ia_mode_enabled = False
+                    self.unloadIA()
                     return False
             except Exception as e:
                 #print(f"Erreur fatale dans loadIA : {e}")
-                self.__ia_mode_enabled = False
+                self.unloadIA()
                 return False
         else :
-            self.__ia_mode_enabled = False
+            self.unloadIA()
             return False
 
     def load_help(self,help:str):

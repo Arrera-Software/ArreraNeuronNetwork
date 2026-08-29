@@ -76,7 +76,7 @@ class ABrain :
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
         if self.__gestIA is not None:
-            self.__gestIA.stop_worker()
+            self.__gestIA.unloadIA()
         if self.__gestionnaire.getGestNeuron().getSocket():
             if self.__gestSocket.get_client_is_on():
                 self.__gestSocket.stop_socket_client()
@@ -86,6 +86,12 @@ class ABrain :
                 self.__gestSocket.stop_socket_server()
         self.__gestionnaire.getGestHist().saveHist()
         return str(text)
+
+    def reload_ia(self) -> bool:
+        """Désinstancie le modèle actuel et recharge/réinstancie le modèle IA configuré."""
+        if self.__gestIA is not None:
+            return self.__gestIA.loadIA()
+        return False
 
     def get_ia_queue_size(self) -> int:
         if self.__gestIA is not None:

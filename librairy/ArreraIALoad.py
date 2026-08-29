@@ -1,3 +1,4 @@
+import gc
 import os
 from llama_cpp import Llama
 
@@ -68,9 +69,28 @@ class ArreraIALoad:
         self.__system_context_is_loaded = False
         self.__system_instructions = []
 
+    def unload_model(self):
+        """Désinstancie proprement le modèle Llama chargé en mémoire."""
+        if self.__model is not None:
+            try:
+                if hasattr(self.__model, 'close'):
+                    self.__model.close()
+            except Exception:
+                pass
+            del self.__model
+            self.__model = None
+            gc.collect()
+        self.__is_loaded = False
+        self.__system_context_is_loaded = False
+        self.__system_instructions = []
+
     def load_model_gguf(self, model_path:str, n_ctx:int=2048):
         if not os.path.exists(model_path):
             raise ValueError(f"Le fichier modèle n'existe pas : {model_path}")
+
+        # Si un modèle est déjà chargé, le désinstancier d'abord
+        if self.__is_loaded or self.__model is not None:
+            self.unload_model()
 
         try:
             self.__model = Llama(
@@ -83,6 +103,7 @@ class ArreraIALoad:
             self.__is_loaded = True
             return True
         except Exception as e:
+            self.__is_loaded = False
             raise ValueError(f"Erreur lors du chargement : {e}")
 
     def send_request(self, sentence: str, consigne_langue: bool = True, as_json: bool = True):
