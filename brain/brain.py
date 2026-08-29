@@ -4,18 +4,49 @@ from datetime import datetime, time
 
 
 class ABrain :
+    __KEYWORDS_ARRET = {
+        "arret", "arreter", "arrete", "stop", "stoppe", "stopper",
+        "eteindre", "eteins", "quitter", "quitte", "fermer", "exit",
+        "shutdown", "bye", "byebye", "ciao", "adieu",
+        "au revoir", "aurevoir", "a la prochaine", "a plus", "a plus tard",
+        "a demain", "a bientot", "bonne nuit", "bonne soiree", "bon apres midi",
+        "arrete toi", "eteins toi", "ferme toi", "coupe toi",
+        "eteins l assistant", "ferme l assistant", "eteins le systeme",
+        "je te laisse", "je dois y aller", "je m en vais", "je pars",
+        "je vais dormir", "je vais me coucher", "c est tout", "c est bon",
+        "on arrete la", "j ai termine", "j ai fini", "on a fini", "coupe tout"
+    }
+
+    __NON_ARRET_TARGETS = (
+        "radio", "musique", "son", "flux",
+        "minuteur", "chrono", "chronometre", "alarme", "bip", "compte a rebours",
+        "projet", "project", "tableur", "excel", "word", "fichier", "document", "page",
+        "fenetre", "calculatrice", "calculette", "agenda", "calendrier", "tache", "traducteur", "lecture",
+        "de parler", "d ecrire", "de lire"
+    )
+
+    __EXCLUSION_EXPRESSIONS = (
+        "arret de bus", "arret de tram", "arret de metro", "arret de train",
+        "arret maladie", "arret de travail", "sans arret", "pourquoi ca s arrete"
+    )
+
+    __POLITENESS_RESIDUES = (
+        "s il te plait", "s il vous plait", "stp", "svp", "please",
+        "merci", "bonne journee", "bon courage", "dis", "dit"
+    )
+
     def __init__(self,config:confNeuron):
-        # Declaration des diferente var
-        self.__listOut =  [] 
+        self.__listOut =  []
         self.__valeurOut = 0
         self.__networkRunning = True
         self.__update = False
         self.__neuronUsed = str
-        self.__listNeuron = ["chatBot","service","api",
-                             "software","open","search",
-                             "time","codehelp","word"]
         # Gestionnaire
         self.__gestionnaire = gestionnaire(config)
+        self.__gestIA = self.__gestionnaire.getGestIA()
+        if self.__gestionnaire.getUserConf().get_ia_model() != "":
+            if not self.__gestIA.loadIA():
+                raise Exception("Erreur critique : Impossible de charger le modèle IA.")
         self.__gestNeuron = self.__gestionnaire.getGestNeuron()
         # Partie serveur
         self.__gestSocket = self.__gestionnaire.getSocketObjet()
@@ -42,6 +73,8 @@ class ABrain :
     def shutdown(self):
         hour = datetime.now().hour
         text = self.__gestLangue.aurevoir(hour)
+        if self.__gestIA is not None:
+            self.__gestIA.unloadIA()
         if self.__gestionnaire.getGestNeuron().getSocket():
             if self.__gestSocket.get_client_is_on():
                 self.__gestSocket.stop_socket_client()
@@ -51,6 +84,23 @@ class ABrain :
                 self.__gestSocket.stop_socket_server()
         self.__gestionnaire.getGestHist().saveHist()
         return str(text)
+
+    def reload_ia(self) -> bool:
+        """Désinstancie le modèle actuel et recharge/réinstancie le modèle IA configuré."""
+        if self.__gestIA is not None:
+            return self.__gestIA.loadIA()
+        return False
+
+    def get_ia_queue_size(self) -> int:
+        if self.__gestIA is not None:
+            return self.__gestIA.get_queue_size()
+        return 0
+
+    def is_ia_busy(self) -> bool:
+        if self.__gestIA is not None:
+            return self.__gestIA.is_busy()
+        return False
+
     
     def getListSortie(self)->list :
         if self.__valeurOut == 5 or self.__valeurOut == 12 or self.__valeurOut == 18 or self.__valeurOut == 19:
@@ -65,6 +115,7 @@ class ABrain :
         if self.__listOut == ["",""]:
             self.__listOut = [self.__gestLangue.nocomprehension(), ""]
 
+        #print(self.__listOut)
         return self.__listOut
 
     def getNeuronUsed(self)-> type[str]:
@@ -116,142 +167,120 @@ class ABrain :
     def getUserData(self):
         return self.__gestionnaire.getLanguageObjet().getDataUser()
 
-    def neuron(self,var:str) :
+    def is_stop_assistant_requette(self, requete: str) -> bool:
+        req = self.__gestionnaire.netoyageChaine(str(requete).lower()).strip()
+
+        for expr in self.__EXCLUSION_EXPRESSIONS:
+            if expr in req:
+                return False
+
+        verbes_arret = ("arrete", "stop", "stoppe", "coupe", "eteins", "ferme", "quitte")
+        if any(v in req for v in verbes_arret):
+            for target in self.__NON_ARRET_TARGETS:
+                if target in req:
+                    return False
+
+        nom_assistant = self.__gestionnaire.getName().lower()
+        if nom_assistant and nom_assistant in req:
+            req = req.replace(nom_assistant, "").strip()
+
+        for residu in self.__POLITENESS_RESIDUES:
+            req = req.replace(residu, "").strip()
+
+        req = " ".join(req.split())
+
+        return req in self.__KEYWORDS_ARRET
+
+    def neuron(self, var: str):
         # Var local
-        requetteNo = str(var).lower()
-        requette = self.__gestionnaire.netoyageChaine(str(var))
+        requette = self.__gestionnaire.netoyageChaine(str(var).lower())
         # Var de l'objet
         self.__valeurOut = 0
-        self.__listOut =  []
+        self.__listOut = []
         self.__neuronUsed = "none"
-        # Service
-        if self.__gestNeuron.nservice is None:
-            self.__valeurOut = 0
-        else :
-            self.__gestNeuron.nservice.neurone(requetteNo)
-            self.__valeurOut = self.__gestNeuron.nservice.getValeurSortie()
-        if self.__valeurOut == 0 :
-            #time
-            if self.__gestNeuron.ntime is None:
+
+        if self.is_stop_assistant_requette(requette):
+            self.__listOut = [self.shutdown(), ""]
+            self.__valeurOut = 15
+            self.__neuronUsed = "core"
+            self.__gestionnaire.setOld(self.__listOut[0], requette)
+            return
+
+        intent = self.__gestionnaire.getGestIA().classify_intent(requette)
+        mots_intent = intent.split(" ")
+
+        # 2. Check pour arrêt complet issu de la classification IA (avec filtre de sécurité)
+        if mots_intent[0] == "ARRET" and not any(target in requette for target in self.__NON_ARRET_TARGETS):
+            self.__listOut = [self.shutdown(), ""]
+            self.__valeurOut = 15
+            self.__neuronUsed = "core"
+        elif mots_intent[0] != "COMPLEXE":
+            # 3. Utilisation du core neuron (les intents rapides)
+            self.__gestNeuron.ncore.neuron(intent, requette)
+            self.__valeurOut = self.__gestNeuron.ncore.getValeurSortie()
+            self.__listOut = self.__gestNeuron.ncore.getListSortie()
+            self.__neuronUsed = "core"
+        else:
+            # 4. Utilisation du routeur IA complexe
+            success = self.__gestNeuron.iarouter.route(requette)
+            
+            if success and self.__gestNeuron.iarouter.getValeurSortie() != 0:
+                self.__valeurOut = self.__gestNeuron.iarouter.getValeurSortie()
+                self.__listOut = self.__gestNeuron.iarouter.getListSortie()
+                self.__neuronUsed = "IA"
+            else:
                 self.__valeurOut = 0
-            else :
-                self.__gestNeuron.ntime.neurone(requette)
-                self.__valeurOut = self.__gestNeuron.ntime.getValeurSortie()
+                self.__listOut = [self.__gestLangue.nocomprehension(), ""]
 
-            if self.__valeurOut == 0 :
-                #code help
-                if self.__gestNeuron.ncodehelp is None:
-                    self.__valeurOut = 0
-                else :
-                    self.__gestNeuron.ncodehelp.neurone(requette)
-                    self.__valeurOut = self.__gestNeuron.ncodehelp.getValeurSortie()
-
-                if self.__valeurOut == 0:
-                    #work
-                    if self.__gestNeuron.nwork is None:
-                        self.__valeurOut = 0
-                    else :
-                        self.__gestNeuron.nwork.neurone(requette)
-                        self.__valeurOut = self.__gestNeuron.nwork.getValeurSortie()
-
-                    if self.__valeurOut == 0:
-                        #open
-                        if self.__gestNeuron.nopen is None:
-                            self.__valeurOut = 0
-                        else :
-                            self.__gestNeuron.nopen.neurone(requette)
-                            self.__valeurOut = self.__gestNeuron.nopen.getValeurSortie()
-
-                        if self.__valeurOut == 0 :
-                            #search
-                            if not self.__etatReseau or self.__gestNeuron.nsearch is None :
-                                self.__valeurOut = 0
-                            else :
-                                self.__gestNeuron.nsearch.neurone(requette)
-                                self.__valeurOut = self.__gestNeuron.nsearch.getValeurSortie()
-
-                            if self.__valeurOut == 0 :
-                                #api
-                                if not self.__etatReseau  or self.__gestNeuron.napi is None :
-                                    self.__valeurOut = 0
-                                else :
-                                    self.__gestNeuron.napi.neurone(requette)
-                                    self.__valeurOut = self.__gestNeuron.napi.getValeurSortie()
-
-                                if self.__valeurOut == 0 :
-                                    #chatBot
-                                    if self.__gestNeuron.nchatbot is None:
-                                        self.__valeurOut = 0
-                                    else :
-                                        self.__gestNeuron.nchatbot.neurone(requette)
-                                        self.__valeurOut = self.__gestNeuron.nchatbot.getValeurSortie()
-
-                                    if self.__valeurOut == 0 :
-                                        if self.__gestionnaire.getKeywordObjet().checkUtils(requette, "stop") :
-                                            self.__listOut = [self.shutdown(),""]
-                                            self.__valeurOut = 15
-                                        else :
-                                            self.__valeurOut = 0
-                                            self.__listOut = [self.__gestLangue.nocomprehension(), ""]
-                                    else :
-                                        self.__listOut = self.__gestNeuron.nchatbot.getListSortie()
-                                        self.__neuronUsed = self.__listNeuron[2]
-                                else :
-                                    self.__listOut = self.__gestNeuron.napi.getListSortie()
-                                    self.__neuronUsed = self.__listNeuron[0]
-                            else :
-                                self.__listOut = self.__gestNeuron.nsearch.getListSortie()
-                                self.__neuronUsed = self.__listNeuron[5]
-                        else :
-                            self.__listOut = self.__gestNeuron.nopen.getListSortie()
-                            self.__neuronUsed = self.__listNeuron[4]
-                    else :
-                        self.__listOut = self.__gestNeuron.nwork.getListSortie()
-                        self.__neuronUsed = self.__listNeuron[8]
-                else :
-                    self.__listOut = self.__gestNeuron.ncodehelp.getListSortie()
-                    self.__neuronUsed = self.__listNeuron[7]
-            else :
-                self.__listOut = self.__gestNeuron.ntime.getListSortie()
-                self.__neuronUsed = self.__listNeuron[6]
-        else :
-            self.__listOut = self.__gestNeuron.nservice.getListSortie()
-            self.__neuronUsed = self.__listNeuron[1]
-
-        #Sauvegarde de la sortie et de l'entrée
+        # Sauvegarde de la sortie et de l'entrée
         if (self.__valeurOut == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11):
-            self.__gestionnaire.setOld("requette api",requette)
-        else :
-            self.__gestionnaire.setOld(self.__listOut[0],requette)
+            self.__gestionnaire.setOld("requette api", requette)
+        else:
+            self.__gestionnaire.setOld(self.__listOut[0], requette)
 
     def updateAssistant(self):
         # print("updateAssistant")
         # Ajouter la partie mise a jour du socket
         self.__gestionnaire.updateDate()
         if (time(0,0) <= datetime.now().time() < time(11,0) and not
-        self.__gestionnaire.get_state_morning_brief()):
+        self.__gestionnaire.get_state_morning_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_morning_brief()
+            try:
+                response = self.__gestIA.generate_final_response("","Annonce-lui que son brief du matin est prêt.")
+                self.__listOut = [response if response else "Brief du matin prêt.",""]
+            except Exception as e:
+                print(f"Erreur generate_final_response morning: {e}")
+                self.__listOut = ["Brief du matin prêt.",""]
             self.__gestionnaire.getGestGUI().active_morning_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("1"),""]
             self.__valeurOut = 5
             return True
         elif (time(11,0) <= datetime.now().time() < time(16,0) and not
-        self.__gestionnaire.get_state_afternoon_brief()):
+        self.__gestionnaire.get_state_afternoon_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_afternoon_brief()
+            try:
+                response = self.__gestIA.generate_final_response("","Annonce-lui que son brief de l'après-midi est prêt.")
+                self.__listOut = [response if response else "Brief de l'après-midi prêt.",""]
+            except Exception as e:
+                print(f"Erreur generate_final_response afternoon: {e}")
+                self.__listOut = ["Brief de l'après-midi prêt.",""]
             self.__gestionnaire.getGestGUI().active_afternoon_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("2"),""]
             self.__valeurOut = 5
             return True
         elif (time(16,0) <= datetime.now().time() and not
-        self.__gestionnaire.get_state_evening_brief()):
+        self.__gestionnaire.get_state_evening_brief() and self.__gestNeuron.getBrief()):
             self.__gestionnaire.set_state_evening_brief()
+            try:
+                response = self.__gestIA.generate_final_response("","Annonce-lui que son brief de la soirée est prêt.")
+                self.__listOut = [response if response else "Brief de la soirée prêt.",""]
+            except Exception as e:
+                print(f"Erreur generate_final_response evening: {e}")
+                self.__listOut = ["Brief de la soirée prêt.",""]
             self.__gestionnaire.getGestGUI().active_evening_brief()
-            self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseBrief("3"),""]
             self.__valeurOut = 5
             return True
         elif self.__gestSocket is not None:
             if self.__gestSocket.get_new_client_is_connected():
-                self.__listOut = [self.__gestionnaire.getLanguageObjet().getPhraseSoftConnected(self.__gestSocket.get_name_new_client()),""]
+                self.__listOut = ["soft connected",""]
                 self.__valeurOut = 1
                 return True
             elif self.__gestSocket.get_message_is_received_from_server():

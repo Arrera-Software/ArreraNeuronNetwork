@@ -13,6 +13,8 @@ DICTUSER = {
     "lieuTravail":"",
     "adresseDomicile" : "",
     "adresseTravail":"",
+    "home_address":["","",""],
+    "work_address":["","",""],
     "dictSoft":{},
     "dictSite":{},
     "moteurRecherche":"",
@@ -22,8 +24,15 @@ DICTUSER = {
     "soundMicro":"0",
     "listWord":[],
     "bootHist":1,
-    "ia_use":0,
-    "ia_model":""
+    "ia_model":"",
+    "voice_selected":"google"
+}
+
+DICTVOICE = {
+    "tom_onnx": "",
+    "tom_json": "",
+    "siwis_onnx": "",
+    "siwis_json": ""
 }
 
 class gestUserSetting:
@@ -39,6 +48,7 @@ class gestUserSetting:
             self.__userTaskPath = self.__conf_folder+"user-task.json"
             self.__userHistoriquePath = self.__conf_folder+"user-hist.json"
             self.__userEventPath = self.__conf_folder+"user-event.json"
+            self.__userVoicePath = self.__conf_folder+"voice.json"
         elif self.__osDect.osWindows():
             home = os.path.join(os.path.expanduser("~"), "AppData", "Roaming")
             self.__conf_folder = str(home)+"/arrera-assistant/"
@@ -46,8 +56,7 @@ class gestUserSetting:
             self.__userTaskPath = self.__conf_folder+"user-task.json"
             self.__userHistoriquePath = self.__conf_folder+"user-hist.json"
             self.__userEventPath = self.__conf_folder+"user-event.json"
-        else :
-            self.__userSettingPath = None
+            self.__userVoicePath = self.__conf_folder + "voice.json"
 
 
         # Teste si le fichier de configuration utilisateur existe
@@ -67,6 +76,10 @@ class gestUserSetting:
         if not os.path.isfile(self.__userEventPath):
             with open(self.__userEventPath, "x", encoding="utf-8") as f:
                 json.dump([], f, ensure_ascii=False, indent=2)
+
+        if not os.path.isfile(self.__userVoicePath):
+            with open(self.__userVoicePath, "x", encoding="utf-8") as f:
+                json.dump(DICTVOICE, f, ensure_ascii=False, indent=2)
 
             self.__firstRun = True
 
@@ -95,6 +108,9 @@ class gestUserSetting:
 
     def getHistoriquePath(self):
         return self.__userHistoriquePath
+
+    def getVoicePath(self):
+        return self.__userVoicePath
 
     # Partie USER
 
@@ -162,47 +178,65 @@ class gestUserSetting:
             return None
         return listVille
 
-    # Lieu Domicile
-
-    def setLieuDomicile(self, lieu:str):
-        if lieu == "":
+    def set_home_adresse(self,adress:str,postal_code:str,town:str):
+        if adress == "" or postal_code == "" or town == "":
             return False
-        return self.__fileUser.setValeurJson("lieuDomicile", lieu)
+        return self.__fileUser.setValeurJson("home_address", [adress, postal_code, town])
 
-    def getLieuDomicile(self):
-        lieuDomicile = self.__fileUser.getContentJsonFlag("lieuDomicile")
-        if lieuDomicile is None:
-            return ""
-        return lieuDomicile
-
-    # Lieu Travail
-    def setLieuTravail(self, lieu:str):
-        if lieu == "":
+    def set_work_adresse(self,adress:str,postal_code:str,town:str):
+        if adress == "" or postal_code == "" or town == "":
             return False
-        return self.__fileUser.setValeurJson("lieuTravail", lieu)
+        return self.__fileUser.setValeurJson("work_address", [adress, postal_code, town])
 
-    def getLieuTravail(self):
-        lieuTravail = self.__fileUser.getContentJsonFlag("lieuTravail")
-        if lieuTravail is None:
-            return ""
-        return lieuTravail
+    def get_town_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return liste[2]
+        return ""
 
-    # Adresse Domicile
-    def setAdresseDomicile(self, adresse:str):
-        if adresse == "":
-            return False
-        return self.__fileUser.setValeurJson("adresseDomicile", adresse)
+    def get_adresse_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[2]}"
+        return ""
 
-    def delAdresseDomicile(self):
-        return self.__fileUser.setValeurJson("adresseDomicile", "")
+    def get_postal_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return liste[1]
+        return ""
 
-    def getAdresseDomicile(self):
-        adresseDomicile = self.__fileUser.getContentJsonFlag("adresseDomicile")
-        if adresseDomicile is None:
-            return ""
-        return adresseDomicile
+    def get_full_adress_home(self):
+        liste = self.__fileUser.getFlagListJson("home_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[1]} {liste[2]}"
+        return ""
 
     # Adresse Travail
+
+    def get_town_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return liste[2]
+        return ""
+
+    def get_adresse_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[2]}"
+        return ""
+
+    def get_postal_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return liste[1]
+        return ""
+
+    def get_full_adress_work(self):
+        liste = self.__fileUser.getFlagListJson("work_address")
+        if liste and len(liste) >= 3:
+            return f"{liste[0]} {liste[1]} {liste[2]}"
+        return ""
 
     def setAdresseTravail(self, adresse:str):
         if adresse == "":
@@ -286,7 +320,7 @@ class gestUserSetting:
             if reponse == "yes":
                 shorcutDir = os.path.join(os.environ["APPDATA"], r"Microsoft\Windows\Start Menu\Programs")
             else :
-                shorcutDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
+                shorcutDir = r"C:\ProgramData\Microsoft\Windows\Start Menu\Programs"
 
             command = filedialog.askopenfilename(
                 title="Sélectionner un programme",
@@ -437,19 +471,8 @@ class gestUserSetting:
 
     # Partie ia
 
-    def get_use_ia(self):
-        return int(self.__fileUser.getContentJsonFlag("ia_use"))
-
     def get_ia_model(self):
         return self.__fileUser.getContentJsonFlag("ia_model")
-
-    def set_use_ia(self,v:bool):
-        b =  self.__fileUser.setValeurJson("ia_use",int(v))
-        if b:
-            return self.__gestionnaire.getGestIA().loadIA()
-        else :
-            return False
-
 
     def set_ia_model(self,v:str):
         b = self.__fileUser.setValeurJson("ia_model",v)
@@ -458,7 +481,8 @@ class gestUserSetting:
         else :
             return False
 
-    # Partie IA pour l'inteface setting
+    def get_use_ia(self):
+        pass
 
     def get_list_model_ia_available(self):
         return self.__gestionnaire.getGestIA().get_list_model_available()
@@ -477,3 +501,14 @@ class gestUserSetting:
 
     def get_model_downloaded(self):
         return self.__gestionnaire.getGestIA().get_list_model_download()
+
+    def get_list_voice_available(self):
+        return self.__gestionnaire.getArrVoice().get_list_voice_model()
+
+    def get_voice_selected(self):
+        return self.__fileUser.getContentJsonFlag("voice_selected")
+
+    def set_voice(self,voice:str):
+        if voice in self.get_list_voice_available():
+            return self.__fileUser.setValeurJson("voice_selected", voice)
+        return False

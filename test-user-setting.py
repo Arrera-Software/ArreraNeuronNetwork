@@ -4,8 +4,6 @@ conf = confNeuron(name="Opale",
                   lang="fr",
                   icon="asset/icon.png",
                   asset="asset/",
-                  assistant_color="white",
-                  assistant_texte_color="black",
                   bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
                   createur="Pauchet Baptiste",
                   listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
@@ -34,13 +32,22 @@ def main():
     boucle= True
     while boucle :
         print("_____________________________________________________")
-        print("1.USER\n2.Genre\n3.Ville Meteo"
-              "\n4.Domicile\n5.Travail\n6.Adresse Domicile"
-              "\n7.Adresse Travail\n8.LOGICIEL\n9.Site Internet"
-              "\n10.Moteur de recherche\n11.Token github\n12.Dossier de travail"
-              "\n13.Dossier video\n14.Sound Micro\n"
-              "15.Tiger Word\n16.Historique\n"
-              "17.IA\n0.Quitter")
+        print("1.USER\n"
+              "2.Genre\n"
+              "3.Domicile\n"
+              "4.Travail\n"
+              "5.LOGICIEL\n"
+              "6.Site Internet\n"
+              "7.Moteur de recherche\n"
+              "8.Token github\n"
+              "9.Dossier de travail\n"
+              "10.Dossier video\n"
+              "11.Sound Micro\n"
+              "12.Tiger Word\n"
+              "13.Historique\n"
+              "14.IA\n"
+              "15.Voice\n"
+              "0.Quitter")
 
         print("_____________________________________________________")
         boucleVerif = True
@@ -71,12 +78,12 @@ def main():
                         prenom = input("Prenom : ")
                         user.setFirstnameUser(prenom)
                     case 2:
-                        nom = input("Prenom : ")
+                        nom = input("Nom : ")
                         user.setLastnameUser(nom)
                     case 3:
                         print(f"Prenom : {user.getFirstnameUser()}\nNom : {user.getLastnameUser()}")
             case 2:
-                print("1.AJouter\n2.Lire")
+                print("1.Ajouter\n2.Lire")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -91,8 +98,8 @@ def main():
                         user.setGenre(genre)
                     case 2:
                         print(user.getGenre())
-            case 3:
-                print("1.AJouter\n2.Lire\n3.Supprimer")
+            case 3 :
+                print("1.Ajouter\n2.Adresse complette\n3.Ville\n4.Code postal\n5.Adresse")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -103,21 +110,23 @@ def main():
                         print("Veuillez entrer un nombre valide.")
                 match nb:
                     case 1:
-                        ville = input("Ville : ")
-                        if user.addTown(ville):
-                            print("Ville ajoutée avec succès.")
+                        adress = input("adresse: ")
+                        cp = input("Code Postal: ")
+                        town = input("Ville: ")
+                        if user.set_home_adresse(adress, cp, town):
+                            print("Ajouter")
                         else:
-                            print("Erreur lors de l'ajout de la ville ou la ville existe déjà.")
+                            print("Erreur")
                     case 2:
-                        print(user.getTown())
+                        print(user.get_full_adress_home())
                     case 3:
-                        ville = input("Ville : ")
-                        if user.removeTown(ville):
-                            print("Ville supprimée avec succès.")
-                        else:
-                            print("Erreur lors de la suppression de la ville.")
-            case 4 :
-                print("1.AJouter\n2.Lire")
+                        print(user.get_town_home())
+                    case 4:
+                        print(user.get_postal_home())
+                    case 5 :
+                        print(user.get_adresse_home())
+            case 4:
+                print("1.Ajouter\n2.Adresse complette\n3.Ville\n4.Code postal\n5.Adresse")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -128,60 +137,23 @@ def main():
                         print("Veuillez entrer un nombre valide.")
                 match nb:
                     case 1:
-                        adresse = input("Adresse Domicile : ")
-                        user.setLieuDomicile(adresse)
+                        adress = input("adresse: ")
+                        cp = input("Code Postal: ")
+                        town = input("Ville: ")
+                        if user.set_work_adresse(adress, cp, town):
+                            print("Ajouter")
+                        else :
+                            print("Erreur")
                     case 2:
-                        print(user.getLieuDomicile())
+                        print(user.get_full_adress_work())
+                    case 3:
+                        print(user.get_town_work())
+                    case 4:
+                        print(user.get_postal_work())
+                    case 5 :
+                        print(user.get_adresse_work())
             case 5:
-                print("1.AJouter\n2.Lire")
-                boucleVerif = True
-                while boucleVerif:
-                    nb = input("Choix : ")
-                    try:
-                        nb = int(nb)
-                        boucleVerif = False
-                    except ValueError:
-                        print("Veuillez entrer un nombre valide.")
-                match nb:
-                    case 1:
-                        adresse = input("Adresse Travail : ")
-                        user.setLieuTravail(adresse)
-                    case 2:
-                        print(user.getLieuTravail())
-            case 6:
-                print("1.AJouter\n2.Lire")
-                boucleVerif = True
-                while boucleVerif:
-                    nb = input("Choix : ")
-                    try:
-                        nb = int(nb)
-                        boucleVerif = False
-                    except ValueError:
-                        print("Veuillez entrer un nombre valide.")
-                match nb:
-                    case 1:
-                        lieu = input("Lieu Domicile : ")
-                        user.setAdresseDomicile(lieu)
-                    case 2:
-                        print(user.getAdresseDomicile())
-            case 7:
-                print("1.AJouter\n2.Lire")
-                boucleVerif = True
-                while boucleVerif:
-                    nb = input("Choix : ")
-                    try:
-                        nb = int(nb)
-                        boucleVerif = False
-                    except ValueError:
-                        print("Veuillez entrer un nombre valide.")
-                match nb:
-                    case 1:
-                        lieu = input("Lieu Travail : ")
-                        user.setAdresseTravail(lieu)
-                    case 2:
-                        print(user.getAdresseTravail())
-            case 8:
-                print("1.AJouter\n2.Voir\n3.Supprimer")
+                print("1.Ajouter\n2.Voir\n3.Supprimer")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -205,8 +177,8 @@ def main():
                             print("Logiciel supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du logiciel ou le logiciel n'existe pas.")
-            case 9:
-                print("1.AJouter\n2.Lire\n3.Supprimer")
+            case 6:
+                print("1.Ajouter\n2.Lire\n3.Supprimer")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -231,8 +203,8 @@ def main():
                             print("Site supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du site.")
-            case 10:
-                print("1.AJouter\n2.Lire")
+            case 7:
+                print("1.Ajouter\n2.Lire")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -247,8 +219,8 @@ def main():
                         user.setMoteurRecherche(moteur)
                     case 2:
                         print(user.getMoteurRecherche())
-            case 11:
-                print("1.AJouter\n2.Lire")
+            case 8:
+                print("1.Ajouter\n2.Lire")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -266,8 +238,8 @@ def main():
                             print("Erreur lors de l'ajout du token ou le token existe déjà.")
                     case 2:
                         print(user.getTokenGithub())
-            case 12:
-                print("1.AJouter\n2.Lire\n3.Supprimer")
+            case 9:
+                print("1.Ajouter\n2.Lire\n3.Supprimer")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -289,8 +261,8 @@ def main():
                             print("Dossier supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du dossier.")
-            case 13:
-                print("1.AJouter\n2.Lire\n3.Supprimer")
+            case 10:
+                print("1.Ajouter\n2.Lire\n3.Supprimer")
                 boucleVerif = True
                 while boucleVerif:
                     nb = input("Choix : ")
@@ -312,7 +284,7 @@ def main():
                             print("Dossier supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du dossier.")
-            case 14:
+            case 11:
                 print("1.Activer\n2.Desactiver\n3.Voir")
                 boucleVerif = True
                 while boucleVerif:
@@ -335,7 +307,7 @@ def main():
                             print("Erreur lors de la désactivation du micro.")
                     case 3:
                         print(user.getSoundMicro())
-            case 15:
+            case 12:
                 print("1.Ajouter\n2.Lire\n3.Supprimer")
                 boucleVerif = True
                 while boucleVerif:
@@ -360,34 +332,34 @@ def main():
                             print("Mot supprimé avec succès.")
                         else:
                             print("Erreur lors de la suppression du mot ou le mot n'existe pas.")
-            case 16 :
+            case 13 :
                 print("Historique")
                 print(f"Etat de l'hitorique : {user.getHist()}")
-                out = input("1. Activer\n2. Desactiver\n0.Rien faire\nChoix : ")
+                out = input("1. Activer\n2. Desactiver\n0. Rien faire\nChoix : ")
                 match out:
                     case "1":
                         user.setHist(True)
-                    case "0":
+                    case "2":
                         user.setHist(False)
-            case 17 :
+                    case "0":
+                        pass
+            case 14 :
                 print("IA")
-                out = input("1.Activer\n2.Desactiver\n3.Voir l'etat\n4.Voir le model\n"
-                            "5.Choisir le model\n6.Download un model\n"
-                            "7.Voir les model telecharger\n8.Modele dans le dossier"
-                            "\nChoix : ")
+                out = input("1. Voir le model\n"
+                            "2. Choisir le model\n"
+                            "3. Download un model\n"
+                            "4. Voir les model telecharger\n"
+                            "5. Modele dans le dossier\n"
+                            "6. Supprimer un modele\n"
+                            "0. Rien faire\n"
+                            "Choix : ")
                 match out:
                     case "1":
-                        user.set_use_ia(True)
+                        pass # Ajoutez l'affichage du modèle ici, ex: print(user.get_ia_model())
                     case "2":
-                        user.set_use_ia(False)
-                    case "3":
-                        print(user.get_use_ia())
-                    case "4":
-                        print(user.get_ia_model())
-                    case "5":
                         model = input("Model : ")
                         user.set_ia_model(model)
-                    case "6":
+                    case "3":
                         print("Model disponible")
                         d = user.get_model_downloaded()
                         for m in user.get_list_model_ia_available():
@@ -395,21 +367,48 @@ def main():
                                 print(f"-{m}")
                         model = input("Model : ")
                         user.download_ia_model(model)
-                    case "7":
+                    case "4":
                         print("Model telecharger")
                         print(user.get_model_downloaded())
-                    case "8":
+                    case "5":
                         print("Model dans le dossier")
                         print(user.get_model_ia_on_directory())
-                    case "9" :
+                    case "6" :
                         model = input("Model a supprimer : ")
                         if user.del_ia_model(model):
                             print("Model supprimer")
                         else :
                             print("Impossible de supprimer le model")
+                    case "0":
+                        pass
+
+            case 15 :
+                print("Voice")
+                out = input("1. Voir les models\n"
+                            "2. Choisir le model\n"
+                            "3. Voir le model selectionner\n"
+                            "Choix : ")
+                match out:
+                    case "1":
+                        text = "Modele de voix disponible :\n"
+                        for l in user.get_list_voice_available():
+                            text += f"- {l}\n"
+                        print(text)
+                    case "2":
+                        text = "Modele de voix disponible :\n"
+                        for l in user.get_list_voice_available():
+                            text += f"- {l}\n"
+                        print(text)
+                        model = input("Choisir le model : ")
+                        if user.set_voice(model):
+                            print("Modele ajouter")
+                        else :
+                            print("Impossible de modifier le model")
+                    case "3":
+                        print(f"Voix selectionner :{user.get_voice_selected()}")
 
             case _:
-                print("Errureur, veuillez choisir un nombre entre 0 et 13.")
+                print("Erreur, veuillez choisir un nombre entre 0 et 14.")
 
 if __name__ == "__main__":
     main()

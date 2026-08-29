@@ -29,12 +29,12 @@ class gestionnaire:
         # Declaration des librairies
         self.__detecteurOS = OS()
         self.__network = network()
-        self.__arrVoice = CArreraVoice(self)
         self.__arrDate = CArreraDate()
         # Fichier JSON
         self.__config = confAssistant
         self.__userConf = gestUserSetting(self)
         self.__fichierFete = jsonWork("config/listFete.json")
+        self.__arrVoice = CArreraVoice(self)
         # Initialisation des tout les gestionnaires
         self.__gestHist = gestHistorique(self)
         self.__gestLang = gestLangue(self.__config.fichierLangue,
@@ -136,18 +136,16 @@ class gestionnaire:
         return self.__userConf.getTowns()
 
     def getEtatLieuDomicile(self):
-        if not self.__userConf.getLieuDomicile():
-            lieuDomicile = True
+        if not self.__userConf.get_full_adress_home():
+            return True
         else :
-            lieuDomicile = False
-        return lieuDomicile
+            return False
 
     def getEtatLieuTravail(self):
-        if not self.__userConf.getLieuTravail():
-            lieuTravail = True
+        if not self.__userConf.get_full_adress_work():
+            return True
         else :
-            lieuTravail = False
-        return lieuTravail
+            return False
     
     def getMoteurRechercheDefault(self):
         return self.__config.moteurderecherche
@@ -214,13 +212,13 @@ class gestionnaire:
         """
         Methode pour retourner l'adresse du domicile
         """
-        return  self.__userConf.getAdresseDomicile()
+        return  self.__userConf.get_adresse_home()
     
     def getAdresseTravil(self) :
         """
         Methode pour retourner l'adresse du lieu de travail
         """
-        return  self.__userConf.getAdresseTravail()
+        return  self.__userConf.get_adresse_work()
 
     def getWorkEmplacement(self):
         return self.__userConf.getWorkFolder()

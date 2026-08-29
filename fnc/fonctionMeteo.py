@@ -28,9 +28,9 @@ class fncMeteo(fncBase) :
         if emplacment in valeurs_autorisees:
             ville = ""
             if emplacment == "work":
-                ville = self._gestionnaire.getUserConf().getLieuTravail()
+                ville = self._gestionnaire.getUserConf().get_town_work()
             elif emplacment == "home":
-                ville = self._gestionnaire.getUserConf().getLieuDomicile()
+                ville = self._gestionnaire.getUserConf().get_town_home()
             elif emplacment == "locate":
                 if self.__fncGPS.locate():
                     ville = self.__fncGPS.getTown()

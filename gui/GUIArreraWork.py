@@ -797,7 +797,7 @@ class GUIWork(GuiBase):
     # Methode qui sert juste a l'ouverture de l'interface de task des projet
 
     def open_task_projet(self):
-        self.__open_task_projet()
+        return self.__open_task_projet()
 
     def open_task_projet_add(self):
         self.__update_etat()

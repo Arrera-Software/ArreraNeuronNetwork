@@ -9,10 +9,11 @@ class neuronBase :
         self._gestGUI = self._gestionnaire.getGestGUI()
         self._gestHist = self._gestionnaire.getGestHist()
         self._userConf = self._gestionnaire.getUserConf()
+        self._gestIA = self._gestionnaire.getGestIA()
         self._objHistorique = None
         self._listSortie = ["",""]
         self._socket = self._gestionnaire.getSocketObjet()
-        self._language = self._gestionnaire.getLanguageObjet()
+        #self._language = self._gestionnaire.getLanguageObjet()
         self._keyword = self._gestionnaire.getKeywordObjet()
         self._valeurOut = 0
 

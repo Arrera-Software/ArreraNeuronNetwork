@@ -102,12 +102,19 @@ class fncGPS(fncBase):
 
             # Identifiant requis par GeoClue
             client.DesktopId = "Assistant_Meteo"
+            
+            # Demander la précision maximale (5 = Exact, force le scan Wi-Fi/GPS)
+            client.RequestedAccuracyLevel = 5
             client.Start()
 
-            # On laisse quelques secondes au matériel (Wi-Fi/GPS) pour fixer la position
-            time.sleep(2)
+            # Boucle d'attente intelligente (max 10 secondes) pour le fix Wi-Fi
+            loc_path = '/'
+            for _ in range(20):
+                time.sleep(0.5)
+                loc_path = client.Location
+                if loc_path != '/':
+                    break
 
-            loc_path = client.Location
             if loc_path != '/':
                 loc = bus.get('org.freedesktop.GeoClue2', loc_path)
                 lat, lon = loc.Latitude, loc.Longitude
@@ -117,7 +124,7 @@ class fncGPS(fncBase):
                 return True
             else:
                 client.Stop()
-                raise False
+                return False
 
         except Exception as e:
             return False

@@ -1,3 +1,4 @@
+from typing import Callable
 from gestionnaire.gestion import gestionnaire
 
 
@@ -7,176 +8,182 @@ class gestGUI:
         self.__gest = gest
         self.__parms = None
         self.__textOut = None
+        self.__prompt = ""
         self.__valOut = 0
-        
-        # Importation des GUI
-        from gui.GUICalculatrice import GUICalculatrice
-        from gui.GUIorthographe import GUIOrthographe
-        from gui.GUIArreraDownload import GUIArreraDownload
-        from gui.GUIAgenda import GUIAgenda
-        from gui.GUIHorloge import GUIHorloge
-        from gui.GUILecture import GUILecture
-        from gui.GUITache import GUITache
-        from gui.GUIArreraWork import GUIWork
-        from gui.GUITraducteur import GuiTraducteur
+
+        self.__gestIA = gest.getGestIA()
+
+        conf = gest.getConfigFile()
+
         from gui.GUIHelp import GUIHelp
-        from gui.GuiBrief import guiBrief
-
-        # Calculatrice
-        self.__guiCalculatrice = GUICalculatrice(self.__gest)
-        # Correcteur d'orthographe
-        self.__guiOrthographe = GUIOrthographe(self.__gest)
-        # Arrera Download
-        self.__guiArreraDownload = GUIArreraDownload(self.__gest)
-        # Agenda
-        self.__guiAgenda = GUIAgenda(self.__gest)
-        # Horloge
-        self.__guiHorloge = GUIHorloge(self.__gest)
-        # Lecture
-        self.__guiLecture = GUILecture(self.__gest)
-        # Tâche
-        self.__guiTache = GUITache(self.__gest)
-        # Work
-        self.__guiWork = GUIWork(self.__gest)
-        # Traducteur
-        self.__guiTraducteur = GuiTraducteur(self.__gest)
-        # Aide
         self.__guiHelp = GUIHelp(self.__gest)
-        # Brief
-        self.__guiBrief = guiBrief(self.__gest,self.__gest.getName())
 
-        # Dictionnaire des actions
-        self.__gui_actions = {
-            "calculatrice_normal": lambda: self.__generic_try_action(
-                self.__guiCalculatrice.activeCalcule,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("7"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("8")
-            ),
-            "calculatrice_pythagore": lambda: self.__generic_try_action(
-                self.__guiCalculatrice.activePythagore,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("5"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("6")
-            ),
-            "calculatrice_complex": lambda: self.__generic_try_action(
-                self.__guiCalculatrice.activeComplex,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("3"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("4")
-            ),
-            "orthographe": self.__action_orthographe,
-            "arrera_download": lambda: self.__generic_try_action(
-                self.__guiArreraDownload.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("1"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraSoftOpen("2")
-            ),
-            "agenda": lambda: self.__generic_action(
+        self.__guiAgenda = None
+        self.__guiHorloge = None
+        self.__guiTache = None
+        self.__guiTraducteur = None
+        self.__guiBrief = None
+        self.__guiWork = None
+        self.__guiCalculatrice = None
+        self.__guiOrthographe = None
+        self.__guiLecture = None
+        self.__guiArreraDownload = None
+        self.__guiNews = None
+
+        self.__gui_actions: dict[str, Callable[[], bool]] = {"aide": self.__action_aide}
+
+        if conf.etatTime == 1:
+            from gui.GUIAgenda import GUIAgenda  # TIME
+            from gui.GUIHorloge import GUIHorloge  # TIME
+            from gui.GUITache import GUITache  # TIME
+
+            self.__guiAgenda = GUIAgenda(self.__gest)
+            self.__guiHorloge = GUIHorloge(self.__gest)
+            self.__guiTache = GUITache(self.__gest)
+
+            self.__gui_actions.update({
+                "agenda": lambda: self.__generic_action(
                 self.__guiAgenda.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("8")
-            ),
-            "agenda_add": lambda: self.__generic_action(
-                self.__guiAgenda.activeAdd,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("4")
-            ),
-            "agenda_delete": lambda: self.__generic_action(
-                self.__guiAgenda.activeDel,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("5")
-            ),
-            "horloge": lambda: self.__generic_action(
-                self.__guiHorloge.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("2")
-            ),
-            "minuteur": lambda: self.__generic_action(
-                self.__guiHorloge.activeMinuteur,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("3")
-            ),
-            "chrono": lambda: self.__generic_action(
-                self.__guiHorloge.activeChrono,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("1")
-            ),
-            "lecture": lambda: self.__generic_action(
-                self.__guiLecture.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseService("6")
-            ),
-            "tache": lambda: self.__generic_action(
-                self.__guiTache.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("9")
-            ),
-            "tache_finish": lambda: self.__generic_action(
-                self.__guiTache.activeFinish,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("11")
-            ),
-            "tache_del": lambda: self.__generic_action(
-                self.__guiTache.activeDel,
-                lambda: self.__gest.getLanguageObjet().getPhraseTime("12")
-            ),
-            "work": lambda: self.__generic_try_action(
-                self.__guiWork.activeAcceuil,
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("7"),
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("8")
-            ),
-            "work_projet": lambda: self.__generic_try_action(
-                self.__guiWork.activeProjet,
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("1"),
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("2")
-            ),
-            "work_tableur": lambda: self.__generic_try_action(
-                self.__guiWork.activeTableur,
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("3"),
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("4")
-            ),
-            "work_manage_tableur": lambda: self.__guiManageTableur(self.__parms),
-            "work_read_tableur": lambda: self.__generic_bool_action(
-                self.__guiWork.active_read_tableur,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("21"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkTableur("22")
-            ),
-            "work_word": lambda: self.__generic_try_action(
-                self.__guiWork.activeWord,
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("5"),
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenGUIWork("6")
-            ),
-            "work_word_read": lambda: self.__generic_try_action(
-                self.__guiWork.active_read_word,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("9"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("10")
-            ),
-            "work_word_write": lambda: self.__generic_try_action(
-                self.__guiWork.active_write_word,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("7"),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkWord("8")
-            ),
-            "tache_projet": lambda: self.__generic_bool_action(
-                self.__guiWork.open_task_projet,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("10", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("11")
-            ),
-            "tache_projet_add": lambda: self.__generic_bool_action(
-                self.__guiWork.open_task_projet_add,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("12", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("13")
-            ),
-            "tache_projet_del": lambda: self.__generic_bool_action(
-                self.__guiWork.open_task_projet_del,
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("14", self.__gest.getGestFNC().getFNCWork().getNameProjet()),
-                lambda: self.__gest.getLanguageObjet().getPhraseArreraWorkProjet("15")
-            ),
-            "traducteur": lambda: self.__generic_action(
-                self.__guiTraducteur.active,
-                lambda: self.__gest.getLanguageObjet().getPhraseOpenTraducteur()
-            ),
-            "aide": self.__action_aide,
-            "morning_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_morning,
-                lambda: self.__gest.getLanguageObjet().getPhraseBrief("1")
-            ),
-            "afternoon_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_afternoon,
-                lambda: self.__gest.getLanguageObjet().getPhraseBrief("2")
-            ),
-            "evening_brief": lambda: self.__generic_action(
-                self.__guiBrief.view_evening,
-                lambda: self.__gest.getLanguageObjet().getPhraseBrief("3")
-            )
-        }
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'agenda est maintenant ouvert.")),
+                "horloge": lambda: self.__generic_action(
+                    self.__guiHorloge.active,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'horloge est maintenant ouverte.")),
+                "minuteur": lambda: self.__generic_action(
+                    self.__guiHorloge.activeMinuteur,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface du minuteur est ouverte.")
+                ),
+                "chrono": lambda: self.__generic_action(
+                    self.__guiHorloge.activeChrono,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface du chronomètre est ouverte.")),
+                "tache": lambda: self.__generic_action(
+                    self.__guiTache.active,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son gestionnaire de tâches est ouvert.")
+                ),})
+
+            self.__prompt += """
+                - "gui": Args ["nom_gui", ""]. nom_gui: agenda, horloge, minuteur, chrono, tache.
+                """
+
+        if conf.etatApi == 1:
+            from gui.GUITraducteur import GuiTraducteur # API
+            from gui.GuiBrief import guiBrief  # API
+            from gui.GuiNews import GuiNews
+
+            self.__guiTraducteur = GuiTraducteur(self.__gest)
+            self.__guiBrief = guiBrief(self.__gest, self.__gest.getName())
+            self.__guiNews = GuiNews(self.__gest)
+
+            self.__gui_actions.update({
+                "traducteur": lambda: self.__generic_action(
+                    self.__guiTraducteur.active,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que le traducteur est ouvert.")),
+               "actu_all": lambda: self.__generic_action(
+                    self.__guiNews.active_all,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités (toutes les catégories) est ouverte.")
+                ),
+                "actu_main": lambda: self.__generic_action(
+                    self.__guiNews.active_main,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités généralistes est ouverte.")
+                ),
+                "actu_tech": lambda: self.__generic_action(
+                    self.__guiNews.active_tech,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités sur les nouvelles technologies est ouverte.")
+                ),
+                "actu_culture": lambda: self.__generic_action(
+                    self.__guiNews.active_culture,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités culturelles est ouverte.")
+                ),
+                "actu_sport": lambda: self.__generic_action(
+                    self.__guiNews.active_sport,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités sportives est ouverte.")
+                ),
+                "actu_science": lambda: self.__generic_action(
+                    self.__guiNews.active_science,
+                    lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que l'interface des actualités scientifiques est ouverte.")
+                ),
+               "morning_brief": lambda: self.__generic_action(
+                   self.__guiBrief.view_morning,
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief du matin est prêt et affiché.")),
+               "afternoon_brief": lambda: self.__generic_action(
+                   self.__guiBrief.view_afternoon,
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief de l'après-midi est prêt et affiché.")),
+               "evening_brief": lambda: self.__generic_action(
+                   self.__guiBrief.view_evening,
+                   lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que son brief de la soirée est prêt et affiché."))
+           })
+
+            self.__prompt += """
+                - "gui": Args ["nom_gui", ""]. nom_gui: traducteur, actu_all, actu_main, actu_tech, actu_culture, actu_sport, actu_science, morning_brief, afternoon_brief, evening_brief.
+                """
+
+
+        if conf.etatWork == 1:
+            from gui.GUIArreraWork import GUIWork # WORK
+
+            self.__guiWork = GUIWork(self.__gest)
+
+            self.__gui_actions.update({
+                "work": lambda: self.__generic_try_action(
+                    self.__guiWork.activeAcceuil,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface d'Arrera Work est ouverte."),
+                    lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir l'interface d'Arrera Work.")),
+                "tache_projet": lambda: self.__generic_bool_action(
+                    self.__guiWork.open_task_projet,
+                    lambda: self.__gestIA.generate_final_response("",f"Annonce à l'utilisateur que les tâches de son projet {self.__gest.getGestFNC().getFNCWork().getNameProjet()} sont ouvertes.") ,
+                    lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir les tâches de son projet."))})
+
+            self.__prompt += """
+                - "gui": Args ["nom_gui", ""]. nom_gui: work, tache_projet.
+                """
+
+        if conf.etatService == 1:
+            from gui.GUICalculatrice import GUICalculatrice  # SERVICE
+            from gui.GUIorthographe import GUIOrthographe  # SERVICE
+            from gui.GUILecture import GUILecture  # SERVICE
+
+            self.__guiCalculatrice = GUICalculatrice(self.__gest)
+            self.__guiOrthographe = GUIOrthographe(self.__gest)
+            self.__guiLecture = GUILecture(self.__gest)
+
+            self.__gui_actions.update({
+                "calculatrice_normal": lambda: self.__generic_try_action(
+                self.__guiCalculatrice.activeCalcule,
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que la calculatrice est ouverte."),
+                lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice.")),
+               "calculatrice_pythagore": lambda: self.__generic_try_action(
+                   self.__guiCalculatrice.activePythagore,
+                   lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que la calculatrice en mode pythagore est ouverte."),
+                   lambda: self.__gestIA.generate_final_response("", "Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice en mode pythagore.")),
+               "calculatrice_complex": lambda: self.__generic_try_action(
+                   self.__guiCalculatrice.activeComplex,
+                   lambda: self.__gestIA.generate_final_response("", "Annonce à l'utilisateur que la calculatrice en mode complexe est ouverte."),
+                   lambda: self.__gestIA.generate_final_response("", "Informe l'utilisateur qu'il est impossible d'ouvrir la calculatrice en mode complexe.")),
+                "orthographe": self.__action_orthographe,
+                "lecture": lambda: self.__generic_action(
+                    self.__guiLecture.active,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface de lecture est ouverte."))})
+
+            self.__prompt += """
+                - "gui": Args ["nom_gui", "texte"]. nom_gui: calculatrice_normal, calculatrice_pythagore, calculatrice_complex, orthographe(texte="texte"), lecture.
+                """
+
+        if conf.etatOpen == 1:
+            from gui.GUIArreraDownload import GUIArreraDownload  # OPEN
+
+            self.__guiArreraDownload = GUIArreraDownload(self.__gest)
+
+            self.__gui_actions.update({"arrera_download": lambda: self.__generic_try_action(
+                self.__guiArreraDownload.active,
+                lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'application Arrera Download est ouverte."),
+                lambda: self.__gestIA.generate_final_response("","Informe l'utilisateur qu'il est impossible d'ouvrir l'application Arrera Download.")
+            )})
+
+            self.__prompt += """
+                - "gui": Args ["nom_gui", ""]. nom_gui: arrera_download.
+                """
+
+    def get_prompt(self):
+        return self.__prompt
 
     def setGUIActive(self, gui: str, parms=None):
         if gui in self.__gui_actions:
@@ -203,8 +210,8 @@ class gestGUI:
             return False
 
     def __generic_action(self, action, success_msg_provider):
-        action()
         self.__textOut = success_msg_provider()
+        action()
         self.__valOut = 5
         return True
 
@@ -229,15 +236,6 @@ class gestGUI:
             self.__textOut = self.__gest.getLanguageObjet().getPhraseService("4")
             self.__valOut = 1
             return False
-
-    def __action_resumer(self):
-        dicte = self.__parms[0]
-        liste = self.__parms[1]
-        intIn = self.__parms[2]
-        self.__guiResumer.activeView(dict=dicte, list=liste, intIn=intIn)
-        self.__textOut = self.__parms[3]
-        self.__valOut = 5
-        return True
 
     def __action_aide(self):
         self.__guiHelp.activeHelp(self.__parms[0])
@@ -271,19 +269,50 @@ class gestGUI:
         return self.__textOut
 
     def activeAgenda(self):
-        self.__guiAgenda.active()
+        if self.__guiAgenda is not None:
+            self.__guiAgenda.active()
 
     def activeTache(self):
-        self.__guiTache.active()
+        if self.__guiTache is not None:
+            self.__guiTache.active()
 
     def activeHelp(self, texte: str):
-        self.__guiHelp.activeHelp(texte)
+        if self.__guiHelp is not None:
+            self.__guiHelp.activeHelp(texte)
 
     def active_morning_brief(self):
-        self.__guiBrief.view_morning()
+        if self.__guiBrief is not None:
+            self.__guiBrief.view_morning()
 
     def active_afternoon_brief(self):
-        self.__guiBrief.view_afternoon()
+        if self.__guiBrief is not None:
+            self.__guiBrief.view_afternoon()
 
     def active_evening_brief(self):
-        self.__guiBrief.view_evening()
+        if self.__guiBrief is not None:
+            self.__guiBrief.view_evening()
+
+    def active_actu_all(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_all()
+
+    def active_actu_main(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_main()
+
+    def active_actu_tech(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_tech()
+
+    def active_actu_culture(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_culture()
+
+    def active_actu_sport(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_sport()
+
+    def active_actu_science(self):
+        if self.__guiNews is not None:
+            self.__guiNews.active_science()
+

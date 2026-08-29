@@ -7,8 +7,6 @@ class confNeuron:
     lang: str
     icon: str
     asset:str
-    assistant_color: str
-    assistant_texte_color: str
     bute: str
     createur: str
     listFonction: List[str] = field(default_factory=list)
@@ -22,6 +20,7 @@ class confNeuron:
     etatCodehelp: int = 0
     etatWork: int = 0
     etatSocket: int = 0
+    brief_enable: int = 1
     lienDoc: str = ""
     fichierLangue:str = ""
     fichierKeyword:str = ""

@@ -37,6 +37,7 @@ class GUIOpale:
         self.__checkCodeHelp = aCheckBox(frameNeuron, text="Neuron\nCodeHelp",boolean_value=True)
         self.__checkWork = aCheckBox(frameNeuron, text="Neuron\nWork",boolean_value=True)
         self.__checkSocket = aCheckBox(frameNeuron, text="Utilisation des socket",boolean_value=True)
+        self.__checkbrief = aCheckBox(frameNeuron, text="Brief", boolean_value=True)
         # Widget FrameLangue
         labelTitleLangue = aLabel(frameLangue,text="Gestion de la langue",police_size=25)
         self.__langSet = aLabel(frameLangue,text="",police_size=25)
@@ -56,7 +57,8 @@ class GUIOpale:
         self.__checkAPI.place(x=130, y=85,anchor="nw")
         self.__checkCodeHelp.place(x=260, y=85,anchor="nw")
         self.__checkWork.place(x=380, y=85,anchor="nw")
-        self.__checkSocket.place(x=130, y=160,anchor="nw")
+        self.__checkSocket.place(x=10, y=160,anchor="nw")
+        self.__checkbrief.place(x=260, y=160,anchor="nw")
         # FrameLangue
         labelTitleLangue.placeTopCenter()
         self.__btnVous.placeLeftCenter()
@@ -108,8 +110,6 @@ class GUIOpale:
                                        lang="fr",
                                        asset="asset/",
                                        icon="asset/icon.png",
-                                       assistant_color="white",
-                                       assistant_texte_color="black",
                                        bute="developper un algo de ChatBot qui sera inclut dans SIX et Ryley",
                                        createur="Pauchet Baptiste",
                                        listFonction=["ouvrir une application", "aider sur les recherches de internet", "donner la meteo",
@@ -124,6 +124,7 @@ class GUIOpale:
                                        etatCodehelp=int(self.__checkCodeHelp.get()),
                                        etatWork=int(self.__checkWork.get()),
                                        etatSocket=int(self.__checkSocket.get()),
+                                       brief_enable=int(self.__checkbrief.get()),
                                        lienDoc="www.google.com",
                                        fichierLangue=str(self.__emplacementLangue),
                                        fichierKeyword="keyword/",
@@ -144,6 +145,8 @@ class GUIOpale:
                     widget.destroy()
                 self.__GUIAssistant(screen)
                 self.__bootAssistant()
+            else:
+                showerror("Erreur", "Impossible de démarrer l'assistant (Erreur de chargement de l'IA). Vérifiez vos logs.")
         else:
             print("Erreur lors de la création de la configuration de l'assistant.")
 
@@ -242,25 +245,29 @@ class GUIOpale:
                                                 ,justify="left")
 
     def __sendAssistantMessage(self,entry:aEntry,screen:aTk):
-        if not self.__thAssistant.is_alive():
-            message = entry.get()
-            if message:
-                self.__thAssistant = th.Thread(target=self.__assistantBrain.neuron,args=(message,))
-                self.__thAssistant.start()
-                entry.delete(0, 'end')  # Clear the entry after sending
-                self.__updateRequetteAssistant(screen,message)
-            else:
-                self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
-                                                    ,justify="left")
+        message = entry.get()
+        if message:
+            entry.delete(0, 'end')  # Clear the entry after sending
+            t = th.Thread(target=self.__assistantBrain.neuron, args=(message,))
+            t.start()
+            if not self.__thAssistant.is_alive():
+                self.__thAssistant = t
+                self.__updateRequetteAssistant(screen, message)
+        else:
+            self.__labelAssistantText.configure(text="Veuillez entrer un message.", wraplength=200
+                                                ,justify="left")
 
     def __updateRequetteAssistant(self,screen:aTk,message:str):
-        if self.__thAssistant.is_alive():
+        q_size = self.__assistantBrain.get_ia_queue_size()
+        if self.__thAssistant.is_alive() or q_size > 0:
+            if q_size > 1:
+                self.__labelGeneration.configure(text=f"Generation ({q_size} en attente)...")
+            else:
+                self.__labelGeneration.configure(text="Generation...")
             self.__labelGeneration.placeBottomRight()
-            screen.after(1000,self.__updateRequetteAssistant,screen,message)
+            screen.after(500,self.__updateRequetteAssistant,screen,message)
         else :
-            del self.__thAssistant
             self.__labelGeneration.place_forget()
-            self.__thAssistant = th.Thread()
             nb = self.__assistantBrain.getValeurSortie()
             texte = self.__assistantBrain.getListSortie()
             self.__labelAssistantText.configure(text=texte[0], wraplength=200
@@ -269,6 +276,7 @@ class GUIOpale:
             self.__addLog(nb,texte[0],message)
             if nb == 15:
                 self.__close()
+
 
     def __keyboard(self,win:aTk,entry:aEntry):
         def anychar(event):
