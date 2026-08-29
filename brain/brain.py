@@ -4,6 +4,38 @@ from datetime import datetime, time
 
 
 class ABrain :
+    __KEYWORDS_ARRET = {
+        # Mots unitaires univoques
+        "arret", "arreter", "arrete", "stop", "stoppe", "stopper",
+        "eteindre", "eteins", "quitter", "quitte", "fermer", "exit",
+        "shutdown", "bye", "byebye", "ciao", "adieu",
+        "au revoir", "aurevoir", "a la prochaine", "a plus", "a plus tard",
+        "a demain", "a bientot", "bonne nuit", "bonne soiree", "bon apres midi",
+        "arrete toi", "eteins toi", "ferme toi", "coupe toi",
+        "eteins l assistant", "ferme l assistant", "eteins le systeme",
+        "je te laisse", "je dois y aller", "je m en vais", "je pars",
+        "je vais dormir", "je vais me coucher", "c est tout", "c est bon",
+        "on arrete la", "j ai termine", "j ai fini", "on a fini", "coupe tout"
+    }
+
+    __NON_ARRET_TARGETS = (
+        "radio", "musique", "son", "flux",
+        "minuteur", "chrono", "chronometre", "alarme", "bip", "compte a rebours",
+        "projet", "project", "tableur", "excel", "word", "fichier", "document", "page",
+        "fenetre", "calculatrice", "calculette", "agenda", "calendrier", "tache", "traducteur", "lecture",
+        "de parler", "d ecrire", "de lire"
+    )
+
+    __EXCLUSION_EXPRESSIONS = (
+        "arret de bus", "arret de tram", "arret de metro", "arret de train",
+        "arret maladie", "arret de travail", "sans arret", "pourquoi ca s arrete"
+    )
+
+    __POLITENESS_RESIDUES = (
+        "s il te plait", "s il vous plait", "stp", "svp", "please",
+        "merci", "bonne journee", "bon courage", "dis", "dit"
+    )
+
     def __init__(self,config:confNeuron):
         # Declaration des diferente var
         self.__listOut =  [] 
@@ -131,30 +163,61 @@ class ABrain :
     def getUserData(self):
         return self.__gestionnaire.getLanguageObjet().getDataUser()
 
-    def neuron(self,var:str) :
+    def is_stop_assistant_requette(self, requete: str) -> bool:
+        req = self.__gestionnaire.netoyageChaine(str(requete).lower()).strip()
+
+        for expr in self.__EXCLUSION_EXPRESSIONS:
+            if expr in req:
+                return False
+
+        verbes_arret = ("arrete", "stop", "stoppe", "coupe", "eteins", "ferme", "quitte")
+        if any(v in req for v in verbes_arret):
+            for target in self.__NON_ARRET_TARGETS:
+                if target in req:
+                    return False
+
+        nom_assistant = self.__gestionnaire.getName().lower()
+        if nom_assistant and nom_assistant in req:
+            req = req.replace(nom_assistant, "").strip()
+
+        for residu in self.__POLITENESS_RESIDUES:
+            req = req.replace(residu, "").strip()
+
+        req = " ".join(req.split())
+
+        return req in self.__KEYWORDS_ARRET
+
+    def neuron(self, var: str):
         # Var local
         requette = self.__gestionnaire.netoyageChaine(str(var).lower())
         # Var de l'objet
         self.__valeurOut = 0
-        self.__listOut =  []
+        self.__listOut = []
         self.__neuronUsed = "none"
+
+        if self.is_stop_assistant_requette(requette):
+            self.__listOut = [self.shutdown(), ""]
+            self.__valeurOut = 15
+            self.__neuronUsed = "core"
+            self.__gestionnaire.setOld(self.__listOut[0], requette)
+            return
 
         intent = self.__gestionnaire.getGestIA().classify_intent(requette)
         mots_intent = intent.split(" ")
 
-        # 1. Check pour arrêt complet
-        if mots_intent[0] == "ARRET":
-            self.__listOut = [self.shutdown(),""]
+        # 2. Check pour arrêt complet issu de la classification IA (avec filtre de sécurité)
+        if mots_intent[0] == "ARRET" and not any(target in requette for target in self.__NON_ARRET_TARGETS):
+            self.__listOut = [self.shutdown(), ""]
             self.__valeurOut = 15
             self.__neuronUsed = "core"
         elif mots_intent[0] != "COMPLEXE":
-            # 2. Utilisation du core neuron (les intents rapides)
+            # 3. Utilisation du core neuron (les intents rapides)
             self.__gestNeuron.ncore.neuron(intent, requette)
             self.__valeurOut = self.__gestNeuron.ncore.getValeurSortie()
             self.__listOut = self.__gestNeuron.ncore.getListSortie()
             self.__neuronUsed = "core"
         else:
-            # 3. Utilisation du routeur IA complexe
+            # 4. Utilisation du routeur IA complexe
             success = self.__gestNeuron.iarouter.route(requette)
             
             if success and self.__gestNeuron.iarouter.getValeurSortie() != 0:
@@ -165,12 +228,11 @@ class ABrain :
                 self.__valeurOut = 0
                 self.__listOut = [self.__gestLangue.nocomprehension(), ""]
 
-
-        #Sauvegarde de la sortie et de l'entrée
+        # Sauvegarde de la sortie et de l'entrée
         if (self.__valeurOut == 3) or (self.__valeurOut == 12) or (self.__valeurOut == 11):
-            self.__gestionnaire.setOld("requette api",requette)
-        else :
-            self.__gestionnaire.setOld(self.__listOut[0],requette)
+            self.__gestionnaire.setOld("requette api", requette)
+        else:
+            self.__gestionnaire.setOld(self.__listOut[0], requette)
 
     def updateAssistant(self):
         # print("updateAssistant")
