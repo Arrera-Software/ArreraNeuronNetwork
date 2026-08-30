@@ -24,7 +24,10 @@ class gestIA :
         self.__dir_ia_instruction = "instruction_ia/"
 
         self.__dict_help_file = {"orthographe":"prompt_orthographe.txt",
-                                 "dedoublonnage":"prompt_dedoublonnage.txt"}
+                                 "dedoublonnage":"prompt_dedoublonnage.txt",
+                                 "mail_creation":"prompt_mail_creation.txt",
+                                 "mail_correction":"prompt_mail_correction.txt",
+                                 "mail_reponse":"prompt_mail_reponse.txt"}
 
         # Gestion de la file d'attente et du multi-threading pour l'IA
         self.__task_queue = queue.Queue()
@@ -173,6 +176,20 @@ class gestIA :
             print(f"Erreur lors de l'appel IA : {e}")
             return False
 
+    def __extract_json_dict(self, raw_reponse: str):
+        if not raw_reponse or not isinstance(raw_reponse, str):
+            return None
+        try:
+            start_idx = raw_reponse.find('{')
+            end_idx = raw_reponse.rfind('}')
+            if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+                json_str = raw_reponse[start_idx:end_idx + 1]
+                return json.loads(json_str)
+            return json.loads(raw_reponse)
+        except Exception as e:
+            print(f"Erreur decodage JSON IA : {e}")
+            return None
+
     def correted_text(self,text:str):
         if not self.__ia_mode_enabled:
             self.__model_reponse_ok = False
@@ -207,6 +224,98 @@ class gestIA :
                 self.__ia_mode_enabled = True
             print(e)
             return False
+
+    def create_mail(self, objet: str, instructions: str = "", signature: str = ""):
+        if not self.__ia_mode_enabled:
+            self.__model_reponse_ok = False
+            return None
+        return self.__submit_task(self.__internal_create_mail, objet, instructions, signature)
+
+    def __internal_create_mail(self, objet: str, instructions: str = "", signature: str = ""):
+        self.__ia_loader.unload_help()
+        try:
+            with open(self.__dir_ia_instruction + "prompt_mail_creation.txt", 'r', encoding='utf-8') as f:
+                instruction = f.read()
+
+            prompt = f"Objet souhaité : {objet}\n"
+            if instructions:
+                prompt += f"Consignes / Détails : {instructions}\n"
+            if signature:
+                prompt += f"Expéditeur / Signature : {signature}\n"
+
+            raw_reponse = self.__ia_loader.send_request(instruction + "\n\n" + prompt, False, True)
+            data = self.__extract_json_dict(raw_reponse)
+            self.__reponse_ia = data
+            self.__model_reponse_ok = True if data is not None else False
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return data
+        except Exception as e:
+            self.__model_reponse_ok = False
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            print(f"Erreur create_mail IA : {e}")
+            return None
+
+    def correct_mail(self, objet: str, mail: str):
+        if not self.__ia_mode_enabled:
+            self.__model_reponse_ok = False
+            return None
+        return self.__submit_task(self.__internal_correct_mail, objet, mail)
+
+    def __internal_correct_mail(self, objet: str, mail: str):
+        self.__ia_loader.unload_help()
+        try:
+            with open(self.__dir_ia_instruction + "prompt_mail_correction.txt", 'r', encoding='utf-8') as f:
+                instruction = f.read()
+
+            prompt = f"Objet : {objet}\n\nCorps du mail :\n{mail}"
+            raw_reponse = self.__ia_loader.send_request(instruction + "\n\n" + prompt, False, True)
+            data = self.__extract_json_dict(raw_reponse)
+            self.__reponse_ia = data
+            self.__model_reponse_ok = True if data is not None else False
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return data
+        except Exception as e:
+            self.__model_reponse_ok = False
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            print(f"Erreur correct_mail IA : {e}")
+            return None
+
+    def reply_mail(self, objet: str, mail_recu: str, consigne_reponse: str, signature: str = ""):
+        if not self.__ia_mode_enabled:
+            self.__model_reponse_ok = False
+            return None
+        return self.__submit_task(self.__internal_reply_mail, objet, mail_recu, consigne_reponse, signature)
+
+    def __internal_reply_mail(self, objet: str, mail_recu: str, consigne_reponse: str, signature: str = ""):
+        self.__ia_loader.unload_help()
+        try:
+            with open(self.__dir_ia_instruction + "prompt_mail_reponse.txt", 'r', encoding='utf-8') as f:
+                instruction = f.read()
+
+            prompt = f"Objet du mail reçu : {objet}\n\nContenu du mail reçu :\n{mail_recu}\n\nConsigne de réponse : {consigne_reponse}\n"
+            if signature:
+                prompt += f"Expéditeur / Signature : {signature}\n"
+
+            raw_reponse = self.__ia_loader.send_request(instruction + "\n\n" + prompt, False, True)
+            data = self.__extract_json_dict(raw_reponse)
+            self.__reponse_ia = data
+            self.__model_reponse_ok = True if data is not None else False
+            self.__ia_loader.unload_help()
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            return data
+        except Exception as e:
+            self.__model_reponse_ok = False
+            if self.__ia_loader.add_system_instruction(self.__generate_main_prompt()):
+                self.__ia_mode_enabled = True
+            print(f"Erreur reply_mail IA : {e}")
+            return None
 
     def deduplicate_actu(self, articles: list) -> list:
         if not articles or not isinstance(articles, list):

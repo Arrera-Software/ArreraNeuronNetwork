@@ -26,6 +26,8 @@ conf = confNeuron(name="Opale",
                   voiceAssistant=True)
 
 gest = gestionnaire(conf)
+print("Chargement de l'IA...")
+gest.getGestIA().loadIA()
 fnc = gest.getGestFNC()
 
 def partTask():
@@ -179,7 +181,7 @@ def partDownload():
 
         match nb:
             case 1:
-                print(fnc.getFNCDownload().getAllMode())
+                print(fnc.getFNCDownload().getAllMode() + " - (audio=2, video=1)")
             case 2:
                 print("Telechargement en etapes")
                 url = input("URL de la video : ")
@@ -650,6 +652,82 @@ def partOrthographe():
             case _:
                 print("Choix invalide, veuillez réessayer.")
 
+def partMail():
+    mailBoucle = True
+    while mailBoucle:
+        print("Test des fonctions de Mail")
+        print("1.Création complète d'un mail\n"
+              "2.Correction d'un mail\n"
+              "3.Réponse à un mail\n"
+              "4.Copier l'objet\n"
+              "5.Copier le mail complet\n"
+              "6.Voir le mail complet généré\n"
+              "0.Quitter")
+        print("__________________________\n")
+        boucleVerif = True
+        while boucleVerif:
+            nb = input("Choix : ")
+            try:
+                nb = int(nb)
+                boucleVerif = False
+            except ValueError:
+                print("Veuillez entrer un nombre valide.")
+
+        match nb:
+            case 1:
+                objet = input("Objet du mail : ")
+                consigne = input("Consignes / Détails (optionnel) : ")
+                print("Génération en cours (le corps sera automatiquement copié)...")
+                if fnc.getFNCMail().create_mail(objet, consigne):
+                    print("\n--- Mail généré (corps copié dans le presse-papier) ---")
+                    print(fnc.getFNCMail().get_mail_complet())
+                    print("-------------------------------------------------------\n")
+                else:
+                    print("Erreur lors de la génération du mail")
+            case 2:
+                objet = input("Objet du mail : ")
+                mail = input("Corps du mail à corriger : ")
+                print("Correction en cours (le corps sera automatiquement copié)...")
+                if fnc.getFNCMail().correct_mail(objet, mail):
+                    print("\n--- Mail corrigé (corps copié dans le presse-papier) ---")
+                    print(fnc.getFNCMail().get_mail_complet())
+                    print("--------------------------------------------------------\n")
+                else:
+                    print("Erreur lors de la correction du mail")
+            case 3:
+                objet = input("Objet du mail reçu : ")
+                mail_recu = input("Corps du mail reçu : ")
+                consigne = input("Consignes de réponse : ")
+                print("Génération de la réponse en cours (le corps sera automatiquement copié)...")
+                if fnc.getFNCMail().reply_mail(objet, mail_recu, consigne):
+                    print("\n--- Réponse générée (corps copié dans le presse-papier) ---")
+                    print(fnc.getFNCMail().get_mail_complet())
+                    print("-----------------------------------------------------------\n")
+                else:
+                    print("Erreur lors de la génération de la réponse")
+            case 4:
+                if fnc.getFNCMail().copy_objet():
+                    print("Objet copié dans le presse-papier")
+                else:
+                    print("Erreur lors de la copie de l'objet")
+            case 5:
+                if fnc.getFNCMail().copy_mail_complet():
+                    print("Mail complet copié dans le presse-papier")
+                else:
+                    print("Erreur lors de la copie du mail complet")
+            case 6:
+                mail_complet = fnc.getFNCMail().get_mail_complet()
+                if mail_complet:
+                    print("\n--- Mail Actuel ---")
+                    print(mail_complet)
+                    print("-------------------\n")
+                else:
+                    print("Aucun mail généré pour le moment.")
+            case 0:
+                mailBoucle = False
+            case _:
+                print("Choix invalide, veuillez réessayer.")
+
 def partCalculatrice():
     calculBoucle = True
     while calculBoucle:
@@ -807,6 +885,7 @@ def partWork():
               "\n29.Fichier extension\n30.Creation d'un fichier"
               "\n31.Voir le fichier du projet" 
               "\n32. Voir les taches du projet"
+              "\n33. Liste taches non fini"
               "\n0.Quitter")
         print("___________________________")
         boucleVerif = True
@@ -977,7 +1056,7 @@ def partWork():
                     print(f"Liste fichier : {fnc.getFNCWork().getListFileProjet()}")
             case 32 :
                 print(f"Liste taches : {fnc.getFNCWork().getFNCTaskProjet().getAllTask()}")
-            case 31:
+            case 33:
                 print(f"Liste taches non fini : {fnc.getFNCWork().getFNCTaskProjet().getNoFinishTask()}")
             case 0:
                 workBoucle = False
@@ -1065,9 +1144,10 @@ def main():
               "8.Horloge\n9.Read\n"
               "10.Radio\n11.Traducteur\n"
               "12.Orthographe\n13.Calculatrice\n"
-              "14.Codehelp\n15.Work"
-              "\n16.Beef\n17.OPEN"
-              "\n0.Quitter")
+              "14.Codehelp\n15.Work\n"
+              "16.Beef\n17.OPEN\n"
+              "18.Mail\n"
+              "0.Quitter")
         print("__________________________\n")
 
 
@@ -1116,6 +1196,8 @@ def main():
                 partBreef()
             case 17:
                 partOPEN()
+            case 18:
+                partMail()
             case 0:
                 print("Fin du programme")
                 break

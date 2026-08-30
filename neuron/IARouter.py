@@ -34,6 +34,7 @@ class IARouter:
             "calculatrice": self.__handle_calculatrice,
             "lecture": self.__handle_lecture,
             "orthographe": self.__handle_orthographe,
+            "mail": self.__handle_mail,
             "recherche": self.__handle_recherche,
             "open": self.__handle_open,
             "download_youtube": self.__handle_download,
@@ -950,6 +951,55 @@ class IARouter:
 
         else:
             return "Action orthographe non reconnue.", 1
+
+    # ==========================================
+    # HANDLERS - MAIL
+    # ==========================================
+
+    def __handle_mail(self, args):
+        fnc = self.__gestFNC.getFNCMail()
+        if fnc is None:
+            return "Erreur: FNC Mail non disponible.", 1
+
+        type_action = self.__arg(args, 0)
+        objet = self.__arg(args, 1)
+        p1 = self.__arg(args, 2)
+        p2 = self.__arg(args, 3)
+
+        if type_action in ("creer", "creation", "create"):
+            if fnc.create_mail(objet, p1):
+                return f"E-mail généré avec succès :\n\n{fnc.get_mail_complet()}", 5
+            return "Impossible de générer l'e-mail.", 1
+
+        elif type_action in ("corriger", "correction", "correct"):
+            if fnc.correct_mail(objet, p1):
+                return f"E-mail corrigé :\n\n{fnc.get_mail_complet()}", 5
+            return "Impossible de corriger l'e-mail.", 1
+
+        elif type_action in ("repondre", "reponse", "reply"):
+            if fnc.reply_mail(objet, p1, p2):
+                return f"Réponse générée :\n\n{fnc.get_mail_complet()}", 5
+            return "Impossible de générer la réponse à l'e-mail.", 1
+
+        elif type_action in ("copier_objet", "copy_objet"):
+            if fnc.copy_objet():
+                return "Objet de l'e-mail copié dans le presse-papier.", 5
+            return "Impossible de copier l'objet.", 1
+
+        elif type_action in ("copier_corps", "copy_corps"):
+            return "Le corps du mail a déjà été copié automatiquement lors de la génération.", 5
+
+        elif type_action in ("copier_tout", "copier_mail", "copy_mail", "copy_all"):
+            if fnc.copy_mail_complet():
+                return "E-mail complet copié dans le presse-papier.", 5
+            return "Impossible de copier l'e-mail.", 1
+
+        elif type_action in ("etat", "state"):
+            etat = fnc.getToolLaunched()
+            return f"État de la fonction mail: {'Actif' if etat else 'Inactif'}", 5
+
+        else:
+            return "Action mail non reconnue.", 1
 
     # ==========================================
     # HANDLERS - RECHERCHE

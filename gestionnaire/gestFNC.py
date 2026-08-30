@@ -23,6 +23,7 @@ class gestFNC:
         self.__calculatrice = None
         self.__read = None
         self.__orthographe = None
+        self.__mail = None
         self.__search_assistant = None
         self.__open = None
         self.__downloader_youtube = None
@@ -92,15 +93,18 @@ class gestFNC:
             from fnc.fonctionCalculatrice import fncCalculatrice
             from fnc.fonctionLecture import fncLecture
             from fnc.fonctionOrthographe import fncOrthographe
+            from fnc.fncMail import fncMail
 
             self.__calculatrice = fncCalculatrice(self.__gestionnaire)
             self.__read = fncLecture(self.__gestionnaire)
             self.__orthographe = fncOrthographe(self.__gestionnaire)
+            self.__mail = fncMail(self.__gestionnaire)
 
             self.__prompt += """
                 - "calculatrice": Args ["action", "p1", "p2", "p3", "p4"]. actions: addition, soustraction, multiplication, division, puissance, modulo, racine, complexe, pythagore, pythagore_reciproque, ouvrir_interface_normal, ouvrir_interface_pythagore, ouvrir_interface_complex.
                 - "lecture": Args ["action", "texte"]. actions: lire, etat, ouvrir_interface.
                 - "orthographe": Args ["action", "texte"]. actions: corriger, copier, etat, ouvrir_interface.
+                - "mail": Args ["action", "objet", "p1", "p2"]. actions: creer(objet, consigne), corriger(objet, mail), repondre(objet, mail_recu, consigne_reponse), copier_objet, copier_corps, copier_tout, etat.
                 """
 
         if conf.etatSearch == 1 :
@@ -178,6 +182,9 @@ class gestFNC:
 
     def getFNCOrthographe(self):
         return self.__orthographe
+
+    def getFNCMail(self):
+        return self.__mail
 
     def getFNCCalculatrice(self):
         return self.__calculatrice
