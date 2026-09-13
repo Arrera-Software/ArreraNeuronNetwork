@@ -20,9 +20,12 @@ class GUIMail(GuiBase) :
         bottom_frame = aFrame(self._screen)
 
         # Frame secondaire
-        self.__redaction_frame = aFrame(center_frame)
-        self.__corrector_frame = aFrame(center_frame)
-        self.__reponse_frame = aFrame(center_frame)
+        self.__redaction_frame = aFrame(center_frame,
+                                        fg_color=center_frame.cget("fg_color"))
+        self.__corrector_frame = aFrame(center_frame,
+                                        fg_color=center_frame.cget("fg_color"))
+        self.__reponse_frame = aFrame(center_frame,
+                                      fg_color=center_frame.cget("fg_color"))
 
         out_frame = aFrame(center_frame,fg_color=center_frame.cget("fg_color"))
 
@@ -49,6 +52,15 @@ class GUIMail(GuiBase) :
         self.__corrector_frame.grid_rowconfigure(1, weight=0)
         self.__corrector_frame.grid_rowconfigure(2, weight=0)
         self.__corrector_frame.grid_rowconfigure(3, weight=1)
+
+        # Configuration de reponse_frame
+        self.__reponse_frame.grid_columnconfigure(0, weight=1)
+        self.__reponse_frame.grid_rowconfigure(0, weight=0)
+        self.__reponse_frame.grid_rowconfigure(1, weight=0)
+        self.__reponse_frame.grid_rowconfigure(2, weight=0)
+        self.__reponse_frame.grid_rowconfigure(3, weight=1)
+        self.__reponse_frame.grid_rowconfigure(4, weight=0)
+        self.__reponse_frame.grid_rowconfigure(5, weight=1)
 
         # Configuration de out_frame
         out_frame.grid_columnconfigure(0, weight=1)
@@ -99,12 +111,22 @@ class GUIMail(GuiBase) :
         self.__t_write_consigne = aTextScrollable(self.__redaction_frame)
         self.__t_write_consigne.enableTextBox()
 
-        #Correction
+        # Correction
         l_title_correction = aLabel(self.__corrector_frame, text="Correction", police_size=30)
         self.__e_correction_objet = aEntryLengend(self.__corrector_frame, text="Objet", police_size=15, gridUsed=True)
         l_t_correction_redaction = aLabel(self.__corrector_frame, text="Corp du mail :", police_size=15)
         self.__t_write_correction = aTextScrollable(self.__corrector_frame)
         self.__t_write_correction.enableTextBox()
+
+        # Reponse
+        l_title_reponse = aLabel(self.__reponse_frame, text="Réponse à un mail", police_size=30)
+        self.__e_reponse_objet = aEntryLengend(self.__reponse_frame, text="Objet reçu ", police_size=15, gridUsed=True)
+        l_t_reponse_mail = aLabel(self.__reponse_frame, text="Mail reçu :", police_size=15)
+        self.__t_write_reponse_mail = aTextScrollable(self.__reponse_frame)
+        self.__t_write_reponse_mail.enableTextBox()
+        l_t_reponse_consigne = aLabel(self.__reponse_frame, text="Informations clés :", police_size=15)
+        self.__t_write_reponse_consigne = aTextScrollable(self.__reponse_frame)
+        self.__t_write_reponse_consigne.enableTextBox()
 
         # Placement des widget de top et bottom
         btn_redaction.grid(row=0, column=0, sticky="ew", padx=15, pady=5)
@@ -127,6 +149,14 @@ class GUIMail(GuiBase) :
         self.__e_correction_objet.grid(row=1, column=0, sticky="ew", padx=10, pady=(5, 10))
         l_t_correction_redaction.grid(row=2, column=0, sticky="w", padx=10, pady=(5, 2))
         self.__t_write_correction.grid(row=3, column=0, sticky="nsew", padx=10, pady=(0, 10))
+
+        # Placement des widgets dans reponse_frame
+        l_title_reponse.grid(row=0, column=0, sticky="w", padx=10, pady=(5, 10))
+        self.__e_reponse_objet.grid(row=1, column=0, sticky="ew", padx=10, pady=(5, 10))
+        l_t_reponse_mail.grid(row=2, column=0, sticky="w", padx=10, pady=(5, 2))
+        self.__t_write_reponse_mail.grid(row=3, column=0, sticky="nsew", padx=10, pady=(0, 5))
+        l_t_reponse_consigne.grid(row=4, column=0, sticky="w", padx=10, pady=(5, 2))
+        self.__t_write_reponse_consigne.grid(row=5, column=0, sticky="nsew", padx=10, pady=(0, 10))
 
         # Placement des widgets dans out_frame
         l_title_out.grid(row=0, column=0, sticky="w", padx=10, pady=(5, 10))
