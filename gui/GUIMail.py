@@ -8,17 +8,29 @@ class GUIMail(GuiBase) :
         super().__init__(gestionnaire,"Generation et correction de mail")
         self.__fnc_mail = self._gestionnaire.getGestFNC().getFNCMail()
         self.__th_generate = th.Thread()
+        self.__index_load = 0
 
     def _mainframe(self):
-        self._screen.grid_rowconfigure(0, weight=0)
-        self._screen.grid_rowconfigure(1, weight=1)
-        self._screen.grid_rowconfigure(2, weight=0)
+        self._screen.grid_rowconfigure(0, weight=1)
         self._screen.grid_columnconfigure(0, weight=1)
 
-        # Frame princiaple
-        top_frame = aFrame(self._screen)
-        center_frame = aFrame(self._screen)
-        bottom_frame = aFrame(self._screen)
+        # Frame de chargement plein écran
+        self.__load_frame = aFrame(self._screen)
+        self.__load_frame.grid_rowconfigure(0, weight=1)
+        self.__load_frame.grid_columnconfigure(0, weight=1)
+        self.__l_load = aLabel(self.__load_frame, text="Traitement en cours...", police_size=35)
+        self.__l_load.grid(row=0, column=0)
+
+        # Frame principale
+        self.__main_frame = aFrame(self._screen)
+        self.__main_frame.grid_rowconfigure(0, weight=0)
+        self.__main_frame.grid_rowconfigure(1, weight=1)
+        self.__main_frame.grid_rowconfigure(2, weight=0)
+        self.__main_frame.grid_columnconfigure(0, weight=1)
+
+        top_frame = aFrame(self.__main_frame)
+        center_frame = aFrame(self.__main_frame)
+        bottom_frame = aFrame(self.__main_frame)
 
         # Frame secondaire
         self.__redaction_frame = aFrame(center_frame,
@@ -78,7 +90,8 @@ class GUIMail(GuiBase) :
         for i in range(3):
             bottom_frame.grid_columnconfigure(i, weight=1, uniform="bottom_btns")
 
-        # Placement des frames principales
+        # Placement de la frame principale et ses sous-frames
+        self.__main_frame.grid(row=0, column=0, sticky="nsew")
         top_frame.grid(row=0,column=0,sticky="ew",padx=5,pady=(5, 2))
         center_frame.grid(row=1,column=0,sticky="nsew",padx=5,pady=2)
         bottom_frame.grid(row=2,column=0,sticky="ew",padx=5,pady=(2, 5))
@@ -176,6 +189,12 @@ class GUIMail(GuiBase) :
         l_t_corp.grid(row=3, column=0, sticky="w", padx=10, pady=(5, 2))
         self.__t_view_copr.grid(row=4, column=0, sticky="nsew", padx=10, pady=(0, 10))
 
+    def __view_load(self):
+        self.__index_load = 0
+        self.__l_load.configure(text="Traitement en cours")
+        self.__main_frame.grid_forget()
+        self.__load_frame.grid(row=0, column=0, sticky="nsew")
+
     def __create_mail(self):
         objet = self.__e_redaction_objet.getEntry().get()
         text = self.__t_write_consigne.getTextBox().get("1.0", "end")
@@ -186,6 +205,7 @@ class GUIMail(GuiBase) :
         self.__th_generate = th.Thread(target=self.__fnc_mail.create_mail,
                                        args=(objet, text,))
         self.__th_generate.start()
+        self.__view_load()
         self.__update_generate()
 
     def __correct_mail(self):
@@ -198,6 +218,7 @@ class GUIMail(GuiBase) :
         self.__th_generate = th.Thread(target=self.__fnc_mail.correct_mail,
                                        args=(objet, text,))
         self.__th_generate.start()
+        self.__view_load()
         self.__update_generate()
 
     def __reponse_mail(self):
@@ -212,6 +233,7 @@ class GUIMail(GuiBase) :
         self.__th_generate = th.Thread(target=self.__fnc_mail.reply_mail,
                                        args=(objet, text, consigne,))
         self.__th_generate.start()
+        self.__view_load()
         self.__update_generate()
 
     def __copy_body(self):
@@ -254,9 +276,25 @@ class GUIMail(GuiBase) :
 
     def __update_generate(self):
         if self.__th_generate.is_alive():
-            print("En cours")
-            self._screen.after(1000, self.__update_generate)
+            if self.__index_load == 0:
+                text = "Traitement en cours"
+                self.__index_load = 1
+            elif self.__index_load == 1:
+                text = "Traitement en cours."
+                self.__index_load = 2
+            elif self.__index_load == 2:
+                text = "Traitement en cours.."
+                self.__index_load = 3
+            elif self.__index_load == 3:
+                text = "Traitement en cours..."
+                self.__index_load = 0
+
+            self.__l_load.configure(text=text)
+            self._screen.after(300, self.__update_generate)
         else :
+            self.__load_frame.grid_forget()
+            self.__main_frame.grid(row=0, column=0, sticky="nsew")
+
             self.__th_generate = th.Thread()
 
             objet = self.__fnc_mail.get_objet()
