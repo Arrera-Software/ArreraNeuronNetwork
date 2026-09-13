@@ -1,12 +1,13 @@
 from arrera_tk import aFrame, aButton, aLabel, aEntry, aText, aEntryLengend, aTextScrollable
-
+import threading as th
+import pyperclip
 from gui.guibase import GuiBase,gestionnaire
 
 class GUIMail(GuiBase) :
     def __init__(self,gestionnaire:gestionnaire):
         super().__init__(gestionnaire,"Generation et correction de mail")
-        self.__corrector = self._gestionnaire.getGestFNC().getFNCMail()
-
+        self.__fnc_mail = self._gestionnaire.getGestFNC().getFNCMail()
+        self.__th_generate = th.Thread()
 
     def _mainframe(self):
         self._screen.grid_rowconfigure(0, weight=0)
@@ -93,9 +94,9 @@ class GUIMail(GuiBase) :
         btn_corrector = aButton(top_frame, text="Correction", command=self.__show_corrector)
         btn_reponse = aButton(top_frame, text="Réponse", command=self.__show_reponse)
 
-        btn_clear = aButton(bottom_frame, text="Effacer tout")
-        btn_copie_body = aButton(bottom_frame, text="Copier le corps")
-        btn_copy_all = aButton(bottom_frame, text="Copier tout")
+        btn_clear = aButton(bottom_frame, text="Effacer tout", command=self.__clear_all)
+        btn_copie_body = aButton(bottom_frame, text="Copier le corps", command=self.__copy_body)
+        btn_copy_all = aButton(bottom_frame, text="Copier tout", command=self.__copy_all)
 
         # Out
         l_title_out = aLabel(out_frame, text="Sortie", police_size=30)
@@ -104,7 +105,7 @@ class GUIMail(GuiBase) :
         self.__e_view_objet = aEntry(out_frame)
 
         l_t_corp = aLabel(out_frame, text="Corps du mail :",police_size=15)
-        self.__t_view_copr = aText(out_frame)
+        self.__t_view_copr = aTextScrollable(out_frame)
 
         # Redaction
         l_title_redaction = aLabel(self.__redaction_frame, text="Redaction d'un mail", police_size=30)
@@ -112,7 +113,8 @@ class GUIMail(GuiBase) :
         l_t_consigne_redaction = aLabel(self.__redaction_frame, text="Informations clés :", police_size=15)
         self.__t_write_consigne = aTextScrollable(self.__redaction_frame)
         self.__t_write_consigne.enableTextBox()
-        btn_generate_redaction = aButton(self.__redaction_frame, text="Générer")
+        btn_generate_redaction = aButton(self.__redaction_frame, text="Générer",
+                                         command=self.__create_mail)
 
         # Correction
         l_title_correction = aLabel(self.__corrector_frame, text="Correction", police_size=30)
@@ -120,7 +122,8 @@ class GUIMail(GuiBase) :
         l_t_correction_redaction = aLabel(self.__corrector_frame, text="Corp du mail :", police_size=15)
         self.__t_write_correction = aTextScrollable(self.__corrector_frame)
         self.__t_write_correction.enableTextBox()
-        btn_generate_correction = aButton(self.__corrector_frame, text="Corriger")
+        btn_generate_correction = aButton(self.__corrector_frame, text="Corriger",
+                                          command=self.__correct_mail)
 
         # Reponse
         l_title_reponse = aLabel(self.__reponse_frame, text="Réponse à un mail", police_size=30)
@@ -131,7 +134,8 @@ class GUIMail(GuiBase) :
         l_t_reponse_consigne = aLabel(self.__reponse_frame, text="Informations clés :", police_size=15)
         self.__t_write_reponse_consigne = aTextScrollable(self.__reponse_frame)
         self.__t_write_reponse_consigne.enableTextBox()
-        btn_generate_reponse = aButton(self.__reponse_frame, text="Répondre")
+        btn_generate_reponse = aButton(self.__reponse_frame, text="Répondre",
+                                       command=self.__reponse_mail)
 
         # Placement des widget de top et bottom
         btn_redaction.grid(row=0, column=0, sticky="ew", padx=15, pady=5)
@@ -172,6 +176,65 @@ class GUIMail(GuiBase) :
         l_t_corp.grid(row=3, column=0, sticky="w", padx=10, pady=(5, 2))
         self.__t_view_copr.grid(row=4, column=0, sticky="nsew", padx=10, pady=(0, 10))
 
+    def __create_mail(self):
+        objet = self.__e_redaction_objet.getEntry().get()
+        text = self.__t_write_consigne.getTextBox().get("1.0", "end")
+
+        self.__t_write_consigne.getTextBox().delete("1.0", "end")
+        self.__e_redaction_objet.getEntry().delete(0, "end")
+
+        self.__th_generate = th.Thread(target=self.__fnc_mail.create_mail,
+                                       args=(objet, text,))
+        self.__th_generate.start()
+        self.__update_generate()
+
+    def __correct_mail(self):
+        objet = self.__e_correction_objet.getEntry().get()
+        text = self.__t_write_correction.getTextBox().get("1.0", "end")
+
+        self.__t_write_correction.getTextBox().delete("1.0", "end")
+        self.__e_correction_objet.getEntry().delete(0, "end")
+
+        self.__th_generate = th.Thread(target=self.__fnc_mail.correct_mail,
+                                       args=(objet, text,))
+        self.__th_generate.start()
+        self.__update_generate()
+
+    def __reponse_mail(self):
+        objet = self.__e_reponse_objet.getEntry().get()
+        text = self.__t_write_reponse_mail.getTextBox().get("1.0", "end")
+        consigne = self.__t_write_reponse_consigne.getTextBox().get("1.0", "end")
+
+        self.__e_reponse_objet.getEntry().delete(0, "end")
+        self.__t_write_reponse_mail.getTextBox().delete("1.0", "end")
+        self.__t_write_reponse_consigne.getTextBox().delete("1.0", "end")
+
+        self.__th_generate = th.Thread(target=self.__fnc_mail.reply_mail,
+                                       args=(objet, text, consigne,))
+        self.__th_generate.start()
+        self.__update_generate()
+
+    def __copy_body(self):
+        corps = self.__fnc_mail.get_corps()
+        if corps:
+            pyperclip.copy(corps)
+
+    def __copy_all(self):
+        self.__fnc_mail.copy_mail_complet()
+
+    def __clear_all(self):
+        self.__e_redaction_objet.getEntry().delete(0, "end")
+        self.__t_write_consigne.getTextBox().delete("1.0", "end")
+        self.__e_correction_objet.getEntry().delete(0, "end")
+        self.__t_write_correction.getTextBox().delete("1.0", "end")
+        self.__e_reponse_objet.getEntry().delete(0, "end")
+        self.__t_write_reponse_mail.getTextBox().delete("1.0", "end")
+        self.__t_write_reponse_consigne.getTextBox().delete("1.0", "end")
+        self.__e_view_objet.delete(0, "end")
+        self.__t_view_copr.enableTextBox()
+        self.__t_view_copr.getTextBox().delete("1.0", "end")
+        self.__t_view_copr.disableTextBox()
+
     def __hide_all_left_frames(self):
         self.__redaction_frame.grid_forget()
         self.__corrector_frame.grid_forget()
@@ -188,3 +251,21 @@ class GUIMail(GuiBase) :
     def __show_reponse(self):
         self.__hide_all_left_frames()
         self.__reponse_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+
+    def __update_generate(self):
+        if self.__th_generate.is_alive():
+            print("En cours")
+            self._screen.after(1000, self.__update_generate)
+        else :
+            self.__th_generate = th.Thread()
+
+            objet = self.__fnc_mail.get_objet()
+            text = self.__fnc_mail.get_corps()
+
+            self.__e_view_objet.delete(0, "end")
+            self.__e_view_objet.insert(0, objet)
+
+            self.__t_view_copr.enableTextBox()
+            self.__t_view_copr.getTextBox().delete("1.0", "end")
+            self.__t_view_copr.getTextBox().insert("1.0", text)
+            self.__t_view_copr.disableTextBox()
