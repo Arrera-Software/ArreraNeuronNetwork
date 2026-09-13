@@ -57,6 +57,7 @@ gui_to_test = {
     "Arrera Download": lambda: gest_gui.setGUIActive("arrera_download") and gest_gui.launch_gui(),
     "Horloge": lambda: gest_gui.setGUIActive("horloge") and gest_gui.launch_gui(),
     "Lecture": lambda: gest_gui.setGUIActive("lecture") and gest_gui.launch_gui(),
+    "Mail": gest_gui.activeMail,
     "Arrera Work": lambda: gest_gui.setGUIActive("work") and gest_gui.launch_gui(),
     "Traducteur": lambda: gest_gui.setGUIActive("traducteur") and gest_gui.launch_gui(),
     "Color Select" : lambda : (fnc_codehelp.setGUICodeHelp("GUIColorSelector"),fnc_codehelp.launchGui()),

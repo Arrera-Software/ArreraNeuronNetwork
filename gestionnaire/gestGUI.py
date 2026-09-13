@@ -29,6 +29,7 @@ class gestGUI:
         self.__guiLecture = None
         self.__guiArreraDownload = None
         self.__guiNews = None
+        self.__guiMail = None
 
         self.__gui_actions: dict[str, Callable[[], bool]] = {"aide": self.__action_aide}
 
@@ -140,10 +141,12 @@ class gestGUI:
             from gui.GUICalculatrice import GUICalculatrice  # SERVICE
             from gui.GUIorthographe import GUIOrthographe  # SERVICE
             from gui.GUILecture import GUILecture  # SERVICE
+            from gui.GUIMail import GUIMail  # SERVICE
 
             self.__guiCalculatrice = GUICalculatrice(self.__gest)
             self.__guiOrthographe = GUIOrthographe(self.__gest)
             self.__guiLecture = GUILecture(self.__gest)
+            self.__guiMail = GUIMail(self.__gest)
 
             self.__gui_actions.update({
                 "calculatrice_normal": lambda: self.__generic_try_action(
@@ -161,10 +164,13 @@ class gestGUI:
                 "orthographe": self.__action_orthographe,
                 "lecture": lambda: self.__generic_action(
                     self.__guiLecture.active,
-                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface de lecture est ouverte."))})
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface de lecture est ouverte.")),
+                "mail": lambda: self.__generic_action(
+                    self.__guiMail.active,
+                    lambda: self.__gestIA.generate_final_response("","Annonce à l'utilisateur que l'interface de mail est ouverte."))})
 
             self.__prompt += """
-                - "gui": Args ["nom_gui", "texte"]. nom_gui: calculatrice_normal, calculatrice_pythagore, calculatrice_complex, orthographe(texte="texte"), lecture.
+                - "gui": Args ["nom_gui", "texte"]. nom_gui: calculatrice_normal, calculatrice_pythagore, calculatrice_complex, orthographe(texte="texte"), lecture, mail.
                 """
 
         if conf.etatOpen == 1:
@@ -316,3 +322,6 @@ class gestGUI:
         if self.__guiNews is not None:
             self.__guiNews.active_science()
 
+    def activeMail(self):
+        if self.__guiMail is not None:
+            self.__guiMail.active()
